@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习: 感知器算法</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习: 感知器算法</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-10-21">2014-10-21</time>
+</span>
+
+ | 
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#感知器" title="感知器">感知器</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">问题描述</h2>
+
+<p>对于线性二分类问题<br />
+\begin{equation}
+y = \left\{
+\begin{aligned}
+&amp; +1 &amp; \sum\nolimits_{i=1}^dw_ix_i &gt; \mbox{threshold} \\
+&amp; -1 &amp; \sum\nolimits_{i=1}^dw_ix_i &lt; \mbox{threshold}
+\end{aligned}
+\right. 
+\end{equation}</p>
+
+<p>也可以记为
+\begin{equation}
+h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sign}\left(\sum_{i=0}^dw_ix_i\right) = \mbox{sign}\left(\mathbf{w^Tx}\right)
+\end{equation} <br />
+其中，$w_0 = -\mbox{threshold}, x_0 = +1$。</p>
+
+<p>问：如何估计模型模型$h(x)$的参数$\mathbf{w}$？  <br />
+答：感知器算法（PLA，Perceptron Learning Algorithm）。</p>
+
+<h2 id="section-1">感知器算法</h2>
+
+<p>感知器算法通过迭代更新模型参数，直到没有错分的样本点。  </p>
+
+<blockquote>
+  <h4 id="pla">PLA</h4>
+  <hr />
+  <p>repeat until a full cycle of not encountering mistakes { <br />
+1. 找到参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
+2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$。  <br />
+}</p>
+</blockquote>
+
+<p><img src="../../../assets/images/2014-10-21-pla_1.png" alt="PLA对参数更新示例" />   <br />
+PLA更新模型参数可以用上图解释： <br />
+1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
+2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。   </p>
+
+<p>通过参数更新规则可知  <br />
+\[
+\mathbf w_{t+1} ＝ \mathbf w_t + y_{n}\mathbf x_{n}
+\]<br />
+两边转置后同时乘上$y_n\mathbf x_n$，可得
+\[
+y_n\mathbf w^T_{t+1} \mathbf x_n \geq y_n\mathbf w^T_t\mathbf x_n
+\]
+这表明，参数更新始终在试图纠正模型参数。  </p>
+
+<p><strong>注意事项</strong>：$\mathbf w$是决策界（判别面）的法向量。</p>
+
+<h2 id="section-2">理论分析</h2>
+
+<blockquote>
+  <ol>
+    <li>PLA算法会终止么？</li>
+    <li>能否从候选模式$h$中学习到目标模式$f$？</li>
+  </ol>
+</blockquote>
+
+<p>如果数据集$\mathcal D$线性可分，存在一个完美$\mathbf w_f$，使得对数据集中所有样本点$y_n = \mbox{sign}\left(\mathbf w_f^T\mathbf x_n\right)$，对于任意一个样本点总有</p>
+
+<p>\begin{equation}
+y_{n(t)}\mathbf w_f^T\mathbf x_{n(t)} \geq \min_n y_n\mathbf x_f^T\mathbf x_n &gt; 0
+\end{equation}</p>
+
+<p>根据感知器算法的更新规则可知
+\begin{equation}
+\begin{aligned}
+\mathbf w_f^T\mathbf w_{t+1} 
+&amp; =  \mathbf w_f^T\left(\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\right) \\
+&amp; \geq \mathbf w_f^T\mathbf w_t + \min_n y_n\mathbf x_f^T\mathbf x_n \\
+&amp; &gt; \mathbf w_f^T\mathbf w_t 
+\end{aligned}
+\end{equation}
+由此可见，参数更新后，$\mathbf w_{t+1}$<em>可能会</em>更加接近$\mathbf w_f$。但是，还不能确定是由于向量间夹角变小还是$\mathbf w_{t+1}$长度变大导致的内积增加。
+\begin{equation}
+\begin{aligned}
+\|\mathbf w_{t+1}\|^2
+&amp; = \|\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\|^2 \\
+&amp; = \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 + 2y_{n(t)}\mathbf w_t^T\mathbf x_{n(t)} \\
+&amp; \leq \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 \\
+&amp; \leq \|\mathbf w_t\|^2 + \max_n\|\mathbf x_{n}\|^2
+\end{aligned}
+\end{equation}
+由此可见，每次更新的时候，向量长度的增加是有限的，最多增加样本最长向量的长度。</p>
+
+<p>事实上，从$\mathbf w_0$开始，经过$T$次迭代后有
+\begin{equation}
+\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\frac{\mathbf w_T}{\|\mathbf w_T\|}\geq
+\sqrt T \times \mbox{constant}
+\label{eq:need_to_be_done_1}
+\end{equation}
+PLA算法迭代次数的上界满足$T\leq R^2/\rho^2$，其中
+\begin{equation}
+R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\mathbf x_n
+\label{eq:need_to_be_done_2}
+\end{equation}</p>
+
+<p>相关的证明如下：  <br />
+<img src="../../../assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
+
+<p><strong>结论：</strong>     <br />
+1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
+2. 对于未知的样本集，作用在其上的PLA算法可能长时间不收敛，导致这样的情况可能是迭代次数不够（理论上的参数$T$由于目标模型$f$未知而难以估计）或者样本集存在噪声（线性不可分）。</p>
+
+<h2 id="pocket-pla">Pocket PLA</h2>
+
+<p>判断样本集是否线性可分的复杂度为NP-hard。实际上，通常样本集存在一些噪声，不可能严格的线性可分，PLA算法无法满足收敛条件。Pocket PLA通过改变PLA迭代结束的条件和参数更新规则仍然可以估计模型参数。</p>
+
+<blockquote>
+  <h4 id="pocket-pla-1">Pocket PLA</h4>
+  <hr />
+  <p>repeat until enough iterations {<br />
+1. 随机抽取参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
+2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$；<br />
+3. 如果$\mathbf w_{t+1}$在样本集上的表现优于$\hat{\mathbf w}$，$\hat{\mathbf w}\leftarrow \mathbf w_{t+1}$。 <br />
+}</p>
+</blockquote>
+
+<p>从第3步可知，Pocket PLA的算法时间复杂度要高于PLA，如果对于线性可分的样本集，Pocket PLA比PLA慢。</p>
+
+<h2 id="section-3">思考问题</h2>
+
+<ol>
+  <li>PLA和梯度下降法有无联系？</li>
+  <li>在分类性能上PLA求解的线性模型和Logistic回归有何差别？</li>
+  <li>如何推导公式\eqref{eq:need_to_be_done_1}\eqref{eq:need_to_be_done_2}？ <a href="https://class.coursera.org/ntumlone-002/forum/thread?thread_id=28">答案</a></li>
+</ol>
+
+<h2 id="section-4">參考資料</h2>
+
+<ol>
+  <li><a href="https://class.coursera.org/ntumlone-002">機器學習基石(Machine Learning Foundations)</a>    </li>
+  <li><a href="http://www.cs.columbia.edu/~mcollins/courses/6998-2012/notes/perc.converge.pdf">Convergence Proof for the Perceptron Algorithm</a></li>
+</ol>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/2014/10/machine-learning-regularization" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-perceptron-learning-algorithm" data-url="http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm" data-title="机器学习: 感知器算法">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

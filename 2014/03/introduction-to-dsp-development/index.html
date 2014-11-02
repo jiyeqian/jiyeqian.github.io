@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>Introduction to DSP Development</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Introduction to DSP Development</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-03-28">2014-03-28</time>
+</span>
+
+ | 
+<span class="categories">
+  categories
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  tags
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#DSP" title="DSP">DSP</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">基本概念</h2>
+
+<p>DaVinci: The Texas Instruments DaVinci is a system on a chip family that combines a DSP core based on the TMS320 C6000 VLIW DSP family with an ARM architecture CPU core.</p>
+
+<p>PSP: Platform Support Package</p>
+
+<p>MAR:  Memory Attribute Register</p>
+
+<p>EVM: EValuation Module.</p>
+
+<p>DVEVM: Digital Video Evaluation Module.</p>
+
+<p>DMAI: Davinci Multimedia Application Interface.</p>
+
+<p>DVTB: Digital Video Test Bench.</p>
+
+<p><a href="http://rtsc.eclipse.org/docs-tip/RTSC_Packaging_Primer" title="RTSC Packaging Primer">RTSC</a>: Real-Time Software Components. 实时软件组件。</p>
+
+<p>XDCtools: XDCtools is the actual product that contains all the tools necessary for you to use the SYS/BIOS components and configure your application. XDCtools provides configuration tools you use to create and build a static configuration as part of your application. This *.cfg configuration file specifies:        </p>
+
+<ul>
+  <li>Which modules from XDCtools, SYS/BIOS, and other components to include in the runtime image.      </li>
+  <li>What static instances of RTOS objects to create. For example, these include tasks and semaphores.        </li>
+  <li>Settings for parameter values for modules and objects.      </li>
+  <li>XDCtools provides critical APIs that are used by SYS/BIOS and other related software components. These include memory allocation, logging, and system control.</li>
+</ul>
+
+<p><img src="http://processors.wiki.ti.com/images/9/92/Config_flow1.png" alt="XDCTools" /></p>
+
+<p><a href="http://www.ti.com/pdfs/wtbu/ti_hlos.pdf" title="Telephony software: the hidden glue in an HLOS-based smartphone">HLOS</a>: High-Level Operating System.</p>
+
+<p>RTOS: Real-Time Operating System. </p>
+
+<p>XDC: eXpress DSP Components</p>
+
+<p>GPP: General-Purpose Processors.</p>
+
+<p>DSP/BIOS:</p>
+
+<p>SYS/BIOS: </p>
+
+<p>DSP/BIOS™ LINK(<strong>END OF LIFE</strong>): 用于GPP与DSP通信。</p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/SysLink_UserGuide" title="SysLink UserGuide">SysLink</a>: The SysLink product provides software connectivity between multiple processors. SysLink is the next generation of DSP Link. The SysLink product is used in conjunction with the IPC product. <a href="http://omappedia.org/wiki/Syslink_Project" title="Syslink Project">SysLink is the next generation IPC driver developed for OMAP4 and beyond</a>. <a href="http://processors.wiki.ti.com/index.php/SysLink_FAQs" title="SysLink FAQs">The SysLink and IPC product are complementary</a>. SysLink comprises of the following sub-components:</p>
+
+<ul>
+  <li>System Manager        </li>
+  <li>Processor Manager        </li>
+  <li>Inter-Processor Communication (IPC)       </li>
+  <li>Utility modules  </li>
+</ul>
+
+<p>The common header files for IPC implemented by both the IPC product (on RTOS-side) and the SysLink product (on HLOS-side) are available within ti/ipc package.
+The SysLink product, in addition to implementing the HLOS-side of all IPC modules available within the RTOS IPC product, adds the following: ProcMgr, FrameQ (HLOS &amp; RTOS), RingIO (HLOS &amp; RTOS).</p>
+
+<p>Some of the key features of SysLink are:    </p>
+
+<ul>
+  <li>Messaging: Ability to exchange fixed size control messages with Co-Processors
+Dynamic memory management: Ability to dynamically map files to Co-Processor’s address space</li>
+  <li>Dynamic loading: Ability to dynamically load new components on Co-Processors at run time</li>
+  <li>Power Management: Static and dynamic power management for DSP</li>
+  <li>Zero-copy shared memory: Ability to “pass” data buffers to other processors by simply providing its location in shared memory.</li>
+  <li>TILER-based memory allocation: Allocate 2-D buffers with mirroring and rotation options, suitable for video</li>
+  <li>Remote function calls: One processor can invoke functions on a remote processor.</li>
+</ul>
+
+<p>SysLink Architecture：
+<img src="http://omappedia.org/images/3/38/SysLink_architecture.png" alt="SysLink Architecture" /></p>
+
+<p>SysLink Usage：
+<img src="http://omappedia.org/images/c/cb/RCM_usage.png" alt="SysLink Usage" /></p>
+
+<p>实现ARM和DSP之间通信的底层软件，Codec Engine就是建立在这个底层软件之上。</p>
+
+<p><em>Note, SysLink 2.x is intended for SYS/BIOS 6 users and does not support WinCE. DSP/BIOS 5 users (including most DVSDK users) should continue to use DSP Link releases!</em> </p>
+
+<p><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ipc/index.html" title="IPC Product Releases">IPC</a>: Inter-Processer Communication. IPC只能在运行SYS/BIOS的CPU上使用。</p>
+
+<p><em>Note, IPC 3.x is incompatible with SysLink. SysLink and most EZSDK users should continue to use IPC 1.x releases!</em></p>
+
+<p>EZSDK:</p>
+
+<p>DVSDK: Digital Video Software Development Kit.</p>
+
+<p>RDK:
+<img src="http://www.deyisupport.com/cfs-file.ashx/__key/communityserver-discussions-components-files/39/6087.RDK.jpg" alt="RDK框架图" /></p>
+
+<p>IPNC RDK: The IPNC RDK is a Reference Design Kit for TI812x platform and is optimized for IPNC multi-resolution applications. RDK allows a user to create different multi-resolution data flows involving video camera, capture, video processing (VS, Noise Filter, Encode, LDC etc) and video display. The IPNC-RDK is implemented using TI’s Multi-Channel “Link” FrameWork (McFW).<br />
+NDK: Network Developers Kit.</p>
+
+<p>GLSDK:</p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/MCSDK_Image_Processing_Demonstration_Guide" title="Multicore Software Development Kit Image Processing Demonstration Guide">MCSDK</a>: MultiCore Software Development Kit.</p>
+
+<p>AVSDK:</p>
+
+<p>QNX SDK:</p>
+
+<p>MFP: Multimedia Framework Products.</p>
+
+<p>McFW: Multi-Channel “Link” FrameWork</p>
+
+<p><a href="http://en.wikipedia.org/wiki/XDAIS_algorithms" title="XDAIS algorithms">xDAIS</a>: eXpress DSP Algorithm Interoperability Standard. The standard was first introduced in 1999 and was created to facilitate integration of DSP algorithms into systems without re-engineering cost. The XDAIS standard address the issues of algorithm resource allocation and consumption on a DSP. Algorithms that comply with the standard are tested and awarded an “eXpressDSP-compliant” mark upon successful completion of the test. For instance, all XDAIS compliant algorithms must implement an Algorithm Interface, called IALG. For those algorithms utilizing DMA, the IDMA interface must be implemented. Further, specific rules are provided for each family of TI DSP. DSP算法工程师要写出能被ARM通过Codec Engine调用的算法，必须保证自己的算法接口符合这个标准。</p>
+
+<p>xDM: XDAIS-DM(Digital Media). An extension of XDAIS, a superset of the XDAIS standard.</p>
+
+<p>IALG Interface is a set of standard interface functions exported by an XDAIS algorithm.</p>
+
+<p><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/fc/index.html" title="Framework Components Product Releases">FC</a>: Framework Components. FC is comprised of XDAIS algorithm resource managers and functional interfaces, which provides libraries/APIs to grant resources (e.g. memory and DMA resources) to algorithms using the interfaces (IALG, IDMA3) defined in XDAIS.     </p>
+
+<ul>
+  <li>DSKT2 - used for creating and interacting with XDAIS algorithms.    </li>
+  <li>RMAN - General purpose resource manager (Introduced in FC 2.00)      </li>
+  <li>ECPY - DMA-based memory copy functional library (Introduced in FC 3.20)      </li>
+  <li>DMAN3 - used for sharing QDMA channels from an EDMA3 device with XDAIS algorithms. <em>(Deprecated as of FC 3.23)</em>       </li>
+  <li>ACPY3 - DMA-based memory copy functional library. <em>(Deprecated as of FC 3.23)</em> </li>
+</ul>
+
+<p><em>Note, FC 3.x is intended for SYS/BIOS 6 users. DSP/BIOS 5 users (including most DVSDK users) should continue to use FC 2.x releases!</em>     </p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/Codec_Engine" title="Codec Engine">CE</a>: Codec Engine. Codec Engine is a set of APIs that you use to instantiate and run XDAIS algorithms. A VISA interface is provided as well for interacting with XDM-compliant XDAIS algorithms.</p>
+
+<p><em>Note, CE 3.x is intended for SYS/BIOS 6 users and does not yet support WinCE. WinCE and DSP/BIOS 5 users (including most DVSDK users) should continue to use CE 2.x releases!</em></p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/Codec_Engine_Overview" title="Codec Engine Overview">DVSDK, CE, FC and xDAIS</a>: </p>
+
+<ul>
+  <li>[Bottom-up] Start with the XDAIS and XDM products, which define a consistent set of algorithm interfaces, and enable the software stack above. Stepping up the stack, there is Framework Components (FC). FC provides libraries/APIs to grant resources (e.g. memory and DMA resources) to algorithms using the interfaces (IALG, IDMA3) defined in XDAIS. Then, we step up into Codec Engine (CE). CE enables applications to easily invoke these algorithms (using FC under the covers). And finally, the big one, the DVSDK. This bundles all of the above and more, and provides examples of fully running applications - real codecs, real I/O, etc.</li>
+  <li>[Top-down] A core component of the DVSDK is the Codec Engine (CE). Looking further down the stack is Framework Components (FC). And finally, FC fundamentally operates on algorithms which comply with the XDAIS and XDM. </li>
+</ul>
+
+<p><a href="http://processors.wiki.ti.com/index.php/How_is_SYS/BIOS_related_to_XDCtools_and_RTSC%3F" title="How is SYS/BIOS related to XDCtools and RTSC?">How is SYS/BIOS related to XDCtools and RTSC?</a></p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/Category:UIA" title="Category:UIA">UIA</a>: Unified Instrumentation Architecture. UIA defines a set of tools, APIs, transports, interfaces and guidelines that enable developers to instrument embedded software in a way that is portable and flexible, and enables the creation of advanced tooling features that can be used both in the lab and in the field.</p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/Multicore_System_Analyzer" title="Multicore System Analyzer">MCSA</a>: Multicore System Analyzer. System Analyzer is a real-time tool for analyzing, visualizing and profiling application running on single or multi core systems.</p>
+
+<p><em>Multicore System Analyzer (MCSA) has recently been renamed to “System Analyzer”.</em>  </p>
+
+<p>VPSS: </p>
+
+<p>DMVAL: Digital Media Video Analytics Library</p>
+
+<p>SPIs: System Programming Interfaces.</p>
+
+<p>MCASP: Multi-Channel Audio Seria Port.</p>
+
+<p>MCBSP: Multi-Channel Buffered Seria Port.</p>
+
+<p>HDVPSS: High-Definition Video Process Sub System. 主要用于视频的capture、deinterlacing、scaler、up/down sample、graphics、display等，由Media Controller Dula ARM Cortex-M3系统中的VPSS-M3控制。</p>
+
+<p>HDVICP2: High-Definition Video Image Coprocesser模块，是一个硬核编解码加速器，主要用于视频编解码，支持H.264、MPEG、MJPEG、AVS等协议，由Media Controller Dula ARM Cortex-M3系统中的VIDEO-M3控制。</p>
+
+<p>ISS: Image Sub System，是IPNC类产品中的视频前端接口，主要用于前端Sensor 的Capture、resize、scaler、H3A等，也是由Media Controller Dula ARM Cortex-M3系统中的VPSS-M3控制（更正：此处根据代码猜测ISS既可以由VIDEO-M3控制也可以由VPSS-M3控制，理由是：在IPNC的RDK中ISS是由VPSS-M3控制，但在DVR RDK中ISS是由VIDEO来控制的。从TI对M3功能的规划来说，更倾向于VPSS-M3控制，理由：VPSS-M3主要负责采集显示等功能，而VIDEO侧重于编解码控制）。</p>
+
+<p>OSAL: Operating System Abstraction Library.</p>
+
+<p>OCMC: On-Chip Memory Controller</p>
+
+<h2 id="ti-">TI 芯片系列</h2>
+
+<p><img src="http://www.deyisupport.com/resized-image.ashx/__size/550x0/__key/CommunityServer-Discussions-Components-Files/39/7002.36.bmp" alt="DM8148命名规则" />
+硅版本号在做引导程序的时候可能会用到，需注意配置要求。</p>
+
+<h2 id="sysbios">SYS/BIOS</h2>
+
+<h3 id="cachemar">Cache_MAR###_###设置</h3>
+
+<ul>
+  <li>功能：通过设置，使得外存（external memory）地址（对应的存储区）是可缓存的（cacheable）<sup id="fnref:sysbios1"><a href="#fn:sysbios1" class="footnote">1</a></sup>。</li>
+  <li>原理：Cache.MAR128_159可设置的地址范围是0x80000000 - 0x9FFFFFFF，该地址对应存储区是512M（0x9FFFFFFF-0x80000000+0x01=512M），Cache.MAR128_159的类型是32位的UInt32（159-128+1=32），32bit掩码，每bit可设置存储区大小16M（512/32＝16）<sup id="fnref:sysbios2"><a href="#fn:sysbios2" class="footnote">2</a></sup>。</li>
+  <li>实例：当Cache.MAR128_159＝0x1时，表示0x80000000开始的16M存储区可被缓存（MAR的低位对应低地址0x80000000还是高地址0x9FFFFFFF有待考证？？）。<a href="http://blog.csdn.net/emilyhuping/article/details/8602550" title="TI dsp的memory映射cache">每个F代表64M可缓存的区域，Cache.MAR128_159=0x000000FF代表从0x80000000开始的128M区域可被缓存</a>（64 * 2 = 128）。</li>
+</ul>
+
+<h2 id="linux-utilsplinuxutils"><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/index.html" title="Linux Utils Overview">Linux Utils</a></h2>
+
+<h3 id="cmempcmem1"><a href="http://processors.wiki.ti.com/index.php/CMEM_Overview" title="CMEM Overview">CMEM</a></h3>
+
+<p>CMEM是确保能分配到<em>连续物理内存</em>的一组API，同时提供虚拟地址到物理地址的转换，以及用户模式的高速缓存（cache）管理。连续物理内存用于多核之间（DSP、ARM）的共享缓存（buffer），以及硬件加速器、DMA。</p>
+
+<p>在操纵连续物理内存之前，需要安装内核模块<code>cmemk.ko</code>初始化可连续分配物理内存的区域：</p>
+
+<div class="highlight"><pre><code class="bash">/sbin/insmod cmemk.ko <span class="nv">pools</span><span class="o">=</span>4x30000,2x500000 <span class="nv">phys_start</span><span class="o">=</span>0x0 <span class="nv">phys_end</span><span class="o">=</span>0x3000000
+</code></pre></div>
+
+<ul>
+  <li>phys_start和phys_end必须是16进制，pools必须是10进制（会用到x，不能用16进制）。</li>
+  <li>上例作用：初始化两个内存池（pool），pool的id分别为0、1，第一个是4个30000字节的buffer，第二个是2个500000字节的buffer，所有buffer的起始地址位于0x0~0x3000000的区域。</li>
+  <li>由于存在对齐限定，每个pool占用的空间会大于或等于内核模块命令指定的空间（Pool buffers are aligned on a module-dependent boundary, and their sizes are rounded up to this same boundary. This applies to each buffer within a pool. ）。</li>
+  <li>可通过命令<code>cat /proc/cmem</code>查看CMEM管理pool和buffer的状态。</li>
+</ul>
+
+<p>CMEM 2.00加入了对分配堆内存（heap）的支持，堆内存的边界对齐依赖于模块实现和用户设定（用户设定大于模块定义边界时，用户设定才有效）。可用堆内存的总大小是指定物理地址区域内存减去内存池占用内存的大小（phys_end - phys_start + 1 - size_of_pools）。使用堆内存的缺点是比内存池容易产生碎片。通过几轮分配释放过程，内存碎片问题可能导致再也无法成功分配内存，这通常导致codec creation failure。在开发测试阶段推荐使用堆内存，在产品实现阶段推荐使用内存池。</p>
+
+<p>CMEM 2.23 增加了程序退出时清理（clean up）未释放内存（buffer）的功能。</p>
+
+<p><code>cmemk.ko</code>的其他参数<sup id="fnref:CMEM1"><a href="#fn:CMEM1" class="footnote">3</a></sup>：</p>
+
+<ul>
+  <li><code>useHeapIfPoolUnavailable=[0|1]</code>：when set to 1, will cause pool-based allocations to fallback to a heap-based allocation if no pool buffer of sufficient size is available.</li>
+  <li><code>allowOverlap=[0|1]</code>： when set to 1, causes cmemk.ko to not fail when it detects that a CMEM memory block location conflicts with the Linux kernel memory, and instead an informational message is printed on the console. </li>
+</ul>
+
+<p>内存分配函数<sup id="fnref:CMEM1:1"><a href="#fn:CMEM1" class="footnote">3</a></sup>：</p>
+
+<div class="highlight"><pre><code class="c"><span class="kt">void</span><span class="o">*</span> <span class="n">CMEM_alloc</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="n">CMEM_AllocParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span>
+</code></pre></div>
+
+<ul>
+  <li><code>size</code>：分配buffer的大小。</li>
+  <li><code>params</code>：CMEM_AllocParams有三个元素。<code>type</code>：CMEM_HEAP, CMEM_POOL, or CMEM_CMA；<code>flags</code>：CMEM_CACHED or CMEM_NONCACHED；<code>alignment</code>：only used for heap allocations, must be power of 2。</li>
+  <li>之前必须先调用<code>CMEM_init()</code>。</li>
+</ul>
+
+<p>Pool allocations can be requested explicitly by pool number, or more generally by just a size. For size-based allocations, the pool which best fits the requested size is automatically chosen. </p>
+
+<h2 id="ipc">IPC</h2>
+
+<h3 id="notify-moduletisdoipcnotify-module-ipc1">Notify module/ti.sdo.ipc.Notify module <sup id="fnref:IPC1"><a href="#fn:IPC1" class="footnote">4</a></sup></h3>
+
+<p>The ti.sdo.ipc.Notify module manages the multiplexing/demultiplexing of software interrupts over hardware interrupts.</p>
+
+<p>调用任何Notify的API之前，必须先调用<code>Ipc_start()</code>函数。如果<code>Ipc.setupNotify</code>设为<code>FALSE</code>，须在<code>Ipc_start()</code>之外调用<code>Notify_start()</code>。</p>
+
+<p>为了接收消息，每个处理器要通过<code>Notify_registerEvent()</code>注册一个或多个回调函数到eventId，回调函数的格式：</p>
+
+<div class="highlight"><pre><code class="c"><span class="n">Void</span> <span class="nf">cbFxn</span><span class="p">(</span><span class="n">UInt16</span> <span class="n">procId</span><span class="p">,</span> <span class="n">UInt16</span> <span class="n">lineId</span><span class="p">,</span> <span class="n">UInt32</span> <span class="n">eventId</span><span class="p">,</span> <span class="n">UArg</span> <span class="n">arg</span><span class="p">,</span> <span class="n">UInt32</span> <span class="n">payload</span><span class="p">);</span>
+</code></pre></div>
+
+<p>The <code>Notify_registerEvent()</code> function (like most other Notify APIs) uses a ti.sdo.utils.MultiProc ID and line ID to target a specific interrupt line to/from a specific processor on a device.</p>
+
+<div class="highlight"><pre><code class="c"><span class="n">Int</span> <span class="n">status</span><span class="p">;</span>
+<span class="n">armProcId</span> <span class="o">=</span> <span class="n">MultiProc_getId</span><span class="p">(</span><span class="s">&quot;ARM&quot;</span><span class="p">);</span>
+<span class="n">Ipc_start</span><span class="p">();</span>
+<span class="cm">/* Register cbFxn with Notify. It will be called when ARM</span>
+<span class="cm"> * sends event number EVENTID to line #0 on this processor.</span>
+<span class="cm"> * The argument 0x1010 is passed to the callback function. */</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">Notify_registerEvent</span><span class="p">(</span><span class="n">armProcId</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">EVENTID</span><span class="p">,</span> <span class="p">(</span><span class="n">Notify_FnNotifyCbck</span><span class="p">)</span><span class="n">cbFxn</span><span class="p">,</span> <span class="mh">0x1010</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">System_abort</span><span class="p">(</span><span class="s">&quot;Notify_registerEvent failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The line ID number is typically 0 (zero), but is provided for use on systems that have multiple interrupt lines between processors.</p>
+
+<p><code>Notify_registerEvent()</code>可将多个回调函数注册到一个事件（event）。每个事件只注册一个回调函数时，调用<code>Notify_registerEventSingle()</code>可获得更好的性能。一旦事件被注册，远程处理器可通过<code>Notify_sendEvent()</code>发送事件。If the specified event and interrupt line are both enabled, all callback functions registered to the event will be called sequentially.</p>
+
+<div class="highlight"><pre><code class="c"><span class="k">while</span> <span class="p">(</span><span class="n">seq</span> <span class="o">&lt;</span> <span class="n">NUMLOOPS</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">Semaphore_pend</span><span class="p">(</span><span class="n">semHandle</span><span class="p">,</span> <span class="n">BIOS_WAIT_FOREVER</span><span class="p">);</span>
+<span class="cm">/* Semaphore_post is called by callback function*/</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">Notify_sendEvent</span><span class="p">(</span><span class="n">armProcId</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">EVENTID</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">TRUE</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>上例中，<code>seq</code>作为回调函数的参数<code>payload</code>发送（执行回调函数时，<code>payload = seq</code>）。<code>payload</code>固定为32个bit长。<code>Notify_sendEvent()</code>的第5个参数设为<code>TRUE</code>， Notify driver会等待之前发送给相同<code>even ID</code>事件被收到的响应（acknowledgement）。</p>
+
+<h2 id="xdc">XDC</h2>
+
+<h3 id="xdcmakefilexdc1">XDC的Makefile示例<sup id="fnref:XDC1"><a href="#fn:XDC1" class="footnote">5</a></sup></h3>
+
+<div class="highlight"><pre><code class="makefile"><span class="nv">CGTOOLS</span> <span class="o">=</span> C:/CCStudio_v3.3/C6000/cgtools
+
+<span class="nv">CC</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/bin/cl6x
+<span class="nv">LNK</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/bin/lnk6x
+<span class="nv">RTS</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/lib/rts6400.lib
+
+<span class="nv">CONFIG</span> <span class="o">=</span> mycfg
+<span class="nv">XDCTARGET</span> <span class="o">=</span> ti.targets.C64
+<span class="nv">XDCPLATFORM</span> <span class="o">=</span> ti.platforms.sim6xxx
+
+<span class="nf">%/linker.cmd %/compiler.opt </span><span class="o">:</span> <span class="m">%.cfg</span>
+	xs xdc.tools.configuro -c <span class="k">$(</span>CGTOOLS<span class="k">)</span> -t <span class="k">$(</span>XDCTARGET<span class="k">)</span> -p <span class="k">$(</span>XDCPLATFORM<span class="k">)</span> <span class="nv">$&lt;</span>
+
+<span class="nf">%.obj </span><span class="o">:</span> <span class="m">%.c $(CONFIG)/compiler.opt</span>
+	<span class="k">$(</span>CC<span class="k">)</span> -@<span class="k">$(</span>CONFIG<span class="k">)</span>/compiler.opt -c <span class="nv">$&lt;</span>
+
+<span class="nf">hello.out </span><span class="o">:</span> <span class="m">hello.obj $(CONFIG)/linker.cmd</span>
+	<span class="k">$(</span>LNK<span class="k">)</span> -o hello.out -c hello.obj <span class="k">$(</span>CONFIG<span class="k">)</span>/linker.cmd <span class="k">$(</span>RTS<span class="k">)</span>
+</code></pre></div>
+
+<h3 id="xdc-1">XDC的配置</h3>
+
+<p>Tconf was the precursor to XDC. The configuration file uses simple JavaScript (EcmaScript) syntax. For more information about configuration, see the XDC Consumer User’s Guide (SPRUEX4).</p>
+
+<p>查看帮助文档：</p>
+
+<div class="highlight"><pre><code class="bash">xs xdc.tools.cdoc.sg
+</code></pre></div>
+
+<p><code>config.bld</code> 中记录了系统的内存等资源的分配，分配方法结合芯片的datasheet（例如tms320dm8127）中Memory Map Summary章节。</p>
+
+<p>大概流程：<code>*.bld + *.cfg ==&gt; *.cmd</code>。</p>
+
+<p>最终生成执行文件的时候，可以在*.map中查看响应配置是否一致。</p>
+
+<h2 id="edma">EDMA</h2>
+
+<p>The EDMA allows data transfer to/from any addressable memory spaces.</p>
+
+<p>EDMA <a href="http://downloads.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/psp/edma3_lld/edma3_lld_1_03/edma3_lld_1_03_00/packages/ti/sdo/edma3/drv/docs/html/edma3__drv_8h.html" title="edma3_drv.h File Reference">API</a></p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/TI81XX_PSP_EDMA_Driver_User_Guide">TI81XX PSP EDMA Driver User Guide</a></p>
+
+<h2 id="cache">Cache</h2>
+
+<h3 id="cachesram">Cache与SRAM</h3>
+<p>Cache 是位于 CPU与主存储器DRAM（Dynamic RAM，动态存储器）之间的少量超高速静态存储器 SRAM（static RAM），其是为了解决 CPU 与 主存之间速度匹配问题而设置的，不能由用户直接寻址访问。SRAM是存取速度较快、价格较高的硬件，Cache是基于SRAM的告诉IO系统。SRAM可以直接寻址访问。如果要使用L1DSRAM或L1PSRAM， 则应该相应减小cache段大小。L2 is configured as SRAM (addressable internal memory). L2 cache can be enabled in the program code by issuing the appropriate chip support library(CSL). </p>
+
+<p>Cache大小可通过cmd设置，那些外存可被Cache可通过Mar设置。</p>
+
+<p>我的理解是SRAM是物理存储，速度快、价格高，Cache是基于高速SRAM的一套系统高速IO机制。SRAM可分区（通过cmd文件）：分为Cache ＋ SRAM，Cache的使用由系统控制，SRAM可由用户控制，比如把相应的段塞入；掩码MAR设置的作用是哪些内存对应的内容可被系统Cache！</p>
+
+<h3 id="dont-forget-the-mar-bits">Don’t forget the MAR bits!</h3>
+
+<p>By setting the MAR register to 1 you are telling the 64x+ core that it is allowed to cache data in the corresponding 16MB section of memory. If, for example, you did not set any of the MAR bits corresponding to your DDR, then none of the data in DDR would actually get cached! So as you can imagine, this is a very important step.</p>
+
+<p>You only need to configure the MAR bits for the external memory. When it comes to the internal memory the corresponding MAR bits are already set for you (i.e. L2 SRAM can be allocated in L1D cache). Furthermore you would never want to turn them off as there is no need since data coherence is maintained by the hardware between L1D and L2.</p>
+
+<p>The L2 cache is disabled (0k) meaning that all the L2 memory will be available as SRAM. </p>
+
+<p>If you wish to programmatically configure/reconfigure the cache at run-time you should use the BCACHE module that is part of DSP/BIOS. </p>
+
+<p>In the version 7.0 release of the C6000 code generation tools, a new cache layout tool, clt6x, is included. clt6x will take dynamic profile information in the form of a weighted call graph (WCG) and create a preferred function order command file that can be input into the linker to guide the placement of function subsections.</p>
+
+<p><a href="http://processors.wiki.ti.com/index.php/Enabling_64x%2B_Cache">Enabling 64x+ Cache</a><br />
+<a href="http://processors.wiki.ti.com/index.php/Cache_Management">Cache Management</a></p>
+
+<h2 id="section-1">内部指令</h2>
+
+<h3 id="mem4--amem4">_mem4 与 _amem4</h3>
+<p><code>_amem4</code>取值按地址4字节对齐，可以这样理解<code>_amem4(p_str) = _amem4(p_str &amp; 0xfffffffc)</code>。</p>
+
+<h2 id="section-2">代码优化</h2>
+
+<h3 id="section-3">反馈信息</h3>
+
+<p>Known Max Trip Count Factor ＝ MUST_ITERATE的第3参数/Loop Unroll Multiple    <br />
+Known Maximum Trip Count是Known Max Trip Count Factor的整数倍</p>
+
+<h3 id="pipeline">Pipeline</h3>
+
+<div class="highlight"><pre><code class="c"><span class="c1">// N强制设置为8的倍数，自动流水线</span>
+<span class="n">N</span> <span class="o">&amp;=</span> <span class="mh">0xfffff8</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
+
+<span class="c1">// 但是，但是，但是，这样不行：</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;</span> <span class="mh">0xfffff8</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
+</code></pre></div>
+
+<div class="highlight"><pre><code class="c"><span class="c1">// EP_SIZE为常量，自动流水线</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">EP_SIZE</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
+</code></pre></div>
+
+<h2 id="edma-1">EDMA</h2>
+
+<p>Again, as we’ve already documented, use ACPY3 for algorithms and some application code when the need is to only do a memory to memory transfer without synchronization. Use LLD when synchronization, indexing, linking and chaining is desired.</p>
+
+<h2 id="section-4">参考资料</h2>
+<p><a href="http://processors.wiki.ti.com/index.php/Main_Page">Texas Instruments Wiki</a><br />
+<a href="http://www.cnblogs.com/just4fun/archive/2011/03/14/1983292.html">TI DaVinci(达芬奇)入门</a></p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:sysbios1">
+      <p>TI SYS/BIOS v6.35 Real-time Operating System User’s Guide (spruex3m: 6.6.2 Configure Parameters to Set MAR Registers) <a href="#fnref:sysbios1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:sysbios2">
+      <p>SYS/BIOS API Documenation <a href="#fnref:sysbios2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:CMEM1">
+      <p>Linux Utils Application Programming Interface (API)  <a href="#fnref:CMEM1" class="reversefootnote">&#8617;</a> <a href="#fnref:CMEM1:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:IPC1">
+      <p>SYS/BIOS Inter-Processor Communication (IPC) 1.25 User’s Guide (sprugo6e) <a href="#fnref:IPC1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:XDC1">
+      <p>XDC Getting Started Guide <a href="#fnref:XDC1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/2013/11/machine-learning" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/2014/10/machine-learning-linear-regression" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/03/introduction-to-dsp-development" data-url="http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development" data-title="Introduction to DSP Development">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://jiyeqian.bitbucket.org/2013/11/machine-learning';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

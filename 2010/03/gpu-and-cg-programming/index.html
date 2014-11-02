@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>GPU编程与CG语言之阳春白雪下里巴人</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>GPU编程与CG语言之阳春白雪下里巴人</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2010-03-06">2010-03-06</time>
+</span>
+
+ | 
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  tags
+  
+  <a href="/tags/#励志故事" title="励志故事">励志故事</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<blockquote>
+  <p>本文内容摘自《GPU编程与CG语言之阳春白雪下里巴人》。</p>
+</blockquote>
+
+<h2 id="section">序</h2>
+
+<p>26 年前，江汉平原的一个农家女人在身边无人的情况下生下了一名男婴，有人看到后叫来了男孩的外婆，外婆剪断了脐带。起初很多人都以为会是一个女孩，都劝她打掉这个孩子，而她还是坚持生了下来。</p>
+
+<p>男孩4 岁时，由于家里忙没有功夫照看，于是女人用一卷毯子裹着他去学校报名读书，说他已经7 岁了。</p>
+
+<p>男孩17 岁那年，考上了武汉大学。爸爸妈妈一起送他到武汉读书，爸爸妈妈还很有力气，扛着几十斤的行李很轻松，男孩那个时候不知道麦当劳，不知道电脑如何开机，不知道什么叫上网。他们对男孩说，要好好读书，多学东西，和同学好好相处，到了大三可以找女朋友。</p>
+
+<p>5 年前，他来到了北京读研。爸爸妈妈一起送他到北京，那个时候他们头发还没有完全白，扛着行李也觉得有点吃力了，到颐和园玩之前先带上水、方便面和几个馒头。他们对男孩说，等他毕业时，再来北京玩，要慢慢适应北方的天气，多喝水，用菊花和甘草泡水喝，要注意穿衣，不要让人瞧不起。</p>
+
+<p>2 年前，他毕业了，在一家研究所找了一份工作，拿到了北京户口，爸爸妈妈来北京玩了一次，打算一家人在北京过年，他们的头发白了不少，拿着行李很辛苦，行李里面是吃的、锅、中草药、被子等。他们说，你要做一个好人，亲戚有事情，你要帮忙，不要骄傲，要攒钱买房子，准备结婚。</p>
+
+<p>你们赐予我生命，一直坚持要我和姐姐都上大学。对于一个普通的家庭而言，同时负担两个孩子上大学，是一件多么艰难的事情！</p>
+
+<p>二十多年过去有如瞬刹的流水，感谢你们，我的父亲母亲。
+<!--more--></p>
+
+<h2 id="section-1">前言</h2>
+
+<p>在我读研期间，对国内的研究风气经历了从期待、到失望的过程。原因在于，工程化的迹象太过明显，我的观点并不排斥工程化，但是以研究的名义，行工程化之实，并将工程化中根深蒂固的“急功近利”带到整个过程中，最后不得不在匆忙中以“略可充数的软件”和“流于表面的技术论文，粉饰以复杂深奥的术语和图表”来结尾，这实在是一种悲哀。对于广大的研究人员和学生而言，已经是一种无奈。</p>
+
+<p>很多人都说，这是教授的错，也有很多人都说，这是学生的错，学风不正！我最开始也这么认为，随着所见愈多，却又困惑。其实大部分的教授都是希望有一番作为的，也是希望可以严格要求学生的，但是现在的大趋势是“权力决定学术”以及“钻营决定利益”，于是很少有人可以在“所有人都进行利益争食”时，还静心研究，实际上，就算静心研究，也没有这个条件。研究过程需要经费进行保证，而不去钻营，不去附和哪些狗屁不懂的人，就没有办法拿到经费。大量的课题原本应该从实际需求中提炼出来的，但随着行政体制的流转，最后演变成为了“媚上”和“附和”而进行的选美比赛。而申请材料的撰写目标，也变成了为了好看和吸引眼球而组建的“花哨”课题。</p>
+
+<p>除此之外，研究人员难！很多研究工作需要依靠博士，但是中国博士的待遇低，前途未卜是众所周知的。一个花哨的课题，加上一个每天想着结婚、吃饭的穷博士，结果是可想而知的。</p>
+
+<p>我工作之后发现，与学校的科研情况相比，社会上的IT 混乱情况有过之而无不及。刚工作初，曾在一次很大的项目验收中听到这么一句话“软件鉴定会就是软件追悼会”。再加上国人不重基础研究，在我工作之初，一个很大的苦恼是，很多人都觉得计算机图形学不属于计算机科学，他们认为计算机图形学只是“使用软件去建模，是美工”，当有人发现我从本科到研究生都是计算机系的学生时，还非常夸张的表达了他们的惊讶。更有一个领导对我说“计算机图形学是一门很小的学科……”，她似乎觉得看过人月神话、软件工程之类的书，就是大牛了，才是真正的计算机科学。</p>
+
+<p>这些情况让我困惑了很久，我的师兄师弟师姐师妹，目前还在计算机图形学领域的人，已经屈指可数。回想这5 年来的所经所历，得出的结论是：中国的科学研究已然被功利化、制度化。</p>
+
+<p>被功利化的学术，失去了方向，变得鼠目寸光，无法容忍长时间的基础积累，一味幻想空中楼阁式的成功。是呀，没有学术的成功，哪有领奖的资格，哪有白花花的银子？我坚决认为，中国必然存在很多像爱迪生一样的天才，但是中国没有一个上位者可以容忍一千次的失败，所以中国的爱迪生无法发明电灯，也无法用智慧照亮别人和自己！</p>
+
+<p>被制度化的学术失去了灵性和创造性，而奴性则越来越重！处于这种氛围的人会从最初的挣扎到慢慢的习惯，到最后成了坚定的捍卫者，因为他们已然失去了活力，已然要依赖这种制度而生存，就好比长在大树上的寄生植物一般。这些人每天说着“假大空”的“真善美”，创造性实际上变成了嘴巴上的大跃进。也确实是嘴巴上的大跃进，从东吃到西，从南吃到北，从河鲜吃到海鲜，油乎乎的嘴巴中一个一个世界空白被填补。</p>
+
+<p>这种现状和柏林墙很像呀！曾看过一段关于柏林墙的评价，堪称经典：世界上的围墙都是防止外面的人闯进来，只有一种围墙是防止里面的人出去的，那是什么？那就是监狱的围墙！在这样的墙里面是什么地方？那不就是监狱吗？</p>
+
+<p>我无意去批评任何人，这种现状的产生并非一朝一夕，一人之力。在这个漩涡中的每个人都身不由己，被动或主动的去忽略科学，正视利益。科学工作者没有独立的人格和意愿，面对的只是官本位和市场经济的强烈压力，在这种情况下，中国想要获得诺贝尔奖实在是天方夜谭！</p>
+
+<p>请原谅我发这么多牢骚，不过此书正是在有点怨气的情况下写出的。我想让更多的人了解计算机图形学，了解GPU 编程，而不是认为那是很遥远很飘渺的事情。当我查询Cg 语言的文献时，NVIDIA 公司出的CgUsersManual 一书已经有了日文版的翻译，而中文版的却还未出现；当我研究体绘制算法时，到处寻找用于实验的体数据，在中文网站上未曾发现。</p>
+
+<p>虽然我一向要求自己做一块坚硬的石头，但是面对不确定的未来难免有惴惴不安之感。正所谓人生失意无南北，或许有一天我的职业生涯走到了无路可回的境地，不得不放弃自己的专业，今天留下点回忆也不错。</p>
+
+<p>最后，愿中国的学术可以“天地开辟，日月重光”！</p>
+
+<p>天地漫漫，浩瀚史诗 <br />
+金黄，那神性灿烂的光芒 <br />
+没有一种爱<br />
+没有一种情<br />
+可以在自由之上<br />
+星辰如海啊<br />
+请听我倾说<br />
+我的爱人很不一般<br />
+那是天地之外的逍遥自在</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/2010/01/chinese-new-poems" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/2010/07/chinese-classical-poems" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2010/03/gpu-and-cg-programming" data-url="http://jiyeqian.bitbucket.org/2010/03/gpu-and-cg-programming" data-title="GPU编程与CG语言之阳春白雪下里巴人">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://jiyeqian.bitbucket.org/2010/01/chinese-new-poems';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://jiyeqian.bitbucket.org/2010/07/chinese-classical-poems';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

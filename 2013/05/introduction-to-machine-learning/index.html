@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>機器學習基礎</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>機器學習基礎</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2013-05-18">2013-05-18</time>
+</span>
+
+ | 
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文的參考文獻主要是<sup id="fnref:YuCourse"><a href="#fn:YuCourse" class="footnote">1</a></sup></p>
+
+<h2 id="section">內容提綱</h2>
+
+<p><a href="#paradigms">機器學習的類型</a>  <br />
+<a href="#statical_linear_regression_model">統計線性迴歸模型</a></p>
+
+<p><span id="paradigms"></span></p>
+
+<h3 id="yucourse01">機器學習的類型<sup id="fnref:YuCourse01"><a href="#fn:YuCourse01" class="footnote">2</a></sup></h3>
+
+<ul>
+  <li>監督學習（Supervised learning）: 已知$\{x_i, y_i\}$，學習$y=f(x; \theta)$。
+    <ol>
+      <li>分類（Classification）: $y$是類別號, 例如：主題；</li>
+      <li>迴歸（Regression）: $y$是連續變量，例如：溫度、收入；</li>
+      <li>排序（Ranking）: $y$是順序編號；</li>
+      <li>結構預測（Structured prediction）: 例如：對語句中的詞性標註。</li>
+    </ol>
+  </li>
+  <li>非監督學習（Unsupervised learning）: 已知$\{x_i\}$，學習$y=f(x; \theta)$。
+    <ol>
+      <li>密度估計（Density estimation）: $y$是密度函數$y=p(x; \theta)$；</li>
+      <li>異常檢測（Abnormal detection）: $y$是異常；</li>
+      <li>聚類（Data Clustering）</li>
+      <li>維數約簡（Dimensionality Reduction）</li>
+    </ol>
+  </li>
+  <li>強化學習（Reinforcement Learning）<sup id="fnref:Rai"><a href="#fn:Rai" class="footnote">3</a></sup>  <sup id="fnref:YaserCourse01"><a href="#fn:YaserCourse01" class="footnote">4</a></sup>  <sup id="fnref:DudaBook"><a href="#fn:DudaBook" class="footnote">5</a></sup>   <sup id="fnref:AndrewCourse2008_16"><a href="#fn:AndrewCourse2008_16" class="footnote">6</a></sup>： 外部環境對輸出只給出評價信息而非正確答案，學習機制通過強化受獎勵的動作來改善自身的性能。
+    <ol>
+      <li>機器人控制</li>
+      <li>自主導航</li>
+      <li>遊戲   	</li>
+    </ol>
+  </li>
+  <li>半監督學習（Semi-supervised Learning）：少量已標註的數據$\{x_i, y_i\}和大量未標註的數據$\{x_i\}$…</li>
+  <li>主動學習（Active Learning）：主動選擇訓練樣本</li>
+  <li>Transfer Learning</li>
+</ul>
+
+<!--more-->
+
+<p><span id="statical_linear_regression_model"></span>  </p>
+
+<h3 id="statical-linear-regression-modelyucourse02">統計線性迴歸模型（Statical Linear Regression Model）<sup id="fnref:YuCourse02"><a href="#fn:YuCourse02" class="footnote">7</a></sup></h3>
+
+<p>\begin{equation}
+  Y = \beta_0 + \beta_1 X + \epsilon
+\end{equation}
+$\beta_0$為截斷或偏移（intercept or bias），$\beta_1$為斜率（slope），$\epsilon$為隨機噪聲。</p>
+
+<ul>
+  <li>如何從數據估計線性模型的參數$\beta_0$和$\beta_1$？</li>
+  <li>如何評價該線性模型是否足夠好？</li>
+  <li>如何評價參數$\beta_0$和$\beta_1$的重要性？</li>
+</ul>
+
+<p>若訓練數據為$(X_i,Y_i) (i = 1,…,n)$，參數$\beta_0$和$\beta_1$的最小二乘迴歸估計為</p>
+
+<p>\begin{equation}
+  [\hat{\beta_0}, \hat{\beta_1}] = \arg\min_{\beta_0, \beta_1}\sum_{i=1}^{n} \left(Y_i - (\beta_0 + \beta_1 X_i)\right)
+\end{equation}</p>
+
+<p>統計模型可表示為</p>
+
+<p>\begin{equation}
+  Y_i = \beta_0 + \beta_1 X_i + \epsilon_i ~~~(i=1,\ldots,n)
+\end{equation}</p>
+
+<p>其中$\epsilon_i$為0均值噪聲，理想的情況是$\epsilon_i$服從高斯分佈$\epsilon_i\thicksim N(0,\sigma^2)$。</p>
+
+<blockquote>
+  <p>最小二乘迴歸對異常值敏感。</p>
+</blockquote>
+
+<p>殘差$r_i = Y_i - (\hat{\beta_0} + \hat{\beta_1} X_i)$應當為隨機噪聲且接近$\epsilon_i$，否著可以通過增加其它特徵，提升模型性能。</p>
+
+<p>如果殘差非隨機，可以增加非線性特徵項，提升模型性能。設非線性基函數為$[f_1(X_i),\ldots,f_p(X_i)]$，可將基礎的線性模型擴展為</p>
+
+<p>\begin{equation}
+  Y_i = \beta_0 + \sum_{j=1}^{p} \beta_j f_j (X_i) + \epsilon_i ~~~(i=1,\ldots,n)
+\end{equation}</p>
+
+<p>例如，線性模型可擴展為如下兩種形式</p>
+
+<p>\[
+  Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \epsilon_i
+\]</p>
+
+<p>以及</p>
+
+<p>\[
+  Y_i = \beta_0 + \beta_1 X_i + \beta_2 \max (0, X_i - 68) + \beta_3 \max (0, X_i - 72) + \epsilon_i
+\]</p>
+
+<p>由此可見，利用非線性基函數，線性模型可以描述非線性關係。</p>
+
+<p>考慮高維空間$X_i \in R^p$的線性迴歸</p>
+
+<p>\begin{equation}
+  Y_i = \beta^T X_i + \epsilon_i ~~~ \epsilon_i \thicksim N(0, \sigma^2)
+\end{equation}</p>
+
+<p>其中$\beta = [\beta_1,\ldots,\beta_p] \in R^p$，參數$\beta$的最小二乘估計為</p>
+
+<p>\begin{equation}
+	\hat{\beta} = (X^T X)^{-1} X^T Y
+\end{equation}</p>
+
+<p>$X$為$n \times p$矩陣，每行（row）是$X_i$的一個數據點，$Y$是$n \times 1$的向量。殘差$r_i \approx \epsilon_i $</p>
+
+<p>\begin{equation}
+	r_i = Y_i - {\hat{\beta}}^T X_i 
+\end{equation}</p>
+
+<ul>
+  <li>若噪聲隨機，如何估計$\sigma^2$?</li>
+  <li>噪聲是高斯分布的嗎？</li>
+  <li>噪聲的方差相等麽？</li>
+  <li>當方差不等時，如何處理？</li>
+</ul>
+
+<p>假設噪聲的方差相等，其估計值為</p>
+
+<p>\begin{equation}
+	{\hat{\sigma}}^2 = \frac{1}{n-p} \sum_{i=1}^n r_i^2
+\end{equation}</p>
+
+<ul>
+  <li>分母為$n-p$而非$n$是為了滿足無偏估計</li>
+  <li>由於$p$個參數，$residue &lt; noise$</li>
+</ul>
+
+<p>如果方差不等，可對其建模</p>
+
+<p>\[
+r_i^2 \approx v_0 + v_1 (X_i - 45) + v_2 (X_i - 45)^2
+\]</p>
+
+<p>最優的無偏線性估計是加權最小二乘</p>
+
+<p>\begin{equation}
+	\hat{\beta} = \arg \min_{\beta} \sum_{i=1}^n w_i (Y_i - \beta^T X_i)^2 
+\end{equation}</p>
+
+<p>其中，$w_i = \frac{1}{\sigma_i^2}$。</p>
+
+<h3 id="section-1">模型參數重要性評估</h3>
+
+<h2 id="section-2">參考資料</h2>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:YuCourse">
+      <p><a href="http://wenku.baidu.com/course/view/49e8b8f67c1cfad6195fa705">Machine Learning（余凯&amp;张潼）</a>  <a href="#fnref:YuCourse" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:YuCourse01">
+      <p><a href="http://wenku.baidu.com/course/study/53b9fd0a79563c1ec5da7107#&amp;93e38a6227d3240c8447ef9b">Machine Learning（余凯&amp;张潼）：Introduction to ML and review of linear algebra, probability, statistics (kai) P18</a> <a href="#fnref:YuCourse01" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:Rai">
+      <p><a href="http://www.cs.utah.edu/~piyush/teaching/29-11-slides.pdf">Reinforcement Learning (1): Discrete MDP, Value Iteration, Policy Iteration</a> <a href="#fnref:Rai" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:YaserCourse01">
+      <p><a href="http://v.163.com/movie/2012/2/3/C/M8FH262HJ_M8FTVDQ3C.html">Learning From Data（Yaser）：The Learning Problem</a>      <a href="#fnref:YaserCourse01" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:DudaBook">
+      <p>模式分類（P13） <a href="#fnref:DudaBook" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:AndrewCourse2008_16">
+      <p><a href="http://v.163.com/movie/2008/1/2/N/M6SGF6VB4_M6SGKSC2N.html">Machine Learning（Andrew Ng，2008）：16</a> <a href="#fnref:AndrewCourse2008_16" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:YuCourse02">
+      <p><a href="http://wenku.baidu.com/course/study/53b9fd0a79563c1ec5da7107#&amp;ea8add07a6c30c2259019e9b">Machine Learning（余凯&amp;张潼）：linear model (tong) </a>       <a href="#fnref:YuCourse02" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/2012/07/introduction-to-python" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/2013/11/machine-learning" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2013/05/introduction-to-machine-learning" data-url="http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning" data-title="機器學習基礎">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://jiyeqian.bitbucket.org/2012/07/introduction-to-python';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://jiyeqian.bitbucket.org/2013/11/machine-learning';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

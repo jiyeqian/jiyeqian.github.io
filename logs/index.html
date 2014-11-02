@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>Jiye Qian - Logs</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Logs</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<ul>
+  <li>2014-11-02：修正了多说配duoshuo误，嵌入了百度站长工具。</li>
+  <li>2014-10-24：修改了code和blockquote显示效果，增加了通过div添加图片caption。</li>
+  <li>2013-11-19：使用了<a href="https://github.com/89ao">89ao</a>的主题。</li>
+</ul>
+
+<hr />
+
+<p>本博客clone自<a href="https://github.com/webfrogs/webfrogs.github.com">webfrog</a>，在此非常感谢这个简洁漂亮的主题。</p>
+
+<p><strong>添加功能</strong>:</p>
+
+<p><del>‘Powered by Jekyll @ GitHub’中’Po’为post，’ed’为edit。</del> <br />
+—var <a href="http://yonsm.net/">Yonsm</a></p>
+
+<p>post右边自动生成post的大纲，浮在post页面左边。 <br />
+vim风格的按键，j为上一篇，k下一篇。<br />
+—via <a href="http://mad4a.me/">mad4a</a></p>
+
+<hr />
+
+
+</section>
+
+
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

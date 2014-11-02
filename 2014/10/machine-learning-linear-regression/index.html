@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习: 线性回归</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习: 线性回归</h1>
+        </header>
+        <nav id="real_nav">
+        <span><a title="home" class="" href="/">home</a></span>
+        <span><a title="categories" class="" href="/categories/">categories</a></span>
+        <span><a title="tags" class="" href="/tags/">tags</a></span>
+        <span><a title="logs" class="" href="/logs/">Log</a></span>
+        <span><a title="about" class="" href="/about/">about</a></span>
+        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-10-19">2014-10-19</time>
+</span>
+
+ | 
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ | 
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#线性回归" title="线性回归">线性回归</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">模型介绍</h2>
+
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_regression.svg/438px-Linear_regression.svg.png" alt="linear regression" /></p>
+
+<p>线性回归（Linear Regression）的回归函数（hypothesis）为
+\begin{equation}
+h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x_1 + \cdots  + \theta_nx_n
+\label{eq:hypothesis_linear_regression}
+\end{equation}
+其中，常数项$x_0 = 1$。</p>
+
+<p>代价函数（cost function）为
+\begin{equation}
+J(\theta) = \frac{1}{2m}\sum_{i=1}^{m}{\left(h_{\theta}\left(x^{(i)}\right) - y^{(i)}\right)^2}
+\label{eq:cost_function_linear_regression}
+\end{equation}
+其中，$x^{(i)} = \left(x_1^{(i)}, x_2^{(i)}, \cdots, x_n^{(i)}\right)$， $m$为样本数量，$n$为特征数量。</p>
+
+<h2 id="section-1">参数估计</h2>
+
+<p>参数估计是通过最小化代价函数\eqref{eq:cost_function_linear_regression}，求解模型参数$\theta$。
+\[
+\min_\theta J(\theta)
+\]
+通常有两种解法：万能的梯度下降法（gradient descent）和正规方程（normal equation）的解析解（也就是线性回归的最小二乘解）。</p>
+
+<h3 id="section-2">梯度下降法</h3>
+
+<p>repeat until convergence {
+\[
+\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta)~~~~~~(j = 0, 1, \ldots, n)
+\]
+}<br />
+也就是<br />
+repeat until convergence {
+\[
+\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
+\]
+}  <br />
+每轮循环的时候同时更新$\theta_j$（下图左边为正确更新方式。<em>不能</em>在同一轮循环中，先更新部分$\theta_j$，再利用已更新的$\theta_j$更新其它$\theta_j$）。  <br />
+<img src="../../../assets/images/2014-10-19-linear_regression_1.png" alt="同时更新$\theta_j$" /> <br />
+特征的尺度如果相差太大，需要进行尺度规范化提高收敛速度，常用的规范化方法是
+\[
+\hat x_i = \frac{x_i - x_{mean}}{x_{max}-x_{min}}
+\]
+或者
+\[
+\hat x_i = \frac{x_i - x_{mean}}{x_{std}}
+\]</p>
+
+<p><strong>注意事项：</strong>   </p>
+
+<ul>
+  <li>线性回归的代价函数$J(\theta)$不存在局部极值（local optima），存在全局极值；</li>
+  <li>将所有特征归一（feature scaling）到统一的尺度$-1\le x_i\le 1$有助于提高梯度下降法的速度（不归一化$x_0$）；</li>
+  <li>学习率$\alpha$太小收敛慢，太大可能错过极值点而不收敛，过大的$\alpha$甚至可能导致$J(\theta)$不降反升；</li>
+  <li>在迭代过程中保持$\alpha$不变，梯度下降步长也会自动减小，因为梯度会不断减小。</li>
+</ul>
+
+<p>尺度归一化效果： <br />
+<img src="../../../assets/images/2014-10-19-linear_regression_2.png" alt="尺度归一化效果示例" /><br />
+梯度下降步长自动减小：<br />
+<img src="../../../assets/images/2014-10-19-linear_regression_3.png" alt="梯度下降步长自动减小" /></p>
+
+<h3 id="section-3">正规方程求解</h3>
+
+<p>正规方程求解也就是线性回归的最小二乘解为
+\begin{equation}
+\theta = \left(X^TX\right)^{-1}X^Ty
+\end{equation}</p>
+
+<p><strong>注意事项：</strong>     </p>
+
+<p>$X^TX$可能不可逆，导致的原因可能是冗余特征（redundant features）和特征数目过多（$n$太多而$m$太少），解决的办法：   </p>
+
+<ul>
+  <li>冗余特征线性相关（e.g. $x_1 = 2x_2$）：删除线性相关特征；</li>
+  <li>特征数目过多（e.g. $m \le n$）：删除特征、正则化（regularization）。</li>
+</ul>
+
+<p>Matlab Code：</p>
+
+<div class="highlight"><pre><code class="matlab"><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">y</span>
+</code></pre></div>
+
+<p>其中，pinv函数可以处理$X^TX$不可逆的情况，而inv函数不行。</p>
+
+<h3 id="section-4">求解方法比较</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gradient Descent</th>
+      <th>Normal Equation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>需要$\alpha$</td>
+      <td>不需要$\alpha$</td>
+    </tr>
+    <tr>
+      <td>需要迭代</td>
+      <td>不需要迭代</td>
+    </tr>
+    <tr>
+      <td>当特征数$n$很大时（$10^6$）工作良好</td>
+      <td>$n$很大时很慢</td>
+    </tr>
+    <tr>
+      <td>特征需要尺度规范化</td>
+      <td>特征不需要尺度规范化</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-5">多项式回归</h2>
+
+<p>当$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $时，多项式回归（polynomial regression）\eqref{eq:hypothesis_polynomial_regression}可以直接转化为线性模型\eqref{eq:hypothesis_linear_regression}。
+\begin{equation}
+h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x + \theta_2x^2 ＋ \theta_3x^3 \cdots  + \theta_nx^n
+\label{eq:hypothesis_polynomial_regression}
+\end{equation}</p>
+
+<p><strong>注意事项：</strong> <br />
+构造多项式特征，借助多项式回归，可以利用线性回归模型解决非线性问题。</p>
+
+<h2 id="section-6">思考问题</h2>
+
+<ol>
+  <li>如何通过收敛判断梯度下降法是否应该停止迭代？</li>
+  <li>特征尺度规范化（feature scaling）为何能提高梯度下降法收敛速度？</li>
+  <li>为什么正规方程估计参数不需要特征尺度规范化？</li>
+</ol>
+
+<h2 id="section-7">应用范例</h2>
+
+<h2 id="section-8">参考资料</h2>
+
+<p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>    <br />
+<a href="http://en.wikipedia.org/wiki/Linear_regression">Wikipedia: Linear regression</a></p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/2014/03/introduction-to-dsp-development" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/2014/10/machine-learning-logistic-regression" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-linear-regression" data-url="http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression" data-title="机器学习: 线性回归">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+        </article>
+        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
+            <img src="/assets/images/site/btt.png" />
+        </a>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
