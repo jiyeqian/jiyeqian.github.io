@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2011-10-08">2011-10-08</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -201,9 +201,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-	<a  href="/2011/09/introduction-to-git" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2012/06/lab-notice" class="pageNav"  >下一篇</a>
+  <a  href="/2011/09/git-essential" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2012/06/lab-notice" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -235,15 +235,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2011/09/introduction-to-git';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2011/09/git-essential';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/06/lab-notice';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2012/06/lab-notice'; -->
+        url = '/2012/06/lab-notice';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2011/10/foreign-poems/#timeSpan';
         }
         if (url) {
             window.location = url;

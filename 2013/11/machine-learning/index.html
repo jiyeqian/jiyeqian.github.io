@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2013-11-20">2013-11-20</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -565,9 +565,9 @@ F1 score = (2 * precision * recall) / (precision + recall)</p>
 <section align="right">
 <br/>
 <span>
-	<a  href="/2013/05/introduction-to-machine-learning" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/03/introduction-to-dsp-development" class="pageNav"  >下一篇</a>
+  <a  href="/2013/05/introduction-to-machine-learning" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/03/dsp-essential" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -599,15 +599,20 @@ F1 score = (2 * precision * recall) / (precision + recall)</p>
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2013/05/introduction-to-machine-learning';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/03/dsp-essential'; -->
+        url = '/2014/03/dsp-essential';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2013/11/machine-learning/#timeSpan';
         }
         if (url) {
             window.location = url;

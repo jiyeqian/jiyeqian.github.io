@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2012-07-04">2012-07-04</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,15 +90,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
   <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
   
-  <a href="/tags/#emacs" title="emacs">emacs</a>&nbsp;
+  <a href="/tags/#Emacs" title="Emacs">Emacs</a>&nbsp;
   
-  <a href="/tags/#lisp" title="lisp">lisp</a>&nbsp;
+  <a href="/tags/#Lisp" title="Lisp">Lisp</a>&nbsp;
   
   <a href="/tags/#工具" title="工具">工具</a>&nbsp;
   
@@ -684,9 +684,9 @@ Symbol's function definition is void: company-pysmell
 <section align="right">
 <br/>
 <span>
-	<a  href="/2012/07/host-your-pages-at-github-using-jekyll" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2012/07/introduction-to-python" class="pageNav"  >下一篇</a>
+  <a  href="/2012/07/host-your-pages-at-github-using-jekyll" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2012/07/python-essential" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -718,15 +718,20 @@ Symbol's function definition is void: company-pysmell
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2012/07/host-your-pages-at-github-using-jekyll';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/07/introduction-to-python';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2012/07/python-essential'; -->
+        url = '/2012/07/python-essential';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2012/07/introduction-to-aquamacs/#timeSpan';
         }
         if (url) {
             window.location = url;

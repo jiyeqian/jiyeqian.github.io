@@ -162,9 +162,15 @@ blockquote h4 {
 blockquote p, blockquote ol, blockquote ul {
   margin: 13px 20px 0;
 }
-blockquote pre code {
+blockquote div pre code {
   border: 0px !important;
   margin: 13px 23px 0 !important;
+}
+blockquote p code,
+blockquote ol li code,
+blockquote ul li code {
+  background-color: #dff0d8;
+  border-width: 0;
 }
 
 blockquote img {

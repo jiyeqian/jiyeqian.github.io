@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2010-07-14">2010-07-14</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -507,9 +507,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-	<a  href="/2010/03/gpu-and-cg-programming" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2010/12/doctor-oath" class="pageNav"  >下一篇</a>
+  <a  href="/2010/03/gpu-and-cg-programming" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2010/12/doctor-oath" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -541,15 +541,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2010/03/gpu-and-cg-programming';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2010/03/gpu-and-cg-programming';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2010/12/doctor-oath';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2010/12/doctor-oath'; -->
+        url = '/2010/12/doctor-oath';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2010/07/chinese-classical-poems/#timeSpan';
         }
         if (url) {
             window.location = url;

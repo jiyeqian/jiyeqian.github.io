@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-21">2014-10-21</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -244,9 +244,9 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/10/machine-learning-regularization" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/machine-learning-regularization" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -278,15 +278,20 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/10/machine-learning-regularization';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks'; -->
+        url = '/2014/10/machine-learning-neural-networks';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/machine-learning-perceptron-learning-algorithm/#timeSpan';
         }
         if (url) {
             window.location = url;

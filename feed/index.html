@@ -7,13 +7,28 @@
     <title>Jiye Qian</title>
     <link href="http://jiyeqian.bitbucket.org/feed/" rel="self" />
     <link href="http://jiyeqian.github.io" />
-    <lastBuildDate>2014-11-03T04:04:47+08:00</lastBuildDate>
+    <lastBuildDate>2014-11-03T22:56:57+08:00</lastBuildDate>
     <webMaster>ccf.developer@gmail.com</webMaster>
+    
+    <item>
+      <title>JavaScript Essential</title>
+      <link href="http://jiyeqian.bitbucket.org/2014/11/javascript-essential"/>
+      <pubDate>2014-11-03T10:30:30Z</pubDate>
+      <author>Jiye Qian</author>
+      <guid>http://jiyeqian.bitbucket.org/2014/11/javascript-essential</guid>
+      <content:encoded><![CDATA[<h2 id="section">参考资料</h2>
+
+<ol>
+  <li><a href="http://javascript.ruanyifeng.com">阮一峰：JavaScript 标准参考教程（alpha）</a>  </li>
+  <li><a href="http://es6.ruanyifeng.com">阮一峰：ECMAScript 6入门</a></li>
+</ol>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>CSS Essential</title>
       <link href="http://jiyeqian.bitbucket.org/2014/10/css-essential"/>
-      <pubDate>2014-10-25T15:37:41Z</pubDate>
+      <pubDate>2014-10-25T15:37:41+08:00</pubDate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/css-essential</guid>
       <content:encoded><![CDATA[<blockquote>
@@ -24,13 +39,17 @@
   <p>CSS主要作用是设定元素（通常称为盒子）的属性，并将设定这些元素在页面的位置关系。CSS解决的主要问题是：    </p>
 
   <ol>
-    <li>如何选择指定的元素？选择器   </li>
-    <li>如何设定元素的属性？盒模型（Box Model）   </li>
+    <li>如何选择指定的元素？选择器（Selector）   </li>
+    <li>如何设定元素的属性？盒子模型（Box Model）   </li>
     <li>如何设置元素间的位置关系？定位机制（Positioning Scheme）</li>
   </ol>
 </blockquote>
 
-<h2 id="section">基础技术</h2>
+<p>本文主要介绍CSS的基本用法，包括如何使用选择器，如何设定样式以及如何布局定位，这些涉及到选择器、盒子模型、普通流、可视化格式模型和块格式化环境等核心概念，理解这些核心概念是熟练运用CSS的基础。</p>
+
+<p>若要详细了解相关内容，可参考文中链接，以及<a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN</a>、<a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3</a>和<a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school</a>关于CSS的详细介绍。</p>
+
+<h2 id="section">基础知识</h2>
 
 <h3 id="section-1">基本语法</h3>
 
@@ -56,7 +75,7 @@
   <li><code>div p</code>：属性选择器</li>
   <li><code>#id</code>：id选择器</li>
   <li><code>first_line</code>：伪元素（pseudo-element）</li>
-  <li><code>background-colr</code>：属性（property）</li>
+  <li><code>background-color</code>：属性（property）</li>
   <li><code>red</code>：值（value）</li>
 </ul>
 
@@ -70,7 +89,7 @@
   <tbody>
     <tr>
       <td>*</td>
-      <td>通用元素选择器，匹配任何元素。</td>
+      <td>通用选择器，匹配任何元素。</td>
     </tr>
     <tr>
       <td>E</td>
@@ -87,7 +106,24 @@
   </tbody>
 </table>
 
-<h4 id="section-5">多元素的组合选择器</h4>
+<p><strong>id选择器和class选择器的区别：</strong></p>
+
+<ul>
+  <li>在CSS文件中，id加前缀<code>#</code>，class用<code>.</code>；</li>
+  <li>同一个页面id只可使用一次，class可多次引用：id是一个标签，用于区分不同的结构和内容，就象名字；class是一个样式，可套在任何结构和内容上，就象衣服，同一内容也可以套多个class的样式；</li>
+  <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
+</ul>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<h4 id="section-5">多选择器组合</h4>
 
 <table>
   <tbody>
@@ -110,17 +146,48 @@
   </tbody>
 </table>
 
-<h3 id="css">CSS的优先级别</h3>
+<p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
 
-<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>。
-如下元素   </p>
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
+
+<h3 id="section-6">优先级别</h3>
+
+<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：   </p>
 
 <div class="highlight"><pre><code class="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span>
 </code></pre></div>
 
-<p>作用在其上样式的优先级从低到高是<code>div &lt; .class &lt; div.class &lt; #id &lt; div#id &lt; #id.class &lt; div#id.class</code>。</p>
+<p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
 
-<h3 id="section-6">属性赋值</h3>
+<p><strong>继承与覆盖：</strong></p>
+
+<p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
+
+<h3 id="section-7">属性赋值</h3>
 
 <p>确定属性最终取值要<a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">经历3步</a>（<a href="http://www.w3.org/TR/CSS2/cascade.html#value-stages" title="Specified, computed, and actual values">CSS2经历4步</a>）：首先获取CSS样式中的指定值（specified value），然后如有必要则转换为绝对值或计算值（computed value），最后根据局部环境的约束再转换为实际值（actual value）。</p>
 
@@ -129,7 +196,7 @@
 <p>在特定的客户端环境，可能还需要将计算值转换为实际值，比如可能需要将小数的边界近似取整。</p>
 
 <blockquote>
-  <h4 id="section-7">常用的赋值规则</h4>
+  <h4 id="section-8">常用的赋值规则</h4>
   <hr />
   <ol>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" title="&lt;color&gt;">颜色</a>赋值的三种形式：关键字、RGB空间、HSL空间；</li>
@@ -147,7 +214,7 @@
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div>
-  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>）后实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
+  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
 </blockquote>
 
 <p>当一个属性可以有多个方向可设置值时，存在形如以下简写的赋值规则：</p>
@@ -179,9 +246,9 @@
   </tbody>
 </table>
 
-<h2 id="section-8">盒模型</h2>
+<h2 id="section-9">盒子模型</h2>
 
-<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒模型实现页面的渲染与显示。</p>
+<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒子模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒子模型实现页面的渲染与显示。</p>
 
 <p>按照HTML的元素是否新开一行可分为块（block-level）元素和内联（inline）元素，这一特性对设置元素的布局至关重要。</p>
 
@@ -195,12 +262,12 @@
   <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
 </blockquote>
 
-<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒模型有四类边：margin edge，border edge，padding edge，content edge。    </p>
+<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒子模型有四类边：margin edge，border edge，padding edge，content edge。    </p>
 
 <div class="image_line">
 <div class="image_card">
 <img src="../../../assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
-<div class="caption">盒模型的四类边</div>
+<div class="caption">盒子模型的四类边</div>
 </div>
 </div>
 
@@ -239,10 +306,10 @@
 
 </blockquote>
 
-<h2 id="section-9">可视化格式模型</h2>
+<h2 id="section-10">可视化格式模型</h2>
 
 <blockquote>
-  <h4 id="section-10">可视化格式模型解决的主要问题</h4>
+  <h4 id="section-11">可视化格式模型解决的主要问题</h4>
   <hr />
   <ol>
     <li>如何生成盒子？</li>
@@ -250,7 +317,7 @@
   </ol>
 </blockquote>
 
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒子模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
 
 <h3 id="box-generation">生成机制（Box Generation）</h3>
 
@@ -258,19 +325,19 @@
 
 <h3 id="positioning-scheme">定位机制（Positioning Scheme）</h3>
 
-<p>CSS的盒子有3种基本定位机制：常规流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是常规流。在常规流中，盒子一个接一个排列，floats算法可以将盒子从常规流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
+<p>CSS的盒子有3种基本定位机制：普通流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是普通流。在普通流中，盒子一个接一个排列，floats算法可以将盒子从普通流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
 
 <h4 id="normal-flow">Normal Flow</h4>
 
 <blockquote>
-  <h4 id="normal-flow-1">如何进入常规流（normal flow）</h4>
+  <h4 id="normal-flow-1">如何进入普通流（normal flow）</h4>
   <hr />
   <p>CCS将盒子的<code>position</code>属性设置为<code>static</code>或<code>relative</code>，并且将<code>float</code>属性设置为<code>none</code>。默认值<code>position: static</code>，<code>float: none</code>。</p>
 
-  <p>常规流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
+  <p>普通流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
 </blockquote>
 
-<p>在常规流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。    </p>
+<p>在普通流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。    </p>
 
 <div class="image_line">
 <div class="image_card">
@@ -298,7 +365,7 @@
   <p><code>float</code>的非<code>none</code>属性暗示了盒子是<code>block</code>类型，因此，非块类型盒子的<code>display</code>属性会因为设置了<code>float</code>属性而改变为块类型。</p>
 </blockquote>
 
-<p>当盒子采用floats算法定位时，盒子会从常规流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
+<p>当盒子采用floats算法定位时，盒子会从普通流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
 
 <div class="image_line">
 <div class="image_card">
@@ -311,7 +378,7 @@
 
 <p>一个盒子设置了浮动后，会影响它的兄弟元素，具体的影响方式较为复杂，这要视乎这些兄弟元素是块级元素还是内联元素，若是块级元素会无视这个浮动的块框，使自身尽可能与这个浮动元素处于同一行，导致被浮动元素覆盖，除非这些<code>div</code>设置了宽度，并且父元素的宽度不足以包含它们，这样兄弟元素才会被强制换行；若是内联元素，则会尽可能围绕浮动元素。</p>
 
-<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了常规流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
+<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了普通流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
 
 <div class="image_line">
 <div class="image_card">
@@ -349,7 +416,7 @@
 <p>但是，<code>clear</code>只是清除了浮动对兄弟元素的影响，而高度塌陷问题还没有解决，需要更高级的清除浮动——闭合浮动。为什么叫闭合浮动？因为浮动的元素脱离了普通流，对于它的父元素，它并没有闭合，这时候就需要闭合浮动了。</p>
 
 <blockquote>
-  <h4 id="section-11">闭合浮动的3种方法</h4>
+  <h4 id="section-12">闭合浮动的3种方法</h4>
   <hr />
   <p>（1）空<code>div</code>方法</p>
 
@@ -386,7 +453,7 @@
 
 <p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="../../../assets/images/../html/clearfloat.html">示例</a>）。</p>
 
-<h2 id="section-12">块格式化环境</h2>
+<h2 id="section-13">块格式化环境</h2>
 
 <blockquote>
   <h4 id="block-formatting-context">块格式化环境（block formatting context）</h4>
@@ -403,7 +470,7 @@
 <p>块格式化环境不存在嵌套包含关系，块格式化环境只包含该环境内的对象，不会再包含该环境中对象再创建的块格式化环境。（A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.）</p>
 
 <blockquote>
-  <h4 id="section-13">创建块格式化环境的条件（满足任意一条即可）</h4>
+  <h4 id="section-14">创建块格式化环境的条件（满足任意一条即可）</h4>
   <hr />
   <ul>
     <li>the root element or something that contains it；</li>
@@ -422,7 +489,7 @@
   <li>阻止元素被浮动元素覆盖。 </li>
 </ol>
 
-<h2 id="section-14">高级选择器</h2>
+<h2 id="section-15">高级选择器</h2>
 
 <h4 id="css-21-">CSS 2.1 属性选择器</h4>
 
@@ -532,7 +599,7 @@
 
 <p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
 
-<h2 id="section-15">使用技巧</h2>
+<h2 id="section-16">使用技巧</h2>
 
 <blockquote>
   <h4 id="important">!important规则</h4>
@@ -544,7 +611,7 @@
 </blockquote>
 
 <blockquote>
-  <h4 id="section-16">容器水平居中</h4>
+  <h4 id="section-17">容器水平居中</h4>
   <hr />
   <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
 
@@ -553,7 +620,7 @@
 </blockquote>
 
 <blockquote>
-  <h4 id="section-17">禁止自动换行</h4>
+  <h4 id="section-18">禁止自动换行</h4>
   <hr />
   <p>文字在一行中显示完成，不要自动换行。</p>
 
@@ -562,7 +629,7 @@
 </blockquote>
 
 <blockquote>
-  <h4 id="section-18">图片宽度自适应</h4>
+  <h4 id="section-19">图片宽度自适应</h4>
   <hr />
   <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
 
@@ -598,7 +665,7 @@
 </blockquote>
 
 <blockquote>
-  <h4 id="section-19">用图片充当列表标志</h4>
+  <h4 id="section-20">用图片充当列表标志</h4>
   <hr />
   <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
 
@@ -612,7 +679,7 @@
 </blockquote>
 
 <blockquote>
-  <h4 id="section-20">用图片替换文字</h4>
+  <h4 id="section-21">用图片替换文字</h4>
   <hr />
   <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
 
@@ -625,31 +692,48 @@
 </code></pre></div>
 </blockquote>
 
-<h2 id="less">预处理器：less</h2>
+<h2 id="section-22">预处理器</h2>
 
-<p>Less是一个CSS预编译器，意思指的是它可以扩展CSSS语言，添加功能如允许变量（variables），混合（mixins），函数（functions）和许多其他的技术，让你的CSS更具维护性，主题性，扩展性。</p>
+<p>CSS预处理器（css preprocessor）的基本思想是，用一种专门的编程语言，进行网页样式设计，然后再编译成CSS文件。常用的CSS预处理器有<a href="http://lesscss.org">Less</a>、<a href="http://sass-lang.com">Sass</a>等。</p>
 
-<p>Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
+<h3 id="less">Less</h3>
 
-<h2 id="section-21">参考资料</h2>
+<p><a href="http://lesscss.org">Less</a>使用变量（variables）、混合（mixins）、函数（functions）和许多其他的技术，让你的CSS更具维护性、主题性、扩展性。Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
+
+<p>具体用法可参考Bootstrap中文网的<a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">Less教程</a>。</p>
+
+<h3 id="sass--compass">Sass &amp; Compass</h3>
+
+<p><a href="http://sass-lang.com">Sass</a>使用变量（variables）、混合（mixins）、嵌套规则（nested rules）、内联导入（inline imports）等，让CSS更加优雅和强大。Sass让CSS更好的组织、体积更小、速度更快。</p>
+
+<p><a href="http://compass-style.org">Compass</a>是Sass的工具库（toolkit）。Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery、Ruby和Rails、python和Django的关系。</p>
+
+<p>具体使用可参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">Sass</a>和<a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">Compass</a>用法指南。</p>
+
+<h2 id="section-23">参考资料</h2>
 
 <ol>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Mozilla Developer Network: CSS</a></li>
-  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">CSS使用技巧</a>    </li>
-  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">CSS选择器笔记</a></li>
-  <li><a href="http://www.bootcss.com/p/lesscss/">LESS « 一种动态样式语言</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-box/">CSS basic box model</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-grid/">CSS Grid Layout Module Level 1</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-flexbox/">CSS Flexible Box Layout Module Level 1</a></li>
-  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">CSS 框模型概述</a></li>
-  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">详说 Block Formatting Contexts (块级格式化上下文)</a></li>
-  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">详说清除浮动</a></li>
-  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">Specified, computed, and actual values</a></li>
-  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">CSS Values and Units Module Level 3</a></li>
-  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">CSS Color Module Level 3</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN: CSS</a></li>
+  <li><a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3: Cascading Style Sheets home page</a></li>
+  <li><a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school: CSS 教程</a></li>
+  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">W3: Specified, computed, and actual values</a></li>
+  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">W3: CSS Values and Units Module Level 3</a></li>
+  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">W3: CSS Color Module Level 3</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-box/">W3: CSS basic box model</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-grid/">W3: CSS Grid Layout Module Level 1</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-flexbox/">W3: CSS Flexible Box Layout Module Level 1</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">阮一峰：CSS使用技巧</a>    </li>
+  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">阮一峰：CSS选择器笔记</a></li>
+  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">cuishengli：CSS 框模型概述</a></li>
+  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">leejersey：详说 Block Formatting Contexts (块级格式化上下文)</a></li>
+  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">Kayo：详说清除浮动</a></li>
+  <li><a href="http://www.catswhocode.com/blog/8-css-preprocessors-to-speed-up-development-time" title="8 CSS preprocessors to speed up development time">Jean: 8 CSS preprocessors to speed up development time</a></li>
+  <li><a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">LESS « 一种动态样式语言</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">阮一峰：SASS用法指南</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">阮一峰：Compass用法指南</a></li>
 </ol>
 
-<h2 id="section-22">脚注</h2>
+<h3 id="section-24">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:ccs_master">
@@ -666,15 +750,47 @@
       <pubDate>2014-10-21T19:09:00Z</pubDate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks</guid>
-      <content:encoded><![CDATA[<h2 id="section">应用背景</h2>
+      <content:encoded><![CDATA[<h2 id="section">简介</h2>
 
-<p>当特征数目巨大时，简单的Logistic回归无法满足需求。神经网络用于解决复杂的非线性问题 </p>
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
+<div class="caption">神经网络结构</div>
+</div>
+</div>
 
-<p>hidden layer 提取特征</p>
+<p>神经网络是神经元分层级联构成的网络，每个神经元对应一个计算模型。最左边和最右边的层分别称为输入（input）和输出（output）层，中间两层为隐藏层（hidden layer）。</p>
 
-<p>hidden layer：除了输入输出层之外的</p>
+<p>当特征数目巨大时，简单的Logistic回归无法满足需求。神经网络用于解决复杂的非线性问题，可以看成是Logistic回归的组合，上图中每个橙色的神经元（除输入层之外）都对应一个Logistic方程。</p>
 
-<h3 id="section-1">代价函数</h3>
+<p>对于分类问题，输入层输入原始数据，隐藏层可视为特征提取，输出层的每个神经元对应一个类别标签。输入数据所属的类别是输出层概率最大神经元对应的类别标签。</p>
+
+<p>神经网络通过前向传播计算给定输入对应的输出，通过反向传播估计权值矩阵。</p>
+
+<h2 id="section-1">前向传播</h2>
+
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
+<div class="caption">神经网络前向传播计算</div>
+</div>
+</div>
+
+<p>神经网络前向传播，从输入到输出，逐层计算。上图所示，假设权值矩阵$\Theta^{(i-1)}$已知，第$i$层可通过第$i-1$层和权值矩阵计算。</p>
+
+<p>\begin{equation}
+\mathbf a^{(i)} = g\left(\mathbf\Theta^{(i-1)}\mathbf a^{(i-1)}\right)
+\end{equation}</p>
+
+<p>$g$是Logistic函数，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
+
+<p>如果上图只看隐藏层和输出层，就相当于一个Logistic回归模型。</p>
+
+<h2 id="section-2">反向参数估计</h2>
+
+<p>神经网络通过反向传播估计权值矩阵$\Theta$。</p>
+
+<h3 id="section-3">代价函数</h3>
 
 <p>\begin{equation}
 \begin{aligned}
@@ -687,7 +803,7 @@ J(\Theta) = -\frac{1}{m} &amp; \sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \
   <p>$h_\Theta (x) \in \mathbb{R}^K$，$(h_\Theta (x))_i$是第$i$个输出；$s_l$表示第$l$层神经元的个数（不含bias unit）；共$m$个样本，$K$个输出，$L$层。</p>
 </blockquote>
 
-<h3 id="section-2">参数估计方法</h3>
+<h3 id="section-4">参数估计方法</h3>
 
 <p>\[
 \min_\Theta J(\Theta)
@@ -782,9 +898,9 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 <span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
 </code></pre></div>
 
-<h2 id="section-3">思考问题</h2>
+<h2 id="section-5">思考问题</h2>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="section-6">参考资料</h2>
 
 <p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </p>
 ]]></content:encoded>
@@ -982,7 +1098,7 @@ J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) -
 \[
 \begin{aligned}
 \theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\left(\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \frac{\lambda}{m}\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
 \end{aligned}
 \]
 }</p>
@@ -1025,7 +1141,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 \[
 \begin{aligned}
 \theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\left(\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \frac{\lambda}{m}\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
 \end{aligned}
 \]
 }</p>
@@ -1083,31 +1199,61 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification</guid>
       <content:encoded><![CDATA[<h2 id="section">问题描述</h2>
 
-<p>许多分类器主要是为了解决二分类问题，比如Logistic回归和SVM，用1和0两个类别标签表示属于或不属于某个类别（而属于另一个类别）。多分类问题是对两个以上类别标签的数据集分类。常用的方法有：</p>
+<p>许多分类器主要是为了解决二分类问题，对只有1和0两个类别标签对数据分类，比如Logistic回归和SVM。多分类问题是对两个以上类别标签的数据集分类。</p>
 
-<ul>
+<p>解决多分类问题的思路：</p>
+
+<ol>
   <li>多个二分类器的组合；</li>
   <li>直接采用多分类器。</li>
-</ul>
+</ol>
 
 <h2 id="one-vs-all">one-vs-all</h2>
 
-<p><img src="../../../assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" /></p>
+<p>针对每类训练一个它与其余所有数据的二分类器，若有$N(N &gt; 2)$个类别，就需要训练$N$个分类器。</p>
 
-<p>one-vs-all也叫one-vs-rest。</p>
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" />
+<div class="caption">one-vs-all也叫one-vs-rest</div>
+</div>
+</div>
 
-<p>可用one-vs-all策略组合Logistic回归解决多分类问题：</p>
+<p>Logistic回归解决多分类问题：</p>
 
 <ol>
   <li>针对每一类$i$训练一个Logistic分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题；</li>
-  <li>新输入$x$所属的类别满足$\max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
+  <li>$x$所属的类别$c$满足$h_\theta^{(c)}(x) = \max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
 </ol>
 
-<p>神经网络是扩展的 one-vs-all 方法。</p>
+<h3 id="section-1">存在的问题</h3>
 
-<h2 id="section-1">参考资料</h2>
+<p>one-vs-all可能导致数据不均衡，其中一类的数据很少，其余的数据很多。</p>
 
-<p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </p>
+<h2 id="section-2">神经网络</h2>
+
+<p>神经网络是扩展Logistic模型组合的one-vs-all方法。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" />
+<div class="caption">神经网络的one-vs-all策略</div>
+</div>
+</div>
+
+<p>注意其中的输出向量是0和1组成的向量，而非类别标签组成的向量。</p>
+
+<h2 id="section-3">思考问题</h2>
+
+<ol>
+  <li>神经网络能避免one-vs-all导致的数据不平衡问题吗？</li>
+</ol>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol>
+  <li><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </li>
+</ol>
 ]]></content:encoded>
     </item>
     
@@ -1178,7 +1324,7 @@ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\r
 <p>令</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
+\mbox{Cost}\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
 \end{equation}</p>
 
 <p>当$h_\theta(x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
@@ -1190,7 +1336,7 @@ Cost\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
 <p>Logistic回归采用</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = \left\{
+\mbox{Cost}\left(h_\theta(x), y\right) = \left\{
 \begin{aligned}
 &amp; -\log\left(h_\theta(x)\right) &amp; y=1 \\
 &amp; -\log\left(1-h_\theta(x)\right) &amp; y=0
@@ -1201,7 +1347,7 @@ Cost\left(h_\theta(x), y\right) = \left\{
 <p>上式等价于</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\left(1-h_\theta(x)\right)
+\mbox{Cost}\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\left(1-h_\theta(x)\right)
 \end{equation}</p>
 
 <p>因此，Logistic回归的代价函数为</p>
@@ -1209,7 +1355,7 @@ Cost\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\l
 <p>\begin{equation}
 \begin{aligned}
 J(\theta)<br />
-= &amp; \frac{1}{m}\sum_{i=1}^{m}Cost\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right) \\
+= &amp; \frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right) \\
 = &amp; -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right)
 \end{aligned}
 \label{eq:cost_function_logistic_regression}
@@ -1429,11 +1575,11 @@ h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x + \theta_2x^2 ＋ \theta_3x^3 
     </item>
     
     <item>
-      <title>Introduction to DSP Development</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development"/>
+      <title>DSP Essential</title>
+      <link href="http://jiyeqian.bitbucket.org/2014/03/dsp-essential"/>
       <pubDate>2014-03-28T00:00:00+08:00</pubDate>
       <author>Jiye Qian</author>
-      <guid>http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development</guid>
+      <guid>http://jiyeqian.bitbucket.org/2014/03/dsp-essential</guid>
       <content:encoded><![CDATA[<h2 id="section">基本概念</h2>
 
 <p>DaVinci: The Texas Instruments DaVinci is a system on a chip family that combines a DSP core based on the TMS320 C6000 VLIW DSP family with an ARM architecture CPU core.</p>
@@ -2284,191 +2430,6 @@ F1 score = (2 * precision * recall) / (precision + recall)</p>
 <!--[Andrew	 Ng 的机器学习课程](https://class.coursera.org/ml-004/class/index) -->
 <p><a href="http://cs229.stanford.edu/materials.html">CS229 Machine Learning Course Materials</a></p>
 
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>機器學習基礎</title>
-      <link href="http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning"/>
-      <pubDate>2013-05-18T00:00:00+08:00</pubDate>
-      <author>Jiye Qian</author>
-      <guid>http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning</guid>
-      <content:encoded><![CDATA[<p>本文的參考文獻主要是<sup id="fnref:YuCourse"><a href="#fn:YuCourse" class="footnote">1</a></sup></p>
-
-<h2 id="section">內容提綱</h2>
-
-<p><a href="#paradigms">機器學習的類型</a>  <br />
-<a href="#statical_linear_regression_model">統計線性迴歸模型</a></p>
-
-<p><span id="paradigms"></span></p>
-
-<h3 id="yucourse01">機器學習的類型<sup id="fnref:YuCourse01"><a href="#fn:YuCourse01" class="footnote">2</a></sup></h3>
-
-<ul>
-  <li>監督學習（Supervised learning）: 已知$\{x_i, y_i\}$，學習$y=f(x; \theta)$。
-    <ol>
-      <li>分類（Classification）: $y$是類別號, 例如：主題；</li>
-      <li>迴歸（Regression）: $y$是連續變量，例如：溫度、收入；</li>
-      <li>排序（Ranking）: $y$是順序編號；</li>
-      <li>結構預測（Structured prediction）: 例如：對語句中的詞性標註。</li>
-    </ol>
-  </li>
-  <li>非監督學習（Unsupervised learning）: 已知$\{x_i\}$，學習$y=f(x; \theta)$。
-    <ol>
-      <li>密度估計（Density estimation）: $y$是密度函數$y=p(x; \theta)$；</li>
-      <li>異常檢測（Abnormal detection）: $y$是異常；</li>
-      <li>聚類（Data Clustering）</li>
-      <li>維數約簡（Dimensionality Reduction）</li>
-    </ol>
-  </li>
-  <li>強化學習（Reinforcement Learning）<sup id="fnref:Rai"><a href="#fn:Rai" class="footnote">3</a></sup>  <sup id="fnref:YaserCourse01"><a href="#fn:YaserCourse01" class="footnote">4</a></sup>  <sup id="fnref:DudaBook"><a href="#fn:DudaBook" class="footnote">5</a></sup>   <sup id="fnref:AndrewCourse2008_16"><a href="#fn:AndrewCourse2008_16" class="footnote">6</a></sup>： 外部環境對輸出只給出評價信息而非正確答案，學習機制通過強化受獎勵的動作來改善自身的性能。
-    <ol>
-      <li>機器人控制</li>
-      <li>自主導航</li>
-      <li>遊戲   	</li>
-    </ol>
-  </li>
-  <li>半監督學習（Semi-supervised Learning）：少量已標註的數據$\{x_i, y_i\}和大量未標註的數據$\{x_i\}$…</li>
-  <li>主動學習（Active Learning）：主動選擇訓練樣本</li>
-  <li>Transfer Learning</li>
-</ul>
-
-<!--more-->
-
-<p><span id="statical_linear_regression_model"></span>  </p>
-
-<h3 id="statical-linear-regression-modelyucourse02">統計線性迴歸模型（Statical Linear Regression Model）<sup id="fnref:YuCourse02"><a href="#fn:YuCourse02" class="footnote">7</a></sup></h3>
-
-<p>\begin{equation}
-  Y = \beta_0 + \beta_1 X + \epsilon
-\end{equation}
-$\beta_0$為截斷或偏移（intercept or bias），$\beta_1$為斜率（slope），$\epsilon$為隨機噪聲。</p>
-
-<ul>
-  <li>如何從數據估計線性模型的參數$\beta_0$和$\beta_1$？</li>
-  <li>如何評價該線性模型是否足夠好？</li>
-  <li>如何評價參數$\beta_0$和$\beta_1$的重要性？</li>
-</ul>
-
-<p>若訓練數據為$(X_i,Y_i) (i = 1,…,n)$，參數$\beta_0$和$\beta_1$的最小二乘迴歸估計為</p>
-
-<p>\begin{equation}
-  [\hat{\beta_0}, \hat{\beta_1}] = \arg\min_{\beta_0, \beta_1}\sum_{i=1}^{n} \left(Y_i - (\beta_0 + \beta_1 X_i)\right)
-\end{equation}</p>
-
-<p>統計模型可表示為</p>
-
-<p>\begin{equation}
-  Y_i = \beta_0 + \beta_1 X_i + \epsilon_i ~~~(i=1,\ldots,n)
-\end{equation}</p>
-
-<p>其中$\epsilon_i$為0均值噪聲，理想的情況是$\epsilon_i$服從高斯分佈$\epsilon_i\thicksim N(0,\sigma^2)$。</p>
-
-<blockquote>
-  <p>最小二乘迴歸對異常值敏感。</p>
-</blockquote>
-
-<p>殘差$r_i = Y_i - (\hat{\beta_0} + \hat{\beta_1} X_i)$應當為隨機噪聲且接近$\epsilon_i$，否著可以通過增加其它特徵，提升模型性能。</p>
-
-<p>如果殘差非隨機，可以增加非線性特徵項，提升模型性能。設非線性基函數為$[f_1(X_i),\ldots,f_p(X_i)]$，可將基礎的線性模型擴展為</p>
-
-<p>\begin{equation}
-  Y_i = \beta_0 + \sum_{j=1}^{p} \beta_j f_j (X_i) + \epsilon_i ~~~(i=1,\ldots,n)
-\end{equation}</p>
-
-<p>例如，線性模型可擴展為如下兩種形式</p>
-
-<p>\[
-  Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \epsilon_i
-\]</p>
-
-<p>以及</p>
-
-<p>\[
-  Y_i = \beta_0 + \beta_1 X_i + \beta_2 \max (0, X_i - 68) + \beta_3 \max (0, X_i - 72) + \epsilon_i
-\]</p>
-
-<p>由此可見，利用非線性基函數，線性模型可以描述非線性關係。</p>
-
-<p>考慮高維空間$X_i \in R^p$的線性迴歸</p>
-
-<p>\begin{equation}
-  Y_i = \beta^T X_i + \epsilon_i ~~~ \epsilon_i \thicksim N(0, \sigma^2)
-\end{equation}</p>
-
-<p>其中$\beta = [\beta_1,\ldots,\beta_p] \in R^p$，參數$\beta$的最小二乘估計為</p>
-
-<p>\begin{equation}
-	\hat{\beta} = (X^T X)^{-1} X^T Y
-\end{equation}</p>
-
-<p>$X$為$n \times p$矩陣，每行（row）是$X_i$的一個數據點，$Y$是$n \times 1$的向量。殘差$r_i \approx \epsilon_i $</p>
-
-<p>\begin{equation}
-	r_i = Y_i - {\hat{\beta}}^T X_i 
-\end{equation}</p>
-
-<ul>
-  <li>若噪聲隨機，如何估計$\sigma^2$?</li>
-  <li>噪聲是高斯分布的嗎？</li>
-  <li>噪聲的方差相等麽？</li>
-  <li>當方差不等時，如何處理？</li>
-</ul>
-
-<p>假設噪聲的方差相等，其估計值為</p>
-
-<p>\begin{equation}
-	{\hat{\sigma}}^2 = \frac{1}{n-p} \sum_{i=1}^n r_i^2
-\end{equation}</p>
-
-<ul>
-  <li>分母為$n-p$而非$n$是為了滿足無偏估計</li>
-  <li>由於$p$個參數，$residue &lt; noise$</li>
-</ul>
-
-<p>如果方差不等，可對其建模</p>
-
-<p>\[
-r_i^2 \approx v_0 + v_1 (X_i - 45) + v_2 (X_i - 45)^2
-\]</p>
-
-<p>最優的無偏線性估計是加權最小二乘</p>
-
-<p>\begin{equation}
-	\hat{\beta} = \arg \min_{\beta} \sum_{i=1}^n w_i (Y_i - \beta^T X_i)^2 
-\end{equation}</p>
-
-<p>其中，$w_i = \frac{1}{\sigma_i^2}$。</p>
-
-<h3 id="section-1">模型參數重要性評估</h3>
-
-<h2 id="section-2">參考資料</h2>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:YuCourse">
-      <p><a href="http://wenku.baidu.com/course/view/49e8b8f67c1cfad6195fa705">Machine Learning（余凯&amp;张潼）</a>  <a href="#fnref:YuCourse" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:YuCourse01">
-      <p><a href="http://wenku.baidu.com/course/study/53b9fd0a79563c1ec5da7107#&amp;93e38a6227d3240c8447ef9b">Machine Learning（余凯&amp;张潼）：Introduction to ML and review of linear algebra, probability, statistics (kai) P18</a> <a href="#fnref:YuCourse01" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:Rai">
-      <p><a href="http://www.cs.utah.edu/~piyush/teaching/29-11-slides.pdf">Reinforcement Learning (1): Discrete MDP, Value Iteration, Policy Iteration</a> <a href="#fnref:Rai" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:YaserCourse01">
-      <p><a href="http://v.163.com/movie/2012/2/3/C/M8FH262HJ_M8FTVDQ3C.html">Learning From Data（Yaser）：The Learning Problem</a>      <a href="#fnref:YaserCourse01" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:DudaBook">
-      <p>模式分類（P13） <a href="#fnref:DudaBook" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:AndrewCourse2008_16">
-      <p><a href="http://v.163.com/movie/2008/1/2/N/M6SGF6VB4_M6SGKSC2N.html">Machine Learning（Andrew Ng，2008）：16</a> <a href="#fnref:AndrewCourse2008_16" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:YuCourse02">
-      <p><a href="http://wenku.baidu.com/course/study/53b9fd0a79563c1ec5da7107#&amp;ea8add07a6c30c2259019e9b">Machine Learning（余凯&amp;张潼）：linear model (tong) </a>       <a href="#fnref:YuCourse02" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
 ]]></content:encoded>
     </item>
     

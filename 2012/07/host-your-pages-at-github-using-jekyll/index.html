@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>基于jekyll的github建站指南</title>
+    <title>基于Jekyll的GitHub建站指南</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>基于jekyll的github建站指南</h1>
+        <h1>基于Jekyll的GitHub建站指南</h1>
         </header>
         <nav id="real_nav">
         <span><a title="home" class="" href="/">home</a></span>
@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2012-07-01">2012-07-01</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,15 +90,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
-  <a href="/tags/#github" title="github">github</a>&nbsp;
+  <a href="/tags/#GitHub" title="GitHub">GitHub</a>&nbsp;
   
-  <a href="/tags/#git" title="git">git</a>&nbsp;
+  <a href="/tags/#Git" title="Git">Git</a>&nbsp;
   
-  <a href="/tags/#jekyll" title="jekyll">jekyll</a>&nbsp;
+  <a href="/tags/#Jekyll" title="Jekyll">Jekyll</a>&nbsp;
   
   <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
   
@@ -264,15 +264,15 @@ $$
 <section align="right">
 <br/>
 <span>
-	<a  href="/2012/06/lab-notice" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2012/07/introduction-to-aquamacs" class="pageNav"  >下一篇</a>
+  <a  href="/2012/06/lab-notice" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2012/07/introduction-to-aquamacs" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2012/07/host-your-pages-at-github-using-jekyll" data-url="http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll" data-title="基于jekyll的github建站指南">
+	<div class="ds-thread" data-thread-key="/2012/07/host-your-pages-at-github-using-jekyll" data-url="http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll" data-title="基于Jekyll的GitHub建站指南">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -298,15 +298,20 @@ $$
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/06/lab-notice';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2012/06/lab-notice';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/07/introduction-to-aquamacs';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2012/07/introduction-to-aquamacs'; -->
+        url = '/2012/07/introduction-to-aquamacs';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2012/07/host-your-pages-at-github-using-jekyll/#timeSpan';
         }
         if (url) {
             window.location = url;

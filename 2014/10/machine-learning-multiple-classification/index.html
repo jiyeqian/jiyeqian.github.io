@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-20">2014-10-20</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -104,39 +104,69 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">问题描述</h2>
 
-<p>许多分类器主要是为了解决二分类问题，比如Logistic回归和SVM，用1和0两个类别标签表示属于或不属于某个类别（而属于另一个类别）。多分类问题是对两个以上类别标签的数据集分类。常用的方法有：</p>
+<p>许多分类器主要是为了解决二分类问题，对只有1和0两个类别标签对数据分类，比如Logistic回归和SVM。多分类问题是对两个以上类别标签的数据集分类。</p>
 
-<ul>
+<p>解决多分类问题的思路：</p>
+
+<ol>
   <li>多个二分类器的组合；</li>
   <li>直接采用多分类器。</li>
-</ul>
+</ol>
 
 <h2 id="one-vs-all">one-vs-all</h2>
 
-<p><img src="../../../assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" /></p>
+<p>针对每类训练一个它与其余所有数据的二分类器，若有$N(N &gt; 2)$个类别，就需要训练$N$个分类器。</p>
 
-<p>one-vs-all也叫one-vs-rest。</p>
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" />
+<div class="caption">one-vs-all也叫one-vs-rest</div>
+</div>
+</div>
 
-<p>可用one-vs-all策略组合Logistic回归解决多分类问题：</p>
+<p>Logistic回归解决多分类问题：</p>
 
 <ol>
   <li>针对每一类$i$训练一个Logistic分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题；</li>
-  <li>新输入$x$所属的类别满足$\max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
+  <li>$x$所属的类别$c$满足$h_\theta^{(c)}(x) = \max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
 </ol>
 
-<p>神经网络是扩展的 one-vs-all 方法。</p>
+<h3 id="section-1">存在的问题</h3>
 
-<h2 id="section-1">参考资料</h2>
+<p>one-vs-all可能导致数据不均衡，其中一类的数据很少，其余的数据很多。</p>
 
-<p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </p>
+<h2 id="section-2">神经网络</h2>
+
+<p>神经网络是扩展Logistic模型组合的one-vs-all方法。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" />
+<div class="caption">神经网络的one-vs-all策略</div>
+</div>
+</div>
+
+<p>注意其中的输出向量是0和1组成的向量，而非类别标签组成的向量。</p>
+
+<h2 id="section-3">思考问题</h2>
+
+<ol>
+  <li>神经网络能避免one-vs-all导致的数据不平衡问题吗？</li>
+</ol>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol>
+  <li><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </li>
+</ol>
 
 </section>
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/10/machine-learning-logistic-regression" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/10/machine-learning-regularization" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/machine-learning-logistic-regression" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/machine-learning-regularization" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -168,15 +198,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/10/machine-learning-logistic-regression';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization'; -->
+        url = '/2014/10/machine-learning-regularization';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/machine-learning-multiple-classification/#timeSpan';
         }
         if (url) {
             window.location = url;

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>python速查手册</title>
+    <title>Python Essential</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>python速查手册</h1>
+        <h1>Python Essential</h1>
         </header>
         <nav id="real_nav">
         <span><a title="home" class="" href="/">home</a></span>
@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2012-07-11">2012-07-11</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,13 +90,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
   <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
   
-  <a href="/tags/#python" title="python">python</a>&nbsp;
+  <a href="/tags/#Python" title="Python">Python</a>&nbsp;
   
   <a href="/tags/#工具" title="工具">工具</a>&nbsp;
   
@@ -431,15 +431,15 @@ else:
 <section align="right">
 <br/>
 <span>
-	<a  href="/2012/07/introduction-to-aquamacs" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2013/05/introduction-to-machine-learning" class="pageNav"  >下一篇</a>
+  <a  href="/2012/07/introduction-to-aquamacs" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2013/05/introduction-to-machine-learning" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2012/07/introduction-to-python" data-url="http://jiyeqian.bitbucket.org/2012/07/introduction-to-python" data-title="python速查手册">
+	<div class="ds-thread" data-thread-key="/2012/07/python-essential" data-url="http://jiyeqian.bitbucket.org/2012/07/python-essential" data-title="Python Essential">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -465,15 +465,20 @@ else:
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2012/07/introduction-to-aquamacs';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2012/07/introduction-to-aquamacs';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning'; -->
+        url = '/2013/05/introduction-to-machine-learning';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2012/07/python-essential/#timeSpan';
         }
         if (url) {
             window.location = url;

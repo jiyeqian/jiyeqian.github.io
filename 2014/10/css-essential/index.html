@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-25">2014-10-25</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -112,13 +112,17 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p>CSS主要作用是设定元素（通常称为盒子）的属性，并将设定这些元素在页面的位置关系。CSS解决的主要问题是：    </p>
 
   <ol>
-    <li>如何选择指定的元素？选择器   </li>
-    <li>如何设定元素的属性？盒模型（Box Model）   </li>
+    <li>如何选择指定的元素？选择器（Selector）   </li>
+    <li>如何设定元素的属性？盒子模型（Box Model）   </li>
     <li>如何设置元素间的位置关系？定位机制（Positioning Scheme）</li>
   </ol>
 </blockquote>
 
-<h2 id="section">基础技术</h2>
+<p>本文主要介绍CSS的基本用法，包括如何使用选择器，如何设定样式以及如何布局定位，这些涉及到选择器、盒子模型、普通流、可视化格式模型和块格式化环境等核心概念，理解这些核心概念是熟练运用CSS的基础。</p>
+
+<p>若要详细了解相关内容，可参考文中链接，以及<a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN</a>、<a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3</a>和<a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school</a>关于CSS的详细介绍。</p>
+
+<h2 id="section">基础知识</h2>
 
 <h3 id="section-1">基本语法</h3>
 
@@ -144,7 +148,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li><code>div p</code>：属性选择器</li>
   <li><code>#id</code>：id选择器</li>
   <li><code>first_line</code>：伪元素（pseudo-element）</li>
-  <li><code>background-colr</code>：属性（property）</li>
+  <li><code>background-color</code>：属性（property）</li>
   <li><code>red</code>：值（value）</li>
 </ul>
 
@@ -158,7 +162,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <tbody>
     <tr>
       <td>*</td>
-      <td>通用元素选择器，匹配任何元素。</td>
+      <td>通用选择器，匹配任何元素。</td>
     </tr>
     <tr>
       <td>E</td>
@@ -175,7 +179,24 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </tbody>
 </table>
 
-<h4 id="section-5">多元素的组合选择器</h4>
+<p><strong>id选择器和class选择器的区别：</strong></p>
+
+<ul>
+  <li>在CSS文件中，id加前缀<code>#</code>，class用<code>.</code>；</li>
+  <li>同一个页面id只可使用一次，class可多次引用：id是一个标签，用于区分不同的结构和内容，就象名字；class是一个样式，可套在任何结构和内容上，就象衣服，同一内容也可以套多个class的样式；</li>
+  <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
+</ul>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<h4 id="section-5">多选择器组合</h4>
 
 <table>
   <tbody>
@@ -198,17 +219,48 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </tbody>
 </table>
 
-<h3 id="css">CSS的优先级别</h3>
+<p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
 
-<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>。
-如下元素   </p>
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
+
+<h3 id="section-6">优先级别</h3>
+
+<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：   </p>
 
 <div class="highlight"><pre><code class="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span>
 </code></pre></div>
 
-<p>作用在其上样式的优先级从低到高是<code>div &lt; .class &lt; div.class &lt; #id &lt; div#id &lt; #id.class &lt; div#id.class</code>。</p>
+<p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
 
-<h3 id="section-6">属性赋值</h3>
+<p><strong>继承与覆盖：</strong></p>
+
+<p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div>
+
+<p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
+
+<h3 id="section-7">属性赋值</h3>
 
 <p>确定属性最终取值要<a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">经历3步</a>（<a href="http://www.w3.org/TR/CSS2/cascade.html#value-stages" title="Specified, computed, and actual values">CSS2经历4步</a>）：首先获取CSS样式中的指定值（specified value），然后如有必要则转换为绝对值或计算值（computed value），最后根据局部环境的约束再转换为实际值（actual value）。</p>
 
@@ -217,7 +269,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>在特定的客户端环境，可能还需要将计算值转换为实际值，比如可能需要将小数的边界近似取整。</p>
 
 <blockquote>
-  <h4 id="section-7">常用的赋值规则</h4>
+  <h4 id="section-8">常用的赋值规则</h4>
   <hr />
   <ol>
     <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" title="&lt;color&gt;">颜色</a>赋值的三种形式：关键字、RGB空间、HSL空间；</li>
@@ -235,7 +287,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div>
-  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>）后实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
+  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
 </blockquote>
 
 <p>当一个属性可以有多个方向可设置值时，存在形如以下简写的赋值规则：</p>
@@ -267,9 +319,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </tbody>
 </table>
 
-<h2 id="section-8">盒模型</h2>
+<h2 id="section-9">盒子模型</h2>
 
-<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒模型实现页面的渲染与显示。</p>
+<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒子模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒子模型实现页面的渲染与显示。</p>
 
 <p>按照HTML的元素是否新开一行可分为块（block-level）元素和内联（inline）元素，这一特性对设置元素的布局至关重要。</p>
 
@@ -283,12 +335,12 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
 </blockquote>
 
-<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒模型有四类边：margin edge，border edge，padding edge，content edge。    </p>
+<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒子模型有四类边：margin edge，border edge，padding edge，content edge。    </p>
 
 <div class="image_line">
 <div class="image_card">
 <img src="../../../assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
-<div class="caption">盒模型的四类边</div>
+<div class="caption">盒子模型的四类边</div>
 </div>
 </div>
 
@@ -327,10 +379,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </blockquote>
 
-<h2 id="section-9">可视化格式模型</h2>
+<h2 id="section-10">可视化格式模型</h2>
 
 <blockquote>
-  <h4 id="section-10">可视化格式模型解决的主要问题</h4>
+  <h4 id="section-11">可视化格式模型解决的主要问题</h4>
   <hr />
   <ol>
     <li>如何生成盒子？</li>
@@ -338,7 +390,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </ol>
 </blockquote>
 
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒子模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
 
 <h3 id="box-generation">生成机制（Box Generation）</h3>
 
@@ -346,19 +398,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="positioning-scheme">定位机制（Positioning Scheme）</h3>
 
-<p>CSS的盒子有3种基本定位机制：常规流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是常规流。在常规流中，盒子一个接一个排列，floats算法可以将盒子从常规流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
+<p>CSS的盒子有3种基本定位机制：普通流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是普通流。在普通流中，盒子一个接一个排列，floats算法可以将盒子从普通流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
 
 <h4 id="normal-flow">Normal Flow</h4>
 
 <blockquote>
-  <h4 id="normal-flow-1">如何进入常规流（normal flow）</h4>
+  <h4 id="normal-flow-1">如何进入普通流（normal flow）</h4>
   <hr />
   <p>CCS将盒子的<code>position</code>属性设置为<code>static</code>或<code>relative</code>，并且将<code>float</code>属性设置为<code>none</code>。默认值<code>position: static</code>，<code>float: none</code>。</p>
 
-  <p>常规流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
+  <p>普通流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
 </blockquote>
 
-<p>在常规流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。    </p>
+<p>在普通流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。    </p>
 
 <div class="image_line">
 <div class="image_card">
@@ -386,7 +438,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p><code>float</code>的非<code>none</code>属性暗示了盒子是<code>block</code>类型，因此，非块类型盒子的<code>display</code>属性会因为设置了<code>float</code>属性而改变为块类型。</p>
 </blockquote>
 
-<p>当盒子采用floats算法定位时，盒子会从常规流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
+<p>当盒子采用floats算法定位时，盒子会从普通流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
 
 <div class="image_line">
 <div class="image_card">
@@ -399,7 +451,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>一个盒子设置了浮动后，会影响它的兄弟元素，具体的影响方式较为复杂，这要视乎这些兄弟元素是块级元素还是内联元素，若是块级元素会无视这个浮动的块框，使自身尽可能与这个浮动元素处于同一行，导致被浮动元素覆盖，除非这些<code>div</code>设置了宽度，并且父元素的宽度不足以包含它们，这样兄弟元素才会被强制换行；若是内联元素，则会尽可能围绕浮动元素。</p>
 
-<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了常规流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
+<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了普通流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
 
 <div class="image_line">
 <div class="image_card">
@@ -437,7 +489,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>但是，<code>clear</code>只是清除了浮动对兄弟元素的影响，而高度塌陷问题还没有解决，需要更高级的清除浮动——闭合浮动。为什么叫闭合浮动？因为浮动的元素脱离了普通流，对于它的父元素，它并没有闭合，这时候就需要闭合浮动了。</p>
 
 <blockquote>
-  <h4 id="section-11">闭合浮动的3种方法</h4>
+  <h4 id="section-12">闭合浮动的3种方法</h4>
   <hr />
   <p>（1）空<code>div</code>方法</p>
 
@@ -474,7 +526,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="../../../assets/images/../html/clearfloat.html">示例</a>）。</p>
 
-<h2 id="section-12">块格式化环境</h2>
+<h2 id="section-13">块格式化环境</h2>
 
 <blockquote>
   <h4 id="block-formatting-context">块格式化环境（block formatting context）</h4>
@@ -491,7 +543,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>块格式化环境不存在嵌套包含关系，块格式化环境只包含该环境内的对象，不会再包含该环境中对象再创建的块格式化环境。（A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.）</p>
 
 <blockquote>
-  <h4 id="section-13">创建块格式化环境的条件（满足任意一条即可）</h4>
+  <h4 id="section-14">创建块格式化环境的条件（满足任意一条即可）</h4>
   <hr />
   <ul>
     <li>the root element or something that contains it；</li>
@@ -510,7 +562,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>阻止元素被浮动元素覆盖。 </li>
 </ol>
 
-<h2 id="section-14">高级选择器</h2>
+<h2 id="section-15">高级选择器</h2>
 
 <h4 id="css-21-">CSS 2.1 属性选择器</h4>
 
@@ -620,7 +672,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
 
-<h2 id="section-15">使用技巧</h2>
+<h2 id="section-16">使用技巧</h2>
 
 <blockquote>
   <h4 id="important">!important规则</h4>
@@ -632,7 +684,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </blockquote>
 
 <blockquote>
-  <h4 id="section-16">容器水平居中</h4>
+  <h4 id="section-17">容器水平居中</h4>
   <hr />
   <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
 
@@ -641,7 +693,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </blockquote>
 
 <blockquote>
-  <h4 id="section-17">禁止自动换行</h4>
+  <h4 id="section-18">禁止自动换行</h4>
   <hr />
   <p>文字在一行中显示完成，不要自动换行。</p>
 
@@ -650,7 +702,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </blockquote>
 
 <blockquote>
-  <h4 id="section-18">图片宽度自适应</h4>
+  <h4 id="section-19">图片宽度自适应</h4>
   <hr />
   <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
 
@@ -686,7 +738,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </blockquote>
 
 <blockquote>
-  <h4 id="section-19">用图片充当列表标志</h4>
+  <h4 id="section-20">用图片充当列表标志</h4>
   <hr />
   <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
 
@@ -700,7 +752,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </blockquote>
 
 <blockquote>
-  <h4 id="section-20">用图片替换文字</h4>
+  <h4 id="section-21">用图片替换文字</h4>
   <hr />
   <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
 
@@ -713,31 +765,48 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </code></pre></div>
 </blockquote>
 
-<h2 id="less">预处理器：less</h2>
+<h2 id="section-22">预处理器</h2>
 
-<p>Less是一个CSS预编译器，意思指的是它可以扩展CSSS语言，添加功能如允许变量（variables），混合（mixins），函数（functions）和许多其他的技术，让你的CSS更具维护性，主题性，扩展性。</p>
+<p>CSS预处理器（css preprocessor）的基本思想是，用一种专门的编程语言，进行网页样式设计，然后再编译成CSS文件。常用的CSS预处理器有<a href="http://lesscss.org">Less</a>、<a href="http://sass-lang.com">Sass</a>等。</p>
 
-<p>Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
+<h3 id="less">Less</h3>
 
-<h2 id="section-21">参考资料</h2>
+<p><a href="http://lesscss.org">Less</a>使用变量（variables）、混合（mixins）、函数（functions）和许多其他的技术，让你的CSS更具维护性、主题性、扩展性。Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
+
+<p>具体用法可参考Bootstrap中文网的<a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">Less教程</a>。</p>
+
+<h3 id="sass--compass">Sass &amp; Compass</h3>
+
+<p><a href="http://sass-lang.com">Sass</a>使用变量（variables）、混合（mixins）、嵌套规则（nested rules）、内联导入（inline imports）等，让CSS更加优雅和强大。Sass让CSS更好的组织、体积更小、速度更快。</p>
+
+<p><a href="http://compass-style.org">Compass</a>是Sass的工具库（toolkit）。Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery、Ruby和Rails、python和Django的关系。</p>
+
+<p>具体使用可参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">Sass</a>和<a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">Compass</a>用法指南。</p>
+
+<h2 id="section-23">参考资料</h2>
 
 <ol>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Mozilla Developer Network: CSS</a></li>
-  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">CSS使用技巧</a>    </li>
-  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">CSS选择器笔记</a></li>
-  <li><a href="http://www.bootcss.com/p/lesscss/">LESS « 一种动态样式语言</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-box/">CSS basic box model</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-grid/">CSS Grid Layout Module Level 1</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-flexbox/">CSS Flexible Box Layout Module Level 1</a></li>
-  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">CSS 框模型概述</a></li>
-  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">详说 Block Formatting Contexts (块级格式化上下文)</a></li>
-  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">详说清除浮动</a></li>
-  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">Specified, computed, and actual values</a></li>
-  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">CSS Values and Units Module Level 3</a></li>
-  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">CSS Color Module Level 3</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN: CSS</a></li>
+  <li><a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3: Cascading Style Sheets home page</a></li>
+  <li><a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school: CSS 教程</a></li>
+  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">W3: Specified, computed, and actual values</a></li>
+  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">W3: CSS Values and Units Module Level 3</a></li>
+  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">W3: CSS Color Module Level 3</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-box/">W3: CSS basic box model</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-grid/">W3: CSS Grid Layout Module Level 1</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-flexbox/">W3: CSS Flexible Box Layout Module Level 1</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">阮一峰：CSS使用技巧</a>    </li>
+  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">阮一峰：CSS选择器笔记</a></li>
+  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">cuishengli：CSS 框模型概述</a></li>
+  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">leejersey：详说 Block Formatting Contexts (块级格式化上下文)</a></li>
+  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">Kayo：详说清除浮动</a></li>
+  <li><a href="http://www.catswhocode.com/blog/8-css-preprocessors-to-speed-up-development-time" title="8 CSS preprocessors to speed up development time">Jean: 8 CSS preprocessors to speed up development time</a></li>
+  <li><a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">LESS « 一种动态样式语言</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">阮一峰：SASS用法指南</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">阮一峰：Compass用法指南</a></li>
 </ol>
 
-<h2 id="section-22">脚注</h2>
+<h3 id="section-24">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:ccs_master">
@@ -750,9 +819,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/11/javascript-essential" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -784,13 +853,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/10/machine-learning-neural-networks';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
+        
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/11/javascript-essential'; -->
+        url = '/2014/11/javascript-essential';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/css-essential/#timeSpan';
         }
         if (url) {
             window.location = url;

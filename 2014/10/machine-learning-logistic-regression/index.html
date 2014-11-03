@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-19">2014-10-19</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -163,7 +163,7 @@ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\r
 <p>令</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
+\mbox{Cost}\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
 \end{equation}</p>
 
 <p>当$h_\theta(x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
@@ -175,7 +175,7 @@ Cost\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
 <p>Logistic回归采用</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = \left\{
+\mbox{Cost}\left(h_\theta(x), y\right) = \left\{
 \begin{aligned}
 &amp; -\log\left(h_\theta(x)\right) &amp; y=1 \\
 &amp; -\log\left(1-h_\theta(x)\right) &amp; y=0
@@ -186,7 +186,7 @@ Cost\left(h_\theta(x), y\right) = \left\{
 <p>上式等价于</p>
 
 <p>\begin{equation}
-Cost\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\left(1-h_\theta(x)\right)
+\mbox{Cost}\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\left(1-h_\theta(x)\right)
 \end{equation}</p>
 
 <p>因此，Logistic回归的代价函数为</p>
@@ -194,7 +194,7 @@ Cost\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\l
 <p>\begin{equation}
 \begin{aligned}
 J(\theta)<br />
-= &amp; \frac{1}{m}\sum_{i=1}^{m}Cost\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right) \\
+= &amp; \frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right) \\
 = &amp; -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right)
 \end{aligned}
 \label{eq:cost_function_logistic_regression}
@@ -265,9 +265,9 @@ J(\theta)<br />
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/10/machine-learning-linear-regression" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/10/machine-learning-multiple-classification" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/machine-learning-linear-regression" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/machine-learning-multiple-classification" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -299,15 +299,20 @@ J(\theta)<br />
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/10/machine-learning-linear-regression';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification'; -->
+        url = '/2014/10/machine-learning-multiple-classification';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/machine-learning-logistic-regression/#timeSpan';
         }
         if (url) {
             window.location = url;

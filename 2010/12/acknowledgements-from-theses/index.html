@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2010-12-27">2010-12-27</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,11 +90,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
-  <a href="/tags/#励志故事" title="励志故事">励志故事</a>&nbsp;
+  <a href="/tags/#励志" title="励志">励志</a>&nbsp;
   
 </span>
 
@@ -173,9 +173,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-	<a  href="/2010/12/doctor-oath" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2011/09/stories" class="pageNav"  >下一篇</a>
+  <a  href="/2010/12/doctor-oath" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2011/09/stories" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -207,15 +207,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2010/12/doctor-oath';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2010/12/doctor-oath';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2011/09/stories';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2011/09/stories'; -->
+        url = '/2011/09/stories';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2010/12/acknowledgements-from-theses/#timeSpan';
         }
         if (url) {
             window.location = url;

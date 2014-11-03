@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2008-07-26">2008-07-26</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,11 +90,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
-  <a href="/tags/#传奇故事" title="传奇故事">传奇故事</a>&nbsp;
+  <a href="/tags/#传奇" title="传奇">传奇</a>&nbsp;
   
 </span>
 
@@ -234,9 +234,9 @@ Lenna当期杂志（1972年11月）是花花公子杂志有史以来最畅销的
 <section align="right">
 <br/>
 <span>
-	<a   class="pageNavInvalid"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2008/10/key-to-success-in-modern-society" class="pageNav"  >下一篇</a>
+  <a   class="pageNavInvalid"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2008/10/key-to-success-in-modern-society" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -268,13 +268,18 @@ Lenna当期杂志（1972年11月）是花花公子杂志有史以来最畅销的
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2008/10/key-to-success-in-modern-society';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
         
+        }
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
+        
+        <!-- url = 'http://jiyeqian.bitbucket.org/2008/10/key-to-success-in-modern-society'; -->
+        url = '/2008/10/key-to-success-in-modern-society';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2008/07/lenna-romance/#timeSpan';
         }
         if (url) {
             window.location = url;

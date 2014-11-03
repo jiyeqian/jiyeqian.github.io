@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>git速查手册</title>
+    <title>Git Essential</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>git速查手册</h1>
+        <h1>Git Essential</h1>
         </header>
         <nav id="real_nav">
         <span><a title="home" class="" href="/">home</a></span>
@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2011-09-27">2011-09-27</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,13 +90,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
   <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
   
-  <a href="/tags/#git" title="git">git</a>&nbsp;
+  <a href="/tags/#Git" title="Git">Git</a>&nbsp;
   
   <a href="/tags/#工具" title="工具">工具</a>&nbsp;
   
@@ -550,15 +550,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-	<a  href="/2011/09/stories" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2011/10/foreign-poems" class="pageNav"  >下一篇</a>
+  <a  href="/2011/09/stories" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2011/10/foreign-poems" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2011/09/introduction-to-git" data-url="http://jiyeqian.bitbucket.org/2011/09/introduction-to-git" data-title="git速查手册">
+	<div class="ds-thread" data-thread-key="/2011/09/git-essential" data-url="http://jiyeqian.bitbucket.org/2011/09/git-essential" data-title="Git Essential">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -584,15 +584,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2011/09/stories';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2011/09/stories';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2011/10/foreign-poems';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2011/10/foreign-poems'; -->
+        url = '/2011/10/foreign-poems';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2011/09/git-essential/#timeSpan';
         }
         if (url) {
             window.location = url;

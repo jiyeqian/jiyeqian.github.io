@@ -2,9 +2,18 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://jiyeqian.bitbucket.org/2014/11/javascript-essential</loc>
+    
+    <lastmod>2014-11-03T10:30:30Z</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://jiyeqian.bitbucket.org/2014/10/css-essential</loc>
     
-    <lastmod>2014-10-25T15:37:41Z</lastmod>
+    <lastmod>2014-10-25T15:37:41+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -65,7 +74,7 @@
   </url>
   
   <url>
-    <loc>http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development</loc>
+    <loc>http://jiyeqian.bitbucket.org/2014/03/dsp-essential</loc>
     
     <lastmod>2014-03-28T00:00:00+08:00</lastmod>
     
@@ -92,7 +101,7 @@
   </url>
   
   <url>
-    <loc>http://jiyeqian.bitbucket.org/2012/07/introduction-to-python</loc>
+    <loc>http://jiyeqian.bitbucket.org/2012/07/python-essential</loc>
     
     <lastmod>2012-07-11T00:00:00+08:00</lastmod>
     
@@ -137,7 +146,7 @@
   </url>
   
   <url>
-    <loc>http://jiyeqian.bitbucket.org/2011/09/introduction-to-git</loc>
+    <loc>http://jiyeqian.bitbucket.org/2011/09/git-essential</loc>
     
     <lastmod>2011-09-27T13:37:00Z</lastmod>
     

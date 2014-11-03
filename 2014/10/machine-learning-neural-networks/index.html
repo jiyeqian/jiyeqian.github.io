@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-21">2014-10-21</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -102,15 +102,47 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">应用背景</h2>
+<h2 id="section">简介</h2>
 
-<p>当特征数目巨大时，简单的Logistic回归无法满足需求。神经网络用于解决复杂的非线性问题 </p>
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
+<div class="caption">神经网络结构</div>
+</div>
+</div>
 
-<p>hidden layer 提取特征</p>
+<p>神经网络是神经元分层级联构成的网络，每个神经元对应一个计算模型。最左边和最右边的层分别称为输入（input）和输出（output）层，中间两层为隐藏层（hidden layer）。</p>
 
-<p>hidden layer：除了输入输出层之外的</p>
+<p>当特征数目巨大时，简单的Logistic回归无法满足需求。神经网络用于解决复杂的非线性问题，可以看成是Logistic回归的组合，上图中每个橙色的神经元（除输入层之外）都对应一个Logistic方程。</p>
 
-<h3 id="section-1">代价函数</h3>
+<p>对于分类问题，输入层输入原始数据，隐藏层可视为特征提取，输出层的每个神经元对应一个类别标签。输入数据所属的类别是输出层概率最大神经元对应的类别标签。</p>
+
+<p>神经网络通过前向传播计算给定输入对应的输出，通过反向传播估计权值矩阵。</p>
+
+<h2 id="section-1">前向传播</h2>
+
+<div class="image_line">
+<div class="image_card">
+<img src="../../../assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
+<div class="caption">神经网络前向传播计算</div>
+</div>
+</div>
+
+<p>神经网络前向传播，从输入到输出，逐层计算。上图所示，假设权值矩阵$\Theta^{(i-1)}$已知，第$i$层可通过第$i-1$层和权值矩阵计算。</p>
+
+<p>\begin{equation}
+\mathbf a^{(i)} = g\left(\mathbf\Theta^{(i-1)}\mathbf a^{(i-1)}\right)
+\end{equation}</p>
+
+<p>$g$是Logistic函数，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
+
+<p>如果上图只看隐藏层和输出层，就相当于一个Logistic回归模型。</p>
+
+<h2 id="section-2">反向参数估计</h2>
+
+<p>神经网络通过反向传播估计权值矩阵$\Theta$。</p>
+
+<h3 id="section-3">代价函数</h3>
 
 <p>\begin{equation}
 \begin{aligned}
@@ -123,7 +155,7 @@ J(\Theta) = -\frac{1}{m} &amp; \sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \
   <p>$h_\Theta (x) \in \mathbb{R}^K$，$(h_\Theta (x))_i$是第$i$个输出；$s_l$表示第$l$层神经元的个数（不含bias unit）；共$m$个样本，$K$个输出，$L$层。</p>
 </blockquote>
 
-<h3 id="section-2">参数估计方法</h3>
+<h3 id="section-4">参数估计方法</h3>
 
 <p>\[
 \min_\Theta J(\Theta)
@@ -218,9 +250,9 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 <span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
 </code></pre></div>
 
-<h2 id="section-3">思考问题</h2>
+<h2 id="section-5">思考问题</h2>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="section-6">参考资料</h2>
 
 <p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </p>
 
@@ -228,9 +260,9 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/10/machine-learning-perceptron-learning-algorithm" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/10/css-essential" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/machine-learning-perceptron-learning-algorithm" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/css-essential" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -262,15 +294,20 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/10/machine-learning-perceptron-learning-algorithm';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/css-essential';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/css-essential'; -->
+        url = '/2014/10/css-essential';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/machine-learning-neural-networks/#timeSpan';
         }
         if (url) {
             window.location = url;

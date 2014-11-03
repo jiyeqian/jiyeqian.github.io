@@ -81,7 +81,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <time datetime="2014-10-19">2014-10-19</time>
 </span>
 
- | 
+ |
 <span class="categories">
   categories
   
@@ -90,7 +90,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </span>
 
 
- | 
+ |
 <span class="tags">
   tags
   
@@ -248,9 +248,9 @@ h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x + \theta_2x^2 ＋ \theta_3x^3 
 <section align="right">
 <br/>
 <span>
-	<a  href="/2014/03/introduction-to-dsp-development" class="pageNav"  >上一篇</a>
-	&nbsp;&nbsp;&nbsp;
-	<a  href="/2014/10/machine-learning-logistic-regression" class="pageNav"  >下一篇</a>
+  <a  href="/2014/03/dsp-essential" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/machine-learning-logistic-regression" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -282,15 +282,20 @@ h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x + \theta_2x^2 ＋ \theta_3x^3 
 $(function(){
   $(document).keydown(function(e) {
     var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/03/introduction-to-dsp-development';
+        if (e.which == 37 || e.which == 72) {  // Left arrow and H
+        
+        url = '/2014/03/dsp-essential';
         
         }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression';
+        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
         
+        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression'; -->
+        url = '/2014/10/machine-learning-logistic-regression';
+        
+        } else if (e.which == 75) {  // K
+          url = '#';
+        } else if (e.which == 74) { // J
+        url = '/2014/10/machine-learning-linear-regression/#timeSpan';
         }
         if (url) {
             window.location = url;
