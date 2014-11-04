@@ -25,7 +25,6 @@
     });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
@@ -68,17 +67,24 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <h1>机器学习: 神经网络</h1>
         </header>
         <nav id="real_nav">
-        <span><a title="home" class="" href="/">home</a></span>
-        <span><a title="categories" class="" href="/categories/">categories</a></span>
-        <span><a title="tags" class="" href="/tags/">tags</a></span>
-        <span><a title="logs" class="" href="/logs/">Log</a></span>
-        <span><a title="about" class="" href="/about/">about</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
         </nav>
         <article class="content">
         <section class="meta">
 <span class="time">
-  <time datetime="2014-10-21">2014-10-21</time>
+  <time datetime="2014-10-22">2014-10-22</time>
 </span>
 
  |
@@ -104,9 +110,21 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">简介</h2>
 
+<!---
+``` python
+print ("hello")
+```
+
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span></code></pre></div>
+
+
+<script src="https://gist.github.com/parkr/931c1c8d465a04042403.js?file=jekyll-private-gist.markdown"> </script>
+--->
+
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
+<img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
 <div class="caption">神经网络结构</div>
 </div>
 </div>
@@ -123,7 +141,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
+<img src="/assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
 <div class="caption">神经网络前向传播计算</div>
 </div>
 </div>
@@ -134,7 +152,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \mathbf a^{(i)} = g\left(\mathbf\Theta^{(i-1)}\mathbf a^{(i-1)}\right)
 \end{equation}</p>
 
-<p>$g$是Logistic函数，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
+<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
 
 <p>如果上图只看隐藏层和输出层，就相当于一个Logistic回归模型。</p>
 
@@ -179,7 +197,7 @@ J(\Theta) = -\frac{1}{m} &amp; \sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \
 <p>\begin{equation}
 \delta^{(l)} = \left\{
 \begin{aligned}
-&amp; a^{(l)} - y &amp; (l = L)~~~~~~~~~~~~~~~~~~~~~~~~~~~ \\
+&amp; a^{(l)} - y &amp; (l = L)  \\
 &amp; \left(\Theta^{(l)} \right)^T\delta^{(l+1)} ~.*~ g’\left(z^{(l)}\right) &amp; (l = L-1, L-2, \ldots, 2) 
 \end{aligned}
 \right. 
@@ -221,22 +239,20 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 
 <p>梯度检测方法也可推广到其它需要计算代价函数及其梯度的地方，比如logistic回归的代价函数。</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
    <span class="n">thetaPlus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
    <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">;</span>
    <span class="n">thetaMinus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
    <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> – <span class="n">EPSILON</span><span class="p">;</span>
    <span class="n">gradApprox</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="p">(</span><span class="n">J</span><span class="p">(</span><span class="n">thetaPlus</span><span class="p">)</span> – <span class="n">J</span><span class="p">(</span><span class="n">thetaMinus</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <blockquote>
   <p>theta 是$\Theta$的向量化，正常情况有gradApprox$\approx$DVec，通过比较gradApprox 与BP 算法所得DVec 的差距判断BP 算法的代价函数及其优化算法是否有subtle bugs。</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
-<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
+<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span></code></pre></div>
 
 <blockquote>
   <p>梯度检查应当在训练神经网络之前，可以通过构造一个新的较小规模的神经网络进行检验；若每次训练都检测梯度，速度很慢。</p>
@@ -246,9 +262,8 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 
 <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$，若初始化为$0$，每层的所有神经元都是一样的。随机数初始化$-\epsilon\leq\Theta_{ij}^{(l)}\leq\epsilon$，选择$\epsilon$的有效策略是根据每层神经元的数目取$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}~(L_{in} = s_l,L_{out}=s_{l+1})$，例如：</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
+<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span></code></pre></div>
 
 <h2 id="section-5">思考问题</h2>
 
@@ -290,31 +305,31 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 	</script>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 72) {  // Left arrow and H
-        
-        url = '/2014/10/machine-learning-perceptron-learning-algorithm';
-        
-        }
-        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
-        
-        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/css-essential'; -->
-        url = '/2014/10/css-essential';
-        
-        } else if (e.which == 75) {  // K
-          url = '#';
-        } else if (e.which == 74) { // J
-        url = '/2014/10/machine-learning-neural-networks/#timeSpan';
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/machine-learning-perceptron-learning-algorithm'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/css-essential'; --1> -->
+<!--         url = '/2014/10/css-essential'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/machine-learning-neural-networks/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
         <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">

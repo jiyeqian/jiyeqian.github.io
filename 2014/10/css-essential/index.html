@@ -25,7 +25,6 @@
     });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
@@ -68,12 +67,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <h1>CSS Essential</h1>
         </header>
         <nav id="real_nav">
-        <span><a title="home" class="" href="/">home</a></span>
-        <span><a title="categories" class="" href="/categories/">categories</a></span>
-        <span><a title="tags" class="" href="/tags/">tags</a></span>
-        <span><a title="logs" class="" href="/logs/">Log</a></span>
-        <span><a title="about" class="" href="/about/">about</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
         </nav>
         <article class="content">
         <section class="meta">
@@ -130,14 +136,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
 <div class="caption">CSS语法（规则）</div>
 </div>
 </div>
 
 <!---
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-pla_1.png" alt="CSS语法">
+<img src="/assets/images/2014-10-21-pla_1.png" alt="CSS语法">
 <div class="caption">CSS语法（规则）</div>
 </div>
 --->
@@ -187,14 +193,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
 </ul>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
-<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <h4 id="section-5">多选择器组合</h4>
 
@@ -221,15 +226,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
 The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
 
@@ -237,8 +241,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：   </p>
 
-<div class="highlight"><pre><code class="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span></code></pre></div>
 
 <p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
 
@@ -246,17 +249,16 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
 <span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
 The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
 
@@ -281,12 +283,11 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
   <p><code>em</code>等单位和百分数都是相对赋值，需要继承父属性的参考值。<code>em</code>是针对字体大小的值，$w$ <code>em</code> = $w$ $\times$ <code>font-size</code>。</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
   Full size text (18px)
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:50%;&quot;</span><span class="nt">&gt;</span>50%<span class="nt">&lt;/span&gt;</span>
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
 </blockquote>
 
@@ -301,19 +302,19 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
       <td style="text-align: left"><code>border-width: 1em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em 3em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em 3em 4em</code></td>
     </tr>
   </tbody>
@@ -330,7 +331,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements">块元素</a>充满父元素的所有空间，每个块元素都会另起一个新行显示。块元素之内还可以包含块元素和行内元素。HTML定义的块元素包括<code>&lt;div&gt;, &lt;span&gt;, &lt;p&gt;</code>等。<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente">内联元素</a>只占据标签包含内容的空间，不会另起新行显示。内联元素通常只包含内联元素。HTML定义的内联元素包括<code>&lt;span&gt;, &lt;code&gt;, &lt;textarea&gt;</code>等。   </p>
 
-  <p><img src="../../../assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /> </p>
+  <p><img src="/assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /> </p>
 
   <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
 </blockquote>
@@ -339,21 +340,20 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
 <div class="caption">盒子模型的四类边</div>
 </div>
 </div>
 
 <p><code>.box {with: ...; height: ...}</code>设置的是只是<code>Content</code>尺寸。相关边的的设置方法是：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nc">.box</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.box</span> <span class="p">{</span>
     <span class="k">width</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">padding</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">border</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">margin</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>内联元素设置属性<code>height</code>和<code>width</code>是没有用的，致使它变宽变大的原因是内部元素的宽高<code>+padding</code>。</p>
 
@@ -414,7 +414,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
 <div class="caption">包含在行盒子中的内联元素</div>
 </div>
 </div>
@@ -423,7 +423,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
+<img src="/assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
 <div class="caption">设置relative的效果"position: relative; left: 20px; top: 20px;"</div>
 </div>
 </div>
@@ -442,7 +442,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
+<img src="/assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
 <div class="caption">设置<code>float</code>的效果</div>
 </div>
 </div>
@@ -455,7 +455,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
+<img src="/assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
 <div class="caption">浮动的影响</div>
 </div>
 </div>
@@ -475,7 +475,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
+<img src="/assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
 <div class="caption">设置absolute的效果"position: absolute; left: 20px; top: 20px;"</div>
 </div>
 </div>
@@ -493,38 +493,35 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>（1）空<code>div</code>方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;clear: both;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside&quot;</span><span class="nt">&gt;</span>我是页脚，我的上面添加了一个设置了 clear: both 的空 div<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>空<code>div</code>方法很方便，但是加入了没有涵义的<code>div</code>，这违背了结构与表现分离的原则，并且后期维护也不方便。</p>
 
   <p>（2）<code>overflow</code>方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>当元素内包含会超出父元素边界的子元素时，<code>overflow</code>方法可能会覆盖掉有用的子元素，或是产生了多余的滚动条。</p>
 
   <p>（3）<code>:after</code>伪元素的方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
     <span class="nc">.clearfix</span> <span class="p">{</span><span class="c">/* 触发 hasLayout */</span> <span class="n">zoom</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
     <span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span><span class="k">content</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">clear</span><span class="o">:</span> <span class="k">both</span><span class="p">;</span> <span class="k">visibility</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box clearfix&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>这个办法不但完美兼容主流浏览器，并且也很方便，使用重用的类，可以减轻代码编写，另外网页的结构也会更加清晰。</p>
 </blockquote>
 
-<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="../../../assets/images/../html/clearfloat.html">示例</a>）。</p>
+<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="/assets/images/../html/clearfloat.html">示例</a>）。</p>
 
 <h2 id="section-13">块格式化环境</h2>
 
@@ -554,7 +551,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   </ul>
 </blockquote>
 
-<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="../../../assets/images/../html/bfc.html">示例</a>）：</p>
+<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="/assets/images/../html/bfc.html">示例</a>）：</p>
 
 <ol>
   <li>阻止<a href="#margin-collapsing">外边距折叠</a>；    </li>
@@ -589,12 +586,11 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">div</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">error</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">td</span><span class="o">[</span><span class="nt">headers</span><span class="o">~=</span><span class="nt">col1</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">p</span><span class="o">[</span><span class="nt">lang</span><span class="o">|=</span><span class="nt">en</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <h4 id="css-21-pseudo-classes">CSS 2.1 伪类（pseudo-classes）</h4>
 
@@ -633,11 +629,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#000</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="m">#ffe</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus:hover</span> <span class="p">{</span> <span class="k">background</span><span class="o">:</span><span class="m">#fff</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <h4 id="css-21-pseudo-elements">CSS 2.1 伪元素（pseudo-elements）</h4>
 
@@ -664,11 +659,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
 <span class="nc">.preamble</span><span class="nd">:first-letter</span> <span class="p">{</span> <span class="k">font-size</span><span class="o">:</span><span class="m">1.5em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="p">}</span>
 <span class="nc">.cbb</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span><span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span><span class="m">17px</span><span class="p">;</span> <span class="k">width</span><span class="o">:</span><span class="m">18px</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="sx">url(top.png)</span> <span class="k">no-repeat</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-18px</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
 
@@ -679,8 +673,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>多条CSS语句互相冲突时，具有!important的语句将覆盖其他语句。由于IE不支持!important，所以也可以利用它区分不同的浏览器。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -688,8 +681,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -697,8 +689,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>文字在一行中显示完成，不要自动换行。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -706,8 +697,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -715,11 +705,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>link的四种状态，需要按照下面的前后顺序进行设置。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">a</span><span class="nd">:link</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">a</span><span class="nd">:link</span> 
 <span class="nt">a</span><span class="nd">:visited</span> 
 <span class="nt">a</span><span class="nd">:hover</span> 
-<span class="nt">a</span><span class="nd">:active</span>
-</code></pre></div>
+<span class="nt">a</span><span class="nd">:active</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -727,14 +716,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>Text-transform用于将所有字母变成小写字母、大写字母或首字母大写。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
 <span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">lowercase</span><span class="p">}</span> 
-<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span>
-</code></pre></div>
+<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span></code></pre></div>
   <p>Font Variant用于将字体变成小型的大写字母（即与小写字母等高的大写字母）。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -742,13 +729,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
 <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
     <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&quot;path-to-your-image&quot;)</span><span class="p">;</span>
     <span class="k">background-repeat</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
     <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">0.5em</span><span class="p">;</span> 
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -756,13 +742,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> 
     <span class="k">text-indent</span><span class="o">:</span> <span class="m">-9999px</span><span class="p">;</span> 
     <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;h1-image.jpg&quot;)</span> <span class="k">no-repeat</span><span class="p">;</span> 
     <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 </blockquote>
 
 <h2 id="section-22">预处理器</h2>
@@ -821,7 +806,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 <span>
   <a  href="/2014/10/machine-learning-neural-networks" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2014/11/javascript-essential" class="pageNav"  >下一篇</a>
+  <a   class="pageNavInvalid"  >下一篇</a>
 </span>
 </section>
 
@@ -849,31 +834,28 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 	</script>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 72) {  // Left arrow and H
-        
-        url = '/2014/10/machine-learning-neural-networks';
-        
-        }
-        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
-        
-        <!-- url = 'http://jiyeqian.bitbucket.org/2014/11/javascript-essential'; -->
-        url = '/2014/11/javascript-essential';
-        
-        } else if (e.which == 75) {  // K
-          url = '#';
-        } else if (e.which == 74) { // J
-        url = '/2014/10/css-essential/#timeSpan';
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/machine-learning-neural-networks'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/css-essential/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
         <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">

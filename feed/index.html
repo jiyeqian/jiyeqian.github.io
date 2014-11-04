@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <rss version="2.0"
-        xmlns:content="http://purl.org/rss/1.0/modules/content/"
-        xmlns:atom="http://www.w3.org/2005/Atom"
-  >
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jiye Qian</title>
     <link href="http://jiyeqian.bitbucket.org/feed/" rel="self" />
     <link href="http://jiyeqian.github.io" />
-    <lastBuildDate>2014-11-03T22:56:57+08:00</lastBuildDate>
-    <webMaster>ccf.developer@gmail.com</webMaster>
-    
-    <item>
-      <title>JavaScript Essential</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/11/javascript-essential"/>
-      <pubDate>2014-11-03T10:30:30Z</pubDate>
-      <author>Jiye Qian</author>
-      <guid>http://jiyeqian.bitbucket.org/2014/11/javascript-essential</guid>
-      <content:encoded><![CDATA[<h2 id="section">参考资料</h2>
-
-<ol>
-  <li><a href="http://javascript.ruanyifeng.com">阮一峰：JavaScript 标准参考教程（alpha）</a>  </li>
-  <li><a href="http://es6.ruanyifeng.com">阮一峰：ECMAScript 6入门</a></li>
-</ol>
-]]></content:encoded>
-    </item>
+    <lastbuilddate>2014-11-04T23:05:33+08:00</lastbuilddate>
+    <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
       <title>CSS Essential</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/css-essential"/>
-      <pubDate>2014-10-25T15:37:41+08:00</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/css-essential" />
+      <pubdate>2014-10-25T15:37:41+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/css-essential</guid>
-      <content:encoded><![CDATA[<blockquote>
+      <content:encoded>&lt;![CDATA[<blockquote>
   <h4 id="what-is-css">What is CSS?</h4>
   <hr />
   <p>The basic goal of the Cascading Stylesheet (CSS) language is to allow a browser engine to paint elements of the page with specific features, like colors, positioning, or decorations. </p>
@@ -57,14 +39,14 @@
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
 <div class="caption">CSS语法（规则）</div>
 </div>
 </div>
 
 <!---
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-pla_1.png" alt="CSS语法">
+<img src="/assets/images/2014-10-21-pla_1.png" alt="CSS语法">
 <div class="caption">CSS语法（规则）</div>
 </div>
 --->
@@ -114,14 +96,13 @@
   <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
 </ul>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
-<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <h4 id="section-5">多选择器组合</h4>
 
@@ -148,15 +129,14 @@
 
 <p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
 The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
 
@@ -164,8 +144,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：   </p>
 
-<div class="highlight"><pre><code class="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span></code></pre></div>
 
 <p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
 
@@ -173,17 +152,16 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
 
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
 <span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200</span><span class="o">%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
 <span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
 <span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
 The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
 <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
 
 <p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
 
@@ -208,12 +186,11 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
   <p><code>em</code>等单位和百分数都是相对赋值，需要继承父属性的参考值。<code>em</code>是针对字体大小的值，$w$ <code>em</code> = $w$ $\times$ <code>font-size</code>。</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
   Full size text (18px)
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:50%;&quot;</span><span class="nt">&gt;</span>50%<span class="nt">&lt;/span&gt;</span>
   <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
 </blockquote>
 
@@ -228,19 +205,19 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
       <td style="text-align: left"><code>border-width: 1em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em 3em</code></td>
     </tr>
     <tr>
-      <td style="text-align: center"><img src="../../../assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
       <td style="text-align: left"><code>border-width: 1em 2em 3em 4em</code></td>
     </tr>
   </tbody>
@@ -257,7 +234,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements">块元素</a>充满父元素的所有空间，每个块元素都会另起一个新行显示。块元素之内还可以包含块元素和行内元素。HTML定义的块元素包括<code>&lt;div&gt;, &lt;span&gt;, &lt;p&gt;</code>等。<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente">内联元素</a>只占据标签包含内容的空间，不会另起新行显示。内联元素通常只包含内联元素。HTML定义的内联元素包括<code>&lt;span&gt;, &lt;code&gt;, &lt;textarea&gt;</code>等。   </p>
 
-  <p><img src="../../../assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /> </p>
+  <p><img src="/assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /> </p>
 
   <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
 </blockquote>
@@ -266,21 +243,20 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
 <div class="caption">盒子模型的四类边</div>
 </div>
 </div>
 
 <p><code>.box {with: ...; height: ...}</code>设置的是只是<code>Content</code>尺寸。相关边的的设置方法是：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nc">.box</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.box</span> <span class="p">{</span>
     <span class="k">width</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">padding</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">border</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
     <span class="k">margin</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <p>内联元素设置属性<code>height</code>和<code>width</code>是没有用的，致使它变宽变大的原因是内部元素的宽高<code>+padding</code>。</p>
 
@@ -341,7 +317,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
 <div class="caption">包含在行盒子中的内联元素</div>
 </div>
 </div>
@@ -350,7 +326,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
+<img src="/assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
 <div class="caption">设置relative的效果"position: relative; left: 20px; top: 20px;"</div>
 </div>
 </div>
@@ -369,7 +345,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
+<img src="/assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
 <div class="caption">设置<code>float</code>的效果</div>
 </div>
 </div>
@@ -382,7 +358,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
+<img src="/assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
 <div class="caption">浮动的影响</div>
 </div>
 </div>
@@ -402,7 +378,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
+<img src="/assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
 <div class="caption">设置absolute的效果"position: absolute; left: 20px; top: 20px;"</div>
 </div>
 </div>
@@ -420,38 +396,35 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>（1）空<code>div</code>方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;clear: both;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside&quot;</span><span class="nt">&gt;</span>我是页脚，我的上面添加了一个设置了 clear: both 的空 div<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>空<code>div</code>方法很方便，但是加入了没有涵义的<code>div</code>，这违背了结构与表现分离的原则，并且后期维护也不方便。</p>
 
   <p>（2）<code>overflow</code>方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>当元素内包含会超出父元素边界的子元素时，<code>overflow</code>方法可能会覆盖掉有用的子元素，或是产生了多余的滚动条。</p>
 
   <p>（3）<code>:after</code>伪元素的方法</p>
 
-  <div class="highlight"><pre><code class="html"><span class="nt">&lt;style&gt;</span>
+  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
     <span class="nc">.clearfix</span> <span class="p">{</span><span class="c">/* 触发 hasLayout */</span> <span class="n">zoom</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
     <span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span><span class="k">content</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">clear</span><span class="o">:</span> <span class="k">both</span><span class="p">;</span> <span class="k">visibility</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">&lt;/style&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box clearfix&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
   <p>这个办法不但完美兼容主流浏览器，并且也很方便，使用重用的类，可以减轻代码编写，另外网页的结构也会更加清晰。</p>
 </blockquote>
 
-<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="../../../assets/images/../html/clearfloat.html">示例</a>）。</p>
+<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="/assets/images/../html/clearfloat.html">示例</a>）。</p>
 
 <h2 id="section-13">块格式化环境</h2>
 
@@ -481,7 +454,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   </ul>
 </blockquote>
 
-<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="../../../assets/images/../html/bfc.html">示例</a>）：</p>
+<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="/assets/images/../html/bfc.html">示例</a>）：</p>
 
 <ol>
   <li>阻止<a href="#margin-collapsing">外边距折叠</a>；    </li>
@@ -516,12 +489,11 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">div</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">error</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">td</span><span class="o">[</span><span class="nt">headers</span><span class="o">~=</span><span class="nt">col1</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">p</span><span class="o">[</span><span class="nt">lang</span><span class="o">|=</span><span class="nt">en</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <h4 id="css-21-pseudo-classes">CSS 2.1 伪类（pseudo-classes）</h4>
 
@@ -560,11 +532,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#000</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="m">#ffe</span><span class="p">;</span> <span class="p">}</span>
 <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus:hover</span> <span class="p">{</span> <span class="k">background</span><span class="o">:</span><span class="m">#fff</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <h4 id="css-21-pseudo-elements">CSS 2.1 伪元素（pseudo-elements）</h4>
 
@@ -591,11 +562,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <p>示例：</p>
 
-<div class="highlight"><pre><code class="css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
 <span class="nc">.preamble</span><span class="nd">:first-letter</span> <span class="p">{</span> <span class="k">font-size</span><span class="o">:</span><span class="m">1.5em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="p">}</span>
 <span class="nc">.cbb</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span><span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span><span class="m">17px</span><span class="p">;</span> <span class="k">width</span><span class="o">:</span><span class="m">18px</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="sx">url(top.png)</span> <span class="k">no-repeat</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-18px</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 
 <p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
 
@@ -606,8 +576,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>多条CSS语句互相冲突时，具有!important的语句将覆盖其他语句。由于IE不支持!important，所以也可以利用它区分不同的浏览器。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -615,8 +584,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -624,8 +592,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>文字在一行中显示完成，不要自动换行。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -633,8 +600,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100</span><span class="o">%</span><span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -642,11 +608,10 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>link的四种状态，需要按照下面的前后顺序进行设置。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">a</span><span class="nd">:link</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">a</span><span class="nd">:link</span> 
 <span class="nt">a</span><span class="nd">:visited</span> 
 <span class="nt">a</span><span class="nd">:hover</span> 
-<span class="nt">a</span><span class="nd">:active</span>
-</code></pre></div>
+<span class="nt">a</span><span class="nd">:active</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -654,14 +619,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>Text-transform用于将所有字母变成小写字母、大写字母或首字母大写。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
 <span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">lowercase</span><span class="p">}</span> 
-<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span>
-</code></pre></div>
+<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span></code></pre></div>
   <p>Font Variant用于将字体变成小型的大写字母（即与小写字母等高的大写字母）。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span>
-</code></pre></div>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -669,13 +632,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
 <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
     <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&quot;path-to-your-image&quot;)</span><span class="p">;</span>
     <span class="k">background-repeat</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
     <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">0.5em</span><span class="p">;</span> 
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 </blockquote>
 
 <blockquote>
@@ -683,13 +645,12 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
   <hr />
   <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
 
-  <div class="highlight"><pre><code class="css"><span class="nt">h1</span> <span class="p">{</span> 
+  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> 
     <span class="k">text-indent</span><span class="o">:</span> <span class="m">-9999px</span><span class="p">;</span> 
     <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;h1-image.jpg&quot;)</span> <span class="k">no-repeat</span><span class="p">;</span> 
     <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
     <span class="k">height</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 </blockquote>
 
 <h2 id="section-22">预处理器</h2>
@@ -741,20 +702,32 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
     </li>
   </ol>
 </div>
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: 神经网络</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks"/>
-      <pubDate>2014-10-21T19:09:00Z</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks" />
+      <pubdate>2014-10-22T03:09:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks</guid>
-      <content:encoded><![CDATA[<h2 id="section">简介</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">简介</h2>
+
+<!---
+``` python
+print ("hello")
+```
+
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span></code></pre></div>
+
+
+<script src="https://gist.github.com/parkr/931c1c8d465a04042403.js?file=jekyll-private-gist.markdown"> </script>
+--->
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
+<img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" />
 <div class="caption">神经网络结构</div>
 </div>
 </div>
@@ -771,7 +744,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
+<img src="/assets/images/2014-10-21-neural-networks_2.png" alt="前向传播" />
 <div class="caption">神经网络前向传播计算</div>
 </div>
 </div>
@@ -782,7 +755,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
 \mathbf a^{(i)} = g\left(\mathbf\Theta^{(i-1)}\mathbf a^{(i-1)}\right)
 \end{equation}</p>
 
-<p>$g$是Logistic函数，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
+<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$\mathbf a_0^{(i)}= 1$的偏移（bias），$\mathbf\Theta^{(i-1)}$的行数为第$i$层神经元个数，列数为第$i-1$层神经元个数加$1$。</p>
 
 <p>如果上图只看隐藏层和输出层，就相当于一个Logistic回归模型。</p>
 
@@ -827,7 +800,7 @@ J(\Theta) = -\frac{1}{m} &amp; \sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \
 <p>\begin{equation}
 \delta^{(l)} = \left\{
 \begin{aligned}
-&amp; a^{(l)} - y &amp; (l = L)~~~~~~~~~~~~~~~~~~~~~~~~~~~ \\
+&amp; a^{(l)} - y &amp; (l = L)  \\
 &amp; \left(\Theta^{(l)} \right)^T\delta^{(l+1)} ~.*~ g’\left(z^{(l)}\right) &amp; (l = L-1, L-2, \ldots, 2) 
 \end{aligned}
 \right. 
@@ -869,22 +842,20 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 
 <p>梯度检测方法也可推广到其它需要计算代价函数及其梯度的地方，比如logistic回归的代价函数。</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
    <span class="n">thetaPlus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
    <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">;</span>
    <span class="n">thetaMinus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
    <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> – <span class="n">EPSILON</span><span class="p">;</span>
    <span class="n">gradApprox</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="p">(</span><span class="n">J</span><span class="p">(</span><span class="n">thetaPlus</span><span class="p">)</span> – <span class="n">J</span><span class="p">(</span><span class="n">thetaMinus</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <blockquote>
   <p>theta 是$\Theta$的向量化，正常情况有gradApprox$\approx$DVec，通过比较gradApprox 与BP 算法所得DVec 的差距判断BP 算法的代价函数及其优化算法是否有subtle bugs。</p>
 </blockquote>
 
-<div class="highlight"><pre><code class="matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
-<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
+<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span></code></pre></div>
 
 <blockquote>
   <p>梯度检查应当在训练神经网络之前，可以通过构造一个新的较小规模的神经网络进行检验；若每次训练都检测梯度，速度很慢。</p>
@@ -894,25 +865,24 @@ D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
 
 <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$，若初始化为$0$，每层的所有神经元都是一样的。随机数初始化$-\epsilon\leq\Theta_{ij}^{(l)}\leq\epsilon$，选择$\epsilon$的有效策略是根据每层神经元的数目取$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}~(L_{in} = s_l,L_{out}=s_{l+1})$，例如：</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
+<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span></code></pre></div>
 
 <h2 id="section-5">思考问题</h2>
 
 <h2 id="section-6">参考资料</h2>
 
 <p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </p>
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: 感知器算法</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm"/>
-      <pubDate>2014-10-21T10:09:00Z</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm" />
+      <pubdate>2014-10-21T18:09:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm</guid>
-      <content:encoded><![CDATA[<h2 id="section">问题描述</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">问题描述</h2>
 
 <p>对于线性二分类问题<br />
 \begin{equation}
@@ -946,8 +916,14 @@ h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sig
 }</p>
 </blockquote>
 
-<p><img src="../../../assets/images/2014-10-21-pla_1.png" alt="PLA对参数更新示例" />   <br />
-PLA更新模型参数可以用上图解释： <br />
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-21-pla_1.png" alt="PLA更新模型参数示意图" />
+<div class="caption">PLA更新模型参数示意图</div>
+</div>
+</div>
+
+<p>PLA更新模型参数解释： <br />
 1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
 2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。   </p>
 
@@ -1012,7 +988,7 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 \end{equation}</p>
 
 <p>相关的证明如下：  <br />
-<img src="../../../assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
+<img src="/assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
 
 <p><strong>结论：</strong>     <br />
 1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
@@ -1049,16 +1025,16 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
   <li><a href="http://www.cs.columbia.edu/~mcollins/courses/6998-2012/notes/perc.converge.pdf">Convergence Proof for the Perceptron Algorithm</a></li>
 </ol>
 
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: 正则化</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization"/>
-      <pubDate>2014-10-20T00:00:00+08:00</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization" />
+      <pubdate>2014-10-20T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization</guid>
-      <content:encoded><![CDATA[<h2 id="section">为什么需要正则化</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">为什么需要正则化</h2>
 
 <p>过拟合（overfitting）是指模型可以在训练集上表现出色，在新数据上性能却很差。解决过拟合问题的方法：</p>
 
@@ -1150,14 +1126,13 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <p>第一步：实现Logistic函数</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
 <span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <p>第二步：实现代价函数（包含梯度计算）</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
 <span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
 
 <span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
@@ -1165,17 +1140,15 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
     <span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
 <span class="n">grad</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)])</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
 
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <p>第三步：估计参数</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
 <span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
-	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
-</code></pre></div>
+	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
 
 <h2 id="section-7">思考问题</h2>
 
@@ -1188,16 +1161,16 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 <h2 id="section-8">参考资料</h2>
 
 <p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </p>
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: 多分类问题</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification"/>
-      <pubDate>2014-10-20T00:00:00+08:00</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification" />
+      <pubdate>2014-10-20T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification</guid>
-      <content:encoded><![CDATA[<h2 id="section">问题描述</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">问题描述</h2>
 
 <p>许多分类器主要是为了解决二分类问题，对只有1和0两个类别标签对数据分类，比如Logistic回归和SVM。多分类问题是对两个以上类别标签的数据集分类。</p>
 
@@ -1214,7 +1187,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" />
+<img src="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" />
 <div class="caption">one-vs-all也叫one-vs-rest</div>
 </div>
 </div>
@@ -1236,7 +1209,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <div class="image_line">
 <div class="image_card">
-<img src="../../../assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" />
+<img src="/assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" />
 <div class="caption">神经网络的one-vs-all策略</div>
 </div>
 </div>
@@ -1254,20 +1227,23 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 <ol>
   <li><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </li>
 </ol>
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: Logistic回归</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression"/>
-      <pubDate>2014-10-19T00:00:00+08:00</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression" />
+      <pubdate>2014-10-19T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-logistic-regression</guid>
-      <content:encoded><![CDATA[<h2 id="section">模型介绍</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">模型介绍</h2>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" alt="Logistic function" />    </p>
-
-<div class="caption" id="fig1">图1 Logistic函数</div>
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-19-logistic_regression_0.png" alt="Logistic函数" />
+<div class="caption">图1 Logistic函数</div>
+</div>
+</div>
 
 <p>Logistic回归（Logistic Regression）用于解决二分类问题，而非回归问题。Logistic函数将回归问题转化为了分类问题。</p>
 
@@ -1278,6 +1254,7 @@ h_\theta(x) = g\left(\theta^Tx\right)
 其中
 \begin{equation}
 g\left(z\right) = \frac{1}{1 + e^{-z}}
+\label{eq:sigmoid-function}
 \end{equation}</p>
 
 <blockquote>
@@ -1305,11 +1282,11 @@ P\left(y=0\big|x; \theta\right) ＝ 1 - P\left(y=1\big|x; \theta\right) ＝ 1 - 
 
 <p>$\theta^Tx = 0$称为决策界（Decision Boundary）。决策界可以时线性的，也可以是非线性的。</p>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /> </p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /> </p>
 
 <div class="caption">图2 线性决策界</div>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></p>
 
 <div class="caption">图3 非线性决策界</div>
 
@@ -1329,7 +1306,7 @@ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\r
 
 <p>当$h_\theta(x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数图" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数图" /></p>
 
 <div class="caption" id="fig4">图4 代价函数</div>
 
@@ -1390,7 +1367,7 @@ J(\theta)<br />
   <li>其它注意事项同梯度下降法求解线性回归参数。</li>
 </ul>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></p>
 
 <div class="caption">图5 采用Matlab的优化框架求解模型参数</div>
 
@@ -1421,18 +1398,18 @@ J(\theta)<br />
   <li><a href="http://en.wikipedia.org/wiki/Logistic_regression">Wikipedia: Logistic regression</a></li>
 </ol>
 
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
       <title>机器学习: 线性回归</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression"/>
-      <pubDate>2014-10-19T00:00:00+08:00</pubDate>
+      <link href="http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression" />
+      <pubdate>2014-10-19T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://jiyeqian.bitbucket.org/2014/10/machine-learning-linear-regression</guid>
-      <content:encoded><![CDATA[<h2 id="section">模型介绍</h2>
+      <content:encoded>&lt;![CDATA[<h2 id="section">模型介绍</h2>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Linear_regression.svg/438px-Linear_regression.svg.png" alt="linear regression" /></p>
+<p><img src="/assets/images/2014-10-19-linear_regression_0.png" alt="linear regression" /></p>
 
 <p>线性回归（Linear Regression）的回归函数（hypothesis）为
 \begin{equation}
@@ -1470,7 +1447,7 @@ repeat until convergence {
 \]
 }  <br />
 每轮循环的时候同时更新$\theta_j$（下图左边为正确更新方式。<em>不能</em>在同一轮循环中，先更新部分$\theta_j$，再利用已更新的$\theta_j$更新其它$\theta_j$）。  <br />
-<img src="../../../assets/images/2014-10-19-linear_regression_1.png" alt="同时更新$\theta_j$" /> <br />
+<img src="/assets/images/2014-10-19-linear_regression_1.png" alt="同时更新$\theta_j$" /> <br />
 特征的尺度如果相差太大，需要进行尺度规范化提高收敛速度，常用的规范化方法是
 \[
 \hat x_i = \frac{x_i - x_{mean}}{x_{max}-x_{min}}
@@ -1490,9 +1467,9 @@ repeat until convergence {
 </ul>
 
 <p>尺度归一化效果： <br />
-<img src="../../../assets/images/2014-10-19-linear_regression_2.png" alt="尺度归一化效果示例" /><br />
+<img src="/assets/images/2014-10-19-linear_regression_2.png" alt="尺度归一化效果示例" /><br />
 梯度下降步长自动减小：<br />
-<img src="../../../assets/images/2014-10-19-linear_regression_3.png" alt="梯度下降步长自动减小" /></p>
+<img src="/assets/images/2014-10-19-linear_regression_3.png" alt="梯度下降步长自动减小" /></p>
 
 <h3 id="section-3">正规方程求解</h3>
 
@@ -1512,8 +1489,7 @@ repeat until convergence {
 
 <p>Matlab Code：</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">y</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">y</span></code></pre></div>
 
 <p>其中，pinv函数可以处理$X^TX$不可逆的情况，而inv函数不行。</p>
 
@@ -1571,866 +1547,360 @@ h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x + \theta_2x^2 ＋ \theta_3x^3 
 
 <p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>    <br />
 <a href="http://en.wikipedia.org/wiki/Linear_regression">Wikipedia: Linear regression</a></p>
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
     <item>
-      <title>DSP Essential</title>
-      <link href="http://jiyeqian.bitbucket.org/2014/03/dsp-essential"/>
-      <pubDate>2014-03-28T00:00:00+08:00</pubDate>
+      <title>基于Jekyll的GitHub建站指南</title>
+      <link href="http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll" />
+      <pubdate>2012-07-01T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://jiyeqian.bitbucket.org/2014/03/dsp-essential</guid>
-      <content:encoded><![CDATA[<h2 id="section">基本概念</h2>
+      <guid>http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll</guid>
+      <content:encoded>&lt;![CDATA[<p>简介：本文主要介绍利用jekyll在github上搭建站点的方法与原理。</p>
 
-<p>DaVinci: The Texas Instruments DaVinci is a system on a chip family that combines a DSP core based on the TMS320 C6000 VLIW DSP family with an ARM architecture CPU core.</p>
+<p><span id="jekyll-and-github"></span></p>
 
-<p>PSP: Platform Support Package</p>
+<h2 id="jekyllgithub">jekyll与github的关系</h2>
 
-<p>MAR:  Memory Attribute Register</p>
+<p>github站点是位于username.github.com仓库中的静态页面。利用高效的工具生成高质量的静态页面是github建站的王道。<a href="http://jekyllrb.com/">jekyll</a>就是用<a href="http://www.ruby-lang.org/">ruby</a><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">制造静态站点的的ruby解析引擎</a>（构建网站时ruby不是必会的）。github除了能构建独立的站点外，还可以为每个项目建立站点。github提供了<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">自动</a>和<a href="https://help.github.com/articles/creating-project-pages-manually">手动</a>建立项目站点的方法。</p>
 
-<p>EVM: EValuation Module.</p>
+<p>github标配有jekyll解析引擎，上传的站点可以代由github的jekyll解析为静态页面。如果<a href="https://help.github.com/articles/files-that-start-with-an-underscore-are-missing">不需要github用jekyll处理上传的站点文件</a>，可以在根目录下添加一个.nojekyll文件。</p>
 
-<p>DVEVM: Digital Video Evaluation Module.</p>
+<p><a href="https://help.github.com/articles/using-jekyll-with-pages">github使用jekyll的_config.yml</a>和用户本地jekyll的不同，它的功能有限，github运行jekyll带有<code>--safe</code>参数。如果用户本地的jekyll使用了自定义插件，github的解析会出错，启用了本地自定义插件的用户可以上传本地解析好的静态页面到github。</p>
 
-<p>DMAI: Davinci Multimedia Application Interface.</p>
+<p>由于本地和gihub的<a href="https://help.github.com/articles/using-jekyll-with-pages">jekyll版本</a>不同，即使本地正常解析的页面也可能会在github上解析出错。下面的表格在github上<code>Jekyll 0.11.0 with Liquid 2.2.2</code>会出错：</p>
 
-<p>DVTB: Digital Video Test Bench.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">功能  <span class="p">|</span>   快捷键  <span class="p">|</span>   快捷键  <span class="p">|</span>  功能
+-------: <span class="p">|</span> -------: <span class="p">|</span> :------- <span class="p">|</span> :-------
+上一节点  <span class="p">|</span>   <span class="sb">`</span>p<span class="sb">`</span>    <span class="p">|</span>    <span class="sb">`</span>n<span class="sb">`</span>   <span class="p">|</span> 下一节点  
+<span class="o">||</span>    <span class="sb">`</span>m<span class="sb">`</span>   <span class="p">|</span> 菜单</code></pre></div>
 
-<p><a href="http://rtsc.eclipse.org/docs-tip/RTSC_Packaging_Primer" title="RTSC Packaging Primer">RTSC</a>: Real-Time Software Components. 实时软件组件。</p>
+<h2 id="jekyll">jekyll驱动网站原理</h2>
 
-<p>XDCtools: XDCtools is the actual product that contains all the tools necessary for you to use the SYS/BIOS components and configure your application. XDCtools provides configuration tools you use to create and build a static configuration as part of your application. This *.cfg configuration file specifies:        </p>
+<p><a href="http://chen.yanping.me/cn/blog/2011/12/15/building-static-sites-with-jekyll/">用jekyll构建静态网站</a>很容易。模板、数据和美化是jekyll建站的三要素。jekyll自动将数据注入模板，通过美化，得到站点。这里可以看到<a href="https://github.com/mojombo/jekyll/wiki/Sites">一堆用jekyll打造的站点</a>，大部分都可以<code>git clone</code>回来学习参考。<br />
+<!--more--></p>
 
-<ul>
-  <li>Which modules from XDCtools, SYS/BIOS, and other components to include in the runtime image.      </li>
-  <li>What static instances of RTOS objects to create. For example, these include tasks and semaphores.        </li>
-  <li>Settings for parameter values for modules and objects.      </li>
-  <li>XDCtools provides critical APIs that are used by SYS/BIOS and other related software components. These include memory allocation, logging, and system control.</li>
-</ul>
+<h3 id="jekyll-1">jekyll的模板</h3>
 
-<p><img src="http://processors.wiki.ti.com/images/9/92/Config_flow1.png" alt="XDCTools" /></p>
+<p>jekyll模板就是带有变量的html格式文件。jekyll的模板用<a href="http://liquidmarkup.org/">Liquid</a>语言描述，定义了页面框架。Liquid通过（Output）和标签（Tag）两种标记（markup），即可描述页面的结构，具体可参阅<a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid for Designers</a>。jekyll对Liquid的标签进行了<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">扩展</a>。Liquid模板语言对模板数据描述（当然也需要html），生成了站点页面的骨架。Liquid所需要的jekyll的<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>在这儿可以找到。除此之外，<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>定义的变量也可以作为模板数据。</p>
 
-<p><a href="http://www.ti.com/pdfs/wtbu/ti_hlos.pdf" title="Telephony software: the hidden glue in an HLOS-based smartphone">HLOS</a>: High-Level Operating System.</p>
+<h3 id="jekyll-2">jekyll的数据</h3>
 
-<p>RTOS: Real-Time Operating System. </p>
+<p>jekyll的数据是用<a href="http://daringfireball.net/projects/markdown/">markdown</a>、<a href="http://textile.sitemonks.com/">textile</a>等标记语言写的文档。这些格式的文档解析为html格式后，注入jekyll模板的<code>&#123;&#123; content &#125;&#125;</code>，就有了网站的页面。jekyll支持的markdown解析器（将markdown转换为html）有：<span id="markdown"></span><a href="https://github.com/rtomayko/rdiscount/">rdiscount</a>、<a href="http://kramdown.rubyforge.org/">kramdown</a>、<a href="https://github.com/tanoku/redcarpet/">redcarpet</a>、<a href="http://maruku.rubyforge.org/">maruku</a>（jekyll默认）、<a href="http://deveiate.org/projects/BlueCloth/">bluecloth</a>。为了方便处理<script type="math/tex">\LaTeX</script>公式，也有人hack了jekyll，<a href="http://yangzetian.github.com/2012/04/15/jekyll-pandoc/">将pandoc作为markdown的解析器</a>。一个更方便的方法是通过<a href="https://github.com/dsanson/jekyll-pandoc-plugin">jekyll-pandoc-plugin</a>插件，启用pandoc解析器。这些hack后的jekyll启用pandoc当然不会在github上生效，只能用于本机解析后，上传静态页面。</p>
 
-<p>XDC: eXpress DSP Components</p>
+<h3 id="jekyll-3">jekyll的美化</h3>
 
-<p>GPP: General-Purpose Processors.</p>
+<p>美化就是用CSS和javascript对html描述的页面进行渲染，美化网页。<a href="http://twitter.github.com/bootstrap/">twitter bootstrap</a>是一套极易上手的页面美化工具。twitter bootstrap还提供了<a href="http://960.gs/">960网格布局</a>，只要按照它约定的方式对页面结构定义、对html标签的<code>class</code>命名，网页的布局美化可谓快又好。</p>
 
-<p>DSP/BIOS:</p>
+<h2 id="jekyll-bootstrap">在jekyll-bootstrap基础上搭建网站</h2>
 
-<p>SYS/BIOS: </p>
+<p>jekyll是一套根据相应规程生成网站的工具。如果按照这套法则，从头开始仍然麻烦。<a href="http://jekyllbootstrap.com/">jekyll-bootstrap</a>就是一个jekyll构建站点的demo，并提供了一些<a href="http://jekyllbootstrap.com/api/bootstrap-api.html">额外的api增强jekyll的功能</a>，在此基础上构建站点相当快捷容易。除此之外，<a href="http://octopress.org/">octopress</a>也是基于jekyll上的不错的工具套件。</p>
 
-<p>DSP/BIOS™ LINK(<strong>END OF LIFE</strong>): 用于GPP与DSP通信。</p>
+<h3 id="section">目录结构</h3>
 
-<p><a href="http://processors.wiki.ti.com/index.php/SysLink_UserGuide" title="SysLink UserGuide">SysLink</a>: The SysLink product provides software connectivity between multiple processors. SysLink is the next generation of DSP Link. The SysLink product is used in conjunction with the IPC product. <a href="http://omappedia.org/wiki/Syslink_Project" title="Syslink Project">SysLink is the next generation IPC driver developed for OMAP4 and beyond</a>. <a href="http://processors.wiki.ti.com/index.php/SysLink_FAQs" title="SysLink FAQs">The SysLink and IPC product are complementary</a>. SysLink comprises of the following sub-components:</p>
+<p>jekyll-bootstrap的<a href="https://github.com/mojombo/jekyll/wiki/usage">目录结构</a>中，只需要将markdown文档放到_posts目录下，<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令），即可在http://localhost:4000看到页面内容，见<a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">快速入门示范</a>。_posts中的数据文档，通过注入_layouts定义的模板（_layouts的模板一般指向了_includes/themes中的模板），渲染页面的CSS和JS文档在assets/themes中，一些解析markdown用到的ruby插件放在_plugins目录。通过<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令）最终生成的静态页面在_sites目录。在更新github上站点的时候，<code>git push</code>可以不必推送_sites目录，将页面的解析留给github，这样做的前提条件是本地未启用自定义插件，_config.yml设置<code>safe = true</code>进行解析。如果本地启用了自定义插件，解析任务就不能交给github做了，上传本地解析好的静态页面到github即可。</p>
 
-<ul>
-  <li>System Manager        </li>
-  <li>Processor Manager        </li>
-  <li>Inter-Processor Communication (IPC)       </li>
-  <li>Utility modules  </li>
-</ul>
+<p>jekyll-bootstrap的_includes/JB中有一些常用的工具，用于列表显示、评论等，可参看_includes/themes中主题的相关html文档学习。</p>
 
-<p>The common header files for IPC implemented by both the IPC product (on RTOS-side) and the SysLink product (on HLOS-side) are available within ti/ipc package.
-The SysLink product, in addition to implementing the HLOS-side of all IPC modules available within the RTOS IPC product, adds the following: ProcMgr, FrameQ (HLOS &amp; RTOS), RingIO (HLOS &amp; RTOS).</p>
+<p>_includes/themes中的主题一般包含default.html、post.html和page.html三个文档。default.html定义了网站的最上层框架（模板），post.html和page.html是其子框架（模板）。<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#posts_and_pages">post和page有别</a>；<code>rake page</code>命令生成的页面按page.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: page</code>；<code>rake post</code>命令生成的页面按post.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: post</code>。生成好的html子页面通过default.html的<code>&#123;&#123; content &#125;&#125;</code>变量调用，生成整个页面。</p>
 
-<p>Some of the key features of SysLink are:    </p>
+<h3 id="section-1">自定义</h3>
 
-<ul>
-  <li>Messaging: Ability to exchange fixed size control messages with Co-Processors
-Dynamic memory management: Ability to dynamically map files to Co-Processor’s address space</li>
-  <li>Dynamic loading: Ability to dynamically load new components on Co-Processors at run time</li>
-  <li>Power Management: Static and dynamic power management for DSP</li>
-  <li>Zero-copy shared memory: Ability to “pass” data buffers to other processors by simply providing its location in shared memory.</li>
-  <li>TILER-based memory allocation: Allocate 2-D buffers with mirroring and rotation options, suitable for video</li>
-  <li>Remote function calls: One processor can invoke functions on a remote processor.</li>
-</ul>
+<p>站点生成需要用到_config.yml<a href="https://github.com/mojombo/jekyll/wiki/configuration">配置文件</a>，<code>markdown</code>变量定义了解析markdown用的<a href="#markdown">解析器</a>。当然也可自定义变量，比如在<code>JB:</code>下定义一个二级变量<code>RSS_path: /atom.xml</code>（注意缩进）。在html页面中，就可以用<code>&#123;&#123; site.JB.RSS_path &#125;&#125;</code>得其值。<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中也可以自定义变量，其中的<code>title</code>变量可以用<code>&#123;&#123; page.title &#125;&#125;</code>访问到。也就是说，站点的全局变量在_config.yml中定义，用<code>site.</code>访问，页面的变量在<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中定义，用<code>page.</code>访问，更多的模板变量可参考<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>。</p>
 
-<p>SysLink Architecture：
-<img src="http://omappedia.org/images/3/38/SysLink_architecture.png" alt="SysLink Architecture" /></p>
+<p>_includes/JB中的插件可以在_includes/custom中重新自定义，方法可仿照_includes/JB中的。如果要_includes/custom中的插件生效，需要在_config.yml中将相应的变量设为<code>custom</code>，设置线索可见_includes/JB中的插件。</p>
 
-<p>SysLink Usage：
-<img src="http://omappedia.org/images/c/cb/RCM_usage.png" alt="SysLink Usage" /></p>
+<h3 id="section-2">小结</h3>
 
-<p>实现ARM和DSP之间通信的底层软件，Codec Engine就是建立在这个底层软件之上。</p>
+<p><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#how_jekyll_generates_the_final_static_files">jekyll生成静态页面的过程</a>就是先搜集站点的原始数据，通过计算，生成用于页面显示的结构化数据（最终的html静态页面）。结构化数据来源有两方面：一方面是文件中的配置文件，如_config.yml和markdown的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>；另一方面通过目录结构和jekyll定义的解析法则，产生数据。站点的全局数据用<code>site.</code>访问，页面数据用<code>page.</code>访问。有了这些结构化的数据后，jekyll再按照用户定义的模板，用相应的结构化数据替换模板中的变量。用户编写的插件是为了计算出满足用户特定需求的数据，但是这些自定义插件不能不github的jekyll解析支持。</p>
 
-<p><em>Note, SysLink 2.x is intended for SYS/BIOS 6 users and does not support WinCE. DSP/BIOS 5 users (including most DVSDK users) should continue to use DSP Link releases!</em> </p>
+<h2 id="jekyll-4">jekyll的装饰部件</h2>
 
-<p><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ipc/index.html" title="IPC Product Releases">IPC</a>: Inter-Processer Communication. IPC只能在运行SYS/BIOS的CPU上使用。</p>
+<p>这些装饰部件中，如果本地的jekyll使用了自定义的插件，github的jeklly解析器不会支持这些自定义插件。</p>
 
-<p><em>Note, IPC 3.x is incompatible with SysLink. SysLink and most EZSDK users should continue to use IPC 1.x releases!</em></p>
+<h3 id="section-3">图片与文件</h3>
 
-<p>EZSDK:</p>
+<p>站点需要的图片直接存放在<code>assets/images</code>文件夹中，可以在_config.yml中定义一个形如<code>img_url: http://jiyeqian.github.com/assets/images</code>的变量，然后在markdown文件需要用到图片的地方插入类似<code>![git代码库结构](&#123;&#123; site.img_url &#125;&#125;/2012-06-27-git-transport.png)</code>的代码即可显示图像。</p>
 
-<p>DVSDK: Digital Video Software Development Kit.</p>
+<p>如果图和文件较多，这里有一些<a href="/2011/09/web-cloud-life/">图片和文件托管的网络资源</a>供参考。</p>
 
-<p>RDK:
-<img src="http://www.deyisupport.com/cfs-file.ashx/__key/communityserver-discussions-components-files/39/6087.RDK.jpg" alt="RDK框架图" /></p>
+<h3 id="section-4">代码高亮</h3>
 
-<p>IPNC RDK: The IPNC RDK is a Reference Design Kit for TI812x platform and is optimized for IPNC multi-resolution applications. RDK allows a user to create different multi-resolution data flows involving video camera, capture, video processing (VS, Noise Filter, Encode, LDC etc) and video display. The IPNC-RDK is implemented using TI’s Multi-Channel “Link” FrameWork (McFW).<br />
-NDK: Network Developers Kit.</p>
+<p>网页代码高亮的一般原理是先用JS或其它脚本语言对代码的进行解析，并提根据不同程的序语言提取关键字、变量、常量、注释，然后将代码层次结构用html标签描述，最后用CSS着色。</p>
 
-<p>GLSDK:</p>
+<p>代码高亮的方案有很多，比如：<a href="https://gist.github.com/1027674">转帖gist代码的插件</a>，<a href="http://google-code-prettify.googlecode.com/svn/trunk/README.html">google-code-prettify</a>，<a href="https://github.com/rsim/blog.rayapps.com/blob/master/_plugins/pygments_cache_patch.rb">利用pygments高亮代码的插件</a>，octopress的<a href="http://octopress.org/docs/plugins/backtick-codeblock/">backtick-codeblock</a>，如果需要在线展示html、js、CSS及其效果，当然还是用<a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsfiddle插件</a>。</p>
 
-<p><a href="http://processors.wiki.ti.com/index.php/MCSDK_Image_Processing_Demonstration_Guide" title="Multicore Software Development Kit Image Processing Demonstration Guide">MCSDK</a>: MultiCore Software Development Kit.</p>
+<p>pygments和rouge是github可支持的代码高亮方案(不支持coderay高亮)。利用pygments，须先在_config.yml中设置<code>pygments: true</code>，并嵌入生成的相应CSS到页面的<code>&lt;head&gt;&lt;/head&gt;</code>之中。   </p>
 
-<p>AVSDK:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pygmentize -S default -f html <span class="p">|</span> sed <span class="s1">&#39;s/^/.highlight code /g&#39;</span> &gt; default.css</code></pre></div>
 
-<p>QNX SDK:</p>
+<p>在pygments的CSS选择器前都加上<code>.highlight code</code>，防止pygments的CSS影响<a href="#mathjax">mathjax</a>公式的CSS。<a href="http://www.stehem.net/2012/02/14/how-to-get-pygments-to-work-with-jekyll.html">pygments也可能会和bootstrap.min.css冲突</a>，需要修改css。上面的<code>pygmentize</code>命令就是pygments代码高亮的效果。代码高亮的highlight标签使用方法<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">可以参考这里</a>。</p>
 
-<p>MFP: Multimedia Framework Products.</p>
+<p>另一个比较特殊的代码高亮插件是<a href="http://octopress.org/docs/plugins/include-code/">include-code</a>，可以直接显示目录中的代码文件，在_config.yml中设置好<code>code_dir</code>参数后，直接用<code>&#123;% include_code excerpt.rb %&#125;</code>，即可显示高亮代码（布局可自己定义，代码高亮的CSS可以用pygments的）。<a href="https://gist.github.com/2890453#working-with-code-partials">pygments也支持类似的方法</a>，但效果不太好。</p>
 
-<p>McFW: Multi-Channel “Link” FrameWork</p>
+<p><span id="mathjax"></span></p>
 
-<p><a href="http://en.wikipedia.org/wiki/XDAIS_algorithms" title="XDAIS algorithms">xDAIS</a>: eXpress DSP Algorithm Interoperability Standard. The standard was first introduced in 1999 and was created to facilitate integration of DSP algorithms into systems without re-engineering cost. The XDAIS standard address the issues of algorithm resource allocation and consumption on a DSP. Algorithms that comply with the standard are tested and awarded an “eXpressDSP-compliant” mark upon successful completion of the test. For instance, all XDAIS compliant algorithms must implement an Algorithm Interface, called IALG. For those algorithms utilizing DMA, the IDMA interface must be implemented. Further, specific rules are provided for each family of TI DSP. DSP算法工程师要写出能被ARM通过Codec Engine调用的算法，必须保证自己的算法接口符合这个标准。</p>
+<h3 id="latex"><script type="math/tex">\LaTeX</script>公式</h3>
 
-<p>xDM: XDAIS-DM(Digital Media). An extension of XDAIS, a superset of the XDAIS standard.</p>
+<p>github可支持的<script type="math/tex">\LaTeX</script>方案需要绕过自定义插件，利用类似<a href="http://www.mathjax.org/">mathjax</a>的javascript方案或采用支持<script type="math/tex">\LaTeX</script>的markdown解析器（比如<a href="http://maruku.rubyforge.org/">maruku</a>）。</p>
 
-<p>IALG Interface is a set of standard interface functions exported by an XDAIS algorithm.</p>
+<p><a href="http://www.mathjax.org/">mathjax</a>通过javascript的方式生成<script type="math/tex">\LaTeX</script>公式可以参考<a href="http://chen.yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用<script type="math/tex">\LaTeX</script></a>，不过，不必把markdown解析引擎设置为kramdown。当markdown解析引擎为kramdown时，只需要在页面中插入下面这段代码：</p>
 
-<p><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/fc/index.html" title="Framework Components Product Releases">FC</a>: Framework Components. FC is comprised of XDAIS algorithm resource managers and functional interfaces, which provides libraries/APIs to grant resources (e.g. memory and DMA resources) to algorithms using the interfaces (IALG, IDMA3) defined in XDAIS.     </p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
 
-<ul>
-  <li>DSKT2 - used for creating and interacting with XDAIS algorithms.    </li>
-  <li>RMAN - General purpose resource manager (Introduced in FC 2.00)      </li>
-  <li>ECPY - DMA-based memory copy functional library (Introduced in FC 3.20)      </li>
-  <li>DMAN3 - used for sharing QDMA channels from an EDMA3 device with XDAIS algorithms. <em>(Deprecated as of FC 3.23)</em>       </li>
-  <li>ACPY3 - DMA-based memory copy functional library. <em>(Deprecated as of FC 3.23)</em> </li>
-</ul>
+<p>下面这段代码：</p>
 
-<p><em>Note, FC 3.x is intended for SYS/BIOS 6 users. DSP/BIOS 5 users (including most DVSDK users) should continue to use FC 2.x releases!</em>     </p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">$$ 
+e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
+$$</code></pre></div>
 
-<p><a href="http://processors.wiki.ti.com/index.php/Codec_Engine" title="Codec Engine">CE</a>: Codec Engine. Codec Engine is a set of APIs that you use to instantiate and run XDAIS algorithms. A VISA interface is provided as well for interacting with XDM-compliant XDAIS algorithms.</p>
+<p>显示的效果：
+<script type="math/tex"> 
+e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
+</script>
+显示行内公式<script type="math/tex">\alpha + \beta</script>的代码如下：</p>
 
-<p><em>Note, CE 3.x is intended for SYS/BIOS 6 users and does not yet support WinCE. WinCE and DSP/BIOS 5 users (including most DVSDK users) should continue to use CE 2.x releases!</em></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html">$$\alpha + \beta$$</code></pre></div>
 
-<p><a href="http://processors.wiki.ti.com/index.php/Codec_Engine_Overview" title="Codec Engine Overview">DVSDK, CE, FC and xDAIS</a>: </p>
+<p>但是kramdown的解析引擎和转帖gist代码的插件、直接高亮文件中代码的插件include-code有冲突。</p>
 
-<ul>
-  <li>[Bottom-up] Start with the XDAIS and XDM products, which define a consistent set of algorithm interfaces, and enable the software stack above. Stepping up the stack, there is Framework Components (FC). FC provides libraries/APIs to grant resources (e.g. memory and DMA resources) to algorithms using the interfaces (IALG, IDMA3) defined in XDAIS. Then, we step up into Codec Engine (CE). CE enables applications to easily invoke these algorithms (using FC under the covers). And finally, the big one, the DVSDK. This bundles all of the above and more, and provides examples of fully running applications - real codecs, real I/O, etc.</li>
-  <li>[Top-down] A core component of the DVSDK is the Codec Engine (CE). Looking further down the stack is Framework Components (FC). And finally, FC fundamentally operates on algorithms which comply with the XDAIS and XDM. </li>
-</ul>
+<p>利用<a href="https://gist.github.com/834610">mathjax插件</a>定义的新标签，也可插入<script type="math/tex">\LaTeX</script>公式。这段代码<code>&#123;% math %&#125; e&#94;x = \sum\_{n=0}&#94;\infty \frac{x&#94;n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)&#94;n &#123;% endmath %&#125;</code>也可显示和上面一样的公式，利用标签<code>&#123;% m %&#125; \alpha + \beta &#123;% em %&#125;</code>可显示行内公式<script type="math/tex">\alpha + \beta</script>。mathjax还<a href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers">支持公式编号</a>，引用公式\eqref{eq:sample}很方便。</p>
 
-<p><a href="http://processors.wiki.ti.com/index.php/How_is_SYS/BIOS_related_to_XDCtools_and_RTSC%3F" title="How is SYS/BIOS related to XDCtools and RTSC?">How is SYS/BIOS related to XDCtools and RTSC?</a></p>
+<p>\begin{equation}
+  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
+  \label{eq:sample}
+\end{equation}</p>
 
-<p><a href="http://processors.wiki.ti.com/index.php/Category:UIA" title="Category:UIA">UIA</a>: Unified Instrumentation Architecture. UIA defines a set of tools, APIs, transports, interfaces and guidelines that enable developers to instrument embedded software in a way that is portable and flexible, and enables the creation of advanced tooling features that can be used both in the lab and in the field.</p>
+<p>另外一些支持<script type="math/tex">\LaTeX</script>公式的方案可参考：Kramdown的<a href="http://kramdown.rubyforge.org/syntax.html#math-blocks">Math Blocks</a>、<a href="http://maruku.rubyforge.org/math.xhtml">Maruku的公式支持</a>。 其他和学术写作相关的插件有：<a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>、<a href="https://github.com/archome/jekyll-citation">jekyll-citation</a>、<a href="https://github.com/pablooliveira/bibjekyll">bibjekyll</a>。</p>
 
-<p><a href="http://processors.wiki.ti.com/index.php/Multicore_System_Analyzer" title="Multicore System Analyzer">MCSA</a>: Multicore System Analyzer. System Analyzer is a real-time tool for analyzing, visualizing and profiling application running on single or multi core systems.</p>
+<h3 id="section-5">其它</h3>
 
-<p><em>Multicore System Analyzer (MCSA) has recently been renamed to “System Analyzer”.</em>  </p>
+<p>显示相关文件的插件用<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin">related_posts-jekyll_plugin</a>、<a href="https://github.com/sebcioz/jekyll-only_first_p">只显示第一段</a>的插件，可解析类似wordpress的<code>&lt;!--more--&gt;</code>标记的<a href="https://gist.github.com/986665">excerpt插件</a>，美化引用格式的<a href="http://octopress.org/docs/plugins/blockquote/">blockquote插件</a>。<a href="http://octopress.org/docs/plugins/">octopress的插件</a>可以直接用于jekyll中。</p>
 
-<p>VPSS: </p>
+<h3 id="section-6">小结</h3>
 
-<p>DMVAL: Digital Media Video Analytics Library</p>
+<p>要将jekyll的页面托管在github时，推荐尽量不用github之外的插件。代码高亮用pygments，markdown的解析器用kramdown更利于对公式的解析，如果还要其它一些美化，就直接插html代码吧！</p>
 
-<p>SPIs: System Programming Interfaces.</p>
+<h2 id="section-7">一些技巧</h2>
 
-<p>MCASP: Multi-Channel Audio Seria Port.</p>
+<h3 id="gist">直接插入gist代码</h3>
 
-<p>MCBSP: Multi-Channel Buffered Seria Port.</p>
+<p>因为markdown的语法可以兼容html，在情非得已的情况下，直接查html代码。如果转帖gist的代码，直接在markdown文件中插入：</p>
 
-<p>HDVPSS: High-Definition Video Process Sub System. 主要用于视频的capture、deinterlacing、scaler、up/down sample、graphics、display等，由Media Controller Dula ARM Cortex-M3系统中的VPSS-M3控制。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
 
-<p>HDVICP2: High-Definition Video Image Coprocesser模块，是一个硬核编解码加速器，主要用于视频编解码，支持H.264、MPEG、MJPEG、AVS等协议，由Media Controller Dula ARM Cortex-M3系统中的VIDEO-M3控制。</p>
+<p>即可得：
+<script src="https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb"></script></p>
 
-<p>ISS: Image Sub System，是IPNC类产品中的视频前端接口，主要用于前端Sensor 的Capture、resize、scaler、H3A等，也是由Media Controller Dula ARM Cortex-M3系统中的VPSS-M3控制（更正：此处根据代码猜测ISS既可以由VIDEO-M3控制也可以由VPSS-M3控制，理由是：在IPNC的RDK中ISS是由VPSS-M3控制，但在DVR RDK中ISS是由VIDEO来控制的。从TI对M3功能的规划来说，更倾向于VPSS-M3控制，理由：VPSS-M3主要负责采集显示等功能，而VIDEO侧重于编解码控制）。</p>
+<h3 id="section-8">页内跳转</h3>
 
-<p>OSAL: Operating System Abstraction Library.</p>
+<p>为了方便页内快速跳转，可建立空内容的锚点。比如</p>
 
-<p>OCMC: On-Chip Memory Controller</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;jekyll-and-github&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
 
-<h2 id="ti-">TI 芯片系列</h2>
+##jekyll与github的关系</code></pre></div>
 
-<p><img src="http://www.deyisupport.com/resized-image.ashx/__size/550x0/__key/CommunityServer-Discussions-Components-Files/39/7002.36.bmp" alt="DM8148命名规则" />
-硅版本号在做引导程序的时候可能会用到，需注意配置要求。</p>
+<p>既可用</p>
 
-<h2 id="sysbios">SYS/BIOS</h2>
+<div class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></div>
 
-<h3 id="cachemar">Cache_MAR###_###设置</h3>
+<p>实现页内跳转，试试，<a href="#jekyll-and-github">回去看看</a>。如果用的是kramdown解释器，上例中空锚点行下须有一空行。</p>
 
-<ul>
-  <li>功能：通过设置，使得外存（external memory）地址（对应的存储区）是可缓存的（cacheable）<sup id="fnref:sysbios1"><a href="#fn:sysbios1" class="footnote">1</a></sup>。</li>
-  <li>原理：Cache.MAR128_159可设置的地址范围是0x80000000 - 0x9FFFFFFF，该地址对应存储区是512M（0x9FFFFFFF-0x80000000+0x01=512M），Cache.MAR128_159的类型是32位的UInt32（159-128+1=32），32bit掩码，每bit可设置存储区大小16M（512/32＝16）<sup id="fnref:sysbios2"><a href="#fn:sysbios2" class="footnote">2</a></sup>。</li>
-  <li>实例：当Cache.MAR128_159＝0x1时，表示0x80000000开始的16M存储区可被缓存（MAR的低位对应低地址0x80000000还是高地址0x9FFFFFFF有待考证？？）。<a href="http://blog.csdn.net/emilyhuping/article/details/8602550" title="TI dsp的memory映射cache">每个F代表64M可缓存的区域，Cache.MAR128_159=0x000000FF代表从0x80000000开始的128M区域可被缓存</a>（64 * 2 = 128）。</li>
-</ul>
+<h3 id="section-9">表格不断行</h3>
 
-<h2 id="linux-utilsplinuxutils"><a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/index.html" title="Linux Utils Overview">Linux Utils</a></h2>
+<p>表格某一栏不断行的处理：</p>
 
-<h3 id="cmempcmem1"><a href="http://processors.wiki.ti.com/index.php/CMEM_Overview" title="CMEM Overview">CMEM</a></h3>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;white-space:nowrap&quot;</span><span class="nt">&gt;</span>git clone username@host:/path/to/repository<span class="nt">&lt;/span&gt;</span></code></pre></div>
 
-<p>CMEM是确保能分配到<em>连续物理内存</em>的一组API，同时提供虚拟地址到物理地址的转换，以及用户模式的高速缓存（cache）管理。连续物理内存用于多核之间（DSP、ARM）的共享缓存（buffer），以及硬件加速器、DMA。</p>
+<!---
+点击[到这里看效果]()。
+--->
 
-<p>在操纵连续物理内存之前，需要安装内核模块<code>cmemk.ko</code>初始化可连续分配物理内存的区域：</p>
+<h3 id="section-10">引用本站其它网页</h3>
 
-<div class="highlight"><pre><code class="bash">/sbin/insmod cmemk.ko <span class="nv">pools</span><span class="o">=</span>4x30000,2x500000 <span class="nv">phys_start</span><span class="o">=</span>0x0 <span class="nv">phys_end</span><span class="o">=</span>0x3000000
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{% post_url your_markdown_file_name %}</code></pre></div>
 
-<ul>
-  <li>phys_start和phys_end必须是16进制，pools必须是10进制（会用到x，不能用16进制）。</li>
-  <li>上例作用：初始化两个内存池（pool），pool的id分别为0、1，第一个是4个30000字节的buffer，第二个是2个500000字节的buffer，所有buffer的起始地址位于0x0~0x3000000的区域。</li>
-  <li>由于存在对齐限定，每个pool占用的空间会大于或等于内核模块命令指定的空间（Pool buffers are aligned on a module-dependent boundary, and their sizes are rounded up to this same boundary. This applies to each buffer within a pool. ）。</li>
-  <li>可通过命令<code>cat /proc/cmem</code>查看CMEM管理pool和buffer的状态。</li>
-</ul>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>李纯明博士报告安排</title>
+      <link href="http://jiyeqian.bitbucket.org/2012/06/lab-notice" />
+      <pubdate>2012-06-27T00:00:00+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://jiyeqian.bitbucket.org/2012/06/lab-notice</guid>
+      <content:encoded>&lt;![CDATA[<blockquote>
 
-<p>CMEM 2.00加入了对分配堆内存（heap）的支持，堆内存的边界对齐依赖于模块实现和用户设定（用户设定大于模块定义边界时，用户设定才有效）。可用堆内存的总大小是指定物理地址区域内存减去内存池占用内存的大小（phys_end - phys_start + 1 - size_of_pools）。使用堆内存的缺点是比内存池容易产生碎片。通过几轮分配释放过程，内存碎片问题可能导致再也无法成功分配内存，这通常导致codec creation failure。在开发测试阶段推荐使用堆内存，在产品实现阶段推荐使用内存池。</p>
-
-<p>CMEM 2.23 增加了程序退出时清理（clean up）未释放内存（buffer）的功能。</p>
-
-<p><code>cmemk.ko</code>的其他参数<sup id="fnref:CMEM1"><a href="#fn:CMEM1" class="footnote">3</a></sup>：</p>
-
-<ul>
-  <li><code>useHeapIfPoolUnavailable=[0|1]</code>：when set to 1, will cause pool-based allocations to fallback to a heap-based allocation if no pool buffer of sufficient size is available.</li>
-  <li><code>allowOverlap=[0|1]</code>： when set to 1, causes cmemk.ko to not fail when it detects that a CMEM memory block location conflicts with the Linux kernel memory, and instead an informational message is printed on the console. </li>
-</ul>
-
-<p>内存分配函数<sup id="fnref:CMEM1:1"><a href="#fn:CMEM1" class="footnote">3</a></sup>：</p>
-
-<div class="highlight"><pre><code class="c"><span class="kt">void</span><span class="o">*</span> <span class="n">CMEM_alloc</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="n">CMEM_AllocParams</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span>
-</code></pre></div>
-
-<ul>
-  <li><code>size</code>：分配buffer的大小。</li>
-  <li><code>params</code>：CMEM_AllocParams有三个元素。<code>type</code>：CMEM_HEAP, CMEM_POOL, or CMEM_CMA；<code>flags</code>：CMEM_CACHED or CMEM_NONCACHED；<code>alignment</code>：only used for heap allocations, must be power of 2。</li>
-  <li>之前必须先调用<code>CMEM_init()</code>。</li>
-</ul>
-
-<p>Pool allocations can be requested explicitly by pool number, or more generally by just a size. For size-based allocations, the pool which best fits the requested size is automatically chosen. </p>
-
-<h2 id="ipc">IPC</h2>
-
-<h3 id="notify-moduletisdoipcnotify-module-ipc1">Notify module/ti.sdo.ipc.Notify module <sup id="fnref:IPC1"><a href="#fn:IPC1" class="footnote">4</a></sup></h3>
-
-<p>The ti.sdo.ipc.Notify module manages the multiplexing/demultiplexing of software interrupts over hardware interrupts.</p>
-
-<p>调用任何Notify的API之前，必须先调用<code>Ipc_start()</code>函数。如果<code>Ipc.setupNotify</code>设为<code>FALSE</code>，须在<code>Ipc_start()</code>之外调用<code>Notify_start()</code>。</p>
-
-<p>为了接收消息，每个处理器要通过<code>Notify_registerEvent()</code>注册一个或多个回调函数到eventId，回调函数的格式：</p>
-
-<div class="highlight"><pre><code class="c"><span class="n">Void</span> <span class="nf">cbFxn</span><span class="p">(</span><span class="n">UInt16</span> <span class="n">procId</span><span class="p">,</span> <span class="n">UInt16</span> <span class="n">lineId</span><span class="p">,</span> <span class="n">UInt32</span> <span class="n">eventId</span><span class="p">,</span> <span class="n">UArg</span> <span class="n">arg</span><span class="p">,</span> <span class="n">UInt32</span> <span class="n">payload</span><span class="p">);</span>
-</code></pre></div>
-
-<p>The <code>Notify_registerEvent()</code> function (like most other Notify APIs) uses a ti.sdo.utils.MultiProc ID and line ID to target a specific interrupt line to/from a specific processor on a device.</p>
-
-<div class="highlight"><pre><code class="c"><span class="n">Int</span> <span class="n">status</span><span class="p">;</span>
-<span class="n">armProcId</span> <span class="o">=</span> <span class="n">MultiProc_getId</span><span class="p">(</span><span class="s">&quot;ARM&quot;</span><span class="p">);</span>
-<span class="n">Ipc_start</span><span class="p">();</span>
-<span class="cm">/* Register cbFxn with Notify. It will be called when ARM</span>
-<span class="cm"> * sends event number EVENTID to line #0 on this processor.</span>
-<span class="cm"> * The argument 0x1010 is passed to the callback function. */</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">Notify_registerEvent</span><span class="p">(</span><span class="n">armProcId</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">EVENTID</span><span class="p">,</span> <span class="p">(</span><span class="n">Notify_FnNotifyCbck</span><span class="p">)</span><span class="n">cbFxn</span><span class="p">,</span> <span class="mh">0x1010</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">System_abort</span><span class="p">(</span><span class="s">&quot;Notify_registerEvent failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>The line ID number is typically 0 (zero), but is provided for use on systems that have multiple interrupt lines between processors.</p>
-
-<p><code>Notify_registerEvent()</code>可将多个回调函数注册到一个事件（event）。每个事件只注册一个回调函数时，调用<code>Notify_registerEventSingle()</code>可获得更好的性能。一旦事件被注册，远程处理器可通过<code>Notify_sendEvent()</code>发送事件。If the specified event and interrupt line are both enabled, all callback functions registered to the event will be called sequentially.</p>
-
-<div class="highlight"><pre><code class="c"><span class="k">while</span> <span class="p">(</span><span class="n">seq</span> <span class="o">&lt;</span> <span class="n">NUMLOOPS</span><span class="p">)</span> <span class="p">{</span>
-<span class="n">Semaphore_pend</span><span class="p">(</span><span class="n">semHandle</span><span class="p">,</span> <span class="n">BIOS_WAIT_FOREVER</span><span class="p">);</span>
-<span class="cm">/* Semaphore_post is called by callback function*/</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">Notify_sendEvent</span><span class="p">(</span><span class="n">armProcId</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">EVENTID</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">TRUE</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>上例中，<code>seq</code>作为回调函数的参数<code>payload</code>发送（执行回调函数时，<code>payload = seq</code>）。<code>payload</code>固定为32个bit长。<code>Notify_sendEvent()</code>的第5个参数设为<code>TRUE</code>， Notify driver会等待之前发送给相同<code>even ID</code>事件被收到的响应（acknowledgement）。</p>
-
-<h2 id="xdc">XDC</h2>
-
-<h3 id="xdcmakefilexdc1">XDC的Makefile示例<sup id="fnref:XDC1"><a href="#fn:XDC1" class="footnote">5</a></sup></h3>
-
-<div class="highlight"><pre><code class="makefile"><span class="nv">CGTOOLS</span> <span class="o">=</span> C:/CCStudio_v3.3/C6000/cgtools
-
-<span class="nv">CC</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/bin/cl6x
-<span class="nv">LNK</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/bin/lnk6x
-<span class="nv">RTS</span> <span class="o">=</span> <span class="k">$(</span>CGTOOLS<span class="k">)</span>/lib/rts6400.lib
-
-<span class="nv">CONFIG</span> <span class="o">=</span> mycfg
-<span class="nv">XDCTARGET</span> <span class="o">=</span> ti.targets.C64
-<span class="nv">XDCPLATFORM</span> <span class="o">=</span> ti.platforms.sim6xxx
-
-<span class="nf">%/linker.cmd %/compiler.opt </span><span class="o">:</span> <span class="m">%.cfg</span>
-	xs xdc.tools.configuro -c <span class="k">$(</span>CGTOOLS<span class="k">)</span> -t <span class="k">$(</span>XDCTARGET<span class="k">)</span> -p <span class="k">$(</span>XDCPLATFORM<span class="k">)</span> <span class="nv">$&lt;</span>
-
-<span class="nf">%.obj </span><span class="o">:</span> <span class="m">%.c $(CONFIG)/compiler.opt</span>
-	<span class="k">$(</span>CC<span class="k">)</span> -@<span class="k">$(</span>CONFIG<span class="k">)</span>/compiler.opt -c <span class="nv">$&lt;</span>
-
-<span class="nf">hello.out </span><span class="o">:</span> <span class="m">hello.obj $(CONFIG)/linker.cmd</span>
-	<span class="k">$(</span>LNK<span class="k">)</span> -o hello.out -c hello.obj <span class="k">$(</span>CONFIG<span class="k">)</span>/linker.cmd <span class="k">$(</span>RTS<span class="k">)</span>
-</code></pre></div>
-
-<h3 id="xdc-1">XDC的配置</h3>
-
-<p>Tconf was the precursor to XDC. The configuration file uses simple JavaScript (EcmaScript) syntax. For more information about configuration, see the XDC Consumer User’s Guide (SPRUEX4).</p>
-
-<p>查看帮助文档：</p>
-
-<div class="highlight"><pre><code class="bash">xs xdc.tools.cdoc.sg
-</code></pre></div>
-
-<p><code>config.bld</code> 中记录了系统的内存等资源的分配，分配方法结合芯片的datasheet（例如tms320dm8127）中Memory Map Summary章节。</p>
-
-<p>大概流程：<code>*.bld + *.cfg ==&gt; *.cmd</code>。</p>
-
-<p>最终生成执行文件的时候，可以在*.map中查看响应配置是否一致。</p>
-
-<h2 id="edma">EDMA</h2>
-
-<p>The EDMA allows data transfer to/from any addressable memory spaces.</p>
-
-<p>EDMA <a href="http://downloads.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/psp/edma3_lld/edma3_lld_1_03/edma3_lld_1_03_00/packages/ti/sdo/edma3/drv/docs/html/edma3__drv_8h.html" title="edma3_drv.h File Reference">API</a></p>
-
-<p><a href="http://processors.wiki.ti.com/index.php/TI81XX_PSP_EDMA_Driver_User_Guide">TI81XX PSP EDMA Driver User Guide</a></p>
-
-<h2 id="cache">Cache</h2>
-
-<h3 id="cachesram">Cache与SRAM</h3>
-<p>Cache 是位于 CPU与主存储器DRAM（Dynamic RAM，动态存储器）之间的少量超高速静态存储器 SRAM（static RAM），其是为了解决 CPU 与 主存之间速度匹配问题而设置的，不能由用户直接寻址访问。SRAM是存取速度较快、价格较高的硬件，Cache是基于SRAM的告诉IO系统。SRAM可以直接寻址访问。如果要使用L1DSRAM或L1PSRAM， 则应该相应减小cache段大小。L2 is configured as SRAM (addressable internal memory). L2 cache can be enabled in the program code by issuing the appropriate chip support library(CSL). </p>
-
-<p>Cache大小可通过cmd设置，那些外存可被Cache可通过Mar设置。</p>
-
-<p>我的理解是SRAM是物理存储，速度快、价格高，Cache是基于高速SRAM的一套系统高速IO机制。SRAM可分区（通过cmd文件）：分为Cache ＋ SRAM，Cache的使用由系统控制，SRAM可由用户控制，比如把相应的段塞入；掩码MAR设置的作用是哪些内存对应的内容可被系统Cache！</p>
-
-<h3 id="dont-forget-the-mar-bits">Don’t forget the MAR bits!</h3>
-
-<p>By setting the MAR register to 1 you are telling the 64x+ core that it is allowed to cache data in the corresponding 16MB section of memory. If, for example, you did not set any of the MAR bits corresponding to your DDR, then none of the data in DDR would actually get cached! So as you can imagine, this is a very important step.</p>
-
-<p>You only need to configure the MAR bits for the external memory. When it comes to the internal memory the corresponding MAR bits are already set for you (i.e. L2 SRAM can be allocated in L1D cache). Furthermore you would never want to turn them off as there is no need since data coherence is maintained by the hardware between L1D and L2.</p>
-
-<p>The L2 cache is disabled (0k) meaning that all the L2 memory will be available as SRAM. </p>
-
-<p>If you wish to programmatically configure/reconfigure the cache at run-time you should use the BCACHE module that is part of DSP/BIOS. </p>
-
-<p>In the version 7.0 release of the C6000 code generation tools, a new cache layout tool, clt6x, is included. clt6x will take dynamic profile information in the form of a weighted call graph (WCG) and create a preferred function order command file that can be input into the linker to guide the placement of function subsections.</p>
-
-<p><a href="http://processors.wiki.ti.com/index.php/Enabling_64x%2B_Cache">Enabling 64x+ Cache</a><br />
-<a href="http://processors.wiki.ti.com/index.php/Cache_Management">Cache Management</a></p>
-
-<h2 id="section-1">内部指令</h2>
-
-<h3 id="mem4--amem4">_mem4 与 _amem4</h3>
-<p><code>_amem4</code>取值按地址4字节对齐，可以这样理解<code>_amem4(p_str) = _amem4(p_str &amp; 0xfffffffc)</code>。</p>
-
-<h2 id="section-2">代码优化</h2>
-
-<h3 id="section-3">反馈信息</h3>
-
-<p>Known Max Trip Count Factor ＝ MUST_ITERATE的第3参数/Loop Unroll Multiple    <br />
-Known Maximum Trip Count是Known Max Trip Count Factor的整数倍</p>
-
-<h3 id="pipeline">Pipeline</h3>
-
-<div class="highlight"><pre><code class="c"><span class="c1">// N强制设置为8的倍数，自动流水线</span>
-<span class="n">N</span> <span class="o">&amp;=</span> <span class="mh">0xfffff8</span><span class="p">;</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
-
-<span class="c1">// 但是，但是，但是，这样不行：</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="o">&amp;</span> <span class="mh">0xfffff8</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
-</code></pre></div>
-
-<div class="highlight"><pre><code class="c"><span class="c1">// EP_SIZE为常量，自动流水线</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">EP_SIZE</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//...}</span>
-</code></pre></div>
-
-<h2 id="edma-1">EDMA</h2>
-
-<p>Again, as we’ve already documented, use ACPY3 for algorithms and some application code when the need is to only do a memory to memory transfer without synchronization. Use LLD when synchronization, indexing, linking and chaining is desired.</p>
-
-<h2 id="section-4">参考资料</h2>
-<p><a href="http://processors.wiki.ti.com/index.php/Main_Page">Texas Instruments Wiki</a><br />
-<a href="http://www.cnblogs.com/just4fun/archive/2011/03/14/1983292.html">TI DaVinci(达芬奇)入门</a></p>
-
-<div class="footnotes">
   <ol>
-    <li id="fn:sysbios1">
-      <p>TI SYS/BIOS v6.35 Real-time Operating System User’s Guide (spruex3m: 6.6.2 Configure Parameters to Set MAR Registers) <a href="#fnref:sysbios1" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:sysbios2">
-      <p>SYS/BIOS API Documenation <a href="#fnref:sysbios2" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:CMEM1">
-      <p>Linux Utils Application Programming Interface (API)  <a href="#fnref:CMEM1" class="reversefootnote">&#8617;</a> <a href="#fnref:CMEM1:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
-    </li>
-    <li id="fn:IPC1">
-      <p>SYS/BIOS Inter-Processor Communication (IPC) 1.25 User’s Guide (sprugo6e) <a href="#fnref:IPC1" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:XDC1">
-      <p>XDC Getting Started Guide <a href="#fnref:XDC1" class="reversefootnote">&#8617;</a></p>
-    </li>
+    <li>地点在虎溪校区数学与统计学院510；</li>
+    <li>意见和报告相关的交流可在本文后留言。</li>
   </ol>
-</div>
-]]></content:encoded>
+</blockquote>
+
+<h2 id="section">报告1：图像处理中的数学方法</h2>
+<ul>
+  <li>时间：7月2日，星期一 上午10:00  </li>
+  <li>地点：数学与统计学院5楼信息系会议室   </li>
+  <li>摘要：介绍图像处理中的几个重要问题及其数学方法：1. 图像去噪中的Perona-Malik模型，各向异性扩散模型（Anisotropic Diffusion）；2. 图像分割的变分方法；3. 基于光流（Optical Flow）的运动分析及其在图像配准中的应用。这些图像处理问题都可以用类似的变分原理来建模与数值计算。总结图像处理中常用的能量泛函和偏微分方程，及其数值求解过程。 </li>
+</ul>
+
+<p><a href="#leave_a_note">我有话要说⋯⋯</a></p>
+
+<h2 id="section-1">报告2：活动轮廓模型与水平集方法</h2>
+<ul>
+  <li>时间：7月4日，星期三 上午10:00  </li>
+  <li>地点：数学与统计学院5楼信息系会议室  </li>
+  <li>摘要：本报告主要内容包括：1. 经典的参数化活动轮廓模型（Active  Contour Models）；2. 驱动曲线演化的外力，如Gradient Vector Flow；3. 几何活动轮廓模型与水平集方法；4. 基于变分原理的水平集方法；5. 无需重新初始化的变分水平集方法。      </li>
+</ul>
+
+<p><a href="#leave_a_note">我有话要说⋯⋯</a></p>
+
+<h2 id="section-2">报告3：基于区域的图像分割方法与偏移场估计</h2>
+<ul>
+  <li>时间：7月6日，星期五 上午10:00</li>
+  <li>地点：数学与统计学院5楼信息系会议室</li>
+  <li>摘要：本报告先介绍几个经典的基于区域的图像分割模型，包括Mumford-Shah模型与Chan-Vese模型，及其局限性。引入Region-Scalable Fitting模型，通过对分片常量（Piecewise Constant）模型的局部化，克服了经典的基于区域的图像分割模型无法对付intensity inhomogeneity的困难。进一步建立了同时分割与偏移估计的能量极小化模型。    </li>
+</ul>
+
+<p><a href="#leave_a_note">我有话要说⋯⋯</a></p>
+
+<h2 id="section-3">报告4：图像分割的一些新方法</h2>
+<ul>
+  <li>时间：7月9日，星期一 上午10:00  </li>
+  <li>地点：数学与统计学院5楼信息系会议室 </li>
+  <li>摘要：本报告介绍几个最新的图像分割方法，包括全局凸的图像分割模型与Split Bregman，Non-Local Active Contours等；基于Fuzzy C-means的图像分割模型及其推广；医学影像分析中的基于Atlas的图像分割方法。    </li>
+</ul>
+
+<p><a href="#leave_a_note">我有话要说⋯⋯</a></p>
+
+<h2 id="section-4">报告5：时间序列磁共振图像分割</h2>
+<ul>
+  <li>时间：7月11日，星期三 上午10:00  </li>
+  <li>地点：数学与统计学院5楼信息系会议室  </li>
+  <li>摘要：本报告介绍当前医学影像分析中的一个热点问题：时间序列图像的分割。在医学的研究与临床应用中经常需要对同一个病人在不同的时间进行扫描，因此得到一系列的图像（longitudinal images）或四维的图像。对这种时间序列图像的分割既要保证分割结果的连贯性，又能检测出病变和结构性变化，比如脑萎缩。本报告针对磁共振脑成像的应用，提出了一个新的四维图像分割模型，有效地保证了对时间序列图像的分割的连贯性。    </li>
+</ul>
+
+<p><a href="#leave_a_note">我有话要说⋯⋯</a></p>
+
+<h2 id="section-5">李纯明博士介绍</h2>
+
+<blockquote>
+  <p><strong>李纯明，美国康涅狄格大学电子工程博士，复旦大学数学硕士, 福建师范大学数学系本科。2005年至2009年在范德堡大学医学成像科学研究所（Vanderbilt University Institute of Imaging Science）从事博士后研究工作。2009年至今在宾夕法尼亚大学 （University of Pennsylvania） 影像系担任高级研究员，兼任卡内基梅隆大学生物医学工程博士学位论文答辩委员会成员和南京军区总医院客座教授。</strong>    </p>
+</blockquote>
+
+<p>李博士的专长是图像处理、医学影像分析和计算机视觉。以第一作者身份在这些领域的顶级期刊和国际会议上发表了多篇具有高度原创性和广泛国际影响的学术论文。<code>这些论文总共被引用累计1500余次，其中一篇关于水平集方法（Level Set Method）的论文于2005年发表至今已经被引用高达800多次。</code></p>
+
+<p>李博士担任二十余家国际权威专业期刊和顶级国际会议的审稿人及程序委员会委员，包括IEEE Trans. on Image Processing， IEEE Trans. on Medical Imaging， IEEE Trans. on Pattern Analysis and Machine Intelligence， Medical Image Analysis， Medical Physics， Magnetic Resonance Imaging  （MRI）等几乎所有图像处理，计算机视觉和医学影像领域的主流期刊，以及 IEEE International Conference on Computer Vision and Pattern Recognition （CVPR）, International Conference on Computer Vision （ICCV）， Medical Image Computing and Computer Assisted Intervention （MICCAI） 等顶级国际会议。李博士曾应邀到卡内基梅隆大学，俄亥俄州立大学，康涅狄格大学，佛罗里达州立大学，清华大学，复旦大学，重庆大学，南京理工大学，华东师范大学，北京师范大学，电子科技大学，厦门大学，南京军区总医院，江苏省人民医院等国内外大学和医院讲学。
+李博士在图像处理领域的一系列研究成果已被世界各国的诸多科研和工程人员广泛应用于工程（包括计算机视觉与图像处理）、生物、医学等领域的科研和技术开发。李博士所建立的模型在图像处理、医学影像和计算机视觉领域中被广泛采用和深入研究。他的一系列基于水平集的图像分割的模型不仅被大量期刊和会议文章所引用，还被一些研究生教材收录，包括国内的科学出版社出版的《图像处理的偏微分方程方法》，或者被国内外一些大学的研究生课程列为重要参考文献 。李博士在磁共振成像的偏移场校正（MRI bias correction） 等医学成像领域的若干重要课题中也取得了世界领先的研究成果，成功地解决了超高场强的磁共振成像中的偏移场校正的难题。李博士目前的主要从事医学影像分析的技术开发及其临床应用，包括多发性硬化症，各种中枢神经系统疾病的计算机辅助诊断的研究，肿瘤精确定位与测量，手术计划与临床随访等等。<code>李博士开发的基于超声波图像分割的颈动脉内-中膜厚度的测量技术已经被辉瑞（世界最大的制药公司）的全球研发总部采用，并成功地用于治疗动脉硬化的药物开发的临床试验。</code></p>
+
+<p><span id="leave_a_note"></span></p>
+
+]]&gt;</content:encoded>
     </item>
     
     <item>
-      <title>Machine Learning</title>
-      <link href="http://jiyeqian.bitbucket.org/2013/11/machine-learning"/>
-      <pubDate>2013-11-20T00:00:00+08:00</pubDate>
+      <title>外国诗歌赏析</title>
+      <link href="http://jiyeqian.bitbucket.org/2011/10/foreign-poems" />
+      <pubdate>2011-10-08T23:09:00+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://jiyeqian.bitbucket.org/2013/11/machine-learning</guid>
-      <content:encoded><![CDATA[<p>Machine learning is the field of study that gives computers the ability to learn without being explicitly programmed.</p>
-
-<h2 id="linear-regression">线性回归（Linear Regression）</h2>
-
-<p>回归函数（hypothesis）：
-\begin{equation}
-h_\theta(x) = \theta^Tx = \theta_0x_0 + \theta_1x_1 + \cdots  + \theta_nx_n
-\end{equation}</p>
-
-<blockquote>
-  <p>常数项$x_0 = 1$。
-线性回归模型适用于多项式回归（polynomial regression），例如当$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $时。</p>
-</blockquote>
-
-<p>代价函数（cost function）：
-\begin{equation}
-J(\theta) = \frac{1}{2m}\sum_{i=1}^{m}{\left(h_{\theta}\left(x^{(i)}\right) - y^{(i)}\right)^2}
-\label{eq:cost_function_linear_regression}
-\end{equation}</p>
-
-<blockquote>
-  <p>$m$为样本数量，$n$为特征数量。</p>
-</blockquote>
-
-<h3 id="section">参数估计方法</h3>
-
-<p>\[
-\min_\theta J(\theta)
-\]</p>
-
-<p>梯度下降法（gradient descent）：</p>
-
-<p>Repeat {
-\[
-\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta)~~~~~~(j = 0, 1, \ldots, n)
-\]
-}</p>
-
-<p>也就是：</p>
-
-<p>Repeat {
-\[
-\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
-\]
-}</p>
-
-<blockquote>
-  <p>每轮循环的时候同时更新$\theta_j$（不能在同一轮循环中，先更新部分$\theta_j$，再利用已更新的$\theta_j$更新其它$\theta_j$）。</p>
-</blockquote>
-
-<ul>
-  <li>线性回归的代价函数$J(\theta)$不存在局部极值（local optima）。</li>
-  <li>将所有特征归一（feature scaling）到统一的尺度$-1\le x_i\le 1$有助于提高梯度下降法的速度（不要把$x_0$归一化）。</li>
-  <li>学习率$\alpha$太小收敛慢，太大可能错过极值点而不收敛。</li>
-</ul>
-
-<p>归一化方法1：</p>
-
-<p>\[
-\hat {x_i} = \frac{x_i - x_{mean}}{x_{max}-x_{min}}
-\]</p>
-
-<p>归一化方法2：</p>
-
-<p>\[
-\hat {x_i} = \frac{x_i - x_{mean}}{x_{std}}
-\]</p>
-
-<p>也可用正规方程求解（normal equation）参数：</p>
-
-<p>\begin{equation}
-\theta = \left(X^TX\right)^{-1}X^Ty
-\end{equation}</p>
-
-<blockquote>
-  <p>这也是线性回归的最小二乘解。</p>
-</blockquote>
-
-<p>处理$X^TX$不可逆的方法：   </p>
-
-<ul>
-  <li>冗余特征（redundant features）线性相关：……。</li>
-  <li>特征数目过多（e.g. $m \le n$）：删除特征、正则化（regularization）。</li>
-</ul>
-
-<p>Matlab Code：</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">y</span>
-</code></pre></div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Gradient Descent</th>
-      <th>Normal Equation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>需要$\alpha$</td>
-      <td>不需要$\alpha$</td>
-    </tr>
-    <tr>
-      <td>需要迭代</td>
-      <td>不需要迭代</td>
-    </tr>
-    <tr>
-      <td>当特征数$n$很大时（$10^6$）工作良好</td>
-      <td>$n$很大时很慢</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="logistic-logistic-regression">Logistic 回归（Logistic Regression）</h2>
-
-<p>Logistic 回归用于解决二分类问题，而非回归问题。</p>
-
-<p>回归模型：</p>
-
-<p>\begin{equation}
-h_\theta(x) = g\left(\theta^Tx\right)
-\end{equation}</p>
-
-<blockquote>
-  <p>若$h_\theta(x) \ge 0.5$，则$y = 1$；若$h_\theta(x) &lt; 0.5$，则$y = 0$。</p>
-</blockquote>
-
-<p>其中：
-\begin{equation}
-g\left(z\right) = \frac{1}{1 + e^{-z}}
-\end{equation}</p>
-
-<blockquote>
-  <p>上式也称为sigmoid function、logistic function。</p>
-</blockquote>
-
-<p>代价函数：</p>
-
-<p>\begin{equation}
-J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right)
-\end{equation}</p>
-
-<blockquote>
-  <p>若套用线性回归的代价函数\eqref{eq:cost_function_linear_regression}，则$J(\theta)$非凸，不利于优化算法。该代价函数可从统计中最大似然估计（maximum likehood estimation）的角度推导。</p>
-</blockquote>
-
-<h3 id="section-1">参数估计方法</h3>
-
-<p>\[
-\min_\theta J(\theta)
-\]</p>
-
-<p>梯度下降法（gradient descent）：</p>
-
-<p>Repeat {
-\[
-\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
-\]
-}</p>
-
-<blockquote>
-  <p>这貌似线性回归的梯度下降法，但$h_\theta$的定义不同。</p>
-</blockquote>
-
-<p>其它优化算法：</p>
-
-<ul>
-  <li>Conjugate gradient</li>
-  <li>BFGS</li>
-  <li>L-BFGS</li>
-</ul>
-
-<blockquote>
-  <p>其它优化算法不需要手工选择学习率$\alpha$，通常也更快，但是更复杂。</p>
-</blockquote>
-
-<h3 id="one-vs-all">处理多分类问题（One-vs-all）</h3>
-
-<ul>
-  <li>针对每一类训练一个logistic 分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题。</li>
-  <li>新输入$x$所属的类别满足$\max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
-</ul>
-
-<h2 id="regularization">正则化（Regularization）</h2>
-
-<p>过拟合（overfitting）：出色的拟合训练集却不能合适的拟合新数据。</p>
-
-<p>解决过拟合问题的方法：</p>
-
-<ul>
-  <li>减少特征数目：手工选择特征、利用模型选择。</li>
-  <li>正则化方法：保留所有特征，但是减小$\theta_j$，使特征对预测$y$贡献小。</li>
-</ul>
-
-<h3 id="section-2">正则化线性回归</h3>
-
-<p>代价函数：</p>
-
-<p>\begin{equation}
-J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
-\end{equation}</p>
-
-<blockquote>
-  <p>增大$\lambda$以减小过拟合；但是，$\lambda$过大（$10^{10}$）时，有$\theta_j\approx 0~~(j = 1,2,\ldots,n)$，则$h_\theta(x) = \theta_0$，这会导致欠拟合（underfitting）。</p>
-</blockquote>
-
-<p>梯度下降法估计参数：</p>
-
-<p>Repeat {
-\[
-\begin{aligned}
-\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\left(\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \frac{\lambda}{m}\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
-\end{aligned}
-\]
-}</p>
-
-<blockquote>
-  <p>正则化只作用于$j\ge 1$的非常数项。</p>
-</blockquote>
-
-<p>迭代过程可以化为如下形式：
-\begin{equation}
-\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)}~~~~~~(j = 1, 2, \ldots, n)
-\end{equation}</p>
-
-<p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小。</p>
-
-<p>正规方程估计参数：</p>
-
-<p>\begin{equation}
-\theta = \left(X^TX + \lambda
-\begin{vmatrix}
-0  &amp;   &amp;        &amp; \\
-   &amp; 1 &amp;        &amp; \\
-   &amp;   &amp; \ddots &amp; \\
-   &amp;   &amp;        &amp; 1
-\end{vmatrix}
-\right)^{-1}X^Ty
-\end{equation}</p>
-
-<h3 id="logistic-">正则化Logistic 回归</h3>
-
-<p>代价函数：</p>
-
-<p>\begin{equation}
-J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right) ＋ \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
-\end{equation}</p>
-
-<p>梯度下降法估计参数：</p>
-
-<p>Repeat {
-\[
-\begin{aligned}
-\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\left(\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \frac{\lambda}{m}\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
-\end{aligned}
-\]
-}</p>
-
-<h3 id="logistic--1">正则化Logistic 回归的实现</h3>
-
-<p>第一步：实现Logistic函数</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
-<span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
-
-<p>第二步：实现代价函数（包含梯度计算）</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
-<span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
-<span class="n">grad</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">theta</span><span class="p">));</span>
-
-<span class="n">sigmoid_y_predict</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
-<span class="n">J</span> <span class="p">=</span> <span class="n">mean</span><span class="p">(</span><span class="o">-</span><span class="n">y</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="n">sigmoid_y_predict</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigmoid_y_predict</span><span class="p">))</span> <span class="o">+</span> <span class="c">...</span>
-	<span class="p">(</span><span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
-
-<span class="n">delta_y</span> <span class="p">=</span> <span class="n">sigmoid_y_predict</span> <span class="o">-</span> <span class="n">y</span><span class="p">;</span>
-<span class="n">grad</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">delta_y</span> <span class="o">.*</span> <span class="n">X</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">));</span>
-<span class="n">grad</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="p">(:,</span> <span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">delta_y</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">))</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
-<span class="k">end</span>
-</code></pre></div>
-
-<p>第三步：估计参数</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
-<span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
-	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
-</code></pre></div>
-
-<h2 id="neural-networks">神经网络（Neural Networks）</h2>
-
-<h3 id="section-3">代价函数</h3>
-
-<p>\begin{equation}
-\begin{aligned}
-J(\Theta) = -\frac{1}{m} &amp; \sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \left(h_\Theta\left(x^{(i)} \right) \right)_k + \left(1 - y_k^{(i)}\right)\log\left(1 -  \left(h_\Theta\left(x^{(i)} \right) \right)_k \right) \right) \\ 
-+ \frac{\lambda}{2m} &amp;  \sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}\left(\Theta_{ji}^{(l)}\right)^2
-\end{aligned}
-\end{equation}</p>
-
-<blockquote>
-  <p>$h_\Theta (x) \in \mathbb{R}^K$，$(h_\Theta (x))_i$是第$i$个输出；$s_l$表示第$l$层神经元的个数（不含bias unit）；共$m$个样本，$K$个输出，$L$层。</p>
-</blockquote>
-
-<h3 id="section-4">参数估计方法</h3>
-
-<p>\[
-\min_\Theta J(\Theta)
-\]</p>
-
-<p>BP算法（BackPropagation algorithm）</p>
-
-<p>各层误差估计：
-<!--
-\begin{equation}
-\left\\{
-\begin{aligned}
-\delta^{(L)} &amp;= a^{(L)} - y  \\\
-\delta^{(i)} &amp;= \left(\Theta^{(i)} \right)^T\delta^{(i+1)} ~.*~ g'\left(z^{(i)}\right)~~~(i = 2, 4, \ldots, L-1)
-\end{aligned}
-\right.
-\label{eq:error_bpxxx}
-\end{equation}
---></p>
-
-<p>\begin{equation}
-\delta^{(l)} = \left\{
-\begin{aligned}
-&amp; a^{(l)} - y &amp; (l = L)~~~~~~~~~~~~~~~~~~~~~~~~~~~ \\
-&amp; \left(\Theta^{(l)} \right)^T\delta^{(l+1)} ~.*~ g’\left(z^{(l)}\right) &amp; (l = L-1, L-2, \ldots, 2) 
-\end{aligned}
-\right. 
-\label{eq:error_bp}
-\end{equation}</p>
-
-<blockquote>
-  <p>$g’\left(z^{(l)}\right) = a^{(l)} ~.*~ \left(1 - a^{(l)}\right)$；$z^{(l)} = \Theta^{(l)}a^{(l)}$；$\delta_j^{(l)}$表示第$l$层第$j$个节点的误差；对于bias节点$\delta_0^{(l)}=0$。</p>
-</blockquote>
-
-<p>BP算法步骤：</p>
-
-<p>训练集：$\left\{\left(x^{(1)}, y^{(1)}\right),\ldots,\left(x^{(m)}, y^{(m)}\right)\right\}$。</p>
-
-<p>初始化：$\Delta _{ij}^{(l)} = 0$(对所有的$i,j,l$)。</p>
-
-<p>For $i=1$ to $m$：</p>
-
+      <guid>http://jiyeqian.bitbucket.org/2011/10/foreign-poems</guid>
+      <content:encoded>&lt;![CDATA[<h4 id="section">目录：</h4>
 <ol>
-  <li>$a^{(1)} = x^{(i)}$；</li>
-  <li>前向计算$a^{(l)}~~(l = 2, 3,\ldots, L)$；</li>
-  <li>利用\eqref{eq:error_bp}反向计算误差；</li>
-  <li>$\Delta ^{(l)} := \Delta ^{(l)} + \delta^{(l+1)}\left(a^{(l)}\right)^T$（$a^{(l)}$向量也须补1）；</li>
-  <li>计算$D_{ij}^{(l)} = \frac{\partial}{\partial \Theta_{ij}^{(l)}}J(\Theta)$：</li>
+  <li><a href="#普希金">普希金</a>：纪念碑</li>
+  <li><a href="#何塞·黎萨尔">何塞·黎萨尔</a>：我最后的告别   </li>
 </ol>
 
-<p>\[
-\begin{aligned}
-D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta _{ij}^{(l)} + \frac{\lambda}{m}\Theta _{ij}^{(l)} &amp; (j \neq 0) \\
-D_{ij}^{(l)} &amp; := \frac{1}{m}\Delta _{ij}^{(l)} &amp; (j = 0)
-\end{aligned} 
-\]</p>
-
-<p>算法技巧：矩阵展成（unroll）向量：</p>
-
-<ol>
-  <li>thetaVec = [Theta1(:); Theta2(:); Theta3(:)]；</li>
-  <li>将向量化的待估参数作为costFunction的参数；</li>
-  <li>costFunction内部再将向量还原为矩阵计算梯度；</li>
-  <li>梯度向量化输出DVec = [D1(:); D2(:); D3(:)]。</li>
-</ol>
-
-<p>算法技巧：梯度检查（gradient checking）：</p>
-
-<p>梯度检测方法也可推广到其它需要计算代价函数及其梯度的地方，比如logistic回归的代价函数。</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
-   <span class="n">thetaPlus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
-   <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">;</span>
-   <span class="n">thetaMinus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
-   <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> – <span class="n">EPSILON</span><span class="p">;</span>
-   <span class="n">gradApprox</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="p">(</span><span class="n">J</span><span class="p">(</span><span class="n">thetaPlus</span><span class="p">)</span> – <span class="n">J</span><span class="p">(</span><span class="n">thetaMinus</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
+<p><span id="普希金"></span></p>
 
 <blockquote>
-  <p>theta 是$\Theta$的向量化，正常情况有gradApprox$\approx$DVec，通过比较gradApprox 与BP 算法所得DVec 的差距判断BP 算法的代价函数及其优化算法是否有subtle bugs。</p>
+  <h4 id="section-1">纪念碑（俄国 普希金）</h4>
+  <hr />
+  <p>我给自己建起了一座非手造的纪念碑<br />
+人民走向那里的小径永远不会荒芜<br />
+它将自己坚定不屈的头颅高高昂起<br />
+高过亚历山大的石柱<br />
+不，我绝不会死去，心活在神圣的竖琴中<br />
+它将比我的骨灰活得更久，永不消亡<br />
+只要在这个月照的世界上还有一个诗人<br />
+我的名声就会传扬  </p>
+
+  <p>整个伟大的俄罗斯都会听到我的传闻<br />
+各种各样的语言都会呼唤我的姓名<br />
+无论骄傲的斯拉夫人的子孙<br />
+还是芬兰人、山野的通古斯人、卡尔梅克人<br />
+我将长时期地受到人民的尊敬和爱戴<br />
+因为我用竖琴唤起了人民善良的感情<br />
+因为我歌颂过自由，在我的残酷的时代<br />
+我还曾为死者呼吁同情<br />
+啊，我的缪斯，你要听从上天的吩咐<br />
+既不怕受人欺侮，也不希求什么桂冠<br />
+什么诽谤，什么赞扬，一概视若粪土<br />
+也不必理睬那些笨蛋  </p>
 </blockquote>
 
-<div class="highlight"><pre><code class="matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
-<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span>
-</code></pre></div>
+<p><span id="何塞·黎萨尔"></span></p>
 
 <blockquote>
-  <p>梯度检查应当在训练神经网络之前，可以通过构造一个新的较小规模的神经网络进行检验；若每次训练都检测梯度，速度很慢。</p>
+  <h4 id="section-2">我最后的告别（菲律宾 何塞·黎萨尔）</h4>
+  <hr />
+  <p>永别了，敬爱的祖国，阳光爱抚的国土，<br />
+您是东海的明珠，我们失去的乐园。<br />
+我忧愤的生命，将为您而愉快地献出，<br />
+即使它将更加辉煌壮丽和生气盎然，<br />
+为了您的幸福，我也乐意向您奉献。  </p>
+
+  <p>在烽烟四起的沙场，恶战方酣，<br />
+人们毫不犹豫、毫不悔恨地英勇献身。<br />
+不管死于何处，在翠柏、月桂或百合旁边，<br />
+还是在绞架上、旷野间、更不管是阵亡，还是悲惨地殉难，<br />
+只要是祖国和国家的需要，全都一样光荣。</p>
+
+  <p>在迎接曙光时，我将安息长眠，<br />
+黎明将冲破黑夜，阳光要普照人间。<br />
+假如您需要颜料来把黎明渲染，<br />
+请让我的热血奔流在美好的时辰，<br />
+让它把这新生的曙光染得更加金光闪闪。</p>
+
+  <p>我少年时代，美梦翩翩，<br />
+我青年时代，理想常燃。<br />
+我切盼有—天，能看到您这东海明珠的容颜，<br />
+您乌黑的眸厂不再流泪，眉宇的皱纹得到舒展，<br />
+没有怨恨重重，更没有血迹斑斑。</p>
+
+  <p>……</p>
+
+  <p>当黑夜沉沉笼罩陵园，<br />
+唯有死者守护着它，彻底不眠。<br />
+请不要打扰他们的休息和神秘的安恬，<br />
+也许您会听见一曲高歌，海上管弦，<br />
+那就是我呀！亲爱的祖国，我在为您引吭高歌，抚奏六弦。</p>
+
+  <p>没有十字架，没有墓碑，也没有任何铭志，<br />
+当我的坟墓已荒烟野蔓，人们不再把我怀念；<br />
+就让人们夷成原野，把土地犁翻，<br />
+当我的骨灰还留在人间，<br />
+就让它化为尘十，覆盖着祖国的良田。</p>
+
+  <p>即使您已把我忘记，我也心地坦然，<br />
+我将遨游在您的高山和草原，<br />
+把优美嘹亮的歌声送到您的耳边。<br />
+芳香、光亮、清丽、妙语、歌声和叹息，<br />
+都永远是我忠贞本质的表现。</p>
+
+  <p>我崇敬的祖国，哀怨中的哀怨，<br />
+亲爱的菲律宾同胞，请听我诀别的赠言：<br />
+我离开大家、离开亲人和挚爱的华颜，<br />
+我去的地方没有奴隶和刽子手，也没有暴君，<br />
+那儿不会戕害忠良，那儿是上帝主持的青天。</p>
+
+  <p>永别了！我的父母、兄弟，我的亲眷，<br />
+还有我那失去家园的童年侣伴。<br />
+感谢吧，我可以摆脱艰辛的生活；歇歇双肩，<br />
+永别了！我心爱的异国姑娘，我的朋友，我的欢乐，<br />
+永别了！亲爱的人们，死就是安息，<br />
+就是长眠。</p>
 </blockquote>
-
-<p>注意事项：</p>
-
-<p>不可将$\Theta _{ij}^{(l)}$初始化为$0$，若初始化为$0$，每层的所有神经元都是一样的。随机数初始化$-\epsilon\leq\Theta _{ij}^{(l)}\leq\epsilon$，选择$\epsilon$的有效策略是根据每层神经元的数目取$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}~(L_{in} = s_l,L_{out}=s_{l+1})$，例如：</p>
-
-<div class="highlight"><pre><code class="matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
-</code></pre></div>
-
-<h2 id="section-5">机器学习系统设计</h2>
-
-<p>交叉验证数据集用于模型选择，测试集用于模型评估。</p>
-
-<p>带有正则化的大规模神经网络解决过拟合问题比小规模神经网络有效，缺点是计算复杂。</p>
-
-<p>交叉验证数据集用于选择最优化的非模型参数（例如正则化参数$\lambda$），训练和测试数据集用于调试算法本身的错误。交叉验证数据集也用于调整logistic回归的阈值。</p>
-
-<p>大规模数据在满足如下两个条件时能取得很好的性能：</p>
-
-<ol>
-  <li>特征$x$含有预测$y$所需的足够信息（该领域的专家有信心通过$x$预测$y$）；</li>
-  <li>学习算法本身能够表示复杂的模型。</li>
-</ol>
-
-<p>For reference:
-Accuracy = (true positives + true negatives) / (total examples)
-Precision = (true positives) / (true positives + false positives)
-Recall = (true positives) / (true positives + false negatives)
-F1 score = (2 * precision * recall) / (precision + recall)</p>
-
-<h2 id="support-vector-machine">支持向量机（Support Vector Machine）</h2>
-
-<p>An SVM with only the linear kernel is comparable to logistic regression, so it will likely underfit the data as well.</p>
-
-<h2 id="k-mean">K-mean</h2>
-<p>随机选择多轮聚类初始中心开始K-mean，已最好一轮作为聚类结果，可以避免局部极值，得到更好的聚类效果。这种方法对聚类数比较小（2～10）有效，当聚类数目很大时，每轮之间效果差异不明显</p>
-
-<h2 id="pca">PCA</h2>
-<p>PCA 之前要mean normalization &amp; feature scaling</p>
-
-<p>validtion &amp; test data sets 也用 training 的PCA映射矩阵（scaling 亦如此）</p>
-
-<h2 id="cf">CF</h2>
-<p>When using gradient descent to train a collaborative filtering system, it is NOT okay to initialize all the parameters (x(i) and θ(j)) to zero. You need to initialize them to different values so that you learn different features and parameters (i.e., perform symmetry breaking).</p>
-
-<h2 id="section-6">问题</h2>
-
-<ol>
-  <li>特征归一化对正规方程估计线性回归参数有何影响？</li>
-  <li>为何减少特征可以避免过拟合？</li>
-  <li>Any logical function over binary-valued (0 or 1) inputs $x_1$ and $x_2$ can be (approximately) represented using some neural network.</li>
-  <li>A two layer (one input layer, one output layer; no hidden layer) neural network can NOT represent the XOR function.</li>
-  <li>多项式构造的特征与“提取的特征”有何区别？</li>
-</ol>
-
-<h2 id="section-7">參考資料</h2>
-
-<!--[Andrew	 Ng 的机器学习课程](https://class.coursera.org/ml-004/class/index) -->
-<p><a href="http://cs229.stanford.edu/materials.html">CS229 Machine Learning Course Materials</a></p>
-
-]]></content:encoded>
+]]&gt;</content:encoded>
     </item>
     
   </channel>

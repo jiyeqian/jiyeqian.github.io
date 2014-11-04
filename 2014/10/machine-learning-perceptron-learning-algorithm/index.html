@@ -25,7 +25,6 @@
     });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
@@ -68,12 +67,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <h1>机器学习: 感知器算法</h1>
         </header>
         <nav id="real_nav">
-        <span><a title="home" class="" href="/">home</a></span>
-        <span><a title="categories" class="" href="/categories/">categories</a></span>
-        <span><a title="tags" class="" href="/tags/">tags</a></span>
-        <span><a title="logs" class="" href="/logs/">Log</a></span>
-        <span><a title="about" class="" href="/about/">about</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
         </nav>
         <article class="content">
         <section class="meta">
@@ -136,8 +142,14 @@ h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sig
 }</p>
 </blockquote>
 
-<p><img src="../../../assets/images/2014-10-21-pla_1.png" alt="PLA对参数更新示例" />   <br />
-PLA更新模型参数可以用上图解释： <br />
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-21-pla_1.png" alt="PLA更新模型参数示意图" />
+<div class="caption">PLA更新模型参数示意图</div>
+</div>
+</div>
+
+<p>PLA更新模型参数解释： <br />
 1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
 2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。   </p>
 
@@ -202,7 +214,7 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 \end{equation}</p>
 
 <p>相关的证明如下：  <br />
-<img src="../../../assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
+<img src="/assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
 
 <p><strong>结论：</strong>     <br />
 1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
@@ -274,31 +286,31 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 	</script>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 72) {  // Left arrow and H
-        
-        url = '/2014/10/machine-learning-regularization';
-        
-        }
-        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
-        
-        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks'; -->
-        url = '/2014/10/machine-learning-neural-networks';
-        
-        } else if (e.which == 75) {  // K
-          url = '#';
-        } else if (e.which == 74) { // J
-        url = '/2014/10/machine-learning-perceptron-learning-algorithm/#timeSpan';
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/machine-learning-regularization'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks'; --1> -->
+<!--         url = '/2014/10/machine-learning-neural-networks'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/machine-learning-perceptron-learning-algorithm/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
         <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">

@@ -25,7 +25,6 @@
     });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
@@ -68,12 +67,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <h1>机器学习: 正则化</h1>
         </header>
         <nav id="real_nav">
-        <span><a title="home" class="" href="/">home</a></span>
-        <span><a title="categories" class="" href="/categories/">categories</a></span>
-        <span><a title="tags" class="" href="/tags/">tags</a></span>
-        <span><a title="logs" class="" href="/logs/">Log</a></span>
-        <span><a title="about" class="" href="/about/">about</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
         </nav>
         <article class="content">
         <section class="meta">
@@ -194,14 +200,13 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <p>第一步：实现Logistic函数</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
 <span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <p>第二步：实现代价函数（包含梯度计算）</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
 <span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
 
 <span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
@@ -209,17 +214,15 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
     <span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
 <span class="n">grad</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)])</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
 
-<span class="k">end</span>
-</code></pre></div>
+<span class="k">end</span></code></pre></div>
 
 <p>第三步：估计参数</p>
 
-<div class="highlight"><pre><code class="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
 <span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
-	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span>
-</code></pre></div>
+	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
 
 <h2 id="section-7">思考问题</h2>
 
@@ -267,31 +270,31 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 	</script>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 72) {  // Left arrow and H
-        
-        url = '/2014/10/machine-learning-multiple-classification';
-        
-        }
-        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
-        
-        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm'; -->
-        url = '/2014/10/machine-learning-perceptron-learning-algorithm';
-        
-        } else if (e.which == 75) {  // K
-          url = '#';
-        } else if (e.which == 74) { // J
-        url = '/2014/10/machine-learning-regularization/#timeSpan';
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/machine-learning-multiple-classification'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm'; --1> -->
+<!--         url = '/2014/10/machine-learning-perceptron-learning-algorithm'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/machine-learning-regularization/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
         <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">

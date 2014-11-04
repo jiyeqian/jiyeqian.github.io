@@ -25,7 +25,6 @@
     });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script> -->
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
@@ -68,12 +67,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <h1>机器学习: Logistic回归</h1>
         </header>
         <nav id="real_nav">
-        <span><a title="home" class="" href="/">home</a></span>
-        <span><a title="categories" class="" href="/categories/">categories</a></span>
-        <span><a title="tags" class="" href="/tags/">tags</a></span>
-        <span><a title="logs" class="" href="/logs/">Log</a></span>
-        <span><a title="about" class="" href="/about/">about</a></span>
-        <span><a title="subscribe by RSS" class="" href="/feed/">Subscribe</a></span>
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
         </nav>
         <article class="content">
         <section class="meta">
@@ -104,9 +110,12 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">模型介绍</h2>
 
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" alt="Logistic function" />    </p>
-
-<div class="caption" id="fig1">图1 Logistic函数</div>
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-19-logistic_regression_0.png" alt="Logistic函数" />
+<div class="caption">图1 Logistic函数</div>
+</div>
+</div>
 
 <p>Logistic回归（Logistic Regression）用于解决二分类问题，而非回归问题。Logistic函数将回归问题转化为了分类问题。</p>
 
@@ -117,6 +126,7 @@ h_\theta(x) = g\left(\theta^Tx\right)
 其中
 \begin{equation}
 g\left(z\right) = \frac{1}{1 + e^{-z}}
+\label{eq:sigmoid-function}
 \end{equation}</p>
 
 <blockquote>
@@ -144,11 +154,11 @@ P\left(y=0\big|x; \theta\right) ＝ 1 - P\left(y=1\big|x; \theta\right) ＝ 1 - 
 
 <p>$\theta^Tx = 0$称为决策界（Decision Boundary）。决策界可以时线性的，也可以是非线性的。</p>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /> </p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /> </p>
 
 <div class="caption">图2 线性决策界</div>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></p>
 
 <div class="caption">图3 非线性决策界</div>
 
@@ -168,7 +178,7 @@ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\r
 
 <p>当$h_\theta(x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数图" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数图" /></p>
 
 <div class="caption" id="fig4">图4 代价函数</div>
 
@@ -229,7 +239,7 @@ J(\theta)<br />
   <li>其它注意事项同梯度下降法求解线性回归参数。</li>
 </ul>
 
-<p><img src="../../../assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></p>
+<p><img src="/assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></p>
 
 <div class="caption">图5 采用Matlab的优化框架求解模型参数</div>
 
@@ -295,31 +305,31 @@ J(\theta)<br />
 	</script>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 72) {  // Left arrow and H
-        
-        url = '/2014/10/machine-learning-linear-regression';
-        
-        }
-        else if (e.which == 39 || e.which == 76) {  // Right arrow and L
-        
-        <!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification'; -->
-        url = '/2014/10/machine-learning-multiple-classification';
-        
-        } else if (e.which == 75) {  // K
-          url = '#';
-        } else if (e.which == 74) { // J
-        url = '/2014/10/machine-learning-logistic-regression/#timeSpan';
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/machine-learning-linear-regression'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification'; --1> -->
+<!--         url = '/2014/10/machine-learning-multiple-classification'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/machine-learning-logistic-regression/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
         <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">

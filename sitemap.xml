@@ -2,15 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://jiyeqian.bitbucket.org/2014/11/javascript-essential</loc>
-    
-    <lastmod>2014-11-03T10:30:30Z</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
     <loc>http://jiyeqian.bitbucket.org/2014/10/css-essential</loc>
     
     <lastmod>2014-10-25T15:37:41+08:00</lastmod>
@@ -22,7 +13,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2014/10/machine-learning-neural-networks</loc>
     
-    <lastmod>2014-10-21T19:09:00Z</lastmod>
+    <lastmod>2014-10-22T03:09:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -31,7 +22,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm</loc>
     
-    <lastmod>2014-10-21T10:09:00Z</lastmod>
+    <lastmod>2014-10-21T18:09:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -74,51 +65,6 @@
   </url>
   
   <url>
-    <loc>http://jiyeqian.bitbucket.org/2014/03/dsp-essential</loc>
-    
-    <lastmod>2014-03-28T00:00:00+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>http://jiyeqian.bitbucket.org/2013/11/machine-learning</loc>
-    
-    <lastmod>2013-11-20T00:00:00+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>http://jiyeqian.bitbucket.org/2013/05/introduction-to-machine-learning</loc>
-    
-    <lastmod>2013-05-18T00:00:00+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>http://jiyeqian.bitbucket.org/2012/07/python-essential</loc>
-    
-    <lastmod>2012-07-11T00:00:00+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>http://jiyeqian.bitbucket.org/2012/07/introduction-to-aquamacs</loc>
-    
-    <lastmod>2012-07-04T00:00:00+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
     <loc>http://jiyeqian.bitbucket.org/2012/07/host-your-pages-at-github-using-jekyll</loc>
     
     <lastmod>2012-07-01T00:00:00+08:00</lastmod>
@@ -139,16 +85,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2011/10/foreign-poems</loc>
     
-    <lastmod>2011-10-08T15:09:00Z</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
-    <loc>http://jiyeqian.bitbucket.org/2011/09/git-essential</loc>
-    
-    <lastmod>2011-09-27T13:37:00Z</lastmod>
+    <lastmod>2011-10-08T23:09:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -157,7 +94,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2011/09/stories</loc>
     
-    <lastmod>2011-09-19T09:45:00Z</lastmod>
+    <lastmod>2011-09-19T17:45:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -166,7 +103,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2010/12/acknowledgements-from-theses</loc>
     
-    <lastmod>2010-12-27T16:49:00Z</lastmod>
+    <lastmod>2010-12-28T00:49:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -175,7 +112,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2010/12/doctor-oath</loc>
     
-    <lastmod>2010-12-27T16:39:00Z</lastmod>
+    <lastmod>2010-12-28T00:39:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -184,7 +121,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2010/07/chinese-classical-poems</loc>
     
-    <lastmod>2010-07-14T19:09:00Z</lastmod>
+    <lastmod>2010-07-15T03:09:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -193,7 +130,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2010/03/gpu-and-cg-programming</loc>
     
-    <lastmod>2010-03-06T23:25:00Z</lastmod>
+    <lastmod>2010-03-07T07:25:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -202,7 +139,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2010/01/chinese-new-poems</loc>
     
-    <lastmod>2010-01-22T19:55:00Z</lastmod>
+    <lastmod>2010-01-23T03:55:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -211,7 +148,7 @@
   <url>
     <loc>http://jiyeqian.bitbucket.org/2008/10/key-to-success-in-modern-society</loc>
     
-    <lastmod>2008-10-27T13:09:00Z</lastmod>
+    <lastmod>2008-10-27T21:09:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -225,8 +162,6 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  
   
   
   
