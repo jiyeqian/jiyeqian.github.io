@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    jekyll_figure (0.0.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  jekyll_figure

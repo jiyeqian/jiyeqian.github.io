@@ -8,6 +8,7 @@
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
     <link rel="stylesheet" href="/assets/css/coderay.css" />
 
     <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
@@ -130,7 +131,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </div>
 </div>
 
-<p>Logistic回归解决多分类问题：</p>
+<p>Logistic回归解决多分类问题<a href="#ng_ml_lr_2014">(Ng, 2014, pp. 30-31)</a>：</p>
 
 <ol>
   <li>针对每一类$i$训练一个Logistic分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题；</li>
@@ -152,7 +153,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </div>
 </div>
 
-<p>注意其中的输出向量是0和1组成的向量，而非类别标签组成的向量。</p>
+<p>注意其中的输出向量是0和1组成的向量，而非类别标签组成的向量<a href="#ng_ml_nnr_2014">(Ng, 2014, p. 41)</a>。$K(K \geq 3)$类则输出层需要$K$个神经元，$K＝2$时输出层只需要一个神经元。</p>
 
 <h2 id="section-3">思考问题</h2>
 
@@ -162,9 +163,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-4">参考资料</h2>
 
-<ol>
-  <li><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a> </li>
-</ol>
+<ol class="bibliography"><li><span id="ng_ml_lr_2014">Ng, A. (2014). Logistic Regression. <i>Machine Learning</i>. Coursera.</span>
+</li>
+<li><span id="ng_ml_nnr_2014">Ng, A. (2014). Neural Networks: Representation. <i>Machine Learning</i>. Coursera.</span>
+</li></ol>
 
 </section>
 <section align="right">
@@ -227,9 +229,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- </script> -->
 
         </article>
-        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
-            <img src="/assets/images/site/btt.png" />
-        </a>
       </div>
 
     <footer>

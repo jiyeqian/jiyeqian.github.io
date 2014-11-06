@@ -2,7 +2,7 @@
 ::-webkit-scrollbar {
 	-webkit-appearance: none;
 	width: 8px;
-	height: 8px
+	height: 0px
 }
 
 ::-webkit-scrollbar-thumb {
@@ -159,7 +159,7 @@ blockquote h4 {
   margin: 6px 0;
   padding: 0 20px;
 }
-blockquote p, blockquote ol, blockquote ul {
+blockquote p, blockquote ol, blockquote ul, blockquote cite {
   margin: 13px 20px 0;
 }
 blockquote div pre code {

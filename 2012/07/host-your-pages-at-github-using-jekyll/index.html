@@ -8,6 +8,7 @@
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
     <link rel="stylesheet" href="/assets/css/coderay.css" />
 
     <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
@@ -239,6 +240,8 @@ e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n
 
 <p>要将jekyll的页面托管在github时，推荐尽量不用github之外的插件。代码高亮用pygments，markdown的解析器用kramdown更利于对公式的解析，如果还要其它一些美化，就直接插html代码吧！</p>
 
+<h2 id="jekyll-5">常用的Jekyll变量</h2>
+
 <h2 id="section-7">一些技巧</h2>
 
 <h3 id="gist">直接插入gist代码</h3>
@@ -252,13 +255,12 @@ e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n
 
 <h3 id="section-8">页内跳转</h3>
 
-<p>为了方便页内快速跳转，可建立空内容的锚点。比如</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;jekyll-and-github&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
-
-##jekyll与github的关系</code></pre></div>
-
-<p>既可用</p>
+<p>为了方便页内快速跳转，可建立空内容的锚点。比如
+~~~html
+<span id="jekyll-and-github"></span>
+##jekyll与github的关系
+~~~
+既可用</p>
 
 <div class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></div>
 
@@ -340,9 +342,6 @@ e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n
 <!-- </script> -->
 
         </article>
-        <a style="position:fixed;bottom:5px;right:5px;" href="#" title="Back to Top">
-            <img src="/assets/images/site/btt.png" />
-        </a>
       </div>
 
     <footer>

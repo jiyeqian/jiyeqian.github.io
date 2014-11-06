@@ -1,6 +1,6 @@
-.highlight pre code .hll { background-color: #ffffcc }
-.highlight pre code  { background: #f8f8f8; line-height: 16px}
 /* .highlight pre code  { margin: 1em; padding: 0 1em } */
+.highlight pre code .hll { background-color: #ffffcc }
+.highlight pre code  { background: #f8f8f8; line-height: 18px}
 .highlight pre code .c { color: #408080; font-style: italic } /* Comment */
 .highlight pre code .err { border: 1px solid #FF0000 } /* Error */
 .highlight pre code .k { color: #008000; font-weight: bold } /* Keyword */
