@@ -316,6 +316,11 @@ table img {
   float: left;
 }
 
+ol.bibliography li{
+  list-style: none;
+}
+
 div#LELE_ShowDIV_UNION {
   display: none;
 }
+

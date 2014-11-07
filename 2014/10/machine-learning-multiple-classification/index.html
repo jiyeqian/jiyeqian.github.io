@@ -28,9 +28,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
 
   </head>
 <!--  <body>
@@ -124,14 +123,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>针对每类训练一个它与其余所有数据的二分类器，若有$N(N &gt; 2)$个类别，就需要训练$N$个分类器。</p>
 
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all classification" />
-<div class="caption">one-vs-all也叫one-vs-rest</div>
-</div>
-</div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png"><img src="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all也叫one-vs-rest" /></a><div class="caption">Figure 1:  one-vs-all也叫one-vs-rest [<a href="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png">PNG</a>]</div></div></div>
 
-<p>Logistic回归解决多分类问题<a href="#ng_ml_lr_2014">(Ng, 2014, pp. 30-31)</a>：</p>
+<p>Logistic回归解决多分类问题<a href="#ng_ml_lr_2014">[1, Pp. 30-31]</a>：</p>
 
 <ol>
   <li>针对每一类$i$训练一个Logistic分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题；</li>
@@ -146,14 +140,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>神经网络是扩展Logistic模型组合的one-vs-all方法。</p>
 
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" />
-<div class="caption">神经网络的one-vs-all策略</div>
-</div>
-</div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classification.png"><img src="/assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" /></a><div class="caption">Figure 2:  神经网络的one-vs-all策略 [<a href="/assets/images/2014-10-20-multiple-classification.png">PNG</a>]</div></div></div>
 
-<p>注意其中的输出向量是0和1组成的向量，而非类别标签组成的向量<a href="#ng_ml_nnr_2014">(Ng, 2014, p. 41)</a>。$K(K \geq 3)$类则输出层需要$K$个神经元，$K＝2$时输出层只需要一个神经元。</p>
+<p>注意其中的输出向量是0和1组成的向量，<strong>而非</strong>输出类别标签<sup id="fnref:class_label_method"><a href="#fn:class_label_method" class="footnote">1</a></sup>，$K(K \geq 3)$类则输出层需要$K$个神经元，$K＝2$时输出层只需要一个神经元<a href="#ng_ml_nnl_2014">[2, P. 2]</a>。</p>
 
 <h2 id="section-3">思考问题</h2>
 
@@ -163,10 +152,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-4">参考资料</h2>
 
-<ol class="bibliography"><li><span id="ng_ml_lr_2014">Ng, A. (2014). Logistic Regression. <i>Machine Learning</i>. Coursera.</span>
+<ol class="bibliography"><li><span id="ng_ml_lr_2014">[1]A. Ng, “Logistic Regression.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
 </li>
-<li><span id="ng_ml_nnr_2014">Ng, A. (2014). Neural Networks: Representation. <i>Machine Learning</i>. Coursera.</span>
+<li><span id="ng_ml_nnl_2014">[2]A. Ng, “Neural Networks: Learning.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
 </li></ol>
+
+<h3 id="section-5">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:class_label_method">
+      <p>神经网络的输出不是$1,2,3,\ldots$这样的类别标签，Logistic回归模型输出属于某一类的概率，输入特征属于输出概率最靠近$1$的类别。 <a href="#fnref:class_label_method" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
 </section>
 <section align="right">
@@ -180,7 +178,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-multiple-classification" data-url="http://jiyeqian.bitbucket.org/2014/10/machine-learning-multiple-classification" data-title="机器学习: 多分类问题">
+	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-multiple-classification" data-url="http://qianjiye.de/2014/10/machine-learning-multiple-classification" data-title="机器学习: 多分类问题">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -213,7 +211,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization'; --1> -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/machine-learning-regularization'; --1> -->
 <!--         url = '/2014/10/machine-learning-regularization'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->

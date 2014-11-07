@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习: 神经网络</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习: 神经网络</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-11-09">2014-11-09</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#神经网络" title="神经网络">神经网络</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">简介</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_1.png"><img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" /></a><div class="caption">Figure 1:  神经网络结构 [<a href="/assets/images/2014-10-21-neural-networks_1.png">PNG</a>]</div></div></div>
+
+<p>神经网络是神经元分层级联构成的网络，除输入层外每个神经元对应一个计算模型。最左边和最右边的层分别称为输入（input）和输出（output）层，中间两层为隐藏层（hidden layer）。</p>
+
+<p>当特征数目巨大时，简单的Logistic回归无法满足需求。神经网络用于解决复杂的非线性问题，可以看成是Logistic回归的组合，上图中每个橙色的神经元（除输入层之外）都对应一个Logistic方程。</p>
+
+<p>对于分类问题，输入层输入原始数据，隐藏层的每个神经元可视为提取一种特征，输出层的每个神经元对应所属类别的概率（不是类别标签）。输入数据所属的类别是输出层概率最大神经元对应的类别。</p>
+
+<p>神经网络通过前向传播计算给定输入对应的输出，通过误差反向传播估计权值矩阵。</p>
+
+<h2 id="section-1">前向传播计算</h2>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_2.png"><img src="/assets/images/2014-10-21-neural-networks_2.png" alt="神经网络前向传播计算" /></a><div class="caption">Figure 2:  神经网络前向传播计算 [<a href="/assets/images/2014-10-21-neural-networks_2.png">PNG</a>]</div></div></div>
+
+<p>神经网络前向传播，从输入到输出，逐层计算。上图所示<a href="#ng_ml_nnr_2014">[1, P. 23]</a>，假设权值矩阵$\Theta^{(l-1)}$已知，第$l$层可通过第$l-1$层和权值矩阵前向计算，</p>
+
+<p>\begin{equation}
+\mathbf a^{(l)} = g\left(\mathbf\Theta^{(l-1)}\mathbf a^{(l-1)}\right),
+\label{eq:forward-propagation}
+\end{equation}</p>
+
+<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$\mathbf a_0^{(l)}= 1$的偏移（bias），$\mathbf\Theta^{(l-1)}$的行数为第$i$层神经元个数，列数为第$l-1$层神经元个数加$1$。</p>
+
+<p>输出层（第$L$层）神经元的输出$\mathbf a^{(L)}$确定输入特征所属的类别。</p>
+
+<p>如果上图去掉隐藏层只有输入和输出层，这就相当于一个Logistic回归模型。</p>
+
+<h2 id="section-2">反向参数估计</h2>
+
+<p>神经网络通过反向传播估计权值矩阵$\Theta$，参数估计仍然是最小化代价函数。通过BP算法（BackPropagation algorithm），输出层的误差向输入层逐层反向传播，利用梯度下降法，估计权值矩阵。</p>
+
+<h3 id="section-3">代价函数</h3>
+
+<p>神经网络的神经元是Logistic模型，存在和Logistic模型类似的代价函数</p>
+
+<p>\begin{equation}
+\begin{aligned}
+J(\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \left(h_\Theta\left(\mathbf x^{(i)} \right) \right)_k + \left(1 - y_k^{(i)}\right)\log\left(1 -  \left(h_\Theta\left(\mathbf x^{(i)} \right) \right)_k \right) \right) \\ 
+&amp;+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}\left(\Theta_{ji}^{(l)}\right)^2.
+\end{aligned}
+\label{eq:cf_nn}
+\end{equation}</p>
+
+<p>$h_\Theta (x) \in \mathbb{R}^K$，$\left(h_\Theta (x)\right)_k = \mathbf a_k^{(L)} $是输出层第$k$个神经元的输出，可由前向传播公式\eqref{eq:forward-propagation}计算；$s_l$表示第$l$层神经元的个数（不含bias unit）；神经网络有$L$层，$m$个样本，$K$个输出。</p>
+
+<p>如果代价函数\eqref{eq:cf_nn}是非凸（non-convex）函数<sup id="fnref:if_no_global_minimum"><a href="#fn:if_no_global_minimum" class="footnote">1</a></sup>，理论上可能会陷入局部极值，事实上，即使不能保证取得全局极值，梯度下降法也能很好的最小化代价函数，使得神经网络工作良好<a href="#ng_ml_nnl_2014">[2, P. 30]</a>。</p>
+
+<p>对比<a href="/2014/10/machine-learning-regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$\mathbf a_0^{(l)} = 1$对应的系数$\mathbf \Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
+
+<h3 id="section-4">参数估计</h3>
+
+<p>通过最小化代价函数$\min_\Theta J(\Theta)$估计模型的所有参数矩阵$\Theta^{(l)}$，采用梯度下降法时需计算代价函数$J(\Theta)$及其梯度$\mathbf D_{ij}^{(l)}$，
+\begin{equation*}
+\mathbf D_{ij}^{(l)} = \frac{\partial J(\Theta)}{\partial\Theta_{ij}^{(l)}}.
+\end{equation*}</p>
+
+<p>第$l$层的误差记为$\mathbf\delta^{(l)}$，$\mathbf\delta_j^{(l)}$表示第$l$层的第$j$个神经元的误差，对于$\mathbf a_0^{(l)} = 1$的bias节点$\mathbf\delta_0^{(l)}=0$。输出层（$l=L$）的误差为
+\begin{equation}
+\mathbf\delta^{(L)} = \mathbf a^{(L)} - \mathbf y, 
+\label{eq:error-bp-1}
+\end{equation}
+对于隐藏层$(l = L-1, L-2, \ldots, 2)$，误差通过权值矩阵$\Theta^{(l)}$从输出层向各隐藏层反向传播，
+\begin{equation}
+\mathbf\delta^{(l)} = \left(\Theta^{(l)}\right)^T\mathbf\delta^{(l+1)} .* g’\left(\mathbf z^{(l)}\right), 
+\label{eq:error-bp-2}
+\end{equation}</p>
+
+<p>其中，$\mathbf z^{(l)} = \Theta^{(l)}\mathbf a^{(l)}$，$g’\left(\mathbf z^{(l)}\right) = \mathbf a^{(l)} .* \left(1 - \mathbf a^{(l)}\right)$。<code>.*</code>借用了Matlab中对应元素相乘的运算符。</p>
+
+<p>Coursera的<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>和Michael Nielsen<a href="#nielsen_nndl_2014">[3]</a>的第二章给出了BP算法的推导过程<sup id="fnref:parameter_estimation"><a href="#fn:parameter_estimation" class="footnote">2</a></sup>。</p>
+
+<blockquote>
+  <h4 id="bp">BP算法</h4>
+  <hr />
+  <p>训练集：$\left\{\left(\mathbf x^{(1)}, \mathbf y^{(1)}\right),\ldots,\left(\mathbf x^{(m)}, \mathbf y^{(m)}\right)\right\}$。 </p>
+
+  <p>初始化： <br />
+1. $\Delta_{ij}^{(l)} = 0$； <br />
+2. 随机数初始化$\Theta_{ij}^{(l)}$为$[-\epsilon, \epsilon]$的值，$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}$由神经元数目确定，其中，$L_{in} = s_l$，$L_{out}=s_{l+1}$。<sup id="fnref:initial_theta"><a href="#fn:initial_theta" class="footnote">3</a></sup>  </p>
+
+  <p>for $i=1$ to $m$ {  <br />
+1. 初始化输入层，$\mathbf a^{(1)} = \mathbf x^{(i)}$； <br />
+2. 利用前向传播\eqref{eq:forward-propagation}，计算各层神经元的值$\mathbf a^{(l)}~~(l = 2, 3,\ldots, L)$；<br />
+3. 利用反向传播\eqref{eq:error-bp-1}和\eqref{eq:error-bp-2}，计算各层误差$\mathbf \delta^{(l)}$； <br />
+4. 更新$\Delta_{ij}^{(l)}$，$\Delta_{ij}^{(l)} := \Delta_{ij}^{(l)} + \mathbf a_j^{(l)}\delta_i^{(l+1)}$<sup id="fnref:vector_update_Delta"><a href="#fn:vector_update_Delta" class="footnote">4</a></sup>（$\mathbf a^{(l)}$也须补$\mathbf a_0^{(l)}=1$）； <br />
+5. 计算梯度$\mathbf D_{ij}^{(l)}$，
+\begin{equation}
+\mathbf D_{ij}^{(l)} := \left\{
+\begin{aligned}
+&amp; \frac{1}{m}\left(\Delta_{ij}^{(l)} + \lambda\Theta_{ij}^{(l)}\right) &amp; (j \neq 0) \\
+&amp; \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
+\end{aligned} 
+\right. .
+\end{equation}
+}</p>
+</blockquote>
+
+<h3 id="section-5">实现细节</h3>
+
+<p>算法技巧：矩阵展成（unroll）向量：</p>
+
+<ol>
+  <li><code class="highlight language-matlab"><span class="n">thetaVec</span> <span class="p">=</span> <span class="p">[</span><span class="n">Theta1</span><span class="p">(:);</span> <span class="n">Theta2</span><span class="p">(:);</span> <span class="n">Theta3</span><span class="p">(:)]</span></code>；</li>
+  <li>将向量化的待估参数作为costFunction的参数；</li>
+  <li>costFunction内部再将向量还原为矩阵计算梯度；</li>
+  <li>梯度向量化输出<code class="highlight language-matlab"><span class="n">DVec</span> <span class="p">=</span> <span class="p">[</span><span class="n">D1</span><span class="p">(:);</span> <span class="n">D2</span><span class="p">(:);</span> <span class="n">D3</span><span class="p">(:)]</span></code>。</li>
+</ol>
+
+<p>算法技巧：梯度检查（gradient checking）：</p>
+
+<p>梯度检测方法也可推广到其它需要计算代价函数及其梯度的地方，比如logistic回归的代价函数。</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="k">for</span> <span class="nb">i</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">n</span>
+   <span class="n">thetaPlus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
+   <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaPlus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">EPSILON</span><span class="p">;</span>
+   <span class="n">thetaMinus</span> <span class="p">=</span> <span class="n">theta</span><span class="p">;</span>
+   <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="n">thetaMinus</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> – <span class="n">EPSILON</span><span class="p">;</span>
+   <span class="n">gradApprox</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span> <span class="p">=</span> <span class="p">(</span><span class="n">J</span><span class="p">(</span><span class="n">thetaPlus</span><span class="p">)</span> – <span class="n">J</span><span class="p">(</span><span class="n">thetaMinus</span><span class="p">));</span>
+<span class="k">end</span></code></pre></div>
+
+<blockquote>
+  <p>theta 是$\Theta$的向量化，正常情况有gradApprox$\approx$DVec，通过比较gradApprox 与BP 算法所得DVec 的差距判断BP 算法的代价函数及其优化算法是否有subtle bugs。</p>
+</blockquote>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="c">% If your backpropagation implementation is correct, then the relative difference will be small (less than 1e-9). </span>
+<span class="n">diff</span> <span class="p">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">-</span> <span class="n">DVec</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">gradApprox</span> <span class="o">+</span> <span class="n">DVec</span><span class="p">);</span></code></pre></div>
+
+<blockquote>
+  <p>梯度检查应当在训练神经网络之前，可以通过构造一个新的较小规模的神经网络进行检验；若每次训练都检测梯度，速度很慢。</p>
+</blockquote>
+
+<p>注意事项：</p>
+
+<p>不可将$\Theta_{ij}^{(l)}$初始化为$0$，若初始化为$0$，每层的所有神经元都是一样的。随机数初始化$-\epsilon\leq\Theta_{ij}^{(l)}\leq\epsilon$，选择$\epsilon$的有效策略是根据每层神经元的数目取$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}~(L_{in} = s_l,L_{out}=s_{l+1})$，例如：</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="n">Theta1</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span>
+<span class="n">Theta2</span> <span class="p">=</span>  <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">INIT_EPSILON</span><span class="p">)</span> <span class="o">-</span> <span class="n">INIT_EPSILON</span><span class="p">;</span></code></pre></div>
+
+<h2 id="section-6">应用</h2>
+
+<p>卡内基梅隆大学基于神经网络的自动驾驶系统<a href="#pomerleau_alvinn_1989">[6]</a>，一些Matlab代码和数据还可以从<a href="http://www.cs.cmu.edu/afs/cs/academic/class/15782-f06/matlab/alvinn/">这里</a>找到。</p>
+
+<h2 id="section-7">参考资料</h2>
+
+<ol class="bibliography"><li><span id="ng_ml_nnr_2014">[1]A. Ng, “Neural Networks: Representation.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
+</li>
+<li><span id="ng_ml_nnl_2014">[2]A. Ng, “Neural Networks: Learning.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
+</li>
+<li><span id="nielsen_nndl_2014">[3]M. A. Nielsen, <i>Neural Networks and Deep Learning</i>. Determination Press, 2014 [Online]. Available at: http://neuralnetworksanddeeplearning.com</span>
+</li>
+<li><span id="ng_ml_nnl_pe_2014">[4]A. Ng, “Programming Exercise 4: Neural Networks Learning.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
+</li>
+<li><span id="pomerleau_alvinn_1989">[5]D. A. Pomerleau, “ALVINN, an autonomous land vehicle in a neural network,” Carnegie Mellon University, 1989 [Online]. Available at: http://repository.cmu.edu/cgi/viewcontent.cgi?article=2874&amp;context=compsci</span>
+</li></ol>
+
+<h3 id="section-8">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:if_no_global_minimum">
+      <p>如果非凸函数，梯度下降法不能确定取得的是全局还是局部极值，可通过<a href="https://class.coursera.org/ml-007/forum/thread?thread_id=1089#comment-3416">取不同初始值多次求解增强鲁棒性</a>。 <a href="#fnref:if_no_global_minimum" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:parameter_estimation">
+      <p>这两篇博客（<a href="http://blog.csdn.net/abcjennifer/article/details/7758797">1</a>、<a href="http://blog.csdn.net/sheng_ai/article/details/19931347">2</a>）也给出了BP算法的推导过程，但是采用了形如<a href="/2014/10/machine-learning-linear-regression/#mjx-eqn-eqcost_function_linear_regression">线性回归的代价函数</a>。 <a href="#fnref:parameter_estimation" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:initial_theta">
+      <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$。若初始化为$0$，每层的所有神经元都一样<a href="#ng_ml_nnl_2014">[2, Pp. 25-26]</a>，每层只能学习到一种特征。$\epsilon$的取值方案参考课程习题脚注<a href="#ng_ml_nnl_pe_2014">[5, P. 7]</a>或<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>。 <a href="#fnref:initial_theta" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:vector_update_Delta">
+      <p>更新的向量形式$\Delta^{(l)} := \Delta^{(l)} + \delta^{(l+1)}\left(\mathbf a^{(l)}\right)^T$。这一步是怎么来的？有何意义？ <a href="#fnref:vector_update_Delta" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/10/css-essential" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/11/machine-learning-neural-networks" data-url="http://qianjiye.de/2014/11/machine-learning-neural-networks" data-title="机器学习: 神经网络">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/css-essential'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/11/machine-learning-neural-networks/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

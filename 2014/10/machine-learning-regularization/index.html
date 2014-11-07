@@ -28,9 +28,8 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa6c4cba1a96584b9d529cb356a6aef2' type='text/javascript'%3E%3C/script%3E"));
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
 
   </head>
 <!--  <body>
@@ -128,6 +127,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>正则化只作用于$j\ge 1$的非常数项，实际上，正则化常数项对结果影响也不大。</li>
 </ul>
 
+<p>资料来源：<a href="#ng_ml_r_2014">[1]</a>。</p>
+
 <p>bias &amp; variance:</p>
 
 <ul>
@@ -141,23 +142,24 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>\begin{equation}
 J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
+\label{eq:cf-linear-regression-r}
 \end{equation}</p>
 
 <h3 id="section-3">梯度下降法估计参数</h3>
 
 <p>repeat until convergence {
-\[
+\begin{equation*}
 \begin{aligned}
 \theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
 \end{aligned}
-\]
+\end{equation*}
 }</p>
 
 <p>迭代过程可以化为如下形式：
-\begin{equation}
-\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)}~~~~~~(j = 1, 2, \ldots, n)
-\end{equation}</p>
+\begin{equation*}
+\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)};~~(j = 1, 2, \ldots, n)
+\end{equation*}</p>
 
 <p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小更快。</p>
 
@@ -165,49 +167,51 @@ J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) -
 
 <p>\begin{equation}
 \theta = \left(X^TX + \lambda
-\begin{vmatrix}
+\begin{bmatrix}
 0  &amp;   &amp;        &amp; \\
    &amp; 1 &amp;        &amp; \\
    &amp;   &amp; \ddots &amp; \\
    &amp;   &amp;        &amp; 1
-\end{vmatrix}
+\end{bmatrix}
 \right)^{-1}X^Ty
 \end{equation}</p>
 
-<blockquote>
-  <p>可以证明，加入正则化项后矩阵始终可逆。</p>
-</blockquote>
+<p>可以证明，加入正则化项后矩阵始终可逆。</p>
 
 <h2 id="logistic">正则化Logistic回归</h2>
 
 <h3 id="section-5">代价函数</h3>
 
 <p>\begin{equation}
-J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right) ＋ \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\begin{aligned}
+J(\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right) \\
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\end{aligned}
+\label{eq:cf-logistic-regression-r}
 \end{equation}</p>
 
 <h3 id="section-6">梯度下降法估计参数</h3>
 
 <p>repeat until convergence {
-\[
+\begin{equation*}
 \begin{aligned}
 \theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~~~~~(j = 1, 2, \ldots, n)
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
 \end{aligned}
-\]
+\end{equation*}
 }</p>
 
 <h3 id="matlab">Matlab实现</h3>
 
 <p>第一步：实现Logistic函数</p>
 
-<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
 <span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
 <span class="k">end</span></code></pre></div>
 
 <p>第二步：实现代价函数（包含梯度计算）</p>
 
-<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
 <span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
 
 <span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
@@ -219,7 +223,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <p>第三步：估计参数</p>
 
-<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
 <span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
 <span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
@@ -235,7 +239,8 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 <h2 id="section-8">参考资料</h2>
 
-<p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </p>
+<ol class="bibliography"><li><span id="ng_ml_r_2014">[1]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014 [Online]. Available at: https://class.coursera.org/ml-007</span>
+</li></ol>
 
 </section>
 <section align="right">
@@ -249,7 +254,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-regularization" data-url="http://jiyeqian.bitbucket.org/2014/10/machine-learning-regularization" data-title="机器学习: 正则化">
+	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-regularization" data-url="http://qianjiye.de/2014/10/machine-learning-regularization" data-title="机器学习: 正则化">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -282,7 +287,7 @@ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\ri
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://jiyeqian.bitbucket.org/2014/10/machine-learning-perceptron-learning-algorithm'; --1> -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/machine-learning-perceptron-learning-algorithm'; --1> -->
 <!--         url = '/2014/10/machine-learning-perceptron-learning-algorithm'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
