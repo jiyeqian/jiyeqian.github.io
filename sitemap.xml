@@ -2,6 +2,24 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2014/11/machine-learning-advice-for-applying-machine-learning</loc>
+    
+    <lastmod>2014-11-25T09:44:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/machine-learning-resources</loc>
+    
+    <lastmod>2014-11-22T00:00:36+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2014/11/machine-learning-neural-networks</loc>
     
     <lastmod>2014-11-09T11:09:00+08:00</lastmod>

@@ -110,83 +110,75 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">模型介绍</h2>
 
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-19-logistic_regression_0.png" alt="Logistic函数" />
-<div class="caption">图1 Logistic函数</div>
-</div>
-</div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_0.png"><img src="/assets/images/2014-10-19-logistic_regression_0.png" alt="Logistic函数" /></a><div class="caption">Figure 1:  Logistic函数 [<a href="/assets/images/2014-10-19-logistic_regression_0.png">PNG</a>]</div></div></div>
 
 <p>Logistic回归（Logistic Regression）用于解决二分类问题，而非回归问题。Logistic函数将回归问题转化为了分类问题。</p>
 
-<p>Logistic回归模型：
+<p>Logistic回归模型为
 \begin{equation}
-h_\theta(x) = g\left(\theta^Tx\right)
+h_{\boldsymbol{\theta}}(\mathbf x) = g\left(\boldsymbol\theta^T\mathbf x\right),
 \end{equation}
 其中
 \begin{equation}
-g\left(z\right) = \frac{1}{1 + e^{-z}}
+g\left(z\right) = \frac{1}{1 + e^{-z}}.
 \label{eq:sigmoid-function}
 \end{equation}</p>
 
-<blockquote>
-  <p>上式也称为sigmoid function、logistic function，如<a href="#fig1">图1</a>所示。</p>
-</blockquote>
+<p>上式也称为Sigmoid函数或Logistic函数，如<a href="#figure-1">图1</a>所示，其导数为
+\begin{equation}
+g’\left(z\right) = g\left(z\right)\left(1-g\left(z\right)\right).
+\label{eq:d-sigmoid-function}
+\end{equation}</p>
 
-<p>分类问题的判别条件如下：
+<p>分类问题的判别条件为
 \begin{equation}
 y = \left\{
 \begin{aligned}
-&amp; 1 &amp; h_\theta(x) \ge 0.5 \\
-&amp; 0 &amp; h_\theta(x) &lt; 0.5
-\end{aligned}
+&amp; 1 &amp; h_\boldsymbol\theta(\mathbf x) \ge 0.5 \\
+&amp; 0 &amp; h_\boldsymbol\theta(\mathbf x) &lt; 0.5
+\end{aligned},
 \right. 
 \end{equation}
-也就是，若$\theta^Tx \ge 0$，则$y = 1$；若$\theta^Tx &lt; 0$，则$y = 0$。Logistic回归模型可以看作是计算属于类别1的概率
+也就是，若$\boldsymbol\theta^T\mathbf x \ge 0$，则$y = 1$；若$\boldsymbol\theta^T\mathbf x &lt; 0$，则$y = 0$。Logistic回归模型可以看作是计算属于类别1的概率
 \begin{equation}
-h_\theta\left(x\right) = \frac{1}{1 + e^{-\theta^Tx}} = P\left(y=1\big|x; \theta\right)
+h_\boldsymbol\theta\left(\mathbf x\right) = \frac{1}{1 + e^{-\boldsymbol\theta^T\mathbf x}} = P\left(y=1\big|\mathbf x; \boldsymbol\theta\right)
 \end{equation}</p>
 
 <p>因此，对于而分类问题，有
 \begin{equation}
-P\left(y=0\big|x; \theta\right) ＝ 1 - P\left(y=1\big|x; \theta\right) ＝ 1 - h_\theta\left(x\right)
+P\left(y=0\big|\mathbf x; \boldsymbol\theta\right) ＝ 1 - P\left(y=1\big|\mathbf x; \boldsymbol\theta\right) ＝ 1 - h_\boldsymbol\theta\left(\mathbf x\right)
 \end{equation}</p>
 
-<p>$\theta^Tx = 0$称为决策界（Decision Boundary）。决策界可以时线性的，也可以是非线性的。</p>
+<p>$\boldsymbol\theta^T\mathbf x = 0$称为决策界（Decision Boundary）。决策界可以时线性的，也可以是非线性的。</p>
 
-<p><img src="/assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /> </p>
-
-<div class="caption">图2 线性决策界</div>
-
-<p><img src="/assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></p>
-
-<div class="caption">图3 非线性决策界</div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_2.png"><img src="/assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /></a><div class="caption">Figure 2:  线性决策界 [<a href="/assets/images/2014-10-19-logistic_regression_2.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_3.png"><img src="/assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></a><div class="caption">Figure 3:  非线性决策界 [<a href="/assets/images/2014-10-19-logistic_regression_3.png">PNG</a>]</div></div></div>
 
 <h2 id="section-1">代价函数</h2>
 
 <p>线性回归的代价函数框架为：</p>
 
 <p>\begin{equation}
-J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\right) - y^{(i)}\right)^2}
+J(\boldsymbol\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)}\right)^2}
 \end{equation}</p>
 
 <p>令</p>
 
 <p>\begin{equation}
-\mbox{Cost}\left(h_\theta(x), y\right) = \frac{1}{2}\left( h_\theta(x) - y \right) ^ 2
+\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = \frac{1}{2}\left( h_\boldsymbol\theta(\mathbf x) - y \right) ^ 2
 \end{equation}</p>
 
-<p>当$h_\theta(x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
+<p>当$h_\boldsymbol\theta(\mathbf x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
 
-<div class="image_line" id="cost_function_curve"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_1.png"><img src="/assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数" /></a><div class="caption">Figure 1:  代价函数 [<a href="/assets/images/2014-10-19-logistic_regression_1.png">PNG</a>]</div></div></div>
+<div class="image_line" id="cost_function_curve"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_1.png"><img src="/assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数" /></a><div class="caption">Figure 4:  代价函数 [<a href="/assets/images/2014-10-19-logistic_regression_1.png">PNG</a>]</div></div></div>
 
 <p>Logistic回归采用</p>
 
 <p>\begin{equation}
-\mbox{Cost}\left(h_\theta(x), y\right) = \left\{
+\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = \left\{
 \begin{aligned}
-&amp; -\log\left(h_\theta(x)\right) &amp; y=1 \\
-&amp; -\log\left(1-h_\theta(x)\right) &amp; y=0
+&amp; -\log\left(h_\boldsymbol\theta(\mathbf x)\right) &amp; y=1 \\
+&amp; -\log\left(1-h_\boldsymbol\theta(\mathbf x)\right) &amp; y=0
 \end{aligned}
 \right. 
 \end{equation}</p>
@@ -194,30 +186,30 @@ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\theta}\left(x^{(i)}\r
 <p>上式等价于</p>
 
 <p>\begin{equation}
-\mbox{Cost}\left(h_\theta(x), y\right) = -y\log\left(h_\theta(x)\right) - (1 - y)\log\left(1-h_\theta(x)\right)
+\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = -y\log\left(h_\boldsymbol\theta(\mathbf x)\right) - (1 - y)\log\left(1-h_\boldsymbol\theta(\mathbf x)\right)
 \end{equation}</p>
 
 <p>因此，Logistic回归的代价函数为</p>
 
 <p>\begin{equation}
 \begin{aligned}
-J(\theta)<br />
-= &amp; \frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right) \\
-= &amp; -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right)
+J(\boldsymbol\theta)<br />
+= &amp; \frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right), y^{(i)}\right) \\
+= &amp; -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)\right)\right)
 \end{aligned}
 \label{eq:cost_function_logistic_regression}
 \end{equation}</p>
 
 <blockquote>
-  <p>若套用线性回归的代价函数，则$J(\theta)$非凸，不利于优化算法。该代价函数可从统计中最大似然估计（maximum likehood estimation）的角度推导。</p>
+  <p>若套用线性回归的代价函数，则$J(\boldsymbol\theta)$非凸，不利于优化算法。该代价函数可从统计中最大似然估计（maximum likehood estimation）的角度推导。</p>
 </blockquote>
 
 <h2 id="section-2">参数估计</h2>
 
-<p>参数估计是通过最小化代价函数\eqref{eq:cost_function_logistic_regression}，求解模型参数$\theta$。</p>
+<p>参数估计是通过最小化代价函数\eqref{eq:cost_function_logistic_regression}，求解模型参数$\boldsymbol\theta$。</p>
 
 <p>\[
-\min_\theta J(\theta)
+\min_\boldsymbol\theta J(\boldsymbol\theta)
 \]</p>
 
 <h3 id="section-3">梯度下降法</h3>
@@ -226,7 +218,7 @@ J(\theta)<br />
 
 <p>repeat until convergence {
 \[
-\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\theta\left(x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
+\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
 \]
 }</p>
 
@@ -237,9 +229,7 @@ J(\theta)<br />
   <li>其它注意事项同梯度下降法求解线性回归参数。</li>
 </ul>
 
-<p><img src="/assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></p>
-
-<div class="caption">图5 采用Matlab的优化框架求解模型参数</div>
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_4.png"><img src="/assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></a><div class="caption">Figure 5:  采用Matlab的优化框架求解模型参数 [<a href="/assets/images/2014-10-19-logistic_regression_4.png">PNG</a>]</div></div></div>
 
 <h3 id="section-4">其它算法</h3>
 
