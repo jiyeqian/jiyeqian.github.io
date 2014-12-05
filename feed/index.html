@@ -4,11 +4,490 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2014-11-26T23:53:01+08:00</lastbuilddate>
+    <lastbuilddate>2014-12-08T23:15:05+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
-      <title>机器学习: 实战技能</title>
+      <title>机器学习：异常检测</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-anomaly-detection" />
+      <pubdate>2014-12-08T10:29:01+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-anomaly-detection</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">简介</h2>
+
+<p>异常检测的基本思想：若发生了小概率事件，就认为出现了异常。</p>
+
+<p>常用的异常检测方法是利用高斯密度函数，计算数据出现的概率，如果发现了概率小于某个阈值的数据，就认为该数据是异常的。</p>
+
+<p>异常检测也是一种模式二分类方法，但两类数据严重不平衡，异常数据要显著少于正常数据。</p>
+
+<h2 id="section-1">基于高斯（正态）分布的异常检测</h2>
+
+<p>根据异常检测的思想，若$\mathbf x$出现的概率$p(\mathbf x) &lt; \varepsilon$，则认为$\mathbf x$是异常点。因此，异常检测的重要内容是估计概率密度函数。</p>
+
+<h3 id="section-2">一元高斯分布</h3>
+
+<p>基于一元高斯分布的异常检测的前提条件是假设特征之间相互独立。</p>
+
+<p>通常假设特征分量的数据集$X$满足均值为$\mu$，方差为$\sigma^2$的正态分布，
+\begin{equation}
+X\sim\mathcal{N}\left(\mu, \sigma^2\right)，
+\end{equation}
+因此有
+\begin{equation}
+p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)，
+\end{equation}
+这需要估计均值$\mu$和方差$\sigma^2$，它们的极大似然估计为
+\begin{equation}
+\begin{aligned}
+\mu = &amp; {1\over m}\sum_{i=1}^{m}x^{(i)}\\
+\sigma^2 = &amp; {1\over m}\sum_{i=1}^{m}\left(x^{(i)}-\mu\right)^2
+\end{aligned}。
+\label{eq:likehood-mu-sigma}
+\end{equation}</p>
+
+<p>得到了概率密度函数，就容易利用概率判断异常。</p>
+
+<h4 id="section-3">一、异常检测</h4>
+
+<blockquote>
+  <h4 id="section-4">异常检测算法</h4>
+  <hr />
+
+  <ol>
+    <li>选择能指示异常的特征$\mathbf x_i$；</li>
+    <li>利用公式\eqref{eq:likehood-mu-sigma}，估计每维特征的均值和方差$\boldsymbol\mu_1,\ldots,\boldsymbol\mu_n,\boldsymbol\sigma_1^2,\ldots,\boldsymbol\sigma_n^2$；</li>
+    <li>计算$\mathbf x$的概率，
+\begin{equation}
+p(\mathbf x) = \prod_{j=1}^n p\left(\mathbf x_j;\boldsymbol\mu_j,\boldsymbol\sigma_j^2\right)，
+\end{equation}
+通过特征分量概率密度函数乘积计算$\mathbf x$概率密度，需满足特征之间相互独立的假设；</li>
+    <li>若$p(\mathbf x) &lt; \varepsilon$，则$\mathbf x$为异常点。</li>
+  </ol>
+</blockquote>
+
+<p>异常检测的训练过程就是估计概率密度函数参数$\boldsymbol\mu$和$\boldsymbol\sigma^2$。通常情况，训练过程不需要异常数据。$60\%$的正常数据作为训练集，$20\%$的正常数据和$50\%$的异常数据作为交叉检验集，$20\%$的正常数据和$50\%$的异常数据作为测试集。</p>
+
+<p>通过交叉检验集可确定判定异常的阈值$\varepsilon$，选择参数可利用<a href="/2014/11/machine-learning-advice-for-applying-machine-learning/#performance-evaluation">分类器性能评价指标</a>。</p>
+
+<p>异常检测和监督学习存在不同的特点，应用在不同的场景：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">异常检测</th>
+      <th style="text-align: left">监督学习</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">正样本（异常数据，$y=1$）少，通常$0\sim 20$个正样本，负样本（正常数据，$y=0$）多；</td>
+      <td style="text-align: left">正样本和负样本都较多；</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">可能存多种不同类型的异常数据，难以通过正样本学习；</td>
+      <td style="text-align: left">大量的正样本数据，能通过训练集了解正样本特点；</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">应用领域：欺诈检测、故障诊断、数据中心设备监控等</td>
+      <td style="text-align: left">应用领域：垃圾邮件分类、天气预测、癌症分类等。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="feature-transform">二、特征变换</h4>
+
+<p>根据异常检测方法可知，运用异常检测有两个重要的前提条件：</p>
+
+<ol>
+  <li>特征满足高斯分布（特征之间的相关性下节考虑）；</li>
+  <li>$p(\mathbf x)$对正常数据很大，但对异常数据很小。</li>
+</ol>
+
+<p>在实际应用中，原始特征可能并不满足这两个前提条件，需要将特征作一定变换或构造新的特征。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png"><img src="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png" alt="原始特征通过变换满足高斯分布" /></a><div class="caption">Figure 1:  原始特征通过变换满足高斯分布 [<a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png">PNG</a>]</div></div></div>
+
+<p>上图展示了通过函数$\log x$变换原始特征以满足高斯分布。也可以通过构造新的特征，比如数据中心监控，利用特征$\mbox{CPU load}$和$\mbox{network traffic}$构造新的特征$\frac{\mbox{CPU load}}{\mbox{network traffic}}$<sup id="fnref:why-create-new-feature"><a href="#fn:why-create-new-feature" class="footnote">1</a></sup>，使其在发生异常的时数据会变得很大或者很小。</p>
+
+<h3 id="section-5">多元高斯分布</h3>
+
+<p>实际应用中，特征之间可能存在相关性，需要采用多元高斯分布概率密度函数进行异常检测。</p>
+
+<p>多元高斯分布的概率密度函数定义为</p>
+
+<p>\begin{equation}
+p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rvert^{1\over 2}}\exp\left(-{1\over 2}(\mathbf x - \boldsymbol\mu)^T\Sigma^{-1}(\mathbf x - \boldsymbol\mu)\right)，
+\label{eq:multi-gaussians-pdf}
+\end{equation}</p>
+
+<p>其均值向量和协方差矩阵的极大似然估计为</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\boldsymbol\mu = &amp; {1\over m}\sum_{i=1}^{m}\mathbf x^{(i)}\\
+\Sigma = &amp; {1\over m}\sum_{i=1}^{m}\left(\mathbf x^{(i)}-\boldsymbol\mu\right)\left(\mathbf x^{(i)}-\boldsymbol\mu\right)^T
+\end{aligned}。
+\end{equation}</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png"><img src="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png" alt="二元高斯分布" /></a><div class="caption">Figure 2:  二元高斯分布 [<a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png">PNG</a>]</div></div></div>
+
+<p>上图给出了不同参数的二元高斯密度函数图。图上排的协方差矩阵为对角阵，表示特征之间独立，可用一元高斯分布的方法进行异常检测；图下排的协方差矩阵是非对角阵，表示特征之间存在相关性，需借助多元高斯分布密度函数\eqref{eq:multi-gaussians-pdf}进行异常检测。</p>
+
+<p>基于一元高斯分布和多元高斯分布的异常检测有不同的应用场景：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">一元高斯分布</th>
+      <th style="text-align: left">多元高斯分布</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">根据先验知识<a href="#feature-transform">构造新特征</a>，手动处理相关性问题；</td>
+      <td style="text-align: left">自动处理样本之间的相关性，计算$\Sigma$<sup id="fnref:multi-gaussian-feature-transform"><a href="#fn:multi-gaussian-feature-transform" class="footnote">2</a></sup>；</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">计算复杂度较低；</td>
+      <td style="text-align: left">计算复杂度较高；</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">能处理样本数$m$很少的情况。</td>
+      <td style="text-align: left">需要$m&gt;n$（一般$m&gt;10n$），否则$\Sigma$不可逆。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>若$\Sigma$不可逆，原因可能是不满足条件$m&gt;n$，或者存在冗余特征，也就是特征之间有相关性（比如$\mathbf x_1=k\mathbf x_2$或$\mathbf x_1=\mathbf x_2 ＋ \mathbf x_3$等）。</p>
+
+<p>由此可见，特征之间是否具有相关性并非利用多元还是一元高斯分布进行异常检测的唯一条件，在必要的时候需要借助一元高斯分布对具有相关性特征的数据集进行异常检测。</p>
+
+<h2 id="section-6">参考文献</h2>
+
+<h3 id="section-7">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-create-new-feature">
+      <p>如何判断构造的新特征有价值？哪些特征加入会有助于提高性能？ <a href="#fnref:why-create-new-feature" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:multi-gaussian-feature-transform">
+      <p>利用多元高斯分布也要将每维特征变换为高斯分布么？ <a href="#fnref:multi-gaussian-feature-transform" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>机器学习：维数约减</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-dimensionality-reduction" />
+      <pubdate>2014-12-08T04:53:42+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-dimensionality-reduction</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">简介</h2>
+
+<p>维数约减的作用通常是为了数据压缩和可视化。数据压缩不仅可以节省存储空间，而且可以加速机器学习算法。高维数据需要约减到3维或2维空间，以便观测其特性。 </p>
+
+<h2 id="pca">主成分分析（PCA）</h2>
+
+<p>维数约减最常用的方法是主成分分析（PCA，Principal Component Analysis）。PCA可以理解为在高维空间中寻找一个低维的面，使得高维空间中的点到该面上的距离之和最小，这个距离也叫投影误差。</p>
+
+<p>利用PCA将维数从$n$维约减到$k$维，需要寻找$n$维空间中的$k$个向量$\mathbf u^{(1)}, \mathbf u^{(2)},\ldots,\mathbf u^{(k)}\in\mathbb R^n$，使空间中的点到这$k$个向量确定的面的投影误差最小。事实上，$n$维空间中的这$k$个向量是样本协方差矩阵最大的$k$个特征值对应的特征向量。</p>
+
+<blockquote>
+  <h4 id="pca-1">PCA维数约减算法</h4>
+  <hr />
+
+  <ol>
+    <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$\mathbf x_j^{(i)}\leftarrow\frac{\mathbf x_j^{(i)}-\boldsymbol \mu_j}{\mathbf s_j}$（$\boldsymbol \mu_j$表示均值，$\mathbf s_j$表示标准差）；</li>
+    <li>计算协方差矩阵（covariance matrix）：$\Sigma = \frac{1}{m}\sum_{i=1}^m\mathbf x^{(i)}\left(\mathbf x^{(i)}\right)^T$；</li>
+    <li>利用特征向量将$n$维向量$\mathbf x$映射到$k$维向量$\mathbf z$：
+\begin{equation}
+\mathbf z^{(i)} = U_{reduce}^T\mathbf x^{(i)}。
+\end{equation}</li>
+  </ol>
+
+  <div class="highlight"><pre><code class="language-matlab"><span class="p">[</span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">]</span> <span class="p">=</span> <span class="n">svd</span><span class="p">(</span><span class="n">Sigma</span><span class="p">);</span>
+<span class="n">Ureduce</span> <span class="p">=</span> <span class="n">U</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">);</span>
+<span class="n">z</span> <span class="p">=</span> <span class="n">Ureduce</span>’ <span class="o">*</span> <span class="n">x</span><span class="p">;</span></code></pre></div>
+  <p>在应用中，只需要在训练集上做PCA，交叉检验和测试集上可以直接应用训练集的均值$\boldsymbol\mu$、标准差$\mathbf s$和映射矩阵$U_{reduce}$计算约减后的向量。</p>
+</blockquote>
+
+<p>Matlab中<code>svd</code>和<code>eig</code>函数都可以得到相同的特征值和特征向量，但是<code>svd</code>更稳定。</p>
+
+<p>从$k$维数据$\mathbf z$重构$n$维数据$\mathbf x$的方法为</p>
+
+<p>\begin{equation}
+\mathbf x_{approx}^{(i)} = U_{reduce}\mathbf z^{(i)}。
+\end{equation}</p>
+
+<p>约减后的维数$k$（主成分个数）通过方差保留的比率确定，选择满足下列条件的最小$k$</p>
+
+<p>\begin{equation*}
+\frac{\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}-\mathbf x_{approx}^{(i)}\right\rVert^2}{\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}\right\rVert^2}\leq 0.01，
+\end{equation*}</p>
+
+<p>此时方差保存比率为$99\%$。但是该方法计算复杂，可以通过特征值更简单的计算，选择满足下列条件的最小$k$</p>
+
+<p>\begin{equation}
+\frac{\sum_{i=1}^kS_{ii}}{\sum_{i=1}^nS_{ii}}\geq 0.99，
+\end{equation}</p>
+
+<p>$S_{ii}$是SVD得到的特征值。</p>
+
+<blockquote>
+  <h4 id="pca-2">谨慎使用PCA</h4>
+  <hr />
+
+  <ol>
+    <li>PCA不是解决过拟合的好方法，正则化是更好的策略（PCA或多或少损失了有助于分类的信息）；</li>
+    <li>不得滥用PCA，除非有证据表明PCA的价值，比如在有训练时间和存储空间的限制的时候。</li>
+  </ol>
+
+</blockquote>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>机器学习：聚类</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-clustering" />
+      <pubdate>2014-12-08T02:38:59+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-clustering</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">聚类简介</h2>
+
+<p>聚类是一种非监督学习方法。</p>
+
+<h2 id="k-means">$k$-means聚类</h2>
+
+<p>$k$-means算法主要包含两步：为样本分配类标签以及修改类中心。</p>
+
+<blockquote>
+  <h4 id="k-means-1">$k$-means算法</h4>
+  <hr />
+  <p>随机初始化$K$个类中心$\boldsymbol\mu_1,\boldsymbol\mu_2,\ldots,\boldsymbol\mu_K\in\mathbb R^n$。 <br />
+重复 {</p>
+
+  <ol>
+    <li>for $i=1$ to $m$：将$\mathbf x^{(i)}$的类别标签$c^{(i)}$设为最靠近的类中心标签，$c^{(i)}=\arg\min_{k=1}^K\left\lVert\mathbf x^{(i)}-\boldsymbol\mu_k\right\rVert^2$；</li>
+    <li>for $k=1$ to $K$：重新计算类中心$\boldsymbol\mu_k$。</li>
+  </ol>
+
+  <p>}</p>
+</blockquote>
+
+<p>$k$-means聚类的代价函数为</p>
+
+<p>\begin{equation}
+J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}-\boldsymbol\mu_{c^{(i)}}\right\rVert^2，
+\label{eq:cf-k-means}
+\end{equation}</p>
+
+<p>该代价函数通常也称为distortion function。</p>
+
+<p>从代价函数可以看出，$k$-means算法的第1步是通过修改类标签$c^{(i)}$最小化代价函数，第2步是通过修改类中心$\boldsymbol\mu_k$最小化代价函数。</p>
+
+<p>从$k$-means算法可知，初始化类中心$\boldsymbol\mu_k$和确定类别数$k$影响着算法的性能。</p>
+
+<h3 id="boldsymbolmuk">初始化类中心$\boldsymbol\mu_k$</h3>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png" alt="不恰当的类中心初始化导致局部极值" /></a><div class="caption">Figure 1:  不恰当的类中心初始化导致局部极值 [<a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png">PNG</a>]</div></div></div>
+
+<p>随机初始化类中心的方法通常是，随机从样本中选取$K$个点作为类中心。为了避免陷入局部极致，通常会进行多轮初始化，选择代价函数值最小的作为聚类结果。</p>
+
+<blockquote>
+  <h4 id="k-means-2">随机初始化选择$k$-means的类中心</h4>
+  <hr />
+  <p>For i = 1 to 100 {</p>
+
+  <ol>
+    <li>随机初始化类中心$\boldsymbol\mu_k$；</li>
+    <li>$k$-means算法得到$c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K$；</li>
+    <li>计算代价函数\eqref{eq:cf-k-means}。</li>
+  </ol>
+
+  <p>}  <br />
+选择代价函数值最小的聚类结果输出。</p>
+</blockquote>
+
+<p>当$K=2,\ldots,10$时，这种方法的代价函数变化明显，当$K$很大（$K&gt;100$）时，代价函数可能没有明显的变化。</p>
+
+<h3 id="k">确定类别数$K$</h3>
+
+<p>通过不停增大类别数$K$，选择代价函数曲线拐点对应的类别数，如下图左所示。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png" alt="确定类别数的elbow method" /></a><div class="caption">Figure 2:  确定类别数的elbow method [<a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png">PNG</a>]</div></div></div>
+
+<p>有时，代价函数曲线不存在拐点，如上图右所示。还可以根据$k$-means应用的具体场景，选择聚类数目，比如要制作XS、S、M、L、XL几种规格的服装，当然用类别数$K=5$来划分人的身高体重。</p>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>机器学习：支持向量机（SVM）</title>
+      <link href="http://qianjiye.de/2014/11/machine-learning-support-vector-machines" />
+      <pubdate>2014-11-27T08:05:56+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/11/machine-learning-support-vector-machines</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="logisticsvm">从Logistic回归到SVM</h2>
+
+<p>本节通过Logistic回归的代价函数，演化到SVM的代价函数，然后通过代价函数最小化推导SVM的判别界<a href="#ng_ml_svm_2014">[1, P. 3—14]</a>。</p>
+
+<p>Logistic回归的代价函数为</p>
+
+<p>\begin{equation}
+\begin{aligned}
+J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\boldsymbol\theta_j^2
+\end{aligned}，
+\label{eq:cf-logistic-regression-r}
+\end{equation}</p>
+
+<p>取出代价函数中的一项如下图，并绘制逼近Logistic代价函数的两个新的代价函数项$\mbox{cost}_1(\mathbf z)$和$\mbox{cost}_0(\mathbf z)$。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-logistic2svm.png"><img src="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-logistic2svm.png" alt="图解Logistic回归的代价函数" /></a><div class="caption">Figure 1:  图解Logistic回归的代价函数 [<a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-logistic2svm.png">PNG</a>]</div></div></div>
+
+<p>将Logistic回归的代价函数提取$\lambda\over m$，令$C={1\over\lambda}$，并用新的代价函数项替代Logistic回归的代价函数项，可得SVM的代价函数</p>
+
+<p>\begin{equation}
+J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\boldsymbol\theta_j^2 ，
+\label{eq:cf-svm-r}
+\end{equation}</p>
+
+<p>新的代价函数不再以$0$作为分类边界，而是以$+1$和$-1$。若代价函数\eqref{eq:cf-svm-r}要得最小值，可得SVM的判别界</p>
+
+<p>\begin{equation}
+\begin{aligned}
+&amp; \min_\boldsymbol\theta\frac{1}{2}\sum_{j=1}^{n}\boldsymbol\theta_j^2 &amp; \\
+&amp;
+\begin{aligned}
+\mbox{s.t.} &amp; ~~ \boldsymbol\theta^T\mathbf x^{(i)} \geq 1 &amp;\mbox{if} &amp; ~~ y^{(i)} = 1 \\
+&amp; ~~ \boldsymbol\theta^T\mathbf x^{(i)} \leq -1 &amp; \mbox{if} &amp; ~~ y^{(i)} = 0
+\end{aligned}
+\end{aligned}。
+\label{eq:svm-decision-boundary}
+\end{equation}</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-svm-boundary.png"><img src="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-svm-boundary.png" alt="图解SVM的判别界" /></a><div class="caption">Figure 2:  图解SVM的判别界 [<a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-svm-boundary.png">PNG</a>]</div></div></div>
+
+<p>根据向量间的夹角公式$\cos\theta = \frac{\boldsymbol\theta^T\mathbf x^{(i)}}{\left\lVert\boldsymbol\theta\right\rVert\left\lVert\mathbf x^{(i)}\right\rVert}$，则$p^{(i)}=\left\lVert\mathbf x^{(i)}\right\rVert\cos\theta$表示向量$\mathbf x^{(i)}$在向量$\boldsymbol\theta$上的投影，SVM的判别界\eqref{eq:svm-decision-boundary}可以改写为</p>
+
+<p>\begin{equation*}
+\begin{aligned}
+&amp; \min_\boldsymbol\theta\frac{1}{2} \lVert\boldsymbol\theta\rVert^2 &amp; \\
+&amp;
+\begin{aligned}
+\mbox{s.t.} &amp; ~~ p^{(i)}\lVert\boldsymbol\theta\rVert \geq 1 &amp;\mbox{if} &amp; ~~ y^{(i)} = 1 \\
+&amp; ~~ p^{(i)}\lVert\boldsymbol\theta\rVert \leq -1 &amp; \mbox{if} &amp; ~~ y^{(i)} = 0
+\end{aligned}
+\end{aligned}。
+\end{equation*}</p>
+
+<p>$\boldsymbol\theta$是判别界的法线，$p^{(i)}$的值可正可负。要满足判别界的条件，$\left\vert p^{(i)}\right\vert$越大越好，这样$\lVert\boldsymbol\theta\rVert$就可以取到很小的值。因此，上图中右下比左下有更大的$\left\vert p^{(i)}\right\vert$，是更合适的SVM判别界。</p>
+
+<h2 id="section">核函数</h2>
+
+<p>SVM为了解决非线性可分问题，需要引入核函数（kernel）。作为SVM的核函数须满足Mercer定理。</p>
+
+<blockquote>
+  <h4 id="mercer-a-hrefjulysvm20142a">Mercer 定理<a href="#July_svm_2014">[2]</a></h4>
+  <hr />
+  <p>函数$\kappa$是 $\mathbb R^n \times \mathbb R^n \to \mathbb R$ 上的映射。如果$\kappa$是一个有效核函数（也称为Mercer核函数），那么当且仅当对于训练样例$\{\mathbf x_1,\mathbf x_2,\ldots,\mathbf x_n\}$，其相应的核函数矩阵是对称半正定的。</p>
+</blockquote>
+
+<p>通过特征与参考地标（landmark）$\mathbf l^{(i)}$之间的相似性，定义高斯核为<a href="#ng_ml_svm_2014">[1, P. 17—20]</a></p>
+
+<p>\begin{equation}
+\mathbf f_i = \mbox{similarity}\left(\mathbf x, \mathbf l^{(i)} \right)
+= \exp\left(-\frac{\left\lVert\mathbf x - \mathbf l^{(i)}\right\rVert}{2\sigma^2} \right)。
+\end{equation}</p>
+
+<p>核函数的作用相当于特征变换，SVM引入了核函数的代价函数为</p>
+
+<p>\begin{equation}
+J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\boldsymbol\theta_j^2。
+\label{eq:cf-svm-kernel-r}
+\end{equation}</p>
+
+<p>SVM代价函数和核函数的参数对SVM分类有如下影响<a href="#ng_ml_svm_2014">[1, P. 25]</a>：</p>
+
+<ol>
+  <li>大的$C~\left(C={1\over\lambda}\right)$导致Low Bias和High Variance；</li>
+  <li>小的$C~\left(C={1\over\lambda}\right)$导致High Bias和Low Variance；</li>
+  <li>大的$\sigma^2$使得特征$\mathbf f_i$变化平缓，导致High Bias和Low Variance；</li>
+  <li>小的$\sigma^2$使得特征$\mathbf f_i$变化较大，导致Low Bias和High Variance。 </li>
+</ol>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-kernel-svm-performance.svg"><img src="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-kernel-svm-performance.svg" alt="高斯核的SVM分类效果" /></a><div class="caption">Figure 3:  高斯核的SVM分类效果 [<a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-kernel-svm-performance.svg">SVG</a>, <a href="/assets/images/2014-11-27-machine-learning-advice-for-applying-machine-learning-kernel-svm-performance.png">PNG</a>]</div></div></div>
+
+<h2 id="smo">SMO算法</h2>
+
+<h2 id="svm">使用SVM</h2>
+
+<p>Logistic回归强调所有点尽可能地远离中间那条线，SVM更应该关心靠近中间分割线的点，让他们尽可能地远离中间线。SVM考虑局部（不关心已经确定远离的点），Logistic回归考虑全局（已经远离的点可能通过调整中间线使其能够更加远离）<a href="#JerryLead_svm1_2011">[3]</a>。</p>
+
+<h3 id="logisticsvm-1">Logistic回归、SVM、神经网络</h3>
+
+<p>如何在分类器Logistic回归、SVM和神经网络之间做出选择？</p>
+
+<p>$n$为特征数目（$x\in \mathbb{R}^{n+1} $），$m$为训练集样本数目，分类器选择的方法如下<a href="#ng_ml_svm_2014">[1, P. 31]</a>：</p>
+
+<ol>
+  <li>若$n$很大（比如$n\geq m, n=10000,m=10,\ldots,1000$），采用Logistic回归或者无核函数（线性核函数）的SVM（此种情况，用Logistic回归难以训练好非线性分类器）；</li>
+  <li>若$n$很小而$m$大小适中（比如$n=1,\ldots,1000,m=10,\ldots,10000$），采用高斯核的SVM；</li>
+  <li>若$n$很小而$m$很大（比如$n=1,\ldots,1000,m=50000+$），先可以增加特征，然后采用Logistic回归或者无核函数（线性核函数）的SVM（此种情况，高斯核的SVM分类器训练会慢）；</li>
+  <li>神经网络在以上大多数情况都工作较好，但是可能训练速度会很慢；</li>
+  <li>神经网络是非凸优化，会陷入局部极值，SVM是凸优化，不用担心陷入局部极值。</li>
+</ol>
+
+<p>选择Logistic回归或者无核函数（线性核函数）的SVM，是因为Logistic回归和无核函数（线性核函数）的SVM相似。</p>
+
+<p>核函数的Logistic回归训练较慢，核函数的SVM可以训练较快。</p>
+
+<h2 id="section-1">应用案例</h2>
+
+<h3 id="a-hrefngmlsvmex20144-p-1015a">垃圾邮件分类<a href="#ng_ml_svm_ex_2014">[4, P. 10—15]</a></h3>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-svm-email-processing.svg"><img src="/assets/images/2014-11-27-machine-learning-svm-email-processing.svg" alt="Email转换为特征向量" /></a><div class="caption">Figure 4:  Email转换为特征向量 [<a href="/assets/images/2014-11-27-machine-learning-svm-email-processing.svg">SVG</a>]</div></div></div>
+
+<p>垃圾邮件分类首先需要将Email文本转换为特征向量。如上图所示，转换方法如下：</p>
+
+<ol>
+  <li>将Email文本转换为纯单词，比如：单词小写化，移除所有HTML标签，url链接均用单词<code>httpaddr</code>代替，提取词干（例如including、includes和included都用include代替）等；</li>
+  <li>利用事先准备的词典，将单词用其在词典中的索引表示，实际应用中，词典通常有10000到50000个单词；</li>
+  <li>将索引转换为$\{0, 1\}$特征向量，向量长度和词典中词汇数目一样，某个单词出现用$1$表示，否者用$0$表示。  </li>
+</ol>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"><li><span id="ng_ml_svm_2014">[1]A. Ng, “Support Vector Machines.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li>
+<li><span id="July_svm_2014">[2]July, “支持向量机通俗导论（理解SVM的三层境界）.” csdn, 2014.</span>
+
+[<a href="http://blog.csdn.net/v_july_v/article/details/7624837/">Online</a>]
+
+</li>
+<li><span id="JerryLead_svm1_2011">[3]JerryLead, “支持向量机SVM（一）.” cnblogs, 2011.</span>
+
+[<a href="http://www.cnblogs.com/jerrylead/archive/2011/03/13/1982639.html">Online</a>]
+
+</li>
+<li><span id="ng_ml_svm_ex_2014">[4]A. Ng, “Programming Exercise 6: Support Vector Machines.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-3">脚注</h3>
+
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>机器学习：实战技能</title>
       <link href="http://qianjiye.de/2014/11/machine-learning-advice-for-applying-machine-learning" />
       <pubdate>2014-11-25T09:44:20+08:00</pubdate>
       <author>Jiye Qian</author>
@@ -19,12 +498,12 @@
 
 <p>模型选择主要是通过评估模型效果，评价模型Bias和Variance的状况，选择合适的模型和估计相应的参数。</p>
 
-<p>数据集一般划分为训练集、交叉验证集和测试集3部分，分别占的比例大概是60%、20%和20%。训练集用于估计模型参数，交叉验证集用于选择模型，测试集用于估计模型的泛化误差（generalization error）；选择在交叉验证集上误差小的模型，但是用测试集上误差作为模型的误差。测试集上的数据对参数估计和模型选择都是不可见的，因此才能“公平”的评价模型的性能。</p>
+<p>数据集一般划分为训练集、交叉验证集和测试集3部分，分别占的比例大概是60%、20%和20%<sup id="fnref:only-train-test"><a href="#fn:only-train-test" class="footnote">1</a></sup>。训练集用于估计模型参数，交叉验证集用于选择模型，测试集用于估计模型的泛化误差（generalization error）；选择在交叉验证集上误差小的模型，但是用测试集上误差作为模型的误差。测试集上的数据对参数估计和模型选择都是不可见的，因此才能“公平”的评价模型的性能。</p>
 
 <p>$J_\mbox{train}(\boldsymbol\theta)$、$J_\mbox{cv}(\boldsymbol\theta)$、$J_\mbox{test}(\boldsymbol\theta)$分别表示模型在训练集、交叉验证集和测试集上的误差</p>
 
 <p>\begin{equation}
-J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\theta\left(\mathbf x_s^{(i)}\right)-y_s^{(i)}\right)^2~~(s = \{\mbox{train},\mbox{cv},\mbox{test}\}).
+J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\theta\left(\mathbf x_s^{(i)}\right)-y_s^{(i)}\right)^2~~(s = \{\mbox{train},\mbox{cv},\mbox{test}\})。
 \end{equation}</p>
 
 <h3 id="bias-vs-variance">Bias vs. Variance</h3>
@@ -61,11 +540,11 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
   <tbody>
     <tr>
       <td style="text-align: left">加入更多的训练样本</td>
-      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias"><a href="#fn:Not-good-if-high-bias" class="footnote">1</a></sup></td>
+      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias"><a href="#fn:Not-good-if-high-bias" class="footnote">2</a></sup></td>
     </tr>
     <tr>
       <td style="text-align: left">抽取特征子集</td>
-      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias:1"><a href="#fn:Not-good-if-high-bias" class="footnote">1</a></sup></td>
+      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias:1"><a href="#fn:Not-good-if-high-bias" class="footnote">2</a></sup></td>
     </tr>
     <tr>
       <td style="text-align: left">增加特征</td>
@@ -86,11 +565,17 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
   </tbody>
 </table>
 
-<h2 id="section-4">性能评估</h2>
+<h2 id="performance-evaluation">性能评估</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_mlsd_2014">[2]</a>。</p>
 
-<p>如何和里评价机器学习算法，尤其是对于有偏的类别而言，单纯的正确率难以合理评价分类器性能。比如癌症检测，癌症的概率大概只有0.5左右，对于分类器，采用作弊的方法，即使全部输出非癌症的结果，也可以获得99.5％的正确率。因此需要合理的评估方法，通常采用的是准确率（Precision）和召回率（Recall）。</p>
+<p>如何和里评价机器学习算法，尤其是对于有偏的类别而言，单纯的正确率（Accuracy），
+\begin{equation}
+\mbox{Accuracy} = \frac{\mbox{true positives + true negatives}}{\mbox{total examples}}，
+\end{equation}
+难以合理评价分类器性能。</p>
+
+<p>比如癌症检测，癌症的概率大概只有0.5左右，对于分类器，采用作弊的方法，即使全部输出非癌症的结果，也可以获得99.5％的正确率。因此需要合理的评估方法，通常采用的是准确率（Precision）和召回率（Recall）。</p>
 
 <h3 id="precision--recall">Precision &amp; Recall</h3>
 
@@ -99,7 +584,7 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
 <p>准确率刻画的是，被正确分类的样本在分类结果中占的比率，</p>
 
 <p>\begin{equation}
-\mbox{Precision} = \frac{\mbox{true positives}}{\mbox{true positives + false positives}}.
+\mbox{Precision} = \frac{\mbox{true positives}}{\mbox{true positives + false positives}}。
 \end{equation}</p>
 
 <ul>
@@ -110,7 +595,7 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
 <p>召回率刻画的是，被正确分类的样本在输入样本中占的比率，</p>
 
 <p>\begin{equation}
-\mbox{Recall} = \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}.
+\mbox{Recall} = \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}。
 \end{equation}</p>
 
 <ul>
@@ -124,22 +609,31 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
 <p>采用准确率和召回率可以合理评估分类器性能，但是两个数值不如单数值的评估直接明了。$F$/$F_1$ Score是基于准确率和召回率的单数值评估指标，</p>
 
 <p>\begin{equation}
-F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox{Recall}}.
+F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox{Recall}}，
 \end{equation}</p>
 
-<h3 id="section-5">数据为王</h3>
+<p>数值越高表示效果越好。</p>
+
+<h3 id="section-4">数据为王</h3>
 
 <div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-size-accuracy.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-size-accuracy.png" alt="数据集大小对准确率的影响" /></a><div class="caption">Figure 5:  数据集大小对准确率的影响 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-size-accuracy.png">PNG</a>]</div></div></div>
 
-<p>通常而言，增加参数数目（比如：Logistic回归增加样本数目，神经网络增加隐藏层神经元）和训练样本数目，可以提升分类器的性能。增加参数数目可以获得Low Bias（$J_\mbox{train}(\theta)$小），增加样本数目可以获得Low Variance（$J_\mbox{test}(\theta)$小）。</p>
+<p>通常而言，增加参数数目（比如：Logistic回归增加特征数目，神经网络增加隐藏层神经元）和训练样本数目，可以提升分类器的性能。增加参数数目可以获得Low Bias（$J_\mbox{train}(\theta)$小），增加样本数目可以获得Low Variance（$J_\mbox{test}(\theta)$小）。</p>
 
 <blockquote>
   <p>“It’s not who has the best algorithm that wins. It’s who has the most data.”<a href="#ng_ml_mlsd_2014">[2, P. 16]</a></p>
 </blockquote>
 
+<p>在大规模数据上训练模型，取得良好效果的前提条件是：</p>
+
+<ol>
+  <li>模型具备足够多的参数，能够表示复杂的函数；</li>
+  <li>特征$\mathbf x$包含了预测$y$的足够信息（例如：该领域的专家可以仅仅通过$x$的有把握地预测$y$）。</li>
+</ol>
+
 <p>Guo-Xun Yuan等撰文指出<a href="#yuan_ralll_2012">[3]</a>，对于大规模数据的应用而言，线性分类器可能获得和非线性分类器接近的性能，并且训练和测试的速度要快得多。</p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="section-5">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_aaml_2014">[1]A. Ng, “Advice for applying machine learning.” Coursera, 2014.</span>
 
@@ -155,10 +649,13 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="section-6">脚注</h3>
 
 <div class="footnotes">
   <ol>
+    <li id="fn:only-train-test">
+      <p>对于不需要做模型选择的情况，只需要训练集和测试集，样本的比例通常是70%和30%。 <a href="#fnref:only-train-test" class="reversefootnote">&#8617;</a></p>
+    </li>
     <li id="fn:Not-good-if-high-bias">
       <p><a href="http://www.holehouse.org/mlclass/10_Advice_for_applying_machine_learning.html">Not good if you have high bias</a> <a href="#fnref:Not-good-if-high-bias" class="reversefootnote">&#8617;</a> <a href="#fnref:Not-good-if-high-bias:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
     </li>
@@ -168,7 +665,7 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
     </item>
     
     <item>
-      <title>机器学习: 学习资源</title>
+      <title>机器学习：学习资源</title>
       <link href="http://qianjiye.de/2014/11/machine-learning-resources" />
       <pubdate>2014-11-22T00:00:36+08:00</pubdate>
       <author>Jiye Qian</author>
@@ -240,35 +737,35 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 <h2 id="section-4">视频课程</h2>
 
 <blockquote>
-  <h4 id="machine-learninglinkhttpswwwcourseraorgcourseml">Machine Learning［<a href="https://www.coursera.org/course/ml">Link</a>］</h4>
+  <h4 id="machine-learningstanford-universitycourserahttpswwwcourseraorgcourseml">Machine Learning［Stanford University］［<a href="https://www.coursera.org/course/ml">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Andrew Ng  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="learning-from-datalinkhttpsworkcaltechedutelecoursehtml">Learning From Data［<a href="https://work.caltech.edu/telecourse.html">Link</a>］</h4>
+  <h4 id="learning-from-datacalifornia-institute-of-technologyhttpsworkcaltechedutelecoursehtml">Learning From Data［<a href="https://work.caltech.edu/telecourse.html">California Institute of Technology</a>］</h4>
   <hr />
   <p>Instructors：Yaser S. Abu-Mostafa  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learning-foundationslinkhttpswwwcourseraorgcoursentumlone">機器學習基石 (Machine Learning Foundations)［<a href="https://www.coursera.org/course/ntumlone">Link</a>］</h4>
+  <h4 id="machine-learning-foundationscourserahttpswwwcourseraorgcoursentumlone">機器學習基石 (Machine Learning Foundations)［國立台灣大學］［<a href="https://www.coursera.org/course/ntumlone">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Hsuan-Tien Lin（林軒田）  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learning-techniqueslinkhttpswwwcourseraorgcoursentumltwo">機器學習技法 (Machine Learning Techniques)［<a href="https://www.coursera.org/course/ntumltwo">Link</a>］</h4>
+  <h4 id="machine-learning-techniquescourserahttpswwwcourseraorgcoursentumltwo">機器學習技法 (Machine Learning Techniques)［國立台灣大學］［<a href="https://www.coursera.org/course/ntumltwo">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Hsuan-Tien Lin（林軒田）  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="introduction-to-machine-learninglinkhttpalexsmolaorgteachingcmu2013-10-701indexhtmlvideohttpwwwtudoucomplcoverpk0asp6hd4s">Introduction to Machine Learning［<a href="http://alex.smola.org/teaching/cmu2013-10-701/index.html">Link</a>］［<a href="http://www.tudou.com/plcover/pK0asp6HD4s/">Video</a>］</h4>
+  <h4 id="introduction-to-machine-learningcarnegie-mellon-universityhttpalexsmolaorgteachingcmu2013-10-701indexhtmlhttpwwwtudoucomplcoverpk0asp6hd4s">Introduction to Machine Learning［<a href="http://alex.smola.org/teaching/cmu2013-10-701/index.html">Carnegie Mellon University</a>］［<a href="http://www.tudou.com/plcover/pK0asp6HD4s/">土豆</a>］</h4>
   <hr />
   <p>Instructors：Barnabas Poczos and Alex Smola <br />
 参考教材：<em>Introduction to Machine Learning</em>［<a href="http://alex.smola.org/drafts/thebook.pdf">下载</a>］</p>
@@ -276,28 +773,28 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learninglinkhttpwwwcscmuedu7etom10701sp11lecturesshtml">Machine Learning［<a href="http://www.cs.cmu.edu/%7Etom/10701_sp11/lectures.shtml">Link</a>］</h4>
+  <h4 id="machine-learningcarnegie-mellon-universityhttpwwwcscmuedu7etom10701sp11lecturesshtml">Machine Learning［<a href="http://www.cs.cmu.edu/%7Etom/10701_sp11/lectures.shtml">Carnegie Mellon University</a>］</h4>
   <hr />
   <p>Instructors：Tom Mitchell  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learninglinkhttpwwwcsubccanando540-2013indexhtmlvideohttpswwwyoutubecomplaylistlistple6wd9fr--edyj5lbfl8uugjecvvw66f6">Machine Learning［<a href="http://www.cs.ubc.ca/~nando/540-2013/index.html">Link</a>］［<a href="https://www.youtube.com/playlist?list=PLE6Wd9FR--EdyJ5lbFl8UuGjecvVw66F6">Video</a>］</h4>
+  <h4 id="machine-learningthe-university-of-british-columbiahttpwwwcsubccanando540-2013indexhtmlyoutubehttpswwwyoutubecomplaylistlistple6wd9fr--edyj5lbfl8uugjecvvw66f6">Machine Learning［<a href="http://www.cs.ubc.ca/~nando/540-2013/index.html">The University of British Columbia</a>］［<a href="https://www.youtube.com/playlist?list=PLE6Wd9FR--EdyJ5lbFl8UuGjecvVw66F6">Youtube</a>］</h4>
   <hr />
   <p>Instructors：Nando de Freitas  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learninglinkhttpmachine-learning-coursejoachimsorg">Machine Learning［<a href="http://machine-learning-course.joachims.org">Link</a>］</h4>
+  <h4 id="machine-learningcornell-universityhttpmachine-learning-coursejoachimsorg">Machine Learning［<a href="http://machine-learning-course.joachims.org">Cornell University</a>］</h4>
   <hr />
   <p>Instructors：Thorsten Joachims  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learninglinkhttpswwwcourseraorgcoursemachlearning">Machine Learning［<a href="https://www.coursera.org/course/machlearning">Link</a>］</h4>
+  <h4 id="machine-learninguniversity-of-washingtoncourserahttpswwwcourseraorgcoursemachlearning">Machine Learning［University of Washington］［<a href="https://www.coursera.org/course/machlearning">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Pedro Domingos  <br />
 预览可看视频</p>
@@ -305,59 +802,65 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 </blockquote>
 
 <blockquote>
-  <h4 id="big-data-large-scale-machine-learninglinkhttpcilvrcsnyuedudokuphpidcoursesbigdataslidesstartvideohttpcilvrcsnyuedudokuphpidcoursesbigdataslidesstart">Big Data, Large Scale Machine Learning［<a href="http://cilvr.cs.nyu.edu/doku.php?id=courses:bigdata:slides:start">Link</a>］［<a href="http://cilvr.cs.nyu.edu/doku.php?id=courses:bigdata:slides:start">Video</a>］</h4>
+  <h4 id="big-data-large-scale-machine-learningnew-york-universityhttpcilvrcsnyuedudokuphpidcoursesbigdataslidesstartvideohttpcilvrcsnyuedudokuphpidcoursesbigdataslidesstart">Big Data, Large Scale Machine Learning［<a href="http://cilvr.cs.nyu.edu/doku.php?id=courses:bigdata:slides:start">New York University</a>］［<a href="http://cilvr.cs.nyu.edu/doku.php?id=courses:bigdata:slides:start">Video</a>］</h4>
   <hr />
   <p>Instructors：John Langford and Yann LeCun  </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="probabilistic-graphical-modelslinkhttpwwwcscmueduepxingclass10708lecturehtml">Probabilistic Graphical Models［<a href="http://www.cs.cmu.edu/~epxing/Class/10708/lecture.html">Link</a>］</h4>
+  <h4 id="probabilistic-graphical-modelscarnegie-mellon-universityhttpwwwcscmueduepxingclass10708lecturehtml">Probabilistic Graphical Models［<a href="http://www.cs.cmu.edu/~epxing/Class/10708/lecture.html">Carnegie Mellon University</a>］</h4>
   <hr />
   <p>Instructors：Eric Xing</p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="probabilistic-graphical-modelslinkhttpswwwcourseraorgcoursepgm">Probabilistic Graphical Models［<a href="https://www.coursera.org/course/pgm">Link</a>］</h4>
+  <h4 id="probabilistic-graphical-modelsstanford-universitycourserahttpswwwcourseraorgcoursepgm">Probabilistic Graphical Models［Stanford University］［<a href="https://www.coursera.org/course/pgm">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Daphne Koller</p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="neural-networks-for-machine-learninglinkhttpswwwcourseraorgcourseneuralnets">Neural Networks for Machine Learning［<a href="https://www.coursera.org/course/neuralnets">Link</a>］</h4>
+  <h4 id="neural-networks-for-machine-learninguniversity-of-torontocourserahttpswwwcourseraorgcourseneuralnets">Neural Networks for Machine Learning［University of Toronto］［<a href="https://www.coursera.org/course/neuralnets">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Geoffrey Hinton</p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="discrete-inference-and-learning-in-artificial-visionlinkhttpswwwcourseraorgcourseartificialvision">Discrete Inference and Learning in Artificial Vision［<a href="https://www.coursera.org/course/artificialvision">Link</a>］</h4>
+  <h4 id="discrete-inference-and-learning-in-artificial-visioncole-centrale-pariscourserahttpswwwcourseraorgcourseartificialvision">Discrete Inference and Learning in Artificial Vision［École Centrale Paris］［<a href="https://www.coursera.org/course/artificialvision">Coursera</a>］</h4>
   <hr />
   <p>Instructors：Nikos Paragios and Pawan Kumar</p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="intro-to-machine-learning-pattern-recognition-for-fun-and-profitlinkhttpswwwudacitycomcourseud120">Intro to Machine Learning: Pattern Recognition for Fun and Profit［<a href="https://www.udacity.com/course/ud120">Link</a>］</h4>
+  <h4 id="intro-to-machine-learning-pattern-recognition-for-fun-and-profitstanford-universityudacityhttpswwwudacitycomcourseud120">Intro to Machine Learning: Pattern Recognition for Fun and Profit［Stanford University］［<a href="https://www.udacity.com/course/ud120">Udacity</a>］</h4>
   <hr />
   <p>Instructors：Sebastian Thrun</p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="machine-learningsupervised-learninghttpswwwudacitycomcourseud675-unsupervised-learninghttpswwwudacitycomcourseud741-reinforcement-learninghttpswwwudacitycomcourseud820">Machine Learning［<a href="https://www.udacity.com/course/ud675">Supervised Learning</a>, <a href="https://www.udacity.com/course/ud741">Unsupervised Learning</a>, <a href="https://www.udacity.com/course/ud820">Reinforcement Learning</a>］</h4>
+  <h4 id="machine-learninggeorgia-institute-of-technologyudacitysupervised-learninghttpswwwudacitycomcourseud675-unsupervised-learninghttpswwwudacitycomcourseud741-reinforcement-learninghttpswwwudacitycomcourseud820">Machine Learning［Georgia Institute of Technology］［Udacity］［<a href="https://www.udacity.com/course/ud675">Supervised Learning</a>, <a href="https://www.udacity.com/course/ud741">Unsupervised Learning</a>, <a href="https://www.udacity.com/course/ud820">Reinforcement Learning</a>］</h4>
   <hr />
   <p>Instructors：Charles Isbell and Michael Littman   </p>
 
 </blockquote>
 
 <blockquote>
-  <h4 id="statistical-learninglinkhttpsstatlearningclassstanfordedu">Statistical Learning［<a href="https://statlearning.class.stanford.edu/">Link</a>］</h4>
+  <h4 id="statistical-learningstanford-universityhttpsstatlearningclassstanfordedu">Statistical Learning［<a href="https://statlearning.class.stanford.edu/">Stanford University</a>］</h4>
   <hr />
   <p>Instructors：Trevor Hastie and Rob Tibshirani     <br />
 参考教材：<em>An Introduction to Statistical Learning, with Applications in R</em>［<a href="http://www-bcf.usc.edu/~gareth/ISL/ISLR%20Fourth%20Printing.pdf">下载</a>］</p>
+</blockquote>
+
+<blockquote>
+  <h4 id="httpocwsjtueducng2socwcncoursedetailshtmid397httpocwsjtueducng2socwcncoursedetailshtmid398">机器学习导论［<a href="http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=397">上海交通大学</a>］／统计机器学习［<a href="http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=398">上海交通大学</a>］</h4>
+  <hr />
+  <p>Instructors：张志华       </p>
 
 </blockquote>
 
@@ -365,7 +868,7 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
     </item>
     
     <item>
-      <title>机器学习: 神经网络</title>
+      <title>机器学习：神经网络</title>
       <link href="http://qianjiye.de/2014/11/machine-learning-neural-networks" />
       <pubdate>2014-11-09T11:09:00+08:00</pubdate>
       <author>Jiye Qian</author>
@@ -1352,7 +1855,7 @@ The flower of lily of the valley is like tinkler, be born at spending cauline to
     </item>
     
     <item>
-      <title>机器学习: 感知器算法</title>
+      <title>机器学习：感知器算法</title>
       <link href="http://qianjiye.de/2014/10/machine-learning-perceptron-learning-algorithm" />
       <pubdate>2014-10-21T18:09:00+08:00</pubdate>
       <author>Jiye Qian</author>
@@ -1504,7 +2007,7 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
     </item>
     
     <item>
-      <title>机器学习: 正则化</title>
+      <title>机器学习：正则化</title>
       <link href="http://qianjiye.de/2014/10/machine-learning-regularization" />
       <pubdate>2014-10-20T00:00:00+08:00</pubdate>
       <author>Jiye Qian</author>
@@ -1585,8 +2088,8 @@ J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) -
 
 <p>\begin{equation}
 \begin{aligned}
-J(\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\theta\left(x^{(i)}\right)\right)\right) \\
-&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\boldsymbol\theta_j^2
 \end{aligned}
 \label{eq:cf-logistic-regression-r}
 \end{equation}</p>
@@ -1645,568 +2148,6 @@ J(\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\theta\left(x^{(
 [<a href="https://www.coursera.org/course/ml">Online</a>]
 
 </li></ol>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习: 多分类问题</title>
-      <link href="http://qianjiye.de/2014/10/machine-learning-multiple-classification" />
-      <pubdate>2014-10-20T00:00:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/machine-learning-multiple-classification</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">问题描述</h2>
-
-<p>许多分类器主要是为了解决二分类问题，对只有1和0两个类别标签对数据分类，比如Logistic回归和SVM。多分类问题是对两个以上类别标签的数据集分类。</p>
-
-<p>解决多分类问题的思路：</p>
-
-<ol>
-  <li>多个二分类器的组合；</li>
-  <li>直接采用多分类器。</li>
-</ol>
-
-<h2 id="one-vs-all">one-vs-all</h2>
-
-<p>针对每类训练一个它与其余所有数据的二分类器，若有$N(N &gt; 2)$个类别，就需要训练$N$个分类器。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png"><img src="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png" alt="one-vs-all也叫one-vs-rest" /></a><div class="caption">Figure 1:  one-vs-all也叫one-vs-rest [<a href="/assets/images/2014-10-20-machine-learning-multiple-classification_1.png">PNG</a>]</div></div></div>
-
-<p>Logistic回归解决多分类问题<a href="#ng_ml_lr_2014">[1, Pp. 30-31]</a>：</p>
-
-<ol>
-  <li>针对每一类$i$训练一个Logistic分类器$h_\theta^{(i)}(x)$，这是第$i$类与其它类别的二分类问题；</li>
-  <li>$x$所属的类别$c$满足$h_\theta^{(c)}(x) = \max_ih_\theta^{(i)}(x)$（属于概率最大的那个类别）。</li>
-</ol>
-
-<h3 id="section-1">存在的问题</h3>
-
-<p>one-vs-all可能导致数据不均衡，其中一类的数据很少，其余的数据很多。</p>
-
-<h2 id="section-2">神经网络</h2>
-
-<p>神经网络是扩展Logistic模型组合的one-vs-all方法。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classification.png"><img src="/assets/images/2014-10-20-multiple-classification.png" alt="神经网络的one-vs-all策略" /></a><div class="caption">Figure 2:  神经网络的one-vs-all策略 [<a href="/assets/images/2014-10-20-multiple-classification.png">PNG</a>]</div></div></div>
-
-<p>注意其中的输出向量是0和1组成的向量，<strong>而非</strong>输出类别标签<sup id="fnref:class_label_method"><a href="#fn:class_label_method" class="footnote">1</a></sup>，$K(K \geq 3)$类则输出层需要$K$个神经元，$K＝2$时输出层只需要一个神经元<a href="#ng_ml_nnl_2014">[2, P. 2]</a>。</p>
-
-<h2 id="section-3">思考问题</h2>
-
-<ol>
-  <li>神经网络能避免one-vs-all导致的数据不平衡问题吗？</li>
-</ol>
-
-<h2 id="section-4">参考资料</h2>
-
-<ol class="bibliography"><li><span id="ng_ml_lr_2014">[1]A. Ng, “Logistic Regression.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li>
-<li><span id="ng_ml_nnl_2014">[2]A. Ng, “Neural Networks: Learning.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<h3 id="section-5">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:class_label_method">
-      <p>神经网络的输出不是$1,2,3,\ldots$这样的类别标签，Logistic回归模型输出属于某一类的概率，输入特征属于输出概率最靠近$1$的类别。 <a href="#fnref:class_label_method" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习: Logistic回归</title>
-      <link href="http://qianjiye.de/2014/10/machine-learning-logistic-regression" />
-      <pubdate>2014-10-19T00:00:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/machine-learning-logistic-regression</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">模型介绍</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_0.png"><img src="/assets/images/2014-10-19-logistic_regression_0.png" alt="Logistic函数" /></a><div class="caption">Figure 1:  Logistic函数 [<a href="/assets/images/2014-10-19-logistic_regression_0.png">PNG</a>]</div></div></div>
-
-<p>Logistic回归（Logistic Regression）用于解决二分类问题，而非回归问题。Logistic函数将回归问题转化为了分类问题。</p>
-
-<p>Logistic回归模型为
-\begin{equation}
-h_{\boldsymbol{\theta}}(\mathbf x) = g\left(\boldsymbol\theta^T\mathbf x\right),
-\end{equation}
-其中
-\begin{equation}
-g\left(z\right) = \frac{1}{1 + e^{-z}}.
-\label{eq:sigmoid-function}
-\end{equation}</p>
-
-<p>上式也称为Sigmoid函数或Logistic函数，如<a href="#figure-1">图1</a>所示，其导数为
-\begin{equation}
-g’\left(z\right) = g\left(z\right)\left(1-g\left(z\right)\right).
-\label{eq:d-sigmoid-function}
-\end{equation}</p>
-
-<p>分类问题的判别条件为
-\begin{equation}
-y = \left\{
-\begin{aligned}
-&amp; 1 &amp; h_\boldsymbol\theta(\mathbf x) \ge 0.5 \\
-&amp; 0 &amp; h_\boldsymbol\theta(\mathbf x) &lt; 0.5
-\end{aligned},
-\right. 
-\end{equation}
-也就是，若$\boldsymbol\theta^T\mathbf x \ge 0$，则$y = 1$；若$\boldsymbol\theta^T\mathbf x &lt; 0$，则$y = 0$。Logistic回归模型可以看作是计算属于类别1的概率
-\begin{equation}
-h_\boldsymbol\theta\left(\mathbf x\right) = \frac{1}{1 + e^{-\boldsymbol\theta^T\mathbf x}} = P\left(y=1\big|\mathbf x; \boldsymbol\theta\right)
-\end{equation}</p>
-
-<p>因此，对于而分类问题，有
-\begin{equation}
-P\left(y=0\big|\mathbf x; \boldsymbol\theta\right) ＝ 1 - P\left(y=1\big|\mathbf x; \boldsymbol\theta\right) ＝ 1 - h_\boldsymbol\theta\left(\mathbf x\right)
-\end{equation}</p>
-
-<p>$\boldsymbol\theta^T\mathbf x = 0$称为决策界（Decision Boundary）。决策界可以时线性的，也可以是非线性的。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_2.png"><img src="/assets/images/2014-10-19-logistic_regression_2.png" alt="线性决策界" /></a><div class="caption">Figure 2:  线性决策界 [<a href="/assets/images/2014-10-19-logistic_regression_2.png">PNG</a>]</div></div></div>
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_3.png"><img src="/assets/images/2014-10-19-logistic_regression_3.png" alt="非线性决策界" /></a><div class="caption">Figure 3:  非线性决策界 [<a href="/assets/images/2014-10-19-logistic_regression_3.png">PNG</a>]</div></div></div>
-
-<h2 id="section-1">代价函数</h2>
-
-<p>线性回归的代价函数框架为：</p>
-
-<p>\begin{equation}
-J(\boldsymbol\theta) = \frac{1}{m}\sum_{i=1}^{m}\frac{1}{2}{\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)}\right)^2}
-\end{equation}</p>
-
-<p>令</p>
-
-<p>\begin{equation}
-\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = \frac{1}{2}\left( h_\boldsymbol\theta(\mathbf x) - y \right) ^ 2
-\end{equation}</p>
-
-<p>当$h_\boldsymbol\theta(\mathbf x)$为Logistic回归模型（<a href="#fig4">图4</a>左）和线性回归模型（<a href="#fig4">图4</a>右）时，分别为非凸函数和凸函数，非凸函数不能用梯度下降法找到全局最优解。因此，Logistic回归需要采用新的代价函数才能用梯度下降法求解。</p>
-
-<div class="image_line" id="cost_function_curve"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_1.png"><img src="/assets/images/2014-10-19-logistic_regression_1.png" alt="代价函数" /></a><div class="caption">Figure 4:  代价函数 [<a href="/assets/images/2014-10-19-logistic_regression_1.png">PNG</a>]</div></div></div>
-
-<p>Logistic回归采用</p>
-
-<p>\begin{equation}
-\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = \left\{
-\begin{aligned}
-&amp; -\log\left(h_\boldsymbol\theta(\mathbf x)\right) &amp; y=1 \\
-&amp; -\log\left(1-h_\boldsymbol\theta(\mathbf x)\right) &amp; y=0
-\end{aligned}
-\right. 
-\end{equation}</p>
-
-<p>上式等价于</p>
-
-<p>\begin{equation}
-\mbox{Cost}\left(h_\boldsymbol\theta(\mathbf x), y\right) = -y\log\left(h_\boldsymbol\theta(\mathbf x)\right) - (1 - y)\log\left(1-h_\boldsymbol\theta(\mathbf x)\right)
-\end{equation}</p>
-
-<p>因此，Logistic回归的代价函数为</p>
-
-<p>\begin{equation}
-\begin{aligned}
-J(\boldsymbol\theta)<br />
-= &amp; \frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right), y^{(i)}\right) \\
-= &amp; -\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)\right)\right)
-\end{aligned}
-\label{eq:cost_function_logistic_regression}
-\end{equation}</p>
-
-<blockquote>
-  <p>若套用线性回归的代价函数，则$J(\boldsymbol\theta)$非凸，不利于优化算法。该代价函数可从统计中最大似然估计（maximum likehood estimation）的角度推导。</p>
-</blockquote>
-
-<h2 id="section-2">参数估计</h2>
-
-<p>参数估计是通过最小化代价函数\eqref{eq:cost_function_logistic_regression}，求解模型参数$\boldsymbol\theta$。</p>
-
-<p>\[
-\min_\boldsymbol\theta J(\boldsymbol\theta)
-\]</p>
-
-<h3 id="section-3">梯度下降法</h3>
-
-<p>貌似线性回归的梯度下降法的结构，但注意$h_\theta$的定义不同。</p>
-
-<p>repeat until convergence {
-\[
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
-\]
-}</p>
-
-<p><strong>注意事项</strong></p>
-
-<ul>
-  <li>特征尺度规范化对加速Logistic回归的梯度下降法依然有效；</li>
-  <li>其它注意事项同梯度下降法求解线性回归参数。</li>
-</ul>
-
-<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2014-10-19-logistic_regression_4.png"><img src="/assets/images/2014-10-19-logistic_regression_4.png" alt="采用Matlab的优化框架求解模型参数" /></a><div class="caption">Figure 5:  采用Matlab的优化框架求解模型参数 [<a href="/assets/images/2014-10-19-logistic_regression_4.png">PNG</a>]</div></div></div>
-
-<h3 id="section-4">其它算法</h3>
-
-<ul>
-  <li>Conjugate gradient</li>
-  <li>BFGS</li>
-  <li>L-BFGS</li>
-</ul>
-
-<blockquote>
-  <p>这几种算法不需要手工选择学习率$\alpha$，通常比梯度下降法快，但是更复杂。</p>
-</blockquote>
-
-<h2 id="section-5">思考问题</h2>
-
-<ol>
-  <li>代价函数如何求偏导？</li>
-</ol>
-
-<h2 id="section-6">应用范例</h2>
-
-<h2 id="section-7">参考资料</h2>
-
-<ol>
-  <li><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>  </li>
-  <li><a href="http://en.wikipedia.org/wiki/Logistic_regression">Wikipedia: Logistic regression</a></li>
-</ol>
-
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习: 线性回归</title>
-      <link href="http://qianjiye.de/2014/10/machine-learning-linear-regression" />
-      <pubdate>2014-10-19T00:00:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/machine-learning-linear-regression</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">模型介绍</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-19-linear_regression_0.png"><img src="/assets/images/2014-10-19-linear_regression_0.png" alt="线性回归" /></a><div class="caption">Figure 1:  线性回归 [<a href="/assets/images/2014-10-19-linear_regression_0.png">PNG</a>]</div></div></div>
-
-<p>线性回归（Linear Regression）的回归函数（hypothesis）为
-\begin{equation}
-h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T \mathbf x = \boldsymbol\theta_0\mathbf x_0 + \boldsymbol\theta_1\mathbf x_1 + \cdots  + \boldsymbol\theta_n\mathbf x_n
-\label{eq:hypothesis_linear_regression}
-\end{equation}
-其中，常数项$\mathbf x_0 = 1$。</p>
-
-<p>代价函数（cost function）为
-\begin{equation}
-J(\boldsymbol\theta) = \frac{1}{2m}\sum_{i=1}^{m}{\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)}\right)^2}
-\label{eq:cost_function_linear_regression}
-\end{equation}
-其中，$\mathbf x^{(i)} = \left(\mathbf x_1^{(i)}, \mathbf x_2^{(i)}, \cdots, \mathbf x_n^{(i)}\right)$， $m$为样本数量，$n$为特征数量。</p>
-
-<h2 id="section-1">参数估计</h2>
-
-<p>参数估计是通过最小化代价函数\eqref{eq:cost_function_linear_regression}，求解模型参数$\boldsymbol\theta$。
-\[
-\min_\boldsymbol\theta J(\boldsymbol\theta)
-\]
-通常有两种解法：万能的梯度下降法（gradient descent）和正规方程（normal equation）的解析解（也就是线性回归的最小二乘解）。</p>
-
-<h3 id="section-2">梯度下降法</h3>
-
-<p>repeat until convergence {
-\[
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{\partial}{\partial\boldsymbol\theta_j}J(\boldsymbol\theta)~~~~~~(j = 0, 1, \ldots, n)
-\]
-}<br />
-也就是<br />
-repeat until convergence {
-\[
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
-\]
-}  <br />
-每轮循环的时候同时更新$\boldsymbol\theta_j$（下图左边为正确更新方式。<em>不能</em>在同一轮循环中，先更新部分$\boldsymbol\theta_j$，再利用已更新的$\boldsymbol\theta_j$更新其它$\boldsymbol\theta_j$）。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-19-linear_regression_1.png"><img src="/assets/images/2014-10-19-linear_regression_1.png" alt="同时更新" /></a><div class="caption">Figure 2:  同时更新 [<a href="/assets/images/2014-10-19-linear_regression_1.png">PNG</a>]</div></div></div>
-
-<p>特征的尺度如果相差太大，需要进行尺度规范化提高收敛速度，常用的规范化方法是
-\[
-\hat{\mathbf x}_i = \frac{\mathbf x_i - \mathbf x_{mean}}{\mathbf x_{max}-\mathbf x_{min}}
-\]
-或者
-\[
-\hat{\mathbf x}_i = \frac{\mathbf x_i - \mathbf x_{mean}}{\mathbf x_{std}}
-\]</p>
-
-<p><strong>注意事项：</strong>   </p>
-
-<ul>
-  <li>线性回归的代价函数$J(\boldsymbol\theta)$不存在局部极值（local optima），存在全局极值；</li>
-  <li>将所有特征归一（feature scaling）到统一的尺度$-1\le \mathbf x_i\le 1$有助于提高梯度下降法的速度（不归一化$\mathbf x_0$）；</li>
-  <li>学习率$\alpha$太小收敛慢，太大可能错过极值点而不收敛，过大的$\alpha$甚至可能导致$J(\boldsymbol\theta)$不降反升；</li>
-  <li>在迭代过程中保持$\alpha$不变，梯度下降步长也会自动减小，因为梯度会不断减小。</li>
-</ul>
-
-<p>尺度归一化效果： </p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-19-linear_regression_2.png"><img src="/assets/images/2014-10-19-linear_regression_2.png" alt="尺度归一化效果示例" /></a><div class="caption">Figure 3:  尺度归一化效果示例 [<a href="/assets/images/2014-10-19-linear_regression_2.png">PNG</a>]</div></div></div>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-10-19-linear_regression_3.png"><img src="/assets/images/2014-10-19-linear_regression_3.png" alt="梯度下降步长自动减小" /></a><div class="caption">Figure 4:  梯度下降步长自动减小 [<a href="/assets/images/2014-10-19-linear_regression_3.png">PNG</a>]</div></div></div>
-
-<h3 id="section-3">正规方程求解</h3>
-
-<p>正规方程求解也就是线性回归的最小二乘解为
-\begin{equation}
-\boldsymbol\theta = \left(\mathbf X^T\mathbf X\right)^{-1}\mathbf X^T\mathbf y
-\end{equation}</p>
-
-<p><strong>注意事项：</strong>     </p>
-
-<p>$\mathbf X^T\mathbf X$可能不可逆，导致的原因可能是冗余特征（redundant features）和特征数目过多（$n$太多而$m$太少），解决的办法：   </p>
-
-<ul>
-  <li>冗余特征线性相关（e.g. $x_1 = 2x_2$）：删除线性相关特征；</li>
-  <li>特征数目过多（e.g. $m \le n$）：删除特征、正则化（regularization）。</li>
-</ul>
-
-<p>Matlab Code：</p>
-
-<div class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">y</span></code></pre></div>
-
-<p>其中，pinv函数可以处理$\mathbf X^T\mathbf X$不可逆的情况，而inv函数不行。</p>
-
-<h3 id="section-4">求解方法比较</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>Gradient Descent</th>
-      <th>Normal Equation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>需要$\alpha$</td>
-      <td>不需要$\alpha$</td>
-    </tr>
-    <tr>
-      <td>需要迭代</td>
-      <td>不需要迭代</td>
-    </tr>
-    <tr>
-      <td>当特征数$n$很大时（$10^6$）工作良好</td>
-      <td>$n$很大时很慢</td>
-    </tr>
-    <tr>
-      <td>特征需要尺度规范化</td>
-      <td>特征不需要尺度规范化</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="section-5">多项式回归</h2>
-
-<p>构造多项式特征，借助多项式回归，可以利用线性回归模型解决非线性问题。当$\mathbf x_1 = x, \mathbf x_2 = x^2, \mathbf x_3 = x^3, \ldots $时，多项式回归（polynomial regression）\eqref{eq:hypothesis_polynomial_regression}可以直接转化为线性模型\eqref{eq:hypothesis_linear_regression}。
-\begin{equation}
-h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T\mathbf x = \boldsymbol\theta_0\mathbf x_0 + \boldsymbol\theta_1 x + \boldsymbol\theta_2 x^2 ＋ \boldsymbol\theta_3 x^3 \cdots  + \boldsymbol\theta_n x^n
-\label{eq:hypothesis_polynomial_regression}
-\end{equation}</p>
-
-<p><strong>注意事项：</strong>  </p>
-
-<p>当对特征进行高此多项式变换后，特征的取值范围可能会急剧变化，需要对多项式特征进行规范化处理<a href="#ng_ml_rlrbv_pe_2014">[1, P. 8]</a>，也就是特征的尺度归一化。</p>
-
-<h2 id="section-6">思考问题</h2>
-
-<ol>
-  <li>如何通过收敛判断梯度下降法是否应该停止迭代？</li>
-  <li>特征尺度规范化（feature scaling）为何能提高梯度下降法收敛速度？</li>
-  <li>为什么正规方程估计参数不需要特征尺度规范化？</li>
-</ol>
-
-<h2 id="section-7">参考资料</h2>
-
-<ol class="bibliography"><li><span id="ng_ml_rlrbv_pe_2014">[1]A. Ng, “Programming Exercise 5: Regularized Linear Regression and Bias v.s. Variance.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<p><a href="https://class.coursera.org/ml-007">Machine Learning （Andrew Ng）</a>    <br />
-<a href="http://en.wikipedia.org/wiki/Linear_regression">Wikipedia: Linear regression</a></p>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>基于Jekyll的GitHub建站指南</title>
-      <link href="http://qianjiye.de/2012/07/host-your-pages-at-github-using-jekyll" />
-      <pubdate>2012-07-01T00:00:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2012/07/host-your-pages-at-github-using-jekyll</guid>
-      <content:encoded>&lt;![CDATA[<p>简介：本文主要介绍利用jekyll在github上搭建站点的方法与原理。</p>
-
-<p><span id="jekyll-and-github"></span></p>
-
-<h2 id="jekyllgithub">jekyll与github的关系</h2>
-
-<p>github站点是位于username.github.com仓库中的静态页面。利用高效的工具生成高质量的静态页面是github建站的王道。<a href="http://jekyllrb.com/">jekyll</a>就是用<a href="http://www.ruby-lang.org/">ruby</a><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">制造静态站点的的ruby解析引擎</a>（构建网站时ruby不是必会的）。github除了能构建独立的站点外，还可以为每个项目建立站点。github提供了<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">自动</a>和<a href="https://help.github.com/articles/creating-project-pages-manually">手动</a>建立项目站点的方法。</p>
-
-<p>github标配有jekyll解析引擎，上传的站点可以代由github的jekyll解析为静态页面。如果<a href="https://help.github.com/articles/files-that-start-with-an-underscore-are-missing">不需要github用jekyll处理上传的站点文件</a>，可以在根目录下添加一个.nojekyll文件。</p>
-
-<p><a href="https://help.github.com/articles/using-jekyll-with-pages">github使用jekyll的_config.yml</a>和用户本地jekyll的不同，它的功能有限，github运行jekyll带有<code>--safe</code>参数。如果用户本地的jekyll使用了自定义插件，github的解析会出错，启用了本地自定义插件的用户可以上传本地解析好的静态页面到github。</p>
-
-<p>由于本地和gihub的<a href="https://help.github.com/articles/using-jekyll-with-pages">jekyll版本</a>不同，即使本地正常解析的页面也可能会在github上解析出错。下面的表格在github上<code>Jekyll 0.11.0 with Liquid 2.2.2</code>会出错：</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">功能  <span class="p">|</span>   快捷键  <span class="p">|</span>   快捷键  <span class="p">|</span>  功能
--------: <span class="p">|</span> -------: <span class="p">|</span> :------- <span class="p">|</span> :-------
-上一节点  <span class="p">|</span>   <span class="sb">`</span>p<span class="sb">`</span>    <span class="p">|</span>    <span class="sb">`</span>n<span class="sb">`</span>   <span class="p">|</span> 下一节点  
-<span class="o">||</span>    <span class="sb">`</span>m<span class="sb">`</span>   <span class="p">|</span> 菜单</code></pre></div>
-
-<h2 id="jekyll">jekyll驱动网站原理</h2>
-
-<p><a href="http://chen.yanping.me/cn/blog/2011/12/15/building-static-sites-with-jekyll/">用jekyll构建静态网站</a>很容易。模板、数据和美化是jekyll建站的三要素。jekyll自动将数据注入模板，通过美化，得到站点。这里可以看到<a href="https://github.com/mojombo/jekyll/wiki/Sites">一堆用jekyll打造的站点</a>，大部分都可以<code>git clone</code>回来学习参考。<br />
-<!--more--></p>
-
-<h3 id="jekyll-1">jekyll的模板</h3>
-
-<p>jekyll模板就是带有变量的html格式文件。jekyll的模板用<a href="http://liquidmarkup.org/">Liquid</a>语言描述，定义了页面框架。Liquid通过（Output）和标签（Tag）两种标记（markup），即可描述页面的结构，具体可参阅<a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid for Designers</a>。jekyll对Liquid的标签进行了<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">扩展</a>。Liquid模板语言对模板数据描述（当然也需要html），生成了站点页面的骨架。Liquid所需要的jekyll的<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>在这儿可以找到。除此之外，<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>定义的变量也可以作为模板数据。</p>
-
-<h3 id="jekyll-2">jekyll的数据</h3>
-
-<p>jekyll的数据是用<a href="http://daringfireball.net/projects/markdown/">markdown</a>、<a href="http://textile.sitemonks.com/">textile</a>等标记语言写的文档。这些格式的文档解析为html格式后，注入jekyll模板的<code>&#123;&#123; content &#125;&#125;</code>，就有了网站的页面。jekyll支持的markdown解析器（将markdown转换为html）有：<span id="markdown"></span><a href="https://github.com/rtomayko/rdiscount/">rdiscount</a>、<a href="http://kramdown.rubyforge.org/">kramdown</a>、<a href="https://github.com/tanoku/redcarpet/">redcarpet</a>、<a href="http://maruku.rubyforge.org/">maruku</a>（jekyll默认）、<a href="http://deveiate.org/projects/BlueCloth/">bluecloth</a>。为了方便处理<script type="math/tex">\LaTeX</script>公式，也有人hack了jekyll，<a href="http://yangzetian.github.com/2012/04/15/jekyll-pandoc/">将pandoc作为markdown的解析器</a>。一个更方便的方法是通过<a href="https://github.com/dsanson/jekyll-pandoc-plugin">jekyll-pandoc-plugin</a>插件，启用pandoc解析器。这些hack后的jekyll启用pandoc当然不会在github上生效，只能用于本机解析后，上传静态页面。</p>
-
-<h3 id="jekyll-3">jekyll的美化</h3>
-
-<p>美化就是用CSS和javascript对html描述的页面进行渲染，美化网页。<a href="http://twitter.github.com/bootstrap/">twitter bootstrap</a>是一套极易上手的页面美化工具。twitter bootstrap还提供了<a href="http://960.gs/">960网格布局</a>，只要按照它约定的方式对页面结构定义、对html标签的<code>class</code>命名，网页的布局美化可谓快又好。</p>
-
-<h2 id="jekyll-bootstrap">在jekyll-bootstrap基础上搭建网站</h2>
-
-<p>jekyll是一套根据相应规程生成网站的工具。如果按照这套法则，从头开始仍然麻烦。<a href="http://jekyllbootstrap.com/">jekyll-bootstrap</a>就是一个jekyll构建站点的demo，并提供了一些<a href="http://jekyllbootstrap.com/api/bootstrap-api.html">额外的api增强jekyll的功能</a>，在此基础上构建站点相当快捷容易。除此之外，<a href="http://octopress.org/">octopress</a>也是基于jekyll上的不错的工具套件。</p>
-
-<h3 id="section">目录结构</h3>
-
-<p>jekyll-bootstrap的<a href="https://github.com/mojombo/jekyll/wiki/usage">目录结构</a>中，只需要将markdown文档放到_posts目录下，<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令），即可在http://localhost:4000看到页面内容，见<a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">快速入门示范</a>。_posts中的数据文档，通过注入_layouts定义的模板（_layouts的模板一般指向了_includes/themes中的模板），渲染页面的CSS和JS文档在assets/themes中，一些解析markdown用到的ruby插件放在_plugins目录。通过<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令）最终生成的静态页面在_sites目录。在更新github上站点的时候，<code>git push</code>可以不必推送_sites目录，将页面的解析留给github，这样做的前提条件是本地未启用自定义插件，_config.yml设置<code>safe = true</code>进行解析。如果本地启用了自定义插件，解析任务就不能交给github做了，上传本地解析好的静态页面到github即可。</p>
-
-<p>jekyll-bootstrap的_includes/JB中有一些常用的工具，用于列表显示、评论等，可参看_includes/themes中主题的相关html文档学习。</p>
-
-<p>_includes/themes中的主题一般包含default.html、post.html和page.html三个文档。default.html定义了网站的最上层框架（模板），post.html和page.html是其子框架（模板）。<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#posts_and_pages">post和page有别</a>；<code>rake page</code>命令生成的页面按page.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: page</code>；<code>rake post</code>命令生成的页面按post.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: post</code>。生成好的html子页面通过default.html的<code>&#123;&#123; content &#125;&#125;</code>变量调用，生成整个页面。</p>
-
-<h3 id="section-1">自定义</h3>
-
-<p>站点生成需要用到_config.yml<a href="https://github.com/mojombo/jekyll/wiki/configuration">配置文件</a>，<code>markdown</code>变量定义了解析markdown用的<a href="#markdown">解析器</a>。当然也可自定义变量，比如在<code>JB:</code>下定义一个二级变量<code>RSS_path: /atom.xml</code>（注意缩进）。在html页面中，就可以用<code>&#123;&#123; site.JB.RSS_path &#125;&#125;</code>得其值。<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中也可以自定义变量，其中的<code>title</code>变量可以用<code>&#123;&#123; page.title &#125;&#125;</code>访问到。也就是说，站点的全局变量在_config.yml中定义，用<code>site.</code>访问，页面的变量在<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中定义，用<code>page.</code>访问，更多的模板变量可参考<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>。</p>
-
-<p>_includes/JB中的插件可以在_includes/custom中重新自定义，方法可仿照_includes/JB中的。如果要_includes/custom中的插件生效，需要在_config.yml中将相应的变量设为<code>custom</code>，设置线索可见_includes/JB中的插件。</p>
-
-<h3 id="section-2">小结</h3>
-
-<p><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#how_jekyll_generates_the_final_static_files">jekyll生成静态页面的过程</a>就是先搜集站点的原始数据，通过计算，生成用于页面显示的结构化数据（最终的html静态页面）。结构化数据来源有两方面：一方面是文件中的配置文件，如_config.yml和markdown的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>；另一方面通过目录结构和jekyll定义的解析法则，产生数据。站点的全局数据用<code>site.</code>访问，页面数据用<code>page.</code>访问。有了这些结构化的数据后，jekyll再按照用户定义的模板，用相应的结构化数据替换模板中的变量。用户编写的插件是为了计算出满足用户特定需求的数据，但是这些自定义插件不能不github的jekyll解析支持。</p>
-
-<h2 id="jekyll-4">jekyll的装饰部件</h2>
-
-<p>这些装饰部件中，如果本地的jekyll使用了自定义的插件，github的jeklly解析器不会支持这些自定义插件。</p>
-
-<h3 id="section-3">图片与文件</h3>
-
-<p>站点需要的图片直接存放在<code>assets/images</code>文件夹中，可以在_config.yml中定义一个形如<code>img_url: http://jiyeqian.github.com/assets/images</code>的变量，然后在markdown文件需要用到图片的地方插入类似<code>![git代码库结构](&#123;&#123; site.img_url &#125;&#125;/2012-06-27-git-transport.png)</code>的代码即可显示图像。</p>
-
-<p>如果图和文件较多，这里有一些<a href="/2011/09/web-cloud-life/">图片和文件托管的网络资源</a>供参考。</p>
-
-<h3 id="section-4">代码高亮</h3>
-
-<p>网页代码高亮的一般原理是先用JS或其它脚本语言对代码的进行解析，并提根据不同程的序语言提取关键字、变量、常量、注释，然后将代码层次结构用html标签描述，最后用CSS着色。</p>
-
-<p>代码高亮的方案有很多，比如：<a href="https://gist.github.com/1027674">转帖gist代码的插件</a>，<a href="http://google-code-prettify.googlecode.com/svn/trunk/README.html">google-code-prettify</a>，<a href="https://github.com/rsim/blog.rayapps.com/blob/master/_plugins/pygments_cache_patch.rb">利用pygments高亮代码的插件</a>，octopress的<a href="http://octopress.org/docs/plugins/backtick-codeblock/">backtick-codeblock</a>，如果需要在线展示html、js、CSS及其效果，当然还是用<a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsfiddle插件</a>。</p>
-
-<p>pygments和rouge是github可支持的代码高亮方案(不支持coderay高亮)。利用pygments，须先在_config.yml中设置<code>pygments: true</code>，并嵌入生成的相应CSS到页面的<code>&lt;head&gt;&lt;/head&gt;</code>之中。   </p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pygmentize -S default -f html <span class="p">|</span> sed <span class="s1">&#39;s/^/.highlight code /g&#39;</span> &gt; default.css</code></pre></div>
-
-<p>在pygments的CSS选择器前都加上<code>.highlight code</code>，防止pygments的CSS影响<a href="#mathjax">mathjax</a>公式的CSS。<a href="http://www.stehem.net/2012/02/14/how-to-get-pygments-to-work-with-jekyll.html">pygments也可能会和bootstrap.min.css冲突</a>，需要修改css。上面的<code>pygmentize</code>命令就是pygments代码高亮的效果。代码高亮的highlight标签使用方法<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">可以参考这里</a>。</p>
-
-<p>另一个比较特殊的代码高亮插件是<a href="http://octopress.org/docs/plugins/include-code/">include-code</a>，可以直接显示目录中的代码文件，在_config.yml中设置好<code>code_dir</code>参数后，直接用<code>&#123;% include_code excerpt.rb %&#125;</code>，即可显示高亮代码（布局可自己定义，代码高亮的CSS可以用pygments的）。<a href="https://gist.github.com/2890453#working-with-code-partials">pygments也支持类似的方法</a>，但效果不太好。</p>
-
-<p><span id="mathjax"></span></p>
-
-<h3 id="latex"><script type="math/tex">\LaTeX</script>公式</h3>
-
-<p>github可支持的<script type="math/tex">\LaTeX</script>方案需要绕过自定义插件，利用类似<a href="http://www.mathjax.org/">mathjax</a>的javascript方案或采用支持<script type="math/tex">\LaTeX</script>的markdown解析器（比如<a href="http://maruku.rubyforge.org/">maruku</a>）。</p>
-
-<p><a href="http://www.mathjax.org/">mathjax</a>通过javascript的方式生成<script type="math/tex">\LaTeX</script>公式可以参考<a href="http://chen.yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用<script type="math/tex">\LaTeX</script></a>，不过，不必把markdown解析引擎设置为kramdown。当markdown解析引擎为kramdown时，只需要在页面中插入下面这段代码：</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
-
-<p>下面这段代码：</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html">$$ 
-e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
-$$</code></pre></div>
-
-<p>显示的效果：
-<script type="math/tex"> 
-e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
-</script>
-显示行内公式<script type="math/tex">\alpha + \beta</script>的代码如下：</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html">$$\alpha + \beta$$</code></pre></div>
-
-<p>但是kramdown的解析引擎和转帖gist代码的插件、直接高亮文件中代码的插件include-code有冲突。</p>
-
-<p>利用<a href="https://gist.github.com/834610">mathjax插件</a>定义的新标签，也可插入<script type="math/tex">\LaTeX</script>公式。这段代码<code>&#123;% math %&#125; e&#94;x = \sum\_{n=0}&#94;\infty \frac{x&#94;n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)&#94;n &#123;% endmath %&#125;</code>也可显示和上面一样的公式，利用标签<code>&#123;% m %&#125; \alpha + \beta &#123;% em %&#125;</code>可显示行内公式<script type="math/tex">\alpha + \beta</script>。mathjax还<a href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers">支持公式编号</a>，引用公式\eqref{eq:sample}很方便。</p>
-
-<p>\begin{equation}
-  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
-  \label{eq:sample}
-\end{equation}</p>
-
-<p>另外一些支持<script type="math/tex">\LaTeX</script>公式的方案可参考：Kramdown的<a href="http://kramdown.rubyforge.org/syntax.html#math-blocks">Math Blocks</a>、<a href="http://maruku.rubyforge.org/math.xhtml">Maruku的公式支持</a>。 其他和学术写作相关的插件有：<a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>、<a href="https://github.com/archome/jekyll-citation">jekyll-citation</a>、<a href="https://github.com/pablooliveira/bibjekyll">bibjekyll</a>。</p>
-
-<h3 id="section-5">其它</h3>
-
-<p>显示相关文件的插件用<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin">related_posts-jekyll_plugin</a>、<a href="https://github.com/sebcioz/jekyll-only_first_p">只显示第一段</a>的插件，可解析类似wordpress的<code>&lt;!--more--&gt;</code>标记的<a href="https://gist.github.com/986665">excerpt插件</a>，美化引用格式的<a href="http://octopress.org/docs/plugins/blockquote/">blockquote插件</a>。<a href="http://octopress.org/docs/plugins/">octopress的插件</a>可以直接用于jekyll中。</p>
-
-<h3 id="section-6">小结</h3>
-
-<p>要将jekyll的页面托管在github时，推荐尽量不用github之外的插件。代码高亮用pygments，markdown的解析器用kramdown更利于对公式的解析，如果还要其它一些美化，就直接插html代码吧！</p>
-
-<h2 id="jekyll-5">常用的Jekyll变量</h2>
-
-<h2 id="section-7">一些技巧</h2>
-
-<h3 id="gist">直接插入gist代码</h3>
-
-<p>因为markdown的语法可以兼容html，在情非得已的情况下，直接查html代码。如果转帖gist的代码，直接在markdown文件中插入：</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
-
-<p>即可得：
-<script src="https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb"></script></p>
-
-<h3 id="section-8">页内跳转</h3>
-
-<p>为了方便页内快速跳转，可建立空内容的锚点。比如
-~~~html
-<span id="jekyll-and-github"></span>
-##jekyll与github的关系
-~~~
-既可用</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></div>
-
-<p>实现页内跳转，试试，<a href="#jekyll-and-github">回去看看</a>。如果用的是kramdown解释器，上例中空锚点行下须有一空行。</p>
-
-<h3 id="section-9">表格不断行</h3>
-
-<p>表格某一栏不断行的处理：</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;white-space:nowrap&quot;</span><span class="nt">&gt;</span>git clone username@host:/path/to/repository<span class="nt">&lt;/span&gt;</span></code></pre></div>
-
-<!---
-点击[到这里看效果]()。
---->
-
-<h3 id="section-10">引用本站其它网页</h3>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">{% post_url your_markdown_file_name %}</code></pre></div>
-
 ]]&gt;</content:encoded>
     </item>
     

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：维数约减</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：维数约减</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-08">2014-12-08</time>
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#非监督学习" title="非监督学习">非监督学习</a>&nbsp;
+  
+  <a href="/tags/#维数约减" title="维数约减">维数约减</a>&nbsp;
+  
+  <a href="/tags/#主成分分析" title="主成分分析">主成分分析</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">简介</h2>
+
+<p>维数约减的作用通常是为了数据压缩和可视化。数据压缩不仅可以节省存储空间，而且可以加速机器学习算法。高维数据需要约减到3维或2维空间，以便观测其特性。 </p>
+
+<h2 id="pca">主成分分析（PCA）</h2>
+
+<p>维数约减最常用的方法是主成分分析（PCA，Principal Component Analysis）。PCA可以理解为在高维空间中寻找一个低维的面，使得高维空间中的点到该面上的距离之和最小，这个距离也叫投影误差。</p>
+
+<p>利用PCA将维数从$n$维约减到$k$维，需要寻找$n$维空间中的$k$个向量$\mathbf u^{(1)}, \mathbf u^{(2)},\ldots,\mathbf u^{(k)}\in\mathbb R^n$，使空间中的点到这$k$个向量确定的面的投影误差最小。事实上，$n$维空间中的这$k$个向量是样本协方差矩阵最大的$k$个特征值对应的特征向量。</p>
+
+<blockquote>
+  <h4 id="pca-1">PCA维数约减算法</h4>
+  <hr />
+
+  <ol>
+    <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$\mathbf x_j^{(i)}\leftarrow\frac{\mathbf x_j^{(i)}-\boldsymbol \mu_j}{\mathbf s_j}$（$\boldsymbol \mu_j$表示均值，$\mathbf s_j$表示标准差）；</li>
+    <li>计算协方差矩阵（covariance matrix）：$\Sigma = \frac{1}{m}\sum_{i=1}^m\mathbf x^{(i)}\left(\mathbf x^{(i)}\right)^T$；</li>
+    <li>利用特征向量将$n$维向量$\mathbf x$映射到$k$维向量$\mathbf z$：
+\begin{equation}
+\mathbf z^{(i)} = U_{reduce}^T\mathbf x^{(i)}。
+\end{equation}</li>
+  </ol>
+
+  <div class="highlight"><pre><code class="language-matlab"><span class="p">[</span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span><span class="p">]</span> <span class="p">=</span> <span class="n">svd</span><span class="p">(</span><span class="n">Sigma</span><span class="p">);</span>
+<span class="n">Ureduce</span> <span class="p">=</span> <span class="n">U</span><span class="p">(:,</span> <span class="mi">1</span><span class="p">:</span><span class="n">k</span><span class="p">);</span>
+<span class="n">z</span> <span class="p">=</span> <span class="n">Ureduce</span>’ <span class="o">*</span> <span class="n">x</span><span class="p">;</span></code></pre></div>
+  <p>在应用中，只需要在训练集上做PCA，交叉检验和测试集上可以直接应用训练集的均值$\boldsymbol\mu$、标准差$\mathbf s$和映射矩阵$U_{reduce}$计算约减后的向量。</p>
+</blockquote>
+
+<p>Matlab中<code>svd</code>和<code>eig</code>函数都可以得到相同的特征值和特征向量，但是<code>svd</code>更稳定。</p>
+
+<p>从$k$维数据$\mathbf z$重构$n$维数据$\mathbf x$的方法为</p>
+
+<p>\begin{equation}
+\mathbf x_{approx}^{(i)} = U_{reduce}\mathbf z^{(i)}。
+\end{equation}</p>
+
+<p>约减后的维数$k$（主成分个数）通过方差保留的比率确定，选择满足下列条件的最小$k$</p>
+
+<p>\begin{equation*}
+\frac{\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}-\mathbf x_{approx}^{(i)}\right\rVert^2}{\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}\right\rVert^2}\leq 0.01，
+\end{equation*}</p>
+
+<p>此时方差保存比率为$99\%$。但是该方法计算复杂，可以通过特征值更简单的计算，选择满足下列条件的最小$k$</p>
+
+<p>\begin{equation}
+\frac{\sum_{i=1}^kS_{ii}}{\sum_{i=1}^nS_{ii}}\geq 0.99，
+\end{equation}</p>
+
+<p>$S_{ii}$是SVD得到的特征值。</p>
+
+<blockquote>
+  <h4 id="pca-2">谨慎使用PCA</h4>
+  <hr />
+
+  <ol>
+    <li>PCA不是解决过拟合的好方法，正则化是更好的策略（PCA或多或少损失了有助于分类的信息）；</li>
+    <li>不得滥用PCA，除非有证据表明PCA的价值，比如在有训练时间和存储空间的限制的时候。</li>
+  </ol>
+
+</blockquote>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-clustering" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/machine-learning-anomaly-detection" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/machine-learning-dimensionality-reduction" data-url="http://qianjiye.de/2014/12/machine-learning-dimensionality-reduction" data-title="机器学习：维数约减">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-clustering'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-anomaly-detection'; --1> -->
+<!--         url = '/2014/12/machine-learning-anomaly-detection'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-dimensionality-reduction/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

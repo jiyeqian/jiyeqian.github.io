@@ -2,6 +2,42 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-anomaly-detection</loc>
+    
+    <lastmod>2014-12-08T10:29:01+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-dimensionality-reduction</loc>
+    
+    <lastmod>2014-12-08T04:53:42+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-clustering</loc>
+    
+    <lastmod>2014-12-08T02:38:59+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/machine-learning-support-vector-machines</loc>
+    
+    <lastmod>2014-11-27T08:05:56+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2014/11/machine-learning-advice-for-applying-machine-learning</loc>
     
     <lastmod>2014-11-25T09:44:20+08:00</lastmod>
@@ -180,6 +216,8 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  
   
   
   
