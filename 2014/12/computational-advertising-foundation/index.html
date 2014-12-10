@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>计算广告学：广告基础</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>计算广告学：广告基础</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-09">2014-12-09</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#计算广告学" title="计算广告学">计算广告学</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文的内容来自于刘鹏的网络课程《计算广告学》<a href="#liu_cad_foundations_2014">[1]</a>。</p>
+
+<h2 id="tips">tips</h2>
+
+<p>广告和推荐系统很相似。对广告而言，在同样位置文字链的点击率远远高于图片；对推荐而言，图片的点击率远远高于文字链。</p>
+
+<h2 id="section">广告目的</h2>
+
+<p>广告（advertising）是由已确定的出资人通过各种媒介进行的有关产品（商品、服务和观点）的，通常是有偿的、有组织的、综合的、劝服性的非人员的信息传播活动<a href="#arens_ad_2013">[2]</a>。</p>
+
+<p>广告的三主体是出资人（sponsor）即广告主（advertiser）、媒介（medium）、受众（audience）<sup id="fnref:search-001"><a href="#fn:search-001" class="footnote">1</a></sup>，这是计算广告学中的三个基本变量。广告是一个三方博弈问题。</p>
+
+<p>广告的本质功能是借助某种有广泛受众的媒介力量，完成较低成本的用户接触（不是向用户卖东西哦）。</p>
+
+<p>品牌广告（brand awareness）：创造独特良好的品牌或产品形象，目的在于提升较长时期内的离线转化率。</p>
+
+<p>效果广告（direct response）：有短期内明确用户转化行为诉求的广告，用户转化行为有购买、注册、投票、捐款等。</p>
+
+<h2 id="section-1">广告的有效性模型</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-effect-model.png"><img src="/assets/images/2014-12-09-computational-advertising-effect-model.png" alt="广告的有效性模型" /></a><div class="caption">Figure 1:  广告的有效性模型 [<a href="/assets/images/2014-12-09-computational-advertising-effect-model.png">PNG</a>]</div></div></div>
+
+<p>曝光阶段，广告位对广告的曝光率和点击率有决定性作用，这种资源优势不是通过算法改进可以获得的。</p>
+
+<p>关注阶段，可以通过技术手段提高用户关注度。不要打断用户而言，比如ad系统通过上下文推荐；对揭示推荐原因而言，比如租车行的广告根据用户所在地理更换背景图片。</p>
+
+<p>信息接受阶段，广告位影响着广告的认可度，比如大的品牌广告主要确保自己的广告投放到影响力大和没有负面影响的媒介，还要关注竞争对手的广告投放情况。</p>
+
+<p>评价在线广告的两个基本指标：点击率和转化率。一般而言，越靠前的阶段对点击率影响越大，越靠后的阶段对转化率影响越大。</p>
+
+<p>下图展示了一些广告策略的效果，＋表示正面作用，－表示负面作用。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png"><img src="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png" alt="一些广告策略的效果" /></a><div class="caption">Figure 2:  一些广告策略的效果 [<a href="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png">PNG</a>]</div></div></div>
+
+<h2 id="section-2">广告与营销的区别</h2>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png"><img src="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png" alt="广告与营销的区别" /></a><div class="caption">Figure 3:  广告与营销的区别 [<a href="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png">PNG</a>]</div></div></div>
+
+<p>就效果广告（direct response）而言，从硬广到返利网，效果越来越好<sup id="fnref:problem-001"><a href="#fn:problem-001" class="footnote">2</a></sup>。当然，各种形式的广告之间有相互作用，配合使用可提升效果。</p>
+
+<h2 id="section-3">参考文献</h2>
+
+<ol class="bibliography"><li><span id="liu_cad_foundations_2014">[1]刘鹏, “广告的基本知识.” 云课堂, 2014.</span>
+
+[<a href="http://study.163.com/c/ad">Online</a>]
+
+</li>
+<li><span id="arens_ad_2013">[2]威廉·阿伦斯, <i>当代广告学</i>. 人民邮电出版社, 2013.</span>
+
+</li></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:search-001">
+      <p>搜索有两个主体，用户和搜索引擎。 <a href="#fnref:search-001" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:problem-001">
+      <p>如何理解把你的客户卖给你，把竞争对手的客户买给你？ <a href="#fnref:problem-001" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-recommender-systems" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/machine-learning-large-scale-machine-learning" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/computational-advertising-foundation" data-url="http://qianjiye.de/2014/12/computational-advertising-foundation" data-title="计算广告学：广告基础">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-recommender-systems'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-large-scale-machine-learning'; --1> -->
+<!--         url = '/2014/12/machine-learning-large-scale-machine-learning'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/computational-advertising-foundation/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

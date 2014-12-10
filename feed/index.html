@@ -4,8 +4,384 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2014-12-08T23:15:05+08:00</lastbuilddate>
+    <lastbuilddate>2014-12-11T00:41:00+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>机器学习：大数据上的机器学习</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-large-scale-machine-learning" />
+      <pubdate>2014-12-10T19:51:50+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-large-scale-machine-learning</guid>
+      <content:encoded>&lt;![CDATA[<p>当机器学习面对大数据的时候，是否从大数据中抽取一个小的子集就可以了呢？这需要分析学习曲线，确定影响性能的关键问题是数据量、特征还是模型或其它问题。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png" alt="学习曲线" /></a><div class="caption">Figure 1:  学习曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png">PNG</a>]</div></div></div>
+
+<p>如果是上图左所示的High Variance情况，则采用大数据能提高模型效果。若从大数据中抽取$m=1000$个样本的训练，如上图右所示，这表明机器学习是High Bias，即使加入更多的数据对性能也没有大的提升，应先加入更多的新特征（若神经网络，则增加神经元），再考虑大数据上的训练是否有利。</p>
+
+<p>如何减少学习时间提高学习效率，是大数据上的机器学习需要解决的重要问题。</p>
+
+<h2 id="section">随机梯度下降法</h2>
+
+<h3 id="section-1">随机梯度下降法</h3>
+
+<p>对于梯度下降法，参数更新的方法是
+\begin{equation}
+\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}，
+\end{equation}
+这种方法叫做批量（batch）梯度下降法，参数更新需在整个训练集上计算一次，当$m$特别大的时候，速度就会很慢。随机梯度下降法（stochastic gradient descent）的更新方式是每次只用一个数据点更新参数。</p>
+
+<blockquote>
+  <h4 id="section-2">随机梯度下降法</h4>
+  <hr />
+
+  <ol>
+    <li>数据集随机化；</li>
+    <li>更新模型参数，  <br />
+Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="footnote">1</a></sup> {  // 通常是$1\sim 10$轮迭。 <br />
+ for $i := 1,\dots,m$ {
+\begin{equation}
+\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~(j=1,\ldots,n)
+\end{equation}
+ }  }。</li>
+  </ol>
+
+</blockquote>
+
+<p>如下图所示，批量梯度下降法通常会向着极小值逼近，随机梯度下降法逼近道路稍显曲折，最总结果通常在极小值的某个区域内徘徊。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png" alt="左：批量梯度下降法，右：随机梯度下降法" /></a><div class="caption">Figure 2:  左：批量梯度下降法，右：随机梯度下降法 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png">PNG</a>]</div></div></div>
+
+<h3 id="section-3">小批量梯度下降法</h3>
+
+<p>随机梯度法每次更新参数只需要一个数据点，批量梯度法每次更新参数只需要整个训练集参数。小批量（mini-batch）梯度下降法间于二者之间，每次更新参数利用训练集的一个小子集的$b$个数据点（通常$b=2,\ldots,100$）。小批量梯度下降法的参数更新规则为
+\begin{equation}
+\boldsymbol\theta_j := \boldsymbol\theta_j - \frac{\alpha}{b}\sum_{i=k}^{k+b-1}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}，
+\end{equation}
+其中$k=1,b+1,2b+1,3b+1,\ldots$。</p>
+
+<p>小批量梯度下降法可利用并行化，获得比随机梯度法更快的速度，但是又多了参数$b$需要调节。</p>
+
+<h3 id="section-4">收敛性判断</h3>
+
+<p>随机梯度下降法可利用代价函数曲线，判断迭代过程是否收敛。但是，随机梯度下降法不会像批量梯度下降法那样，在整个训练集上评估代价。</p>
+
+<p>在利用$\left(\mathbf x^{(i)},y^{(i)}\right)$更新参数$\boldsymbol\theta_j$之前，计算该点的代价（误差）
+\begin{equation}
+\mbox{cost}\left(\boldsymbol\theta,\left(\mathbf x^{(i)},y^{(i)}\right)\right)= {1\over 2}\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)-y^{(i)}\right)^2，
+\end{equation}
+若是在参数更新之后再计算误差，不能真实反映迭代的误差。将最近多次（比如$1000$）迭代的误差平均，作为代价函数曲线上的一个点，下图就是随机梯度下降法的代价函数曲线。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png" alt="代价函数曲线" /></a><div class="caption">Figure 3:  代价函数曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png">PNG</a>]</div></div></div>
+
+<p>小的$\alpha$能否得到更好的结果呢？随机梯度下降法的性质表明其结果会在极小值附近区域震荡，很小的学习率$\alpha$可能得到的结果也只是好一点点而已。如上图左上所示，小的$\alpha$得到稍微光滑一点的曲线，但效果提升并不明显。</p>
+
+<p>上图右下的代价函数曲线不降反升，是因为学习率$\alpha$过大，可以适当调小学习率。</p>
+
+<p>选择最近多少个点平均作为代价函数曲线的点合适呢？</p>
+
+<ul>
+  <li>点的数目多，代价函数曲线更光滑，需要较长时间才展示参数更新结果，不能及时的反应参数更新的情况。上图右上所示，更多数目的点平均得到的曲线更光滑。</li>
+  <li>点的数目少，代价函数曲线噪声更大。上图左下所示，过少数目的点导致曲线震荡厉害，看不到变化趋势；过多的点又导致曲线过于平坦，也看不到变化趋势。</li>
+</ul>
+
+<p>因此，选择点的数目需要综合考虑这些情况，便于观察判断迭代是否收敛。</p>
+
+<p>为了随机梯度下降法能更好逼近极小值，可动态调整学习效率$\alpha=\frac{\mbox{constant1}}{\mbox{interationNumber + constant2}}$，学习过程中不断减小$\alpha$，越是靠近极小值的地方更新步长越短。但是，这又多出两个参数$\mbox{constant1}$和$\mbox{constant2}$需要调节了，该方法也不十分常用。</p>
+
+<h2 id="section-5">在线学习</h2>
+
+<p>在线学习通常不需要维护一个固定的训练集，思想上和随机梯度法类似，每次新数据来，学习更新模型，然后继续接收新数据，继续更新模型……在线学习适合用于数据集动态缓慢变化的情况，模型随可随数据变换动态演进。</p>
+
+<p>对于购物网站来说，随着经济大环境的改变，用户对价格的敏感度也会变化，用户特性会随时变迁，在线学习及时通过新样本训练模型可适应这些变化。</p>
+
+<p>预测CTR（click-through rate）是经典的在线学习例子。比如用户在网站搜索手机，返回用户最可能点击的10个结果。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png" alt="预测CTR" /></a><div class="caption">Figure 4:  预测CTR [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png">PNG</a>]</div></div></div>
+
+<p>如何计算用户点击的概率呢？将搜索匹配的单词等作为特征向量，利用logistic回归可以估计用户点击概率。推荐系统的协同过滤算法学习到的特征向量，也可作为logistic的输入特征。</p>
+
+<p>每次用户搜索可以得到对这10个搜索结果的反馈（是否点击了），从而得到10组数据，这些数据又可以用来训练模型。</p>
+
+<h2 id="mapreduce">MapReduce</h2>
+
+<p>MapReduce可将学习任务分配到多台机器上，然后将这些机器的学习结果汇总得到整个学习结果。</p>
+
+<blockquote>
+  <h4 id="mapreduce-1">基于MapReduce的批量梯度学习算法</h4>
+  <hr />
+  <p>整个任务：$\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{400}\sum_{i=1}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$。</p>
+
+  <p>分配任务：</p>
+
+  <ul>
+    <li>Machine 1: $temp_j^{(1)}=\sum_{i=1}^{100}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
+    <li>Machine 2: $temp_j^{(2)}=\sum_{i={101}}^{200}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
+    <li>Machine 3: $temp_j^{(3)}=\sum_{i={201}}^{300}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
+    <li>Machine 4: $temp_j^{(4)}=\sum_{i={301}}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$。</li>
+  </ul>
+
+  <p>任务合并：$\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{400}\left(temp_j^{(1)}+temp_j^{(2)}+temp_j^{(3)}+temp_j^{(4)}\right)$。</p>
+</blockquote>
+
+<h2 id="section-6">参考资料</h2>
+
+<h3 id="section-7">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:sgd-cycle-times">
+      <p>对于大数据，通常一轮迭代（每个点参与一次）也能得到较好结果，通常进行$1\sim 10$轮迭代（这个还依赖于训练集的大小）。 <a href="#fnref:sgd-cycle-times" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>计算广告学：广告基础</title>
+      <link href="http://qianjiye.de/2014/12/computational-advertising-foundation" />
+      <pubdate>2014-12-09T09:02:19+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/computational-advertising-foundation</guid>
+      <content:encoded>&lt;![CDATA[<p>本文的内容来自于刘鹏的网络课程《计算广告学》<a href="#liu_cad_foundations_2014">[1]</a>。</p>
+
+<h2 id="tips">tips</h2>
+
+<p>广告和推荐系统很相似。对广告而言，在同样位置文字链的点击率远远高于图片；对推荐而言，图片的点击率远远高于文字链。</p>
+
+<h2 id="section">广告目的</h2>
+
+<p>广告（advertising）是由已确定的出资人通过各种媒介进行的有关产品（商品、服务和观点）的，通常是有偿的、有组织的、综合的、劝服性的非人员的信息传播活动<a href="#arens_ad_2013">[2]</a>。</p>
+
+<p>广告的三主体是出资人（sponsor）即广告主（advertiser）、媒介（medium）、受众（audience）<sup id="fnref:search-001"><a href="#fn:search-001" class="footnote">1</a></sup>，这是计算广告学中的三个基本变量。广告是一个三方博弈问题。</p>
+
+<p>广告的本质功能是借助某种有广泛受众的媒介力量，完成较低成本的用户接触（不是向用户卖东西哦）。</p>
+
+<p>品牌广告（brand awareness）：创造独特良好的品牌或产品形象，目的在于提升较长时期内的离线转化率。</p>
+
+<p>效果广告（direct response）：有短期内明确用户转化行为诉求的广告，用户转化行为有购买、注册、投票、捐款等。</p>
+
+<h2 id="section-1">广告的有效性模型</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-effect-model.png"><img src="/assets/images/2014-12-09-computational-advertising-effect-model.png" alt="广告的有效性模型" /></a><div class="caption">Figure 1:  广告的有效性模型 [<a href="/assets/images/2014-12-09-computational-advertising-effect-model.png">PNG</a>]</div></div></div>
+
+<p>曝光阶段，广告位对广告的曝光率和点击率有决定性作用，这种资源优势不是通过算法改进可以获得的。</p>
+
+<p>关注阶段，可以通过技术手段提高用户关注度。不要打断用户而言，比如ad系统通过上下文推荐；对揭示推荐原因而言，比如租车行的广告根据用户所在地理更换背景图片。</p>
+
+<p>信息接受阶段，广告位影响着广告的认可度，比如大的品牌广告主要确保自己的广告投放到影响力大和没有负面影响的媒介，还要关注竞争对手的广告投放情况。</p>
+
+<p>评价在线广告的两个基本指标：点击率和转化率。一般而言，越靠前的阶段对点击率影响越大，越靠后的阶段对转化率影响越大。</p>
+
+<p>下图展示了一些广告策略的效果，＋表示正面作用，－表示负面作用。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png"><img src="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png" alt="一些广告策略的效果" /></a><div class="caption">Figure 2:  一些广告策略的效果 [<a href="/assets/images/2014-12-09-computational-advertising-improve-ad-performance.png">PNG</a>]</div></div></div>
+
+<h2 id="section-2">广告与营销的区别</h2>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png"><img src="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png" alt="广告与营销的区别" /></a><div class="caption">Figure 3:  广告与营销的区别 [<a href="/assets/images/2014-12-09-computational-advertising-ad-vs-sale.png">PNG</a>]</div></div></div>
+
+<p>就效果广告（direct response）而言，从硬广到返利网，效果越来越好<sup id="fnref:problem-001"><a href="#fn:problem-001" class="footnote">2</a></sup>。当然，各种形式的广告之间有相互作用，配合使用可提升效果。</p>
+
+<h2 id="section-3">参考文献</h2>
+
+<ol class="bibliography"><li><span id="liu_cad_foundations_2014">[1]刘鹏, “广告的基本知识.” 云课堂, 2014.</span>
+
+[<a href="http://study.163.com/c/ad">Online</a>]
+
+</li>
+<li><span id="arens_ad_2013">[2]威廉·阿伦斯, <i>当代广告学</i>. 人民邮电出版社, 2013.</span>
+
+</li></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:search-001">
+      <p>搜索有两个主体，用户和搜索引擎。 <a href="#fnref:search-001" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:problem-001">
+      <p>如何理解把你的客户卖给你，把竞争对手的客户买给你？ <a href="#fnref:problem-001" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>机器学习：推荐系统</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-recommender-systems" />
+      <pubdate>2014-12-09T07:20:25+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-recommender-systems</guid>
+      <content:encoded>&lt;![CDATA[<p>推荐系统首先通过分析用户的使用历史获得用户的兴趣偏向，然后使用得到的用户兴趣偏向获得用户潜在感兴趣的产品或服务。鉴于产生推荐的方式不同，推荐系统通常可以分为以下三类<a href="#wu_thesis_bju_2010">[1]</a>：基于内容的过滤（content-based filtering）、协同过滤（collaborative filtering）和CBF与CF的混合过滤（hybrid filtering）。</p>
+
+<p>以电影的推荐系统为例，相关变量定义如下<a href="#ng_ml_rs_2014">[2]</a>：</p>
+
+<ul>
+  <li>$n_u$：用户数目；</li>
+  <li>$n_m$：电影数目；</li>
+  <li>$\mathbf r(i, j)$：若用户$j$对电影$i$进行了评分则赋值为1；</li>
+  <li>$\mathbf y^{(i, j)}$：用户$j$对电影$i$的评分；</li>
+  <li>$\boldsymbol\theta^{(j)}$：用户$j$的参数向量；</li>
+  <li>$\mathbf x^{(i)}$：电影$i$的特征向量；</li>
+  <li>$m^{(j)}$：用户$j$评价过的电影数目。</li>
+</ul>
+
+<h2 id="section">基于内容的过滤</h2>
+
+<p>基于内容的过滤（CBF）方法根据抽取出的用户和产品特征获得推荐。这类方法利用用户和产品的特征计算他们之间的匹配度，最终把匹配得最好的数个产品推荐给相应的用户。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png"><img src="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png" alt="用户对电影的评价" /></a><div class="caption">Figure 1:  用户对电影的评价 [<a href="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png">PNG</a>]</div></div></div>
+
+<p>上图展示了用户对电影的评分$0\sim 5$，用属于爱情片（romance）和动作片（action）的概率表示电影特征。用户评分<code>?</code>表示用户$j$未对电影$i$作出评价，也就是$\mathbf r(i, j)=0$。</p>
+
+<p>如何估计用户未评价电影的得分呢？这时一个线性回归问题。利用电影特征向量$\mathbf x^{(i)}$和参数$\boldsymbol\theta^{(j)}$，可估计用户$j$对电影$i$的评分
+\begin{equation}
+\mathbf y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}。
+\label{eq:user-rating}
+\end{equation}</p>
+
+<p>因此，基于内容的的推荐需要学习参数$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$。假设已知$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$，学习算法采用代价函数
+\begin{equation}
+\begin{aligned}
+J\left(\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}\right) = &amp;{1\over 2}\sum_{j=1}^{n_u}\sum_{i:\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{j=1}^{n_u}\sum_{k=1}^n\left(\boldsymbol\theta_k^{(j)}\right)^2，
+\end{aligned}
+\label{eq:cf-learn-user-parameters}
+\end{equation}
+由于电影评分的总数目是固定的，省去平均化过程对最小化代价函数没有影响，只保留$1\over 2$方便求导，梯度下降法更新参数的规则为
+\begin{equation}
+\begin{aligned}
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)} &amp; (k=0)\\
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)}+\lambda\boldsymbol\theta_k^{(j)}\right)&amp;(k\neq 0)
+\end{aligned}。
+\end{equation}</p>
+
+<p>CBF就是把某用户评价高的电影推荐给该用户。为了实现推荐，需要计算用户对所有电影的评分，计算复杂度高。</p>
+
+<p>CBF方法具有两个主要的缺陷：</p>
+
+<ol>
+  <li>CBF需要预处理产品以得到代表它们的特征，但这种预处理在实际问题中往往非常困难；</li>
+  <li>CBF推荐给某个用户的产品往往和此用户已经消费过的产品很相似，它们无法发现用户并不熟悉但具有潜在兴趣的产品种类。 </li>
+</ol>
+
+<h2 id="section-1">协同过滤</h2>
+
+<p>协同过滤（CF）方法不需要事先获得产品或用户的特征，它们只依赖于用户过去的行为（如对产品的浏览、评价或购买等）。 通过用户过去的行为企业可以收集用户对产品的显式评分（如Netflix）或隐式评分（如Google新闻）。通常 CF方法首先分析已经收集到的用户-产品评分对中所呈现的用户与产品的相互作用，然后它们使用这些相互作用为用户产生个性化产品推荐。</p>
+
+<p>CF通常分为基于产品的（item-based）推荐和基于用户的（user-based）推荐。基于用户的推荐假设如果两个用户过去对产品有相似的喜好，那么他们现在对产品仍有相似的喜好；基于产品的推荐假设如果某个用户过去喜欢某种产品，那么该用户现在仍喜欢与此产品相似的产品。 </p>
+
+<p>在实际应用中，电影的特征向量往往也是未知的，需要通过学习得到。协同过滤不仅可以学习到用户对电影的评价，而且能学习到电影的特征。</p>
+
+<p>电影特征向量学习与用户评价模型参数估计\eqref{eq:cf-learn-user-parameters}类似，假设已知$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$，学习$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$采用的代价函数为
+\begin{equation}
+\begin{aligned}
+J\left(\mathbf x^{(1)}, \ldots, \mathbf x^{(n_m)}\right) = &amp;{1\over 2}\sum_{i=1}^{n_m}\sum_{i:\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{i=1}^{n_m}\sum_{k=1}^n\left(\mathbf x_k^{(i)}\right)^2
+\end{aligned}。
+\label{eq:cf-learn-item-features}
+\end{equation}</p>
+
+<p>根据\eqref{eq:cf-learn-user-parameters}和\eqref{eq:cf-learn-item-features}，同时学习$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$和$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$可以采用代价函数
+\begin{equation}
+\begin{aligned}
+J\left(\mathbf x^{(1)},\ldots,\mathbf x^{(n_m)},\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}\right) = &amp;{1\over 2}\sum_{(i,j):\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{i=1}^{n_m}\sum_{k=1}^n\left(\mathbf x_k^{(i)}\right)^2+{\lambda\over 2}\sum_{j=1}^{n_u}\sum_{k=1}^n\left(\boldsymbol\theta_k^{(j)}\right)^2
+\end{aligned}，
+\label{eq:cf-learn-all-parameters}
+\end{equation}
+梯度下降法更新参数的规则为
+\begin{equation}
+\begin{aligned}
+\mathbf x_k^{(i)}&amp;:=\mathbf x_k^{(i)}-\alpha\left(\sum_{j:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\boldsymbol\theta_k^{(j)}+\lambda\mathbf x_k^{(i)}\right)\\
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)}+\lambda\boldsymbol\theta_k^{(j)}\right)
+\end{aligned}，
+\label{eq:grd-x-theta}
+\end{equation}
+由于电影的特征$\mathbf x$也通过学习得到，不再需要额外增加$\mathbf x_0^{(i)}=1$的项。</p>
+
+<blockquote>
+  <h4 id="section-2">协同过滤算法</h4>
+  <hr />
+
+  <ol>
+    <li>用小的随机变量初始化$\mathbf x^{(1)},\ldots,\mathbf x^{(n_m)},\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}$<sup id="fnref:how-item-feature-demension"><a href="#fn:how-item-feature-demension" class="footnote">1</a></sup>；</li>
+    <li>最小化代价函数\eqref{eq:cf-learn-all-parameters}，若采用梯度下降法，采用\eqref{eq:grd-x-theta}更新参数；</li>
+    <li>学习到参数后，利用\eqref{eq:user-rating}计算用户$j$对电影$i$的评分。</li>
+  </ol>
+</blockquote>
+
+<p>协同过滤算法是一个不断进化的过程，$\mathbf x^{(i)}$和$\boldsymbol\theta^{(j)}$相互作用，$\mathbf x^{(i)}$推动$\boldsymbol\theta^{(j)}$更新，$\boldsymbol\theta^{(j)}$也推动$\mathbf x^{(i)}$更新。</p>
+
+<p>当学习到电影的特征向量$\mathbf x^{(i)}$后，可以用$\left\lVert \mathbf x^{(i_1)}-\mathbf x^{(i_2)}\right\rVert$计算电影之间的相似度。通过电影的相似度，为用户推荐相关的电影，这就是基于物品的推荐方法。</p>
+
+<p>CF方法存在的主要问题：</p>
+
+<ol>
+  <li>冷启动：对于一个新用户，由于缺乏其对产品的评分，CF无法为其提供可靠的 产品推荐；对于一种新的产品，CF无法确定该把它推荐给哪些用户。</li>
+  <li>可扩展性：CF方法中可能涉及到数以百万计的用户为成千上万种产品提供的评分。传统的CF推荐算法通常需要计算每对用户或产品之间的相似度，然后把这些相似度存放至电脑的主存中以便高效地产生推荐。当用户或产品的数量较大时，计算复杂度很高。 </li>
+</ol>
+
+<h3 id="section-3">均值规范化</h3>
+
+<p>针对新用户的冷启动，该用户$j$从未对任何电影做出评价，协同过滤算法会得到用户的参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，如果估计该用户对电影的评分，也将全为$0$，这显然不符合逻辑。因此，需要对数据进行适当的处理，避免这样的情况发生。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png"><img src="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png" alt="均值规范化" /></a><div class="caption">Figure 2:  均值规范化 [<a href="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png">PNG</a>]</div></div></div>
+
+<p>定义用户对所有电影评价的均值为$\boldsymbol\mu$，重新对用户对电影的评分规范化
+\begin{equation}
+\mathbf y^{(i,j)} := \mathbf y^{(i,j)} - \boldsymbol\mu_i。
+\end{equation}
+规范化评分后，公式\eqref{eq:user-rating}计算用户$j$对电影$i$的评分规则变为
+\begin{equation}
+\mathbf y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\boldsymbol\mu_i，
+\end{equation}
+即使参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，估计新用户对电影的评分将是所有用户的平均分，合情合理。</p>
+
+<h3 id="section-4">思考问题</h3>
+
+<ul>
+  <li>如果系统已经有了部分标注的特征$\mathbf x$，如何融入到协同过滤算法中？</li>
+  <li>如何利用协同过滤提高广告点击率？</li>
+  <li>协同过滤的特征学习方法可以做传感器校准么？</li>
+  <li>协同过滤和广联规则挖掘有何联系？</li>
+  <li>协同过滤的特征学习可以解决盲源信号分离么？</li>
+</ul>
+
+<h2 id="section-5">混合过滤</h2>
+
+<p>混合过滤(HF)组合CBF和CF，以期在克服它们各自缺点的同时，融合它们特有的优势。通常组合的方式包括以下三种：</p>
+
+<ol>
+  <li>加权（weighted）组合：首先分别独立应用CBF和CF获得对产品的预测评分，然后组合它们的预测评分以便获得混合过滤的预测评分，最后根据混合预测评分为用户产生推荐列表。</li>
+  <li>混合（mixed）组合：首先分别独立应用CBF和CF产生各自的推荐列表，然后组合这两组推荐列表以便获得最终的推荐列表。</li>
+  <li>序贯（sequential）组合：当可用评分较少时使用CBF方法获得用户的特征并进行推荐；而当可用评分积聚到一定程度时，使用CF方法代替原来的CBF方法获得最终的推荐列表。 </li>
+</ol>
+
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"><li><span id="wu_thesis_bju_2010">[1]吴金龙, “Netflix Prize 中的协同过滤算法,” PhD thesis, 北京大学, 2010.</span>
+
+</li>
+<li><span id="ng_ml_rs_2014">[2]A. Ng, “Recommender Systems.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-7">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:how-item-feature-demension">
+      <p>如何确定电影的特征多少维合适呢？ <a href="#fnref:how-item-feature-demension" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>机器学习：异常检测</title>
@@ -19,7 +395,7 @@
 
 <p>常用的异常检测方法是利用高斯密度函数，计算数据出现的概率，如果发现了概率小于某个阈值的数据，就认为该数据是异常的。</p>
 
-<p>异常检测也是一种模式二分类方法，但两类数据严重不平衡，异常数据要显著少于正常数据。</p>
+<p>异常检测也是一种模式二分类方法，但两类数据严重不平衡，异常数据要显著少于正常数据。异常检测通常只需要对正常数据进行建模。</p>
 
 <h2 id="section-1">基于高斯（正态）分布的异常检测</h2>
 
@@ -492,7 +868,22 @@ J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsym
       <pubdate>2014-11-25T09:44:20+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2014/11/machine-learning-advice-for-applying-machine-learning</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">模型选择</h2>
+      <content:encoded>&lt;![CDATA[<p>对于分类器而言通常需要考虑如下问题：</p>
+
+<ul>
+  <li>如何评价分类器性能？</li>
+  <li>数据需要如何预处理？</li>
+  <li>如何设计代价函数？</li>
+  <li>代价函数是凸的么？</li>
+  <li>如何用最优化方法求解模型参数？</li>
+  <li>如何调整参数，在Bias和Variance之间寻求平衡？</li>
+  <li>如何解决多分类问题？</li>
+  <li>如何处理线性不可分问题？</li>
+</ul>
+
+<p>对于样本动态变化的情况，还需要考虑如何在线学习和动态更新模型参数；对于大规模数据集，需要考虑如何选择合适的模型，如何降低复杂度。</p>
+
+<h2 id="section">模型选择</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_aaml_2014">[1]</a>。</p>
 
@@ -737,7 +1128,7 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 <h2 id="section-4">视频课程</h2>
 
 <blockquote>
-  <h4 id="machine-learningstanford-universitycourserahttpswwwcourseraorgcourseml">Machine Learning［Stanford University］［<a href="https://www.coursera.org/course/ml">Coursera</a>］</h4>
+  <h4 id="machine-learningstanford-universitycourserahttpswwwcourseraorgcoursemlcs229httpstudy163complanplanintroduction1200146htm">Machine Learning［Stanford University］［<a href="https://www.coursera.org/course/ml">Coursera</a>、<a href="http://study.163.com/plan/planIntroduction/1200146.htm">CS229</a>］</h4>
   <hr />
   <p>Instructors：Andrew Ng  </p>
 
@@ -861,6 +1252,34 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
   <h4 id="httpocwsjtueducng2socwcncoursedetailshtmid397httpocwsjtueducng2socwcncoursedetailshtmid398">机器学习导论［<a href="http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=397">上海交通大学</a>］／统计机器学习［<a href="http://ocw.sjtu.edu.cn/G2S/OCW/cn/CourseDetails.htm?Id=398">上海交通大学</a>］</h4>
   <hr />
   <p>Instructors：张志华       </p>
+
+</blockquote>
+
+<blockquote>
+  <h4 id="introduction-to-recommender-systemsuniversity-of-minnesotacourserahttpswwwcourseraorgcourserecsys">Introduction to Recommender Systems［University of Minnesota］［<a href="https://www.coursera.org/course/recsys">Coursera</a>］</h4>
+  <hr />
+  <p>Instructors：Joseph A. Konstan &amp; Michael D. Ekstrand       </p>
+
+</blockquote>
+
+<blockquote>
+  <h4 id="httpstudy163comcad">计算广告学［<a href="http://study.163.com/c/ad">网易云课堂</a>］</h4>
+  <hr />
+  <p>Instructors：刘鹏       </p>
+
+</blockquote>
+
+<blockquote>
+  <h4 id="httpbigeyeautsinghuaeducndragonstar2012">机器学习［<a href="http://bigeye.au.tsinghua.edu.cn/DragonStar2012/">龙星计划2012</a>］</h4>
+  <hr />
+  <p>Instructors：余凯 &amp; 张潼       </p>
+
+</blockquote>
+
+<blockquote>
+  <h4 id="httppanbaiducomsharelinkshareid3220401770uk723014463">信息处理和人工智能的深度学习［<a href="http://pan.baidu.com/share/link?shareid=3220401770&amp;uk=723014463">龙星计划2013</a>］</h4>
+  <hr />
+  <p>Instructors：邓力       </p>
 
 </blockquote>
 
@@ -1153,1001 +1572,6 @@ J(\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \le
     </li>
   </ol>
 </div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>CSS Essential</title>
-      <link href="http://qianjiye.de/2014/10/css-essential" />
-      <pubdate>2014-10-25T15:37:41+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/css-essential</guid>
-      <content:encoded>&lt;![CDATA[<blockquote>
-  <h4 id="what-is-css">What is CSS?</h4>
-  <hr />
-  <p>The basic goal of the Cascading Stylesheet (CSS) language is to allow a browser engine to paint elements of the page with specific features, like colors, positioning, or decorations. </p>
-
-  <p>CSS主要作用是设定元素（通常称为盒子）的属性，并将设定这些元素在页面的位置关系。CSS解决的主要问题是：    </p>
-
-  <ol>
-    <li>如何选择指定的元素？选择器（Selector）   </li>
-    <li>如何设定元素的属性？盒子模型（Box Model）   </li>
-    <li>如何设置元素间的位置关系？定位机制（Positioning Scheme）</li>
-  </ol>
-</blockquote>
-
-<p>本文主要介绍CSS的基本用法，包括如何使用选择器，如何设定样式以及如何布局定位，这些涉及到选择器、盒子模型、普通流、可视化格式模型和块格式化环境等核心概念，理解这些核心概念是熟练运用CSS的基础。</p>
-
-<p>若要详细了解相关内容，可参考文中链接，以及<a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN</a>、<a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3</a>和<a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school</a>关于CSS的详细介绍。</p>
-
-<h2 id="section">基础知识</h2>
-
-<h3 id="section-1">基本语法</h3>
-
-<p>CCS语法元素主要由选择器，属性和值构成，通过规则给选择器范围内的属性赋值。   </p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
-<div class="caption">CSS语法（规则）</div>
-</div>
-</div>
-
-<!---
-<div class="image_card">
-<img src="/assets/images/2014-10-21-pla_1.png" alt="CSS语法">
-<div class="caption">CSS语法（规则）</div>
-</div>
---->
-
-<h4 id="section-2">各部分元素含义：</h4>
-
-<ul>
-  <li><code>div p</code>：属性选择器</li>
-  <li><code>#id</code>：id选择器</li>
-  <li><code>first_line</code>：伪元素（pseudo-element）</li>
-  <li><code>background-color</code>：属性（property）</li>
-  <li><code>red</code>：值（value）</li>
-</ul>
-
-<h3 id="section-3">基本选择器</h3>
-
-<p>选择器相当于作用域规则，选择属性设置起作用的范围。另一个相关概念是<a href="#block-formatting-context">块格式化环境</a>。</p>
-
-<h4 id="section-4">常用选择器</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>*</td>
-      <td>通用选择器，匹配任何元素。</td>
-    </tr>
-    <tr>
-      <td>E</td>
-      <td>标签选择器，匹配所有使用E标签的元素。</td>
-    </tr>
-    <tr>
-      <td>.info</td>
-      <td>class选择器，匹配所有class属性中包含info的元素。</td>
-    </tr>
-    <tr>
-      <td>#footer</td>
-      <td>id选择器，匹配所有id属性等于footer的元素。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><strong>id选择器和class选择器的区别：</strong></p>
-
-<ul>
-  <li>在CSS文件中，id加前缀<code>#</code>，class用<code>.</code>；</li>
-  <li>同一个页面id只可使用一次，class可多次引用：id是一个标签，用于区分不同的结构和内容，就象名字；class是一个样式，可套在任何结构和内容上，就象衣服，同一内容也可以套多个class的样式；</li>
-  <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
-</ul>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
-<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
-<span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
-<span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
-<span class="nt">&lt;/style&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span></code></pre></div>
-
-<h4 id="section-5">多选择器组合</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>E,F</td>
-      <td>多元素选择器，同时匹配所有E元素或F元素，E和F之间用逗号分隔。</td>
-    </tr>
-    <tr>
-      <td>E F</td>
-      <td>后代元素选择器，匹配所有属于E元素后代的F元素，E和F之间用空格分隔。</td>
-    </tr>
-    <tr>
-      <td>E &gt; F</td>
-      <td>子元素选择器，匹配所有E元素的子元素F。</td>
-    </tr>
-    <tr>
-      <td>E + F</td>
-      <td>毗邻元素选择器，匹配所有紧随E元素之后的同级元素F。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
-<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
-<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
-<span class="nt">&lt;/style&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
-The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-
-<p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
-
-<h3 id="section-6">优先级别</h3>
-
-<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：   </p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span></code></pre></div>
-
-<p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
-
-<p><strong>继承与覆盖：</strong></p>
-
-<p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
-
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
-<span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
-<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
-<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
-<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
-<span class="nt">&lt;/style&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
-The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
-<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-
-<p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
-
-<h3 id="section-7">属性赋值</h3>
-
-<p>确定属性最终取值要<a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">经历3步</a>（<a href="http://www.w3.org/TR/CSS2/cascade.html#value-stages" title="Specified, computed, and actual values">CSS2经历4步</a>）：首先获取CSS样式中的指定值（specified value），然后如有必要则转换为绝对值或计算值（computed value），最后根据局部环境的约束再转换为实际值（actual value）。</p>
-
-<p>指定值可能是绝对值（例如：<code>2mm</code>、<code>red</code>等），也可能是相对值（例如：<code>auto</code>、<code>1.2em</code>、<code>12%</code>等）。对于绝对值而言不需要计算即可获得计算值，相对值需要再借助参考值计算获得计算值。如果属性没有指定值，它的取值继承父元素。</p>
-
-<p>在特定的客户端环境，可能还需要将计算值转换为实际值，比如可能需要将小数的边界近似取整。</p>
-
-<blockquote>
-  <h4 id="section-8">常用的赋值规则</h4>
-  <hr />
-  <ol>
-    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" title="&lt;color&gt;">颜色</a>赋值的三种形式：关键字、RGB空间、HSL空间；</li>
-    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/length" title="&lt;length&gt;">长度</a>赋值的两种形式：以<code>em</code>、<code>ex</code>、<code>ch</code>、<code>rem</code>、<code>vw</code>、<code>vh</code>、<code>vmin</code>、<code>vmax</code>为单位的相对赋值，以<code>cm</code>、<code>mm</code>、<code>in</code>、<code>pt</code>、<code>pc</code>、<code>px</code>为单位的绝对赋值；</li>
-    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">百分数</a>赋值：<code>width</code>、<code>margin</code>和<code>padding</code>等接受百分数赋值。</li>
-  </ol>
-
-  <p>示例：    </p>
-
-  <p><code>em</code>等单位和百分数都是相对赋值，需要继承父属性的参考值。<code>em</code>是针对字体大小的值，$w$ <code>em</code> = $w$ $\times$ <code>font-size</code>。</p>
-
-  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
-  Full size text (18px)
-  <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:50%;&quot;</span><span class="nt">&gt;</span>50%<span class="nt">&lt;/span&gt;</span>
-  <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
-</blockquote>
-
-<p>当一个属性可以有多个方向可设置值时，存在形如以下简写的赋值规则：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">位置</th>
-      <th style="text-align: left">赋值规则</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
-      <td style="text-align: left"><code>border-width: 1em</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
-      <td style="text-align: left"><code>border-width: 1em 2em</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
-      <td style="text-align: left"><code>border-width: 1em 2em 3em</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
-      <td style="text-align: left"><code>border-width: 1em 2em 3em 4em</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="section-9">盒子模型</h2>
-
-<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒子模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒子模型实现页面的渲染与显示。</p>
-
-<p>按照HTML的元素是否新开一行可分为块（block-level）元素和内联（inline）元素，这一特性对设置元素的布局至关重要。</p>
-
-<blockquote>
-  <h4 id="htmlblock-levelinline">HTML的块（block-level）元素和内联（inline）元素</h4>
-  <hr />
-  <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements">块元素</a>充满父元素的所有空间，每个块元素都会另起一个新行显示。块元素之内还可以包含块元素和行内元素。HTML定义的块元素包括<code>&lt;div&gt;, &lt;span&gt;, &lt;p&gt;</code>等。<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente">内联元素</a>只占据标签包含内容的空间，不会另起新行显示。内联元素通常只包含内联元素。HTML定义的内联元素包括<code>&lt;span&gt;, &lt;code&gt;, &lt;textarea&gt;</code>等。   </p>
-
-  <p><img src="/assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /> </p>
-
-  <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
-</blockquote>
-
-<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒子模型有四类边：margin edge，border edge，padding edge，content edge。    </p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
-<div class="caption">盒子模型的四类边</div>
-</div>
-</div>
-
-<p><code>.box {with: ...; height: ...}</code>设置的是只是<code>Content</code>尺寸。相关边的的设置方法是：</p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.box</span> <span class="p">{</span>
-    <span class="k">width</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-    <span class="k">height</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-    <span class="k">padding</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-    <span class="k">border</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-    <span class="k">margin</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-
-<p>内联元素设置属性<code>height</code>和<code>width</code>是没有用的，致使它变宽变大的原因是内部元素的宽高<code>+padding</code>。</p>
-
-<p>满足一定条件俩个盒子的外边届（margin）会叠加，使得估计这俩个盒子的位置关系变得复杂。</p>
-
-<blockquote>
-  <h4 id="margin-collapsing">外边叠加（margin collapsing）</h4>
-  <hr />
-  <p>上边距（top margin）和下边距（bottom margin）有时会叠加，叠加后两者最大值作为两者间的边距。发生外边叠加的3种情况（<a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html#CSS 外边距合并">图解</a>）<sup id="fnref:ccs_master"><a href="#fn:ccs_master" class="footnote">1</a></sup>：</p>
-
-  <ol>
-    <li>兄弟（Adjacent siblings）块：相邻块中，兄的下边界和弟的上边界会叠加；</li>
-    <li>父与首尾孩子（Parent and first/last child）块：父块和首个孩子的margin-top之间不被任何东西分隔，则它们会叠加；父块和最后孩子的margin-bottom之间不被任何东西分隔，则它们会叠加；</li>
-    <li>空块（Empty blocks）：不存在border、padding、inline content、height或min-height分隔块的margin-top和margin-bottom，上下边界会叠加。</li>
-  </ol>
-
-  <p>注意事项：</p>
-
-  <ul>
-    <li>当与负边界叠加时，叠加后的边界是最大正边界和最小边界之和；</li>
-    <li>浮动的（floating）和绝对定位的（absolutely positioned）元素不参与外边叠加（这是因为创建了新的<a href="#block-formatting-context">块格式化环境</a>，而边界叠加只发生在同一块格式化环境）。</li>
-  </ul>
-
-</blockquote>
-
-<h2 id="section-10">可视化格式模型</h2>
-
-<blockquote>
-  <h4 id="section-11">可视化格式模型解决的主要问题</h4>
-  <hr />
-  <ol>
-    <li>如何生成盒子？</li>
-    <li>盒子如何在页面布局？</li>
-  </ol>
-</blockquote>
-
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒子模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
-
-<h3 id="box-generation">生成机制（Box Generation）</h3>
-
-<p>生成盒子的类型通过CSS属性<code>display</code>设定，当设定属性为<code>block</code>、<code>list-item</code>和<code>table</code>时，生成块盒子，当设定属性为<code>inline</code>、<code>inline-block</code>和<code>inline-table</code>时，生成内联盒子。<a href="#htmlblock-levelinline">HTML元素的属性</a>决定了该元素生成盒子类型的默认值，块元素默认生成块盒子，内联元素默认生成内联盒子。不同类型盒子的定位机制不同。</p>
-
-<h3 id="positioning-scheme">定位机制（Positioning Scheme）</h3>
-
-<p>CSS的盒子有3种基本定位机制：普通流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是普通流。在普通流中，盒子一个接一个排列，floats算法可以将盒子从普通流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
-
-<h4 id="normal-flow">Normal Flow</h4>
-
-<blockquote>
-  <h4 id="normal-flow-1">如何进入普通流（normal flow）</h4>
-  <hr />
-  <p>CCS将盒子的<code>position</code>属性设置为<code>static</code>或<code>relative</code>，并且将<code>float</code>属性设置为<code>none</code>。默认值<code>position: static</code>，<code>float: none</code>。</p>
-
-  <p>普通流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
-</blockquote>
-
-<p>在普通流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。    </p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
-<div class="caption">包含在行盒子中的内联元素</div>
-</div>
-</div>
-
-<p>CSS2.1可以设置<code>display</code>属性为<code>inline-block</code>，融合inline和block的属性。在水平方向按内联盒子的方式布局，同时可以像块盒子一样设置widths、heights和垂自方向的 margins、padding。 </p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
-<div class="caption">设置relative的效果"position: relative; left: 20px; top: 20px;"</div>
-</div>
-</div>
-
-<h4 id="floats">Floats</h4>
-
-<blockquote>
-  <h4 id="floats-1">如何使用浮动模式（floats）</h4>
-  <hr />
-  <p>CCS将盒子的<code>float</code>属性设置为<code>left</code>或<code>right</code>，并且将<code>position</code>属性设置为<code>static</code>或<code>relative</code>。</p>
-
-  <p><code>float</code>的非<code>none</code>属性暗示了盒子是<code>block</code>类型，因此，非块类型盒子的<code>display</code>属性会因为设置了<code>float</code>属性而改变为块类型。</p>
-</blockquote>
-
-<p>当盒子采用floats算法定位时，盒子会从普通流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
-<div class="caption">设置<code>float</code>的效果</div>
-</div>
-</div>
-
-<p>上图3个红色的方块，两个左浮（<code>float: left</code>），一个右浮。第二个左浮窗口位于第一个左浮动窗口右边，如果再增加左浮窗口，会不断的照此叠加，充满父盒子后会换行继续显示。</p>
-
-<p>一个盒子设置了浮动后，会影响它的兄弟元素，具体的影响方式较为复杂，这要视乎这些兄弟元素是块级元素还是内联元素，若是块级元素会无视这个浮动的块框，使自身尽可能与这个浮动元素处于同一行，导致被浮动元素覆盖，除非这些<code>div</code>设置了宽度，并且父元素的宽度不足以包含它们，这样兄弟元素才会被强制换行；若是内联元素，则会尽可能围绕浮动元素。</p>
-
-<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了普通流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
-<div class="caption">浮动的影响</div>
-</div>
-</div>
-
-<p>当浮动影响到盒子的布局时，需要<a href="#clearing-floats">清除浮动</a>。</p>
-
-<h4 id="absolute-positioning">Absolute Positioning</h4>
-
-<blockquote>
-  <h4 id="absolute-positioning-1">如何采用绝对定位（absolute positioning）</h4>
-  <hr />
-  <p>CCS将盒子的<code>position</code>属性设置为<code>absolute</code>或<code>fixed</code>。</p>
-
-  <p>当设置为<code>fixed</code>的时候，盒子的位置相对于浏览器可见的视窗固定，即使拖动浏览器的滚动条，盒子的位置也固定不变。</p>
-
-</blockquote>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
-<div class="caption">设置absolute的效果"position: absolute; left: 20px; top: 20px;"</div>
-</div>
-</div>
-
-<h4 id="clearing-floats">清除浮动（clearing floats）</h4>
-
-<p>由于浮动元素会影响它的兄弟元素的位置和父元素产生高度塌陷，需要清除浮动。</p>
-
-<p>常用的清除浮动方法是<code>clear: both</code>，<code>clear</code>的属性值<code>both</code>、<code>left</code>、<code>right</code>、<code>none</code>、<code>inherit</code> 分别代表在元素左右两侧不允许出现浮动元素、左侧不允许出现浮动元素、右侧不允许出现浮动元素、不清除浮动、继承父元素的值。</p>
-
-<p>但是，<code>clear</code>只是清除了浮动对兄弟元素的影响，而高度塌陷问题还没有解决，需要更高级的清除浮动——闭合浮动。为什么叫闭合浮动？因为浮动的元素脱离了普通流，对于它的父元素，它并没有闭合，这时候就需要闭合浮动了。</p>
-
-<blockquote>
-  <h4 id="section-12">闭合浮动的3种方法</h4>
-  <hr />
-  <p>（1）空<code>div</code>方法</p>
-
-  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;clear: both;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside&quot;</span><span class="nt">&gt;</span>我是页脚，我的上面添加了一个设置了 clear: both 的空 div<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-  <p>空<code>div</code>方法很方便，但是加入了没有涵义的<code>div</code>，这违背了结构与表现分离的原则，并且后期维护也不方便。</p>
-
-  <p>（2）<code>overflow</code>方法</p>
-
-  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-  <p>当元素内包含会超出父元素边界的子元素时，<code>overflow</code>方法可能会覆盖掉有用的子元素，或是产生了多余的滚动条。</p>
-
-  <p>（3）<code>:after</code>伪元素的方法</p>
-
-  <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;style&gt;</span>
-    <span class="nc">.clearfix</span> <span class="p">{</span><span class="c">/* 触发 hasLayout */</span> <span class="n">zoom</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
-    <span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span><span class="k">content</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">clear</span><span class="o">:</span> <span class="k">both</span><span class="p">;</span> <span class="k">visibility</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">&lt;/style&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box clearfix&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span></code></pre></div>
-  <p>这个办法不但完美兼容主流浏览器，并且也很方便，使用重用的类，可以减轻代码编写，另外网页的结构也会更加清晰。</p>
-</blockquote>
-
-<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="/assets/images/../html/clearfloat.html">示例</a>）。</p>
-
-<h2 id="section-13">块格式化环境</h2>
-
-<blockquote>
-  <h4 id="block-formatting-context">块格式化环境（block formatting context）</h4>
-  <hr />
-  <p>块格式化环境是CCS渲染Web页面的一块区域，块盒子在该区域内布局。</p>
-
-  <p>块格式化环境对（<code>float</code>）定位和清除（<code>clear</code>）浮动至关重要，定位和清除浮动只对同一块格式化环境中的对象有效。<code>float</code>不会影响到其它块格式化环境中的盒子，<code>clear</code>只清除同一块格式化环境中之前的float效果。</p>
-
-  <p>简单来说，块格式化环境是一种属性，这种属性会影响着元素的定位以及与其兄弟元素之间的相互作用。</p>
-</blockquote>
-
-<p>块格式化环境就是一个作用范围，可理解为一个独立的容器，这个容器的里盒子的布局与这个容器外的不相干。</p>
-
-<p>块格式化环境不存在嵌套包含关系，块格式化环境只包含该环境内的对象，不会再包含该环境中对象再创建的块格式化环境。（A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.）</p>
-
-<blockquote>
-  <h4 id="section-14">创建块格式化环境的条件（满足任意一条即可）</h4>
-  <hr />
-  <ul>
-    <li>the root element or something that contains it；</li>
-    <li><code>float</code>设置为<strong>非</strong><code>none</code>；</li>
-    <li><code>position</code>设置为<code>absolute</code>或<code>fixed</code>；</li>
-    <li><code>display</code>设置为<code>inline-block</code>、<code>table-cell</code>、<code>table-caption</code>、<code>flex</code>或<code>inline-flex</code>；</li>
-    <li><code>overflow</code>设置为<strong>非</strong><code>visible</code>。</li>
-  </ul>
-</blockquote>
-
-<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="/assets/images/../html/bfc.html">示例</a>）：</p>
-
-<ol>
-  <li>阻止<a href="#margin-collapsing">外边距折叠</a>；    </li>
-  <li>包含浮动的元素（<a href="#clearing-floats">清除浮动</a>之<code>overflow</code>方法）；   </li>
-  <li>阻止元素被浮动元素覆盖。 </li>
-</ol>
-
-<h2 id="section-15">高级选择器</h2>
-
-<h4 id="css-21-">CSS 2.1 属性选择器</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>E[att]</td>
-      <td>匹配所有具有att属性的E元素，不考虑它的值。（注意：E在此处可以省略，比如”[cheacked]”。以下同。）</td>
-    </tr>
-    <tr>
-      <td>E[att=val]</td>
-      <td>匹配所有att属性等于”val”的E元素。</td>
-    </tr>
-    <tr>
-      <td>E[att~=val]</td>
-      <td>匹配所有att属性具有多个空格分隔的值、其中一个值等于”val”的E元素。</td>
-    </tr>
-    <tr>
-      <td>E[att|=val]</td>
-      <td>匹配所有att属性具有多个连字号分隔（hyphen-separated）的值、其中一个值以”val”开头的E元素，主要用于lang属性，比如”en”、”en-us”、”en-gb”等等。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>示例：</p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">div</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">error</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">td</span><span class="o">[</span><span class="nt">headers</span><span class="o">~=</span><span class="nt">col1</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">p</span><span class="o">[</span><span class="nt">lang</span><span class="o">|=</span><span class="nt">en</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-
-<h4 id="css-21-pseudo-classes">CSS 2.1 伪类（pseudo-classes）</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>E:first-child</td>
-      <td>匹配父元素的第一个子元素。</td>
-    </tr>
-    <tr>
-      <td>E:link</td>
-      <td>匹配所有未被点击的链接。</td>
-    </tr>
-    <tr>
-      <td>E:visited</td>
-      <td>匹配所有已被点击的链接。</td>
-    </tr>
-    <tr>
-      <td>E:active</td>
-      <td>匹配鼠标已经其上按下、还没有释放的E元素。</td>
-    </tr>
-    <tr>
-      <td>E:hover</td>
-      <td>匹配鼠标悬停其上的E元素。</td>
-    </tr>
-    <tr>
-      <td>E:focus</td>
-      <td>匹配获得当前焦点的E元素。</td>
-    </tr>
-    <tr>
-      <td>E:lang(c)</td>
-      <td>匹配lang属性等于c的E元素。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>示例：</p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#000</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="m">#ffe</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus:hover</span> <span class="p">{</span> <span class="k">background</span><span class="o">:</span><span class="m">#fff</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-
-<h4 id="css-21-pseudo-elements">CSS 2.1 伪元素（pseudo-elements）</h4>
-
-<table>
-  <tbody>
-    <tr>
-      <td>E:first-line</td>
-      <td>匹配E元素的第一行。</td>
-    </tr>
-    <tr>
-      <td>E:first-letter</td>
-      <td>匹配E元素的第一个字母。</td>
-    </tr>
-    <tr>
-      <td>E:before</td>
-      <td>在E元素之前插入生成的内容。</td>
-    </tr>
-    <tr>
-      <td>E:after</td>
-      <td>在E元素之后插入生成的内容。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>示例：</p>
-
-<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
-<span class="nc">.preamble</span><span class="nd">:first-letter</span> <span class="p">{</span> <span class="k">font-size</span><span class="o">:</span><span class="m">1.5em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="p">}</span>
-<span class="nc">.cbb</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span><span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span><span class="m">17px</span><span class="p">;</span> <span class="k">width</span><span class="o">:</span><span class="m">18px</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="sx">url(top.png)</span> <span class="k">no-repeat</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-18px</span><span class="p">;</span> <span class="p">}</span>
-<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-
-<p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
-
-<h2 id="section-16">使用技巧</h2>
-
-<blockquote>
-  <h4 id="important">!important规则</h4>
-  <hr />
-  <p>多条CSS语句互相冲突时，具有!important的语句将覆盖其他语句。由于IE不支持!important，所以也可以利用它区分不同的浏览器。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="section-17">容器水平居中</h4>
-  <hr />
-  <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="section-18">禁止自动换行</h4>
-  <hr />
-  <p>文字在一行中显示完成，不要自动换行。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="section-19">图片宽度自适应</h4>
-  <hr />
-  <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="link">设置link状态的顺序</h4>
-  <hr />
-  <p>link的四种状态，需要按照下面的前后顺序进行设置。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">a</span><span class="nd">:link</span> 
-<span class="nt">a</span><span class="nd">:visited</span> 
-<span class="nt">a</span><span class="nd">:hover</span> 
-<span class="nt">a</span><span class="nd">:active</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="text-transformfont-variant">Text-transform和Font Variant</h4>
-  <hr />
-  <p>Text-transform用于将所有字母变成小写字母、大写字母或首字母大写。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
-<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">lowercase</span><span class="p">}</span> 
-<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span></code></pre></div>
-  <p>Font Variant用于将字体变成小型的大写字母（即与小写字母等高的大写字母）。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="section-20">用图片充当列表标志</h4>
-  <hr />
-  <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
-<span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
-    <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&quot;path-to-your-image&quot;)</span><span class="p">;</span>
-    <span class="k">background-repeat</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
-    <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">0.5em</span><span class="p">;</span> 
-<span class="p">}</span></code></pre></div>
-</blockquote>
-
-<blockquote>
-  <h4 id="section-21">用图片替换文字</h4>
-  <hr />
-  <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
-
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">h1</span> <span class="p">{</span> 
-    <span class="k">text-indent</span><span class="o">:</span> <span class="m">-9999px</span><span class="p">;</span> 
-    <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;h1-image.jpg&quot;)</span> <span class="k">no-repeat</span><span class="p">;</span> 
-    <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
-    <span class="k">height</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
-</blockquote>
-
-<h2 id="section-22">预处理器</h2>
-
-<p>CSS预处理器（css preprocessor）的基本思想是，用一种专门的编程语言，进行网页样式设计，然后再编译成CSS文件。常用的CSS预处理器有<a href="http://lesscss.org">Less</a>、<a href="http://sass-lang.com">Sass</a>等。</p>
-
-<h3 id="less">Less</h3>
-
-<p><a href="http://lesscss.org">Less</a>使用变量（variables）、混合（mixins）、函数（functions）和许多其他的技术，让你的CSS更具维护性、主题性、扩展性。Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
-
-<p>具体用法可参考Bootstrap中文网的<a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">Less教程</a>。</p>
-
-<h3 id="sass--compass">Sass &amp; Compass</h3>
-
-<p><a href="http://sass-lang.com">Sass</a>使用变量（variables）、混合（mixins）、嵌套规则（nested rules）、内联导入（inline imports）等，让CSS更加优雅和强大。Sass让CSS更好的组织、体积更小、速度更快。</p>
-
-<p><a href="http://compass-style.org">Compass</a>是Sass的工具库（toolkit）。Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery、Ruby和Rails、python和Django的关系。</p>
-
-<p>具体使用可参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">Sass</a>和<a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">Compass</a>用法指南。</p>
-
-<h2 id="section-23">参考资料</h2>
-
-<ol>
-  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN: CSS</a></li>
-  <li><a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3: Cascading Style Sheets home page</a></li>
-  <li><a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school: CSS 教程</a></li>
-  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">W3: Specified, computed, and actual values</a></li>
-  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">W3: CSS Values and Units Module Level 3</a></li>
-  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">W3: CSS Color Module Level 3</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-box/">W3: CSS basic box model</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-grid/">W3: CSS Grid Layout Module Level 1</a></li>
-  <li><a href="http://dev.w3.org/csswg/css-flexbox/">W3: CSS Flexible Box Layout Module Level 1</a></li>
-  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">阮一峰：CSS使用技巧</a>    </li>
-  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">阮一峰：CSS选择器笔记</a></li>
-  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">cuishengli：CSS 框模型概述</a></li>
-  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">leejersey：详说 Block Formatting Contexts (块级格式化上下文)</a></li>
-  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">Kayo：详说清除浮动</a></li>
-  <li><a href="http://www.catswhocode.com/blog/8-css-preprocessors-to-speed-up-development-time" title="8 CSS preprocessors to speed up development time">Jean: 8 CSS preprocessors to speed up development time</a></li>
-  <li><a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">LESS « 一种动态样式语言</a></li>
-  <li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">阮一峰：SASS用法指南</a></li>
-  <li><a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">阮一峰：Compass用法指南</a></li>
-</ol>
-
-<h3 id="section-24">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:ccs_master">
-      <p>也可参考”CSS Mastery: Advanced Web Standards Solutions, Second Edition”一书的”Chapter 3: Visual Formatting Model Overview”。 <a href="#fnref:ccs_master" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：感知器算法</title>
-      <link href="http://qianjiye.de/2014/10/machine-learning-perceptron-learning-algorithm" />
-      <pubdate>2014-10-21T18:09:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/machine-learning-perceptron-learning-algorithm</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">问题描述</h2>
-
-<p>对于线性二分类问题<br />
-\begin{equation}
-y = \left\{
-\begin{aligned}
-&amp; +1 &amp; \sum\nolimits_{i=1}^dw_ix_i &gt; \mbox{threshold} \\
-&amp; -1 &amp; \sum\nolimits_{i=1}^dw_ix_i &lt; \mbox{threshold}
-\end{aligned}
-\right. 
-\end{equation}</p>
-
-<p>也可以记为
-\begin{equation}
-h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sign}\left(\sum_{i=0}^dw_ix_i\right) = \mbox{sign}\left(\mathbf{w^Tx}\right)
-\end{equation} <br />
-其中，$w_0 = -\mbox{threshold}, x_0 = +1$。</p>
-
-<p>问：如何估计模型模型$h(x)$的参数$\mathbf{w}$？  <br />
-答：感知器算法（PLA，Perceptron Learning Algorithm）。</p>
-
-<h2 id="section-1">感知器算法</h2>
-
-<p>感知器算法通过迭代更新模型参数，直到没有错分的样本点。  </p>
-
-<blockquote>
-  <h4 id="pla">PLA</h4>
-  <hr />
-  <p>repeat until a full cycle of not encountering mistakes { <br />
-1. 找到参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
-2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$。  <br />
-}</p>
-</blockquote>
-
-<div class="image_line">
-<div class="image_card">
-<img src="/assets/images/2014-10-21-pla_1.png" alt="PLA更新模型参数示意图" />
-<div class="caption">PLA更新模型参数示意图</div>
-</div>
-</div>
-
-<p>PLA更新模型参数解释： <br />
-1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
-2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。   </p>
-
-<p>通过参数更新规则可知  <br />
-\[
-\mathbf w_{t+1} ＝ \mathbf w_t + y_{n}\mathbf x_{n}
-\]<br />
-两边转置后同时乘上$y_n\mathbf x_n$，可得
-\[
-y_n\mathbf w^T_{t+1} \mathbf x_n \geq y_n\mathbf w^T_t\mathbf x_n
-\]
-这表明，参数更新始终在试图纠正模型参数。  </p>
-
-<p><strong>注意事项</strong>：$\mathbf w$是决策界（判别面）的法向量。</p>
-
-<h2 id="section-2">理论分析</h2>
-
-<blockquote>
-  <ol>
-    <li>PLA算法会终止么？</li>
-    <li>能否从候选模式$h$中学习到目标模式$f$？</li>
-  </ol>
-</blockquote>
-
-<p>如果数据集$\mathcal D$线性可分，存在一个完美$\mathbf w_f$，使得对数据集中所有样本点$y_n = \mbox{sign}\left(\mathbf w_f^T\mathbf x_n\right)$，对于任意一个样本点总有</p>
-
-<p>\begin{equation}
-y_{n(t)}\mathbf w_f^T\mathbf x_{n(t)} \geq \min_n y_n\mathbf x_f^T\mathbf x_n &gt; 0
-\end{equation}</p>
-
-<p>根据感知器算法的更新规则可知
-\begin{equation}
-\begin{aligned}
-\mathbf w_f^T\mathbf w_{t+1} 
-&amp; =  \mathbf w_f^T\left(\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\right) \\
-&amp; \geq \mathbf w_f^T\mathbf w_t + \min_n y_n\mathbf x_f^T\mathbf x_n \\
-&amp; &gt; \mathbf w_f^T\mathbf w_t 
-\end{aligned}
-\end{equation}
-由此可见，参数更新后，$\mathbf w_{t+1}$<em>可能会</em>更加接近$\mathbf w_f$。但是，还不能确定是由于向量间夹角变小还是$\mathbf w_{t+1}$长度变大导致的内积增加。
-\begin{equation}
-\begin{aligned}
-\|\mathbf w_{t+1}\|^2
-&amp; = \|\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\|^2 \\
-&amp; = \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 + 2y_{n(t)}\mathbf w_t^T\mathbf x_{n(t)} \\
-&amp; \leq \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 \\
-&amp; \leq \|\mathbf w_t\|^2 + \max_n\|\mathbf x_{n}\|^2
-\end{aligned}
-\end{equation}
-由此可见，每次更新的时候，向量长度的增加是有限的，最多增加样本最长向量的长度。</p>
-
-<p>事实上，从$\mathbf w_0$开始，经过$T$次迭代后有
-\begin{equation}
-\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\frac{\mathbf w_T}{\|\mathbf w_T\|}\geq
-\sqrt T \times \mbox{constant}
-\label{eq:need_to_be_done_1}
-\end{equation}
-PLA算法迭代次数的上界满足$T\leq R^2/\rho^2$，其中
-\begin{equation}
-R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\mathbf x_n
-\label{eq:need_to_be_done_2}
-\end{equation}</p>
-
-<p>相关的证明如下：  <br />
-<img src="/assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
-
-<p><strong>结论：</strong>     <br />
-1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
-2. 对于未知的样本集，作用在其上的PLA算法可能长时间不收敛，导致这样的情况可能是迭代次数不够（理论上的参数$T$由于目标模型$f$未知而难以估计）或者样本集存在噪声（线性不可分）。</p>
-
-<h2 id="pocket-pla">Pocket PLA</h2>
-
-<p>判断样本集是否线性可分的复杂度为NP-hard。实际上，通常样本集存在一些噪声，不可能严格的线性可分，PLA算法无法满足收敛条件。Pocket PLA通过改变PLA迭代结束的条件和参数更新规则仍然可以估计模型参数。</p>
-
-<blockquote>
-  <h4 id="pocket-pla-1">Pocket PLA</h4>
-  <hr />
-  <p>repeat until enough iterations {<br />
-1. 随机抽取参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
-2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$；<br />
-3. 如果$\mathbf w_{t+1}$在样本集上的表现优于$\hat{\mathbf w}$，$\hat{\mathbf w}\leftarrow \mathbf w_{t+1}$。 <br />
-}</p>
-</blockquote>
-
-<p>从第3步可知，Pocket PLA的算法时间复杂度要高于PLA，如果对于线性可分的样本集，Pocket PLA比PLA慢。</p>
-
-<h2 id="section-3">思考问题</h2>
-
-<ol>
-  <li>PLA和梯度下降法有无联系？</li>
-  <li>在分类性能上PLA求解的线性模型和Logistic回归有何差别？</li>
-  <li>如何推导公式\eqref{eq:need_to_be_done_1}\eqref{eq:need_to_be_done_2}？ <a href="https://class.coursera.org/ntumlone-002/forum/thread?thread_id=28">答案</a></li>
-</ol>
-
-<h2 id="section-4">參考資料</h2>
-
-<ol>
-  <li><a href="https://class.coursera.org/ntumlone-002">機器學習基石(Machine Learning Foundations)</a>    </li>
-  <li><a href="http://www.cs.columbia.edu/~mcollins/courses/6998-2012/notes/perc.converge.pdf">Convergence Proof for the Perceptron Algorithm</a></li>
-</ol>
-
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：正则化</title>
-      <link href="http://qianjiye.de/2014/10/machine-learning-regularization" />
-      <pubdate>2014-10-20T00:00:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/10/machine-learning-regularization</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">为什么需要正则化</h2>
-
-<p>过拟合（overfitting）是指模型可以在训练集上表现出色，在新数据上性能却很差。解决过拟合问题的方法：</p>
-
-<ul>
-  <li>减少特征数目：手工选择特征、利用模型选择；</li>
-  <li>正则化（regularization）：保留所有特征，但是减小$\theta_j$，使特征对预测$y$贡献小。</li>
-</ul>
-
-<p>正则化通过在代价函数中加入正则化项限制模型参数，避免过拟合。</p>
-
-<p>线性回归和Logistic回归的代价函数追加的正则化项是$\frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2$。</p>
-
-<ul>
-  <li>$\lambda$称为正则化参数，增大$\lambda$以减小过拟合；</li>
-  <li>$\lambda$过大（$10^{10}$）时，有$\theta_j\approx 0~~(j = 1,2,\ldots,n)$，则$h_\theta(x) = \theta_0$，这会导致欠拟合（underfitting）；</li>
-  <li>正则化只作用于$j\ge 1$的非常数项，实际上，正则化常数项对结果影响也不大。</li>
-</ul>
-
-<p>资料来源：<a href="#ng_ml_r_2014">[1]</a>。</p>
-
-<p>bias &amp; variance:</p>
-
-<ul>
-  <li>high bias: 欠拟合；</li>
-  <li>high variance: 过拟合。</li>
-</ul>
-
-<h2 id="section-1">正则化线性回归</h2>
-
-<h3 id="section-2">代价函数</h3>
-
-<p>\begin{equation}
-J(\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
-\label{eq:cf-linear-regression-r}
-\end{equation}</p>
-
-<h3 id="section-3">梯度下降法估计参数</h3>
-
-<p>repeat until convergence {
-\begin{equation*}
-\begin{aligned}
-\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
-\end{aligned}
-\end{equation*}
-}</p>
-
-<p>迭代过程可以化为如下形式：
-\begin{equation*}
-\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)};~~(j = 1, 2, \ldots, n)
-\end{equation*}</p>
-
-<p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小更快。</p>
-
-<h3 id="section-4">正规方程估计参数</h3>
-
-<p>\begin{equation}
-\theta = \left(X^TX + \lambda
-\begin{bmatrix}
-0  &amp;   &amp;        &amp; \\
-   &amp; 1 &amp;        &amp; \\
-   &amp;   &amp; \ddots &amp; \\
-   &amp;   &amp;        &amp; 1
-\end{bmatrix}
-\right)^{-1}X^Ty
-\end{equation}</p>
-
-<p>可以证明，加入正则化项后矩阵始终可逆。</p>
-
-<h2 id="logistic">正则化Logistic回归</h2>
-
-<h3 id="section-5">代价函数</h3>
-
-<p>\begin{equation}
-\begin{aligned}
-J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
-&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\boldsymbol\theta_j^2
-\end{aligned}
-\label{eq:cf-logistic-regression-r}
-\end{equation}</p>
-
-<h3 id="section-6">梯度下降法估计参数</h3>
-
-<p>repeat until convergence {
-\begin{equation*}
-\begin{aligned}
-\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
-\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_\theta\left(x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
-\end{aligned}
-\end{equation*}
-}</p>
-
-<h3 id="matlab">Matlab实现</h3>
-
-<p>第一步：实现Logistic函数</p>
-
-<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
-<span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
-<span class="k">end</span></code></pre></div>
-
-<p>第二步：实现代价函数（包含梯度计算）</p>
-
-<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
-<span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
-
-<span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
-<span class="n">J</span> <span class="p">=</span> <span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">+</span> <span class="c">...</span>
-    <span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
-<span class="n">grad</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)])</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
-
-<span class="k">end</span></code></pre></div>
-
-<p>第三步：估计参数</p>
-
-<div class="highlight"><pre><code class="language-matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
-<span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
-<span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
-	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
-
-<h2 id="section-7">思考问题</h2>
-
-<ol>
-  <li>如何推导正则化线性回归的正规方程解？</li>
-  <li>求解正则化线性回归的正规方程时，为何矩阵始终可逆？</li>
-  <li>如何选取合适的$\lambda$？</li>
-</ol>
-
-<h2 id="section-8">参考资料</h2>
-
-<ol class="bibliography"><li><span id="ng_ml_r_2014">[1]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
 ]]&gt;</content:encoded>
     </item>
     

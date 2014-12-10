@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：推荐系统</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：推荐系统</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-09">2014-12-09</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#推荐系统" title="推荐系统">推荐系统</a>&nbsp;
+  
+  <a href="/tags/#特征学习" title="特征学习">特征学习</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>推荐系统首先通过分析用户的使用历史获得用户的兴趣偏向，然后使用得到的用户兴趣偏向获得用户潜在感兴趣的产品或服务。鉴于产生推荐的方式不同，推荐系统通常可以分为以下三类<a href="#wu_thesis_bju_2010">[1]</a>：基于内容的过滤（content-based filtering）、协同过滤（collaborative filtering）和CBF与CF的混合过滤（hybrid filtering）。</p>
+
+<p>以电影的推荐系统为例，相关变量定义如下<a href="#ng_ml_rs_2014">[2]</a>：</p>
+
+<ul>
+  <li>$n_u$：用户数目；</li>
+  <li>$n_m$：电影数目；</li>
+  <li>$\mathbf r(i, j)$：若用户$j$对电影$i$进行了评分则赋值为1；</li>
+  <li>$\mathbf y^{(i, j)}$：用户$j$对电影$i$的评分；</li>
+  <li>$\boldsymbol\theta^{(j)}$：用户$j$的参数向量；</li>
+  <li>$\mathbf x^{(i)}$：电影$i$的特征向量；</li>
+  <li>$m^{(j)}$：用户$j$评价过的电影数目。</li>
+</ul>
+
+<h2 id="section">基于内容的过滤</h2>
+
+<p>基于内容的过滤（CBF）方法根据抽取出的用户和产品特征获得推荐。这类方法利用用户和产品的特征计算他们之间的匹配度，最终把匹配得最好的数个产品推荐给相应的用户。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png"><img src="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png" alt="用户对电影的评价" /></a><div class="caption">Figure 1:  用户对电影的评价 [<a href="/assets/images/2014-12-08-machine-learning-recommender-systems-recommender-data.png">PNG</a>]</div></div></div>
+
+<p>上图展示了用户对电影的评分$0\sim 5$，用属于爱情片（romance）和动作片（action）的概率表示电影特征。用户评分<code>?</code>表示用户$j$未对电影$i$作出评价，也就是$\mathbf r(i, j)=0$。</p>
+
+<p>如何估计用户未评价电影的得分呢？这时一个线性回归问题。利用电影特征向量$\mathbf x^{(i)}$和参数$\boldsymbol\theta^{(j)}$，可估计用户$j$对电影$i$的评分
+\begin{equation}
+\mathbf y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}。
+\label{eq:user-rating}
+\end{equation}</p>
+
+<p>因此，基于内容的的推荐需要学习参数$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$。假设已知$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$，学习算法采用代价函数
+\begin{equation}
+\begin{aligned}
+J\left(\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}\right) = &amp;{1\over 2}\sum_{j=1}^{n_u}\sum_{i:\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{j=1}^{n_u}\sum_{k=1}^n\left(\boldsymbol\theta_k^{(j)}\right)^2，
+\end{aligned}
+\label{eq:cf-learn-user-parameters}
+\end{equation}
+由于电影评分的总数目是固定的，省去平均化过程对最小化代价函数没有影响，只保留$1\over 2$方便求导，梯度下降法更新参数的规则为
+\begin{equation}
+\begin{aligned}
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)} &amp; (k=0)\\
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)}+\lambda\boldsymbol\theta_k^{(j)}\right)&amp;(k\neq 0)
+\end{aligned}。
+\end{equation}</p>
+
+<p>CBF就是把某用户评价高的电影推荐给该用户。为了实现推荐，需要计算用户对所有电影的评分，计算复杂度高。</p>
+
+<p>CBF方法具有两个主要的缺陷：</p>
+
+<ol>
+  <li>CBF需要预处理产品以得到代表它们的特征，但这种预处理在实际问题中往往非常困难；</li>
+  <li>CBF推荐给某个用户的产品往往和此用户已经消费过的产品很相似，它们无法发现用户并不熟悉但具有潜在兴趣的产品种类。 </li>
+</ol>
+
+<h2 id="section-1">协同过滤</h2>
+
+<p>协同过滤（CF）方法不需要事先获得产品或用户的特征，它们只依赖于用户过去的行为（如对产品的浏览、评价或购买等）。 通过用户过去的行为企业可以收集用户对产品的显式评分（如Netflix）或隐式评分（如Google新闻）。通常 CF方法首先分析已经收集到的用户-产品评分对中所呈现的用户与产品的相互作用，然后它们使用这些相互作用为用户产生个性化产品推荐。</p>
+
+<p>CF通常分为基于产品的（item-based）推荐和基于用户的（user-based）推荐。基于用户的推荐假设如果两个用户过去对产品有相似的喜好，那么他们现在对产品仍有相似的喜好；基于产品的推荐假设如果某个用户过去喜欢某种产品，那么该用户现在仍喜欢与此产品相似的产品。 </p>
+
+<p>在实际应用中，电影的特征向量往往也是未知的，需要通过学习得到。协同过滤不仅可以学习到用户对电影的评价，而且能学习到电影的特征。</p>
+
+<p>电影特征向量学习与用户评价模型参数估计\eqref{eq:cf-learn-user-parameters}类似，假设已知$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$，学习$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$采用的代价函数为
+\begin{equation}
+\begin{aligned}
+J\left(\mathbf x^{(1)}, \ldots, \mathbf x^{(n_m)}\right) = &amp;{1\over 2}\sum_{i=1}^{n_m}\sum_{i:\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{i=1}^{n_m}\sum_{k=1}^n\left(\mathbf x_k^{(i)}\right)^2
+\end{aligned}。
+\label{eq:cf-learn-item-features}
+\end{equation}</p>
+
+<p>根据\eqref{eq:cf-learn-user-parameters}和\eqref{eq:cf-learn-item-features}，同时学习$\mathbf x^{(1)}, \mathbf x^{(2)}, \ldots, \mathbf x^{(n_m)}$和$\boldsymbol\theta^{(1)},\boldsymbol\theta^{(2)},\dots,\boldsymbol\theta^{(n_u)}$可以采用代价函数
+\begin{equation}
+\begin{aligned}
+J\left(\mathbf x^{(1)},\ldots,\mathbf x^{(n_m)},\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}\right) = &amp;{1\over 2}\sum_{(i,j):\mathbf r(i, j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)^2 + \\
+&amp;{\lambda\over 2}\sum_{i=1}^{n_m}\sum_{k=1}^n\left(\mathbf x_k^{(i)}\right)^2+{\lambda\over 2}\sum_{j=1}^{n_u}\sum_{k=1}^n\left(\boldsymbol\theta_k^{(j)}\right)^2
+\end{aligned}，
+\label{eq:cf-learn-all-parameters}
+\end{equation}
+梯度下降法更新参数的规则为
+\begin{equation}
+\begin{aligned}
+\mathbf x_k^{(i)}&amp;:=\mathbf x_k^{(i)}-\alpha\left(\sum_{j:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\boldsymbol\theta_k^{(j)}+\lambda\mathbf x_k^{(i)}\right)\\
+\boldsymbol\theta_k^{(j)}&amp;:=\boldsymbol\theta_k^{(j)}-\alpha\left(\sum_{i:r(i,j)=1}\left(\left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)} - \mathbf y^{(i, j)}\right)\mathbf x_k^{(i)}+\lambda\boldsymbol\theta_k^{(j)}\right)
+\end{aligned}，
+\label{eq:grd-x-theta}
+\end{equation}
+由于电影的特征$\mathbf x$也通过学习得到，不再需要额外增加$\mathbf x_0^{(i)}=1$的项。</p>
+
+<blockquote>
+  <h4 id="section-2">协同过滤算法</h4>
+  <hr />
+
+  <ol>
+    <li>用小的随机变量初始化$\mathbf x^{(1)},\ldots,\mathbf x^{(n_m)},\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}$<sup id="fnref:how-item-feature-demension"><a href="#fn:how-item-feature-demension" class="footnote">1</a></sup>；</li>
+    <li>最小化代价函数\eqref{eq:cf-learn-all-parameters}，若采用梯度下降法，采用\eqref{eq:grd-x-theta}更新参数；</li>
+    <li>学习到参数后，利用\eqref{eq:user-rating}计算用户$j$对电影$i$的评分。</li>
+  </ol>
+</blockquote>
+
+<p>协同过滤算法是一个不断进化的过程，$\mathbf x^{(i)}$和$\boldsymbol\theta^{(j)}$相互作用，$\mathbf x^{(i)}$推动$\boldsymbol\theta^{(j)}$更新，$\boldsymbol\theta^{(j)}$也推动$\mathbf x^{(i)}$更新。</p>
+
+<p>当学习到电影的特征向量$\mathbf x^{(i)}$后，可以用$\left\lVert \mathbf x^{(i_1)}-\mathbf x^{(i_2)}\right\rVert$计算电影之间的相似度。通过电影的相似度，为用户推荐相关的电影，这就是基于物品的推荐方法。</p>
+
+<p>CF方法存在的主要问题：</p>
+
+<ol>
+  <li>冷启动：对于一个新用户，由于缺乏其对产品的评分，CF无法为其提供可靠的 产品推荐；对于一种新的产品，CF无法确定该把它推荐给哪些用户。</li>
+  <li>可扩展性：CF方法中可能涉及到数以百万计的用户为成千上万种产品提供的评分。传统的CF推荐算法通常需要计算每对用户或产品之间的相似度，然后把这些相似度存放至电脑的主存中以便高效地产生推荐。当用户或产品的数量较大时，计算复杂度很高。 </li>
+</ol>
+
+<h3 id="section-3">均值规范化</h3>
+
+<p>针对新用户的冷启动，该用户$j$从未对任何电影做出评价，协同过滤算法会得到用户的参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，如果估计该用户对电影的评分，也将全为$0$，这显然不符合逻辑。因此，需要对数据进行适当的处理，避免这样的情况发生。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png"><img src="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png" alt="均值规范化" /></a><div class="caption">Figure 2:  均值规范化 [<a href="/assets/images/2014-12-08-machine-learning-recommender-systems-mean-normalization.png">PNG</a>]</div></div></div>
+
+<p>定义用户对所有电影评价的均值为$\boldsymbol\mu$，重新对用户对电影的评分规范化
+\begin{equation}
+\mathbf y^{(i,j)} := \mathbf y^{(i,j)} - \boldsymbol\mu_i。
+\end{equation}
+规范化评分后，公式\eqref{eq:user-rating}计算用户$j$对电影$i$的评分规则变为
+\begin{equation}
+\mathbf y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\boldsymbol\mu_i，
+\end{equation}
+即使参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，估计新用户对电影的评分将是所有用户的平均分，合情合理。</p>
+
+<h3 id="section-4">思考问题</h3>
+
+<ul>
+  <li>如果系统已经有了部分标注的特征$\mathbf x$，如何融入到协同过滤算法中？</li>
+  <li>如何利用协同过滤提高广告点击率？</li>
+  <li>协同过滤的特征学习方法可以做传感器校准么？</li>
+  <li>协同过滤和广联规则挖掘有何联系？</li>
+  <li>协同过滤的特征学习可以解决盲源信号分离么？</li>
+</ul>
+
+<h2 id="section-5">混合过滤</h2>
+
+<p>混合过滤(HF)组合CBF和CF，以期在克服它们各自缺点的同时，融合它们特有的优势。通常组合的方式包括以下三种：</p>
+
+<ol>
+  <li>加权（weighted）组合：首先分别独立应用CBF和CF获得对产品的预测评分，然后组合它们的预测评分以便获得混合过滤的预测评分，最后根据混合预测评分为用户产生推荐列表。</li>
+  <li>混合（mixed）组合：首先分别独立应用CBF和CF产生各自的推荐列表，然后组合这两组推荐列表以便获得最终的推荐列表。</li>
+  <li>序贯（sequential）组合：当可用评分较少时使用CBF方法获得用户的特征并进行推荐；而当可用评分积聚到一定程度时，使用CF方法代替原来的CBF方法获得最终的推荐列表。 </li>
+</ol>
+
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"><li><span id="wu_thesis_bju_2010">[1]吴金龙, “Netflix Prize 中的协同过滤算法,” PhD thesis, 北京大学, 2010.</span>
+
+</li>
+<li><span id="ng_ml_rs_2014">[2]A. Ng, “Recommender Systems.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-7">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:how-item-feature-demension">
+      <p>如何确定电影的特征多少维合适呢？ <a href="#fnref:how-item-feature-demension" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-anomaly-detection" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/computational-advertising-foundation" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/machine-learning-recommender-systems" data-url="http://qianjiye.de/2014/12/machine-learning-recommender-systems" data-title="机器学习：推荐系统">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-anomaly-detection'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/computational-advertising-foundation'; --1> -->
+<!--         url = '/2014/12/computational-advertising-foundation'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-recommender-systems/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
