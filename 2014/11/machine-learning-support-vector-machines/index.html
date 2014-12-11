@@ -239,7 +239,13 @@ J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsym
   <li>将索引转换为$\{0, 1\}$特征向量，向量长度和词典中词汇数目一样，某个单词出现用$1$表示，否者用$0$表示。  </li>
 </ol>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="section-2">相关评论</h2>
+
+<p>事实上，支持向量机是一个具有很好数学基础的分类方法，但它本质上也只不过是一个简单的两层方法：第一层可以看作是一些单元集合（一个支持向量就是一个单元），这些单元通过核函数能够度量输入向量和每个支持向量的相似度；第二层则把这些相似度做了简单的线性累加。支持向量机第一层的训练和最简单的无监督学习基本一致：利用支持向量来表示训练样本。一般来讲，通过调整核函数的平滑性（参数）能在线性分类和模板匹配之间做出平衡。从这个角度来讲，核函数只不过是一种模板匹配方法。<a href="#lecun_dl_vs_svm_2014">[5]</a></p>
+
+<p>［@余凯_西二旗民工］很多有关SVM的教科书都有misleading: (1)KKT条件，support vectors，quadratic programing都是浮云；（2）kernel本身对理解学习问题有帮助，但实际工程上用处为0；（3）hinge loss只是众多可选项之一，logistic效果一点不差。［@老师木］做论文时迷信kernel，margin，认为这些机制和graphical model结合不就无敌了吗？等论文出来的结论是hinge loss对比无优越性。再翻vapnik的 统计学习的本质，原来他老人家也早做过对比试验，没发现svm相对于lr的优越性。看损失函数曲线，真看不出hinge loss比log loss好，只是hinge loss能得到稀疏解，看上去很美。当然理解这些优化理论本身会给人一些享受。数据线性可分的可能性随维度升高而变大，这是Thomas cover五六十年代得出的结论。要严格一点，数据线性可分和线性无关等价，张成维度高的线性空间所需的基多，其实就是VC维了。引入kernel就是引入非线性，使变换后的样例线性无关。Rbf核等价于无穷次多项式拟合，相对于有限的样例，没有不能分开的。<a href="#mu_svm_myth_2014">[6]</a></p>
+
+<h2 id="section-3">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_svm_2014">[1]A. Ng, “Support Vector Machines.” Coursera, 2014.</span>
 
@@ -260,9 +266,19 @@ J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsym
 
 [<a href="https://www.coursera.org/course/ml">Online</a>]
 
+</li>
+<li><span id="lecun_dl_vs_svm_2014">[5]Y. LeCun, “深度学习与支持向量机有什么联系？.” 52cs, 2014.</span>
+
+[<a href="http://www.52cs.org/?p=46">Online</a>]
+
+</li>
+<li><span id="mu_svm_myth_2014">[6]老师木, “SVM神话.” 52cs, 2014.</span>
+
+[<a href="http://www.52cs.org/?p=359">Online</a>]
+
 </li></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="section-4">脚注</h3>
 
 
 </section>

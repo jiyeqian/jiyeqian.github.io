@@ -120,6 +120,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-1">基于高斯（正态）分布的异常检测</h2>
 
+<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_ad_2014">[1]</a>。</p>
+
 <p>根据异常检测的思想，若$\mathbf x$出现的概率$p(\mathbf x) &lt; \varepsilon$，则认为$\mathbf x$是异常点。因此，异常检测的重要内容是估计概率密度函数。</p>
 
 <h3 id="section-2">一元高斯分布</h3>
@@ -261,6 +263,12 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 <p>由此可见，特征之间是否具有相关性并非利用多元还是一元高斯分布进行异常检测的唯一条件，在必要的时候需要借助一元高斯分布对具有相关性特征的数据集进行异常检测。</p>
 
 <h2 id="section-6">参考文献</h2>
+
+<ol class="bibliography"><li><span id="ng_ml_ad_2014">[1]A. Ng, “Anomaly detection.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
 
 <h3 id="section-7">脚注</h3>
 <div class="footnotes">

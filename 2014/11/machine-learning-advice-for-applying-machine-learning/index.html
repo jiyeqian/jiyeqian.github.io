@@ -262,7 +262,31 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 
 <p>Guo-Xun Yuan等撰文指出<a href="#yuan_ralll_2012">[3]</a>，对于大规模数据的应用而言，线性分类器可能获得和非线性分类器接近的性能，并且训练和测试的速度要快得多。</p>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="section-5">获取更多的数据</h2>
+
+<p>并非总是数据越多越好。在获取更多数据之前，先判断模型是否需要更多的数据。</p>
+
+<p>针对Low Bias（或High Variance）的模型，获取更多的数据才能提高模型的性能。如果是High Bias（或Low Variance）的模型，先增加特征（神经网络增加神经元），使模型是Low Bias（或High Variance）的，然后更多的数据才有助于提升模型性能。获取更多数据的方法通常有人工合成、手动搜集标柱等<a href="#ng_ml_ocr_2014">[4]</a>。</p>
+
+<p>针对OCR，可以将计算机字库中的标准字体叠加随机背景，然后进行形变，产生更多的样本集。一般而言，通过叠加高斯噪声增大样本集对提升性能帮助不大，除非需要解决的问题的就是高斯噪声下的OCR。</p>
+
+<h2 id="section-6">提升关键步骤性能</h2>
+
+<p>针对一个机器学习应用的流水线，找出影响性能的瓶颈，对症下药，才能更有效的改善性能<a href="#ng_ml_ocr_2014">[4]</a>。</p>
+
+<div class="image_line" id="figure-6"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png" alt="学习字符分割间隔的神奇方法" /></a><div class="caption">Figure 6:  学习字符分割间隔的神奇方法 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png">PNG</a>]</div></div></div>
+
+<p>对OCR问题而言，通常分为文字检测、字符分割、字符识别几个步骤。提升OCR性能，需要先定量分析究竟哪个步骤对性能的影响最大，然后有针对性的解决。</p>
+
+<div class="image_line" id="figure-7"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png" alt="Ceiling Analysis" /></a><div class="caption">Figure 7:  Ceiling Analysis [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png">PNG</a>]</div></div></div>
+
+<p>上图给出了通过Ceiling Analysis分析出关键问题的示例，系统的总体精度是$72\%$。如果手动标注（检测定位）待识别的文字区域（也就是让文字都正确定位），那么系统的精度会提升到$89\%$；如果继续将所有的字符都正确分割出，精度会提升到$90\%$。从而可得出，字符检测可以提升$17\%$的精度，字符识别可提升$10\%$的精度，首先从这两个地方改善性能，字符分割对性能的提升只有$1\%$，可先不考虑改进。</p>
+
+<div class="image_line" id="figure-8"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png" alt="人脸识别" /></a><div class="caption">Figure 8:  人脸识别 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png">PNG</a>]</div></div></div>
+
+<p>上图给出了对人脸识别的Ceiling Analysis，可以看出预处理的背景移除对提升性能影响不大，仅仅为$0.1\%$，这个步骤其实可以去掉。人脸检测才是影响性能的关键。</p>
+
+<h2 id="section-7">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_aaml_2014">[1]A. Ng, “Advice for applying machine learning.” Coursera, 2014.</span>
 
@@ -276,9 +300,14 @@ F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox
 </li>
 <li><span id="yuan_ralll_2012">[3]G.-X. Yuan, C.-H. Ho, and C.-J. Lin, “Recent Advances of Large-Scale Linear Classification,” <i>Proceedings of the IEEE</i>, vol. 100, no. 9, pp. 2584–2603, 2012.</span>
 
+</li>
+<li><span id="ng_ml_ocr_2014">[4]A. Ng, “Application example: Photo OCR.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
 </li></ol>
 
-<h3 id="section-6">脚注</h3>
+<h3 id="section-8">脚注</h3>
 
 <div class="footnotes">
   <ol>
