@@ -209,7 +209,7 @@ p(\mathbf x) = \prod_{j=1}^n p\left(\mathbf x_j;\boldsymbol\mu_j,\boldsymbol\sig
 
 <p>上图展示了通过函数$\log x$变换原始特征以满足高斯分布。也可以通过构造新的特征，比如数据中心监控，利用特征$\mbox{CPU load}$和$\mbox{network traffic}$构造新的特征$\frac{\mbox{CPU load}}{\mbox{network traffic}}$<sup id="fnref:why-create-new-feature"><a href="#fn:why-create-new-feature" class="footnote">1</a></sup>，使其在发生异常的时数据会变得很大或者很小。</p>
 
-<h3 id="section-5">多元高斯分布</h3>
+<h3 id="multi-gaussian-anormaly-detection">多元高斯分布</h3>
 
 <p>实际应用中，特征之间可能存在相关性，需要采用多元高斯分布概率密度函数进行异常检测。</p>
 
@@ -262,7 +262,9 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 
 <p>由此可见，特征之间是否具有相关性并非利用多元还是一元高斯分布进行异常检测的唯一条件，在必要的时候需要借助一元高斯分布对具有相关性特征的数据集进行异常检测。</p>
 
-<h2 id="section-6">参考文献</h2>
+<p>具有相关性的特征数据，经过基于PCA的坐标变换（参考维数约减部分关于PCA的内容）消除相关性，也可以用一元高斯分布的方法处理。</p>
+
+<h2 id="section-5">参考文献</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_ad_2014">[1]A. Ng, “Anomaly detection.” Coursera, 2014.</span>
 
@@ -270,7 +272,7 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="section-6">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:why-create-new-feature">

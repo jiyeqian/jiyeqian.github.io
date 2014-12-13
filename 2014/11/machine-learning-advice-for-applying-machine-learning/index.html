@@ -194,6 +194,22 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
   </tbody>
 </table>
 
+<blockquote>
+  <h4 id="example">Example</h4>
+  <hr />
+  <p>Suppose you have a dataset with n = 10 features and m = 5000 examples. After training your logistic regression classifier with gradient descent, you find that it has underfit the training set and does not achieve the desired performance on the training or cross validation sets. Which of the following might be promising steps to take? Check all that apply.</p>
+
+  <ul>
+    <li>[A] Use an SVM with a Gaussian Kernel. (By using a Gaussian kernel, your model will have greater complexity and can avoid underfitting the data.)</li>
+    <li>[B] Increase the regularization parameter $\lambda$.</li>
+    <li>[C] Try using a neural network with a large number of hidden units. (A neural network with many hidden units is a more complex (higher variance) model than logistic regression, so it is less likely to underfit the data.)</li>
+    <li>[D] Reduce the number of examples in the training set. (While you can improve accuracy on the training set by removing examples, doing so results in a worse model that will not generalize as well.)</li>
+    <li>[E] Create / add new polynomial features.</li>
+  </ul>
+
+  <p>Answer: A C E</p>
+</blockquote>
+
 <h2 id="performance-evaluation">性能评估</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_mlsd_2014">[2]</a>。</p>
