@@ -132,7 +132,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>对于梯度下降法，参数更新的方法是
 \begin{equation}
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}，
+\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}，
 \end{equation}
 这种方法叫做批量（batch）梯度下降法，参数更新需在整个训练集上计算一次，当$m$特别大的时候，速度就会很慢。随机梯度下降法（stochastic gradient descent）的更新方式是每次只用一个数据点更新参数。</p>
 
@@ -146,7 +146,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="footnote">1</a></sup> {  // 通常是$1\sim 10$轮迭。 <br />
  for $i := 1,\dots,m$ {
 \begin{equation}
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~(j=1,\ldots,n)
+\theta_j := \theta_j - \alpha\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}~~(j=1,\ldots,n)
 \end{equation}
  }  }。</li>
   </ol>
@@ -161,7 +161,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 
 <p>随机梯度法每次更新参数只需要一个数据点，批量梯度法每次更新参数只需要整个训练集参数。小批量（mini-batch）梯度下降法间于二者之间，每次更新参数利用训练集的一个小子集的$b$个数据点（通常$b=2,\ldots,100$）。小批量梯度下降法的参数更新规则为
 \begin{equation}
-\boldsymbol\theta_j := \boldsymbol\theta_j - \frac{\alpha}{b}\sum_{i=k}^{k+b-1}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}，
+\theta_j := \theta_j - \frac{\alpha}{b}\sum_{i=k}^{k+b-1}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}，
 \end{equation}
 其中$k=1,b+1,2b+1,3b+1,\ldots$。</p>
 
@@ -218,18 +218,18 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 <blockquote>
   <h4 id="mapreduce-1">基于MapReduce的批量梯度学习算法</h4>
   <hr />
-  <p>整个任务：$\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{400}\sum_{i=1}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$。</p>
+  <p>整个任务：$\theta_j := \theta_j - \alpha\frac{1}{400}\sum_{i=1}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$。</p>
 
   <p>分配任务：</p>
 
   <ul>
-    <li>Machine 1: $temp_j^{(1)}=\sum_{i=1}^{100}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
-    <li>Machine 2: $temp_j^{(2)}=\sum_{i={101}}^{200}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
-    <li>Machine 3: $temp_j^{(3)}=\sum_{i={201}}^{300}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$；</li>
-    <li>Machine 4: $temp_j^{(4)}=\sum_{i={301}}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}$。</li>
+    <li>Machine 1: $temp_j^{(1)}=\sum_{i=1}^{100}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$；</li>
+    <li>Machine 2: $temp_j^{(2)}=\sum_{i={101}}^{200}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$；</li>
+    <li>Machine 3: $temp_j^{(3)}=\sum_{i={201}}^{300}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$；</li>
+    <li>Machine 4: $temp_j^{(4)}=\sum_{i={301}}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$。</li>
   </ul>
 
-  <p>任务合并：$\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{400}\left(temp_j^{(1)}+temp_j^{(2)}+temp_j^{(3)}+temp_j^{(4)}\right)$。</p>
+  <p>任务合并：$\theta_j := \theta_j - \alpha\frac{1}{400}\left(temp_j^{(1)}+temp_j^{(2)}+temp_j^{(3)}+temp_j^{(4)}\right)$。</p>
 </blockquote>
 
 <p>随机梯度下降法每次只采用一个数据点，是一个串行过程，因此不适合用Mapreduce这样的并行化方法。</p>
@@ -257,7 +257,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 <span>
   <a  href="/2014/12/computational-advertising-foundation" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2014/12/machine-learning-feasibility-of-learning" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -295,6 +295,9 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning'; --1> -->
+<!--         url = '/2014/12/machine-learning-feasibility-of-learning'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->

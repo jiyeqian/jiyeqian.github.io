@@ -119,7 +119,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>\begin{equation}
 \begin{aligned}
 J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
-&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\boldsymbol\theta_j^2
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
 \end{aligned}，
 \label{eq:cf-logistic-regression-r}
 \end{equation}</p>
@@ -131,7 +131,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 <p>将Logistic回归的代价函数提取$\lambda\over m$，令$C={1\over\lambda}$，并用新的代价函数项替代Logistic回归的代价函数项，可得SVM的代价函数</p>
 
 <p>\begin{equation}
-J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\boldsymbol\theta_j^2 ，
+J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf x^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\theta_j^2 ，
 \label{eq:cf-svm-r}
 \end{equation}</p>
 
@@ -139,7 +139,7 @@ J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsym
 
 <p>\begin{equation}
 \begin{aligned}
-&amp; \min_\boldsymbol\theta\frac{1}{2}\sum_{j=1}^{n}\boldsymbol\theta_j^2 &amp; \\
+&amp; \min_\boldsymbol\theta\frac{1}{2}\sum_{j=1}^{n}\theta_j^2 &amp; \\
 &amp;
 \begin{aligned}
 \mbox{s.t.} &amp; ~~ \boldsymbol\theta^T\mathbf x^{(i)} \geq 1 &amp;\mbox{if} &amp; ~~ y^{(i)} = 1 \\
@@ -186,7 +186,7 @@ J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsym
 <p>核函数的作用相当于特征变换，SVM引入了核函数的代价函数为</p>
 
 <p>\begin{equation}
-J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\boldsymbol\theta_j^2。
+J(\boldsymbol\theta)  =  C\sum_{i=1}^{m}\left(y^{(i)}\mbox{cost}_1\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)+\left(1-y^{(i)}\right)\mbox{cost}_0\left(\boldsymbol\theta ^T\mathbf f^{(i)}\right)\right) + \frac{1}{2}\sum_{j=1}^n\theta_j^2。
 \label{eq:cf-svm-kernel-r}
 \end{equation}</p>
 

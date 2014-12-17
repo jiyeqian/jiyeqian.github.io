@@ -131,11 +131,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>神经网络前向传播，从输入到输出，逐层计算。上图所示<a href="#ng_ml_nnr_2014">[1, P. 23]</a>，假设权值矩阵$\Theta^{(l-1)}$已知，第$l$层可通过第$l-1$层和权值矩阵前向计算，</p>
 
 <p>\begin{equation}
-\mathbf a^{(l)} = g\left(\mathbf\Theta^{(l-1)}\mathbf a^{(l-1)}\right),
+\mathbf a^{(l)} = g\left(\boldsymbol\Theta^{(l-1)}\mathbf a^{(l-1)}\right),
 \label{eq:forward-propagation}
 \end{equation}</p>
 
-<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$\mathbf a_0^{(l)}= 1$的偏移（bias），$\mathbf\Theta^{(l-1)}$的行数为第$l$层神经元个数，列数为第$l-1$层神经元个数加$1$。</p>
+<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$a_0^{(l)}= 1$的偏移（bias），$\boldsymbol\Theta^{(l-1)}$的行数为第$l$层神经元个数，列数为第$l-1$层神经元个数加$1$。</p>
 
 <p>输出层（第$L$层）神经元的输出$\mathbf a^{(L)}$确定输入特征所属的类别。</p>
 
@@ -143,7 +143,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-2">反向参数估计</h2>
 
-<p>神经网络通过反向传播估计权值矩阵$\Theta$，参数估计仍然是最小化代价函数。通过BP算法（BackPropagation algorithm），输出层的误差向输入层逐层反向传播，利用梯度下降法，估计权值矩阵。</p>
+<p>神经网络通过反向传播估计权值矩阵$\boldsymbol\Theta$，参数估计仍然是最小化代价函数。通过BP算法（BackPropagation algorithm），输出层的误差向输入层逐层反向传播，利用梯度下降法，估计权值矩阵。</p>
 
 <h3 id="section-3">代价函数</h3>
 
@@ -151,39 +151,39 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>\begin{equation}
 \begin{aligned}
-J(\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \left(h_\Theta\left(\mathbf x^{(i)} \right) \right)_k + \left(1 - y_k^{(i)}\right)\log\left(1 -  \left(h_\Theta\left(\mathbf x^{(i)} \right) \right)_k \right) \right) \\ 
+J(\boldsymbol\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \left(h_{\boldsymbol\Theta}\left(\mathbf x^{(i)} \right) \right)_k + \left(1 - y_k^{(i)}\right)\log\left(1 -  \left(h_{\boldsymbol\Theta}\left(\mathbf x^{(i)} \right) \right)_k \right) \right) \\ 
 &amp;+\frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}\left(\Theta_{ji}^{(l)}\right)^2.
 \end{aligned}
 \label{eq:cf_nn}
 \end{equation}</p>
 
-<p>$h_\Theta (\mathbf x) \in \mathbb{R}^K$，$\left(h_\Theta (\mathbf x)\right)_k = \mathbf a_k^{(L)} $是输出层第$k$个神经元的输出，可由前向传播公式\eqref{eq:forward-propagation}计算；$s_l$表示第$l$层神经元的个数（不含bias unit）；神经网络有$L$层，$m$个样本，$K$个输出。</p>
+<p>$h_{\boldsymbol\Theta} (\mathbf x) \in \mathbb{R}^K$，$\left(h_{\boldsymbol\Theta} (\mathbf x)\right)_k = \mathbf a_k^{(L)} $是输出层第$k$个神经元的输出，可由前向传播公式\eqref{eq:forward-propagation}计算；$s_l$表示第$l$层神经元的个数（不含bias unit）；神经网络有$L$层，$m$个样本，$K$个输出。</p>
 
 <p>如果代价函数\eqref{eq:cf_nn}是非凸（non-convex）函数<sup id="fnref:if_no_global_minimum"><a href="#fn:if_no_global_minimum" class="footnote">1</a></sup>，理论上可能会陷入局部极值，事实上，即使不能保证取得全局极值，梯度下降法也能很好的最小化代价函数，使得神经网络工作良好<a href="#ng_ml_nnl_2014">[2, P. 30]</a>。</p>
 
-<p>对比<a href="/2014/10/machine-learning-regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$\mathbf a_0^{(l)} = 1$对应的系数$\mathbf \Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
+<p>对比<a href="/2014/10/machine-learning-regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$a_0^{(l)} = 1$对应的系数$\Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
 
 <h3 id="section-4">参数估计</h3>
 
-<p>通过最小化代价函数$\min_\Theta J(\Theta)$估计模型的所有参数矩阵$\Theta^{(l)}$，采用梯度下降法时需计算代价函数$J(\Theta)$及其梯度$\mathbf D_{ij}^{(l)}$，
+<p>通过最小化代价函数$\min_{\boldsymbol\Theta} J(\boldsymbol\Theta)$估计模型的所有参数矩阵$\boldsymbol\Theta^{(l)}$，采用梯度下降法时需计算代价函数$J(\boldsymbol\Theta)$及其梯度$D_{ij}^{(l)}$，
 \begin{equation*}
-\mathbf D_{ij}^{(l)} = \frac{\partial J(\Theta)}{\partial\Theta_{ij}^{(l)}}.
+D_{ij}^{(l)} = \frac{\partial J(\boldsymbol\Theta)}{\partial\Theta_{ij}^{(l)}}.
 \end{equation*}</p>
 
-<p>第$l$层的误差记为$\mathbf\delta^{(l)}$，$\mathbf\delta_j^{(l)}$表示第$l$层的第$j$个神经元的误差，对于$\mathbf a_0^{(l)} = 1$的bias节点$\boldsymbol\delta_0^{(l)}=0$。输出层（$l=L$）的误差为
+<p>第$l$层的误差记为$\mathbf\delta^{(l)}$，$\delta_j^{(l)}$表示第$l$层的第$j$个神经元的误差，对于$a_0^{(l)} = 1$的bias节点$\delta_0^{(l)}=0$。输出层（$l=L$）的误差为
 \begin{equation}
 \boldsymbol\delta^{(L)} = \mathbf a^{(L)} - \mathbf y, 
 \label{eq:error-bp-1}
 \end{equation}
-对于隐藏层$(l = L-1, L-2, \ldots, 2)$，误差通过权值矩阵$\Theta^{(l)}$从输出层向各隐藏层反向传播，
+对于隐藏层$(l = L-1, L-2, \ldots, 2)$，误差通过权值矩阵$\boldsymbol\Theta^{(l)}$从输出层向各隐藏层反向传播，
 \begin{equation*}
-\boldsymbol\delta^{(l)} = \left(\Theta^{(l)}\right)^T\boldsymbol\delta^{(l+1)} .* g’\left(\mathbf z^{(l)}\right), 
+\boldsymbol\delta^{(l)} = \left(\boldsymbol\Theta^{(l)}\right)^T\boldsymbol\delta^{(l+1)} .* g’\left(\mathbf z^{(l)}\right), 
 \end{equation*}</p>
 
-<p>其中，<code>.*</code>借用了Matlab中对应元素相乘的运算符，$\mathbf z^{(l)} = \Theta^{(l-1)}\mathbf a^{(l-1)}$，$\mathbf a^{(l)} = g\left(\mathbf z^{(l)}\right)$，$g’\left(\mathbf z^{(l)}\right) = \mathbf a^{(l)} .* \left(\mathbf 1 - \mathbf a^{(l)}\right)$<sup id="fnref:d-sigmoid-f"><a href="#fn:d-sigmoid-f" class="footnote">2</a></sup>，于是可得误差回传计算公式</p>
+<p>其中，<code>.*</code>借用了Matlab中对应元素相乘的运算符，$\mathbf z^{(l)} = \boldsymbol\Theta^{(l-1)}\mathbf a^{(l-1)}$，$\mathbf a^{(l)} = g\left(\mathbf z^{(l)}\right)$，$g’\left(\mathbf z^{(l)}\right) = \mathbf a^{(l)} .* \left(\mathbf 1 - \mathbf a^{(l)}\right)$<sup id="fnref:d-sigmoid-f"><a href="#fn:d-sigmoid-f" class="footnote">2</a></sup>，于是可得误差回传计算公式</p>
 
 <p>\begin{equation}
-\boldsymbol\delta^{(l)} = \left(\Theta^{(l)}\right)^T\boldsymbol\delta^{(l+1)} .* \mathbf a^{(l)} .* \left(\mathbf 1 - \mathbf a^{(l)}\right).
+\boldsymbol\delta^{(l)} = \left(\boldsymbol\Theta^{(l)}\right)^T\boldsymbol\delta^{(l+1)} .* \mathbf a^{(l)} .* \left(\mathbf 1 - \mathbf a^{(l)}\right).
 \label{eq:error-bp-2}
 \end{equation}</p>
 
@@ -203,10 +203,10 @@ J(\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \le
   <ol>
     <li>初始化输入层$\mathbf a^{(1)} = \mathbf x^{(k)}$，利用前向传播\eqref{eq:forward-propagation}，计算各层神经元$\mathbf a^{(l)}~~(l = 2,\ldots, L)$；  </li>
     <li>利用反向传播\eqref{eq:error-bp-1}和\eqref{eq:error-bp-2}，计算各层误差$\boldsymbol \delta^{(l)}~~(l = 2,\ldots, L)$；   </li>
-    <li>更新$\Delta_{ij}^{(l)}~~(l = 1,\ldots, L - 1)$，$\Delta_{ij}^{(l)} := \Delta_{ij}^{(l)} + \mathbf a_j^{(l)}\boldsymbol\delta_i^{(l+1)}$<sup id="fnref:vector_update_Delta"><a href="#fn:vector_update_Delta" class="footnote">5</a></sup>（$\mathbf a^{(l)}$也须补$\mathbf a_0^{(l)}=1$）；   </li>
-    <li>计算梯度$\mathbf D_{ij}^{(l)}~~(l = 1,\ldots, L - 1)$，
+    <li>更新$\Delta_{ij}^{(l)}~~(l = 1,\ldots, L - 1)$，$\Delta_{ij}^{(l)} := \Delta_{ij}^{(l)} + a_j^{(l)}\delta_i^{(l+1)}$<sup id="fnref:vector_update_Delta"><a href="#fn:vector_update_Delta" class="footnote">5</a></sup>（$\mathbf a^{(l)}$也须补$a_0^{(l)}=1$）；   </li>
+    <li>计算梯度$D_{ij}^{(l)}~~(l = 1,\ldots, L - 1)$，
 \begin{equation}
-\mathbf D_{ij}^{(l)} := \left\{
+D_{ij}^{(l)} := \left\{
 \begin{aligned}
 &amp; \frac{1}{m}\left(\Delta_{ij}^{(l)} + \lambda\Theta_{ij}^{(l)}\right) &amp; (j \neq 0) \\
 &amp; \frac{1}{m}\Delta_{ij}^{(l)} &amp; (j = 0)
@@ -388,7 +388,7 @@ J(\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(i)}\log \le
       <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$。若初始化为$0$，每层的所有神经元都一样<a href="#ng_ml_nnl_2014">[2, Pp. 25-26]</a>，每层只能学习到一种特征。$\epsilon$的取值方案参考课程习题脚注<a href="#ng_ml_nnl_pe_2014">[4, P. 7]</a>或<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>。 <a href="#fnref:initial_theta" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:vector_update_Delta">
-      <p>更新的向量形式$\Delta^{(l)} := \Delta^{(l)} + \boldsymbol\delta^{(l+1)}\left(\mathbf a^{(l)}\right)^T$。这一步是怎么来的？有何意义？ <a href="#fnref:vector_update_Delta" class="reversefootnote">&#8617;</a></p>
+      <p>更新的向量形式$\boldsymbol\Delta^{(l)} := \boldsymbol\Delta^{(l)} + \boldsymbol\delta^{(l+1)}\left(\mathbf a^{(l)}\right)^T$。这一步是怎么来的？有何意义？ <a href="#fnref:vector_update_Delta" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

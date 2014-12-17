@@ -129,11 +129,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <hr />
 
   <ol>
-    <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$\mathbf x_j^{(i)}:=\frac{\mathbf x_j^{(i)}-\boldsymbol \mu_j}{\boldsymbol \sigma_j}$（$\boldsymbol \mu_j$表示均值，$\boldsymbol \sigma_j$表示标准差）；</li>
+    <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$x_j^{(i)}:=\frac{x_j^{(i)}-\mu_j}{ \sigma_j}$（$\mu_j$表示均值，$\sigma_j$表示标准差）；</li>
     <li>计算协方差矩阵（covariance matrix）：$\Sigma = \frac{1}{m}\sum_{i=1}^m\mathbf x^{(i)}\left(\mathbf x^{(i)}\right)^T$；</li>
     <li>利用特征向量将$n$维向量$\mathbf x$映射到$k$维向量$\mathbf z$：
 \begin{equation}
-\mathbf z^{(i)} = U_{reduce}^T\mathbf x^{(i)}。
+\mathbf z^{(i)} = \mathbf U_{reduce}^T\mathbf x^{(i)}。
 \label{eq:pca-mapping}
 \end{equation}</li>
   </ol>
@@ -149,7 +149,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>从$k$维数据$\mathbf z$重构$n$维数据$\mathbf x$的方法为</p>
 
 <p>\begin{equation}
-\mathbf x_{approx}^{(i)} = U_{reduce}\mathbf z^{(i)}。
+\mathbf x_{approx}^{(i)} = \mathbf U_{reduce}\mathbf z^{(i)}。
 \label{eq:pca-reconstruction}
 \end{equation}</p>
 

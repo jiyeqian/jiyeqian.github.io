@@ -114,17 +114,17 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>线性回归（Linear Regression）的回归函数（hypothesis）为
 \begin{equation}
-h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T \mathbf x = \boldsymbol\theta_0\mathbf x_0 + \boldsymbol\theta_1\mathbf x_1 + \cdots  + \boldsymbol\theta_n\mathbf x_n
+h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T \mathbf x = \theta_0 x_0 + \theta_1 x_1 + \cdots  + \theta_n x_n
 \label{eq:hypothesis_linear_regression}
 \end{equation}
-其中，常数项$\mathbf x_0 = 1$。</p>
+其中，常数项$x_0 = 1$。</p>
 
 <p>代价函数（cost function）为
 \begin{equation}
 J(\boldsymbol\theta) = \frac{1}{2m}\sum_{i=1}^{m}{\left(h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)}\right)^2}
 \label{eq:cost_function_linear_regression}
 \end{equation}
-其中，$\mathbf x^{(i)} = \left(\mathbf x_1^{(i)}, \mathbf x_2^{(i)}, \cdots, \mathbf x_n^{(i)}\right)$， $m$为样本数量，$n$为特征数量。</p>
+其中，$\mathbf x^{(i)} = \left(x_1^{(i)}, x_2^{(i)}, \cdots, x_n^{(i)}\right)$， $m$为样本数量，$n$为特征数量。</p>
 
 <h2 id="section-1">参数估计</h2>
 
@@ -138,33 +138,33 @@ J(\boldsymbol\theta) = \frac{1}{2m}\sum_{i=1}^{m}{\left(h_{\boldsymbol\theta}\le
 
 <p>repeat until convergence {
 \[
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{\partial}{\partial\boldsymbol\theta_j}J(\boldsymbol\theta)~~~~~~(j = 0, 1, \ldots, n)
+\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\boldsymbol\theta)~~~~~~(j = 0, 1, \ldots, n)
 \]
 }<br />
 也就是<br />
 repeat until convergence {
 \[
-\boldsymbol\theta_j := \boldsymbol\theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)\mathbf x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
+\theta_j := \theta_j - \alpha\frac{1}{m}\sum_{i=1}^m\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right) x_j^{(i)}~~~~~~(j = 0, 1, \ldots, n)
 \]
 }  <br />
-每轮循环的时候同时更新$\boldsymbol\theta_j$（下图左边为正确更新方式。<em>不能</em>在同一轮循环中，先更新部分$\boldsymbol\theta_j$，再利用已更新的$\boldsymbol\theta_j$更新其它$\boldsymbol\theta_j$）。</p>
+每轮循环的时候同时更新$\theta_j$（下图左边为正确更新方式。<em>不能</em>在同一轮循环中，先更新部分$\theta_j$，再利用已更新的$\theta_j$更新其它$\theta_j$）。</p>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-19-linear_regression_1.png"><img src="/assets/images/2014-10-19-linear_regression_1.png" alt="同时更新" /></a><div class="caption">Figure 2:  同时更新 [<a href="/assets/images/2014-10-19-linear_regression_1.png">PNG</a>]</div></div></div>
 
 <p>特征的尺度如果相差太大，需要进行尺度规范化提高收敛速度，常用的规范化方法是
 \[
-\hat{\mathbf x}_i = \frac{\mathbf x_i - \mathbf x_{mean}}{\mathbf x_{max}-\mathbf x_{min}}
+\hat{x}_i = \frac{x_i - x_{mean}}{x_{max}-x_{min}}
 \]
 或者
 \[
-\hat{\mathbf x}_i = \frac{\mathbf x_i - \mathbf x_{mean}}{\mathbf x_{std}}
+\hat{x}_i = \frac{x_i - x_{mean}}{x_{std}}
 \]</p>
 
 <p><strong>注意事项：</strong>   </p>
 
 <ul>
   <li>线性回归的代价函数$J(\boldsymbol\theta)$不存在局部极值（local optima），存在全局极值；</li>
-  <li>将所有特征归一（feature scaling）到统一的尺度$-1\le \mathbf x_i\le 1$有助于提高梯度下降法的速度（不归一化$\mathbf x_0$）；</li>
+  <li>将所有特征归一（feature scaling）到统一的尺度$-1\le x_i\le 1$有助于提高梯度下降法的速度（不归一化$x_0$）；</li>
   <li>学习率$\alpha$太小收敛慢，太大可能错过极值点而不收敛，过大的$\alpha$甚至可能导致$J(\boldsymbol\theta)$不降反升；</li>
   <li>在迭代过程中保持$\alpha$不变，梯度下降步长也会自动减小，因为梯度会不断减小。</li>
 </ul>
@@ -228,9 +228,9 @@ repeat until convergence {
 
 <h2 id="section-5">多项式回归</h2>
 
-<p>构造多项式特征，借助多项式回归，可以利用线性回归模型解决非线性问题。当$\mathbf x_1 = x, \mathbf x_2 = x^2, \mathbf x_3 = x^3, \ldots $时，多项式回归（polynomial regression）\eqref{eq:hypothesis_polynomial_regression}可以直接转化为线性模型\eqref{eq:hypothesis_linear_regression}。
+<p>构造多项式特征，借助多项式回归，可以利用线性回归模型解决非线性问题。当$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $时，多项式回归（polynomial regression）\eqref{eq:hypothesis_polynomial_regression}可以直接转化为线性模型\eqref{eq:hypothesis_linear_regression}。
 \begin{equation}
-h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T\mathbf x = \boldsymbol\theta_0\mathbf x_0 + \boldsymbol\theta_1 x + \boldsymbol\theta_2 x^2 ＋ \boldsymbol\theta_3 x^3 \cdots  + \boldsymbol\theta_n x^n
+h_\boldsymbol\theta(\mathbf x) = \boldsymbol\theta^T\mathbf x = \theta_0 x_0 + \theta_1 x + \theta_2 x^2 ＋ \theta_3 x^3 \cdots  + \theta_n x^n
 \label{eq:hypothesis_polynomial_regression}
 \end{equation}</p>
 

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>Jiye Qian - Jiye's Homepage</title>
+    <title>机器学习：训练与测试</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -64,7 +64,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>Jiye's Homepage</h1>
+        <h1>机器学习：训练与测试</h1>
         </header>
         <nav id="real_nav">
         
@@ -82,120 +82,113 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         
         </nav>
         <article class="content">
-        <section class="post">
-<ul class="listing">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-18">2014-12-18</time>
+</span>
 
+ |
+<span class="categories">
+  categories
   
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
   
-    
-    <li class="listing-seperator">2011</li>
-  
-  <li class="listing-item">
-    <time datetime="2011-10-08">2011-10-08</time>
-    <a href="/2011/10/foreign-poems" title="外国诗歌赏析">外国诗歌赏析</a>
-    
-  </li>
+</span>
 
-  
-  
-  <li class="listing-item">
-    <time datetime="2011-09-19">2011-09-19</time>
-    <a href="/2011/09/stories" title="故事赏析">故事赏析</a>
-    
-  </li>
 
+ |
+<span class="tags">
+  tags
   
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
   
-    
-    <li class="listing-seperator">2010</li>
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
   
-  <li class="listing-item">
-    <time datetime="2010-12-28">2010-12-28</time>
-    <a href="/2010/12/acknowledgements-from-theses" title="那些论文，精彩的致谢">那些论文，精彩的致谢</a>
-    
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2010-12-28">2010-12-28</time>
-    <a href="/2010/12/doctor-oath" title="19世纪欧洲大学授予博士学位时宣誓誓词">19世纪欧洲大学授予博士学位时宣誓誓词</a>
-    
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2010-07-15">2010-07-15</time>
-    <a href="/2010/07/chinese-classical-poems" title="中国古代诗词赏析">中国古代诗词赏析</a>
-    
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2010-03-07">2010-03-07</time>
-    <a href="/2010/03/gpu-and-cg-programming" title="GPU编程与CG语言之阳春白雪下里巴人">GPU编程与CG语言之阳春白雪下里巴人</a>
-    
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2010-01-23">2010-01-23</time>
-    <a href="/2010/01/chinese-new-poems" title="中国现代诗歌赏析">中国现代诗歌赏析</a>
-    
-  </li>
-
-  
-  
-    
-    <li class="listing-seperator">2008</li>
-  
-  <li class="listing-item">
-    <time datetime="2008-10-27">2008-10-27</time>
-    <a href="/2008/10/key-to-success-in-modern-society" title="Key to Success in Modern Society">Key to Success in Modern Society</a>
-    
-  </li>
-
-  
-  
-  <li class="listing-item">
-    <time datetime="2008-07-26">2008-07-26</time>
-    <a href="/2008/07/lenna-romance" title="Lenna传奇">Lenna传奇</a>
-    
-  </li>
-
-</ul>
-
-<div id="post-pagination" class="paginator">
-
-  
-    
-    <a href="/"><前页</a>
-    
-  
-
-      
-      <a href="/">1</a>
-      
-
-    
-      
-      <span class="current-page">2</span>
-      
-    
-
-  
-    <span class="next disabled" >后页&gt;</span>
-  
-  (共29篇)
-</div>
-
+</span>
 
 </section>
+<section class="post">
+<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_tt_2014">[1]</a>。</p>
+
+<p>## </p>
+
+<p>学习的两个核心问题：</p>
+
+<ol>
+  <li>能确保$E_{out}(g)$接近$E_{in}(g)$么？</li>
+  <li>能够使$E_{in}(g)$足够小么？</li>
+</ol>
+
+<p>$\lvert\mathcal H\rvert=M$与上述两个问题有什么关系？</p>
+
+<p>太小的$M$使坏事儿发生的概率小，$E_{out}(g)$接近$E_{in}(g)$接近的概率大，但是不一定能找到很小的$E_{in}(g)$；太大的$M$使坏事儿发生的概率增大了。</p>
+
+<h2 id="section">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_tt_2014">[1]H.-T. Lin, “Lecture 5: Training versus Testing.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li></ol>
+
+<h3 id="section-1">脚注</h3>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-feasibility-of-learning" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/machine-learning-training-versus-testing" data-url="http://qianjiye.de/2014/12/machine-learning-training-versus-testing" data-title="机器学习：训练与测试">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
 
 
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-feasibility-of-learning'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-training-versus-testing/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
 
         </article>
       </div>

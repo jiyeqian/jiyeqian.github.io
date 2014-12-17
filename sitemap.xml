@@ -2,6 +2,24 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-training-versus-testing</loc>
+    
+    <lastmod>2014-12-18T04:32:08+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning</loc>
+    
+    <lastmod>2014-12-14T06:19:24+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2014/12/machine-learning-large-scale-machine-learning</loc>
     
     <lastmod>2014-12-10T19:51:50+08:00</lastmod>

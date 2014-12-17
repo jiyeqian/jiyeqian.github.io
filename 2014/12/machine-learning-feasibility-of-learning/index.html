@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：学习的可行性</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：学习的可行性</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-14">2014-12-14</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_fl_2014">[1]</a>。</p>
+
+<p>Learning is PAC-possible, if enough statistical data and finite $\left\lvert\mathcal H\right\rvert$.</p>
+
+<h2 id="section">基本定义</h2>
+
+<ul>
+  <li>未知的目标函数 $f:\mathcal X \rightarrow\mathcal Y$；</li>
+  <li>$\mathcal X$的分布$P$；</li>
+  <li>训练集 $\mathcal D:\left(\mathbf x_1,y_1\right),\ldots,\left(\mathbf x_N,y_N\right)$；</li>
+  <li>学习算法 $\mathcal A$；</li>
+  <li>假设集 $\mathcal H$。</li>
+</ul>
+
+<p>机器学习的任务就是找到$f$的近似$g$，使得$g\approx f$。利用学习算法$\mathcal A$，通过数据集$\mathcal D$，从$\mathcal H$中找到合适的$h$，当$g=h$有$g\approx f$。</p>
+
+<h2 id="hoeffding">Hoeffding不等式</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png" alt="估计罐中橙色弹珠的概率" /></a><div class="caption">Figure 1:  估计罐中橙色弹珠的概率 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png">PNG</a>]</div></div></div>
+
+<p>能用从罐中抽样出橙色弹珠的比率$\nu$，作为罐中橙色弹珠出现概率$\mu$的估计么？Hoeffding不等式给出了答案，
+\begin{equation}
+P\left[\lvert\nu-\mu\rvert&gt;\epsilon\right]\leq 2\exp\left(-2\epsilon^2N\right)，
+\end{equation}
+当$N$很大时，$\nu$和$\mu$可能很接近（PAC，Probably Approximately Correct）。一个大的$N$和松散的$\epsilon$约束，使得$\nu\approx\mu$。</p>
+
+<blockquote>
+  <h4 id="section-1">问题</h4>
+  <hr />
+  <p>设$\mu=0.4$，若从罐中抽$10$个弹珠得到$\nu\leq 0.1$。利用Hoeffding不等式估计发生这样情况的概率界。</p>
+
+  <p>答案：$0.33$（该概率的精确值是$0.05$）</p>
+
+  <p>这个问题等价于：已知一次伯努利实验成功的概率为$0.4$，求$10$重伯努利实验中，最多出现一次成功的概率。
+\begin{equation*}
+\begin{aligned}
+P(最多一次成功) = &amp;P(10次都不成功) + P(仅有1次成功）\\
+    = &amp; 0.6^{10}+  C(1,10) \times 0.4^1 \times 0.6^9\\
+    = &amp;0.0464 \approx 0.05
+\end{aligned}
+\end{equation*}</p>
+</blockquote>
+
+<h2 id="section-2">概率与机器学习</h2>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png" alt="从概率到机器学习" /></a><div class="caption">Figure 2:  从概率到机器学习 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png">PNG</a>]</div></div></div>
+
+<p>如上图所示，将罐中的弹珠当作$\mathcal X$。对某个特定的假设$h$，若$h(\mathbf x)\neq f(\mathbf x)$则将弹珠涂为橙色，若$h(\mathbf x)= f(\mathbf x)$则将弹珠涂为绿色。将机器学习的可行性用概率问题进行判断。</p>
+
+<p>对特定的$h$，抽样出来$N$个数据的in-sample误差定义为
+\begin{equation}
+E_{in}\left(h\right) = {1\over N}\sum_{n=1}^N\left[\left[h\left(x_n\right)\neq y_n\right]\right]，
+\end{equation}
+$\mathcal X$中数据的out-sample误差定义为
+\begin{equation}
+E_{out}\left(h\right) = \varepsilon_{\mathbf x\sim P}\left[\left[h\left(\mathbf x\right)\neq f\left(\mathbf x\right)\right]\right]，
+\end{equation}
+于是得到类似的Hoeffding不等式
+\begin{equation}
+P\left[\left\lvert E_{in}\left(h\right)-E_{out}\left(h\right)\right\rvert&gt;\epsilon\right]\leq 2\exp\left(-2\epsilon^2N\right)。
+\end{equation}</p>
+
+<p>由上式可知，对所有$N$和$\epsilon$而言，在不需要知道$E_{out}\left(h\right)$、$f$和$P$的前提下，$E_{in}\left(h\right)=E_{out}\left(h\right)$近似可能正确。也就是说，如果$E_{in}\left(h\right)\approx E_{out}\left(h\right)$并且$E_{in}\left(h\right)$很小，可以得出$E_{out}\left(h\right)$也很小，进而可以得出对于同样分布$P$的数据$h\approx f$。</p>
+
+<p>如果令$g=h$，上述情况是否表明学习是可行的了呢？事实上，上述情况只是验证了某个特定的$h$，机器学习是要从$\mathcal H$中找出满足条件的$h$作为$g$，还没有$h$选择的过程。</p>
+
+<h2 id="section-3">从概率到机器学习</h2>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png" alt="多个假设" /></a><div class="caption">Figure 3:  多个假设 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png">PNG</a>]</div></div></div>
+
+<p>不好的数据集（BAD Data）是指，存在$h$使得该数据集上$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png" alt="不好的数据集" /></a><div class="caption">Figure 4:  不好的数据集 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png">PNG</a>]</div></div></div>
+
+<p>上图中$\mathcal D_i$表示有$N$个数据点的数据集，<code>BAD</code>标注的是不好的数据集。每个$h_j$对应行上出现<code>BAD</code>的概率通过Hoeffding定理限定，对某个$h_j$，$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大的概率是受约束的。Hoeffding定理保证的是每行不会有太多的<code>BAD</code>。</p>
+
+<p>如果某个数据集$\mathcal D_i$上，对至少一个$h_j$是不好的数据集，也就是上图中的列至少存在一个<code>BAD</code>，那么在该数据集上，不能通过算法$\mathcal A$自由的从假设$\mathcal H$中选择$h$，因为总存在$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大的情况。机器学习期望的是算法$\mathcal A$能在好的数据集（例如$\mathcal D_{1126}$）上自由的选择$h$。</p>
+
+<p>根据上图可推算，选到不好数据集的概率
+\begin{equation}
+P_{\mathcal D}\left[\mbox{BAD } \mathcal D\right] \leq 2M\exp\left(-2\epsilon^2N\right)，
+\end{equation}
+由此可见，选到不好数据集的概率是受限的，也就是可能找到好数据集，使得可以利用它自由在假设$\mathcal H$中选择。</p>
+
+<p>如果$\left\lvert\mathcal H\right\rvert=M$有限，并且$N$足够大，使得可以通过$\mathcal A$选择到$g$，选择$E_{in}\left(h_m\right)$最小的那个$h_m$作为$g$，使得$E_{out}\left(g\right)\approx E_{in}\left(g\right)$。如果$\mathcal A$找到一个$g$使得$E_{in}\left(g\right)\approx 0$，PAC保证了$E_{out}\left(g\right)\approx 0$，也就是说学习是可行的。</p>
+
+<p>因此，学习的可行性通过以下两条保证：</p>
+
+<ol>
+  <li>可以通过$E_{in}\left(h\right)$估计$E_{out}\left(h\right)$；</li>
+  <li>存在数据集$\mathcal D$，使得可以在$\mathcal H$中自由的选择$h$。</li>
+</ol>
+
+<p>满足这两条的前提条件是假设集$\mathcal H$中候选$h$的数目$M$有限且$\mathcal D$中数据点数量$N$足够大。</p>
+
+<p>如果$M=\infty$，咋办？</p>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_fl_2014">[1]H.-T. Lin, “Lecture 4: Feasibility of Learning.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li></ol>
+
+<h3 id="section-5">脚注</h3>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-large-scale-machine-learning" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/machine-learning-training-versus-testing" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/machine-learning-feasibility-of-learning" data-url="http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning" data-title="机器学习：学习的可行性">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-large-scale-machine-learning'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-training-versus-testing'; --1> -->
+<!--         url = '/2014/12/machine-learning-training-versus-testing'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-feasibility-of-learning/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

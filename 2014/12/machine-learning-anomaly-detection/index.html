@@ -154,11 +154,11 @@ p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma
   <hr />
 
   <ol>
-    <li>选择能指示异常的特征$\mathbf x_i$；</li>
-    <li>利用公式\eqref{eq:likehood-mu-sigma}，估计每维特征的均值和方差$\boldsymbol\mu_1,\ldots,\boldsymbol\mu_n,\boldsymbol\sigma_1^2,\ldots,\boldsymbol\sigma_n^2$；</li>
+    <li>选择能指示异常的特征$\mathbf x_j$；</li>
+    <li>利用公式\eqref{eq:likehood-mu-sigma}，估计每维特征的均值和方差$\mu_1,\ldots,\mu_n,\sigma_1^2,\ldots,\sigma_n^2$；</li>
     <li>计算$\mathbf x$的概率，
 \begin{equation}
-p(\mathbf x) = \prod_{j=1}^n p\left(\mathbf x_j;\boldsymbol\mu_j,\boldsymbol\sigma_j^2\right)，
+p(\mathbf x) = \prod_{j=1}^n p\left(x_j;\mu_j,\sigma_j^2\right)，
 \end{equation}
 通过特征分量概率密度函数乘积计算$\mathbf x$概率密度，需满足特征之间相互独立的假设；</li>
     <li>若$p(\mathbf x) &lt; \varepsilon$，则$\mathbf x$为异常点。</li>
