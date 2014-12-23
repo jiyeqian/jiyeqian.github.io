@@ -4,8 +4,172 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2014-12-23T20:58:27+08:00</lastbuilddate>
+    <lastbuilddate>2014-12-24T16:22:59+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>机器学习：VC维</title>
+      <link href="http://qianjiye.de/2014/12/machine-learning-the-vc-dimension" />
+      <pubdate>2014-12-24T05:02:45+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2014/12/machine-learning-the-vc-dimension</guid>
+      <content:encoded>&lt;![CDATA[<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_vcd_2014">[1]</a>。</p>
+
+<h2 id="section">学习的可行性</h2>
+
+<p>当$N\geq 2,k\geq 3$时，成长函数满足约束条件
+\begin{equation}
+m_{\mathcal H}(N)\leq B(N,k)=\sum_{i=0}^{k-1}\binom{N}{i}\leq N^{k-1}，
+\end{equation}
+由此可见，断点$k$是判断成长函数大小的重要条件。当$k\geq 3$时，才能使用上界约束$N^{k-1}$。</p>
+
+<p>对于$\forall g=\mathcal A(\mathcal D)\in\mathcal H$和足够大的数据集$\mathcal D$，当$k\geq 3$时，
+\begin{equation}
+\begin{aligned}
+P_{\mathcal D}\left[\lvert E_{in}(g)-E_{out}(g)\rvert&gt;\epsilon\right] \leq &amp; P_{\mathcal D}\left[\exists h\in\mathcal H\mbox{ s.t. }\lvert E_{in}(h)-E_{out}(h)\rvert&gt;\epsilon\right] \\
+\leq &amp; 4m_{\mathcal H}(2N)\exp\left(-{1\over 8}\epsilon^2N\right)\\
+\leq &amp; 4(2N)^{k-1}\exp\left(-{1\over 8}\epsilon^2N\right)。
+\end{aligned}
+\end{equation}</p>
+
+<p>由此可知，学习是可行的，前提是满足下列条件：</p>
+
+<ol>
+  <li>好的假设集$\mathcal H$：$m_{\mathcal H}(N)$的断点是$k$；</li>
+  <li>好的数据集$\mathcal D$：$N$足够大；</li>
+  <li>好的演算法$\mathcal A$：$\mathcal A$能够选到一个$g$使得$E_{in}(g)$很小。</li>
+</ol>
+
+<p>其中，前两个条件可能得到$E_{out}\approx E_{in}$。</p>
+
+<h2 id="vc">VC维</h2>
+
+<p>$\mathcal H$的VC维$d_{VC}是指$满足$m_{\mathcal H}(N)=2^N$的最大$N$，VC维也满足：</p>
+
+<ul>
+  <li>$\mathcal H$可以打碎的最多输入数据个数；</li>
+  <li>$d_{VC}=\mbox{‘minmum }k\mbox{‘} - 1$。</li>
+</ul>
+
+<p>若$N\leq d_{VC}$，$\mathcal H$能够打碎某些$N$个点的数据子集；若$k &gt; d_{VC}$，$k$必是$\mathcal H$的断点；如果$N\geq 2, d_{VC}\geq 2$， 显然有
+\begin{equation}
+m_{\mathcal H}(N)\leq N^{d_{VC}}。
+\end{equation}</p>
+
+<p>1维空间的正射线和正区间的$d_{VC}$分别是$1$和$2$；2维空间感知器的$d_{VC}=3$；2维空间凸包的$d_{VC}=\infty$。</p>
+
+<p>有限$d_{VC}$的$\mathcal H$就是好的假设集。若$d_{VC}$有限，存在$g$使得$E_{out}(g)\approx E_{in}(g)$，并且不需要受学习算法$\mathcal A$、输入数据分布$P$和目标函数$f$的制约。</p>
+
+<blockquote>
+  <h4 id="section-1">练习题</h4>
+  <hr />
+  <p>若存在$N$个点的数据集不能被$\mathcal H$打碎，仅仅根据这条信息，可以得到关于$d_{VC}(H)$的什么结论？       </p>
+
+  <p>［A］$d_{VC}(\mathcal H)&gt;N$；［B］$d_{VC}(\mathcal H)=N$；［C］$d_{VC}(\mathcal H)&lt;N$；［D］无法得出以上任何结论。</p>
+
+  <p>答案：［D］。</p>
+</blockquote>
+
+<h2 id="vc-1">感知器的VC维</h2>
+
+<p>如何证明$d$维空间感知器的VC维$d_{VC}=d+1$？若能证明$d_{VC}\geq d+1$且$d_{VC}\leq d+1$，那么就可以得到$d_{VC}=d+1$。</p>
+
+<blockquote>
+  <h4 id="dvcgeq-d1">练习题：以下哪个表明$d_{VC}\geq d+1$？</h4>
+  <hr />
+
+  <p>［A］存在$d+1$个输入能被打碎； <br />
+［B］任何$d+1$个输入都能被打碎； <br />
+［C］存在$d+2$个输入不能被打碎； <br />
+［D］任何$d+2$个输入都不能被打碎。</p>
+
+  <p>答案：［A］。</p>
+</blockquote>
+
+<p>上面练习表明，只要在$d$维空间找到一组$d+1$个点的数据集能被感知器打碎（$d+1$个点的所有二分法都能实现），那么就证明了$d_{VC}\geq d+1$。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-dvc1.png"><img src="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-dvc1.png" alt="d维空间的一组数据点" /></a><div class="caption">Figure 1:  d维空间的一组数据点 [<a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-dvc1.png">PNG</a>]</div></div></div>
+
+<p>这组数据点如上图所示，红色框中的数据点表述了上方$2$维空间3个点的坐标。最左边1列灰色的$1$，表示感知器的偏移常量。</p>
+
+<p>易知，$\mathbf X$是$(d+1)\times (d+1)$的方正，且所有列线性无关（秩为$d+1$）。因此，$\mathbf X$可逆，且是$d+1$维线性空间的基。若$\mathbf y$表示任意一种二分类结果（$\mathbf X$可被打碎），那么这样的二分类方式$\mathbf w=\mathbf X^{-1}\mathbf y$总存在，因此$d_{VC}\geq d+1$。</p>
+
+<blockquote>
+  <h4 id="dvcleq-d1">练习题：以下哪个表明$d_{VC}\leq d+1$？</h4>
+  <hr />
+
+  <p>［A］存在$d+1$个输入能被打碎； <br />
+［B］任何$d+1$个输入都能被打碎； <br />
+［C］存在$d+2$个输入不能被打碎； <br />
+［D］任何$d+2$个输入都不能被打碎。</p>
+
+  <p>答案：［D］。</p>
+</blockquote>
+
+<p>上面练习表明，若$d$维空间任意$d+2$个点的数据集均不能被感知器打碎，那么就证明了$d_{VC}\leq d+1$。</p>
+
+<p>若$d$维空间中任取$d+2$个点，都存在一种不能实现的二分类方法，那么这$d+2$个点就不能被打碎。</p>
+
+<p>补上常数项$1$。因为$d+2$个$d+1$维的向量必定线性相关，任意一个均可用其它$d+1$个表示，那么
+\[
+\mathbf x_{d+2} = a_1\mathbf x_{1} + a_2\mathbf x_{2} + \ldots a_{d+1}\mathbf x_{d+1}，
+\]
+其中，$a_i(i=1,2,\dots,d+1)$不全为$0$。上式两边同时乘以$\mathbf w^T$可得
+\[
+\mathbf w^T\mathbf x_{d+2} = a_1\mathbf w^T\mathbf x_{1} + a_2\mathbf w^T\mathbf x_{2} + \ldots a_{d+1}\mathbf w^T\mathbf x_{d+1}。
+\]
+若要所有二分法都可行，上式不论右边$\mathbf x_i(i=1,2,\dots,d+1)$取何值，左边$\mathbf w^T\mathbf x_{d+2}$既可取正又可取负。采用反证法，找到一组左边$\mathbf x_i(i=1,2,\dots,d+1)$的取值，使得$\mathbf w^T\mathbf x_{d+2}$只能取正（或者负）。</p>
+
+<p>假设这$d+2$个点能被打碎，一定存在一种分类情况使得$\mathbf w^T\mathbf x_i(i=1,2,\dots,d+1)$的符号与$a_i(i=1,2,\dots,d+1)$的符号相同，那么$a_i\mathbf w^T\mathbf x_i(i=1,2,\dots,d+1)&gt;0$，这样$\mathbf w^T\mathbf x_{d+2}$就只能取正。那么，这$d+2$个点不能被打碎，与假设矛盾。因此，$d$维空间中，任意$d+2$个点都存在不可能二分类的情况，也就是$d$维空间中的任何$d+2$个输入都不能被打碎，那么$d_{VC}\leq d+1$。</p>
+
+<h2 id="vc-2">理解VC维</h2>
+
+<p>VC维可以理解为假设集$\mathcal H$的自由度，它衡量了$\mathcal H$的分类能力。$d_{VC}$可以直观的认为是$\mathcal H$可调节参数的个数（但不总是这样）。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-vc-freedom.png"><img src="/assets/images/2014-12-23-machine-learning-the-vc-dimension-vc-freedom.png" alt="VC维相当于自由度" /></a><div class="caption">Figure 2:  VC维相当于自由度 [<a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-vc-freedom.png">PNG</a>]</div></div></div>
+
+<p>如上图所示，正射线只有一个可以调节参数，自由度是$1$，$d_{VC}=1$；正区间有两个可以调节参数，自由度是$2$，$d_{VC}=2$。感知器的参数向量$\mathbf w = (w_0,w_1,\ldots,w_d)$是$d+1$维（有$d+1$个可自由调节参数）和它的$d_{VC}$一致。</p>
+
+<p>过原点的感知器的$d_{VC}=d$，因为少了一个自由度。</p>
+
+<p>对于机器学习是否可行，有两个判断指标：（1）$E_{out}(g)\approx E_{in}(g)$？（2）$E_{in}(g)$是否足够小。$d_{VC}$（或$M$）可以作为这两个条件的评价指标。若$d_{VC}$较小，更大概率保证$E_{out}(g)\approx E_{in}(g)$，但$\mathcal H$的能力较弱，可选择的假设较少，难以使$E_{in}(g)$较小；若$d_{VC}$较大，$\mathcal H$的能力较强，可选择的假设较多，更容易使$E_{in}(g)$较小，但$E_{out}(g)\approx E_{in}(g)$的概率偏低。</p>
+
+<h2 id="vc-3">应用VC维</h2>
+
+<p>对于$\forall g=\mathcal A(\mathcal D)\in \mathcal H$和大的数据集$\mathcal D$，当$d_{VC}\geq 2$时，坏事儿发生概率的$VC$界为
+\begin{equation}
+P_{\mathcal D}\left[\left\lvert E_{in}(g)-E_{out}(g)\right\rvert&gt;\epsilon\right]\leq 4(2N)^{d_{VC}}\exp\left(-{1\over 8}\epsilon^2N\right)。
+\end{equation}
+令$\delta=4(2N)^{d_{VC}}\exp\left(-{1\over 8}\epsilon^2N\right)$，可得$\Omega(N,\mathcal H,\delta)=\epsilon=\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\right)}$，那么可得$E_{out}(g)$的上界
+\begin{equation}
+E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\right)}。
+\end{equation}</p>
+
+<p>$\Omega(N,\mathcal H,\delta)$用于度量模型的复杂度，揭示了限定$E_{out}(g)$和$E_{in}(g)$差异的方法。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-vc-message.png"><img src="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-vc-message.png" alt="VC维与误差的关系" /></a><div class="caption">Figure 3:  VC维与误差的关系 [<a href="/assets/images/2014-12-23-machine-learning-the-vc-dimension-pla-vc-message.png">PNG</a>]</div></div></div>
+
+<p>上图展示了VC维和误差的关系，随着VC维$d_{VC}$的增加，模型越来越复杂，但是误差并非越来越小，$E_{out}(g)$和$E_{in}(g)$的差异却越来越大，发生坏事儿的概率变大了。由此可见，强大的$\mathcal H$（$d_{VC}$大）不总是好事儿，要选择合适的$d_{VC}^*$。</p>
+
+<p>给定指标$\epsilon=0.1,\delta=0.1,d_{VC}=3$，可以计算大约需要$N\approx 30000$的数据集能满足要求。</p>
+
+<p>理论上需要$N\approx 10000d_{VC}$才能满足要求，实际上通常只需$N\approx 10d_{VC}$，这是因为在推导$VC$界的时候，不等式不断放大，得到的是一个很宽松的上界。</p>
+
+<p>$d_{VC}$虽是一个宽松的值，但可认为对所有模型都<strong>同样一致</strong>宽松，因此在模型之间比较时，仍有重要作用。</p>
+
+<h2 id="dvc">$d_{VC}$容易计算吗？</h2>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_vcd_2014">[1]H.-T. Lin, “Lecture 7: The VC Dimension.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li></ol>
+
+<h3 id="section-3">脚注</h3>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>机器学习：不均衡数据问题</title>
@@ -95,6 +259,10 @@
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2014/12/machine-learning-theory-of-generalization</guid>
       <content:encoded>&lt;![CDATA[<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_tg_2014">[1]</a>。</p>
+
+<p>泛化是指在训练集上得到的模型可以推广到整个数据集，也就是$E_{out}\approx E_{in}$，就是要使坏事$\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon$发生的概率足够小。</p>
+
+<p>Generelization: $E_{out}\approx E_{in}$ possible, if $m_{\mathcal H}(N)$ breaks somewhere and $N$ large enough.</p>
 
 <h2 id="mmathcal-hn">最大可能的$m_{\mathcal H}(N)$</h2>
 
@@ -290,9 +458,9 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 
 <p>对于2维平面上的$N$个点，$\mathcal X\in \mathbb R^2$，若$\mathcal H$是凸包，那么如上图所示，$m_{\mathcal H}(N)=2^N$。</p>
 
-<p>如果$N$个点的所有二分法都能被$\mathcal H$实现，就称这$N$个点被$\mathcal H$打碎（shatter）。也就是，若$m_{\mathcal H}(N)=2^N$，当且仅当$N$个点能被打碎。</p>
+<p>如果某$N$个点数据集（也就是空间中存在按某种方式排列的$N$个点）的所有二分法都能被$\mathcal H$实现，就称这$N$个点被$\mathcal H$打碎（shatter）。也就是，若$m_{\mathcal H}(N)=2^N$，当且仅当某$N$个点的数据集能被打碎。</p>
 
-<p>如果不存在$k$个点能够被$\mathcal H$打碎，就称$k$是$\mathcal H$的一个断点（break point），也就是对任意$k$个点$m_{\mathcal H}(k) &lt; 2^k$<sup id="fnref:break-point-explain"><a href="#fn:break-point-explain" class="footnote">1</a></sup>。如果$k$是断点，那么$k,k+1,k+2,\ldots$都是断点，通常研究最小的断点$k$。</p>
+<p>如果不存在$k$个点的数据集能够被$\mathcal H$打碎，就称$k$是$\mathcal H$的一个断点（break point），也就是对任意$k$个点$m_{\mathcal H}(k) &lt; 2^k$<sup id="fnref:break-point-explain"><a href="#fn:break-point-explain" class="footnote">1</a></sup>。如果$k$是断点，那么$k,k+1,k+2,\ldots$都是断点，通常研究最小的断点$k$。若$k$是最小断点，那么一定存在一个$k-1$点的数据集能被$\mathcal H$打碎。</p>
 
 <h2 id="section-3">成长函数与断点</h2>
 
@@ -1133,97 +1301,6 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
     </li>
   </ol>
 </div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：聚类</title>
-      <link href="http://qianjiye.de/2014/12/machine-learning-clustering" />
-      <pubdate>2014-12-08T02:38:59+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/12/machine-learning-clustering</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">聚类简介</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png"><img src="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png" alt="几种聚类方法的比较" /></a><div class="caption">Figure 1:  几种聚类方法的比较 [<a href="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png">PNG</a>]</div></div></div>
-
-<p>聚类是一种非监督学习方法。上图是scikit-learn中几种聚类方法的比较<a href="#scikit-learn">[1]</a>。</p>
-
-<h2 id="k-means">$k$-means聚类</h2>
-
-<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_c_2014">[2]</a>。</p>
-
-<p>$k$-means算法主要包含两步：为样本分配类标签以及修改类中心。</p>
-
-<blockquote>
-  <h4 id="k-means-1">$k$-means算法</h4>
-  <hr />
-  <p>随机初始化$K$个类中心$\boldsymbol\mu_1,\boldsymbol\mu_2,\ldots,\boldsymbol\mu_K\in\mathbb R^n$。 <br />
-重复 {</p>
-
-  <ol>
-    <li>for $i=1$ to $m$：将$\mathbf x^{(i)}$的类别标签$c^{(i)}$设为最靠近的类中心标签，$c^{(i)}=\arg\min_{k=1}^K\left\lVert\mathbf x^{(i)}-\boldsymbol\mu_k\right\rVert^2$；</li>
-    <li>for $k=1$ to $K$：重新计算类中心$\boldsymbol\mu_k$。</li>
-  </ol>
-
-  <p>}</p>
-</blockquote>
-
-<p>$k$-means聚类的代价函数为</p>
-
-<p>\begin{equation}
-J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}-\boldsymbol\mu_{c^{(i)}}\right\rVert^2，
-\label{eq:cf-k-means}
-\end{equation}</p>
-
-<p>该代价函数通常也称为distortion function。</p>
-
-<p>从代价函数可以看出，$k$-means算法的第1步是通过修改类标签$c^{(i)}$最小化代价函数，第2步是通过修改类中心$\boldsymbol\mu_k$最小化代价函数。</p>
-
-<p>从$k$-means算法可知，初始化类中心$\boldsymbol\mu_k$和确定类别数$k$影响着算法的性能。</p>
-
-<h3 id="boldsymbolmuk">初始化类中心$\boldsymbol\mu_k$</h3>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png" alt="不恰当的类中心初始化导致局部极值" /></a><div class="caption">Figure 2:  不恰当的类中心初始化导致局部极值 [<a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png">PNG</a>]</div></div></div>
-
-<p>随机初始化类中心的方法通常是，随机从样本中选取$K$个点作为类中心。为了避免陷入局部极致，通常会进行多轮初始化，选择代价函数值最小的作为聚类结果。</p>
-
-<blockquote>
-  <h4 id="k-means-2">随机初始化选择$k$-means的类中心</h4>
-  <hr />
-  <p>For i = 1 to 100 {</p>
-
-  <ol>
-    <li>随机初始化类中心$\boldsymbol\mu_k$；</li>
-    <li>$k$-means算法得到$c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K$；</li>
-    <li>计算代价函数\eqref{eq:cf-k-means}。</li>
-  </ol>
-
-  <p>}  <br />
-选择代价函数值最小的聚类结果输出。</p>
-</blockquote>
-
-<p>当$K=2,\ldots,10$时，这种方法的代价函数变化明显，当$K$很大（$K&gt;100$）时，代价函数可能没有明显的变化。</p>
-
-<h3 id="k">确定类别数$K$</h3>
-
-<p>通过不停增大类别数$K$，选择代价函数曲线拐点对应的类别数，如下图左所示。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png" alt="确定类别数的elbow method" /></a><div class="caption">Figure 3:  确定类别数的elbow method [<a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png">PNG</a>]</div></div></div>
-
-<p>有时，代价函数曲线不存在拐点，如上图右所示。还可以根据$k$-means应用的具体场景，选择聚类数目，比如要制作XS、S、M、L、XL几种规格的服装，当然用类别数$K=5$来划分人的身高体重。</p>
-
-<h2 id="section-1">参考文献</h2>
-
-<ol class="bibliography"><li><span id="scikit-learn">[1]F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
-
-</li>
-<li><span id="ng_ml_c_2014">[2]A. Ng, “Clustering.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<h3 id="section-2">脚注</h3>
 ]]&gt;</content:encoded>
     </item>
     
