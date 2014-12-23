@@ -112,11 +112,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">聚类简介</h2>
 
-<p>聚类是一种非监督学习方法。</p>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png"><img src="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png" alt="几种聚类方法的比较" /></a><div class="caption">Figure 1:  几种聚类方法的比较 [<a href="/assets/images/2014-12-07-machine-learning-clustering-plot_cluster_comparison_1.png">PNG</a>]</div></div></div>
+
+<p>聚类是一种非监督学习方法。上图是scikit-learn中几种聚类方法的比较<a href="#scikit-learn">[1]</a>。</p>
 
 <h2 id="k-means">$k$-means聚类</h2>
 
-<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_c_2014">[1]</a>。</p>
+<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_c_2014">[2]</a>。</p>
 
 <p>$k$-means算法主要包含两步：为样本分配类标签以及修改类中心。</p>
 
@@ -149,7 +151,7 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 
 <h3 id="boldsymbolmuk">初始化类中心$\boldsymbol\mu_k$</h3>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png" alt="不恰当的类中心初始化导致局部极值" /></a><div class="caption">Figure 1:  不恰当的类中心初始化导致局部极值 [<a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png" alt="不恰当的类中心初始化导致局部极值" /></a><div class="caption">Figure 2:  不恰当的类中心初始化导致局部极值 [<a href="/assets/images/2014-11-27-machine-learning-k-means-local-minimum.png">PNG</a>]</div></div></div>
 
 <p>随机初始化类中心的方法通常是，随机从样本中选取$K$个点作为类中心。为了避免陷入局部极致，通常会进行多轮初始化，选择代价函数值最小的作为聚类结果。</p>
 
@@ -174,13 +176,16 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 
 <p>通过不停增大类别数$K$，选择代价函数曲线拐点对应的类别数，如下图左所示。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png" alt="确定类别数的elbow method" /></a><div class="caption">Figure 2:  确定类别数的elbow method [<a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png" alt="确定类别数的elbow method" /></a><div class="caption">Figure 3:  确定类别数的elbow method [<a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png">PNG</a>]</div></div></div>
 
 <p>有时，代价函数曲线不存在拐点，如上图右所示。还可以根据$k$-means应用的具体场景，选择聚类数目，比如要制作XS、S、M、L、XL几种规格的服装，当然用类别数$K=5$来划分人的身高体重。</p>
 
 <h2 id="section-1">参考文献</h2>
 
-<ol class="bibliography"><li><span id="ng_ml_c_2014">[1]A. Ng, “Clustering.” Coursera, 2014.</span>
+<ol class="bibliography"><li><span id="scikit-learn">[1]F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
+
+</li>
+<li><span id="ng_ml_c_2014">[2]A. Ng, “Clustering.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ml">Online</a>]
 

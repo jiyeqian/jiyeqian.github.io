@@ -187,13 +187,13 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 
 <p>如果$N$个点的所有二分法都能被$\mathcal H$实现，就称这$N$个点被$\mathcal H$打碎（shatter）。也就是，若$m_{\mathcal H}(N)=2^N$，当且仅当$N$个点能被打碎。</p>
 
-<p>如果$k$个点不能被$\mathcal H$打碎，就称$k$是$\mathcal H$的一个断点（break point）。显然，$m_{\mathcal H}(k)=2^k$。如果$k$是断电，那么$k,k+1,k+2,\ldots$都是断点，通常研究最小的断点$k$。</p>
-
-<p>正射线和正区间判别函数的最小断点分别是$2$和$3$，2维感知器的最小断点是$4$，凸包没有断点。</p>
+<p>如果不存在$k$个点能够被$\mathcal H$打碎，就称$k$是$\mathcal H$的一个断点（break point），也就是对任意$k$个点$m_{\mathcal H}(k) &lt; 2^k$<sup id="fnref:break-point-explain"><a href="#fn:break-point-explain" class="footnote">1</a></sup>。如果$k$是断点，那么$k,k+1,k+2,\ldots$都是断点，通常研究最小的断点$k$。</p>
 
 <h2 id="section-3">成长函数与断点</h2>
 
 <p>$m_{\mathcal H}(N)=O\left(N^{k-1}\right)$。</p>
+
+<p>正射线和正区间判别函数的最小断点分别是$2$和$3$，2维感知器的最小断点是$4$，凸包没有断点<sup id="fnref:break-point-example"><a href="#fn:break-point-example" class="footnote">2</a></sup>。</p>
 
 <h2 id="section-4">参考资料</h2>
 
@@ -204,6 +204,16 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 </li></ol>
 
 <h3 id="section-5">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:break-point-explain">
+      <p>若数据集有$N$个点，断点是$k$（$N\geq k$），那么从$N$个点中任意抽取$k$个点，这$k$个点都不能被打碎。也就是说$N$个点的数据集中，不存在$k$个点的子集满足$m_{\mathcal H}(k)=2^k$。 <a href="#fnref:break-point-explain" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:break-point-example">
+      <p>对于正射线当$m_{\mathcal H}(N)=N+1=2^N$时，有$N=1$，故断点为$1+1=2$，其它情况计算类似…… <a href="#fnref:break-point-example" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
 </section>
 <section align="right">
@@ -211,7 +221,7 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 <span>
   <a  href="/2014/12/machine-learning-feasibility-of-learning" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2014/12/machine-learning-theory-of-generalization" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -249,6 +259,9 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-theory-of-generalization'; --1> -->
+<!--         url = '/2014/12/machine-learning-theory-of-generalization'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
