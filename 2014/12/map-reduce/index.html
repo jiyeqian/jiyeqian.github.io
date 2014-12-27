@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>Map-Reduce Essential</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>Map-Reduce Essential</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2014-12-25">2014-12-25</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#大数据" title="大数据">大数据</a>&nbsp;
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="map-reduce">为什么需要Map-Reduce？</h2>
+
+<h3 id="cluster">集群（cluster）</h3>
+
+<p>在传统的单节点模型中，CPU从内存读取数据，当内存空间不够时，再从磁盘读取数据，当磁盘空间不够了呢？</p>
+
+<p>即使磁盘空间足够，磁盘带宽是50MB/sec，若从磁盘读取200TB数据，大约需要46+天，完全没法接受呀！</p>
+
+<p>需要这样一个集群……</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-cluster-architecture.png"><img src="/assets/images/2014-12-24-map-reduce-cluster-architecture.png" alt="集群架构" /></a><div class="caption">Figure 1:  集群架构 [<a href="/assets/images/2014-12-24-map-reduce-cluster-architecture.png">PNG</a>]</div></div></div>
+
+<h3 id="map-reduce-1">Map-Reduce解决集群带来的挑战</h3>
+
+<h4 id="node-failures">一、节点故障（node failures）</h4>
+
+<p>如果单个服务器能坚持3年（1000天），1000台服务器的集群平均每天大概发生1次故障，1M台服务器的集群平均每天大概发生1000次故障。节点故障时亟须解决的问题：</p>
+
+<ul>
+  <li>如何存储数据，即使节点故障时仍可用？</li>
+  <li>若正在进行大规模计算，如果节点发生故障该如何处理？</li>
+</ul>
+
+<p>Map-Reduce在多个节点冗余存储，保证数据持久存储和获取。</p>
+
+<h4 id="network-bottleneck">二、网络瓶颈（network bottleneck）</h4>
+
+<p>Map-Reduce的计算靠近数据端，减少数据移动。</p>
+
+<h4 id="section">三、分布式程序编写困难</h4>
+
+<p>Map-Reduce简单的编程模型，隐藏了复杂的细节。</p>
+
+<h2 id="map-reduce-2">Map-Reduce简介</h2>
+
+<h3 id="redundant-storage-infrastructure">冗余存储架构（redundant storage infrastructure）</h3>
+
+<p>冗余存储架构采用分布式文件系统（distributed file system），例如：Google GFS、Hadoop HDFS。典型的应用是处理大文件，一次存储多次读取追加更新。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-cluster-architecture-data-chunk.png"><img src="/assets/images/2014-12-24-map-reduce-cluster-architecture-data-chunk.png" alt="数据分块存储" /></a><div class="caption">Figure 2:  数据分块存储 [<a href="/assets/images/2014-12-24-map-reduce-cluster-architecture-data-chunk.png">PNG</a>]</div></div></div>
+
+<p>数据分块（chuck）存储在多台服务器。如上图所示，一个大文件分割成C0～C5共6块，每块在多台服务器存储备份。每台存储服务器也做计算用，使得计算靠近存储端。</p>
+
+<h3 id="computational-model">计算模型（computational model）</h3>
+
+<blockquote>
+  <h4 id="map-reduce-3">Map-Reduce计算模型</h4>
+  <hr />
+  <p>输入：key-value对的集合     <br />
+程序实现以下两个模块：</p>
+
+  <ol>
+    <li>Map(k,v) —&gt; &lt;k’, v’&gt;*
+      <ul>
+        <li>输入一个key-value对，输出多个key-value对；</li>
+        <li>对所有的(k,v)对，只有一个Map函数。 </li>
+      </ul>
+    </li>
+    <li>Reduce(k’, &lt;v’&gt;*) —&gt; &lt;k’, v”&gt;
+      <ul>
+        <li>所有的具有相同k’的v’都被reduce到一起；</li>
+        <li>对同一个k’，只有一个Reduce函数。</li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<p>Map-Reduce的计算模型分为Map和Reduce两步，Map分布式处理任务，Reduce合并任务。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-computational-model.png"><img src="/assets/images/2014-12-24-map-reduce-computational-model.png" alt="Map-Reduce单词计数实例" /></a><div class="caption">Figure 3:  Map-Reduce单词计数实例 [<a href="/assets/images/2014-12-24-map-reduce-computational-model.png">PNG</a>]</div></div></div>
+
+<p>上图展示了用Map-Reduce统计超大规模文件中单词出现次数，红色横线将不同节点的实现分割开。对于Map节点，所有相同单词都输出到同一个节点，比如the都在第二个节点。为了保证效率，Map-Reduce都采用的是顺序读取。</p>
+
+<h3 id="scheduling-and-data-flow">调度与数据流（scheduling and data flow）</h3>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-diagram.png"><img src="/assets/images/2014-12-24-map-reduce-diagram.png" alt="Map-Reduce结构" /></a><div class="caption">Figure 4:  Map-Reduce结构 [<a href="/assets/images/2014-12-24-map-reduce-diagram.png">PNG</a>]</div></div></div>
+
+<p>Map-Reduce的数据流：</p>
+
+<ul>
+  <li>输入输出存储在分布式文件系统；</li>
+  <li>中间结果存储在本地文件系统；</li>
+  <li>输出通常再输入到另一个Map-Reduce任务。</li>
+</ul>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-parallel.png"><img src="/assets/images/2014-12-24-map-reduce-parallel.png" alt="Map-Reduce的并行实现" /></a><div class="caption">Figure 5:  Map-Reduce的并行实现 [<a href="/assets/images/2014-12-24-map-reduce-parallel.png">PNG</a>]</div></div></div>
+
+<p>上图是Map-Reduce分布式系统的并行实现，Partition Function部分采用Hash算法，将相同key的value映射到同一节点。</p>
+
+<p>Map-Reduce环境的主要任务：</p>
+
+<ul>
+  <li>分割输入数据；</li>
+  <li>多机之间程序调度；</li>
+  <li>执行按key分组操作；</li>
+  <li>处理节点故障；</li>
+  <li>处理多机间通信。</li>
+</ul>
+
+<p>Map-Reduce的实现分为Master节点、Map节点和Reduce节点，Master节点的任务：</p>
+
+<ul>
+  <li>管理每个任务状态：空闲（idle，等待处理）、处理中（in-progress）、completed（结束）；</li>
+  <li>将空闲任务安排到可用节点；</li>
+  <li>当Map任务结束，向Master发送其R中间文件（存放在本地文件系统中）的位置和大小，每个reducer一个中间文件；</li>
+  <li>Master推送信息到Reducer；</li>
+  <li>Master周期性ping检测节点是否出故障。</li>
+</ul>
+
+<p>Map-Reduce系统有M个Map任务和R个Reduce任务，M比集群中的节点数目大得多，R通常比M小。</p>
+
+<h2 id="map-reduce-4">Map-Reduce的改进</h2>
+
+<h4 id="section-1">一、合并操作</h4>
+
+<div class="image_line" id="figure-6"><div class="image_card"><a href="/assets/images/2014-12-24-map-reduce-mapper-combiner.png"><img src="/assets/images/2014-12-24-map-reduce-mapper-combiner.png" alt="合并操作" /></a><div class="caption">Figure 6:  合并操作 [<a href="/assets/images/2014-12-24-map-reduce-mapper-combiner.png">PNG</a>]</div></div></div>
+
+<p>通常在一个Map任务中会产生多个相同key的(k,v)对，在Map节点合并这些相同的key可有效降低网络流量，如上图所示。合并函数通常与Reduce函数相同。</p>
+
+<p>合并时需要注意Reduce函数是否支持在Map节点的合并操作，也就是合并操作会不会改变Reduce的结果。</p>
+
+<h4 id="section-2">二、改写分割函数</h4>
+
+<p>例如：系统采用的默认分割函数<code>hash(key) mod R</code>可以改写为<code>hash(hostname(URL)) mod R</code>，使同一个主机的url输出到相同的文件。</p>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2014/12/machine-learning-the-vc-dimension" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2014/12/map-reduce" data-url="http://qianjiye.de/2014/12/map-reduce" data-title="Map-Reduce Essential">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-the-vc-dimension'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/map-reduce/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2014 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
