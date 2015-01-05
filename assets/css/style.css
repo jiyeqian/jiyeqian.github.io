@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Galdeano|Electrolize|Cuprum);
+/* @import url(http://fonts.googleapis.com/css?family=Galdeano|Electrolize|Cuprum); */
 ::-webkit-scrollbar {
 	-webkit-appearance: none;
 	width: 8px;
@@ -12,7 +12,7 @@
 }
 
 
-body{font-size:14px;word-spacing:1px;margin-left:auto;margin-right:auto;font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;color:#000000;background-color:#ffffff;}
+body{font-size:14px;word-spacing:1px;margin-left:auto;margin-right:auto;font-family:"Galdeano","Tahoma","Verdana","Georgia","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;color:#000000;background-color:#ffffff;}
 *{padding:0;margin:0;border:none;outline:none;}
 a{color:#dd0000;text-decoration:none;}
 a:hover{color:#333333;text-decoration:underline;}
@@ -31,14 +31,14 @@ ol ul, ul ol, ul ul, ol ol{margin-left:1em;}
 .pageNav{font-weight:bold;font-size:17px;}
 .pageNavInvalid{font-weight:bold;font-size:17px;color:#D0D0D0;}
 header{padding:.5em 0;border-bottom:1px solid #cccccc;}
-nav{font-family:"Electrolize",sans-serif;font-size:1.1em;text-transform:uppercase;float:left;margin-left:-12em;width:9em;text-align:right;}
+nav{font-family:"Electrolize","Tahoma","Georgia",sans-serif;font-size:1.1em;text-transform:uppercase;float:left;margin-left:-12em;width:9em;text-align:right;}
 nav a{display:block;padding:.7em 1em;color:#000000;}
 nav a:hover{background-color:#ff0000;text-decoration:none;color:#f9f9f9;-webkit-transition:color .2s linear;}
 .post{padding:.5em 0em;}
-h1{font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.6em;color:#000;}
-h2{font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.4em;color:#111;}
-h3{font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.2em;color:#222;}
-h4{font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1em;color:#333;}
+h1{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.6em;color:#000;}
+h2{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.4em;color:#111;}
+h3{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.2em;color:#222;}
+h4{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1em;color:#333;}
 embed,object,iframe{display:block;margin:4px auto;}
 .gist{font-size:12px;line-height:1.6;}
 footer{text-align:center;display:block;border-top:1px dashed #CCC;}

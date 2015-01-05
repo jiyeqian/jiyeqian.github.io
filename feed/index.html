@@ -4,15 +4,134 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2014-12-27T18:44:12+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-05T16:35:16+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
+      <title>支持向量机：线性支持向量机（1）</title>
+      <link href="http://qianjiye.de/2015/01/svm-linear-svm" />
+      <pubdate>2015-01-04T04:57:13+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/svm-linear-svm</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">最佳判别界</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png" alt="最佳判别界" /></a><div class="caption">Figure 1:  最佳判别界 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png">PNG</a>]</div></div></div>
+
+<p>对相同的数据集，PLA可能得到不同的判别界，如上图所示，那条判别界最好呢？</p>
+
+<ul>
+  <li>测量是有误差的，能容忍误差越大的分界线越好，如上图上排所示，灰色的圆半径越大表示对误差的容忍度越大。噪声是导致过拟合的主要原因，对误差的容忍度越好，过拟合的可能性越低。</li>
+  <li>判别界能膨胀得越胖越鲁棒，如上图下排所示。</li>
+</ul>
+
+<p>根据上两条标准，最右的判别界最佳。判别界的胖瘦程度称为边界（margin），最大边界的判别界最佳，也就是离判别界距离最近的点离判别界距离越大越好，</p>
+
+<p>\begin{equation*}
+\begin{aligned}
+\max\limits_{\mathbf w} &amp;\quad\mbox{margin}(\mathbf w)\\
+\mbox{subject to}&amp; \quad\mbox{every } y_n\mathbf w^T\mathbf x_n &gt; 0\\
+&amp;\quad\mbox{margin}(\mathbf w)=\min\limits_{n=1,\ldots,N}\mbox{distance}(\mathbf x_n, \mathbf w)。
+\end{aligned}
+\end{equation*}</p>
+
+<p>$y_n\mathbf w^T\mathbf x_n &gt; 0$表示点被正确的分类，$\mbox{margin}(\mathbf w)$的定义可以保证判别界在两类的“中间”，不会偏向任何一边。</p>
+
+<h2 id="section-1">支持向量机</h2>
+
+<p>与线性感知器的定义不同，定义$b=\mathbf w_0, \mathbf w=\left[\mathbf w_1, \ldots, \mathbf w_d\right]^T$，$\mathbf x=\left[\mathbf x_1, \ldots, \mathbf x_d\right]^T$。点到判别界的距离可表示为
+\begin{equation*}
+\mbox{distance}(\mathbf x, b, \mathbf w)=\frac{1}{\lVert\mathbf w\rVert}\left\lvert\mathbf w^T\mathbf x + b\right\rvert，
+\end{equation*}
+因此可得最大间隔
+\begin{equation*}
+\begin{aligned}
+\max\limits_{b, \mathbf w} &amp;\quad\mbox{margin}(b, \mathbf w)\\
+\mbox{subject to}&amp; \quad\mbox{every } y_n\left(\mathbf w^T\mathbf x_n + b\right) &gt; 0\\
+&amp;\quad\mbox{margin}(b, \mathbf w)=\min\limits_{n=1,\ldots,N}\frac{1}{\lVert\mathbf w\rVert}y_n\left(\mathbf w^T\mathbf x_n + b\right)。
+\end{aligned}
+\end{equation*}
+通过系数缩放，总可以做到$\min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1$，最大间隔问题可以转化为等价问题
+\begin{equation*}
+\begin{aligned}
+\max\limits_{b, \mathbf w} &amp;\quad{1\over\lVert\mathbf w\rVert}\\
+\mbox{subject to}&amp; \min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1。
+\end{aligned}
+\end{equation*}
+上述条件$\min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1$可以用等价的条件$y_n\left(\mathbf w^T\mathbf x_n + b\right) \geq 1$代替。如果仅仅是$y_n\left(\mathbf w^T\mathbf x_n + b\right) &gt; 1$而无法取“$=$”，那么不等式两边可以除以大于$1$的系数，使得条件仍然成立，$\mathbf w$除以大于$1$的系数后，${1\over\lVert\mathbf w\rVert}$会更大。因此，标准形式的最优化是
+\begin{equation}
+\begin{aligned}
+\min\limits_{b, \mathbf w} &amp;\quad{1\over 2}\mathbf w^T\mathbf w\\
+\mbox{subject to}&amp; \quad y_n\left(\mathbf w^T\mathbf x_n + b\right) \geq 1\mbox{ for all }n。
+\end{aligned}
+\end{equation}</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png" alt="支持向量" /></a><div class="caption">Figure 2:  支持向量 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png">PNG</a>]</div></div></div>
+
+<p>通过求解可以发现，只有部分点对解有作用，如上图边界上方框内的点，这些点称为<strong>候选</strong>支持向量（support vector）。支持向量机就是利用支持向量学习“最胖”判别界。</p>
+
+<h2 id="section-2">二次规划求解</h2>
+
+<p>求解最佳判别界的是一个二次规划问题（QP，quadratic programming）。二次规划的标准形式为
+\begin{equation*}
+\begin{aligned}
+\mbox{optimal} &amp;\quad\mathbf u\leftarrow QP(\mathbf Q, \mathbf p, \mathbf A, \mathbf c) \\
+\min\limits_{\mathbf u} &amp;\quad{1\over 2}\mathbf u^T\mathbf Q\mathbf u + \mathbf p^T\mathbf u\\
+\mbox{subject to}&amp;\quad\mathbf a_m^T\mathbf u\geq c_m\mbox{ for }m=1,2,\ldots,M。
+\end{aligned}
+\end{equation*}
+支持向量机利用二次规划求解时的目标函数参数为
+\begin{equation*}
+\mathbf u =<br />
+\begin{bmatrix}
+b\\
+\mathbf w
+\end{bmatrix};
+\mathbf Q = 
+\begin{bmatrix}
+0 &amp;\mathbf 0_d^T\\
+\mathbf 0_d &amp;\mathbf I_d
+\end{bmatrix};
+\mathbf p=\mathbf 0_{d+1}
+，
+\end{equation*}
+约束条件参数为
+\begin{equation*}
+\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1;M=N。
+\end{equation*}</p>
+
+<p>这里所讲的支持向量机叫做线性hard-margin支持向量机，其中hard-margin是指所有的点能被正确分类。</p>
+
+<h2 id="section-3">最大边界的价值</h2>
+
+<p>正则化（regularization）通过约束条件$\mathbf w^T\mathbf w\leq C$最小化$E_{in}$，支持向量机通过$E_{in}=0$等约束条件最小化$\mathbf w^T\mathbf w$。因此，支持向量机也可以看作是一种<strong>特殊的正则化方法</strong>。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png" alt="无法打碎3个点的情况" /></a><div class="caption">Figure 3:  无法打碎3个点的情况 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png">PNG</a>]</div></div></div>
+
+<p>对于最大边界算法$\mathcal A_{\rho}$，脚标表示分界线的宽度要大于$\rho$。当$\rho = 0$时就是PLA，它可以打碎2维平面的3个输入点；若$\rho＝1.126$，如上图所示，无法打碎3个点。</p>
+
+<p>如果加入了$\rho$条件的限制，可能的二分类情况少了，可认为<strong>VC维更小了，有更好的泛化性能</strong>。对于算法的VC维，有数据依赖的VC维比没有依赖的要低，$d_{VC}\left(\mathcal A_\rho\right)&lt;d_{VC}(\mathcal H)$，有数据依赖意味着加入了跟多的约束条件。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png" alt="单位圆上的数据" /></a><div class="caption">Figure 4:  单位圆上的数据 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png">PNG</a>]</div></div></div>
+
+<p>当$\mathcal X$是上图所示半径为$R$的单位圆上点时，
+\begin{equation}
+d_{VC}\left(\mathcal A_\rho\right)\leq\min\left({R^2\over \rho^2},d\right)+1\leq d+1。
+\end{equation}</p>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png" alt="各种判别界的对比" /></a><div class="caption">Figure 5:  各种判别界的对比 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png">PNG</a>]</div></div></div>
+
+<p>几种情况的判别界对比如上图所示，large-margin的判别界简单且数量较少，有特征变换$\Phi$的判别界较复杂但是数量较多。</p>
+
+<p>较少的判别界对$d_{VC}$和泛化有利，复杂的判别界可能得到更好的$E_{in}$。非线性支持向量机同时具备大边界的判别界和采用多种特征变换$\Phi$，因此判别界较少而且比较复杂，兼顾了这两方面的优点。</p>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
       <title>Map-Reduce Essential</title>
-      <link href="http://qianjiye.de/2014/12/map-reduce" />
+      <link href="http://qianjiye.de/2014/12/map-reduce-essential" />
       <pubdate>2014-12-25T02:08:25+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/12/map-reduce</guid>
+      <guid>http://qianjiye.de/2014/12/map-reduce-essential</guid>
       <content:encoded>&lt;![CDATA[<h2 id="map-reduce">为什么需要Map-Reduce？</h2>
 
 <h3 id="cluster">集群（cluster）</h3>
@@ -147,6 +266,8 @@
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2014/12/machine-learning-the-vc-dimension</guid>
       <content:encoded>&lt;![CDATA[<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_vcd_2014">[1]</a>。</p>
+
+<p>Learning happens, if finite $d_{VC}$, large $N$, and low $E_{in}$.</p>
 
 <h2 id="section">学习的可行性</h2>
 
@@ -1123,188 +1244,6 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
   <ol>
     <li id="fn:how-item-feature-demension">
       <p>如何确定电影的特征多少维合适呢？ <a href="#fnref:how-item-feature-demension" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：异常检测</title>
-      <link href="http://qianjiye.de/2014/12/machine-learning-anomaly-detection" />
-      <pubdate>2014-12-08T10:29:01+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/12/machine-learning-anomaly-detection</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">简介</h2>
-
-<p>异常检测的基本思想：若发生了小概率事件，就认为出现了异常。</p>
-
-<p>常用的异常检测方法是利用高斯密度函数，计算数据出现的概率，如果发现了概率小于某个阈值的数据，就认为该数据是异常的。</p>
-
-<p>异常检测也是一种模式二分类方法，但两类数据严重不平衡，异常数据要显著少于正常数据。异常检测通常只需要对正常数据进行建模。</p>
-
-<h2 id="section-1">基于高斯（正态）分布的异常检测</h2>
-
-<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_ad_2014">[1]</a>。</p>
-
-<p>根据异常检测的思想，若$\mathbf x$出现的概率$p(\mathbf x) &lt; \varepsilon$，则认为$\mathbf x$是异常点。因此，异常检测的重要内容是估计概率密度函数。</p>
-
-<h3 id="section-2">一元高斯分布</h3>
-
-<p>基于一元高斯分布的异常检测的前提条件是假设特征之间相互独立。</p>
-
-<p>通常假设特征分量的数据集$X$满足均值为$\mu$，方差为$\sigma^2$的正态分布，
-\begin{equation}
-X\sim\mathcal{N}\left(\mu, \sigma^2\right)，
-\end{equation}
-因此有
-\begin{equation}
-p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)，
-\end{equation}
-这需要估计均值$\mu$和方差$\sigma^2$，它们的极大似然估计为
-\begin{equation}
-\begin{aligned}
-\mu = &amp; {1\over m}\sum_{i=1}^{m}x^{(i)}\\
-\sigma^2 = &amp; {1\over m}\sum_{i=1}^{m}\left(x^{(i)}-\mu\right)^2
-\end{aligned}。
-\label{eq:likehood-mu-sigma}
-\end{equation}</p>
-
-<p>得到了概率密度函数，就容易利用概率判断异常。</p>
-
-<h4 id="section-3">一、异常检测</h4>
-
-<blockquote>
-  <h4 id="section-4">异常检测算法</h4>
-  <hr />
-
-  <ol>
-    <li>选择能指示异常的特征$\mathbf x_j$；</li>
-    <li>利用公式\eqref{eq:likehood-mu-sigma}，估计每维特征的均值和方差$\mu_1,\ldots,\mu_n,\sigma_1^2,\ldots,\sigma_n^2$；</li>
-    <li>计算$\mathbf x$的概率，
-\begin{equation}
-p(\mathbf x) = \prod_{j=1}^n p\left(x_j;\mu_j,\sigma_j^2\right)，
-\end{equation}
-通过特征分量概率密度函数乘积计算$\mathbf x$概率密度，需满足特征之间相互独立的假设；</li>
-    <li>若$p(\mathbf x) &lt; \varepsilon$，则$\mathbf x$为异常点。</li>
-  </ol>
-</blockquote>
-
-<p>异常检测的训练过程就是估计概率密度函数参数$\boldsymbol\mu$和$\boldsymbol\sigma^2$。通常情况，训练过程不需要异常数据。$60\%$的正常数据作为训练集，$20\%$的正常数据和$50\%$的异常数据作为交叉检验集，$20\%$的正常数据和$50\%$的异常数据作为测试集。</p>
-
-<p>通过交叉检验集可确定判定异常的阈值$\varepsilon$，选择参数可利用<a href="/2014/11/machine-learning-advice-for-applying-machine-learning/#performance-evaluation">分类器性能评价指标</a>。</p>
-
-<p>异常检测和监督学习存在不同的特点，应用在不同的场景：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">异常检测</th>
-      <th style="text-align: left">监督学习</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">正样本（异常数据，$y=1$）少，通常$0\sim 20$个正样本，负样本（正常数据，$y=0$）多；</td>
-      <td style="text-align: left">正样本和负样本都较多；</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">可能存多种不同类型的异常数据，难以通过正样本学习；</td>
-      <td style="text-align: left">大量的正样本数据，能通过训练集了解正样本特点；</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">应用领域：欺诈检测、故障诊断、数据中心设备监控等</td>
-      <td style="text-align: left">应用领域：垃圾邮件分类、天气预测、癌症分类等。</td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="feature-transform">二、特征变换</h4>
-
-<p>根据异常检测方法可知，运用异常检测有两个重要的前提条件：</p>
-
-<ol>
-  <li>特征满足高斯分布（特征之间的相关性下节考虑）；</li>
-  <li>$p(\mathbf x)$对正常数据很大，但对异常数据很小。</li>
-</ol>
-
-<p>在实际应用中，原始特征可能并不满足这两个前提条件，需要将特征作一定变换或构造新的特征。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png"><img src="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png" alt="原始特征通过变换满足高斯分布" /></a><div class="caption">Figure 1:  原始特征通过变换满足高斯分布 [<a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-nongaussain-features.png">PNG</a>]</div></div></div>
-
-<p>上图展示了通过函数$\log x$变换原始特征以满足高斯分布。也可以通过构造新的特征，比如数据中心监控，利用特征$\mbox{CPU load}$和$\mbox{network traffic}$构造新的特征$\frac{\mbox{CPU load}}{\mbox{network traffic}}$<sup id="fnref:why-create-new-feature"><a href="#fn:why-create-new-feature" class="footnote">1</a></sup>，使其在发生异常的时数据会变得很大或者很小。</p>
-
-<h3 id="multi-gaussian-anormaly-detection">多元高斯分布</h3>
-
-<p>实际应用中，特征之间可能存在相关性，需要采用多元高斯分布概率密度函数进行异常检测。</p>
-
-<p>多元高斯分布的概率密度函数定义为</p>
-
-<p>\begin{equation}
-p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rvert^{1\over 2}}\exp\left(-{1\over 2}(\mathbf x - \boldsymbol\mu)^T\Sigma^{-1}(\mathbf x - \boldsymbol\mu)\right)，
-\label{eq:multi-gaussians-pdf}
-\end{equation}</p>
-
-<p>其均值向量和协方差矩阵的极大似然估计为</p>
-
-<p>\begin{equation}
-\begin{aligned}
-\boldsymbol\mu = &amp; {1\over m}\sum_{i=1}^{m}\mathbf x^{(i)}\\
-\Sigma = &amp; {1\over m}\sum_{i=1}^{m}\left(\mathbf x^{(i)}-\boldsymbol\mu\right)\left(\mathbf x^{(i)}-\boldsymbol\mu\right)^T
-\end{aligned}。
-\end{equation}</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png"><img src="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png" alt="二元高斯分布" /></a><div class="caption">Figure 2:  二元高斯分布 [<a href="/assets/images/2014-12-08-machine-learning-anomaly-detection-multi-gaussians.png">PNG</a>]</div></div></div>
-
-<p>上图给出了不同参数的二元高斯密度函数图。图上排的协方差矩阵为对角阵，表示特征之间独立，可用一元高斯分布的方法进行异常检测；图下排的协方差矩阵是非对角阵，表示特征之间存在相关性，需借助多元高斯分布密度函数\eqref{eq:multi-gaussians-pdf}进行异常检测。</p>
-
-<p>基于一元高斯分布和多元高斯分布的异常检测有不同的应用场景：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">一元高斯分布</th>
-      <th style="text-align: left">多元高斯分布</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">根据先验知识<a href="#feature-transform">构造新特征</a>，手动处理相关性问题；</td>
-      <td style="text-align: left">自动处理样本之间的相关性，计算$\Sigma$<sup id="fnref:multi-gaussian-feature-transform"><a href="#fn:multi-gaussian-feature-transform" class="footnote">2</a></sup>；</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">计算复杂度较低；</td>
-      <td style="text-align: left">计算复杂度较高；</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">能处理样本数$m$很少的情况。</td>
-      <td style="text-align: left">需要$m&gt;n$（一般$m&gt;10n$），否则$\Sigma$不可逆。</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>若$\Sigma$不可逆，原因可能是不满足条件$m&gt;n$，或者存在冗余特征，也就是特征之间有相关性（比如$\mathbf x_1=k\mathbf x_2$或$\mathbf x_1=\mathbf x_2 ＋ \mathbf x_3$等）。</p>
-
-<p>由此可见，特征之间是否具有相关性并非利用多元还是一元高斯分布进行异常检测的唯一条件，在必要的时候需要借助一元高斯分布对具有相关性特征的数据集进行异常检测。</p>
-
-<p>具有相关性的特征数据，经过基于PCA的坐标变换（参考维数约减部分关于PCA的内容）消除相关性，也可以用一元高斯分布的方法处理。</p>
-
-<h2 id="section-5">参考文献</h2>
-
-<ol class="bibliography"><li><span id="ng_ml_ad_2014">[1]A. Ng, “Anomaly detection.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<h3 id="section-6">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:why-create-new-feature">
-      <p>如何判断构造的新特征有价值？哪些特征加入会有助于提高性能？ <a href="#fnref:why-create-new-feature" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:multi-gaussian-feature-transform">
-      <p>利用多元高斯分布也要将每维特征变换为高斯分布么？ <a href="#fnref:multi-gaussian-feature-transform" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
