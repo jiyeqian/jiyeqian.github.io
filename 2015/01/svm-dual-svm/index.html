@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>支持向量机：对偶支持向量机（2）</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>支持向量机：对偶支持向量机（2）</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-01-06">2015-01-06</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">对偶支持向量机的价值</h2>
+
+<p>对于求解非线性支持向量机系数的QP，有$\tilde d+1$个变量和$N$个约束条件，对于经过非线性特征变换后$Z$空间的特征维数$\tilde d$一般很大。当$\tilde d$很大时，求解比较具有挑战性。</p>
+
+<p>对偶支持向量机是支持向量机的另一种形式，它不依赖$\tilde d$，有$N$个变量和$N+1$个约束条件。</p>
+
+<h2 id="section-1">拉格朗日乘子法</h2>
+
+<p>正则化采用带约束的最小化方法
+\[
+\min\limits_{\mathbf w} E_{in}(\mathbf w)\mbox{ s.t. }\mathbf w^T\mathbf w \leq C，
+\]
+可以通过如下等价的拉格朗日乘子法实现
+\[
+\min\limits_{\mathbf w} E_{aug}(\mathbf w)=E_{in}(\mathbf w)+{\lambda\over N}\mathbf w^T\mathbf w。
+\]
+正则化通过将$\lambda$作为<strong>确定值</strong>，代替$C$作为约束条件，求解更容易。对偶支持向量机不同于正则化，它将$N$个$\lambda$视为<strong>变量</strong>求解。</p>
+
+<p>当$\boldsymbol\alpha_n$为拉格朗日乘子时，求解支持向量机参数的拉格朗日函数为
+\begin{equation}
+\mathcal L(b, \mathbf w, \boldsymbol \alpha) = {1\over 2}\mathbf w^T\mathbf w + \sum_{n=1}^N\alpha_n\left(1-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)。
+\end{equation}</p>
+
+<h2 id="section-2">拉格朗日对偶问题</h2>
+
+<p>根据拉格朗日函数，可得
+\begin{equation}
+\begin{aligned}
+\mbox{SVM}\equiv &amp;\min\limits_{b,\mathbf w}\max\limits_{\mbox{all }\alpha_n\geq 0}\mathcal L(b,\mathbf w, \boldsymbol\alpha)\\
+=&amp;\min\limits_{b,\mathbf w}\left(\infty\mbox{ if violating };{1\over 2}\mathbf w^T\mathbf w\mbox{ if feasible}\right)。
+\end{aligned}
+\end{equation}
+根据$b$和$\mathbf w$取值的划分，分两种情况解释上述公式：</p>
+
+<ol>
+  <li>任意violating的$(b,\mathbf w)$：$\max\limits_{\mbox{all } \alpha_n\geq 0}\left(\square+\sum_n\alpha_n(\mbox{some positive})\right)\rightarrow\infty$；</li>
+  <li>任意feasible的$(b,\mathbf w)$：$\max\limits_{\mbox{all } \alpha_n\geq 0}\left(\square+\sum_n\alpha_n(\mbox{all non-positive})\right)=\square$。</li>
+</ol>
+
+<p>对$\alpha’_n\geq 0$的任意$\boldsymbol\alpha’$可得
+\[
+\min\limits_{b,\mathbf w}\max\limits_{\mbox{all } \alpha_n\geq 0}\mathcal L(b,\mathbf w, \boldsymbol\alpha)\geq\min\limits_{b,\mathbf w}\mathcal L(b,\mathbf w, \boldsymbol\alpha’)，
+\]
+于是有
+\begin{equation}
+\min\limits_{b,\mathbf w}\max\limits_{\mbox{all } \alpha_n\geq 0}\mathcal L(b,\mathbf w, \boldsymbol\alpha)\geq\max\limits_{\mbox{all } \alpha_n\geq 0}\min\limits_{b,\mathbf w}\mathcal L(b,\mathbf w, \boldsymbol\alpha)。
+\end{equation}</p>
+
+<p>若果解决了对偶问题，就得到原问题的下界。上式右边<strong>将对$b$和$\mathbf w$的优化问题转化成了对$\alpha_n$的优化问题</strong>，同时内层是对$b$和$\mathbf w$无约束条件的最优化，方便求解。</p>
+
+<p>如果上式中只是“$\geq$”，则表示弱对偶（weak duality）；如果上式中“$=$”成立，则为强对偶（strong duality）。对于QP，“$=$”成立的条件是：（1）原问题是凸的；（2）原问题有解（对本问题而言，数据是可分的）；（3）线性约束条件。</p>
+
+<p>对于支持向量机，“$=$”成立，求解右边的问题即可。</p>
+
+<h2 id="section-3">化简拉格朗日对偶问题</h2>
+
+<p>对于对偶问题，内层无约束优化取得最小值的条件是
+\[
+{\partial \mathcal L(b, \mathbf w, \boldsymbol\alpha)\over\partial b} = 0;\quad{\partial \mathcal L(b, \mathbf w, \boldsymbol\alpha)\over\partial w_i} = 0，
+\]
+也就是
+\[
+\sum_{n=1}^N\alpha_ny_n=0;\quad\mathbf w=\sum_{n=1}^N\alpha_ny_n\mathbf z_n。
+\]
+将上述变量带入对偶问题，可以化解为
+\[
+\max\limits_{\mbox{all }\alpha_n\geq 0,\sum y_n\alpha_n=0,\mathbf w=\sum\alpha_ny_n\mathbf z_n}\min\limits_{b,\mathbf w}\left(\frac{1}{2}\mathbf w^T\mathbf w+\sum_{n=1}^N\alpha_n-\mathbf w^T\mathbf w\right)，
+\]
+继续将$\mathbf w$的取值带入，可得
+\begin{equation*}
+\max\limits_{\mbox{all }\alpha_n\geq 0,\sum y_n\alpha_n=0,\mathbf w=\sum\alpha_ny_n\mathbf z_n}\left(-\frac{1}{2}\left\lVert\sum_{n=1}^N\alpha_ny_n\mathbf z_n\right\rVert^2+\sum_{n=1}^N\alpha_n\right)，
+\end{equation*}
+化为二次规划的标准形式为
+\begin{equation}
+\begin{aligned}
+\min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
+\mbox{subject to}&amp;\quad\sum_{n=1}^Ny_n\alpha_n=0\\
+&amp;\quad\alpha_n\geq 0,\mbox{ for }n=1,2,\ldots,N。
+\end{aligned}
+\end{equation}</p>
+
+<p>该优化问题有$N$个变量，$N+1$个约束条件。根据<a href="/2015/01/svm-linear-svm/#mjx-eqn-eqqp-standard-format">QP的标准形式</a>，可以得到利用QP求解对偶二次规划的系数
+\[
+\begin{aligned}
+&amp;q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m;\quad\mathbf p=-\mathbf 1_N;\\
+&amp;\mathbf a_{\geq}=\mathbf y,c_{\geq}=0;\quad\mathbf a_{\leq}=-\mathbf y,c_{\leq}=0;\\
+&amp;\mathbf a_n^T=\mbox{n-th unit direction},c_n=0。
+\end{aligned}
+\]
+为了利用标准的QP，将“$=$”约束转换成了“$\geq$”和“$\leq$”约束。通常情况$q_{n,m}\neq 0$，系数对应着$N\times N$的非稀疏矩阵，$N$很大时需要占用很大的存储空间。因此，通常会采用针对支持向量机设计的特殊QP加速求解过程。</p>
+
+<h2 id="kkt">KKT条件</h2>
+
+<p>原问题和对偶问题都是最佳解需要$b,\mathbf w,\boldsymbol\alpha$之间满足如下条件：</p>
+
+<ol>
+  <li>原问题可行：$y_n(\mathbf w^T\mathbf z_n+b)\geq 1$；</li>
+  <li>对偶问题可行：$\alpha_n\geq 0$；</li>
+  <li>对偶问题内最优化：$\sum_{n=1}^N\alpha_ny_n=0;\mathbf w=\sum_{n=1}^N\alpha_ny_n\mathbf z_n$；</li>
+  <li>原问题内最优化：$\alpha_n\left(1-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)=0$，这个条件也称为complementary slackness，其中至少一项为$0$。</li>
+</ol>
+
+<p>这称为KKT条件，它是原问题和对偶问题都是最佳解的必要（necessary）条件，此处也是充分（sufficient）条件。</p>
+
+<blockquote>
+  <h4 id="example">Example</h4>
+  <hr />
+  <p>For a single variable $w$, consider minimizing ${1\over 2}w^2$ subject to two linear constraints $w\geq 1$ and $w\leq 3$. We know that the Lagrange function $\mathcal L(w,\alpha)={1\over 2}w^2+\alpha_1(1-w)+\alpha_2(w-3)$. Which of the following equations that contain $\alpha$ are among the KKT conditions of the optimization problem?</p>
+
+  <ol>
+    <li>$\alpha_1\geq 0$ and $\alpha_2\geq 0$</li>
+    <li>$w=\alpha_1-\alpha_2$</li>
+    <li>$\alpha_1(1-w)=0$ and $\alpha_2(w-3)=0$ </li>
+    <li>all of the above</li>
+  </ol>
+
+  <p>Answer：4</p>
+</blockquote>
+
+<p>通过KKT条件，可以利用$\boldsymbol\alpha$求解$b$和$\mathbf w$。利用KKT条件3容易求解$\mathbf w$，利用KKT条件4，当$\alpha_n&gt;0$时，$1-y_n\left(\mathbf w^T\mathbf z_n+b\right)=0$两边同时乘以$y_n$可得$b$，
+\begin{equation}
+\left\{
+\begin{aligned}
+b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
+\mathbf w=&amp;\sum_{n=1}^N\alpha_ny_n\mathbf z_n。
+\end{aligned}
+\right.
+\end{equation}
+利用不同$\alpha_n&gt;0$时的数据，理论上求解到的$b$应该是一样的。</p>
+
+<h2 id="section-4">支持向量</h2>
+
+<p>$\alpha_n&gt;0$对应的点一定在边界上，这些点称为<strong>支持向量</strong>。也有些在边界上的点，对应的$\alpha_n$不一定大于$0$。容易发现，计算$b$和$\mathbf w$只需要支持向量就够了。</p>
+
+<p>从计算公式可以发现，$\mathbf w$可以由$y_n\mathbf z_n$的线性组合表示，也就是$\mathbf w$可由数据表示，这和PLA算法相似
+\begin{equation*}
+\mathbf w_{SVM}=\sum_{n=1}^N\alpha_n\left(y_n\mathbf z_n\right)，
+\mathbf w_{PLA}=\sum_{n=1}^N\beta_n\left(y_n\mathbf z_n\right)，
+\end{equation*}
+其中$\beta_n$表示犯错误的次数。</p>
+
+<h2 id="section-5">两种形式的支持向量机</h2>
+
+<p>原始支持向量机适合特征维数$\tilde d$较少的情形，对偶形式的支持向量机适合数据点$N$较少的情形，两者都是通过最优化找到最大边界的判别界。</p>
+
+<p>事实上，对偶形式的支持向量机和特征维数$\tilde d$也有关系，$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$的计算也是$\mathbb R^{\tilde d}$空间的内积。</p>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/01/svm-linear-svm" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/01/svm-dual-svm" data-url="http://qianjiye.de/2015/01/svm-dual-svm" data-title="支持向量机：对偶支持向量机（2）">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/svm-linear-svm'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/svm-dual-svm/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
