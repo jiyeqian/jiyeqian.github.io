@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>支持向量机：对偶支持向量机（2）</title>
+    <title>支持向量机（2）：对偶支持向量机</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -64,7 +64,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>支持向量机：对偶支持向量机（2）</h1>
+        <h1>支持向量机（2）：对偶支持向量机</h1>
         </header>
         <nav id="real_nav">
         
@@ -185,8 +185,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \begin{aligned}
 \min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
 \mbox{subject to}&amp;\quad\sum_{n=1}^Ny_n\alpha_n=0\\
-&amp;\quad\alpha_n\geq 0,\mbox{ for }n=1,2,\ldots,N。
+&amp;\quad\alpha_n\geq 0,\mbox{ for }n=1,2,\ldots,N，
 \end{aligned}
+\label{eq:qp-dual-svm}
 \end{equation}</p>
 
 <p>该优化问题有$N$个变量，$N+1$个约束条件。根据<a href="/2015/01/svm-linear-svm/#mjx-eqn-eqqp-standard-format">QP的标准形式</a>，可以得到利用QP求解对偶二次规划的系数
@@ -198,6 +199,17 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \end{aligned}
 \]
 为了利用标准的QP，将“$=$”约束转换成了“$\geq$”和“$\leq$”约束。通常情况$q_{n,m}\neq 0$，系数对应着$N\times N$的非稀疏矩阵，$N$很大时需要占用很大的存储空间。因此，通常会采用针对支持向量机设计的特殊QP加速求解过程。</p>
+
+<p>对偶支持向量机优化问题的矩阵形式为
+\begin{equation}
+\begin{aligned}
+\min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\boldsymbol\alpha^T\mathbf Q_D\boldsymbol\alpha-\mathbf 1^T\boldsymbol\alpha \\
+\mbox{subject to}&amp;\quad\mathbf y^T\boldsymbol\alpha=0\\
+&amp;\quad\alpha_n\geq 0,\mbox{ for }n=1,2,\ldots,N，
+\end{aligned}
+\label{eq:qp-dual-svm2}
+\end{equation}
+其中$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$。</p>
 
 <h2 id="kkt">KKT条件</h2>
 
@@ -236,7 +248,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \end{aligned}
 \right.
 \end{equation}
-利用不同$\alpha_n&gt;0$时的数据，理论上求解到的$b$应该是一样的。</p>
+利用不同$\alpha_n&gt;0$时的数据，理论上求解到的$b$应该是一样的，可以计算多个$b$然后平均得到更稳定的解。</p>
 
 <h2 id="section-4">支持向量</h2>
 
@@ -262,13 +274,13 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 <span>
   <a  href="/2015/01/svm-linear-svm" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/01/svm-kernel-svm" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2015/01/svm-dual-svm" data-url="http://qianjiye.de/2015/01/svm-dual-svm" data-title="支持向量机：对偶支持向量机（2）">
+	<div class="ds-thread" data-thread-key="/2015/01/svm-dual-svm" data-url="http://qianjiye.de/2015/01/svm-dual-svm" data-title="支持向量机（2）：对偶支持向量机">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -300,6 +312,9 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/svm-kernel-svm'; --1> -->
+<!--         url = '/2015/01/svm-kernel-svm'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
