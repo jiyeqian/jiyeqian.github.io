@@ -84,7 +84,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <article class="content">
         <section class="meta">
 <span class="time">
-  <time datetime="2015-01-06">2015-01-06</time>
+  <time datetime="2015-01-05">2015-01-05</time>
 </span>
 
  |
@@ -103,6 +103,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
   
   <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
+  
+  <a href="/tags/#对偶问题" title="对偶问题">对偶问题</a>&nbsp;
   
 </span>
 
@@ -131,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \mathcal L(b, \mathbf w, \boldsymbol \alpha) = {1\over 2}\mathbf w^T\mathbf w + \sum_{n=1}^N\alpha_n\left(1-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)。
 \end{equation}</p>
 
-<h2 id="section-2">拉格朗日对偶问题</h2>
+<h2 id="lagrange-dual-problem">拉格朗日对偶问题</h2>
 
 <p>根据拉格朗日函数，可得
 \begin{equation}
@@ -162,7 +164,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>对于支持向量机，“$=$”成立，求解右边的问题即可。</p>
 
-<h2 id="section-3">化简拉格朗日对偶问题</h2>
+<h2 id="section-2">化简拉格朗日对偶问题</h2>
 
 <p>对于对偶问题，内层无约束优化取得最小值的条件是
 \[
@@ -250,7 +252,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \end{equation}
 利用不同$\alpha_n&gt;0$时的数据，理论上求解到的$b$应该是一样的，可以计算多个$b$然后平均得到更稳定的解。</p>
 
-<h2 id="section-4">支持向量</h2>
+<h2 id="section-3">支持向量</h2>
 
 <p>$\alpha_n&gt;0$对应的点一定在边界上，这些点称为<strong>支持向量</strong>。也有些在边界上的点，对应的$\alpha_n$不一定大于$0$。容易发现，计算$b$和$\mathbf w$只需要支持向量就够了。</p>
 
@@ -261,7 +263,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \end{equation*}
 其中$\beta_n$表示犯错误的次数。</p>
 
-<h2 id="section-5">两种形式的支持向量机</h2>
+<h2 id="section-4">两种形式的支持向量机</h2>
 
 <p>原始支持向量机适合特征维数$\tilde d$较少的情形，对偶形式的支持向量机适合数据点$N$较少的情形，两者都是通过最优化找到最大边界的判别界。</p>
 

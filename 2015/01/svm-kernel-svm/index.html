@@ -84,7 +84,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <article class="content">
         <section class="meta">
 <span class="time">
-  <time datetime="2015-01-07">2015-01-07</time>
+  <time datetime="2015-01-06">2015-01-06</time>
 </span>
 
  |
@@ -104,6 +104,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
   
+  <a href="/tags/#核方法" title="核方法">核方法</a>&nbsp;
+  
 </span>
 
 </section>
@@ -114,7 +116,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>能否找到比$O(\tilde d)$快的方法计算$\mathbf z_n^T\mathbf z_m=\Phi(\mathbf x_n)^T\Phi(\mathbf x_m)$？能否将先特征转换再计算内积的两步合为一步呢？</p>
 
-<h2 id="section-1">核技巧</h2>
+<h2 id="kernel-trick">核技巧</h2>
 
 <p>对于2阶多项式变换
 \[
@@ -153,7 +155,7 @@ g_{SVM}(\mathbf x)
 \end{equation}
 从上面的公式可以看出，计算不再依赖变换后的空间，只依赖原空间，$b$和判别函数只依赖原空间的支持向量，大大简化了计算。</p>
 
-<h2 id="section-2">多项式核</h2>
+<h2 id="section-1">多项式核</h2>
 
 <p>仿照2阶多项式核的定义，可以推导高阶多项式核的定义为
 \begin{equation}
@@ -167,7 +169,7 @@ K_Q(\mathbf x,\mathbf x’)=\left(\zeta + \gamma\mathbf x^T\mathbf x’\right)^Q
 
 <p>当$\zeta=0,\gamma=1$时，多项式核就变为了线性核。线性核利用原始支持向量机就比较高效。因此，应当首先尝试线性核，当线性核不能满足要求时再尝试其它高阶核。</p>
 
-<h2 id="section-3">高斯核</h2>
+<h2 id="section-2">高斯核</h2>
 
 <p>对于1维数据的高斯核，利用Taylor展式可得
 \begin{equation*}
@@ -196,7 +198,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 
 <p>上图是不同系数的高斯核支持向量机的效果，$\gamma$越大，高斯函数越尖，越容易过拟合。当$\gamma\rightarrow\infty$时，$K_{lim}\left(\mathbf x,\mathbf x’\right)=[[\mathbf x＝\mathbf x’]]$，相当于严格判断是否与支持向量一致。</p>
 
-<h2 id="section-4">小结</h2>
+<h2 id="section-3">小结</h2>
 
 <p>各种核函数的比较如下表：</p>
 
@@ -251,7 +253,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 <span>
   <a  href="/2015/01/svm-dual-svm" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/01/svm-soft-margin-svm" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -289,6 +291,9 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/svm-soft-margin-svm'; --1> -->
+<!--         url = '/2015/01/svm-soft-margin-svm'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
