@@ -4,8 +4,18 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-07T17:55:19+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-09T07:46:22+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>支持向量机（5）：核logistic回归</title>
+      <link href="http://qianjiye.de/2015/01/svm-kernel-logistic-regression" />
+      <pubdate>2015-01-09T15:01:15+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/svm-kernel-logistic-regression</guid>
+      <content:encoded>&lt;![CDATA[<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png"><img src="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png" alt="4种形式的支持向量机" /></a><div class="caption">Figure 1:  4种形式的支持向量机 [<a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png">PNG</a>]</div></div></div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>支持向量机（4）：soft-margin支持向量机</title>
@@ -65,7 +75,10 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 \end{aligned}
 \label{eq:qp-soft-margin-dual-svm}
 \end{equation}
-与hard-margin对偶支持向量机不同的地方只是$\alpha_n$多了一个上界$C$，这是$N$个变量$2N+1$个约束条件的QP。</p>
+与hard-margin对偶支持向量机不同的地方只是$\alpha_n$多了一个上界$C$，这是$N$个变量$2N+1$个约束条件的QP。$\alpha_n$的约束界也可以表示为矩阵形式
+\begin{equation}
+\mathbf 0_N\leq \mathbf I_N\boldsymbol\alpha \leq C\cdot \mathbf 1_N。
+\end{equation}</p>
 
 <h2 id="soft-margin-2">核soft-margin支持向量机</h2>
 
@@ -373,7 +386,10 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 \end{aligned}
 \label{eq:qp-dual-svm2}
 \end{equation}
-其中$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$。</p>
+其中$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$，$\alpha_n$的约束界也可以表示为矩阵形式
+\begin{equation}
+\mathbf I_N\boldsymbol\alpha \geq \mathbf 0_N。
+\end{equation}</p>
 
 <h2 id="kkt">KKT条件</h2>
 
@@ -504,17 +520,21 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \begin{aligned}
 \mbox{optimal} &amp;\quad\mathbf u\leftarrow QP(\mathbf Q, \mathbf p, \mathbf A, \mathbf c) \\
 \min\limits_{\mathbf u} &amp;\quad{1\over 2}\mathbf u^T\mathbf Q\mathbf u + \mathbf p^T\mathbf u\\
-\mbox{subject to}&amp;\quad\mathbf a_m^T\mathbf u\geq c_m\mbox{ for }m=1,2,\ldots,M。
+\mbox{subject to}&amp;\quad\mathbf a_n^T\mathbf u\geq c_n\mbox{ for }n=1,2,\ldots,N。
 \end{aligned}
 \label{eq:qp-standard-format}
 \end{equation}
-支持向量机利用二次规划求解时的目标函数系数为
+支持向量机利用二次规划求解时参数为
 \begin{equation*}
 \mathbf u =<br />
 \begin{bmatrix}
 b\\
 \mathbf w
-\end{bmatrix};
+\end{bmatrix}
+，
+\end{equation*}
+目标函数系数为
+\begin{equation*}
 \mathbf Q = 
 \begin{bmatrix}
 0 &amp;\mathbf 0_d^T\\
@@ -525,7 +545,7 @@ b\\
 \end{equation*}
 约束条件系数为
 \begin{equation*}
-\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1;M=N。
+\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1。
 \end{equation*}</p>
 
 <p>这里所讲的支持向量机叫做线性hard-margin支持向量机，其中hard-margin是指所有的点能被正确分类。</p>
@@ -1172,121 +1192,6 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
     </li>
   </ol>
 </div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：学习的可行性</title>
-      <link href="http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning" />
-      <pubdate>2014-12-14T06:19:24+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning</guid>
-      <content:encoded>&lt;![CDATA[<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_fl_2014">[1]</a>。</p>
-
-<p>Learning is PAC-possible, if enough statistical data and finite $\left\lvert\mathcal H\right\rvert$.</p>
-
-<h2 id="section">基本定义</h2>
-
-<ul>
-  <li>未知的目标函数 $f:\mathcal X \rightarrow\mathcal Y$；</li>
-  <li>$\mathcal X$的分布$P$；</li>
-  <li>训练集 $\mathcal D:\left(\mathbf x_1,y_1\right),\ldots,\left(\mathbf x_N,y_N\right)$；</li>
-  <li>学习算法 $\mathcal A$；</li>
-  <li>假设集 $\mathcal H$。</li>
-</ul>
-
-<p>机器学习的任务就是找到$f$的近似$g$，使得$g\approx f$。利用学习算法$\mathcal A$，通过数据集$\mathcal D$，从$\mathcal H$中找到合适的$h$，当$g=h$有$g\approx f$。</p>
-
-<h2 id="hoeffding">Hoeffding不等式</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png" alt="估计罐中橙色弹珠的概率" /></a><div class="caption">Figure 1:  估计罐中橙色弹珠的概率 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-bin-and-sample.png">PNG</a>]</div></div></div>
-
-<p>能用从罐中抽样出橙色弹珠的比率$\nu$，作为罐中橙色弹珠出现概率$\mu$的估计么？Hoeffding不等式给出了答案，
-\begin{equation}
-P\left[\lvert\nu-\mu\rvert&gt;\epsilon\right]\leq 2\exp\left(-2\epsilon^2N\right)，
-\end{equation}
-当$N$很大时，$\nu$和$\mu$可能很接近（PAC，Probably Approximately Correct）。一个大的$N$和松散的$\epsilon$约束，使得$\nu\approx\mu$。</p>
-
-<blockquote>
-  <h4 id="section-1">问题</h4>
-  <hr />
-  <p>设$\mu=0.4$，若从罐中抽$10$个弹珠得到$\nu\leq 0.1$。利用Hoeffding不等式估计发生这样情况的概率界。</p>
-
-  <p>答案：$0.33$（该概率的精确值是$0.05$）</p>
-
-  <p>这个问题等价于：已知一次伯努利实验成功的概率为$0.4$，求$10$重伯努利实验中，最多出现一次成功的概率。
-\begin{equation*}
-\begin{aligned}
-P(最多一次成功) = &amp;P(10次都不成功) + P(仅有1次成功）\\
-    = &amp; 0.6^{10}+  \binom{10}{1} \times 0.4^1 \times 0.6^9\\
-    = &amp;0.0464 \approx 0.05
-\end{aligned}
-\end{equation*}</p>
-</blockquote>
-
-<h2 id="section-2">概率与机器学习</h2>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png" alt="从概率到机器学习" /></a><div class="caption">Figure 2:  从概率到机器学习 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-connection2learning.png">PNG</a>]</div></div></div>
-
-<p>如上图所示，将罐中的弹珠当作$\mathcal X$。对某个特定的假设$h$，若$h(\mathbf x)\neq f(\mathbf x)$则将弹珠涂为橙色，若$h(\mathbf x)= f(\mathbf x)$则将弹珠涂为绿色。将机器学习的可行性用概率问题进行判断。</p>
-
-<p>对特定的$h$，抽样出来$N$个数据的in-sample误差定义为
-\begin{equation}
-E_{in}\left(h\right) = {1\over N}\sum_{n=1}^N\left[\left[h\left(x_n\right)\neq y_n\right]\right]，
-\end{equation}
-$\mathcal X$中数据的out-sample误差定义为
-\begin{equation}
-E_{out}\left(h\right) = \varepsilon_{\mathbf x\sim P}\left[\left[h\left(\mathbf x\right)\neq f\left(\mathbf x\right)\right]\right]，
-\end{equation}
-于是得到类似的Hoeffding不等式
-\begin{equation}
-P\left[\left\lvert E_{in}\left(h\right)-E_{out}\left(h\right)\right\rvert&gt;\epsilon\right]\leq 2\exp\left(-2\epsilon^2N\right)。
-\end{equation}</p>
-
-<p>由上式可知，对所有$N$和$\epsilon$而言，在不需要知道$E_{out}\left(h\right)$、$f$和$P$的前提下，$E_{in}\left(h\right)=E_{out}\left(h\right)$近似可能正确。也就是说，如果$E_{in}\left(h\right)\approx E_{out}\left(h\right)$并且$E_{in}\left(h\right)$很小，可以得出$E_{out}\left(h\right)$也很小，进而可以得出对于同样分布$P$的数据$h\approx f$。</p>
-
-<p>如果令$g=h$，上述情况是否表明学习是可行的了呢？事实上，上述情况只是验证了某个特定的$h$，机器学习是要从$\mathcal H$中找出满足条件的$h$作为$g$，还没有$h$选择的过程。</p>
-
-<h2 id="section-3">从概率到机器学习</h2>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png" alt="多个假设" /></a><div class="caption">Figure 3:  多个假设 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-probability-many-hypothesis.png">PNG</a>]</div></div></div>
-
-<p>不好的数据集（BAD Data）是指，存在$h$使得该数据集上$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png"><img src="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png" alt="不好的数据集" /></a><div class="caption">Figure 4:  不好的数据集 [<a href="/assets/images/2014-12-13-machine-learning-feasibility-of-learning-bad-data.png">PNG</a>]</div></div></div>
-
-<p>上图中$\mathcal D_i$表示有$N$个数据点的数据集，<code>BAD</code>标注的是不好的数据集。每个$h_j$对应行上出现<code>BAD</code>的概率通过Hoeffding定理限定，对某个$h_j$，$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大的概率是受约束的。Hoeffding定理保证的是每行不会有太多的<code>BAD</code>。</p>
-
-<p>如果某个数据集$\mathcal D_i$上，对至少一个$h_j$是不好的数据集，也就是上图中的列至少存在一个<code>BAD</code>，那么在该数据集上，不能通过算法$\mathcal A$自由的从假设$\mathcal H$中选择$h$，因为总存在$E_{out}\left(h\right)$和$E_{in}\left(h\right)$差异很大的情况。机器学习期望的是算法$\mathcal A$能在好的数据集（例如$\mathcal D_{1126}$）上自由的选择$h$。</p>
-
-<p>根据上图可推算，选到不好数据集的概率
-\begin{equation}
-P_{\mathcal D}\left[\mbox{BAD } \mathcal D\right] \leq 2M\exp\left(-2\epsilon^2N\right)，
-\end{equation}
-由此可见，选到不好数据集的概率是受限的，也就是可能找到好数据集，使得可以利用它自由在假设$\mathcal H$中选择。</p>
-
-<p>如果$\left\lvert\mathcal H\right\rvert=M$有限，并且$N$足够大，使得可以通过$\mathcal A$选择到$g$，选择$E_{in}\left(h_m\right)$最小的那个$h_m$作为$g$，使得$E_{out}\left(g\right)\approx E_{in}\left(g\right)$。如果$\mathcal A$找到一个$g$使得$E_{in}\left(g\right)\approx 0$，PAC保证了$E_{out}\left(g\right)\approx 0$，也就是说学习是可行的。</p>
-
-<p>因此，学习的可行性通过以下两条保证：</p>
-
-<ol>
-  <li>可以通过$E_{in}\left(h\right)$估计$E_{out}\left(h\right)$；</li>
-  <li>存在数据集$\mathcal D$，使得可以在$\mathcal H$中自由的选择$h$。</li>
-</ol>
-
-<p>满足这两条的前提条件是假设集$\mathcal H$中候选$h$的数目$M$有限且$\mathcal D$中数据点数量$N$足够大。</p>
-
-<p>如果$M=\infty$，咋办？</p>
-
-<h2 id="section-4">参考资料</h2>
-
-<ol class="bibliography"><li><span id="lin_ml_fl_2014">[1]H.-T. Lin, “Lecture 4: Feasibility of Learning.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
-
-</li></ol>
-
-<h3 id="section-5">脚注</h3>
 ]]&gt;</content:encoded>
     </item>
     

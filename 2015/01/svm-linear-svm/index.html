@@ -25,12 +25,13 @@
         }
     });
     </script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/javascript">
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
+ -->
   </head>
 <!--  <body>
 -->
@@ -172,17 +173,21 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \begin{aligned}
 \mbox{optimal} &amp;\quad\mathbf u\leftarrow QP(\mathbf Q, \mathbf p, \mathbf A, \mathbf c) \\
 \min\limits_{\mathbf u} &amp;\quad{1\over 2}\mathbf u^T\mathbf Q\mathbf u + \mathbf p^T\mathbf u\\
-\mbox{subject to}&amp;\quad\mathbf a_m^T\mathbf u\geq c_m\mbox{ for }m=1,2,\ldots,M。
+\mbox{subject to}&amp;\quad\mathbf a_n^T\mathbf u\geq c_n\mbox{ for }n=1,2,\ldots,N。
 \end{aligned}
 \label{eq:qp-standard-format}
 \end{equation}
-支持向量机利用二次规划求解时的目标函数系数为
+支持向量机利用二次规划求解时参数为
 \begin{equation*}
 \mathbf u =<br />
 \begin{bmatrix}
 b\\
 \mathbf w
-\end{bmatrix};
+\end{bmatrix}
+，
+\end{equation*}
+目标函数系数为
+\begin{equation*}
 \mathbf Q = 
 \begin{bmatrix}
 0 &amp;\mathbf 0_d^T\\
@@ -193,7 +198,7 @@ b\\
 \end{equation*}
 约束条件系数为
 \begin{equation*}
-\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1;M=N。
+\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1。
 \end{equation*}</p>
 
 <p>这里所讲的支持向量机叫做线性hard-margin支持向量机，其中hard-margin是指所有的点能被正确分类。</p>

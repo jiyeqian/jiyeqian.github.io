@@ -25,12 +25,13 @@
         }
     });
     </script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/javascript">
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
+ -->
   </head>
 <!--  <body>
 -->
@@ -211,7 +212,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \end{aligned}
 \label{eq:qp-dual-svm2}
 \end{equation}
-其中$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$。</p>
+其中$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$，$\alpha_n$的约束界也可以表示为矩阵形式
+\begin{equation}
+\mathbf I_N\boldsymbol\alpha \geq \mathbf 0_N。
+\end{equation}</p>
 
 <h2 id="kkt">KKT条件</h2>
 

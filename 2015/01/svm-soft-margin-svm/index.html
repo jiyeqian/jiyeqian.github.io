@@ -25,12 +25,13 @@
         }
     });
     </script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/javascript">
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
+ -->
   </head>
 <!--  <body>
 -->
@@ -96,7 +97,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
   
-  <a href="/tags/#模型选择" title="模型选择">模型选择</a>&nbsp;
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
   
 </span>
 
@@ -154,7 +155,10 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 \end{aligned}
 \label{eq:qp-soft-margin-dual-svm}
 \end{equation}
-与hard-margin对偶支持向量机不同的地方只是$\alpha_n$多了一个上界$C$，这是$N$个变量$2N+1$个约束条件的QP。</p>
+与hard-margin对偶支持向量机不同的地方只是$\alpha_n$多了一个上界$C$，这是$N$个变量$2N+1$个约束条件的QP。$\alpha_n$的约束界也可以表示为矩阵形式
+\begin{equation}
+\mathbf 0_N\leq \mathbf I_N\boldsymbol\alpha \leq C\cdot \mathbf 1_N。
+\end{equation}</p>
 
 <h2 id="soft-margin-2">核soft-margin支持向量机</h2>
 
@@ -214,7 +218,7 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 <span>
   <a  href="/2015/01/svm-kernel-svm" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/01/svm-kernel-logistic-regression" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -252,6 +256,9 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/svm-kernel-logistic-regression'; --1> -->
+<!--         url = '/2015/01/svm-kernel-logistic-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
