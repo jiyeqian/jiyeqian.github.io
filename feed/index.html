@@ -4,7 +4,7 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-09T07:46:22+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-09T12:18:56+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
@@ -14,6 +14,24 @@
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2015/01/svm-kernel-logistic-regression</guid>
       <content:encoded>&lt;![CDATA[<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png"><img src="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png" alt="4种形式的支持向量机" /></a><div class="caption">Figure 1:  4种形式的支持向量机 [<a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png">PNG</a>]</div></div></div>
+
+<p>回顾<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
+\[
+\min\limits_{b,\mathbf w}{1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)，
+\]
+可以简写为
+\[
+\min\limits_{b,\mathbf w}{1\over 2}\mathbf w^T\mathbf w + C\sum\widehat{\mbox{err}}。
+\]
+soft-margin可以看作一种特殊的误差$\widehat{\mbox {err}}$度量。$L_2$正则化是对$\mathbf w$长度的约束
+\[
+\min\limits_{b,\mathbf w}{\lambda\over N}\mathbf w^T\mathbf w + {1\over N}\sum\mbox{err}。
+\]</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png"><img src="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png" alt="SVM与正则化" /></a><div class="caption">Figure 2:  SVM与正则化 [<a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png">PNG</a>]</div></div></div>
+
+<p>加入了大分类的边界限制，可以得到更少的分类情况，也可以通过$L_2$正则化实现。
+从上图对比正则化方法可知，支持向量机可以看作为特殊的正则化方法。大的$C$，对应于小的$\lambda$，更弱的正则化。</p>
 ]]&gt;</content:encoded>
     </item>
     
@@ -47,6 +65,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 \mbox{s.t.}&amp;\quad y_n\left(\mathbf w^T\mathbf z_n+b\right)\geq 1-\xi_n\\
 &amp;\quad\xi_n\geq 0 \mbox{ for all }n，
 \end{aligned}
+\label{eq:soft-margin-primal-svm}
 \end{equation}
 该QP模型有$\tilde d+1+N$个变量和$2N$个约束条件。</p>
 
