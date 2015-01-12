@@ -137,7 +137,14 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 \end{aligned}
 \label{eq:soft-margin-primal-svm}
 \end{equation}
-该QP模型有$\tilde d+1+N$个变量和$2N$个约束条件。</p>
+该QP模型有$\tilde d+1+N$个变量和$2N$个约束条件，也被称为基于$\ell_1$损失的soft-margin。如果采用$\xi_n^2$，则被称为基于$\ell_2$损失的soft-margin
+\begin{equation*}
+\begin{aligned}
+\min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n^2\\
+\mbox{s.t.}&amp;\quad y_n\left(\mathbf w^T\mathbf z_n+b\right)\geq 1-\xi_n，
+\end{aligned}
+\end{equation*}
+此时不再需要约束条件$\xi_n\geq 0$。</p>
 
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png" alt="边界容忍度" /></a><div class="caption">Figure 1:  边界容忍度 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png">PNG</a>]</div></div></div>
 
