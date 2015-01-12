@@ -4,7 +4,7 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-12T10:42:31+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-12T20:32:02+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
@@ -13,7 +13,169 @@
       <pubdate>2015-01-12T18:31:45+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2015/01/svm-support-vector-regression</guid>
-      <content:encoded>&lt;![CDATA[
+      <content:encoded>&lt;![CDATA[<h2 id="section">脊回归</h2>
+
+<p>有正则化项的回归称为<strong>脊回归</strong>（ridge regression）。脊回归的核模型有解析解么？</p>
+
+<p>脊回归的最优化模型为
+\[
+\min_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\left(y_n-\mathbf w^T\mathbf z_n\right)^2\right)，
+\]
+根据表示定理可知，存在形如$\mathbf w_*=\sum_{n=1}^N\beta_n\mathbf z_n$的最优解，将其带入并表示为核形式
+\begin{equation}
+\min_\beta\left({\lambda\over N}\sum_{n=1}^N\sum_{m=1}^N\beta_n\beta_mK(\mathbf x_n,\mathbf x_m)+{1\over N}\sum_{n=1}^N\left(y_n-\sum_{n=1}^N\beta_mK(\mathbf x_n,\mathbf x_m)\right)\right)。
+\end{equation}
+<strong>脊回归的核模型</strong>就是利用表示定理将脊回归核化。目标函数写为矩阵的形式
+\begin{equation}
+E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol\beta + {1\over N}\left(\boldsymbol\beta^T\mathbf K^T\mathbf K\boldsymbol\beta-2\boldsymbol\beta^T\mathbf K^T\mathbf y + \mathbf y^T\mathbf y\right)，
+\end{equation}
+无约束最优化问题可以通过
+\[
+\bigtriangledown E_{aug}(\boldsymbol\beta)={2\over N}\left(\lambda\mathbf K^T\mathbf I\boldsymbol\beta+\mathbf K^T\mathbf K\boldsymbol\beta-\mathbf K^T\right)={2\over N}\mathbf K^T\left((\lambda\mathbf I+\mathbf K)\boldsymbol\beta-\mathbf y\right)
+\]
+令$\bigtriangledown E_{aug}(\boldsymbol\beta)=0$求解，
+\begin{equation}
+\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y。
+\end{equation}
+根据Mercer条件可知$\mathbf K$半正定，并且$\lambda&gt;0$，因此矩阵总可逆。稠密矩阵求逆的时间复杂度为$O\left(N^3\right)$。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png" alt="［左］：脊回归的线性模型；［右］：脊回归的核模型" /></a><div class="caption">Figure 1:  ［左］：脊回归的线性模型；［右］：脊回归的核模型 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png">PNG</a>]</div></div></div>
+
+<p>上图中的蓝线是脊回归的效果。线性模型与核模型的选择是速度与效率的折中权衡，它们之间的对比如下表：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>线性模型</th>
+      <th>核模型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^TX)^{-1}\mathbf X^T\mathbf y$</td>
+      <td>$\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y$</td>
+    </tr>
+    <tr>
+      <td>功能受限</td>
+      <td>通过$K$实现强大的功能</td>
+    </tr>
+    <tr>
+      <td>训练时间复杂度为$O\left(d^3+d^2N\right)$</td>
+      <td>训练时间复杂度为$O\left(N^3\right)$</td>
+    </tr>
+    <tr>
+      <td>预测时间复杂度为$O(d)$，当$N\gg d$时效率高</td>
+      <td>预测时间复杂度为$O(N)$，当训练样本大时效率低</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>当参数获得后，回归函数就可以用核表示为
+\begin{equation}
+g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
+\end{equation}</p>
+
+<h2 id="section-1">最小二乘支持向量机</h2>
+
+<p><strong>最小二乘支持向量机</strong>（LSSVM，least-squares SVM）就是将脊回归的核模型用于分类。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png" alt="最小二乘与soft-margin支持向量机的对比" /></a><div class="caption">Figure 2:  最小二乘与soft-margin支持向量机的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png">PNG</a>]</div></div></div>
+
+<p>上图可以看出，最小二乘与soft-margin支持向量机的分类面很相似，但是LSSVM的支持向量要多得多，预测速度会很慢。</p>
+
+<p>LSSVM和logistic回归的核模型得到的参数$\boldsymbol\beta$是稠密的，标准支持向量机的参数$\boldsymbol\alpha$是稀疏的。能否得到像标准支持向量机一样稀疏的$\boldsymbol\beta$呢？</p>
+
+<h2 id="tube">tube回归</h2>
+
+<p>定义tube回归的误差为
+\begin{equation}
+err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
+\end{equation}
+在tube区域内不计误差，在该区域外到tube的距离记为误差。</p>
+
+<div class="image_line" id="tube-error-illustration"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png" alt="tube与平方误差对比" /></a><div class="caption">Figure 3:  tube与平方误差对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png">PNG</a>]</div></div></div>
+
+<p>如上图所示，tube与平方误差很相似，尤其是在$\lvert s-y\rvert$很小的区域内，当$\lvert s-y\rvert$很大时，tube误差不如平方误差变化陡峭，因此受噪声影响更小。</p>
+
+<p>基于tube误差的模型能否得到稀疏的系数呢？</p>
+
+<h2 id="section-2">支持向量回归</h2>
+
+<p>基于$L_2$正则化的tube回归模型为
+\begin{equation*}
+\min\limits_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n-y_n\right\rvert-\epsilon\right)\right)，
+\end{equation*}
+虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/svm-kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
+\begin{equation*}
+\min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w+C\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n+b-y_n\right\rvert-\epsilon\right)\right)，
+\end{equation*}
+虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
+\begin{equation*}
+\begin{aligned}
+\min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
+\mbox{s.t.}&amp;\quad \left\lvert\mathbf w^T\mathbf z_n+b-y_n\right\rvert\leq \epsilon+\xi_n\\
+&amp;\quad\xi_n\geq 0 \mbox{ for all }n，
+\end{aligned}
+\end{equation*}
+约束条件线性化
+\begin{equation}
+\begin{aligned}
+\min\limits_{b,\mathbf w,\boldsymbol\xi^\vee,\boldsymbol\xi^\wedge}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\left(\xi_n^\vee+\xi_n^\wedge\right)\\
+\mbox{s.t.}&amp;\quad -\epsilon-\xi_n^\vee\leq y_n - \mathbf w^T\mathbf z_n-b\leq \epsilon+\xi_n^\wedge\\
+&amp;\quad\xi_n^\vee\geq 0,\xi_n^\wedge\geq 0\mbox{ for all }n，
+\end{aligned}
+\end{equation}
+这就是标准的<strong>支持向量回归</strong>（SVR，support vector regression）原问题，$\xi_n^\vee$和$\xi_n^\wedge$分别记录tube下届和上界违规，如<a href="#tube-error-illustration">上图左</a>所示的分界线下边和上边标红的线段。通过$C$对正则化和tube违规进行折中，调节参数$\epsilon$可控制tube的高度。该QP模型有$\tilde d+1+2N$个变量，$2N+2N$个约束条件。</p>
+
+<p>将支持向量回归的原问题转成对偶问题，可移除对$\tilde d$的依赖。</p>
+
+<h2 id="section-3">支持向量回归的对偶模型</h2>
+
+<p>通过拉格朗日乘子法的KKT条件${\partial\mathcal L\over\partial\mathbf w}=0$可得
+\begin{equation}
+\mathbf w = \sum_{n=1}^N\left(\alpha_n^\wedge-\alpha_n^\vee\right)\mathbf z_n = \sum_{n=1}^N\beta_n\mathbf z_n，
+\end{equation}
+通过${\partial\mathcal L\over\partial b}=0$可得
+\[
+\sum_{n=1}^N\left(\alpha_n^\wedge-\alpha_n^\vee\right)＝0，
+\]
+互补松弛条件（complementary slackness）为
+\begin{equation}
+\left\{
+\begin{aligned}
+\alpha_n^\wedge\left(\epsilon+\xi_n^\wedge-y_n+\mathbf w^T\mathbf z_n+b\right)=&amp;0\\
+\alpha_n^\vee\left(\epsilon+\xi_n^\vee+y_n-\mathbf w^T\mathbf z_n-b\right)=&amp;0。
+\end{aligned}
+\right.
+\label{eq:complementary-slackness-svm-regession}
+\end{equation}</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png" alt="QP原问题与对偶问题的对比" /></a><div class="caption">Figure 4:  QP原问题与对偶问题的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png">PNG</a>]</div></div></div>
+
+<p>上图左上和左下分别表示soft-margin支持向量机的原问题和对偶问题的QP模型；上图右上和右下分别表示支持向量回归的原问题和对偶问题的QP模型。上图中，相同颜色的符号展示了如何从原问题变化到对偶问题。</p>
+
+<p>当数据点位于tube中有$\left\lvert\mathbf w^T\mathbf z_n+b-y_n\right\rvert&lt;\epsilon$，不计误差，$\xi_n^\wedge=\xi_n^\vee=0$，根据互补松弛条件\eqref{eq:complementary-slackness-svm-regession}可知
+\[
+\left\{
+\begin{aligned}
+\epsilon+\xi_n^\wedge-y_n+\mathbf w^T\mathbf z_n+b\neq &amp;0\\
+\epsilon+\xi_n^\vee+y_n-\mathbf w^T\mathbf z_n-b\neq &amp;0，
+\end{aligned}
+\right.
+\]
+以及$\alpha_n^\wedge=\alpha_n^\vee＝0$，因此可得$\beta_n=0$。由此可知，支持向量回归问题中$\beta_n\neq 0$的支持向量刚好位于tube的边界上或在tube之外。</p>
+
+<p>参考<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
+\begin{equation}
+b=
+\left\{
+\begin{aligned}
+y_n-\mathbf w^T\mathbf z_n-\epsilon&amp;\quad(0&lt;\alpha_n^\wedge&lt;C)\\
+y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
+\end{aligned}
+\right.
+\end{equation}</p>
+
 ]]&gt;</content:encoded>
     </item>
     
@@ -28,16 +190,17 @@
 <h2 id="section">支持向量机的正则化形式</h2>
 
 <p>回顾<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
-\[
-\min\limits_{b,\mathbf w}{1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)，
-\]
+\begin{equation}
+\min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)\right)，
+\label{eq:uniform-soft-margin-svm}
+\end{equation}
 可以简写为
 \[
-\min\limits_{b,\mathbf w}{1\over 2}\mathbf w^T\mathbf w + C\sum\widehat{\mbox{err}}。
+\min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w + C\sum\widehat{\mbox{err}}\right)。
 \]
 这是目标函数的正则化形式表示方法，soft-margin可以看作一种特殊的误差$\widehat{\mbox {err}}$度量。$L_2$正则化是对$\mathbf w$长度的约束
 \[
-\min\limits_{b,\mathbf w}{\lambda\over N}\mathbf w^T\mathbf w + {1\over N}\sum\mbox{err}。
+\min\limits_{b,\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w + {1\over N}\sum\mbox{err}\right)。
 \]</p>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png"><img src="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png" alt="SVM与正则化" /></a><div class="caption">Figure 2:  SVM与正则化 [<a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-regularized-model.png">PNG</a>]</div></div></div>
@@ -142,14 +305,14 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
   <hr />
   <p>对任意的$L_2$正则化线性模型     <br />
 \begin{equation*}
-\min_{\mathbf w}{\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^Nerr\left(y_n,\mathbf w^T\mathbf z_n\right)，
+\min_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^Nerr\left(y_n,\mathbf w^T\mathbf z_n\right)\right)，
 \end{equation*} 
 存在能用$\mathbf z_n$线性表示的最佳解$\mathbf w_*=\sum_{n=1}^N\beta_n\mathbf z_n$。</p>
 </blockquote>
 
-<p>$L_2$正则化的logistic回归优化模型为
+<p>任意$L_2$正则化的线性模型都能使用核方法。$L_2$正则化的logistic回归优化模型为
 \[
-\min_{\mathbf w}{\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\log\left(1+\exp\left(-y_n\mathbf w^T\mathbf z_n\right)\right)。
+\min_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\log\left(1+\exp\left(-y_n\mathbf w^T\mathbf z_n\right)\right)\right)。
 \]
 由上述定理可知，最佳$\mathbf w$一定是$\mathbf z_n$的线性组合。直接将用$\mathbf z_n$表示的$\mathbf w$代入上式，再用核方法表示，可以得到基于$L_2$正则化的核logistic回归优化模型
 \begin{equation}
@@ -215,7 +378,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 &amp;+\sum_{n=1}^N\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)+\sum_{n=1}^N\beta_n\left(-\xi_n\right)，
 \end{aligned}
 \]
-利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>的方法可得
+根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
 \begin{equation}
 \begin{aligned}
 \min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\

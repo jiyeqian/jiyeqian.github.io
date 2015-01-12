@@ -160,7 +160,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 &amp;+\sum_{n=1}^N\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)+\sum_{n=1}^N\beta_n\left(-\xi_n\right)，
 \end{aligned}
 \]
-利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>的方法可得
+根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
 \begin{equation}
 \begin{aligned}
 \min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
