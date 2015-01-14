@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <ol>
   <li>基本的方法是必须采用科学的<a href="/2014/11/machine-learning-advice-for-applying-machine-learning/#performance-evaluation">性能评价指标</a>，比如$F_1$ Scorce，避免大样本类淹没了小样本类。对小样本类别的分类性能也能进行有效的评估。</li>
   <li><a href="/2014/12/machine-learning-anomaly-detection">异常检测</a>也是处理这类不均衡样本的方法，只对大样本类别进行建模，小样本类当作异常数据进行检测。</li>
-  <li>通过加权度量不同类的分类错误<a href="#lin_ml_ne_2014">[1, P. 24]</a>，小样本赋予更大的权值。</li>
+  <li>对不同类别赋予不同重要程度的权值<a href="#lin_ml_ne_2014">[1, P. 24]</a>，小样本赋予更大的权值<a href="#scikit-learn-2015-svm-unbalanced">[2]</a>。</li>
 </ol>
 
 <p>以下方法可行吗？</p>
@@ -188,6 +188,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <ol class="bibliography"><li><span id="lin_ml_ne_2014">[1]H.-T. Lin, “Lecture 8: Noise and Error.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="scikit-learn-2015-svm-unbalanced">[2]F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
+
+[<a href="http://scikit-learn.org/stable/modules/svm.html#unbalanced-problems">Online</a>]
 
 </li></ol>
 
