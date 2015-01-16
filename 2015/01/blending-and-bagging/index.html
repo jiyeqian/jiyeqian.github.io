@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>分类器融合（1）：混合与自助聚合</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>分类器融合（1）：混合与自助聚合</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-01-15">2015-01-15</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">聚合法简介</h2>
+
+<p>如何将特征和假设集组合起来，让机器学习的性能更好呢？</p>
+
+<p>假设$T$个👬朋友$g_1,\ldots,g_T$给出参考意见$g_t(\mathbf x)$预测股票是否会涨，如何决策呢？</p>
+
+<ol>
+  <li>校验法（validation）：听从最懂股票那个朋友的意见，
+\begin{equation*}
+G(\mathbf x)=g_{t_*}(\mathbf x)，\qquad t_*=\arg\min_{t\in\{1,2,\ldots,T\}}E_{val}\left(g_t^-\right)，
+\end{equation*}
+$E_{val}\left(g_{t}^-\right)$表示$g^-$是在一个较小数据集上得到的结果，选择完成之后在全验证集上得到完整的$g$。</li>
+  <li>投票法（vote）：一人一票的均匀投票，听从多数人的意见，
+\begin{equation}
+G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T1\cdot g_t(\mathbf x)\right)。
+\label{eq:uniform-blending-hypothesis}
+\end{equation}</li>
+  <li>加权投票法：每个人的票数不一样，听从多数票的意见，
+\begin{equation}
+G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_t\cdot g_t(\mathbf x)\right),\qquad\alpha_t\geq 0。
+\label{eq:linear-blending-hypothesis}
+\end{equation}
+当$\alpha_t=[[E_{val}\left(g_{t}^-\right)\mbox{ smallest}]]$时，与方法1一样；当$\alpha_t=1$时，与方法2一样。</li>
+  <li>有条件的组合：比如科技股听从擅长这方面的朋友，传统行业股票听从那些……
+\begin{equation*}
+G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\right),\qquad q_t(\mathbf x)\geq 0，
+\end{equation*}
+当$q_t(\mathbf x)=\alpha_t$时，与方法3一样，也就是包含了前面所有情况。</li>
+</ol>
+
+<p><strong>聚合法</strong>的目的是综合多个假设（可能是比较弱的）让效果更好。上述方法中，2～4称为<strong>聚合模型</strong>（aggregation model）。</p>
+
+<p>对于上述1的校验（validation）方法，如果用$E_{in}(g_t)$代替$E_{val}(g_t)$进行选择，最终可能会付出很大VC维的代价<sup id="fnref:why-large-dvc"><a href="#fn:why-large-dvc" class="footnote">1</a></sup>。这种方法需要一个强大优秀的$g_t^-$，否则也只是差中择优。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png"><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="［左］：水平垂直线投票；［右］PLA投票" /></a><div class="caption">Figure 1:  ［左］：水平垂直线投票；［右］PLA投票 [<a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png">PNG</a>]</div></div></div>
+
+<p>上图展示了利用聚合法的投票机制，灰色的判别界表示参与投票的分类器。上图左中，水平线将平面分割成了9块区域，如果按“垂直、水平左，水平右”的顺序投票，每个区域中的投票结果如图中绿色标注，最终结果相当于组合成了黑色的判别界。上图左展示的投票方法，相当于特征变换（feature transform）的效果<sup id="fnref:why-feateure-tansform"><a href="#fn:why-feateure-tansform" class="footnote">2</a></sup>；上图右展示了感知器的投票结果，相当于正则化的效果。通过上图可看出，合理的集合方法能提升性能。</p>
+
+<h2 id="section-1">均匀混合</h2>
+
+<p>均匀混合（uniform blending）也就是投票(voting)方法\eqref{eq:uniform-blending-hypothesis}。如果每个$g_t$都相同，结果等价于任意的$g_t$；如果每个$g_t$千差万别，就是少数服从多数。该方法可以直接推广到多类的情况，
+\[
+G(\mathbf x)=\arg\max_{1\leq k\leq K}\sum_{t=1}^T[[g_t(\mathbf x)=k]]。
+\]</p>
+
+<p>均匀混合解决回归问题的方法是
+\[
+G(\mathbf x) = {1\over T}\sum_{t=1}^Tg_t(\mathbf x)。
+\]
+如果每个$g_t$都相同，结果等价于任意的$g_t$；对于不同的$g_t$，可能得到比单一判别更精确的结果。</p>
+
+<p>由此可见，对于多个不同的假设，即使采用简单的混合法则，也可以得到比单一假设更好的结果。</p>
+
+<p>对于均匀混合的回归，
+\[
+\begin{aligned}
+avg\left(\left(g_t(\mathbf x)-f(\mathbf x)\right)^2\right)
+=&amp;avg\left(g_t^2-2g_t^2f+f^2\right)\\
+=&amp;avg\left(g_t^2\right)-2Gf+f^2\\
+=&amp;avg\left(g_t^2\right)-G^2+(G-f)^2\\
+=&amp;avg\left(g_t^2\right)-2G^2 + G^2 +(G-f)^2\\
+=&amp;avg\left(g_t^2-2g_tG + G^2\right) +(G-f)^2\\
+=&amp;avg\left(\left(g_t-G\right)^2\right) +(G-f)^2。
+\end{aligned}
+\]</p>
+
+<p>若对产生$\mathbf x$分布的所有点都进行上述运算，然后取期望可得
+\[
+avg\left(E_{out}\left(g_t\right)\right)=avg(\varepsilon(g_t-G)^2)+E_{out}(G)\geq E_{out}(G)，
+\]
+也就是说，均匀混合方法的效果会比选择其中一个好。</p>
+
+<p>从$P^N$采集大小为$N$的$T$个数据集，利用上述公式，衡量演算法$\mathcal A$的表现。通过$\mathcal A(\mathcal D_t)$获得$g_t$，对其平均
+\[
+\bar g=\lim_{T\rightarrow\infty}G=\lim_{T\rightarrow\infty}{1\over T}\sum_{t=1}^Tg_t=\varepsilon_{\mathcal D}\mathcal A(\mathcal D)，
+\]
+算法$\mathcal A$的性能期望为
+\begin{equation}
+avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
+\label{eq:bias-variance-decomposition}
+\end{equation}</p>
+
+<p>上述公式中：</p>
+
+<ul>
+  <li>$avg(E_{out}(g_t))$：算法$\mathcal A$的期望性能；</li>
+  <li>$E_{out}(\bar g)$：算法共识（consensus）的性能（$\bar g$就是从$\mathcal D_t\sim P^N$期望获得的$g_t$），通常称为<strong>bias</strong>；</li>
+  <li>$avg(\varepsilon(g_t-\bar g)^2)$：偏离共识的期望，通常称为<strong>variance</strong>。</li>
+</ul>
+
+<p>通过bias和variance，将演算法的表现拆分为两部分。均匀混合通过减小variance获得更稳定的性能。</p>
+
+<h2 id="section-2">线性混合</h2>
+
+<p>通过\eqref{eq:linear-blending-hypothesis}，赋予不同假设不同的权重就是<strong>线性混合</strong>（linear blending）。</p>
+
+<p>线性回归的线性混合目标为
+\[
+\min_{\alpha_t\geq 0}{1\over N}\sum_{n=1}^N\left(y_n-\sum_{t=1}^T\alpha_tg_t(\mathbf x_n)\right)^2，
+\]
+将$g(\mathbf x)$视为特征变换$\phi(\mathbf x)$，换一种表达形式
+\[
+\min_{\mathbf w}{1\over N}\sum_{n=1}^{N}\left(y_n-\sum_{i=1}^{\tilde d}w_i\phi_i(\mathbf x_n)\right)^2，
+\]
+这就类似两阶（two-level）的学习方法。</p>
+
+<p>线性混合＝线性模型＋假设（hypothesis）视为变换＋约束条件，
+\[
+\min_{\alpha_t\geq 0}{1\over N}\sum_{n=1}^Nerr\left(y_n,\sum_{t=1}^T\alpha_tg_t(\mathbf x_n)\right)。
+\]
+对于二分类问题
+\[
+\alpha_tg_t(\mathbf x)=|\alpha_t|(-g_t(\mathbf x))\qquad\mbox{if }\alpha_t&lt;0，
+\]
+正负对分类器本质上没有差别，实际上有“线性混合＝线性模型＋假设（hypothesis）视为变换”，不需要$\alpha_t$的约束条件。</p>
+
+<p>在实际中，$g_t$通常是用$E_{in}$从各模型中选的最优，$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\dots,g_T\in\mathcal H_T$。如果在这些$g_t$中用$E_{in}$再选最优的，就是best of best，将付出高复杂度$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。如果在这些$g_t$中用$E_{in}$再采用线性混合，就是aggregation of best，将付出<strong>高于</strong>$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。实际上通常采用$E_{val}$替代$E_{in}$，通过最小化$E_{train}$得到$g_t^-$。</p>
+
+<blockquote>
+  <h4 id="section-3">线性混合算法</h4>
+  <hr />
+
+  <ol>
+    <li>从$\mathcal D_{train}$中获取$g_1^-,g_2^-,\ldots,g_T^-$；     </li>
+    <li>在$\mathcal D_{val}$中将$(\mathbf x_n,y_n)$转换为$(\mathbf z_n=\phi^-(\mathbf x_n),y_n)$，其中$\phi^-(\mathbf x)＝(g_1^-(\mathbf x),g_2^-(\mathbf x),\ldots,g_T^-(\mathbf x))$；</li>
+    <li>计算$\boldsymbol\alpha=\mbox{LinearModel}\left(\{(\mathbf z_n, y_n)\}\right)$；</li>
+    <li>返回 $G_{LINB}(\mathbf x)=\mbox{LinearHypothesis}_\boldsymbol\alpha(\phi(\mathbf x))$，其中$\phi(\mathbf x)＝(g_1(\mathbf x),g_2(\mathbf x),\ldots,g_T(\mathbf x))$<sup id="fnref:how-gt-gt-x"><a href="#fn:how-gt-gt-x" class="footnote">3</a></sup>。</li>
+  </ol>
+
+</blockquote>
+
+<p><strong>如果将3、4两步换为：</strong></p>
+
+<ul>
+  <li>计算$\tilde g=\mbox{AnyModel}\left(\{(\mathbf z_n, y_n)\}\right)$；</li>
+  <li>返回$G_{ANYB}(\mathbf x)=\tilde g(\phi(\mathbf x))$。</li>
+</ul>
+
+<p>这就是any blending（stacking）的方法。any blending方法强大，可以实现conditional blending，但是也存在过拟合的风险。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png"><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="混合方法使用实例" /></a><div class="caption">Figure 2:  混合方法使用实例 [<a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png">PNG</a>]</div></div></div>
+
+<p>上图的流程中，Val.-Set Blending就是any blending的方法，使得$E_{test}$降低到$456.24$。然后再将这一步得到的上百个$g，G$用近似的$\tilde E_{test}$（$\tilde E_{test}$好可使真正的$E_{test}$更好）进行linear blending。</p>
+
+<p>混合（blending）在实际中很有用，但是模型计算复杂度增大了。</p>
+
+<h2 id="section-4">⾃助聚合</h2>
+
+<p>混合（blending）方法的策略是先学习到$g_t$，然后再聚合（aggregate）。<del>能否在学习$g_t$的同时进行聚合呢？✅</del></p>
+
+<p>对于均匀聚合（uniform aggregation），不同模型参与聚合是关键，获取不同模型的方法包括：</p>
+
+<ul>
+  <li>从不同假设集获取模型：$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\ldots,g_T\in\mathcal H_T$；</li>
+  <li>采用不同的参数：对于梯度下降法，$\eta=0.001,0.01,\ldots,10$；</li>
+  <li>利用算法的随机性：从不同的初始化开始PLA；</li>
+  <li>利用数据的随机性：交叉检验采用不同数据集验证$g_v^-$<sup id="fnref:how-to-gv-x"><a href="#fn:how-to-gv-x" class="footnote">4</a></sup>。</li>
+</ul>
+
+<p>回顾\eqref{eq:bias-variance-decomposition}，算法的性能被拆分为bias和variance两部分进行评估。共识的结果会比$\mathcal A(\mathcal D)$的单一$g$效果好，但是每次都需要用不同的$\mathcal D_t$获得$g_t$。</p>
+
+<p>能否通过有限的$T$和单一的数据集$\mathcal D$得近似的$\bar g$？✅</p>
+
+<p><strong>bootstrapping</strong>是一种通过重采样（re-sample）$\mathcal D$模拟$\mathcal D_t$的统计学工具。bootstrap得到$\tilde{\mathcal D}_t$的方法：从$\mathcal D$中随机抽取一个点，纪录该点后然后放回，重复该过程直到抽取到$N’$个数据。</p>
+
+<blockquote>
+  <h4 id="section-5">自助聚合算法</h4>
+  <hr />
+
+  <ol>
+    <li>利用bootstrapping技术得到$N’$点的数据集$\tilde{\mathcal D}_t$；</li>
+    <li>利用$\mathcal A(\tilde{\mathcal D}_t)$得到$g_t$；</li>
+    <li>$G=\mbox{Uniform}(g_t)$。</li>
+  </ol>
+</blockquote>
+
+<p><strong>⾃助聚合</strong>（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）也称为<strong>打包</strong>（bagging）。像⾃助聚合这种，建立在其它基础算法（base algorithm）$\mathcal A$之上的算法称为meta algorithm。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png"><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="bagging pocket方法" /></a><div class="caption">Figure 3:  bagging pocket方法 [<a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png">PNG</a>]</div></div></div>
+
+<p>上图是bagging pocket方法的效果，通过bagging得到各不相同的$g_t$，然后通过聚合得到合适的非线性分类器。</p>
+
+<p>如果基础算法（base algorithm）对数据的随机性很敏感，bagging可以工作得相当好。</p>
+
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-7">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-large-dvc">
+      <p>为什么会付出很大VC维的代价？ <a href="#fnref:why-large-dvc" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:why-feateure-tansform">
+      <p>为什么相当于特征变换的效果？ <a href="#fnref:why-feateure-tansform" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:how-gt-gt-x">
+      <p>$g_t^-(\mathbf x)$和$g_t(\mathbf x)$具体如何计算？ <a href="#fnref:how-gt-gt-x" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:how-to-gv-x">
+      <p>这步如何操作？ <a href="#fnref:how-to-gv-x" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/01/linear-regression" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/01/blending-and-bagging" data-url="http://qianjiye.de/2015/01/blending-and-bagging" data-title="分类器融合（1）：混合与自助聚合">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/linear-regression'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/blending-and-bagging/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
