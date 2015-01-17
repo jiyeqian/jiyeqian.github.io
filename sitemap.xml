@@ -2,6 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2015/01/adaptive-boosting</loc>
+    
+    <lastmod>2015-01-17T13:02:33+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2015/01/blending-and-bagging</loc>
     
     <lastmod>2015-01-15T15:12:32+08:00</lastmod>
@@ -76,7 +85,7 @@
   <url>
     <loc>http://qianjiye.de/2014/12/machine-learning-noise-and-error</loc>
     
-    <lastmod>2014-12-28T02:56:00+08:00</lastmod>
+    <lastmod>2014-12-27T16:56:00+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -360,6 +369,8 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  
   
   
   

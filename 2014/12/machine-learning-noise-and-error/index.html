@@ -85,7 +85,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <article class="content">
         <section class="meta">
 <span class="time">
-  <time datetime="2014-12-28">2014-12-28</time>
+  <time datetime="2014-12-27">2014-12-27</time>
 </span>
 
  |
@@ -176,8 +176,8 @@ f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\
 
 <p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
 
-<p>对于错分的不同损失，可定义如下的加权误差度量方式
-\[
+<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
+<p>\[
 E_{in}^w(h)={1\over N}\sum_{n=1}^N
 \left\{
 \begin{aligned}

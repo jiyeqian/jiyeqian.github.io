@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>分类器融合（2）：AdaBoost</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>分类器融合（2）：AdaBoost</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-01-17">2015-01-17</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">基于样本加权的误差度量</h2>
+
+<p>bootstrapping重采样数据集$\mathcal D=\{(\mathbf x_1,y_1),(\mathbf x_2,y_2),(\mathbf x_3,y_3),(\mathbf x_4,y_4)\}$，可能得到$\tilde{\mathcal D}_t=\{(\mathbf x_1,y_1),(\mathbf x_1,y_1),(\mathbf x_2,y_2),(\mathbf x_4,y_4)\}$，那么$\tilde{\mathcal D}_t$上的in-sample误差是$E_{in}^{0/1}(h)={1\over 4}\sum_{(\mathbf x,y)\in\tilde{\mathcal D}_t}[[y\neq h(\mathbf x)]]$，令$\mathbf u^{(t)}=[2,1,0,1]^T$，该误差也可以直接用$\mathcal D$上的加权误差$E_{in}$表示，$E_{in}^{\mathbf u^{(t)}}(h)={1\over 4}\sum_{n=1}^4u_n^{(t)}\cdot[[y_n\neq h(\mathbf x_n)]]$。这就是bagging通过最小化bootstrap-weighted误差得到不同$g_t$的方法。</p>
+
+<p>通常需要最小化的加权误差为
+\[
+E_{in}^{\mathbf u}(h)={1\over N}\sum_{n=1}^Nu_n\cdot err(y_n, h(\mathbf x_n))，
+\]
+把$\mathbf u$放回算法并不困难。对于SVM，利用对偶QP最小化误差$E_{in}^{\mathbf u}\varpropto C\sum_{n=1}^Nu_n\widehat{err}_{SVM}$，可以通过调整原方法的上界为$0\leq \alpha_n\leq Cu_n$来实现；对于logistic回归，利用SGD最小化误差$E_{in}^{\mathbf u}\varpropto C\sum_{n=1}^Nu_n\widehat{err}_{CE}$，可以通过按不同倍率$u_n$的概率采样$(\mathbf x_n,y_n)$来实现。</p>
+
+<p>这里是基于不同样本点加权的误差度量方式，与<a href="/2014/12/machine-learning-noise-and-error/#class-weighted-error">基于不同类别加权的误差度量方式</a>的加权对象不同。如何将$\mathbf u$放回原算法是这类加权算法要处理的重要问题。</p>
+
+<h2 id="section-1">权重调整策略</h2>
+
+<p>如果算法会根据$\mathbf u$决定$g$，那么怎样改变$\mathbf u$使得$g$越不一样越好？越不一样的$g$，通过聚合（aggregation）机制，越有可能得到更好的结果。</p>
+
+<p>通过$u_n^{(t)}$得到$g_t$，$u_n^{(t+1)}$得到$g_{t+1}$，
+\[
+\left\{
+\begin{aligned}
+g_t&amp;\leftarrow\arg\min_{h\in\mathcal H}\left(\sum_{n=1}^Nu_n^{(t)}[[y_n\neq h(\mathbf x_n)]]\right)\\
+g_{t+1}&amp;\leftarrow\arg\min_{h\in\mathcal H}\left(\sum_{n=1}^Nu_n^{(t+1)}[[y_n\neq h(\mathbf x_n)]]\right)。
+\end{aligned}
+\right.
+\]
+如果先选定$g_t$（当作$h$），调整权重$u_n^{(t+1)}$使得$g_t$效果非常差，$g_t$以及与$g_t$相似的假设都不会被当作$g_{t+1}$，这样就能选择到一个与$g_t$很不一样的$g_{t+1}$。这就是获得不一样$g$的基本思想。理想的情况就是构造$\mathbf u_n^{(t+1)}$，使得$g_t$的表现就像随机猜想一样
+\[
+\frac{\sum_{n=1}^Nu_n^{(t+1)}[[y_n\neq g_t(\mathbf x_n)]]}{\sum_{n=1}^Nu_n^{(t+1)}}={1\over 2}，
+\]
+也就是期望
+\[
+\frac{\sum_{n=1}^Nu_n^{(t+1)}[[y_n\neq g_t(\mathbf x_n)]]}{\sum_{n=1}^Nu_n^{(t+1)}}=\frac{\clubsuit_{t+1}}{\clubsuit_{t+1}+\spadesuit_{t+1}}={1\over 2}，
+\]
+其中
+\[
+\clubsuit_{t+1}=\sum_{n=1}^Nu_n^{(t+1)}[[y_n\neq g_t(\mathbf x_n)]]\qquad\spadesuit_{t+1}=\sum_{n=1}^Nu_n^{(t+1)}[[y_n= g_t(\mathbf x_n)]]。
+\]</p>
+
+<p>假设犯错误的样本点有$1126$个，正确的样本点有$6211$个，对于错分的样本点就可以用$u_n^{(t+1)}\leftarrow u_n^{(t)}\cdot {6211\over 7337}$更新，对于正确分类的样本点就可以用$u_n^{(t+1)}\leftarrow u_n^{(t)}\cdot {1126\over 7337}$更新。更新权重$\mathbf u^{(t+1)}$时，设错误率为
+\begin{equation}
+\epsilon_t=\frac{\sum_{n=1}^Nu_n^{(t)}[[y_n\neq g_t(\mathbf x_n)]]}{\sum_{n=1}^Nu_n^{(t)}}，
+\label{eq:epsilon-t}
+\end{equation}
+错误的点原来的权重乘以系数$\varpropto(1-\epsilon_t)$，正确的点原来的权重乘以系数$\varpropto\epsilon_t$。</p>
+
+<p>通常的做法是定义缩放因子
+\begin{equation}
+\blacklozenge_t=\sqrt{1-\epsilon_t\over\epsilon_t}，
+\label{eq:blacklozenge-t}
+\end{equation}
+其中$\epsilon_t$按\eqref{eq:epsilon-t}计算，权重更新方法为
+\[
+\mbox{incorrect}\leftarrow\mbox{incorrect}\cdot\blacklozenge_t\qquad\mbox{correct}\leftarrow\mbox{correct }/\blacklozenge_t。
+\]
+当$\epsilon\leq{1\over 2}$时，$\blacklozenge_t\geq 1$，放大错误的作用，缩小正确的影响，更关注错分的样本。</p>
+
+<h2 id="adaboost">AdaBoost</h2>
+
+<p>AdaBoost<sup id="fnref:pi-jiang-method"><a href="#fn:pi-jiang-method" class="footnote">1</a></sup> ＝ 弱的基础学习算法$\mathcal A$（学生）＋最优的权重调整因子$\blacklozenge_t$（老师）＋神奇的线性聚合$\alpha_t$（班级集体智慧）。</p>
+
+<blockquote>
+  <h4 id="adaboostadaptive-boosting">AdaBoost（<em>ada</em>ptive <em>boost</em>ing）算法</h4>
+  <hr />
+
+  <p>首先，初始化$\mathbf u^{(1)}=\left[{1\over N},{1\over N},\ldots,{1\over N}\right]$；</p>
+
+  <p>其次，对于$t=1,2,\ldots,T$执行以下步骤：</p>
+
+  <ol>
+    <li>利用$\mathcal A(\mathcal D, \mathbf u^{(t)})$得到$g_t$，其中$\mathcal A$最小化$\mathbf u^{(t)}$加权的0/1误差；</li>
+    <li>将$\mathbf u^{(t)}$更新为$\mathbf u^{(t＋1)}$：
+\[
+u_n^{(t+1)}\leftarrow\left\{
+\begin{aligned}
+u_n^{(t)}\cdot\blacklozenge_t&amp;\quad\mbox{if }[[y_n\neq g_t(\mathbf x_n)]]\\
+u_n^{(t)}/\blacklozenge_t&amp;\quad\mbox{if }[[y_n= g_t(\mathbf x_n)]]，
+\end{aligned}
+\right.
+\]
+其中$\blacklozenge_t$按\eqref{eq:blacklozenge-t}计算；</li>
+    <li>计算系数$\alpha_t=\ln(\blacklozenge_t)$；</li>
+  </ol>
+
+  <p>最后，返回$G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_tg_t(\mathbf x)\right)$。</p>
+</blockquote>
+
+<p>好的$g_t$应该有大的$\alpha_t$。对于$\epsilon_t={1\over 2}$，近似于随机猜想，$\alpha_t=0$；对于$\epsilon_t=0$，完全正确的分类器，$\alpha_t=\infty$。</p>
+
+<p>AdaBoost的VC界是
+\[
+E_{out}(G)\leq E_{in}(G)+O\left(\sqrt{O\left(d_{VC}(\mathcal H)\cdot T\log T\right)\cdot{\log N\over N}}\right)，
+\]
+其中$d_{VC}(\mathcal H)$是为了$g_t$所要付出的代价。当$g_t$的性能优于随机猜想$\left(\epsilon_t\leq\epsilon&lt;{1\over 2}\right)$时，经过$T=O(\log N)$轮迭代就可以达到$E_{in}(G)=0$。由于总共的$d_{VC}=O\left(d_{VC}(\mathcal H)\cdot T\log T\right)$随$T$增长缓慢，不等式右边第二项也可以做到很小。</p>
+
+<p>AdaBoost是一种提升算法（boosting）的实现，从boosting的角度，若$\mathcal A$略优于随机猜想$\left(\epsilon_t\leq\epsilon&lt;{1\over 2}\right)$，AdaBoost＋$\mathcal A$可以达到很强大的性能（$E_{in}(G)=0$，$E_{out}$很小）。</p>
+
+<h2 id="adaboost-stump">AdaBoost-Stump</h2>
+
+<p>对于一个decision stump分类器
+\[
+h_{s,i,\theta}(\mathbf x)=s\cdot\mbox{sign}(\mathbf x_i-\theta)，
+\]
+$i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分类器就是水平或竖直线，该算法优化的时间复杂度为$O(d\cdot N\log N)$。decision stump能够高效的最小化$E_{in}^\mathbf u$，但是自身的性能却很弱。
+将decision stump作为基础分类器，可以组合出功能强大的<strong>AdaBoost-Stump</strong>。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-17-adaptive-boosting-adaboost-stump.png"><img src="/assets/images/2015-01-17-adaptive-boosting-adaboost-stump.png" alt="AdaBoost-Stump示例" /></a><div class="caption">Figure 1:  AdaBoost-Stump示例 [<a href="/assets/images/2015-01-17-adaptive-boosting-adaboost-stump.png">PNG</a>]</div></div></div>
+
+<p>上图展示了基于decision stump构造的AdaBoost-Stump，当$t=5$时就能完美的分类。AdaBoost-Stump能够比核SVM更高效地得到非线性分类器。</p>
+
+<p>世界上第一个实时人脸识别程序就是基于AdaBoost-Stump。从$24\times 24$规格的162336张候选图片中挑选关键图片，在此基础上进行线性聚合（linear aggregation）<sup id="fnref:how-to-do-AdaBoost-face"><a href="#fn:how-to-do-AdaBoost-face" class="footnote">2</a></sup>。为了提高速度，人脸识别采用的$G$会尽早排除非人脸。</p>
+
+<p>AdaBoost-Stump能够有效的进行特征选择和聚合。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:pi-jiang-method">
+      <p>也可称为“皮匠法”，意为“三个臭皮匠，胜过诸葛亮”。 <a href="#fnref:pi-jiang-method" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:how-to-do-AdaBoost-face">
+      <p>这里如何构造人脸识别程序的呢？ <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/01/blending-and-bagging" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/01/adaptive-boosting" data-url="http://qianjiye.de/2015/01/adaptive-boosting" data-title="分类器融合（2）：AdaBoost">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/blending-and-bagging'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/adaptive-boosting/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

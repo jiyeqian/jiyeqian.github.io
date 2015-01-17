@@ -109,6 +109,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
+<p><strong>混合</strong>（blending）是将不同的假设用均匀、线性或非线性的方式组合起来；如果先从boostrapped数据上学习到各种不同的假设，然后再混合，就称为<strong>自助聚合</strong>（bagging, bootstrap aggregating）。</p>
+
 <h2 id="section">聚合法简介</h2>
 
 <p>如何将特征和假设集组合起来，让机器学习的性能更好呢？</p>
@@ -280,7 +282,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
   <ol>
     <li>利用bootstrapping技术得到$N’$点的数据集$\tilde{\mathcal D}_t$；</li>
-    <li>利用$\mathcal A(\tilde{\mathcal D}_t)$得到$g_t$；</li>
+    <li>利用$\mathcal A(\tilde{\mathcal D}_t)$，算法$\mathcal A$在数据集$\tilde{\mathcal D}_t$上得到$g_t$；</li>
     <li>$G=\mbox{Uniform}(g_t)$。</li>
   </ol>
 </blockquote>
@@ -322,7 +324,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <span>
   <a  href="/2015/01/linear-regression" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/01/adaptive-boosting" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -360,6 +362,9 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/adaptive-boosting'; --1> -->
+<!--         url = '/2015/01/adaptive-boosting'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
