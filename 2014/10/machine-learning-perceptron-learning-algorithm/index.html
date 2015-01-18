@@ -130,7 +130,7 @@ h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sig
 <p>问：如何估计模型模型$h(x)$的参数$\mathbf{w}$？  <br />
 答：感知器算法（PLA，Perceptron Learning Algorithm）。</p>
 
-<h2 id="section-1">感知器算法</h2>
+<h2 id="pla-algorithm">感知器算法</h2>
 
 <p>感知器算法通过迭代更新模型参数，直到没有错分的样本点。  </p>
 
@@ -166,7 +166,7 @@ y_n\mathbf w^T_{t+1} \mathbf x_n \geq y_n\mathbf w^T_t\mathbf x_n
 
 <p><strong>注意事项</strong>：$\mathbf w$是决策界（判别面）的法向量。</p>
 
-<h2 id="section-2">理论分析</h2>
+<h2 id="section-1">理论分析</h2>
 
 <blockquote>
   <ol>
@@ -237,7 +237,7 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 
 <p>从第3步可知，Pocket PLA的算法时间复杂度要高于PLA，如果对于线性可分的样本集，Pocket PLA比PLA慢。</p>
 
-<h2 id="section-3">思考问题</h2>
+<h2 id="section-2">思考问题</h2>
 
 <ol>
   <li>PLA和梯度下降法有无联系？</li>
@@ -245,7 +245,7 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
   <li>如何推导公式\eqref{eq:need_to_be_done_1}\eqref{eq:need_to_be_done_2}？ <a href="https://class.coursera.org/ntumlone-002/forum/thread?thread_id=28">答案</a></li>
 </ol>
 
-<h2 id="section-4">參考資料</h2>
+<h2 id="section-3">參考資料</h2>
 
 <ol>
   <li><a href="https://class.coursera.org/ntumlone-002">機器學習基石(Machine Learning Foundations)</a>    </li>

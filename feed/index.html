@@ -4,8 +4,188 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-17T18:21:32+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-18T13:15:27+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>logistic回归</title>
+      <link href="http://qianjiye.de/2015/01/logistic-regression" />
+      <pubdate>2015-01-17T16:28:27+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/logistic-regression</guid>
+      <content:encoded>&lt;![CDATA[<p>本节的主要参考资料是机器学习基石<a href="#lin_ml_logistic_regression_2014">[1]</a>和机器学习<a href="#ng_ml_lr_2014">[2]</a>网络课程。</p>
+
+<h2 id="soft">soft二分类</h2>
+
+<p>soft二分类感兴趣的不仅仅是$\{-1,+1\}$类别的判断，而是属于某个类别的可能性，比如
+\begin{equation}
+f(\mathbf x)=P(+1|\mathbf x)\in [0,1]。
+\label{eq:f-vs-probility}
+\end{equation}
+但是在实际应用中，难以获取属于某个类别的概率，只能得到是否属于某个类别，也就是与二分类一样的数据集。</p>
+
+<p>不妨将$\{-1,+1\}$类别标签的数据，看作是概率标签数据被噪声污染的结果，e.g. $(\mathbf x_1,y’_1=0.9=P(+1|\mathbf x_1))+{noise}\rightarrow(\mathbf x_1,y_1=\circ\sim P(+1|\mathbf x_1))$。</p>
+
+<p>logistic回归解决的问题，就是在$\{-1,+1\}$类别标签的训练集上，通过soft二分类产生概率标签的输出。</p>
+
+<h2 id="logistic">logistic回归模型</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-logistic-function.png"><img src="/assets/images/2015-01-17-logistic-regression-logistic-function.png" alt="logistic函数" /></a><div class="caption">Figure 1:  logistic函数 [<a href="/assets/images/2015-01-17-logistic-regression-logistic-function.png">PNG</a>]</div></div></div>
+
+<p>对于特征$\mathbf x=(x_0, x_1,\ldots,x_d)$，先计算加权的risk score，$s=\mathbf w^T\mathbf x$，然后再将此得分代入如上图所示的logistic函数<sup id="fnref:logistic-function-properties"><a href="#fn:logistic-function-properties" class="footnote">1</a></sup>
+\begin{equation}
+\theta(s)={1\over 1 + e^{-s}}
+\label{eq:sigmoid-function}
+\end{equation}
+转化为概率的形式。logistic函数也称为sigmoid函数，单调、光滑。也就是可用logistic回归模型
+\begin{equation}
+h(\mathbf x)={1\over 1+\exp(-\mathbf w^T\mathbf x)}，
+\end{equation}
+作为目标函数$f(\mathbf x)=P(y|\mathbf x)$的近似。</p>
+
+<p>建立logistic回归模型的基本思路是，找到最可能产生数据集$\mathcal D$的假设$h$。考虑数据集$\mathcal D=\{(\mathbf x_1,\circ),(\mathbf x_2,\times),\ldots,(\mathbf x_N,\times)\}$，根据\eqref{eq:f-vs-probility}可得<sup id="fnref:andrew-class-label"><a href="#fn:andrew-class-label" class="footnote">2</a></sup>
+\[
+P(y|\mathbf x)=
+\left\{
+\begin{aligned}
+&amp;f(\mathbf x)&amp;\mbox{for }y=+1&amp;\\
+&amp;1-f(\mathbf x)&amp;\mbox{for }y=-1&amp;，
+\end{aligned}
+\right.
+\]
+那么得到这个数据集的概率为
+\[
+\begin{aligned}
+&amp;P(\mathbf x_1)P(\circ|\mathbf x_1)\times P(\mathbf x_2)P(\times|\mathbf x_2)\times\ldots P(\mathbf x_N)P(\times|\mathbf x_N)\\
+=&amp;P(\mathbf x_1)f(\mathbf x_1)\times P(\mathbf x_2)(1-f(\mathbf x_2))\times\ldots P(\mathbf x_N)(1-f(\mathbf x_N))\Rightarrow\mbox{probability using }f\\
+\approx &amp;P(\mathbf x_1)h(\mathbf x_1)\times P(\mathbf x_2)(1-h(\mathbf x_2))\times\ldots P(\mathbf x_N)(1-h(\mathbf x_N))\Rightarrow\mbox{likelihood}(h)，
+\end{aligned}
+\]
+$h$产生这笔数据的可能性（likelihood）和$f$产生这笔数据的概率（probability）差不多，最终得到了$h$产生这笔数据的可能性。期望$f$产生这笔数据的概率相当大<sup id="fnref:why-large-probability"><a href="#fn:why-large-probability" class="footnote">3</a></sup>，因此有
+\[
+\mbox{likelihood}(h)\approx\mbox{probability using }f\approx\mbox{large}，
+\]
+选择可能性最高的那个$h$
+\[
+g=\arg\max_h\mbox{likelihood}(h)。
+\]
+根据logistic函数的性质$\theta(-s)=1-\theta(s)$，可进一步得到
+\[
+\mbox{likelihood}(h)=P(\mathbf x_1)h(+\mathbf x_1)\times P(\mathbf x_2)(-h(\mathbf x_2))\times\ldots P(\mathbf x_N)(-h(\mathbf x_N))，
+\]
+对所有$h$，$P(\mathbf x_i)$都不变，那么可得
+\[
+\mbox{likelihood}(\mbox{logistic }h)\varpropto\prod_{n=1}^Nh(y_n\mathbf x_n)，
+\]
+最佳$\mathbf w$应满足条件
+\[
+\max_{\mathbf w}\mbox{likelihood}(\mathbf w)\varpropto\prod_{n=1}^N\theta(y_n\mathbf w^T\mathbf x_n)。
+\]
+利用$\ln$将乘法化为加法，得到等价的优化问题
+\begin{equation}
+\min_\mathbf wE_{in}(\mathbf w)={1\over N}\sum_{n=1}^N\ln\left(1+\exp\left(-y_n\mathbf w^T\mathbf x_n\right)\right)，
+\end{equation}
+其中$err(\mathbf w,\mathbf x,y)=\ln\left(1+\exp\left(-y\mathbf w^T\mathbf x\right)\right)$称为<strong>交叉熵误差</strong>（cross-entropy error）。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-convex-or-non.png"><img src="/assets/images/2015-01-17-logistic-regression-convex-or-non.png" alt="［左］：平方误差代价函数；［右］交叉熵误差代价函数" /></a><div class="caption">Figure 2:  ［左］：平方误差代价函数；［右］交叉熵误差代价函数 [<a href="/assets/images/2015-01-17-logistic-regression-convex-or-non.png">PNG</a>]</div></div></div>
+
+<p>上图展示了用不同误差度量方式的代价函数，上图左采用了线性回归基于平方误差的代价函数，非凸不利于优化。</p>
+
+<h2 id="section">梯度下降法</h2>
+
+<p>$E_{in}(\mathbf w)$是连续、可微、二次可微的凸函数，理论上取得最小值时$\mathbf w$满足$\nabla E_{in}(\mathbf w)=0$，其中
+\begin{equation}
+\nabla E_{in}(\mathbf w)={1\over N}\sum_{n=1}^N\theta(-y_n\mathbf w^T\mathbf x_n)(-y_n\mathbf x_n)。
+\label{eq:gradient-logistic-object-function}
+\end{equation}
+由于$\nabla E_{in}(\mathbf w)=0$是非线性方程，并且$\theta(-y_n\mathbf w^T\mathbf x_n)＝0$的条件$y_n\mathbf w^T\mathbf x_n\gg 0$也难以满足，因此不存在类似线性回归的闭式解。</p>
+
+<p>回顾<a href="/2014/10/machine-learning-perceptron-learning-algorithm/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
+\[
+\mathbf w_{t+1}\leftarrow\mathbf w_{t}+1\cdot\left(\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n\right)，
+\]
+简记为
+\[
+\mathbf w_{t+1}\leftarrow\mathbf w_{t}+\eta\mathbf v，
+\]
+其中$\eta=1$表示步长，$\mathbf v=\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n$表示方向。对$(\eta,\mathbf v)$和终止条件的不同定义，就会得到不同的迭代优化算法。考察梯度计算公式\eqref{eq:gradient-logistic-object-function}，$\theta(-y_n\mathbf w^T\mathbf x_n)$相当于梯度方向的加权值，当$y_n\mathbf w^T\mathbf x_n$越小的时候，权值越大，负值越大表示犯错越厉害。如果按照梯度方向更新，这和PLA有相同的含义，犯错越厉害的对更新贡献越大。</p>
+
+<p>对于logistic回归的$E_{in}$，令$\eta&gt;0$，
+\[
+\min_{\lVert\mathbf v\rVert=1}E_{in}(\mathbf w_t+\eta\mathbf v)
+\]
+利用贪婪法找$\mathbf w_t$附近最好的一个方向，让$E_{in}$下降最多。上式仍然是非线性，且带约束条件，难以求解。当$\eta$足够小时，利用Taylor展式可得
+\[
+E_{in}(\mathbf w_t+\eta\mathbf v)\approx E_{in}(\mathbf w_t)+\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)
+\]
+若要实现
+\[
+\min_{\lVert\mathbf v\rVert=1}\left(E_{in}(\mathbf w_t)+\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)\right)，
+\]
+就要使得$\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)$最小，此时$\eta&gt;0$是常数，因此$\mathbf v$和$\nabla E_{in}(\mathbf w_t)$反向时得到的值最小，
+\[
+\mathbf v=-\frac{\nabla E_{in}(\mathbf w_t)}{\lVert\nabla E_{in}(\mathbf w_t)\rVert}，
+\]
+那么参数的更新规则为
+\begin{equation}
+\mathbf w_{t+1}\leftarrow\mathbf w_{t}-\eta\frac{\nabla E_{in}(\mathbf w_t)}{\lVert\nabla E_{in}(\mathbf w_t)\rVert}。
+\label{eq:gd-iterate}
+\end{equation}
+这种参数更新方法就是梯度下降法，是一种简单且应用广泛的优化算法。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-eta-example.png"><img src="/assets/images/2015-01-17-logistic-regression-eta-example.png" alt="不同步长的迭代效果" /></a><div class="caption">Figure 3:  不同步长的迭代效果 [<a href="/assets/images/2015-01-17-logistic-regression-eta-example.png">PNG</a>]</div></div></div>
+
+<p id="why-fixed-eta">上图展示了利用\eqref{eq:gd-iterate}迭代的效果，$\eta$过小导致收敛太慢，过大导致不稳定，动态调整可以得到不错的效果。对于动态调整的$\eta$，坡度$\lVert\nabla E_{in}(\mathbf w_t)\rVert$大的时候采用大的$\eta$，小的时候采用小的$\eta$。当$\eta\leftarrow{\eta\over\lVert\nabla E_{in}(\mathbf w_t)\rVert}$时，固定住新的$\eta$就会达到动态调整的效果，因此可以采用固定$\eta$的自适应步长更新方式</p>
+<p>\begin{equation}
+\mathbf w_{t+1}\leftarrow\mathbf w_{t}-\eta\nabla E_{in}(\mathbf w_t)。
+\label{eq:gd-iterate-2}
+\end{equation}</p>
+
+<blockquote>
+  <h4 id="logistic-1">梯度下降法求解logistic回归参数</h4>
+  <hr />
+  <p>初始化$\mathbf w_0$和$\eta$；</p>
+
+  <p>对$t=0,1,\ldots$循环以下步骤，直到$\nabla E_{in}(\mathbf w_{t+1})=0$或达到设定迭代次数：       </p>
+
+  <ol>
+    <li>利用公式\eqref{eq:gradient-logistic-object-function}计算$\nabla E_{in}(\mathbf w_{t})$；</li>
+    <li>利用公式\eqref{eq:gd-iterate-2}更新参数$\mathbf w_{t+1}$。</li>
+  </ol>
+</blockquote>
+
+<p>梯度下降法的注意事项可以参考<a href="/2015/01/linear-regression/#gd-method">线性回归梯度法</a>的注意事项。</p>
+
+<h2 id="section-1">参考文献</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_logistic_regression_2014">[1]H.-T. Lin, “Lecture 10: Logistic Regression.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="ng_ml_lr_2014">[2]A. Ng, “Logistic Regression.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-2">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:logistic-function-properties">
+      <p>logistic函数的性质：（1）$\theta(-s)=1-\theta(s)$；（2）${d\theta(s)\over ds}=\theta(s)(1-\theta(s))$（${d\theta(s)\over d^Ns}=\theta(s)\prod_{n=0}^N(1-N\theta(s))$<strong>????</strong>）；（3）${\theta(s)\over 1-\theta(s)}=e^s$。 <a href="#fnref:logistic-function-properties" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:andrew-class-label">
+      <p>Andrew NG课程中采用了$\{0,1\}$类别标签<a href="#ng_ml_lr_2014">[2]</a>，因此得到的公式与本文形式不同。 <a href="#fnref:andrew-class-label" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:why-large-probability">
+      <p><del>为什么$f$产生这笔数据的概率很大？</del>期望找到最合适的$h$，使产生数据集$\mathcal D$的可能性最大。 <a href="#fnref:why-large-probability" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>分类器融合（2）：AdaBoost</title>
@@ -370,7 +550,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
       <guid>http://qianjiye.de/2015/01/linear-regression</guid>
       <content:encoded>&lt;![CDATA[<p><img src="/assets/images/2014-10-19-linear_regression_0.png" alt="线性回归" /></p>
 
-<p>本节的主要参考资料是机器学习<a href="#ng_ml_linreg_2014">[1]</a>和机器学习基石<a href="#lin_mlf_linreg_2014">[2]</a>网络课程。</p>
+<p>本节的主要参考资料是机器学习基石<a href="#lin_mlf_linreg_2014">[1]</a>和机器学习<a href="#ng_ml_linreg_2014">[2]</a>网络课程。</p>
 
 <h2 id="section">线性回归模型</h2>
 
@@ -468,7 +648,7 @@ E_{in}\left(\mathbf w_{LIN}\right)
 
 <p>$\mbox{noise level}$可以用$\sigma^2$表示，从上图右可见，$\bar E_{in}$和$\bar E_{out}$在$N\rightarrow\infty$时都会趋近于$\sigma^2$。期望的泛化误差（generalization error）可以用${2(d+1)\over N}$衡量，这里是平均情况，VC维衡量的是最坏的情况。</p>
 
-<h2 id="section-2">梯度下降法</h2>
+<h2 id="gd-method">梯度下降法</h2>
 
 <p>梯度下降法就是沿梯度下降方向更新参数，也就是对每个特征的权值$w_i$，不断迭代执行更新
 \begin{equation}
@@ -494,13 +674,13 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
 
 <h4 id="alpha">学习率$\alpha$的注意事项：</h4>
 <ol>
-  <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，在固定$\alpha$的情况下梯度下降步长也会自动减小，如上图右所示；</li>
+  <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，<a href="/2015/01/logistic-regression/#why-fixed-eta">在固定$\alpha$的情况下梯度下降步长也会自动减小</a>，如上图右所示；</li>
   <li>$\alpha$太小收敛慢，太大可能错过极值点而不收敛，甚至可能导致$E_{in}(\mathbf w)$不降反升。</li>
 </ol>
 
 <p>线性回归的代价函数$E_{in}(\mathbf w)$不存在局部极值（local optima），极小值就是全局极值<sup id="fnref:no-local-optima"><a href="#fn:no-local-optima" class="footnote">6</a></sup>。</p>
 
-<h2 id="section-3">两种方法对比</h2>
+<h2 id="section-2">两种方法对比</h2>
 
 <table>
   <thead>
@@ -529,7 +709,7 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
   </tbody>
 </table>
 
-<h2 id="section-4">分类问题</h2>
+<h2 id="section-3">分类问题</h2>
 
 <p>线性分类器和线性回归的对比如下表：</p>
 
@@ -581,22 +761,22 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 <p>在很多时候，用线性回归解决分类问题效果尚可。如果要让效果更好，可将$\mathbf w_{LIN}$当做PLA或pocket算法的初始值$\mathbf w_0$，加速PLA或pocket算法。</p>
 
-<h2 id="section-5">多项式回归</h2>
+<h2 id="section-4">多项式回归</h2>
 
 <p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，构造新的特征向量$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
 
 <p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="section-5">参考资料</h2>
 
-<ol class="bibliography"><li><span id="ng_ml_linreg_2014">[1]A. Ng, “Linear Regression with multiple variables.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li>
-<li><span id="lin_mlf_linreg_2014">[2]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
+<ol class="bibliography"><li><span id="lin_mlf_linreg_2014">[1]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="ng_ml_linreg_2014">[2]A. Ng, “Linear Regression with multiple variables.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
 
 </li>
 <li><span id="ng_ml_rlrbv_pe_2014">[3]A. Ng, “Programming Exercise 5: Regularized Linear Regression and Bias v.s. Variance.” Coursera, 2014.</span>
@@ -605,7 +785,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="section-6">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -1516,119 +1696,6 @@ d_{VC}\left(\mathcal A_\rho\right)\leq\min\left({R^2\over \rho^2},d\right)+1\leq
 <p>几种情况的判别界对比如上图所示，large-margin的判别界简单且数量较少，有特征变换$\Phi$的判别界较复杂但是数量较多。</p>
 
 <p>较少的判别界对$d_{VC}$和泛化有利，复杂的判别界可能得到更好的$E_{in}$。非线性支持向量机同时具备大边界的判别界和采用多种特征变换$\Phi$，因此判别界较少而且比较复杂，兼顾了这两方面的优点。</p>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习：噪声与误差</title>
-      <link href="http://qianjiye.de/2014/12/machine-learning-noise-and-error" />
-      <pubdate>2014-12-27T16:56:00+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2014/12/machine-learning-noise-and-error</guid>
-      <content:encoded>&lt;![CDATA[<p>如果数据存在噪声，对机器学习可学习理论推导有何影响？</p>
-
-<h2 id="section">噪声起源</h2>
-
-<p>对于$f:\mathcal X\rightarrow \mathcal Y$，噪声即可能来源于$\mathcal X$，也可能来源于$\mathcal Y$。以信用卡申办信息为例说明（$\mathcal X$为客户资料，$\mathcal Y$为是否办理信用卡）：</p>
-
-<ul>
-  <li>$y$的噪声：良好纪录的用户，被标记为Bad；</li>
-  <li>$y$的噪声：同样资料的用户，标记却不同（不同专家评价有差异）；</li>
-  <li>$\mathbf x$的噪声：不准确的客户资料。</li>
-</ul>
-
-<h2 id="target-distribution">目标分布<sup id="fnref:target-distribution"><a href="#fn:target-distribution" class="footnote">1</a></sup></h2>
-
-<p>由于噪声的存在，弹珠模型的弹珠不再是确定的颜色，而是会随时变色，但是通过记录抽出瞬间弹珠的颜色，仍可以对罐中弹珠颜色概率做估计。$y=f(\mathbf x) + \mbox{noise}$，$y$用<strong>目标分布</strong>表示
-\begin{equation}
-y\sim P(y|\mathbf x)。
-\end{equation}
-对于满足$(\mathbf x,y)\sim P(\mathbf x,y)$的噪声数据，VC界仍成立，通过$E_{in}$仍然可以估计$E_{out}$。
-如果$P(\circ|\mathbf x)=0.7$，$P(\times|\mathbf x)=0.3$，<strong>理想最小目标函数</strong>（ideal mini-target）为$f(\mathbf x)=\circ$，在最佳选择下噪声水平是$0.3$。对于确定的（无噪声）的目标函数$f$，也可用目标分布（target distribution）表示
-\[
-P(y|\mathbf x)=
-\left\{
-\begin{aligned}
-1&amp;\quad\mbox{for }y=f(\mathbf x)\\
-0&amp;\quad\mbox{for }y\neq f(\mathbf x)。
-\end{aligned}
-\right.
-\]</p>
-
-<p>机器学习的目标就是预测常见数据（w.r.t. $P(\mathbf x)$）的理想最小目标函数（w.r.t. $P(y|\mathbf x)$）。</p>
-
-<p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
-
-<h2 id="section-1">误差度量</h2>
-
-<p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
-
-<p>令$\tilde y=g(\mathbf x)，y=f(\mathbf x)$，0/1误差和<strong>平方误差</strong>分别定义为\[err(\tilde y,y)=[[\tilde y\neq y]]\qquad err(\tilde y,y)=(\tilde y- y)^2。\]</p>
-
-<p>误差是如何影响学习算法的呢？</p>
-
-<p>下面示例展示了不同度量方式下误差的差异：</p>
-
-<p><img src="/assets/images/2014-12-27-machine-learning-noise-and-error-ideal-mini-target-example.png" alt="误差度量的影响" /></p>
-
-<p>$P(y|\mathbf x)$和$err$确定了理想最小目标函数$f(\mathbf x)$。在0/1误差和平方误差度量方式下，理想最小目标函数分别为
-\[
-f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\in\mathcal Y}yP(y|\mathbf x)。
-\]
-若采用平方误差度度量方式，上例中$f(\mathbf x)=1.9$。</p>
-
-<p>根据具体应用场景，选择相应的错误（误差）衡量方法，对机器学习至关重要。</p>
-
-<p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
-
-<h2 id="section-2">误差度量范例</h2>
-
-<p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
-
-<ol>
-  <li>false reject：合法用户识别为非法；</li>
-  <li>false accept：非法用户识别为合法。</li>
-</ol>
-
-<p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
-
-<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
-<p>\[
-E_{in}^w(h)={1\over N}\sum_{n=1}^N
-\left\{
-\begin{aligned}
-&amp;1 &amp;\quad\mbox{if }y_n=+1\\
-&amp;1000 &amp;\quad\mbox{if }y_n=-1
-\end{aligned}
-\right\}
-\cdot \left[\left[y_n\neq h(\mathbf x_n)\right]\right]。
-\]
-对于线性可分数据的PLA，这种定义并无影响。对于pocket算法，假设将$-1$样本复制$1000$倍，在新的数据上仍用$E_{in}^{0/1}$度量误差，就和在原数据上用$E_{in}^{w}$度量一致。</p>
-
-<p>实际使用中，不会真的复制数据，采取虚拟复制（virtual copying）的策略。</p>
-
-<blockquote>
-  <h4 id="pocket">加权pocket算法</h4>
-  <hr />
-
-  <ol>
-    <li>以$1000$倍的概率检查$-1$样本犯的错误；       </li>
-    <li>当$\mathbf w_{t+1}$犯的错误$E_{in}^w$比$\hat{\mathbf w}$小时，用$\hat{\mathbf w}$更新$\mathbf w_{t+1}$。</li>
-  </ol>
-</blockquote>
-
-<h2 id="section-3">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-4">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:target-distribution">
-      <p>不太明白这节的意思…… <a href="#fnref:target-distribution" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
 ]]&gt;</content:encoded>
     </item>
     

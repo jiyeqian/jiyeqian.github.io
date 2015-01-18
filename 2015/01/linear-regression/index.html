@@ -115,7 +115,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p><img src="/assets/images/2014-10-19-linear_regression_0.png" alt="线性回归" /></p>
 
-<p>本节的主要参考资料是机器学习<a href="#ng_ml_linreg_2014">[1]</a>和机器学习基石<a href="#lin_mlf_linreg_2014">[2]</a>网络课程。</p>
+<p>本节的主要参考资料是机器学习基石<a href="#lin_mlf_linreg_2014">[1]</a>和机器学习<a href="#ng_ml_linreg_2014">[2]</a>网络课程。</p>
 
 <h2 id="section">线性回归模型</h2>
 
@@ -213,7 +213,7 @@ E_{in}\left(\mathbf w_{LIN}\right)
 
 <p>$\mbox{noise level}$可以用$\sigma^2$表示，从上图右可见，$\bar E_{in}$和$\bar E_{out}$在$N\rightarrow\infty$时都会趋近于$\sigma^2$。期望的泛化误差（generalization error）可以用${2(d+1)\over N}$衡量，这里是平均情况，VC维衡量的是最坏的情况。</p>
 
-<h2 id="section-2">梯度下降法</h2>
+<h2 id="gd-method">梯度下降法</h2>
 
 <p>梯度下降法就是沿梯度下降方向更新参数，也就是对每个特征的权值$w_i$，不断迭代执行更新
 \begin{equation}
@@ -239,13 +239,13 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
 
 <h4 id="alpha">学习率$\alpha$的注意事项：</h4>
 <ol>
-  <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，在固定$\alpha$的情况下梯度下降步长也会自动减小，如上图右所示；</li>
+  <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，<a href="/2015/01/logistic-regression/#why-fixed-eta">在固定$\alpha$的情况下梯度下降步长也会自动减小</a>，如上图右所示；</li>
   <li>$\alpha$太小收敛慢，太大可能错过极值点而不收敛，甚至可能导致$E_{in}(\mathbf w)$不降反升。</li>
 </ol>
 
 <p>线性回归的代价函数$E_{in}(\mathbf w)$不存在局部极值（local optima），极小值就是全局极值<sup id="fnref:no-local-optima"><a href="#fn:no-local-optima" class="footnote">6</a></sup>。</p>
 
-<h2 id="section-3">两种方法对比</h2>
+<h2 id="section-2">两种方法对比</h2>
 
 <table>
   <thead>
@@ -274,7 +274,7 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
   </tbody>
 </table>
 
-<h2 id="section-4">分类问题</h2>
+<h2 id="section-3">分类问题</h2>
 
 <p>线性分类器和线性回归的对比如下表：</p>
 
@@ -326,22 +326,22 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 <p>在很多时候，用线性回归解决分类问题效果尚可。如果要让效果更好，可将$\mathbf w_{LIN}$当做PLA或pocket算法的初始值$\mathbf w_0$，加速PLA或pocket算法。</p>
 
-<h2 id="section-5">多项式回归</h2>
+<h2 id="section-4">多项式回归</h2>
 
 <p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，构造新的特征向量$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
 
 <p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="section-5">参考资料</h2>
 
-<ol class="bibliography"><li><span id="ng_ml_linreg_2014">[1]A. Ng, “Linear Regression with multiple variables.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li>
-<li><span id="lin_mlf_linreg_2014">[2]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
+<ol class="bibliography"><li><span id="lin_mlf_linreg_2014">[1]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="ng_ml_linreg_2014">[2]A. Ng, “Linear Regression with multiple variables.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
 
 </li>
 <li><span id="ng_ml_rlrbv_pe_2014">[3]A. Ng, “Programming Exercise 5: Regularized Linear Regression and Bias v.s. Variance.” Coursera, 2014.</span>
@@ -350,7 +350,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="section-6">脚注</h3>
 
 <div class="footnotes">
   <ol>

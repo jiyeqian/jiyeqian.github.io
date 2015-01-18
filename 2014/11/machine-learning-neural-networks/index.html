@@ -136,7 +136,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \label{eq:forward-propagation}
 \end{equation}</p>
 
-<p>$g$是<a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$a_0^{(l)}= 1$的偏移（bias），$\boldsymbol\Theta^{(l-1)}$的行数为第$l$层神经元个数，列数为第$l-1$层神经元个数加$1$。</p>
+<p>$g$是<a href="/2015/01/logistic-regression/#mjx-eqn-eqsigmoid-function">Logistic函数</a>，每层额外增加了一个$a_0^{(l)}= 1$的偏移（bias），$\boldsymbol\Theta^{(l-1)}$的行数为第$l$层神经元个数，列数为第$l-1$层神经元个数加$1$。</p>
 
 <p>输出层（第$L$层）神经元的输出$\mathbf a^{(L)}$确定输入特征所属的类别。</p>
 
@@ -380,7 +380,7 @@ D_{ij}^{(l)} := \left\{
       <p>如果非凸函数，梯度下降法不能确定取得的是全局还是局部极值，可通过<a href="https://class.coursera.org/ml-007/forum/thread?thread_id=1089#comment-3416">取不同初始值多次求解增强鲁棒性</a>。 <a href="#fnref:if_no_global_minimum" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:d-sigmoid-f">
-      <p><a href="/2014/10/machine-learning-logistic-regression/#mjx-eqn-eqd-sigmoid-function">Sigmoid函数导数</a>为$g(z)=g(z)(1-g(z))$。 <a href="#fnref:d-sigmoid-f" class="reversefootnote">&#8617;</a></p>
+      <p><a href="/2015/01/logistic-regression/#fn:logistic-function-properties">Sigmoid函数导数</a>为$g(z)=g(z)(1-g(z))$。 <a href="#fnref:d-sigmoid-f" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:parameter_estimation">
       <p>这两篇博客（<a href="http://blog.csdn.net/abcjennifer/article/details/7758797">1</a>、<a href="http://blog.csdn.net/sheng_ai/article/details/19931347">2</a>）也给出了BP算法的推导过程，但是采用了形如<a href="/2015/01/linear-regression/#mjx-eqn-eqcost-function-linear-regression">线性回归的代价函数</a>。 <a href="#fnref:parameter_estimation" class="reversefootnote">&#8617;</a></p>
