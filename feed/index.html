@@ -4,8 +4,237 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-18T13:15:27+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-19T21:20:50+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>图像分类（1）：基于k最近邻算法的简介</title>
+      <link href="http://qianjiye.de/2015/01/image-classification-knn-based-introduction" />
+      <pubdate>2015-01-19T17:20:03+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/image-classification-knn-based-introduction</guid>
+      <content:encoded>&lt;![CDATA[<p>本文主要参考<em>Convolutional Neural Networks for Visual Recognition</em><a href="#lifeifei_CNN_kNN_2015">[1]</a>课程笔记。</p>
+
+<h2 id="section">简介</h2>
+
+<p>图像分类的任务是根据已知的确定标签集，为输入图像分配一个标签（标签就是所谓的类别）。其它一些计算机视觉问题，比如目标提取、分割等，都可以被归结到图像分类。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-classify.png"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-classify.png" alt="图像分类示例" /></a><div class="caption">Figure 1:  图像分类示例 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-classify.png">PNG</a>]</div></div></div>
+
+<p>上图展示一个图像分类模型，通过计算属于4个标签｛🐱，🐶，🎩，🍵｝的概率，为图像分配最大概率对应的标签。彩色图像用3维矩阵表示，本例中宽248像素，高400像素的图像，用248×400×3的矩阵表示。矩阵的每个元素对应一个像素值，取值是0到255的整数。具体来说，图像分类的任务是通过这些像素值，利用计算机视觉算法，得到类别标签（本例输入图片的类别标签是🐱）。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-challenges.jpeg"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-challenges.jpeg" alt="图像分类面临的主要挑战" /></a><div class="caption">Figure 2:  图像分类面临的主要挑战 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-challenges.jpeg">JPEG</a>]</div></div></div>
+
+<p>计算机视觉算法进行图像分类面临的主要挑战包括：视角变化（viewpoint variation）、尺度变化（scale variation）、形变（deformation）、光照影响（illumination conditions）、背景混杂（background clutter）、类内变化（intra-class variation）等，如上图所示。好的图像分类模型应当能应对这些挑战。</p>
+
+<p>图像分类算法与传统的计算机算法（比如排序）开发不同。首先需要给计算输入供包含每类若干示例图像的<a href="http://cs231n.github.io/assets/trainset.jpg">训练集</a>；然后开发学习算法从样本集中的每类学习；最后通过预测结果评估算法性能。这种依赖已标注样本集的方法称为<strong>数据驱动的方法</strong>（data-driven approach）。</p>
+
+<p>图像分类算法开发的流程如下：</p>
+
+<ol>
+  <li>输入：输入包含$N$张图像，已经用K个标签之一标注了每张图像，这称为训练集（training set）。</li>
+  <li>学习：开发学习算法，通过训练集学习每类的样子，这称为训练分类器（training classifier）或学习模型（learning a model）。</li>
+  <li>评估：输入分类算法没有学习过的图片，通过算法预测标签，根据预测和真实结果的对比评估算法的效果。</li>
+</ol>
+
+<h2 id="section-1">最近邻分类器</h2>
+
+<p>最近邻分类器（nearest neighbor classifier）容易实现，本文通过它介绍图像分类的基本方法流程，但是在实际应用中很少使用该方法。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-nn.jpg"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-nn.jpg" alt="［左］：CIFAR-10示例图像；［右］：与第1列最相邻的10张图片" /></a><div class="caption">Figure 3:  ［左］：CIFAR-10示例图像；［右］：与第1列最相邻的10张图片 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-nn.jpg">JPG</a>]</div></div></div>
+
+<p>图像数据集采用<a href="http://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a>，它包含尺寸32×32的60000张小图，每张图片已经被｛✈️，🚗，🐦，🐱，……｝等10个标签之一标注，如上图左所示。60000张图片被分割成50000张图片（每类5000张）的训练集和10000张图片（每类1000张）的测试集。</p>
+
+<p>最近邻分类器训练分类器的方法，就是记住训练集即可。在预测的时候直接和训练集中的每张图片比较，得到输入图像与训练集中最相邻那张图片的标签，将该标签作为预测结果。上图右是最近邻分类器的结果，其中第8行，与第1列🐎最相邻的是🚗，🐎就会被误标记为🚗。</p>
+
+<p>最近邻算法度量两张图片的相邻程度，通常采用像素值之间的$L_1$距离或$L_2$距离：
+\[
+d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\rvert；\qquad d_2(\mathbf I_1,\mathbf I_2)=\sqrt{\sum_p\left(\mathbf I_1^p-\mathbf I_2^p\right)^2}。
+\]
+在CIFAR-10数据集上，用$L_1$距离得到的分类正确率大约是38.6%，$L_2$距离得到的分类正确率大约是35.4%，高于随机猜想10%的精度，目前最先进的卷积神经网络（CNN，convolutional neural networks）<a href="http://www.kaggle.com/c/cifar-10/leaderboard">正确率在95%以上</a><sup id="fnref:what-is-kaggle-score"><a href="#fn:what-is-kaggle-score" class="footnote">1</a></sup>。</p>
+
+<p>在度量两个向量差异时，$L_2$的效果比$L_1$糟糕（That is, the $L_2$ distance prefers many medium disagreements to one big one. ）。$L_1$和$L_2$是常用的两个<a href="http://planetmath.org/vectorpnorm">p范数</a>特例。</p>
+
+<h2 id="k">k最近邻分类器</h2>
+
+<p>k最近邻分类器（k-NN，k-nearest neighbor classifier）是对最近邻分类器的简单扩展：从训练集中选出与输入图像最相邻的k张图像的类别标签，通过这k个标签对输入图像的类别标签进行投票。k=1时，k最近邻分类器和最近邻分类器等价。直观上理解，k最近邻分类器取大的k值，对判别边界有平滑作用，能更好的抗击噪声干扰。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-knn.jpeg"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-knn.jpeg" alt="k最近邻分类器的分类效果" /></a><div class="caption">Figure 4:  k最近邻分类器的分类效果 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-knn.jpeg">JPEG</a>]</div></div></div>
+
+<p>上图的k最近邻分类器采用的是$L_2$距离。上图中可以看到，蓝色区域中的小块绿色孤岛是由于噪声点干扰导致的，这将导致预测错误；上图右的5-NN不受这些异常值的干扰，能在测试集上取得跟好的泛化（generalization）效果。上图右的灰色表示有争议的区域，在这些区域至少2个类别标签都得到了最高票。</p>
+
+<h2 id="section-2">交叉验证</h2>
+
+<p>在实际应用中，如何选择kNN的参数k呢？除k之外，还有度量距离的$L_1$和$L_2$等其它参数需要调节。这些候选参数称为<strong>超参数</strong>（hyperparameters）。在基于数据驱动的机器学习算法中，参数选择非常普遍。</p>
+
+<p>在实际应用中，不能采用测试集选择参数。如果采用测试集调整参数，分类器就可能对测试集过拟合（overfit），当最终发布到应用环境，分类器的性能可能大打折扣。用测试集调整参数，相当于把测试集当训练集使用。测试集只应该在最终测试分类器泛化性能时，被使用1次。</p>
+
+<p>合适的做法是从训练集分割出一个较小的子集，作为验证集（validation set）。对CIFAR-10数据，可以用49,000个图像作为训练集，利用剩下了1,000个图像作为验证集进行参数调节。在选择参数k的时候，在验证集上测试每个k模型的性能，从中选择使性能达到最好的k。选定k之后，在测试集上仅进行一次性能评估。</p>
+
+<p>当训练集合测试集较小的时候，可以采用更聪明的<strong>交叉验证</strong>（cross-validation）进行参数选择。通过评估不同验证集上的平均性能，选择合适的参数。以5-fold的交叉验证为例：</p>
+
+<ol>
+  <li>将训练集分割为5等份；</li>
+  <li>选择1份作为验证集，剩余的4份组成训练集，在验证集上评估参数的性能；</li>
+  <li>轮流将5份作为训练集，将5次性能的平均作为最终评估结果。</li>
+</ol>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-cvplot.png"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-cvplot.png" alt="5-fold交叉验证选择参数k的正确率曲线" /></a><div class="caption">Figure 5:  5-fold交叉验证选择参数k的正确率曲线 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-cvplot.png">PNG</a>]</div></div></div>
+
+<p>上图展示了5-fold交叉验证的效果，k=7是个不错的参数。若分割的等份大于5，上图的曲线将变得更加光滑。</p>
+
+<p>在实际应用中，由于交叉验证计算量很大，因而会选择采用单一验证集而避免采用交叉验证。通常用50%到90%的数据作为训练集，剩下的作为验证集，候选超参数集越大，验证集越大。当验证集很小时（比如仅仅几百个数据），采用交叉验证是比较保险的方法，它能减少参数选择时的噪声干扰，常用的有3-fole、5-fold、10-fold交叉验证。</p>
+
+<p>另一个需要考虑的问题是，在通过验证集确定了最佳参数后，是否需要利用整个训练集和最佳参数重新学习。由于放回了验证集，整个训练集上的表现必然有所不同。实际上，最终发布的分类器不需要验证集的参与。</p>
+
+<h2 id="section-3">评价与建议</h2>
+
+<p>k最近邻算法的主要优点是容易理解和实现，并且训练不时耗；主要缺点是测试（预测）时耗高。在实际应用中，主要关注的是测试（预测）时耗。深度神经网络（DNN，deep neural networks）相反，训练耗时但预测高效，在实际中更适用。</p>
+
+<p>最近邻算法也是一个活跃的研究领域。近似最近邻算法（ANN，approximate nearest neighbor）通过对精度和速度（空间）耗费的折中提高效率，比如<a href="http://www.cs.ubc.ca/research/flann/">FLANN</a>。这些算法通常需要通过kd树或k均值算法预处理或建立索引。</p>
+
+<p>k最近邻算法有时是不错的选择，尤其是数据维数较低的时候，但在图像分类中几乎很少使用。图像是高维数据，高维空间的距离度量表现有些反直觉（counter-intuitive）。</p>
+
+<div class="image_line" id="figure-6"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-samenorm.png"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-samenorm.png" alt="" /></a><div class="caption">Figure 6:   [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-samenorm.png">PNG</a>]</div></div></div>
+
+<p>利用$L_2$距离度量上图中小图的相似性，结果违反直觉。其它图都是最左图变换得到的，人眼观察这些图比较相似，但是基于$L_2$的度量表明其它图和原图差异很大。实际山，像素级别的距离度量无法判断基于直觉和语义的相似性。</p>
+
+<div class="image_line" id="figure-7"><div class="image_card"><a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-pixels_embed_cifar10.jpg"><img src="/assets/images/2015-01-19-image-classification-knn-based-introduction-pixels_embed_cifar10.jpg" alt="利用t-SNE展示CIFAR-10图像" /></a><div class="caption">Figure 7:  利用t-SNE展示CIFAR-10图像 [<a href="/assets/images/2015-01-19-image-classification-knn-based-introduction-pixels_embed_cifar10.jpg">JPG</a>]</div></div></div>
+
+<p>上图用<a href="http://lvdmaaten.github.io/tsne/">t-SNE</a>展示CIFAR-10的图像，在像素级的$L_2$距离度量下，相似的图像相邻排列。结果表明并所非所期望的那样，同类别的相邻排列。实际上，这种度量严重受背景和颜色分布的影响，并非真正度量图像内容的相似性。</p>
+
+<p>k最近邻算法在实际使用中的建议：</p>
+
+<ol>
+  <li>数据预处理：特征向量均值归0化、方差单位化<sup id="fnref:why-not-here"><a href="#fn:why-not-here" class="footnote">2</a></sup>；</li>
+  <li>对高维数据用<a href="http://cs229.stanford.edu/notes/cs229-notes10.pdf">PCA</a>或<a href="http://scikit-learn.org/stable/modules/random_projection.html">随机投影</a>（random projections）等算法降维处理；</li>
+  <li>根据前文建议采用验证（50%到90%数据作为训练集）或交叉验证，通常fold数越多，效果越好，但也越耗时；</li>
+  <li>通过验证集选择k（候选k越多越好）和距离度量方式；</li>
+  <li>如果算法太耗时，尝试采用ANN加速。</li>
+</ol>
+
+<h2 id="section-4">示例代码</h2>
+
+<p>下文中代码所需要的函数和数据<a href="http://vision.stanford.edu/teaching/cs231n/assignment1.zip">在这里获取</a>。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;jiyeqian&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cs231n.data_utils</span> <span class="kn">import</span> <span class="n">load_CIFAR10</span>
+
+<span class="c"># a magic function we provide</span>
+<span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="s">&#39;cs231n/datasets/cifar-10-batches-py&#39;</span><span class="p">)</span>
+<span class="c"># Subsample the data for more efficient code execution</span>
+<span class="n">num_training</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">)</span>
+<span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span> <span class="o">=</span> <span class="n">Xtr</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">num_test</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">)</span>
+<span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">Xte</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">Yte</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c"># flatten out all images to be one-dimensional</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xtr_rows becomes 5000 x 3072</span>
+<span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xte_rows becomes 500 x 3072</span>
+
+<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example. Y is 1-dimension of size N &quot;&quot;&quot;</span>
+        <span class="c"># the nearest neighbor classifier simply remembers all the training data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example we wish to predict label for &quot;&quot;&quot;</span>
+        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c"># lets make sure that the output type matches the input type</span>
+        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="c"># loop over all test rows</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+            <span class="c"># find the nearest training image to the i&#39;th test image</span>
+            <span class="c"># using the L1 distance (sum of absolute value differences)</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c"># L2 distance</span>
+            <span class="c"># distances = np.linalg.norm(self.Xtr - X[i,:], axis = 1)</span>
+            <span class="c"># min_index = np.argmin(distances) # get the index with smallest distance</span>
+            <span class="c"># Ypred[i] = self.ytr[min_index] # predict the label of the nearest example</span>
+            <span class="n">fre_idx</span><span class="p">,</span> <span class="n">fre_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">distances</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">]],</span> \
+                                         <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fre_idx</span><span class="p">[</span><span class="n">fre_num</span> <span class="o">==</span> <span class="n">fre_num</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Ypred</span>
+
+
+<span class="c"># Part 1: kNN prediction</span>
+
+<span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span> <span class="c"># create a Nearest Neighbor classifier class</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span> <span class="c"># train the classifier on the training images and labels</span>
+<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># predict labels on the test images</span>
+<span class="c"># and now print the classification accuracy, which is the average number</span>
+<span class="c"># of examples that are correctly predicted (i.e. label matches)</span>
+<span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span> <span class="p">)</span>
+
+
+<span class="c"># Part 2: validation for choosing k</span>
+
+<span class="c"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span class="c"># recall Xtr_rows is 5,000 x 3072 matrix</span>
+<span class="n">Xval_rows</span><span class="p">,</span> <span class="n">Yval</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span><span class="c"># take first 1000 for validation</span>
+<span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span> <span class="c"># keep last 4,000 for train</span>
+
+<span class="c"># find hyperparameters that work best on the validation set</span>
+<span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span>
+
+    <span class="c"># use a particular value of k and evaluation on validation data</span>
+    <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
+    <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
+    <span class="c"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+    <span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,)</span>
+
+    <span class="c"># keep track of what works on the validation set</span>
+    <span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span></code></pre></div>
+
+<p>k最近邻算法预测阶段计算复杂度非常高，为了加快计算速度，上述代码只抽取了10%的数据，得到的结果如下：</p>
+
+<div class="highlight"><pre><code># Part 1:
+accuracy: 0.290000
+# Part 2:
+accuracy: 0.291000
+accuracy: 0.269000
+accuracy: 0.275000
+accuracy: 0.289000
+accuracy: 0.287000
+accuracy: 0.285000
+accuracy: 0.283000
+</code></pre></div>
+
+<h2 id="section-5">参考文献</h2>
+
+<ol class="bibliography"><li><span id="lifeifei_CNN_kNN_2015">[1]F.-F. Li and A. Karpathy, “Image classification: data-driven approach, nearest neighbor, train/val/test splits.” GitHub, 2015.</span>
+
+[<a href="http://cs231n.github.io/classification/">Online</a>]
+
+</li></ol>
+
+<h3 id="section-6">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:what-is-kaggle-score">
+      <p>kaggle排名的得分（score）是如何计算的？ <a href="#fnref:what-is-kaggle-score" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:why-not-here">
+      <p>We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization. <a href="#fnref:why-not-here" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>logistic回归</title>
@@ -302,9 +531,9 @@ $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分�
 
 <p>上图展示了基于decision stump构造的AdaBoost-Stump，当$t=5$时就能完美的分类。AdaBoost-Stump能够比核SVM更高效地得到非线性分类器。</p>
 
-<p>世界上第一个实时人脸识别程序就是基于AdaBoost-Stump。从$24\times 24$规格的162336张候选图片中挑选关键图片，在此基础上进行线性聚合（linear aggregation）<sup id="fnref:how-to-do-AdaBoost-face"><a href="#fn:how-to-do-AdaBoost-face" class="footnote">2</a></sup>。为了提高速度，人脸识别采用的$G$会尽早排除非人脸。</p>
+<p>世界上第一个实时人脸识别程序就是基于AdaBoost-Stump。从$24\times 24$规格的162336张候选图片中通过decision stump挑选关键图片，在此基础上进行线性聚合（linear aggregation）<sup id="fnref:how-to-do-AdaBoost-face"><a href="#fn:how-to-do-AdaBoost-face" class="footnote">2</a></sup>。为了提高速度，人脸识别采用的$G$会尽早排除非人脸。</p>
 
-<p>AdaBoost-Stump能够有效的进行特征选择和聚合。</p>
+<p>在实际应用中，特征维数可能很高，AdaBoost-Stump能够有效的进行特征选择和聚合。上例是2维的低纬度情况，进行了5次迭代，没有特征选择的功能。</p>
 
 <h2 id="section-2">参考资料</h2>
 
@@ -318,7 +547,7 @@ $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分�
       <p>也可称为“皮匠法”，意为“三个臭皮匠，胜过诸葛亮”。 <a href="#fnref:pi-jiang-method" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:how-to-do-AdaBoost-face">
-      <p>这里如何构造人脸识别程序的呢？ <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
+      <p>这里如何构造人脸识别程序的呢？（1）<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=172">论坛讨论</a>；（2）<a href="http://en.wikipedia.org/wiki/Viola–Jones_object_detection_framework">Viola–Jones object detection framework</a>。 <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -535,7 +764,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
       <p>$g_t^-(\mathbf x)$和$g_t(\mathbf x)$具体如何计算？ <a href="#fnref:how-gt-gt-x" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:how-to-gv-x">
-      <p>这步如何操作？ <a href="#fnref:how-to-gv-x" class="reversefootnote">&#8617;</a></p>
+      <p>这步如何操作？「機器學習基石」第十五講有關。 <a href="#fnref:how-to-gv-x" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -1398,6 +1627,15 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 \end{aligned}
 \end{equation*}
 必须是对称半正定。</p>
+
+<p>若$K_1(\mathbf x,\mathbf x’)=\Phi_1(\mathbf x)^T\Phi_1(\mathbf x’)$和$K_2(\mathbf x,\mathbf x’)=\Phi_2(\mathbf x)^T\Phi_2(\mathbf x’)$是两个有效的核，那么下面生成的也是有效的核：</p>
+
+<ul>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)\cdot K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)+K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = (1-K_1(\mathbf x,\mathbf x’))^{-1},\quad 0&lt;K_1(\mathbf x,\mathbf x’)&lt;1$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = \alpha K_1(\mathbf x,\mathbf x’),\quad\alpha\in\mathbb R$。</li>
+</ul>
 ]]&gt;</content:encoded>
     </item>
     
@@ -1569,133 +1807,6 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 
 <p>事实上，对偶形式的支持向量机和特征维数$\tilde d$也有关系，$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$的计算也是$\mathbb R^{\tilde d}$空间的内积。</p>
 
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>支持向量机（1）：线性支持向量机</title>
-      <link href="http://qianjiye.de/2015/01/svm-linear-svm" />
-      <pubdate>2015-01-03T18:57:13+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/svm-linear-svm</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">最佳判别界</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png" alt="最佳判别界" /></a><div class="caption">Figure 1:  最佳判别界 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-best-hyperplane.png">PNG</a>]</div></div></div>
-
-<p>对相同的数据集，PLA可能得到不同的判别界，如上图所示，那条判别界最好呢？</p>
-
-<ul>
-  <li>测量是有误差的，能容忍误差越大的分界线越好，如上图上排所示，灰色的圆半径越大表示对误差的容忍度越大。噪声是导致过拟合的主要原因，对误差的容忍度越好，过拟合的可能性越低。</li>
-  <li>判别界能膨胀得越胖越鲁棒，如上图下排所示。</li>
-</ul>
-
-<p>根据上两条标准，最右的判别界最佳。判别界的胖瘦程度称为边界（margin），最大边界的判别界最佳，也就是离判别界距离最近的点离判别界距离越大越好，</p>
-
-<p>\begin{equation*}
-\begin{aligned}
-\max\limits_{\mathbf w} &amp;\quad\mbox{margin}(\mathbf w)\\
-\mbox{subject to}&amp; \quad\mbox{every } y_n\mathbf w^T\mathbf x_n &gt; 0\\
-&amp;\quad\mbox{margin}(\mathbf w)=\min\limits_{n=1,\ldots,N}\mbox{distance}(\mathbf x_n, \mathbf w)。
-\end{aligned}
-\end{equation*}</p>
-
-<p>$y_n\mathbf w^T\mathbf x_n &gt; 0$表示点被正确的分类，$\mbox{margin}(\mathbf w)$的定义可以保证判别界在两类的“中间”，不会偏向任何一边。</p>
-
-<h2 id="section-1">支持向量机</h2>
-
-<p>与线性感知器的定义不同，定义$b= w_0, \mathbf w=\left[ w_1, \ldots,  w_d\right]^T$，$\mathbf x=\left[ x_1, \ldots,  x_d\right]^T$。点到判别界的距离可表示为
-\begin{equation*}
-\mbox{distance}(\mathbf x, b, \mathbf w)=\frac{1}{\lVert\mathbf w\rVert}\left\lvert\mathbf w^T\mathbf x + b\right\rvert，
-\end{equation*}
-因此可得最大间隔
-\begin{equation*}
-\begin{aligned}
-\max\limits_{b, \mathbf w} &amp;\quad\mbox{margin}(b, \mathbf w)\\
-\mbox{subject to}&amp; \quad\mbox{every } y_n\left(\mathbf w^T\mathbf x_n + b\right) &gt; 0\\
-&amp;\quad\mbox{margin}(b, \mathbf w)=\min\limits_{n=1,\ldots,N}\frac{1}{\lVert\mathbf w\rVert}y_n\left(\mathbf w^T\mathbf x_n + b\right)。
-\end{aligned}
-\end{equation*}
-通过系数缩放，总可以做到$\min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1$，最大间隔问题可以转化为等价问题
-\begin{equation*}
-\begin{aligned}
-\max\limits_{b, \mathbf w} &amp;\quad{1\over\lVert\mathbf w\rVert}\\
-\mbox{subject to}&amp; \min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1。
-\end{aligned}
-\end{equation*}
-上述条件$\min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1$可以用等价的条件$y_n\left(\mathbf w^T\mathbf x_n + b\right) \geq 1$代替。如果仅仅是$y_n\left(\mathbf w^T\mathbf x_n + b\right) &gt; 1$而无法取“$=$”，那么不等式两边可以除以大于$1$的系数，使得条件仍然成立，$\mathbf w$除以大于$1$的系数后，${1\over\lVert\mathbf w\rVert}$会更大。因此，标准形式的最优化是
-\begin{equation}
-\begin{aligned}
-\min\limits_{b, \mathbf w} &amp;\quad{1\over 2}\mathbf w^T\mathbf w\\
-\mbox{subject to}&amp; \quad y_n\left(\mathbf w^T\mathbf x_n + b\right) \geq 1\mbox{ for all }n。
-\end{aligned}
-\label{eq:linear-svm-model}
-\end{equation}</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png" alt="支持向量" /></a><div class="caption">Figure 2:  支持向量 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-support-vectors.png">PNG</a>]</div></div></div>
-
-<p>通过求解可以发现，只有部分点对解有作用，如上图边界上方框内的点，这些点称为<strong>候选</strong>支持向量（support vector）。支持向量机就是利用支持向量学习“最胖”判别界。</p>
-
-<h2 id="section-2">二次规划求解</h2>
-
-<p>求解最佳判别界的是一个二次规划问题（QP，quadratic programming）。二次规划的标准形式为
-\begin{equation}
-\begin{aligned}
-\mbox{optimal} &amp;\quad\mathbf u\leftarrow QP(\mathbf Q, \mathbf p, \mathbf A, \mathbf c) \\
-\min\limits_{\mathbf u} &amp;\quad{1\over 2}\mathbf u^T\mathbf Q\mathbf u + \mathbf p^T\mathbf u\\
-\mbox{subject to}&amp;\quad\mathbf a_n^T\mathbf u\geq c_n\mbox{ for }n=1,2,\ldots,N。
-\end{aligned}
-\label{eq:qp-standard-format}
-\end{equation}
-支持向量机利用二次规划求解时参数为
-\begin{equation*}
-\mathbf u =<br />
-\begin{bmatrix}
-b\\
-\mathbf w
-\end{bmatrix}
-，
-\end{equation*}
-目标函数系数为
-\begin{equation*}
-\mathbf Q = 
-\begin{bmatrix}
-0 &amp;\mathbf 0_d^T\\
-\mathbf 0_d &amp;\mathbf I_d
-\end{bmatrix};
-\mathbf p=\mathbf 0_{d+1}
-，
-\end{equation*}
-约束条件系数为
-\begin{equation*}
-\mathbf a_n^T=y_n\left[1\quad\mathbf x_n^T\right];c_n=1。
-\end{equation*}</p>
-
-<p>这里所讲的支持向量机叫做线性hard-margin支持向量机，其中hard-margin是指所有的点能被正确分类。</p>
-
-<p>利用$\mathbf z_n=\Phi\left(\mathbf x_n\right)$，用$\mathbf z_n$替代$\mathbf x_n$，可以得到非线性的支持向量机。</p>
-
-<h2 id="section-3">最大边界的价值</h2>
-
-<p>正则化（regularization）通过约束条件$\mathbf w^T\mathbf w\leq C$最小化$E_{in}$，支持向量机通过$E_{in}=0$等约束条件最小化$\mathbf w^T\mathbf w$。因此，支持向量机也可以看作是一种<strong>特殊的正则化方法</strong>。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png" alt="无法打碎3个点的情况" /></a><div class="caption">Figure 3:  无法打碎3个点的情况 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-no3shatter.png">PNG</a>]</div></div></div>
-
-<p>对于最大边界算法$\mathcal A_{\rho}$，脚标表示分界线的宽度要大于$\rho$。当$\rho = 0$时就是PLA，它可以打碎2维平面的3个输入点；若$\rho＝1.126$，如上图所示，无法打碎3个点。</p>
-
-<p>如果加入了$\rho$条件的限制，可能的二分类情况少了，可认为<strong>VC维更小了，有更好的泛化性能</strong>。对于算法的VC维，有数据依赖的VC维比没有依赖的要低，$d_{VC}\left(\mathcal A_\rho\right)&lt;d_{VC}(\mathcal H)$，有数据依赖意味着加入了跟多的约束条件。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png" alt="单位圆上的数据" /></a><div class="caption">Figure 4:  单位圆上的数据 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-unit-circle-data.png">PNG</a>]</div></div></div>
-
-<p>当$\mathcal X$是上图所示半径为$R$的单位圆上点时，
-\begin{equation}
-d_{VC}\left(\mathcal A_\rho\right)\leq\min\left({R^2\over \rho^2},d\right)+1\leq d+1。
-\end{equation}</p>
-
-<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png"><img src="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png" alt="各种判别界的对比" /></a><div class="caption">Figure 5:  各种判别界的对比 [<a href="/assets/images/2015-01-03-svm-linear-support-vector-machine-benefits-large-margin.png">PNG</a>]</div></div></div>
-
-<p>几种情况的判别界对比如上图所示，large-margin的判别界简单且数量较少，有特征变换$\Phi$的判别界较复杂但是数量较多。</p>
-
-<p>较少的判别界对$d_{VC}$和泛化有利，复杂的判别界可能得到更好的$E_{in}$。非线性支持向量机同时具备大边界的判别界和采用多种特征变换$\Phi$，因此判别界较少而且比较复杂，兼顾了这两方面的优点。</p>
 ]]&gt;</content:encoded>
     </item>
     

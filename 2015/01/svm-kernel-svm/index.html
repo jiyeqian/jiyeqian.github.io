@@ -248,6 +248,15 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 \end{equation*}
 必须是对称半正定。</p>
 
+<p>若$K_1(\mathbf x,\mathbf x’)=\Phi_1(\mathbf x)^T\Phi_1(\mathbf x’)$和$K_2(\mathbf x,\mathbf x’)=\Phi_2(\mathbf x)^T\Phi_2(\mathbf x’)$是两个有效的核，那么下面生成的也是有效的核：</p>
+
+<ul>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)\cdot K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)+K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = (1-K_1(\mathbf x,\mathbf x’))^{-1},\quad 0&lt;K_1(\mathbf x,\mathbf x’)&lt;1$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = \alpha K_1(\mathbf x,\mathbf x’),\quad\alpha\in\mathbb R$。</li>
+</ul>
+
 </section>
 <section align="right">
 <br/>

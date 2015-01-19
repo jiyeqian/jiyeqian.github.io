@@ -218,9 +218,9 @@ $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分�
 
 <p>上图展示了基于decision stump构造的AdaBoost-Stump，当$t=5$时就能完美的分类。AdaBoost-Stump能够比核SVM更高效地得到非线性分类器。</p>
 
-<p>世界上第一个实时人脸识别程序就是基于AdaBoost-Stump。从$24\times 24$规格的162336张候选图片中挑选关键图片，在此基础上进行线性聚合（linear aggregation）<sup id="fnref:how-to-do-AdaBoost-face"><a href="#fn:how-to-do-AdaBoost-face" class="footnote">2</a></sup>。为了提高速度，人脸识别采用的$G$会尽早排除非人脸。</p>
+<p>世界上第一个实时人脸识别程序就是基于AdaBoost-Stump。从$24\times 24$规格的162336张候选图片中通过decision stump挑选关键图片，在此基础上进行线性聚合（linear aggregation）<sup id="fnref:how-to-do-AdaBoost-face"><a href="#fn:how-to-do-AdaBoost-face" class="footnote">2</a></sup>。为了提高速度，人脸识别采用的$G$会尽早排除非人脸。</p>
 
-<p>AdaBoost-Stump能够有效的进行特征选择和聚合。</p>
+<p>在实际应用中，特征维数可能很高，AdaBoost-Stump能够有效的进行特征选择和聚合。上例是2维的低纬度情况，进行了5次迭代，没有特征选择的功能。</p>
 
 <h2 id="section-2">参考资料</h2>
 
@@ -234,7 +234,7 @@ $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分�
       <p>也可称为“皮匠法”，意为“三个臭皮匠，胜过诸葛亮”。 <a href="#fnref:pi-jiang-method" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:how-to-do-AdaBoost-face">
-      <p>这里如何构造人脸识别程序的呢？ <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
+      <p>这里如何构造人脸识别程序的呢？（1）<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=172">论坛讨论</a>；（2）<a href="http://en.wikipedia.org/wiki/Viola–Jones_object_detection_framework">Viola–Jones object detection framework</a>。 <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

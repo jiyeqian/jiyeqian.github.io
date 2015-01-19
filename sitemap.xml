@@ -2,6 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2015/01/image-classification-knn-based-introduction</loc>
+    
+    <lastmod>2015-01-19T17:20:03+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2015/01/logistic-regression</loc>
     
     <lastmod>2015-01-17T16:28:27+08:00</lastmod>
