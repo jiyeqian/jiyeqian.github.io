@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>图像分类（2）：基于支持向量机和softmax的方法</title>
+    <title>图像分类（2）：多分类支持向量机和softmax分类器</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>图像分类（2）：基于支持向量机和softmax的方法</h1>
+        <h1>图像分类（2）：多分类支持向量机和softmax分类器</h1>
         </header>
         <nav id="real_nav">
         
@@ -157,7 +157,7 @@ f(\mathbf x_i,\mathbf W)=\mathbf W\mathbf x_i。
 
 <p>在线性分类器（评分函数）基础上，通过定义不同损失函数，可得到具备不同特性的多分类支持向量机和softmax分类器。</p>
 
-<h2 id="section-2">多分类支持向量机</h2>
+<h2 id="multiclass-SVM">多分类支持向量机</h2>
 
 <div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg"><img src="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg" alt="损失函数示意图" /></a><div class="caption">Figure 3:  损失函数示意图 [<a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg">JPG</a>]</div></div></div>
 
@@ -214,7 +214,7 @@ L_i=C\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
 
 <p>本文的多分类支持向量机，只是支持向量机解决多分类问题的方法之一。除此之外还有一对多（OVA，one-vs-all）策略和实际中很少使用的多对多（AVA，all-vs-all）。简单的OVA策略能很好处理多分类问题<a href="#Rifkin04indefense">[2]</a>，本文的方法是OVA的增强版<a href="#Weston99supportvector">[3]</a>，理论上数据损失项可达0，常规的OVA方法则不行。</p>
 
-<h2 id="softmax">softmax分类器</h2>
+<h2 id="softmax-classifier">softmax分类器</h2>
 
 <p>softmax分类器是logistic回归分类器在多分类问题的推广。$f_j(\mathbf z)={e^{z_j}\over\sum_k e^{z_k}}$被称为softmax函数（softmax function），它将实数转换为$[0,1]$区间的值。softmax分类器采用同样的评分函数\eqref{multiclass-linear-classifier-2}，但采用<strong>交叉熵损失</strong>（cross-entropy loss）函数
 \begin{equation}
@@ -271,7 +271,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
 <p>多分类支持向量机和softmax分类器，在性能表现上通常很相近。假设$\mathbf x_i$属于第1类，对于$[10, -100, -100]$和$[10, 9, 9]$，多分类支持向量机都不再增加损失函数的值；但对于softmax分类器，$[10, 9, 9]$会比$[10, -100, -100]$让损失函数增加更大的值。softmax分类器永不满足，总是试图让正确的分类概率更大，损失函数的值更小；然而，只要多分类支持向量机满足边界条件，不论评分高低，不再调整评分，这可以看作是多分类支持向量机的一个特性，比如对于一个车辆分类器，它应该关注如何分类轿车和卡车等困难问题，而不应受已经评分很低🐸🐱🐶等的影响。</p>
 
-<h2 id="section-3">参考文献</h2>
+<h2 id="section-2">参考文献</h2>
 
 <ol class="bibliography"><li><span id="lifeifei_CNN_SVM_2015">[1]F.-F. Li and A. Karpathy, “Linear classification: Support Vector Machine, Softmax.” GitHub, 2015.</span>
 
@@ -287,7 +287,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
 </li></ol>
 
-<h3 id="section-4">脚注</h3>
+<h3 id="section-3">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -315,7 +315,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" data-url="http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier" data-title="图像分类（2）：基于支持向量机和softmax的方法">
+	<div class="ds-thread" data-thread-key="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" data-url="http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier" data-title="图像分类（2）：多分类支持向量机和softmax分类器">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
