@@ -117,7 +117,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section">支持向量机的正则化形式</h2>
 
-<p>回顾<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
+<p>回顾<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
 \begin{equation}
 \min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)\right)，
 \label{eq:uniform-soft-margin-svm}
@@ -171,7 +171,7 @@ err_{SCE}(s, y)&amp;=\log(1+\exp(-ys))。
     </tr>
     <tr>
       <td>soft-margin支持向量机</td>
-      <td>QP最小化误差$err_{0/1}$</td>
+      <td>QP最小化误差$err_{SVM}$</td>
       <td>容易优化，理论基础较好</td>
       <td>对于负值很大的误差，是$err_{0/1}$很松的上界</td>
     </tr>
@@ -253,15 +253,15 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
 <section align="right">
 <br/>
 <span>
-  <a  href="/2015/01/svm-soft-margin-svm" class="pageNav"  >上一篇</a>
+  <a  href="/2015/01/soft-margin-svm" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/01/svm-support-vector-regression" class="pageNav"  >下一篇</a>
+  <a  href="/2015/01/support-vector-regression" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2015/01/svm-kernel-logistic-regression" data-url="http://qianjiye.de/2015/01/svm-kernel-logistic-regression" data-title="支持向量机（5）：核logistic回归">
+	<div class="ds-thread" data-thread-key="/2015/01/kernel-logistic-regression" data-url="http://qianjiye.de/2015/01/kernel-logistic-regression" data-title="支持向量机（5）：核logistic回归">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -289,18 +289,18 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2015/01/svm-soft-margin-svm'; -->
+<!--         url = '/2015/01/soft-margin-svm'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/svm-support-vector-regression'; --1> -->
-<!--         url = '/2015/01/svm-support-vector-regression'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/support-vector-regression'; --1> -->
+<!--         url = '/2015/01/support-vector-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2015/01/svm-kernel-logistic-regression/#timeSpan'; -->
+<!--         url = '/2015/01/kernel-logistic-regression/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

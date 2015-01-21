@@ -206,9 +206,9 @@ L={1\over N}\sum_i\sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{
 <p>$\Delta$和$\lambda$虽是两个不同的参数，但都是相同的折中效果。不需交叉验证选择$\Delta$，直接设置$\Delta=1.0$即可，只需通过交叉验证调节$\lambda$。放大$\mathbf W$可以放大评分，缩小$\mathbf W$也可缩小评分
 ，度量评分之间的差距的$\Delta$也同步放大或缩小，而调节$\lambda$可放缩$\mathbf W$，因此固定住$\Delta$只设置$\lambda$即可。</p>
 
-<p>对于二分类支持向量机，样本$i$的损失表示为
+<p>对于二分类支持向量机，<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">损失函数</a>表示为
 \[
-L_i=C\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
+L=C\sum_{i=1}^N\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
 \]
 其中$C$是超参数，$y_i\in\{-1,+1\}$。它可视为本文多分类问题简化为二分类的一个特例，$C$和$\lambda$都有相同的折中作用，$C\propto{1\over \lambda}$。</p>
 
@@ -239,7 +239,7 @@ H(p,q)=H(p)+D_{KL}(p\| q)，
 \[
 P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 \]
-表示预测正确分类$y_i$的归一化概率。好的分类结果是$\prod_{i=1}^NP(y_i|\mathbf x_i;\mathbf W)$最大，这可认为是最大似然估计（MLE，maximum likelihood estimation）。正则化项$R(\mathbf W)$可认为源自权值矩阵的高斯先验（Gaussian prior），最小化损失函数相当于最大后验概率估计（maximum a posteriori）。</p>
+表示预测正确分类$y_i$的归一化概率。好的分类结果是$\prod_{i=1}^NP(y_i|\mathbf x_i;\mathbf W)$最大，这可认为是最大似然估计（MLE，maximum likelihood estimation）。正则化项$R(\mathbf W)$可认为源自权值矩阵的高斯先验（Gaussian prior），最小化损失函数相当于最大后验概率估计（maximum a posteriori）。当模型是条件概率分布、损失函数是对数损失函数、模型复杂度由模型的先验概率表示时，结构风险最小化就等价于最大后验概率估计<a href="#lihang_sml_2012">[4, P. 9]</a>。</p>
 
 <p>编程实现时，$e^{f_{y_i}}$和$\sum_j e^{f_j}$的值可能很大，大数值相除不稳定，所以需要采用规范化技巧（normalization trick）。softmax函数可以写为等价的形式
 \[
@@ -284,6 +284,9 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 <li><span id="Weston99supportvector">[3]J. Weston and C. Watkins, “Support Vector Machines for Multi-Class Pattern Recognition,” in <i>European Symposium on Artificial Neural Networks</i>, Bruges (Belgium), 1999, pp. 219–224.</span>
 
 [<a href="https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999-461.pdf">Online</a>]
+
+</li>
+<li><span id="lihang_sml_2012">[4]李航, <i>统计学习方法</i>. 清华大学出版社, 2012.</span>
 
 </li></ol>
 

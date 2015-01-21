@@ -198,7 +198,7 @@ g=\arg\max_h\mbox{likelihood}(h)。
 \end{equation}
 由于$\nabla E_{in}(\mathbf w)=0$是非线性方程，并且$\theta(-y_n\mathbf w^T\mathbf x_n)＝0$的条件$y_n\mathbf w^T\mathbf x_n\gg 0$也难以满足，因此不存在类似线性回归的闭式解。</p>
 
-<p>回顾<a href="/2014/10/machine-learning-perceptron-learning-algorithm/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
+<p>回顾<a href="/2014/10/pla/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
 \[
 \mathbf w_{t+1}\leftarrow\mathbf w_{t}+1\cdot\left(\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n\right)，
 \]

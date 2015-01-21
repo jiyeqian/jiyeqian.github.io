@@ -121,7 +121,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \[
 \min\limits_{b,\mathbf w}\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]，
 \]
-结合<a href="/2015/01/svm-linear-svm/#mjx-eqn-eqlinear-svm-model">线性支持向量机</a>，可以得到容忍错分的优化模型
+结合<a href="/2015/01/linear-svm/#mjx-eqn-eqlinear-svm-model">线性支持向量机</a>，可以得到容忍错分的优化模型
 \[
 \begin{aligned}
 \min\limits_{b,\mathbf w}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]\\
@@ -160,7 +160,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 &amp;+\sum_{n=1}^N\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)+\sum_{n=1}^N\beta_n\left(-\xi_n\right)，
 \end{aligned}
 \]
-根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
+根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
 \begin{equation}
 \begin{aligned}
 \min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
@@ -180,7 +180,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 
 <p>soft-margin是实际中广泛应用的支持向量机。</p>
 
-<p>soft-margin的支持向量机与<a href="/2015/01/svm-kernel-svm/#kernel-trick">hard-margin的支持向量机</a>基本相同，$\alpha_n$上界$C$的限制，导致$b$的计算不同。</p>
+<p>soft-margin的支持向量机与<a href="/2015/01/kernel-svm/#kernel-trick">hard-margin的支持向量机</a>基本相同，$\alpha_n$上界$C$的限制，导致$b$的计算不同。</p>
 
 <p>利用complementary slackness条件可得
 \begin{equation}
@@ -232,15 +232,15 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 <section align="right">
 <br/>
 <span>
-  <a  href="/2015/01/svm-kernel-svm" class="pageNav"  >上一篇</a>
+  <a  href="/2015/01/kernel-svm" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/01/svm-kernel-logistic-regression" class="pageNav"  >下一篇</a>
+  <a  href="/2015/01/kernel-logistic-regression" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2015/01/svm-soft-margin-svm" data-url="http://qianjiye.de/2015/01/svm-soft-margin-svm" data-title="支持向量机（4）：soft-margin支持向量机">
+	<div class="ds-thread" data-thread-key="/2015/01/soft-margin-svm" data-url="http://qianjiye.de/2015/01/soft-margin-svm" data-title="支持向量机（4）：soft-margin支持向量机">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -268,18 +268,18 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2015/01/svm-kernel-svm'; -->
+<!--         url = '/2015/01/kernel-svm'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/svm-kernel-logistic-regression'; --1> -->
-<!--         url = '/2015/01/svm-kernel-logistic-regression'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/kernel-logistic-regression'; --1> -->
+<!--         url = '/2015/01/kernel-logistic-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2015/01/svm-soft-margin-svm/#timeSpan'; -->
+<!--         url = '/2015/01/soft-margin-svm/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

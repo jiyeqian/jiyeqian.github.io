@@ -154,7 +154,7 @@ E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol
   </thead>
   <tbody>
     <tr>
-      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^TX)^{-1}\mathbf X^T\mathbf y$</td>
+      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^T\mathbf X)^{-1}\mathbf X^T\mathbf y$</td>
       <td>$\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y$</td>
     </tr>
     <tr>
@@ -177,8 +177,6 @@ E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol
 g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
 \end{equation}</p>
 
-<h2 id="section-1">最小二乘支持向量机</h2>
-
 <p><strong>最小二乘支持向量机</strong>（LSSVM，least-squares SVM）就是将脊回归的核模型用于分类。</p>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png" alt="最小二乘与soft-margin支持向量机的对比" /></a><div class="caption">Figure 2:  最小二乘与soft-margin支持向量机的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png">PNG</a>]</div></div></div>
@@ -187,7 +185,7 @@ g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
 
 <p>LSSVM和logistic回归的核模型得到的参数$\boldsymbol\beta$是稠密的，标准支持向量机的参数$\boldsymbol\alpha$是稀疏的。能否得到像标准支持向量机一样稀疏的$\boldsymbol\beta$呢？</p>
 
-<h2 id="tube">tube回归</h2>
+<h2 id="section-1">支持向量回归</h2>
 
 <p>定义tube回归的误差为
 \begin{equation}
@@ -201,17 +199,15 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 
 <p>基于tube误差的模型能否得到稀疏的系数呢？</p>
 
-<h2 id="section-2">支持向量回归</h2>
-
 <p>基于$L_2$正则化的tube回归模型为
 \begin{equation*}
 \min\limits_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n-y_n\right\rvert-\epsilon\right)\right)，
 \end{equation*}
-虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/svm-kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
+虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
 \begin{equation*}
 \min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w+C\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n+b-y_n\right\rvert-\epsilon\right)\right)，
 \end{equation*}
-虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
+虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
 \begin{equation*}
 \begin{aligned}
 \min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
@@ -231,7 +227,7 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 
 <p>将支持向量回归的原问题转成对偶问题，可移除对$\tilde d$的依赖。</p>
 
-<h2 id="section-3">支持向量回归的对偶模型</h2>
+<h2 id="section-2">支持向量回归的对偶模型</h2>
 
 <p>通过拉格朗日乘子法的KKT条件${\partial\mathcal L\over\partial\mathbf w}=0$可得
 \begin{equation}
@@ -267,7 +263,7 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 \]
 以及$\alpha_n^\wedge=\alpha_n^\vee＝0$，因此可得$\beta_n=0$。由此可知，支持向量回归问题中$\beta_n\neq 0$的支持向量刚好位于tube的边界上或在tube之外。</p>
 
-<p>参考<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
+<p>参考<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
 \begin{equation}
 b=
 \left\{
@@ -283,7 +279,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 <section align="right">
 <br/>
 <span>
-  <a  href="/2015/01/svm-kernel-logistic-regression" class="pageNav"  >上一篇</a>
+  <a  href="/2015/01/kernel-logistic-regression" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
   <a  href="/2015/01/linear-regression" class="pageNav"  >下一篇</a>
 </span>
@@ -291,7 +287,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2015/01/svm-support-vector-regression" data-url="http://qianjiye.de/2015/01/svm-support-vector-regression" data-title="支持向量机（6）：支持向量回归">
+	<div class="ds-thread" data-thread-key="/2015/01/support-vector-regression" data-url="http://qianjiye.de/2015/01/support-vector-regression" data-title="支持向量机（6）：支持向量回归">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -319,7 +315,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2015/01/svm-kernel-logistic-regression'; -->
+<!--         url = '/2015/01/kernel-logistic-regression'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
@@ -330,7 +326,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2015/01/svm-support-vector-regression/#timeSpan'; -->
+<!--         url = '/2015/01/support-vector-regression/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

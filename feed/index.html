@@ -4,7 +4,7 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-21T17:07:44+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-22T06:26:53+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
@@ -106,9 +106,9 @@ L={1\over N}\sum_i\sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{
 <p>$\Delta$和$\lambda$虽是两个不同的参数，但都是相同的折中效果。不需交叉验证选择$\Delta$，直接设置$\Delta=1.0$即可，只需通过交叉验证调节$\lambda$。放大$\mathbf W$可以放大评分，缩小$\mathbf W$也可缩小评分
 ，度量评分之间的差距的$\Delta$也同步放大或缩小，而调节$\lambda$可放缩$\mathbf W$，因此固定住$\Delta$只设置$\lambda$即可。</p>
 
-<p>对于二分类支持向量机，样本$i$的损失表示为
+<p>对于二分类支持向量机，<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">损失函数</a>表示为
 \[
-L_i=C\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
+L=C\sum_{i=1}^N\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
 \]
 其中$C$是超参数，$y_i\in\{-1,+1\}$。它可视为本文多分类问题简化为二分类的一个特例，$C$和$\lambda$都有相同的折中作用，$C\propto{1\over \lambda}$。</p>
 
@@ -139,7 +139,7 @@ H(p,q)=H(p)+D_{KL}(p\| q)，
 \[
 P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 \]
-表示预测正确分类$y_i$的归一化概率。好的分类结果是$\prod_{i=1}^NP(y_i|\mathbf x_i;\mathbf W)$最大，这可认为是最大似然估计（MLE，maximum likelihood estimation）。正则化项$R(\mathbf W)$可认为源自权值矩阵的高斯先验（Gaussian prior），最小化损失函数相当于最大后验概率估计（maximum a posteriori）。</p>
+表示预测正确分类$y_i$的归一化概率。好的分类结果是$\prod_{i=1}^NP(y_i|\mathbf x_i;\mathbf W)$最大，这可认为是最大似然估计（MLE，maximum likelihood estimation）。正则化项$R(\mathbf W)$可认为源自权值矩阵的高斯先验（Gaussian prior），最小化损失函数相当于最大后验概率估计（maximum a posteriori）。当模型是条件概率分布、损失函数是对数损失函数、模型复杂度由模型的先验概率表示时，结构风险最小化就等价于最大后验概率估计<a href="#lihang_sml_2012">[4, P. 9]</a>。</p>
 
 <p>编程实现时，$e^{f_{y_i}}$和$\sum_j e^{f_j}$的值可能很大，大数值相除不稳定，所以需要采用规范化技巧（normalization trick）。softmax函数可以写为等价的形式
 \[
@@ -184,6 +184,9 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 <li><span id="Weston99supportvector">[3]J. Weston and C. Watkins, “Support Vector Machines for Multi-Class Pattern Recognition,” in <i>European Symposium on Artificial Neural Networks</i>, Bruges (Belgium), 1999, pp. 219–224.</span>
 
 [<a href="https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999-461.pdf">Online</a>]
+
+</li>
+<li><span id="lihang_sml_2012">[4]李航, <i>统计学习方法</i>. 清华大学出版社, 2012.</span>
 
 </li></ol>
 
@@ -527,7 +530,7 @@ g=\arg\max_h\mbox{likelihood}(h)。
 \end{equation}
 由于$\nabla E_{in}(\mathbf w)=0$是非线性方程，并且$\theta(-y_n\mathbf w^T\mathbf x_n)＝0$的条件$y_n\mathbf w^T\mathbf x_n\gg 0$也难以满足，因此不存在类似线性回归的闭式解。</p>
 
-<p>回顾<a href="/2014/10/machine-learning-perceptron-learning-algorithm/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
+<p>回顾<a href="/2014/10/pla/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
 \[
 \mathbf w_{t+1}\leftarrow\mathbf w_{t}+1\cdot\left(\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n\right)，
 \]
@@ -1244,10 +1247,10 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
     
     <item>
       <title>支持向量机（6）：支持向量回归</title>
-      <link href="http://qianjiye.de/2015/01/svm-support-vector-regression" />
+      <link href="http://qianjiye.de/2015/01/support-vector-regression" />
       <pubdate>2015-01-12T18:31:45+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/svm-support-vector-regression</guid>
+      <guid>http://qianjiye.de/2015/01/support-vector-regression</guid>
       <content:encoded>&lt;![CDATA[<h2 id="section">脊回归</h2>
 
 <p>有正则化项的回归称为<strong>脊回归</strong>（ridge regression）。脊回归的核模型有解析解么？</p>
@@ -1287,7 +1290,7 @@ E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol
   </thead>
   <tbody>
     <tr>
-      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^TX)^{-1}\mathbf X^T\mathbf y$</td>
+      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^T\mathbf X)^{-1}\mathbf X^T\mathbf y$</td>
       <td>$\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y$</td>
     </tr>
     <tr>
@@ -1310,8 +1313,6 @@ E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol
 g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
 \end{equation}</p>
 
-<h2 id="section-1">最小二乘支持向量机</h2>
-
 <p><strong>最小二乘支持向量机</strong>（LSSVM，least-squares SVM）就是将脊回归的核模型用于分类。</p>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png" alt="最小二乘与soft-margin支持向量机的对比" /></a><div class="caption">Figure 2:  最小二乘与soft-margin支持向量机的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png">PNG</a>]</div></div></div>
@@ -1320,7 +1321,7 @@ g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
 
 <p>LSSVM和logistic回归的核模型得到的参数$\boldsymbol\beta$是稠密的，标准支持向量机的参数$\boldsymbol\alpha$是稀疏的。能否得到像标准支持向量机一样稀疏的$\boldsymbol\beta$呢？</p>
 
-<h2 id="tube">tube回归</h2>
+<h2 id="section-1">支持向量回归</h2>
 
 <p>定义tube回归的误差为
 \begin{equation}
@@ -1334,17 +1335,15 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 
 <p>基于tube误差的模型能否得到稀疏的系数呢？</p>
 
-<h2 id="section-2">支持向量回归</h2>
-
 <p>基于$L_2$正则化的tube回归模型为
 \begin{equation*}
 \min\limits_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n-y_n\right\rvert-\epsilon\right)\right)，
 \end{equation*}
-虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/svm-kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
+虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
 \begin{equation*}
 \min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w+C\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n+b-y_n\right\rvert-\epsilon\right)\right)，
 \end{equation*}
-虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
+虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
 \begin{equation*}
 \begin{aligned}
 \min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
@@ -1364,7 +1363,7 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 
 <p>将支持向量回归的原问题转成对偶问题，可移除对$\tilde d$的依赖。</p>
 
-<h2 id="section-3">支持向量回归的对偶模型</h2>
+<h2 id="section-2">支持向量回归的对偶模型</h2>
 
 <p>通过拉格朗日乘子法的KKT条件${\partial\mathcal L\over\partial\mathbf w}=0$可得
 \begin{equation}
@@ -1400,7 +1399,7 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 \]
 以及$\alpha_n^\wedge=\alpha_n^\vee＝0$，因此可得$\beta_n=0$。由此可知，支持向量回归问题中$\beta_n\neq 0$的支持向量刚好位于tube的边界上或在tube之外。</p>
 
-<p>参考<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
+<p>参考<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
 \begin{equation}
 b=
 \left\{
@@ -1416,15 +1415,15 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
     
     <item>
       <title>支持向量机（5）：核logistic回归</title>
-      <link href="http://qianjiye.de/2015/01/svm-kernel-logistic-regression" />
+      <link href="http://qianjiye.de/2015/01/kernel-logistic-regression" />
       <pubdate>2015-01-09T15:01:15+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/svm-kernel-logistic-regression</guid>
+      <guid>http://qianjiye.de/2015/01/kernel-logistic-regression</guid>
       <content:encoded>&lt;![CDATA[<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png"><img src="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png" alt="4种形式的支持向量机" /></a><div class="caption">Figure 1:  4种形式的支持向量机 [<a href="/assets/images/2015-01-09-svm-kernel-logistic-regression-SVMs.png">PNG</a>]</div></div></div>
 
 <h2 id="section">支持向量机的正则化形式</h2>
 
-<p>回顾<a href="/2015/01/svm-soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
+<p>回顾<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">soft-margin支持向量机</a>，当违反边界的时候$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n + b\right)$，当没有违反边界的时候$\xi_n = 0$，边界违法的情况可以统一定义为$\xi_n=\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)$，于是无约束形式的soft-margin支持向量机为
 \begin{equation}
 \min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\max\left(1-y_n\left(\mathbf w^T\mathbf z_n + b\right), 0\right)\right)，
 \label{eq:uniform-soft-margin-svm}
@@ -1478,7 +1477,7 @@ err_{SCE}(s, y)&amp;=\log(1+\exp(-ys))。
     </tr>
     <tr>
       <td>soft-margin支持向量机</td>
-      <td>QP最小化误差$err_{0/1}$</td>
+      <td>QP最小化误差$err_{SVM}$</td>
       <td>容易优化，理论基础较好</td>
       <td>对于负值很大的误差，是$err_{0/1}$很松的上界</td>
     </tr>
@@ -1560,10 +1559,10 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
     
     <item>
       <title>支持向量机（4）：soft-margin支持向量机</title>
-      <link href="http://qianjiye.de/2015/01/svm-soft-margin-svm" />
+      <link href="http://qianjiye.de/2015/01/soft-margin-svm" />
       <pubdate>2015-01-07T17:24:31+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/svm-soft-margin-svm</guid>
+      <guid>http://qianjiye.de/2015/01/soft-margin-svm</guid>
       <content:encoded>&lt;![CDATA[<h2 id="soft-margin">soft-margin支持向量机</h2>
 
 <p>在求解支持向量机参数的二次规划中，约束条件要求所有点被正确分类的叫<strong>hard-margin支持向量机</strong>。这类支持向量机过拟合原因：（1）特征转换功能太强；（2）坚持所有点都被正确分类。</p>
@@ -1574,7 +1573,7 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
 \[
 \min\limits_{b,\mathbf w}\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]，
 \]
-结合<a href="/2015/01/svm-linear-svm/#mjx-eqn-eqlinear-svm-model">线性支持向量机</a>，可以得到容忍错分的优化模型
+结合<a href="/2015/01/linear-svm/#mjx-eqn-eqlinear-svm-model">线性支持向量机</a>，可以得到容忍错分的优化模型
 \[
 \begin{aligned}
 \min\limits_{b,\mathbf w}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]\\
@@ -1613,7 +1612,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 &amp;+\sum_{n=1}^N\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)+\sum_{n=1}^N\beta_n\left(-\xi_n\right)，
 \end{aligned}
 \]
-根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/svm-dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
+根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
 \begin{equation}
 \begin{aligned}
 \min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
@@ -1633,7 +1632,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 
 <p>soft-margin是实际中广泛应用的支持向量机。</p>
 
-<p>soft-margin的支持向量机与<a href="/2015/01/svm-kernel-svm/#kernel-trick">hard-margin的支持向量机</a>基本相同，$\alpha_n$上界$C$的限制，导致$b$的计算不同。</p>
+<p>soft-margin的支持向量机与<a href="/2015/01/kernel-svm/#kernel-trick">hard-margin的支持向量机</a>基本相同，$\alpha_n$上界$C$的限制，导致$b$的计算不同。</p>
 
 <p>利用complementary slackness条件可得
 \begin{equation}
@@ -1685,10 +1684,10 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
     
     <item>
       <title>支持向量机（3）：核支持向量机</title>
-      <link href="http://qianjiye.de/2015/01/svm-kernel-svm" />
+      <link href="http://qianjiye.de/2015/01/kernel-svm" />
       <pubdate>2015-01-06T14:25:58+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/svm-kernel-svm</guid>
+      <guid>http://qianjiye.de/2015/01/kernel-svm</guid>
       <content:encoded>&lt;![CDATA[<h2 id="section">回顾对偶支持向量机</h2>
 
 <p>当特征空间维数$\tilde d$很大时，计算$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$是对偶支持向量机的求解瓶颈。</p>
@@ -1802,7 +1801,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
     </tr>
     <tr>
       <td>高斯核</td>
-      <td>强大；<br />$K(\mathbf x, \mathbf x’)$有界；<br />1个参数难以选择；</td>
+      <td>强大；<br />$K(\mathbf x, \mathbf x’)$有界；<br />1个参数容易选择；</td>
       <td>没有显示的$\mathbf w$供解读；<br />计算比线性核慢；<br />太强大导致容易过拟合</td>
     </tr>
   </tbody>

@@ -115,6 +115,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">为什么需要正则化</h2>
 
+<p>结构风险最小化（SRM，structural risk minimuzation）等价于正则化<a href="#lihang_sml_2012">[1, P. 9]</a>，正则化是结构风险最小化策略的实现，是在经验风险上加一个正则化项或惩罚项<a href="#lihang_sml_2012">[1, P. 13]</a>。正则化符合奥卡姆剃刀（Occam’s rezor）原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。从贝叶斯估计的角度看，正则化项对应于模型的先验概率，可以假设复杂的模型有较大的先验概率<a href="#lihang_sml_2012">[1, P. 14]</a>。</p>
+
 <p>过拟合（overfitting）是指模型可以在训练集上表现出色，在新数据上性能却很差。解决过拟合问题的方法：</p>
 
 <ul>
@@ -132,7 +134,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>正则化只作用于$j\ge 1$的非常数项，实际上，正则化常数项对结果影响也不大。</li>
 </ul>
 
-<p>资料来源：<a href="#ng_ml_r_2014">[1]</a>。</p>
+<p>资料来源：<a href="#ng_ml_r_2014">[2]</a>。</p>
 
 <p>bias &amp; variance:</p>
 
@@ -244,7 +246,10 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 
 <h2 id="section-8">参考资料</h2>
 
-<ol class="bibliography"><li><span id="ng_ml_r_2014">[1]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014.</span>
+<ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 清华大学出版社, 2012.</span>
+
+</li>
+<li><span id="ng_ml_r_2014">[2]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ml">Online</a>]
 
@@ -256,7 +261,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 <span>
   <a  href="/2014/10/machine-learning-multiple-classification" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2014/10/machine-learning-perceptron-learning-algorithm" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/pla" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -295,8 +300,8 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/10/machine-learning-perceptron-learning-algorithm'; --1> -->
-<!--         url = '/2014/10/machine-learning-perceptron-learning-algorithm'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/pla'; --1> -->
+<!--         url = '/2014/10/pla'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
