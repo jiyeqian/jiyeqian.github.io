@@ -178,7 +178,7 @@ g_{t+1}&amp;\leftarrow\arg\min_{h\in\mathcal H}\left(\sum_{n=1}^Nu_n^{(t+1)}[[y_
   <p>其次，对于$t=1,2,\ldots,T$执行以下步骤：</p>
 
   <ol>
-    <li>利用$\mathcal A(\mathcal D, \mathbf u^{(t)})$得到$g_t$，其中$\mathcal A$最小化$\mathbf u^{(t)}$加权的0/1误差；</li>
+    <li>$g_t\leftarrow\mathcal A(\mathcal D, \mathbf u^{(t)})$，通过算法$\mathcal A$在最小化$\mathbf u^{(t)}$加权0/1误差约束下得到$g_t$；</li>
     <li>将$\mathbf u^{(t)}$更新为$\mathbf u^{(t＋1)}$：
 \[
 u_n^{(t+1)}\leftarrow\left\{
@@ -192,7 +192,7 @@ u_n^{(t)}/\blacklozenge_t&amp;\quad\mbox{if }[[y_n= g_t(\mathbf x_n)]]，
     <li>计算系数$\alpha_t=\ln(\blacklozenge_t)$；</li>
   </ol>
 
-  <p>最后，返回$G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_tg_t(\mathbf x)\right)$。</p>
+  <p>最后，返回$G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_tg_t(\mathbf x)\right)$，也就是$T$个分类器和$T$个系数。</p>
 </blockquote>
 
 <p>好的$g_t$应该有大的$\alpha_t$。对于$\epsilon_t={1\over 2}$，近似于随机猜想，$\alpha_t=0$；对于$\epsilon_t=0$，完全正确的分类器，$\alpha_t=\infty$。</p>

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>机器学习：多分类问题</title>
+    <title>多分类问题</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>机器学习：多分类问题</h1>
+        <h1>多分类问题</h1>
         </header>
         <nav id="real_nav">
         
@@ -125,9 +125,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><a href="/2015/01/image-classification-knn-based-introduction/#kNN">k最近邻分类器</a>是最简单的多分类器。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classification.png"><img src="/assets/images/2014-10-20-multiple-classification.png" alt="神经网络的多分类策略" /></a><div class="caption">Figure 1:  神经网络的多分类策略 [<a href="/assets/images/2014-10-20-multiple-classification.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-nn.png"><img src="/assets/images/2014-10-20-multiple-classes-nn.png" alt="神经网络的多分类策略" /></a><div class="caption">Figure 1:  神经网络的多分类策略 [<a href="/assets/images/2014-10-20-multiple-classes-nn.png">PNG</a>]</div></div></div>
 
-<p>神经网络是天生的多分类器，上图展示了神经网络的多分类策略，其中的输出是0和1组成的向量，<strong>而非</strong>类别标签。类别数$K(K \geq 3)$时，输出层需$K$个神经元；$K＝2$时，输出层只需一个神经元<a href="#ng_ml_nnl_2014">[1, P. 2]</a>。预测时，输入样本属于概率最大的类别。</p>
+<p>神经网络是天生的多分类器，上图展示了神经网络的多分类策略，其中的输出是0和1组成的向量，<strong>而非</strong>类别标签。类别数$K(K \geq 3)$时，输出层需$K$个神经元；$K＝2$时，输出层只需一个神经元<a href="#ng_ml_nnl_2014">[1, P. 2]</a>。预测时，输入样本属于输出“概率”最大的类别。</p>
 
 <h2 id="section-2">二分类器解决多分类问题</h2>
 
@@ -135,17 +135,23 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>Ryan Rifkin等人指出，如果基本的二分类器调整和正则化做得好，简单的one-vs-all策略也可和其它方法一样好<a href="#Rifkin04indefense">[2]</a><sup id="fnref:unbalance-data-problem"><a href="#fn:unbalance-data-problem" class="footnote">1</a></sup>。</p>
 
-<h3 id="section-3">一对多</h3>
+<h3 id="section-3">基本方法</h3>
 
 <p>一对多的方法是针对每一类训练一个二分类器，将它与其余所有数据进行二分类，若有$K(K &gt; 2)$个类别，就需要训练$K$个分类器，这种方法也叫one-vs-rest。</p>
 
+<p>一对一的方法是任意两类之间都训练一个二分类器，若有$K$个类别，就需要训练${K(K-1)\over 2}$个分类器。</p>
+
 <p>logistic回归通过“概率”最大化判断类别<a href="#ng_ml_lr_2014">[3, Pp. 30-31]</a>。</p>
 
-<p>支持向量机将$\left(\boldsymbol\theta^{(i)} \right)^T\mathbf x$值最大的作为输入样本的类别$i$<a href="#ng_ml_svm_2014">[4, P. 30]</a>。</p>
+<p>支持向量机将$\mathbf x^T\boldsymbol\theta^{(i)}$值最大的作为输入样本的类别$i$<a href="#ng_ml_svm_2014">[4, P. 30]</a>。</p>
 
-<h3 id="section-4">一对一</h3>
+<h3 id="section-4">实现技术</h3>
 
-<p>一对一的方法是任意两类之间都训练一个二分类器，若有$K$个类别，就需要训练${K(K-1)\over 2}$个分类器。预测的时候，相当于用这些分类器投票。</p>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png"><img src="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png" alt="多分类器的争议区域（左：one-vs-all，右：one-vs-one）" /></a><div class="caption">Figure 2:  多分类器的争议区域（左：one-vs-all，右：one-vs-one） [<a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png">PNG</a>]</div></div></div>
+
+<p>若采用投票机制，one-vs-all和one-vs-one都存在如上图绿色所示的争议区域（$\mathcal R_i$表示类别$\mathcal C_i$所属的区域）<a href="#bishop_prml_2006">[5, Pp. 182-183]</a>。上图左的争议区域表示既可能属于$\mathcal C_1$又可能属于$\mathcal C_2$；上图右的争议区域表示不属于任何一个类别。</p>
+
+<p>对于one-vs-all的$K$个线性分类器，输入对象属于输出值最大分类器对应的类别，在这种情况下类别所属的区域是单联通的凸区域（singly connected and convex）<sup id="fnref:why-singly-connected-and-convex"><a href="#fn:why-singly-connected-and-convex" class="footnote">2</a></sup>。</p>
 
 <h2 id="section-5">二分类器扩展为多分类器</h2>
 
@@ -153,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>采用交叉熵损失和softmax函数，可以推导出用于多分类的<a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier/#softmax-classifier">softmax分类器</a>，可视为logistic回归在多分类问题上的推广。</p>
 
-<p>结构化支持向量机（structured SVM）也可以解决多分类问题<a href="#Tsochantaridis:2004:SVM:1015330.1015341">[5]</a><sup id="fnref:how-structured-svm-do"><a href="#fn:how-structured-svm-do" class="footnote">2</a></sup>。</p>
+<p>结构化支持向量机（structured SVM）也可以解决多分类问题<a href="#Tsochantaridis:2004:SVM:1015330.1015341">[6]</a><sup id="fnref:how-structured-svm-do"><a href="#fn:how-structured-svm-do" class="footnote">3</a></sup>。</p>
 
 <h2 id="section-6">参考资料</h2>
 
@@ -175,7 +181,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 [<a href="https://www.coursera.org/course/ml">Online</a>]
 
 </li>
-<li><span id="Tsochantaridis:2004:SVM:1015330.1015341">[5]I. Tsochantaridis, T. Hofmann, T. Joachims, and Y. Altun, “Support Vector Machine Learning for Interdependent and Structured Output Spaces,” in <i>Proceedings of the Twenty-first International Conference on Machine Learning</i>, New York, NY, USA, 2004, pp. 104–111.</span>
+<li><span id="bishop_prml_2006">[5]C. M. Bishop, <i>Pattern Recognition and Machine Learning</i>. New York: Springer-Verlag, 2006.</span>
+
+</li>
+<li><span id="Tsochantaridis:2004:SVM:1015330.1015341">[6]I. Tsochantaridis, T. Hofmann, T. Joachims, and Y. Altun, “Support Vector Machine Learning for Interdependent and Structured Output Spaces,” in <i>Proceedings of the Twenty-first International Conference on Machine Learning</i>, New York, 2004, pp. 104–111.</span>
 
 [<a href="http://doi.acm.org/10.1145/1015330.1015341">Online</a>]
 
@@ -188,6 +197,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <li id="fn:unbalance-data-problem">
       <p>one-vs-all可能导致数据不均衡吗（其中一类的数据很少，其余的数据很多）？ <a href="#fnref:unbalance-data-problem" class="reversefootnote">&#8617;</a></p>
     </li>
+    <li id="fn:why-singly-connected-and-convex">
+      <p>什么是单联通的凸区域？这样的区域有什么价值？ <a href="#fnref:why-singly-connected-and-convex" class="reversefootnote">&#8617;</a></p>
+    </li>
     <li id="fn:how-structured-svm-do">
       <p>结构化支持向量机如何工作？ <a href="#fnref:how-structured-svm-do" class="reversefootnote">&#8617;</a></p>
     </li>
@@ -198,15 +210,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section align="right">
 <br/>
 <span>
-  <a  href="/2012/07/host-your-pages-at-github-using-jekyll" class="pageNav"  >上一篇</a>
+  <a  href="/2014/10/machine-learning-regularization" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2014/10/machine-learning-regularization" class="pageNav"  >下一篇</a>
+  <a  href="/2014/10/pla" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2014/10/machine-learning-multiple-classification" data-url="http://qianjiye.de/2014/10/machine-learning-multiple-classification" data-title="机器学习：多分类问题">
+	<div class="ds-thread" data-thread-key="/2014/10/multiple-classes" data-url="http://qianjiye.de/2014/10/multiple-classes" data-title="多分类问题">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
@@ -234,18 +246,18 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2012/07/host-your-pages-at-github-using-jekyll'; -->
+<!--         url = '/2014/10/machine-learning-regularization'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/10/machine-learning-regularization'; --1> -->
-<!--         url = '/2014/10/machine-learning-regularization'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/pla'; --1> -->
+<!--         url = '/2014/10/pla'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2014/10/machine-learning-multiple-classification/#timeSpan'; -->
+<!--         url = '/2014/10/multiple-classes/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->
