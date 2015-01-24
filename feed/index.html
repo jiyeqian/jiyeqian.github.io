@@ -4,8 +4,155 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-24T08:25:20+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-24T17:19:04+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>分类器融合（4）：随机森林</title>
+      <link href="http://qianjiye.de/2015/01/random-forest" />
+      <pubdate>2015-01-24T17:33:22+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/random-forest</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">随机森林</h2>
+
+<p>bagging通过投票或平均的方法，可以减少variance；决策树功能强大， 但是有很大的variance。能否将二者融合起来，优势互补？</p>
+
+<p>［1/3］random forest（RF） = bagging + fully-grown C&amp;RT tree</p>
+
+<p>random描述了bagging中bootstrapping过程的随机性；forest表示很多树的组合。</p>
+
+<blockquote>
+  <h4 id="section-1">随机森林算法</h4>
+  <hr />
+  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
+
+  <ol>
+    <li>通过bootstrapping方法从$\mathcal D$中抽取大小为$N’$的数据集$\tilde{\mathcal D}_t$；</li>
+    <li>通过决策树算法$\mbox{DTree}(\tilde{\mathcal D}_t)$得到$g_t$。</li>
+  </ol>
+
+  <p>返回$G=\mbox{Uniform}(\{g_t\})$就是随机森林。</p>
+</blockquote>
+
+<p>不同的$g_t$是进行分类器融合的关键。bagging通过bootstrapping的方法制造数据的随机性，从而得到不同的$g_t$。</p>
+
+<p>另一种得到不同$g_t$的方法是从$\mathbf x$中随机抽取$d’$维特征：</p>
+
+<ul>
+  <li>随机抽取索引为$i_1,i_2,\ldots,i_{d’}$的特征，特种空间从高维到低维投影，$\Phi(\mathbf x)=\left(x_{i_1},x_{i_1},\ldots,x_{i_{d’}}\right)$；</li>
+  <li>$\mathcal Z\in\mathbb R^{d’}$是$\mathcal X\in\mathbb R^d$的<strong>随机子空间</strong>（random subspace）；</li>
+  <li>通常$d’\ll d$，对大的$d$这样更高效<sup id="fnref:small-subspace"><a href="#fn:small-subspace" class="footnote">1</a></sup>；</li>
+</ul>
+
+<p>RF的原作者建议每次在C&amp;RT找$b(\mathbf x)$时，都重采样得到新的$d’$维特征子空间，让得到的树更不一样：</p>
+
+<p>［2/3］RF ＝ bagging ＋ random-subspace C&amp;RT。</p>
+
+<p>随机从$\mathbf x$中采样$d’$维特征可记为$\Phi(\mathbf x)=\mathbf P\mathbf x$，利用$\mathbf P$的第$i$随机抽取1维特征，这样的行属于自然基（natural basis）。</p>
+
+<p>采用<strong>随机组合方式</strong>，利用随机的行$\mathbf p_i$对特征进行投影（组合），$\phi_i(\mathbf x)=\mathbf p_i^T\mathbf x$，可以得到更强大的特征空间。通常采用的是低维投影，$\mathbf p_i$中只有$d’’$个非零元素。随机子空间是$d’’=1$的特殊情况，且$\mathbf p_i$属于自然基。</p>
+
+<p>RF的原作者建议每次在C&amp;RT找$b(\mathbf x)$时，都进行$d’$的随机低维投影（组合）：</p>
+
+<p>［3/3］RF ＝ bagging ＋ random-combination C&amp;RT</p>
+
+<p>采用随机组合方式的C&amp;RT树，每个分支函数$b(\mathbf x)$相当于感知器（线性分类器）。</p>
+
+<h2 id="oob">OOB方法</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png"><img src="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png" alt="out-of-sample数据点" /></a><div class="caption">Figure 1:  out-of-sample数据点 [<a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png">PNG</a>]</div></div></div>
+
+<p>采用bagging的时候，没被选中数据点称为out-of-bag（OOB）数据点，如上图左所示，星号标注的点表示没有对训练任何$g_t$有贡献。当$N’=N$时，对每次训练$g_t$的数据集$(\mathbf x_n,y_n)$是OOB的概率是$\left(1-{1\over N}\right)^N$，如果$N$很大时，这个概率是${1\over e}$。$g_t$对应数据集OOB数据大小约为${N\over e}$，这表明数据集中有不少点（大约1/3）没有参与训练。</p>
+
+<p>OOB数据可以看作用于验证的数据，如上图右所示。但是通常不需要验证$g_t$，因为即使$g_t$效果不理想，融合后的分类器$G$仍然可以达到很好的效果。$G_n^-$表示$\{\mathbf x_n,y_n\}$是OOB数据点的分类器的集合，上图左最下一行$G_n^-=\mbox{average}(g_2,g_3,g_T)$，利用OOB数据集校验的误差定义为
+\begin{equation}
+E_{oob}(G)={1\over N}\sum_{n=1}^Nerr\left(y_n,G_n^-(\mathbf x_n)\right)，
+\end{equation}
+利用$E_{oob}$，bagging和RF可以实现自验证（self-validation）。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-oob-validation.png"><img src="/assets/images/2015-01-24-random-forest-oob-validation.png" alt="［左］：验证集方法［右］：OOB集方法" /></a><div class="caption">Figure 2:  ［左］：验证集方法［右］：OOB集方法 [<a href="/assets/images/2015-01-24-random-forest-oob-validation.png">PNG</a>]</div></div></div>
+
+<p>上图是传统验证方法和$E_{oob}$的对比，$E_{oob}$通常能很准确的衡量$G$的性能。利用$E_{oob}$进行$d’’$等参数选择，通常不需要重新训练<sup id="fnref:why-not-re-training"><a href="#fn:why-not-re-training" class="footnote">2</a></sup>。</p>
+
+<h2 id="section-2">特征选择</h2>
+
+<p>特征选择就是移除冗余（redundant）和不相关（irrelevant）的特征。主要优点包括：</p>
+
+<ul>
+  <li>高效：让假设集和简单，预测时间变短；</li>
+  <li>提升泛化能力：移除特征的同时也移除了那些特征的噪声；</li>
+  <li>增强可理解性：剩余的特征对结果的解释性更强；</li>
+</ul>
+
+<p>但也存在对应的缺点：</p>
+
+<ul>
+  <li>计算量大：从特征空间选择重要的特征子集本身是组合优化问题；</li>
+  <li>过拟合：恰好选到那些结果看似很好的特征组合；</li>
+  <li>误解释：特别是存在过拟合时，可能得到结果的错误解释，或者只能得出关联性而非因果关系。</li>
+</ul>
+
+<p>决策树本身具备特征选择的能力，每次在某个特征上进行分割，用到的那些特征就是被选择的特征，这和decision stump类似。</p>
+
+<p>特征选择的简单理想情况是不考虑特征组合的影响，计算每个特征的重要性，从$d$维特征中选择最重要的$d’$维特征。通过线性模型容易实现
+\[
+score = \mathbf w^T\mathbf x=\sum_{i=1}^dw_ix_i，
+\]
+对良好的$\mathbf w$（对特征给出合理评分），第$i$维特征的重要性$\mbox{importance}(i)=|w_i|$，大的数值对得分贡献大。$\mathbf w$可通过数据进行学习得到。</p>
+
+<p>对于非线性模型，特征选择通常比较复杂。虽然RF是非线模型，但是由于内在的机制，采用<strong>随机测试</strong>（random test）也能方便选择特征。如果特征$i$很重要，用随机值$\mathbf x_{n,i}$代替该特征就会极大降低性能。产生这些随机值的方法包括：</p>
+
+<ul>
+  <li>通过均分分布或高斯分布产生：真实数据的分布$P(x_i)$可能并不服从这些分布，不仅加入了噪声，而且改变了分布，不是理想的方法。</li>
+  <li>bootstrap或者组合（permutation）方法：这样就保持了原来的分布$P(x_i)$，组合方法重新排列原始特征（类似洗牌）。</li>
+</ul>
+
+<p>利用组合方法重排特征进行性能测试称为<strong>组合测试</strong>（permutation test），
+\[
+\mbox{importance}(i)=\mbox{importance}(\mathcal D)-\mbox{importance}(\mathcal D^{(p)})，
+\]
+$\mathcal D^{(p)}$表示$\mathcal D$的特征$\{x_{n,i}\}$经过重新“洗牌”。组合测试是一种统计工具，可以用于类似RF的其它非线性模型。</p>
+
+<p>通常需要重新训来呢得到$\mbox{importance}(\mathcal D^{(p)})$，但是可RF利用OOB不需重新训练，
+\[
+\mbox{importance}(i)=E_{oob}(G)-E_{oob}^{(p)}(G)，
+\]
+得到$E_{oob}^{(p)}(G)$的方法是，在计算过程中需要$x_{n,i}$的地方，用组合的OOB值代替$x_{n,i}$。</p>
+
+<p>在实际中，RF通过“permutation + OOB”进行特征选择，通常不仅高效而且有效。</p>
+
+<h2 id="rf">RF特性</h2>
+
+<p>通常随机森林需要的树越多越好🌲🌲🌲🌲，$\bar g=\lim_{T\rightarrow\infty} G$。通过增减树判断随机森林是否稳定，确保有足够多的树，如果不够，继续增加🌲。</p>
+
+<p>台湾大学在KDDCup 2013中发现，随机森林的$E_{val}$表现依赖初始的种子点，最终通过将树增加到12000课，估定种子为1，夺得了冠军🏆。</p>
+
+<h4 id="section-3">以下图片展示了随机森林的优点：</h4>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-large-margin.png"><img src="/assets/images/2015-01-24-random-forest-large-margin.png" alt="通过多棵树得到平滑和类似最大边界的判别界" /></a><div class="caption">Figure 3:  通过多棵树得到平滑和类似最大边界的判别界 [<a href="/assets/images/2015-01-24-random-forest-large-margin.png">PNG</a>]</div></div></div>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-robust-nonlinear-model.jpg"><img src="/assets/images/2015-01-24-random-forest-robust-nonlinear-model.jpg" alt="容易得到鲁棒的非线性模型" /></a><div class="caption">Figure 4:  容易得到鲁棒的非线性模型 [<a href="/assets/images/2015-01-24-random-forest-robust-nonlinear-model.jpg">JPG</a>]</div></div></div>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-noise-corrected.jpg"><img src="/assets/images/2015-01-24-random-forest-noise-corrected.jpg" alt="通过投票机制消除噪声的干扰" /></a><div class="caption">Figure 5:  通过投票机制消除噪声的干扰 [<a href="/assets/images/2015-01-24-random-forest-noise-corrected.jpg">JPG</a>]</div></div></div>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-5">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:small-subspace">
+      <p>这种方法也可以用于其它机器学习模型。 <a href="#fnref:small-subspace" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:why-not-re-training">
+      <p>为什么不需要重新训练？ <a href="#fnref:why-not-re-training" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>分类器融合（3）：决策树</title>
@@ -112,7 +259,7 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <h2 id="section-2">决策树剪枝</h2>
 
-<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。</p>
+<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
 <p>决策树需要正则化机制避免过拟合。利用控制树叶数目$\Omega(G)$，正则化决策树
 \begin{equation}
@@ -1724,131 +1871,6 @@ g(\mathbf x) = \theta\left(A\left(\mathbf w_{SVM}^T\mathbf \Phi(\mathbf x) + b_{
 \min_\beta\left({\lambda\over N}\sum_{n=1}^N\sum_{m=1}^N\beta_n\beta_mK(\mathbf x_n,\mathbf x_m)+{1\over N}\sum_{n=1}^N\log\left(1+\exp\left(-y_n\sum_{m=1}^N\beta_mK(\mathbf x_m,\mathbf x_n)\right)\right)\right)，
 \end{equation}
 这是无约束最优化问题，GD／SGD等都可求解。与支持向量机不同，KLR的大部分$\beta_n\neq 0$。</p>
-
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>支持向量机（4）：soft-margin支持向量机</title>
-      <link href="http://qianjiye.de/2015/01/soft-margin-svm" />
-      <pubdate>2015-01-07T17:24:31+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/soft-margin-svm</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="soft-margin">soft-margin支持向量机</h2>
-
-<p>在求解支持向量机参数的二次规划中，约束条件要求所有点被正确分类的叫<strong>hard-margin支持向量机</strong>。这类支持向量机过拟合原因：（1）特征转换功能太强；（2）坚持所有点都被正确分类。</p>
-
-<p>可以通过放宽条件，容忍部分噪声（容许这部分噪声数据分类错误），使得支持向量机具有更好的泛化性能。</p>
-
-<p>对于pocket PLA，目标函数为
-\[
-\min\limits_{b,\mathbf w}\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]，
-\]
-结合<a href="/2015/01/linear-svm/#mjx-eqn-eqlinear-svm-model">线性支持向量机</a>，可以得到容忍错分的优化模型
-\[
-\begin{aligned}
-\min\limits_{b,\mathbf w}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]\\
-\mbox{s.t.}&amp;\quad y_n\left(\mathbf w^T\mathbf z_n+b\right)\geq 1-\infty\cdot\left[\left[y_n\neq\mbox{sign}\left(\mathbf w^T\mathbf z_n+b\right)\right]\right]，
-\end{aligned}
-\]
-$C$是调节最大边界和噪声容忍度的参数。但是，上述模型不是QP，并且不能区别分类错误时误差的大小，进一步降模型变为<strong>soft-margin支持向量机</strong>
-\begin{equation}
-\begin{aligned}
-\min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
-\mbox{s.t.}&amp;\quad y_n\left(\mathbf w^T\mathbf z_n+b\right)\geq 1-\xi_n\\
-&amp;\quad\xi_n\geq 0 \mbox{ for all }n，
-\end{aligned}
-\label{eq:soft-margin-primal-svm}
-\end{equation}
-该QP模型有$\tilde d+1+N$个变量和$2N$个约束条件，也被称为基于$\ell_1$损失的soft-margin。如果采用$\xi_n^2$，则被称为基于$\ell_2$损失的soft-margin
-\begin{equation*}
-\begin{aligned}
-\min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n^2\\
-\mbox{s.t.}&amp;\quad y_n\left(\mathbf w^T\mathbf z_n+b\right)\geq 1-\xi_n，
-\end{aligned}
-\end{equation*}
-此时不再需要约束条件$\xi_n\geq 0$。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png" alt="边界容忍度" /></a><div class="caption">Figure 1:  边界容忍度 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-margin-violation.png">PNG</a>]</div></div></div>
-
-<p>$C$是调节最大边界和边界容忍度的参数，$\xi_n$是容忍误差的大小，如上图所示。$C$越小，对最大边界要求越高；$C$越大，能容忍的边界误差越小。</p>
-
-<h2 id="soft-margin-1">对偶soft-margin支持向量机</h2>
-
-<p>soft-margin支持向量机的拉格朗日函数为
-\[
-\begin{aligned}
-\mathcal L(b,\mathbf w,\boldsymbol\alpha, \boldsymbol\beta)=
-&amp;{1\over 2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
-&amp;+\sum_{n=1}^N\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)+\sum_{n=1}^N\beta_n\left(-\xi_n\right)，
-\end{aligned}
-\]
-根据${\partial\mathcal L\over\partial\xi_n}=0$可得$C-\alpha_n-\beta_n=0$，利用化解<a href="/2015/01/dual-svm/#lagrange-dual-problem">拉格朗日对偶问题</a>相同的方法可得
-\begin{equation}
-\begin{aligned}
-\min\limits_{\boldsymbol\alpha}&amp;\quad\frac{1}{2}\sum_{n=1}^N\sum_{m=1}^N\alpha_n\alpha_my_ny_m\mathbf z_n^T\mathbf z_m-\sum_{n=1}^N\alpha_n \\
-\mbox{subject to}&amp;\quad\sum_{n=1}^Ny_n\alpha_n=0\\
-&amp;\quad 0\leq\alpha_n\leq C,\mbox{ for }n=1,2,\ldots,N \\
-\mbox{implicitly}&amp;\quad \mathbf w=\sum_{n=1}^N\alpha_ny_n\mathbf z_n\\
-&amp;\quad\beta_n=C-\alpha_n,\mbox{ for }n=1,2,\ldots,N，
-\end{aligned}
-\label{eq:qp-soft-margin-dual-svm}
-\end{equation}
-与hard-margin对偶支持向量机不同的地方只是$\alpha_n$多了一个上界$C$，这是$N$个变量$2N+1$个约束条件的QP。$\alpha_n$的约束界也可以表示为矩阵形式
-\begin{equation}
-\mathbf 0_N\leq \mathbf I_N\boldsymbol\alpha \leq C\cdot \mathbf 1_N。
-\end{equation}</p>
-
-<h2 id="soft-margin-2">核soft-margin支持向量机</h2>
-
-<p>soft-margin是实际中广泛应用的支持向量机。</p>
-
-<p>soft-margin的支持向量机与<a href="/2015/01/kernel-svm/#kernel-trick">hard-margin的支持向量机</a>基本相同，$\alpha_n$上界$C$的限制，导致$b$的计算不同。</p>
-
-<p>利用complementary slackness条件可得
-\begin{equation}
-\begin{aligned}
-\alpha_n\left(1-\xi_n-y_n\left(\mathbf w^T\mathbf z_n+b\right)\right)=&amp;0\\
-\left(C-\alpha_n\right)\xi_n=&amp;0，
-\end{aligned}
-\label{eq:soft-margin-complementary-slackness}
-\end{equation}
-当$\alpha_s&gt;0$时，$b=y_s-y_s\xi_s-\mathbf w^T\mathbf z_s$；当$\alpha_s&lt;C$时，$\xi_s=0$。满足$0&lt;\alpha_s&lt;C$的点称为<strong>自由支持向量</strong>$\left(\mathbf x_s, y_s\right)$，利用这些点容易得到
-\begin{equation}
-b=y_s-\sum\limits_{SV}\alpha_ny_nK\left(\mathbf x_n, \mathbf x_s\right)。
-\end{equation}
-在极少数情况下，不存在自由支持向量，$b$通过不等式限定，只要满足KKT条件的取值都是合理的$b$。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-soft-margin-gaussian-svm.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-soft-margin-gaussian-svm.png" alt="soft-margin高斯核支持向量机" /></a><div class="caption">Figure 2:  soft-margin高斯核支持向量机 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-soft-margin-gaussian-svm.png">PNG</a>]</div></div></div>
-
-<p>上图展示了soft-margin高斯核支持向量机的效果，灰色的区域表示最大分类间隔。从图中可以看出，$C$越大，对误差的容忍越弱，越容易导致过拟合。</p>
-
-<h2 id="alphan">$\alpha_n$的物理含义</h2>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png" alt="不同类型的数据点" /></a><div class="caption">Figure 3:  不同类型的数据点 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png">PNG</a>]</div></div></div>
-
-<p>通过公式\eqref{eq:soft-margin-complementary-slackness}可知，$\alpha_n$将数据点分为如上图所示的3种类型：</p>
-
-<ol>
-  <li>当$\alpha_n=0$时，非支持向量，$\xi_n=0$，位于边界之外，极少数可能在边界上；</li>
-  <li>当$0&lt;\alpha_n&lt;C$时，自由（free）支持向量$\square$，$\xi_n=0$，位于边界上，用于计算$b$；</li>
-  <li>当$\alpha_n=C$时，有界（bounded）支持向量$\triangle$，$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n+b\right)$，落在边界内，可能正确分类也可能分错，极少数可能在边界上。</li>
-</ol>
-
-<h2 id="section">模型选择</h2>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png" alt="［中］：交叉验证误差；［右］：支持向量个数" /></a><div class="caption">Figure 4:  ［中］：交叉验证误差；［右］：支持向量个数 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png">PNG</a>]</div></div></div>
-
-<p>上图左是soft-margin高斯核支持向量机的分类效果，横轴是$C$的变化，纵轴是$\gamma$的变化。由于$E_{cv}(C,\gamma)$不光滑，通常的模型选择方法是通过$C$和$\gamma$的数据网格，利用交叉验证的方法选择合适的模型，上图中所示，选择了左下角的模型。</p>
-
-<p>交叉验证中，将数据分为$N$份的验证称为<strong>leave-one-out交叉验证</strong>，它的误差上界是
-\begin{equation}
-E_{loocv}\leq\frac{\#SV}{N}，
-\label{eq:eloocv-upper-bound}
-\end{equation}
-$\#SV$表示支持向量的个数。可以通过支持向量的个数进行模型选择。由于支持向量个数的函数也是非光滑的，难以优化，也采取利用$C$和$\gamma$的数据网格，多次计算后做选择。</p>
-
-<p>由于\eqref{eq:eloocv-upper-bound}也只是给出了$E_{loocv}$的上界，通常用于当$E_{cv}$计算量很大时模型的安全检查，剔除那些支持向量过多的危险模型，然后再在剩余模型中进一步做交叉验证选择合适的模型。</p>
 
 ]]&gt;</content:encoded>
     </item>

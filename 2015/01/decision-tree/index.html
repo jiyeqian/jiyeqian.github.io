@@ -101,7 +101,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   tags
   
-  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
   
 </span>
 
@@ -206,7 +208,7 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <h2 id="section-2">决策树剪枝</h2>
 
-<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。</p>
+<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
 <p>决策树需要正则化机制避免过拟合。利用控制树叶数目$\Omega(G)$，正则化决策树
 \begin{equation}
@@ -274,7 +276,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 <span>
   <a  href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/01/random-forest" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -312,6 +314,9 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/random-forest'; --1> -->
+<!--         url = '/2015/01/random-forest'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
