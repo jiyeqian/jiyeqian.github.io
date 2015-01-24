@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>分类器融合（3）：决策树</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>分类器融合（3）：决策树</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-01-23">2015-01-23</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<table>
+  <thead>
+    <tr>
+      <th>融合类型</th>
+      <th>混合</th>
+      <th>学习</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>均匀融合</td>
+      <td>voting／averaging</td>
+      <td>Bagging</td>
+    </tr>
+    <tr>
+      <td>非均匀融合</td>
+      <td>linear</td>
+      <td>AdaBoost</td>
+    </tr>
+    <tr>
+      <td>有条件融合</td>
+      <td>stacking</td>
+      <td>decision tree</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>混合（blending）：得到$g_t$之后再融合；</li>
+  <li>学习（learning）：学习$g_t$的同时进行融合。</li>
+</ul>
+
+<h2 id="section">简介</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png"><img src="/assets/images/2015-01-23-decision-tree-decision-tree-example.png" alt="［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法" /></a><div class="caption">Figure 1:  ［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法 [<a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png">PNG</a>]</div></div></div>
+
+<p>上图左的决策树用来判断是否观看MOOC课程。决策树是<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">分类器有条件融合</a>的经典学习模型，在不同的情况下采用不同的$g_t$：</p>
+
+<ul>
+  <li>基本假设（base hypothesis）$g_t(\mathbf x)$：每条路径终点的叶子🍃，此处是常数。 </li>
+  <li>条件$q_t(t)$：$\mathbf x$在路径$t$上么？上图左中菱形区域。</li>
+</ul>
+
+<p>决策树是递归结构，每个分支对应一颗子决策树
+\[
+G(\mathbf x)=\sum_{c=1}^C[[b(\mathbf x)=c]]\cdot G_c(\mathbf x)，
+\]
+$b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子树。</p>
+
+<p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
+
+<p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
+
+<h2 id="section-1">分类回归树</h2>
+
+<p>分类回归树（C&amp;RT，classification and regression tree）是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数：</p>
+
+<ul>
+  <li>二分类或多分类问题（0／1误差）：$\{y_n\}$中占大多数的；</li>
+  <li>回归问题（平方误差）：$\{y_n\}$的平均。</li>
+</ul>
+
+<p>C&amp;RT通过基于不纯度函数的<strong>分支条件</strong>用decision stump进行二元分支
+\[
+b(\mathbf x)=\arg\min_{\mbox{decision stumps }h(\mathbf x)}\sum_{c=1}^2|\mathcal D_c\mbox{ with }h|\cdot\mbox{impurity}(\mathcal D_c\mbox{ with }h)，
+\]
+不纯度通过数据集大小加权。</p>
+
+<p>回归的不纯度采用回归误差
+\begin{equation}
+\mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N(y_n-\bar y)^2，
+\end{equation}
+$\bar y$表示$\{y_n\}$的平均，分类的候选不纯度可采用分类误差
+\begin{equation*}
+\mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N[[y_n\neq y^*]]，
+\end{equation*}
+$y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
+\begin{equation}
+\mbox{impurity}(\mathcal D)=1-\sum_{k=1}^K\left({\sum_{n=1}^N[[y_n=k]]\over N}\right)^2，
+\end{equation}
+或
+\begin{equation*}
+\mbox{impurity}(\mathcal D)=1-\max_{1\leq k\leq K}{\sum_{n=1}^N[[y_n=k]]\over N}，
+\end{equation*}
+只采用最优的$k=y^*$。</p>
+
+<p>分类回归树“被迫”停止生长的两个<strong>终止条件</strong>：</p>
+
+<ol>
+  <li>所有$y_n$都相同，不纯度为0，返回$g_t(\mathbf x)=y_n$；</li>
+  <li>所有$\mathbf x_n$都相同，不存在decision stump。</li>
+</ol>
+
+<p>这种被迫停止生长的树称为完全成长树（fully-grown tree）。</p>
+
+<p>C&amp;AT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
+
+<h2 id="section-2">决策树剪枝</h2>
+
+<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。</p>
+
+<p>决策树需要正则化机制避免过拟合。利用控制树叶数目$\Omega(G)$，正则化决策树
+\begin{equation}
+\arg\min_{\mbox{all possible }G}E_{in}(G)+\lambda\Omega(G)，
+\end{equation}
+称为剪枝（pruning）。通常是采用交叉验证选择$\lambda$。若要列举所有的$G$，计算量非常大，通常的做法是从完全成长树入手构造可能的$G$：</p>
+
+<ul>
+  <li>$G^{(0)}$为完全成长树；</li>
+  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子）。</li>
+</ul>
+
+<h2 id="section-3">决策树优势</h2>
+
+<p>几乎没有哪种其它的机器学习算法能够拥有如此多优良特性，除非其它决策树，比如C4.5。</p>
+
+<h4 id="section-4">一、可解释性好</h4>
+
+<h4 id="section-5">二、容易处理多分类问题</h4>
+
+<h4 id="section-6">三、容易处理类别特征</h4>
+
+<p>决策树通过decision stump
+\begin{equation}
+b(\mathbf x)=[[x_i\leq \theta]]+1\quad\theta\in\mathbb R，
+\end{equation}
+可以对数值特征进行分类；利用决策子集（decision subset）
+\begin{equation}
+b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
+\end{equation}
+决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
+
+<h4 id="section-7">四、容易处理遗失特征</h4>
+
+<p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
+
+<ul>
+  <li>获取体重特征；</li>
+  <li>用身高特征代替。</li>
+</ul>
+
+<p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
+
+<h4 id="section-8">五、高效的训练非线性模型</h4>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">Figure 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
+
+<h2 id="section-9">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-10">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:categorical-feature">
+      <p>例如医生诊断时会给出症状相关的类别特征｛fever, pain, tired, sweaty｝。 <a href="#fnref:categorical-feature" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/01/decision-tree" data-url="http://qianjiye.de/2015/01/decision-tree" data-title="分类器融合（3）：决策树">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/image-classification-svm-and-softmax-based-linear-classifier'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/decision-tree/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

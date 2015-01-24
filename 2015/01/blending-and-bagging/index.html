@@ -135,9 +135,10 @@ G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_t\cdot g_t(\mathbf x)\right),\q
 \end{equation}
 当$\alpha_t=[[E_{val}\left(g_{t}^-\right)\mbox{ smallest}]]$时，与方法1一样；当$\alpha_t=1$时，与方法2一样。</li>
   <li>有条件的组合：比如科技股听从擅长这方面的朋友，传统行业股票听从那些……
-\begin{equation*}
+\begin{equation}
 G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\right),\qquad q_t(\mathbf x)\geq 0，
-\end{equation*}
+\label{eq:conditional-blending-hypothesis}
+\end{equation}
 当$q_t(\mathbf x)=\alpha_t$时，与方法3一样，也就是包含了前面所有情况。</li>
 </ol>
 
