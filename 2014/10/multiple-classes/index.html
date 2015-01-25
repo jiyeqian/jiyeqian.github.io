@@ -141,13 +141,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>一对一的方法是任意两类之间都训练一个二分类器，若有$K$个类别，就需要训练${K(K-1)\over 2}$个分类器。</p>
 
-<p>logistic回归通过“概率”最大化判断类别<a href="#ng_ml_lr_2014">[3, Pp. 30-31]</a>。</p>
+<p>logistic回归通过<a href="/2015/01/linear-models-for-classification/#multiple-classes">“概率”最大化</a>判断类别<a href="#ng_ml_lr_2014">[3, Pp. 30-31]</a>。</p>
 
 <p>支持向量机将$\mathbf x^T\boldsymbol\theta^{(i)}$值最大的作为输入样本的类别$i$<a href="#ng_ml_svm_2014">[4, P. 30]</a>。</p>
 
 <h3 id="section-4">实现技术</h3>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png"><img src="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png" alt="多分类器的争议区域（左：one-vs-all，右：one-vs-one）" /></a><div class="caption">Figure 2:  多分类器的争议区域（左：one-vs-all，右：one-vs-one） [<a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png">PNG</a>]</div></div></div>
+<div class="image_line" id="anbiguous-regions"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png"><img src="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png" alt="多分类器的争议区域（左：one-vs-all，右：one-vs-one）" /></a><div class="caption">Figure 2:  多分类器的争议区域（左：one-vs-all，右：one-vs-one） [<a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png">PNG</a>]</div></div></div>
 
 <p>若采用投票机制，one-vs-all和one-vs-one都存在如上图绿色所示的争议区域（$\mathcal R_i$表示类别$\mathcal C_i$所属的区域）<a href="#bishop_prml_2006">[5, Pp. 182-183]</a>。上图左的争议区域表示既可能属于$\mathcal C_1$又可能属于$\mathcal C_2$；上图右的争议区域表示不属于任何一个类别。</p>
 
