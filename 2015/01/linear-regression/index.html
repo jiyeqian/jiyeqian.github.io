@@ -328,7 +328,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 <h2 id="section-4">多项式回归</h2>
 
-<p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，构造新的特征向量$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
+<p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，<a href="/2015/01/nonlinear-transformation">构造新的特征向量</a>$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
 
 <p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
 

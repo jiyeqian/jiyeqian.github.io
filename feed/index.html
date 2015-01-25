@@ -4,8 +4,72 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-25T08:50:55+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-25T15:22:54+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>非线性特征变换</title>
+      <link href="http://qianjiye.de/2015/01/nonlinear-transformation" />
+      <pubdate>2015-01-25T19:03:12+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/nonlinear-transformation</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">非线性变换</h2>
+
+<p>线性假设集（分类器）的类别之间的判别界是线性的，低VC维可使$E_{in}$和$E_{out}$接近，但无法分类线性不可分数据。线性分类器应用于线性不可分数据，会导致很大的$E_{in}$，$E_{out}$也会很大。如何突破线性分类器的局限，对线性不可分数据分类？</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-25-nonlinear-transformation-circular-separable.png"><img src="/assets/images/2015-01-25-nonlinear-transformation-circular-separable.png" alt="［左］：线性不可分；［中］：圆可分；［右］Z空间线性可分" /></a><div class="caption">Figure 1:  ［左］：线性不可分；［中］：圆可分；［右］Z空间线性可分 [<a href="/assets/images/2015-01-25-nonlinear-transformation-circular-separable.png">PNG</a>]</div></div></div>
+
+<p>上图左的数据$\mathcal D$虽然线性不可分，但是可以用上图中所示的圆分开
+\[
+h_{SEP}(\mathbf x)=\mbox{sign}\left(0.6-x_1^2-x_2^2\right)，
+\]
+令$\tilde{\mathbf w}^T=[0.6,-1,-1],\mathbf z=\left[1,x_1^2,x_2^2\right]^T$，上式可以记为
+\[
+h(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\mathbf z\right)，
+\]
+这就相当于通过<strong>非线性特征变换</strong>$\Phi: \mathbf x\in\mathcal X\mapsto\mathbf z\in\mathcal Z$，将$\mathcal X$空间中线性不可分数据变到线性可分的$\mathcal Z$空间，如上图右所示。</p>
+
+<p>通过变换$\Phi_2(\mathbf x)=\left(1,x_1,x_2,x_1^2,x_1x_2,x_2^2\right)$，可以使得$\mathcal Z$空间的感知器和$\mathcal X$空间的二次假设等价，
+\[
+\mathcal H_{\Phi_2}=\left\{h(\mathbf x):h(\mathbf x)=\tilde h(\Phi_2(\mathbf x))\mbox{ for some linear }\tilde h\mbox{ on }\mathcal Z\right\}
+\]
+可以实现$\mathcal X$空间的所有二次曲线判别界，当然也包括线性的特殊情况，使得$E_{in}$有机会更小。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-25-nonlinear-transformation.png"><img src="/assets/images/2015-01-25-nonlinear-transformation.png" alt="非线性变换步骤" /></a><div class="caption">Figure 2:  非线性变换步骤 [<a href="/assets/images/2015-01-25-nonlinear-transformation.png">PNG</a>]</div></div></div>
+
+<p>上图展示了使用非线性变换的步骤。首先通过变换$\Phi$将数据从$\mathcal X$空间映射到$\mathcal Z$空间；然后在$\mathcal Z$空间利用线性分类算法$\mathcal A$得到线性判别界；最后返回
+\begin{equation}
+g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
+\end{equation}
+逆变换$\Phi^{-1}$不一定存在。</p>
+
+<p>非线性变换$\Phi$和$\mathcal Z$空间的线性模型算法$\mathcal A$，不仅可以用于分类，而且可用于回归。</p>
+
+<h2 id="section-1">复杂度与性能分析</h2>
+
+<p>若原始特征是$d$维，$Q$次多项式特征变换$\Phi_{Q}(\mathbf x)$后的特征空间维度$\tilde d+1$为$\binom{Q+d}{Q}$，空间复杂度为$O\left(Q^d\right)$。当$Q$很大时，新空间中的计算和存储代价都极大。新空间中$d_{VC}\left(\mathcal H_{\Phi_Q}\right)\leq \tilde d+1$，当$Q$很大时$d_{VC}$也会很大。当$d_{VC}$增加时，用于训练的数据量也要增加，需要考虑训练集的数据量是否足够。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-25-nonlinear-transformation-visual-choices.png"><img src="/assets/images/2015-01-25-nonlinear-transformation-visual-choices.png" alt="选择不同特征变换" /></a><div class="caption">Figure 3:  选择不同特征变换 [<a href="/assets/images/2015-01-25-nonlinear-transformation-visual-choices.png">PNG</a>]</div></div></div>
+
+<p>上图展示了人工基于视觉的选择，不同特征变换下，$d_{VC}$从6降到了1。事实上，此时的模型复杂度需要考虑人工付出的$d_{VC}$代价，这是“human learning ＋ machine learning”。对于机器学习，人工偷看了数据付出的代价也必须加以考量。</p>
+
+<p>对于特征变换，$Q$次变换可以在$Q-1$次的基础上进行
+\[
+\Phi_{Q}(\mathbf x)=\left(\Phi_{Q-1}(\mathbf x),x_1^Q,x_1^{Q-1}x_2,\ldots,x_d^Q\right)，
+\]
+也就是存在嵌套关系
+\[
+\mathcal H_{\Phi_0}\subset\mathcal H_{\Phi_1}\subset\mathcal H_{\Phi_2}\subset\ldots\subset\mathcal H_{\Phi_Q}，
+\]
+那么$d_{VC}$按上述次序递增（$\leq$），$E_{in}$按上述次序递减（$\geq$）。高次变换能得到$E_{in}$非常小的结果，然而$E_{in}$仅仅是中间产物，并<a href="/2014/12/machine-learning-the-vc-dimension/#vc-and-errors">不能说明$E_{out}$会很小</a>。合理的方法是从$H_{\Phi_1}$开始尝试，线性模型是首选，如果效果不达标再考虑高次的特征变换。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>线性分类模型</title>
@@ -1624,7 +1688,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 <h2 id="section-4">多项式回归</h2>
 
-<p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，构造新的特征向量$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
+<p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，<a href="/2015/01/nonlinear-transformation">构造新的特征向量</a>$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
 
 <p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
 
@@ -1673,175 +1737,6 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
     </li>
   </ol>
 </div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>支持向量机（6）：支持向量回归</title>
-      <link href="http://qianjiye.de/2015/01/support-vector-regression" />
-      <pubdate>2015-01-12T18:31:45+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/support-vector-regression</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">脊回归</h2>
-
-<p>有正则化项的回归称为<strong>脊回归</strong>（ridge regression）。脊回归的核模型有解析解么？</p>
-
-<p>脊回归的最优化模型为
-\[
-\min_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\left(y_n-\mathbf w^T\mathbf z_n\right)^2\right)，
-\]
-根据表示定理可知，存在形如$\mathbf w_*=\sum_{n=1}^N\beta_n\mathbf z_n$的最优解，将其带入并表示为核形式
-\begin{equation}
-\min_\beta\left({\lambda\over N}\sum_{n=1}^N\sum_{m=1}^N\beta_n\beta_mK(\mathbf x_n,\mathbf x_m)+{1\over N}\sum_{n=1}^N\left(y_n-\sum_{n=1}^N\beta_mK(\mathbf x_n,\mathbf x_m)\right)\right)。
-\end{equation}
-<strong>脊回归的核模型</strong>就是利用表示定理将脊回归核化。目标函数写为矩阵的形式
-\begin{equation}
-E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol\beta + {1\over N}\left(\boldsymbol\beta^T\mathbf K^T\mathbf K\boldsymbol\beta-2\boldsymbol\beta^T\mathbf K^T\mathbf y + \mathbf y^T\mathbf y\right)，
-\end{equation}
-无约束最优化问题可以通过
-\[
-\nabla E_{aug}(\boldsymbol\beta)={2\over N}\left(\lambda\mathbf K^T\mathbf I\boldsymbol\beta+\mathbf K^T\mathbf K\boldsymbol\beta-\mathbf K^T\right)={2\over N}\mathbf K^T\left((\lambda\mathbf I+\mathbf K)\boldsymbol\beta-\mathbf y\right)
-\]
-令$\nabla E_{aug}(\boldsymbol\beta)=0$求解，
-\begin{equation}
-\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y。
-\label{eq:analytic-solution-ridge-regression}
-\end{equation}
-根据Mercer条件可知$\mathbf K$半正定，并且$\lambda&gt;0$，因此矩阵总可逆。稠密矩阵求逆的时间复杂度为$O\left(N^3\right)$。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png" alt="［左］：脊回归的线性模型；［右］：脊回归的核模型" /></a><div class="caption">Figure 1:  ［左］：脊回归的线性模型；［右］：脊回归的核模型 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-ridge-regression-compare.png">PNG</a>]</div></div></div>
-
-<p>上图中的蓝线是脊回归的效果。线性模型与核模型的选择是速度与效率的折中权衡，它们之间的对比如下表：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>线性模型</th>
-      <th>核模型</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>$\mathbf w = (\lambda\mathbf I+\mathbf X^T\mathbf X)^{-1}\mathbf X^T\mathbf y$</td>
-      <td>$\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y$</td>
-    </tr>
-    <tr>
-      <td>功能受限</td>
-      <td>通过$K$实现强大的功能</td>
-    </tr>
-    <tr>
-      <td>训练时间复杂度为$O\left(d^3+d^2N\right)$</td>
-      <td>训练时间复杂度为$O\left(N^3\right)$</td>
-    </tr>
-    <tr>
-      <td>预测时间复杂度为$O(d)$，当$N\gg d$时效率高</td>
-      <td>预测时间复杂度为$O(N)$，当训练样本大时效率低</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>当参数获得后，回归函数就可以用核表示为
-\begin{equation}
-g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
-\end{equation}</p>
-
-<p>将脊回归的核模型用于分类就是<strong>最小二乘支持向量机</strong>（LSSVM，least-squares SVM），也就是用回归解决分类问题，虽然分类性能可能不佳，但用解析方法\eqref{eq:analytic-solution-ridge-regression}可“容易”求解系数。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png" alt="最小二乘与soft-margin支持向量机的对比" /></a><div class="caption">Figure 2:  最小二乘与soft-margin支持向量机的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-svm-vs-lssvm.png">PNG</a>]</div></div></div>
-
-<p>上图可以看出，最小二乘与soft-margin支持向量机的分类面很相似，但是LSSVM的支持向量要多得多，预测速度会很慢。</p>
-
-<p>LSSVM和logistic回归的核模型得到的参数$\boldsymbol\beta$是稠密的，标准支持向量机的参数$\boldsymbol\alpha$是稀疏的。能否得到像标准支持向量机一样稀疏的$\boldsymbol\beta$呢？</p>
-
-<h2 id="section-1">支持向量回归</h2>
-
-<p>定义tube回归的误差为
-\begin{equation}
-err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
-\end{equation}
-在tube区域内不计误差，在该区域外到tube的距离记为误差。</p>
-
-<div class="image_line" id="tube-error-illustration"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png" alt="tube与平方误差对比" /></a><div class="caption">Figure 3:  tube与平方误差对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-tube-vs-square-error.png">PNG</a>]</div></div></div>
-
-<p>如上图所示，tube与平方误差很相似，尤其是在$\lvert s-y\rvert$很小的区域内，当$\lvert s-y\rvert$很大时，tube误差不如平方误差变化陡峭，因此受噪声影响更小。</p>
-
-<p>基于tube误差的模型能否得到稀疏的系数呢？</p>
-
-<p>基于$L_2$正则化的tube回归模型为
-\begin{equation*}
-\min\limits_{\mathbf w}\left({\lambda\over N}\mathbf w^T\mathbf w+{1\over N}\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n-y_n\right\rvert-\epsilon\right)\right)，
-\end{equation*}
-虽无约束，但$\max$导致不可微；利用表示定理可核化，但无法明确得到稀疏的系数。仿照<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">无约束形式</a>的soft-margin支持向量机，分离出$b$后改写为
-\begin{equation*}
-\min\limits_{b,\mathbf w}\left({1\over 2}\mathbf w^T\mathbf w+C\sum_{n=1}^N\max\left(0, \left\lvert \mathbf w^T\mathbf z_n+b-y_n\right\rvert-\epsilon\right)\right)，
-\end{equation*}
-虽然不可微，但是QP问题；对偶问题可核化，KKT条件能得到系数稀疏。再对比<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-primal-svm">约束形式</a>的soft-margin支持向量机，改写为带约束的优化问题
-\begin{equation*}
-\begin{aligned}
-\min\limits_{b,\mathbf w,\boldsymbol\xi}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\xi_n\\
-\mbox{s.t.}&amp;\quad \left\lvert\mathbf w^T\mathbf z_n+b-y_n\right\rvert\leq \epsilon+\xi_n\\
-&amp;\quad\xi_n\geq 0 \mbox{ for all }n，
-\end{aligned}
-\end{equation*}
-约束条件线性化
-\begin{equation}
-\begin{aligned}
-\min\limits_{b,\mathbf w,\boldsymbol\xi^\vee,\boldsymbol\xi^\wedge}&amp;\quad\frac{1}{2}\mathbf w^T\mathbf w + C\sum_{n=1}^N\left(\xi_n^\vee+\xi_n^\wedge\right)\\
-\mbox{s.t.}&amp;\quad -\epsilon-\xi_n^\vee\leq y_n - \mathbf w^T\mathbf z_n-b\leq \epsilon+\xi_n^\wedge\\
-&amp;\quad\xi_n^\vee\geq 0,\xi_n^\wedge\geq 0\mbox{ for all }n，
-\end{aligned}
-\end{equation}
-这就是标准的<strong>支持向量回归</strong>（SVR，support vector regression）原问题，$\xi_n^\vee$和$\xi_n^\wedge$分别记录tube下届和上界违规，如<a href="#tube-error-illustration">上图左</a>所示的分界线下边和上边标红的线段。通过$C$对正则化和tube违规进行折中，调节参数$\epsilon$可控制tube的高度。该QP模型有$\tilde d+1+2N$个变量，$2N+2N$个约束条件。</p>
-
-<p>将支持向量回归的原问题转成对偶问题，可移除对$\tilde d$的依赖。</p>
-
-<h2 id="section-2">支持向量回归的对偶模型</h2>
-
-<p>通过拉格朗日乘子法的KKT条件${\partial\mathcal L\over\partial\mathbf w}=0$可得
-\begin{equation}
-\mathbf w = \sum_{n=1}^N\left(\alpha_n^\wedge-\alpha_n^\vee\right)\mathbf z_n = \sum_{n=1}^N\beta_n\mathbf z_n，
-\end{equation}
-通过${\partial\mathcal L\over\partial b}=0$可得
-\[
-\sum_{n=1}^N\left(\alpha_n^\wedge-\alpha_n^\vee\right)＝0，
-\]
-互补松弛条件（complementary slackness）为
-\begin{equation}
-\left\{
-\begin{aligned}
-\alpha_n^\wedge\left(\epsilon+\xi_n^\wedge-y_n+\mathbf w^T\mathbf z_n+b\right)=&amp;0\\
-\alpha_n^\vee\left(\epsilon+\xi_n^\vee+y_n-\mathbf w^T\mathbf z_n-b\right)=&amp;0。
-\end{aligned}
-\right.
-\label{eq:complementary-slackness-svm-regession}
-\end{equation}</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png"><img src="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png" alt="QP原问题与对偶问题的对比" /></a><div class="caption">Figure 4:  QP原问题与对偶问题的对比 [<a href="/assets/images/2015-01-12-svm-support-vector-regression-primal-vs-dual-QP.png">PNG</a>]</div></div></div>
-
-<p>上图左上和左下分别表示soft-margin支持向量机的原问题和对偶问题的QP模型；上图右上和右下分别表示支持向量回归的原问题和对偶问题的QP模型。上图中，相同颜色的符号展示了如何从原问题变化到对偶问题。</p>
-
-<p>当数据点位于tube中有$\left\lvert\mathbf w^T\mathbf z_n+b-y_n\right\rvert&lt;\epsilon$，不计误差，$\xi_n^\wedge=\xi_n^\vee=0$，根据互补松弛条件\eqref{eq:complementary-slackness-svm-regession}可知
-\[
-\left\{
-\begin{aligned}
-\epsilon+\xi_n^\wedge-y_n+\mathbf w^T\mathbf z_n+b\neq &amp;0\\
-\epsilon+\xi_n^\vee+y_n-\mathbf w^T\mathbf z_n-b\neq &amp;0，
-\end{aligned}
-\right.
-\]
-以及$\alpha_n^\wedge=\alpha_n^\vee＝0$，因此可得$\beta_n=0$。由此可知，支持向量回归问题中$\beta_n\neq 0$的支持向量刚好位于tube的边界上或在tube之外。</p>
-
-<p>参考<a href="/2015/01/soft-margin-svm/#mjx-eqn-eqsoft-margin-complementary-slackness">soft-margin支持向量机</a>可得
-\begin{equation}
-b=
-\left\{
-\begin{aligned}
-y_n-\mathbf w^T\mathbf z_n-\epsilon&amp;\quad(0&lt;\alpha_n^\wedge&lt;C)\\
-y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
-\end{aligned}
-\right.
-\end{equation}</p>
-
 ]]&gt;</content:encoded>
     </item>
     
