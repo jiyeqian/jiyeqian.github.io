@@ -4,8 +4,110 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-25T15:22:54+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-26T09:16:38+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>过拟合的危害</title>
+      <link href="http://qianjiye.de/2015/01/hazard-of-overfitting" />
+      <pubdate>2015-01-26T13:47:38+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/hazard-of-overfitting</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">初识过拟合</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png" alt="［左］：好的拟合；［右］：过拟合" /></a><div class="caption">Figure 1:  ［左］：好的拟合；［右］：过拟合 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png">PNG</a>]</div></div></div>
+
+<ul>
+  <li>差的泛化（bad generalization）：低的$E_{in}$高的$E_{out}$，$E_{out}-E_{in}$很大；</li>
+  <li>过拟合（overfitting）：$E_{in}$降低时$E_{out}$升高；</li>
+  <li>欠拟合（underfitting）：$E_{in}$升高时$E_{out}$也在升高。</li>
+</ul>
+
+<p>上图右采用了4次多项式变换$\Phi$和$\mathcal Z$空间的线性拟合，$N=5$个点时存在唯一解<sup id="fnref:is-unique"><a href="#fn:is-unique" class="footnote">1</a></sup>，$E_{in}=0$，过拟合了。</p>
+
+<p>泛化能力描述的是既成的状态，过拟合描述的是变化过程。解决欠拟合采用<a href="/2015/01/nonlinear-transformation">非线性特征变换</a>，解决过拟合更复杂。过拟合主要受噪声和数据量的影响。</p>
+
+<h2 id="section-1">过拟合的特性</h2>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png" alt="［左］：10次多项式的含噪数据；［右］：50次多项式的无噪数据" /></a><div class="caption">Figure 2:  ［左］：10次多项式的含噪数据；［右］：50次多项式的无噪数据 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png">PNG</a>]</div></div></div>
+
+<p>上图展示了分别用2次和10次多项式拟合1含噪和无噪数据的效果。结果有些意外，2次多项式的性能都要优于10次多项式。</p>
+
+<p>下图的学习曲线表明，当数据量$N$较小时，10次多项式的$E_{in}$和$E_{out}$之间差距较大，泛化误差更大，这和VC界一致，因为10次多项式的$d_{VC}$较大。因此，当数据量较少时，用简单的模型更合适得到较好的结果。</p>
+
+<p>对于上图右不带噪声的数据，10次多项式的表现仍然很差。这是由于目标函数过于复杂，生成的数据很像噪声。可以这样理解，50次多项式生成的无噪数据和10次多项式生成的数据加入噪声相似。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png" alt="2次和10次多项式的学习曲线" /></a><div class="caption">Figure 3:  2次和10次多项式的学习曲线 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png">PNG</a>]</div></div></div>
+
+<p>假设数据产生的方式为
+\[
+y=f(x)+\epsilon\sim\mbox{Gaussian}\left(\sum_{q=0}^{Q_f}\alpha_qx^q,\sigma^2\right)，
+\]</p>
+
+<p>$\sigma^2$表示产生噪声的等级，$Q_f$是模型的复杂度，数据集的大小为$N$。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png" alt="不同参数影响下的过拟合图谱（越红过拟合越厉害）" /></a><div class="caption">Figure 4:  不同参数影响下的过拟合图谱（越红过拟合越厉害） [<a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png">PNG</a>]</div></div></div>
+
+<p>实验时确保能产生包含模型最高次的数据，过拟合采用$E_{out}(g_{10})-E_{out}(g_{2})$度量。上图分别展示了固定模型复杂度和噪声等级下的过拟合图谱，红色表示过拟合强，蓝色表示过拟合弱。上图左固定住模型复杂度，通过$\sigma^2$产生的噪声称为随机噪声（stochastic noise）；上图右固定住噪声等级，通过模型复杂度$Q_f$导致的“噪声”称为确定性噪声（deterministic noise）。</p>
+
+<p>事实上，过拟合很容易发生：</p>
+
+<ul>
+  <li>当数据量$N$少的时候，</li>
+  <li>当随机噪声大的时候，</li>
+  <li>当确定性噪声大的时候，</li>
+  <li>当模型复杂$d_{VC}$大的时候，</li>
+</ul>
+
+<p>这几种情况都容易发生过拟合。</p>
+
+<p>确定性噪声大表示目标函数太复杂，机器难以学会。复杂模型产生的数据就像就像含有随机噪声一样，它就像伪随机数发生器（pseudo-random generator）。确定性噪声与随机噪声不同的地方包括：（1）当$\mathcal H$变复杂时，确定性噪声会减小；（2）固定$\mathbf x$后，确定性噪声也是固定的。</p>
+
+<h2 id="section-2">克服过拟合</h2>
+
+<p>克服过拟合的方法：</p>
+
+<ul>
+  <li>从简单的模型开始尝试；</li>
+  <li>数据清洗或剪枝；</li>
+  <li>根据已有数据生成更多数据（data hinting）；</li>
+  <li>正则化；</li>
+  <li>验证（validation）。</li>
+</ul>
+
+<h4 id="data-cleaning">一、数据清洗或剪枝</h4>
+
+<p>可以利用<a href="/2014/12/machine-learning-anomaly-detection">异常检测</a>的方法，探测出离群点，然后改变类别标签（数据清洗）或者移除异常点（数据剪枝），通常探测离群点的方法包括：</p>
+
+<ul>
+  <li>离本类很远，离其它类却很近；</li>
+  <li>被当前分类器错误分类；</li>
+  <li>……</li>
+</ul>
+
+<p>数据清洗或剪枝对性能的影响难以把握，有时对提升效果可能非常微弱。</p>
+
+<h4 id="data-hinting">二、数据生成（data hinting）</h4>
+
+<p>根据已有数据或已知规则产生新的数据。比如字符识别的时候，通过旋转等方式生成新的字符样本。</p>
+
+<p>但是需要注意，新加入的样本不再是来自原来的概率分布，不再是i.i.d.（independent identically distributed）。</p>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:is-unique">
+      <p>4次多项式变换在$N=5$个点时存在唯一解？不对吧！ <a href="#fnref:is-unique" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>非线性特征变换</title>
@@ -1461,279 +1563,6 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
     </li>
     <li id="fn:how-to-gv-x">
       <p>这步如何操作？「機器學習基石」第十五講有關。 <a href="#fnref:how-to-gv-x" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>线性回归</title>
-      <link href="http://qianjiye.de/2015/01/linear-regression" />
-      <pubdate>2015-01-13T20:17:01+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/linear-regression</guid>
-      <content:encoded>&lt;![CDATA[<p><img src="/assets/images/2014-10-19-linear_regression_0.png" alt="线性回归" /></p>
-
-<p>本节的主要参考资料是机器学习基石<a href="#lin_mlf_linreg_2014">[1]</a>和机器学习<a href="#ng_ml_linreg_2014">[2]</a>网络课程。</p>
-
-<h2 id="section">线性回归模型</h2>
-
-<p>线性回归的假设集（hypothesis）为
-\begin{equation}
-h(\mathbf x) = \mathbf w^T\mathbf x，
-\label{eq:linear-regression-model}
-\end{equation}
-$\mathbf x$是含有常数项$x_0 = 1$的$d+1$维向量$\mathbf x =\left[1,x_1,\ldots,x_d\right]^T$，$\mathbf w=\left[w_0,w_1,\ldots,w_d\right]^T$，$d$是特征维数。</p>
-
-<p>目标代价函数采用平方误差和估计
-\begin{equation}
-E_{in}(\mathbf w)={1\over N}\sum_{n=1}^N\left(\mathbf w^T\mathbf x_n-y_n\right)^2，
-\label{eq:cost-function-linear-regression}
-\end{equation}
-$N$是样本数。通过机器学习算法求得线性回归的参数
-\begin{equation}
-\mathbf w_{LIN} = \arg\min_{\mathbf w}E_{in}(\mathbf w)，
-\end{equation}
-通常方法有正规方程（normal equation）的解析方法和梯度下降法（gradient descent）。</p>
-
-<h2 id="section-1">解析方法</h2>
-
-<p>解析方法得到的最优解也称为<strong>线性回归的最小二乘解</strong>。</p>
-
-<p>代价函数改写为矩阵形式
-\[
-E_{in}(\mathbf w) 
-={1\over N}\lVert\mathbf X\mathbf w-\mathbf y\rVert^2
-={1\over N}\left(\mathbf w^T\mathbf X^T\mathbf X\mathbf w-2\mathbf w^T\mathbf X^T\mathbf y+\mathbf y^T\mathbf y\right)，
-\]
-$\mathbf X$是样本数据矩阵，每行代表一个样本点，每列代表一个特征，第一列的向量$\mathbf 1_N$对应常数偏移。$E_{in}(\mathbf w)$是连续可微的凸函数，当$\nabla E_{in}(\mathbf w)=0$时取得最小值，
-\[
-\nabla E_{in}(\mathbf w)={2\over N}\left(\mathbf X^T\mathbf X\mathbf w-\mathbf X^T\mathbf y\right)，
-\]
-取得最小值时
-\begin{equation}
-\mathbf w_{LIN} = \left(\mathbf X^T\mathbf X\right)^{-1}\mathbf X^T\mathbf y = \mathbf X^\dagger \mathbf y，
-\end{equation}
-$\mathbf X^\dagger$称为<strong>伪逆</strong>（pseudo-inverse）。通常情况$N\gg d+1$，因此$\left(\mathbf X^T\mathbf X\right)^{-1}$通常都可逆；如果不可逆，解不唯一。</p>
-
-<p>导致$\mathbf X^T\mathbf X$不可逆的原因可能是冗余特征（redundant features）或者特征数目过多（$d$太大而$N$太少），解决的办法：   </p>
-
-<ul>
-  <li>对于冗余的线性相关特征，例如$x_1 = 2x_2$，删除线性相关特征；</li>
-  <li>对于特征数目过多，例如$N&lt;d$，删除特征或正则化（regularization）<sup id="fnref:how-to-regularize"><a href="#fn:how-to-regularize" class="footnote">1</a></sup>。</li>
-</ul>
-
-<p>Matlab的<code>pinv</code>函数可以处理$\mathbf X^T\mathbf X$不可逆的情况<sup id="fnref:pinv-vs-inv"><a href="#fn:pinv-vs-inv" class="footnote">2</a></sup>。</p>
-
-<h3 id="mathbf-wlin">解析方法求解$\mathbf w_{LIN}$是机器学习算法吗？</h3>
-
-<p>✅通过VC维的角度分析，能得到小的$E_{out}\left(\mathbf w_{\small{LIN}}\right)$，就是学习……</p>
-
-<ul>
-  <li>能够得到最佳的$E_{in}$；</li>
-  <li>$d+1$个变量，有限的$d_{VC}$，因此有好的$E_{out}$；</li>
-  <li>事实上，求解伪逆的过程也是迭代逐步最优的过程（高斯消元法）。</li>
-</ul>
-
-<p>VC维考察的是个别的$E_{in}$<sup id="fnref:some-E-in"><a href="#fn:some-E-in" class="footnote">3</a></sup>，从$E_{in}$平均误差角度分析
-\begin{equation}
-\bar E_{in}
-=\varepsilon_{\mathcal D\sim P^N}\left\{E_{in}\left(\mathbf w_{LIN}\mbox{ w.r.t }\mathcal D\right)\right\}
-=\mbox{noise level}\cdot\left(1-{d+1\over N}\right)，
-\label{eq:noise-level-e-in}
-\end{equation}
-$\mbox{noise level}$表示数据中的噪声，${d+1\over N}$表示比噪声小的比率，数据越多二者差别越小。</p>
-
-<p>$E_{in}\left(\mathbf w_{LIN}\right)$计算方法为
-\[
-E_{in}\left(\mathbf w_{LIN}\right)
-={1\over N}\left\lVert\mathbf y-\hat{\mathbf y}\right\rVert^2
-={1\over N}\left\lVert\mathbf y-\mathbf X\mathbf X^\dagger\mathbf y\right\rVert^2
-={1\over N}\left\lVert\left(\mathbf I-\mathbf X\mathbf X^\dagger\right)\mathbf y\right\rVert^2，
-\]
-$\mathbf X\mathbf X^\dagger$让$\mathbf y$加帽$\wedge$变成了$\hat{\mathbf y}$，也叫<strong>帽矩阵</strong><sup id="fnref:hat-matrix-properties"><a href="#fn:hat-matrix-properties" class="footnote">4</a></sup>（hat matrix），记为$\mathbf H$。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-13-linear-regression-learning-curve.png"><img src="/assets/images/2015-01-13-linear-regression-learning-curve.png" alt="［左］：图解证明；［右］：学习曲线" /></a><div class="caption">Figure 1:  ［左］：图解证明；［右］：学习曲线 [<a href="/assets/images/2015-01-13-linear-regression-learning-curve.png">PNG</a>]</div></div></div>
-
-<p>由$\hat{\mathbf y}=\mathbf X\mathbf w_{LIN}$可知，$\hat{\mathbf y}$是$\mathbf X$列向量的线性组合，也就是如上图左所示，$\hat{\mathbf y}$位于$\mathbf X$张成的线性空间中。当$\mathbf y-\hat{\mathbf y}$垂直于该生成空间时，$\left\lVert\mathbf y-\hat{\mathbf y}\right\rVert^2$的值最小。$\mathbf H$将$\mathbf y$投影为$\hat{\mathbf y}$，$\mathbf I-\mathbf H$将$\mathbf y$投影为$\mathbf y-\hat{\mathbf y}$。$\mathbf I-\mathbf H$的迹为$trace(\mathbf I-\mathbf H)=N-(d+1)$，表示自由度从$N$降到$N-(d+1)$。</p>
-
-<p>观测到的数据$\mathbf y$是理想的数据空间$f\left(\mathbf X\right)$叠加一些噪声。$\mathbf y-\hat{\mathbf y}$也可以从噪声投影得到，如上图左所示，
-\[
-E_{in}\left(\mathbf w_{LIN}\right)
-={1\over N}\left\lVert\mathbf y-\hat{\mathbf y}\right\rVert^2
-={1\over N}\left\lVert(\mathbf I-\mathbf H)\cdot\mbox{noise}\right\rVert^2
-={1\over N}(N-(d+1))\lVert\mbox{noise}\rVert^2，
-\]
-因此可得公式\eqref{eq:noise-level-e-in}的结论。$E_{out}$的证明过程叫复杂，仍然可以得到
-\[
-\bar E_{out}
-=\mbox{noise level}\cdot\left(1+{d+1\over N}\right)。
-\]</p>
-
-<p>$\mbox{noise level}$可以用$\sigma^2$表示，从上图右可见，$\bar E_{in}$和$\bar E_{out}$在$N\rightarrow\infty$时都会趋近于$\sigma^2$。期望的泛化误差（generalization error）可以用${2(d+1)\over N}$衡量，这里是平均情况，VC维衡量的是最坏的情况。</p>
-
-<h2 id="gd-method">梯度下降法</h2>
-
-<p>梯度下降法就是沿梯度下降方向更新参数，也就是对每个特征的权值$w_i$，不断迭代执行更新
-\begin{equation}
-w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots,d)
-\end{equation}
-直至收敛，其中$\alpha$表示学习速率，梯度计算公式为
-\[
-{\partial E_{in}(\mathbf w)\over\partial w_i}
-={1\over N}\sum_{n=1}^N\left(\mathbf w^T\mathbf x_n - y_n\right)x_{n,i}。
-\]</p>
-
-<p>参数须同时更新，也就是当每个$w_i$都更新完成后，才能用新的$\mathbf w$计算$E_{in}(\mathbf w)$，具体可参考<a href="/assets/images/2014-10-19-linear_regression_1.png">Andrew NG的讲义</a><sup id="fnref:andrew-simultaneous-update"><a href="#fn:andrew-simultaneous-update" class="footnote">5</a></sup>。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-13-linear-regression-error-curve.png"><img src="/assets/images/2015-01-13-linear-regression-error-curve.png" alt="［左1］：未归一化梯度下降路径；［左2］：归一化梯度下降路径；&lt;br/&gt;［右］：梯度下降路径" /></a><div class="caption">Figure 2:  ［左1］：未归一化梯度下降路径；［左2］：归一化梯度下降路径；<br />［右］：梯度下降路径 [<a href="/assets/images/2015-01-13-linear-regression-error-curve.png">PNG</a>]</div></div></div>
-
-<p>梯度下降法需要将所有特征归一（feature scaling）到统一的尺度（不用归一化$x_0$），比如$-1\le x_i\le 1$，
-\[
-\hat{x}_i = \frac{x_i - x_{mean}}{x_{max}-x_{min}}
-\qquad\mbox{or}\qquad
-\hat{x}_i = \frac{x_i - x_{mean}}{x_{std}}，
-\]
-这样有助于提高梯度下降法的速度，如上图左2所示。但是，归一化改变了特征的物理意义，有时并非好事儿。</p>
-
-<h4 id="alpha">学习率$\alpha$的注意事项：</h4>
-<ol>
-  <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，<a href="/2015/01/logistic-regression/#why-fixed-eta">在固定$\alpha$的情况下梯度下降步长也会自动减小</a>，如上图右所示；</li>
-  <li>$\alpha$太小收敛慢，太大可能错过极值点而不收敛，甚至可能导致$E_{in}(\mathbf w)$不降反升。</li>
-</ol>
-
-<p>线性回归的代价函数$E_{in}(\mathbf w)$不存在局部极值（local optima），极小值就是全局极值<sup id="fnref:no-local-optima"><a href="#fn:no-local-optima" class="footnote">6</a></sup>。</p>
-
-<h2 id="section-2">两种方法对比</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>梯度下降法</th>
-      <th>解析解法</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>需要$\alpha$</td>
-      <td>不需要$\alpha$</td>
-    </tr>
-    <tr>
-      <td>迭代实现，可实现在线增量学习</td>
-      <td>不需要迭代</td>
-    </tr>
-    <tr>
-      <td>当特征数$d$很大时（$10^6$）工作良好</td>
-      <td>$d$很大时很慢</td>
-    </tr>
-    <tr>
-      <td>特征需要尺度规范化</td>
-      <td>特征不需要尺度规范化<sup id="fnref:why-not-scale"><a href="#fn:why-not-scale" class="footnote">7</a></sup></td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="section-3">分类问题</h2>
-
-<p>线性分类器和线性回归的对比如下表：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>指标</th>
-      <th>线性分类器</th>
-      <th>线性回归</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>$\mathcal Y$</td>
-      <td>$\{-1,+1\}$</td>
-      <td>$\mathbb R$</td>
-    </tr>
-    <tr>
-      <td>$h(\mathbf x)$</td>
-      <td>$\mbox{sign}\left(\mathbf w^T\mathbf x\right)$</td>
-      <td>$\mathbf w^T\mathbf x$</td>
-    </tr>
-    <tr>
-      <td>$err(\hat{y},y)$</td>
-      <td>$[[\hat{y}\neq y]]$</td>
-      <td>$(\hat{y}-y)^2$</td>
-    </tr>
-    <tr>
-      <td>算法复杂度</td>
-      <td>通常是NP-hard</td>
-      <td>高效求解方法</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>能否利用线性回归的高效，借助$g(\mathbf x)=\mbox{sign}\left(\mathbf w_{LIN}^T\mathbf x\right)$，用线性回归解决分类问题？✅</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-13-linear-regression-error-compare.png"><img src="/assets/images/2015-01-13-linear-regression-error-compare.png" alt="线性分类器和线性回归误差比较" /></a><div class="caption">Figure 3:  线性分类器和线性回归误差比较 [<a href="/assets/images/2015-01-13-linear-regression-error-compare.png">PNG</a>]</div></div></div>
-
-<p>上图展示了两种方法误差的对比，$err_{0/1}\leq err_{sqr}$，平方误差是0/1误差的上限。从VC维的理论可知
-\[
-\mbox{classification }E_{out}(\mathbf w)
-\leq \mbox{classification }E_{in}(\mathbf w)+\sqrt{\cdots}
-\leq \mbox{regression }E_{in}(\mathbf w)+\sqrt{\cdots}，
-\]
-in-sample回归误差也是out-sample分类误差的上限，做好in-sample回归误差也是做好in-sample分类误差的一种方法，in-sample回归误差很小时能保证out-sample分类误差也很小。由此可见，可用线性回归解决分类问题。</p>
-
-<p>也可直接将回归问题视为分类问题，只是用$err_{sqr}$当作$\widehat{err}$作为$err_{0/1}$误差的近似。为分类问题选择稍宽松的误差上界，这样容易求解参数。</p>
-
-<p>在很多时候，用线性回归解决分类问题效果尚可。如果要让效果更好，可将$\mathbf w_{LIN}$当做PLA或pocket算法的初始值$\mathbf w_0$，加速PLA或pocket算法。</p>
-
-<h2 id="section-4">多项式回归</h2>
-
-<p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，<a href="/2015/01/nonlinear-transformation">构造新的特征向量</a>$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
-
-<p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
-
-<h2 id="section-5">参考资料</h2>
-
-<ol class="bibliography"><li><span id="lin_mlf_linreg_2014">[1]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
-
-</li>
-<li><span id="ng_ml_linreg_2014">[2]A. Ng, “Linear Regression with multiple variables.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li>
-<li><span id="ng_ml_rlrbv_pe_2014">[3]A. Ng, “Programming Exercise 5: Regularized Linear Regression and Bias v.s. Variance.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<h3 id="section-6">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:how-to-regularize">
-      <p>如何进行正则化？ <a href="#fnref:how-to-regularize" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:pinv-vs-inv">
-      <p>Matlab的<code>pinv</code>和<code>inv</code>有何区别？ <a href="#fnref:pinv-vs-inv" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:some-E-in">
-      <p>为什么VC维考察的是个别的$E_{in}$？ <a href="#fnref:some-E-in" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:hat-matrix-properties">
-      <p>帽矩阵的性质（可从文中图示的角度理解）：（1）$\mathbf H$是对称的；（2）$\mathbf H^2=\mathbf H$；（3）$(\mathbf I-\mathbf H)^2=\mathbf I-\mathbf H$。 <a href="#fnref:hat-matrix-properties" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:andrew-simultaneous-update">
-      <p>事实上，不同时更新的情况很少发生，因为在更新每个$w_i$前，已经用$\mathbf w$计算过了$E_{in}(\mathbf w)$，更新过程中，不再需要重复计算$E_{in}(\mathbf w)$。 <a href="#fnref:andrew-simultaneous-update" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:no-local-optima">
-      <p>这是真的吗？ <a href="#fnref:no-local-optima" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:why-not-scale">
-      <p>为什么解析方法不需要规范化特征？ <a href="#fnref:why-not-scale" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>过拟合的危害</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>过拟合的危害</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-01-26">2015-01-26</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">初识过拟合</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png" alt="［左］：好的拟合；［右］：过拟合" /></a><div class="caption">Figure 1:  ［左］：好的拟合；［右］：过拟合 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-good-vs-over-fitting.png">PNG</a>]</div></div></div>
+
+<ul>
+  <li>差的泛化（bad generalization）：低的$E_{in}$高的$E_{out}$，$E_{out}-E_{in}$很大；</li>
+  <li>过拟合（overfitting）：$E_{in}$降低时$E_{out}$升高；</li>
+  <li>欠拟合（underfitting）：$E_{in}$升高时$E_{out}$也在升高。</li>
+</ul>
+
+<p>上图右采用了4次多项式变换$\Phi$和$\mathcal Z$空间的线性拟合，$N=5$个点时存在唯一解<sup id="fnref:is-unique"><a href="#fn:is-unique" class="footnote">1</a></sup>，$E_{in}=0$，过拟合了。</p>
+
+<p>泛化能力描述的是既成的状态，过拟合描述的是变化过程。解决欠拟合采用<a href="/2015/01/nonlinear-transformation">非线性特征变换</a>，解决过拟合更复杂。过拟合主要受噪声和数据量的影响。</p>
+
+<h2 id="section-1">过拟合的特性</h2>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png" alt="［左］：10次多项式的含噪数据；［右］：50次多项式的无噪数据" /></a><div class="caption">Figure 2:  ［左］：10次多项式的含噪数据；［右］：50次多项式的无噪数据 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-case-study.png">PNG</a>]</div></div></div>
+
+<p>上图展示了分别用2次和10次多项式拟合1含噪和无噪数据的效果。结果有些意外，2次多项式的性能都要优于10次多项式。</p>
+
+<p>下图的学习曲线表明，当数据量$N$较小时，10次多项式的$E_{in}$和$E_{out}$之间差距较大，泛化误差更大，这和VC界一致，因为10次多项式的$d_{VC}$较大。因此，当数据量较少时，用简单的模型更合适得到较好的结果。</p>
+
+<p>对于上图右不带噪声的数据，10次多项式的表现仍然很差。这是由于目标函数过于复杂，生成的数据很像噪声。可以这样理解，50次多项式生成的无噪数据和10次多项式生成的数据加入噪声相似。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png" alt="2次和10次多项式的学习曲线" /></a><div class="caption">Figure 3:  2次和10次多项式的学习曲线 [<a href="/assets/images/2015-01-26-hazard-of-overfitting-learning-curves.png">PNG</a>]</div></div></div>
+
+<p>假设数据产生的方式为
+\[
+y=f(x)+\epsilon\sim\mbox{Gaussian}\left(\sum_{q=0}^{Q_f}\alpha_qx^q,\sigma^2\right)，
+\]</p>
+
+<p>$\sigma^2$表示产生噪声的等级，$Q_f$是模型的复杂度，数据集的大小为$N$。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png" alt="不同参数影响下的过拟合图谱（越红过拟合越厉害）" /></a><div class="caption">Figure 4:  不同参数影响下的过拟合图谱（越红过拟合越厉害） [<a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png">PNG</a>]</div></div></div>
+
+<p>实验时确保能产生包含模型最高次的数据，过拟合采用$E_{out}(g_{10})-E_{out}(g_{2})$度量。上图分别展示了固定模型复杂度和噪声等级下的过拟合图谱，红色表示过拟合强，蓝色表示过拟合弱。上图左固定住模型复杂度，通过$\sigma^2$产生的噪声称为随机噪声（stochastic noise）；上图右固定住噪声等级，通过模型复杂度$Q_f$导致的“噪声”称为确定性噪声（deterministic noise）。</p>
+
+<p>事实上，过拟合很容易发生：</p>
+
+<ul>
+  <li>当数据量$N$少的时候，</li>
+  <li>当随机噪声大的时候，</li>
+  <li>当确定性噪声大的时候，</li>
+  <li>当模型复杂$d_{VC}$大的时候，</li>
+</ul>
+
+<p>这几种情况都容易发生过拟合。</p>
+
+<p>确定性噪声大表示目标函数太复杂，机器难以学会。复杂模型产生的数据就像就像含有随机噪声一样，它就像伪随机数发生器（pseudo-random generator）。确定性噪声与随机噪声不同的地方包括：（1）当$\mathcal H$变复杂时，确定性噪声会减小；（2）固定$\mathbf x$后，确定性噪声也是固定的。</p>
+
+<h2 id="section-2">克服过拟合</h2>
+
+<p>克服过拟合的方法：</p>
+
+<ul>
+  <li>从简单的模型开始尝试；</li>
+  <li>数据清洗或剪枝；</li>
+  <li>根据已有数据生成更多数据（data hinting）；</li>
+  <li>正则化；</li>
+  <li>验证（validation）。</li>
+</ul>
+
+<h4 id="data-cleaning">一、数据清洗或剪枝</h4>
+
+<p>可以利用<a href="/2014/12/machine-learning-anomaly-detection">异常检测</a>的方法，探测出离群点，然后改变类别标签（数据清洗）或者移除异常点（数据剪枝），通常探测离群点的方法包括：</p>
+
+<ul>
+  <li>离本类很远，离其它类却很近；</li>
+  <li>被当前分类器错误分类；</li>
+  <li>……</li>
+</ul>
+
+<p>数据清洗或剪枝对性能的影响难以把握，有时对提升效果可能非常微弱。</p>
+
+<h4 id="data-hinting">二、数据生成（data hinting）</h4>
+
+<p>根据已有数据或已知规则产生新的数据。比如字符识别的时候，通过旋转等方式生成新的字符样本。</p>
+
+<p>但是需要注意，新加入的样本不再是来自原来的概率分布，不再是i.i.d.（independent identically distributed）。</p>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:is-unique">
+      <p>4次多项式变换在$N=5$个点时存在唯一解？不对吧！ <a href="#fnref:is-unique" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/01/nonlinear-transformation" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/01/hazard-of-overfitting" data-url="http://qianjiye.de/2015/01/hazard-of-overfitting" data-title="过拟合的危害">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/nonlinear-transformation'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/hazard-of-overfitting/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
