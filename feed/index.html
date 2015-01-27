@@ -4,8 +4,261 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-26T09:16:38+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-27T15:18:50+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>正则化</title>
+      <link href="http://qianjiye.de/2015/01/regularization" />
+      <pubdate>2015-01-26T17:50:30+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/regularization</guid>
+      <content:encoded>&lt;![CDATA[<p>正则化来源于处理函数逼近（function approximation）中的病态问题（ill-posed problem）。克服过拟合的一个方法是从简单模型开始尝试；正则化是相反的思路，从复杂模型的假设集开始，通过正则化约束求解得到未过拟合的简单模型（复杂项的系数很小或接近0）。</p>
+
+<p>正则化等价于结构风险最小化（SRM，structural risk minimuzation）<a href="#lihang_sml_2012">[1, P. 9]</a>，它是结构风险最小化策略的实现，通过在经验风险上加一个正则化项或惩罚项实现<a href="#lihang_sml_2012">[1, P. 13]</a>。正则化符合奥卡姆剃刀（Occam’s rezor）原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。从贝叶斯估计的角度看，正则化项对应于模型的先验概率，可以假设复杂的模型有较大的先验概率<a href="#lihang_sml_2012">[1, P. 14]</a>。</p>
+
+<p>本文的主要参考资料是机器学习基石<a href="#lin_ml_regularization_2014">[2]</a>。</p>
+
+<h2 id="section">带约束回归</h2>
+
+<p>对于$x\in\mathbb R$的Q阶多项式变换$\Phi_Q(x)=\left(1,x,x^2,\ldots,x^Q\right)$，为了方便用$\mathbf w$代替回归系数$\tilde{\mathbf w}$。10次和2次空间中回归问题的假设集$\mathcal H_{10}$和$\mathcal H_2$分别表示为
+\[
+\begin{aligned}
+&amp;w_0+w_1x+w_2x^2+w_3x^3+\ldots,w_{10}x^{10}\\
+&amp;w_0+w_1x+w_2x^2。
+\end{aligned}
+\]
+若$w_3=w_4=\ldots=w_{10}=0$，则$\mathcal H_2=\mathcal H_{10}$，也就是$\mathcal H_2$的回归问题可以用带约束的$\mathcal H_{10}$实现
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }w_3=w_4=\ldots=w_{10}=0。
+\]
+正则化可以看作带约束的优化$E_{in}$。</p>
+
+<p>稍微放松约束条件，任意8个系数为0，得到用带约束的$\mathcal H_{10}$表示的$\mathcal H’_2$
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }\sum_{q=0}^{10}\left[\left[w_q\neq 0\right]\right]\leq 3。
+\]
+$\mathcal H’_2$比$\mathcal H_2$宽松，但比$\mathcal H_{10}$过拟合风险低，$\mathcal H_2\subset\mathcal H’_2\subset\mathcal H_{10}$。求解稀疏形式（含8个0系数）$\mathcal H’_2$中的假设非常困难，NP-hard。</p>
+
+<p>进一步放松约束条件，得到用带约束的$\mathcal H_{10}$表示的$\mathcal H(C)$
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }\sum_{q=0}^{10}w_q^2\leq C。
+\]
+$\mathcal H(C)$和$\mathcal H’_2$有交集（overlap），对$C\geq 0$存在嵌套结构
+\[
+\mathcal H(0)\subset\mathcal H(1.126)\subset\ldots\subset\mathcal H(1126)\subset\ldots\subset\mathcal H(\infty)=\mathcal H(10)。
+\]
+从正则化假设集$\mathcal H(C)$的到的最优解就是正则化假设$\mathbf w_{REG}$。</p>
+
+<h2 id="section-1">拉格朗日乘子法</h2>
+
+<p>根据上述推导，正则化回归问题的向量表示形式
+\begin{equation}
+\min_{\mathbf w\in\mathbb R^{Q+1}}E_{in}(\mathbf w)=
+{1\over N}\sum_{n=1}^N\left(\mathbf w^T\mathbf z_n-y_n\right)^2\qquad\mbox{s.t. }\sum_{q=0}^Qw_q^2\leq C，
+\end{equation}
+进一步记为矩阵形式
+\begin{equation}
+\min_{\mathbf w\in\mathbb R^{Q+1}}E_{in}(\mathbf w)=
+{1\over N}(\mathbf Z\mathbf w-\mathbf y)^T(\mathbf Z\mathbf w-\mathbf y)\qquad\mbox{s.t. }\mathbf w^T\mathbf w\leq C，
+\label{eq:constrained-Ein-matrix}
+\end{equation}
+事实上$\mathbf w$位于半径为$\sqrt C$的球中。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-gradient-descent.png"><img src="/assets/images/2015-01-26-regularization-gradient-descent.png" alt="正则化约束的梯度下降法" /></a><div class="caption">Figure 1:  正则化约束的梯度下降法 [<a href="/assets/images/2015-01-26-regularization-gradient-descent.png">PNG</a>]</div></div></div>
+
+<p>上图展示了正则化约束的梯度下降法，蓝色的椭圆曲线表示梯度相同的等高线，红色的圆形表示约束条件。没有正则化约束时，$\mathbf w$沿着$-\nabla E_{in}(\mathbf w)$方向达到最优解$\mathbf w_{lin}$，梯度方向指出了到达最优解的方式。有正则化约束时，大部分情况，最优解都在球面$\mathbf w^T\mathbf w=C$上。$-\nabla E_{in}(\mathbf w)$可以分解为绿色和红色$\mathbf w$（球切面的法向量）两个方向，如果已经在球面上，仍然继续沿着$\mathbf w$下降，会破坏约束条件。正则化梯度下降法，可看作在绿色箭头方向作用下接近最优解。达到最优解的条件是满足约束且不能继续下降，也就是$-\nabla E_{in}(\mathbf w)$平行于$\mathbf w$，那么有$-\nabla E_{in}(\mathbf w_{REG})\propto\mathbf w_{REG}$，此时绿色方向的分量为0，不再下降，优化过程结束。</p>
+
+<p>利用拉格朗日乘子$\lambda&gt;0$，达到最优解的条件是
+\begin{equation}
+\nabla E_{in}(\mathbf w_{REG})+{2\lambda\over N}\mathbf w_{REG}=0。
+\label{eq:nabla-E-w-reg}
+\end{equation}
+因为$\nabla E_{in}(\mathbf w_{REG})={2\over N}\left(\mathbf Z^T\mathbf Z\mathbf w_{REG}-\mathbf Z^T\mathbf y\right)$，所以可得最优解<sup id="fnref:why-regularize-all"><a href="#fn:why-regularize-all" class="footnote">1</a></sup>
+\begin{equation}
+\mathbf w_{REG}\leftarrow\left(\mathbf Z^T\mathbf Z+\lambda\mathbf I\right)^{-1}\mathbf Z^T\mathbf y。
+\end{equation}
+$\mathbf Z^T\mathbf Z$是半正定的，当$\lambda&gt;0$时，上述逆矩阵总存在。正则化的线性回归在统计学中称为<strong>脊回归</strong>（ridge regression）。</p>
+
+<p>求解\eqref{eq:nabla-E-w-reg}等价于最小化增广误差（augmented error）
+\begin{equation}
+\mathbf w_{REG}\leftarrow \arg\min_{\mathbf w}E_{aug}(\mathbf w)\quad \lambda\geq 0，
+\label{eq:Eaug-minimization}
+\end{equation}
+其中增广误差
+\begin{equation}
+E_{aug}(\mathbf w)=E_{in}(\mathbf w)+{\lambda\over N}\mathbf w^T\mathbf w，
+\label{eq:E-aug}
+\end{equation}
+$\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{in}$，可通过无约束优化$E_{aug}(\mathbf w)$高效求解，每个$C$都有对应的$\lambda$，大的$\lambda$对应着小的$C$，也对应着短的$\mathbf w$。当$\lambda=1$或$C=\infty$或$C\geq\lVert\mathbf w_{LIN}\rVert^2$（相当于红色的圆已经把$\mathbf w_{LIN}$包含在内）时，相当于没有进行正则化。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-regularize-regression.png"><img src="/assets/images/2015-01-26-regularization-regularize-regression.png" alt="不同系数下正则化的效果" /></a><div class="caption">Figure 2:  不同系数下正则化的效果 [<a href="/assets/images/2015-01-26-regularization-regularize-regression.png">PNG</a>]</div></div></div>
+
+<p>$\lambda$相当于对过拟合的惩罚因子，上图展示了不同$\lambda$惩罚下的效果。</p>
+
+<p>${\lambda\over N}\mathbf w^T\mathbf w$称为权重衰减（weight-decay）正则化，可推广到“任意变换 ＋ 线性模型”。</p>
+
+<h2 id="section-2">勒让德多项式</h2>
+
+<p>当$x_n\in[-1,1]$和$Q$很大时，$x_n^q$会变得非常小，除精确度因素影响外，还需要很大的$w_q$才能体现$x_n^q$的影响，这就与正则化的目的有些“矛盾”，过度惩罚了高次项。对于$\mathcal Z$空间的特征
+\[
+\Phi(\mathbf x)=\left(1,x,x^2,\ldots,x^Q\right)，
+\]
+特征之间彼此非正交，对低次项容忍度较大，对高次项惩罚力度更大。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png"><img src="/assets/images/2015-01-26-regularization-legendre-polynomials.png" alt="勒让德多项式" /></a><div class="caption">Figure 3:  勒让德多项式 [<a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png">PNG</a>]</div></div></div>
+
+<p>为改善这一问题，可以考虑在多项式空间找到一组正交的基函数（orthonormal basis function），也称为勒让德多项式（legendre polynomials），构造如上图所示的新多项式变换
+\[
+\Phi(\mathbf x)=\left(1,L_1(x),L_2(x),\ldots,L_Q(x)\right)。
+\]</p>
+
+<h2 id="vc">VC维分析</h2>
+
+<p>带约束$E_{in}$优化\eqref{eq:constrained-Ein-matrix}的VC上界
+\begin{equation}
+E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
+\label{eq:vc-bound}
+\end{equation}
+采用与$C$等价的$\lambda$时，可以用优化\eqref{eq:Eaug-minimization}实现，在没有限定$\mathcal H(C)$的情况下，通过优化$E_{aug}$间接获得了VC维的保证。对比\eqref{eq:E-aug}和\eqref{eq:vc-bound}，$\mathbf w^T\mathbf w=\Omega(\mathbf w)$衡量了单一假设的复杂度，$\Omega(\mathcal H(C))$衡量了整个假设集的复杂度。如果${\lambda\over N}\Omega(\mathbf w)$能很好的表示$\Omega(\mathcal H(C))$，衡量$E_{out}$时，$E_{aug}$是比$E_{in}$更好中介。</p>
+
+<p>对$\mathcal Z$空间的非正则化方法，$d_{VC}(\mathcal H)=\tilde d+1$。事实上，采用正则化考虑的假设集$\mathcal H(C)$要小于$\mathcal H$。采用了正则化后，有效（effective）VC维$d_{EFF}(\mathcal H,\mathcal A)\leq d_{VC}(\mathcal H)$，其中$\mathcal A$为正则化算法。因此，正则化方法具有更好的泛化性能。增大$\lambda$使$C$变小，从而使$\mathcal H(C)$变小，使得$d_{EFF}(\mathcal H,\mathcal A)$减小。</p>
+
+<h2 id="section-3">正则化的推广</h2>
+
+<p>除权重衰减（weight-decay）正则化外，还有很多其它的正则化方法。正则化的约束条件应当向着目标函数方向，选择正则化方法的思路包括：</p>
+
+<ul>
+  <li>目标相关（target-dependent）：利用目标的特性，比如已知目标函数的对称性，可采用对称正则化$\sum[[q\mbox{ is odd}]]w_q^2$；</li>
+  <li>合理性（plausible）：使结果更加光滑和简单，比如要对随机或确定性噪声鲁棒，可采用稀疏的$L_1$正则化$\sum |w_q|$；</li>
+  <li>友好（friendly）：易于优化，比如采用除权重衰减的$L_2$正则化$\sum w_q^2$。</li>
+</ul>
+
+<p>如果正则化选择不合适，还有$\lambda=0$这道防线，可以避免危害。以上正则化选择思路和<a href="/2014/12/machine-learning-noise-and-error/#error-measurement">误差度量</a>一致：用户相关（user-dependent）、合理性、友好。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png"><img src="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png" alt="［左］：L2正则化；［右］L1正则化" /></a><div class="caption">Figure 4:  ［左］：L2正则化；［右］L1正则化 [<a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png">PNG</a>]</div></div></div>
+
+<p>$L_1$正则化在需要稀疏解时很有用。上图右是$L_1$正则化示意图，$L_1$正则化
+\begin{equation}
+\Omega(\mathbf w)=\sum_{q=0}^Q|w_q|=\lVert\mathbf w\rVert_1，
+\end{equation}
+虽然不可微分，但它是凸的，解是稀疏的（$\mathbf w$有很多0元素）。$-\nabla E_{in}$可分解到垂直于边界面的方向（边界面的法向量方向，如上图右红色箭头所示）和沿边界面的方向。当到达边界面后，如果继续沿着法向量方向下降，会破坏约束条件，沿着面的方向如果还能下降，则继续沿着面的方向下降，直到停在菱形球的顶点，或者直到$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$（沿边界面的方向分量为0）。边界面的法向量只和$\mathbf w$的符号有关，如果要$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$比较困难，通常会停在菱形球的顶点，该点在坐标轴上，必有元素为0。</p>
+
+<h2 id="lambda">最优$\lambda$</h2>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png"><img src="/assets/images/2015-01-26-regularization-noise-and-lambda.png" alt="噪声对性能的影响" /></a><div class="caption">Figure 5:  噪声对性能的影响 [<a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png">PNG</a>]</div></div></div>
+
+<p>上图表明，噪声等级越高，正则化的惩罚力度$\lambda$越大。实际上，噪声的等级不可预知，只有通过实验的方法选择最佳$\lambda$，也就是通过<a href="">验证</a>（validation）选择最佳$\lambda$。</p>
+
+<h2 id="section-4">正则化实例</h2>
+
+<p>本节内容源于机器学习<a href="#ng_ml_r_2014">[3]</a>网络课程，这里没有对增加的偏移项$x_0=1$的系数正则化，且$y\in\{0,1\}$。</p>
+
+<h3 id="section-5">正则化线性回归</h3>
+
+<h4 id="section-6">一、代价函数</h4>
+
+<p>\begin{equation}
+J(\boldsymbol\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
+\label{eq:cf-linear-regression-r}
+\end{equation}</p>
+
+<h4 id="section-7">二、梯度下降法估计参数</h4>
+
+<p>repeat until convergence {
+\begin{equation*}
+\begin{aligned}
+\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
+\end{aligned}
+\end{equation*}
+}</p>
+
+<p>迭代过程可以化为如下形式：
+\begin{equation*}
+\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)};~~(j = 1, 2, \ldots, n)
+\end{equation*}</p>
+
+<p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小更快。</p>
+
+<h3 id="logistic">正则化Logistic回归</h3>
+
+<h4 id="section-8">一、代价函数</h4>
+
+<p>\begin{equation}
+\begin{aligned}
+J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\end{aligned}
+\label{eq:cf-logistic-regression-r}
+\end{equation}</p>
+
+<h4 id="section-9">二、梯度下降法估计参数</h4>
+
+<p>repeat until convergence {
+\begin{equation*}
+\begin{aligned}
+\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
+\end{aligned}
+\end{equation*}
+}</p>
+
+<h3 id="matlab">Matlab实现</h3>
+
+<p>第一步：实现Logistic函数</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
+<span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
+<span class="k">end</span></code></pre></div>
+
+<p>第二步：实现代价函数（包含梯度计算）</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
+<span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
+
+<span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
+<span class="n">J</span> <span class="p">=</span> <span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">+</span> <span class="c">...</span>
+    <span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">grad</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)])</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
+
+<span class="k">end</span></code></pre></div>
+
+<p>第三步：估计参数</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+<span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
+	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
+
+<h2 id="section-10">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
+
+</li>
+<li><span id="lin_ml_regularization_2014">[2]H.-T. Lin, “Lecture 14: Regularization.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="ng_ml_r_2014">[3]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-11">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-regularize-all">
+      <p>为什么正则化包括$x_0=1$的偏移项系数，两者有何区别？ <a href="#fnref:why-regularize-all" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>过拟合的危害</title>
@@ -25,7 +278,7 @@
 
 <p>上图右采用了4次多项式变换$\Phi$和$\mathcal Z$空间的线性拟合，$N=5$个点时存在唯一解<sup id="fnref:is-unique"><a href="#fn:is-unique" class="footnote">1</a></sup>，$E_{in}=0$，过拟合了。</p>
 
-<p>泛化能力描述的是既成的状态，过拟合描述的是变化过程。解决欠拟合采用<a href="/2015/01/nonlinear-transformation">非线性特征变换</a>，解决过拟合更复杂。过拟合主要受噪声和数据量的影响。</p>
+<p>泛化能力描述的是既成的状态，过拟合描述的是变化过程。解决欠拟合可采用<a href="/2015/01/nonlinear-transformation">非线性特征变换</a>，解决过拟合更复杂。过拟合主要受噪声和数据量的影响。</p>
 
 <h2 id="section-1">过拟合的特性</h2>
 
@@ -1345,224 +1598,6 @@ $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分�
     </li>
     <li id="fn:how-to-do-AdaBoost-face">
       <p>这里如何构造人脸识别程序的呢？（1）<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=172">论坛讨论</a>；（2）<a href="http://en.wikipedia.org/wiki/Viola–Jones_object_detection_framework">Viola–Jones object detection framework</a>。 <a href="#fnref:how-to-do-AdaBoost-face" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>分类器融合（1）：混合与自助聚合</title>
-      <link href="http://qianjiye.de/2015/01/blending-and-bagging" />
-      <pubdate>2015-01-15T15:12:32+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/blending-and-bagging</guid>
-      <content:encoded>&lt;![CDATA[<p><strong>混合</strong>（blending）是将不同的假设用均匀、线性或非线性的方式组合起来；如果先从boostrapped数据上学习到各种不同的假设，然后再混合，就称为<strong>自助聚合</strong>（bagging, bootstrap aggregating）。</p>
-
-<h2 id="section">聚合法简介</h2>
-
-<p>如何将特征和假设集组合起来，让机器学习的性能更好呢？</p>
-
-<p>假设$T$个👬朋友$g_1,\ldots,g_T$给出参考意见$g_t(\mathbf x)$预测股票是否会涨，如何决策呢？</p>
-
-<ol>
-  <li>校验法（validation）：听从最懂股票那个朋友的意见，
-\begin{equation*}
-G(\mathbf x)=g_{t_*}(\mathbf x)，\qquad t_*=\arg\min_{t\in\{1,2,\ldots,T\}}E_{val}\left(g_t^-\right)，
-\end{equation*}
-$E_{val}\left(g_{t}^-\right)$表示$g^-$是在一个较小数据集上得到的结果，选择完成之后在全验证集上得到完整的$g$。</li>
-  <li>投票法（vote）：一人一票的均匀投票，听从多数人的意见，
-\begin{equation}
-G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T1\cdot g_t(\mathbf x)\right)。
-\label{eq:uniform-blending-hypothesis}
-\end{equation}</li>
-  <li>加权投票法：每个人的票数不一样，听从多数票的意见，
-\begin{equation}
-G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T\alpha_t\cdot g_t(\mathbf x)\right),\qquad\alpha_t\geq 0。
-\label{eq:linear-blending-hypothesis}
-\end{equation}
-当$\alpha_t=[[E_{val}\left(g_{t}^-\right)\mbox{ smallest}]]$时，与方法1一样；当$\alpha_t=1$时，与方法2一样。</li>
-  <li>有条件的组合：比如科技股听从擅长这方面的朋友，传统行业股票听从那些……
-\begin{equation}
-G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\right),\qquad q_t(\mathbf x)\geq 0，
-\label{eq:conditional-blending-hypothesis}
-\end{equation}
-当$q_t(\mathbf x)=\alpha_t$时，与方法3一样，也就是包含了前面所有情况。</li>
-</ol>
-
-<p><strong>聚合法</strong>的目的是综合多个假设（可能是比较弱的）让效果更好。上述方法中，2～4称为<strong>聚合模型</strong>（aggregation model）。</p>
-
-<p>对于上述1的校验（validation）方法，如果用$E_{in}(g_t)$代替$E_{val}(g_t)$进行选择，最终可能会付出很大VC维的代价<sup id="fnref:why-large-dvc"><a href="#fn:why-large-dvc" class="footnote">1</a></sup>。这种方法需要一个强大优秀的$g_t^-$，否则也只是差中择优。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png"><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="［左］：水平垂直线投票；［右］PLA投票" /></a><div class="caption">Figure 1:  ［左］：水平垂直线投票；［右］PLA投票 [<a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png">PNG</a>]</div></div></div>
-
-<p>上图展示了利用聚合法的投票机制，灰色的判别界表示参与投票的分类器。上图左中，水平线将平面分割成了9块区域，如果按“垂直、水平左，水平右”的顺序投票，每个区域中的投票结果如图中绿色标注，最终结果相当于组合成了黑色的判别界。上图左展示的投票方法，相当于特征变换（feature transform）的效果<sup id="fnref:why-feateure-tansform"><a href="#fn:why-feateure-tansform" class="footnote">2</a></sup>；上图右展示了感知器的投票结果，相当于正则化的效果。通过上图可看出，合理的集合方法能提升性能。</p>
-
-<h2 id="section-1">均匀混合</h2>
-
-<p>均匀混合（uniform blending）也就是投票(voting)方法\eqref{eq:uniform-blending-hypothesis}。如果每个$g_t$都相同，结果等价于任意的$g_t$；如果每个$g_t$千差万别，就是少数服从多数。该方法可以直接推广到多类的情况，
-\[
-G(\mathbf x)=\arg\max_{1\leq k\leq K}\sum_{t=1}^T[[g_t(\mathbf x)=k]]。
-\]</p>
-
-<p>均匀混合解决回归问题的方法是
-\[
-G(\mathbf x) = {1\over T}\sum_{t=1}^Tg_t(\mathbf x)。
-\]
-如果每个$g_t$都相同，结果等价于任意的$g_t$；对于不同的$g_t$，可能得到比单一判别更精确的结果。</p>
-
-<p>由此可见，对于多个不同的假设，即使采用简单的混合法则，也可以得到比单一假设更好的结果。</p>
-
-<p>对于均匀混合的回归，
-\[
-\begin{aligned}
-avg\left(\left(g_t(\mathbf x)-f(\mathbf x)\right)^2\right)
-=&amp;avg\left(g_t^2-2g_t^2f+f^2\right)\\
-=&amp;avg\left(g_t^2\right)-2Gf+f^2\\
-=&amp;avg\left(g_t^2\right)-G^2+(G-f)^2\\
-=&amp;avg\left(g_t^2\right)-2G^2 + G^2 +(G-f)^2\\
-=&amp;avg\left(g_t^2-2g_tG + G^2\right) +(G-f)^2\\
-=&amp;avg\left(\left(g_t-G\right)^2\right) +(G-f)^2。
-\end{aligned}
-\]</p>
-
-<p>若对产生$\mathbf x$分布的所有点都进行上述运算，然后取期望可得
-\[
-avg\left(E_{out}\left(g_t\right)\right)=avg(\varepsilon(g_t-G)^2)+E_{out}(G)\geq E_{out}(G)，
-\]
-也就是说，均匀混合方法的效果会比选择其中一个好。</p>
-
-<p>从$P^N$采集大小为$N$的$T$个数据集，利用上述公式，衡量演算法$\mathcal A$的表现。通过$\mathcal A(\mathcal D_t)$获得$g_t$，对其平均
-\[
-\bar g=\lim_{T\rightarrow\infty}G=\lim_{T\rightarrow\infty}{1\over T}\sum_{t=1}^Tg_t=\varepsilon_{\mathcal D}\mathcal A(\mathcal D)，
-\]
-算法$\mathcal A$的性能期望为
-\begin{equation}
-avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
-\label{eq:bias-variance-decomposition}
-\end{equation}</p>
-
-<p>上述公式中：</p>
-
-<ul>
-  <li>$avg(E_{out}(g_t))$：算法$\mathcal A$的期望性能；</li>
-  <li>$E_{out}(\bar g)$：算法共识（consensus）的性能（$\bar g$就是从$\mathcal D_t\sim P^N$期望获得的$g_t$），通常称为<strong>bias</strong>；</li>
-  <li>$avg(\varepsilon(g_t-\bar g)^2)$：偏离共识的期望，通常称为<strong>variance</strong>。</li>
-</ul>
-
-<p>通过bias和variance，将演算法的表现拆分为两部分。均匀混合通过减小variance获得更稳定的性能。</p>
-
-<h2 id="section-2">线性混合</h2>
-
-<p>通过\eqref{eq:linear-blending-hypothesis}，赋予不同假设不同的权重就是<strong>线性混合</strong>（linear blending）。</p>
-
-<p>线性回归的线性混合目标为
-\[
-\min_{\alpha_t\geq 0}{1\over N}\sum_{n=1}^N\left(y_n-\sum_{t=1}^T\alpha_tg_t(\mathbf x_n)\right)^2，
-\]
-将$g(\mathbf x)$视为特征变换$\phi(\mathbf x)$，换一种表达形式
-\[
-\min_{\mathbf w}{1\over N}\sum_{n=1}^{N}\left(y_n-\sum_{i=1}^{\tilde d}w_i\phi_i(\mathbf x_n)\right)^2，
-\]
-这就类似两阶（two-level）的学习方法。</p>
-
-<p>线性混合＝线性模型＋假设（hypothesis）视为变换＋约束条件，
-\[
-\min_{\alpha_t\geq 0}{1\over N}\sum_{n=1}^Nerr\left(y_n,\sum_{t=1}^T\alpha_tg_t(\mathbf x_n)\right)。
-\]
-对于二分类问题
-\[
-\alpha_tg_t(\mathbf x)=|\alpha_t|(-g_t(\mathbf x))\qquad\mbox{if }\alpha_t&lt;0，
-\]
-正负对分类器本质上没有差别，实际上有“线性混合＝线性模型＋假设（hypothesis）视为变换”，不需要$\alpha_t$的约束条件。</p>
-
-<p>在实际中，$g_t$通常是用$E_{in}$从各模型中选的最优，$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\dots,g_T\in\mathcal H_T$。如果在这些$g_t$中用$E_{in}$再选最优的，就是best of best，将付出高复杂度$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。如果在这些$g_t$中用$E_{in}$再采用线性混合，就是aggregation of best，将付出<strong>高于</strong>$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。实际上通常采用$E_{val}$替代$E_{in}$，通过最小化$E_{train}$得到$g_t^-$。</p>
-
-<blockquote>
-  <h4 id="section-3">线性混合算法</h4>
-  <hr />
-
-  <ol>
-    <li>从$\mathcal D_{train}$中获取$g_1^-,g_2^-,\ldots,g_T^-$；     </li>
-    <li>在$\mathcal D_{val}$中将$(\mathbf x_n,y_n)$转换为$(\mathbf z_n=\phi^-(\mathbf x_n),y_n)$，其中$\phi^-(\mathbf x)＝(g_1^-(\mathbf x),g_2^-(\mathbf x),\ldots,g_T^-(\mathbf x))$；</li>
-    <li>计算$\boldsymbol\alpha=\mbox{LinearModel}\left(\{(\mathbf z_n, y_n)\}\right)$；</li>
-    <li>返回 $G_{LINB}(\mathbf x)=\mbox{LinearHypothesis}_\boldsymbol\alpha(\phi(\mathbf x))$，其中$\phi(\mathbf x)＝(g_1(\mathbf x),g_2(\mathbf x),\ldots,g_T(\mathbf x))$<sup id="fnref:how-gt-gt-x"><a href="#fn:how-gt-gt-x" class="footnote">3</a></sup>。</li>
-  </ol>
-
-</blockquote>
-
-<p><strong>如果将3、4两步换为：</strong></p>
-
-<ul>
-  <li>计算$\tilde g=\mbox{AnyModel}\left(\{(\mathbf z_n, y_n)\}\right)$；</li>
-  <li>返回$G_{ANYB}(\mathbf x)=\tilde g(\phi(\mathbf x))$。</li>
-</ul>
-
-<p>这就是any blending（stacking）的方法。any blending方法强大，可以实现conditional blending，但是也存在过拟合的风险。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png"><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="混合方法使用实例" /></a><div class="caption">Figure 2:  混合方法使用实例 [<a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png">PNG</a>]</div></div></div>
-
-<p>上图的流程中，Val.-Set Blending就是any blending的方法，使得$E_{test}$降低到$456.24$。然后再将这一步得到的上百个$g，G$用近似的$\tilde E_{test}$（$\tilde E_{test}$好可使真正的$E_{test}$更好）进行linear blending。</p>
-
-<p>混合（blending）在实际中很有用，但是模型计算复杂度增大了。</p>
-
-<h2 id="section-4">⾃助聚合</h2>
-
-<p>混合（blending）方法的策略是先学习到$g_t$，然后再聚合（aggregate）。<del>能否在学习$g_t$的同时进行聚合呢？✅</del></p>
-
-<p>对于均匀聚合（uniform aggregation），不同模型参与聚合是关键，获取不同模型的方法包括：</p>
-
-<ul>
-  <li>从不同假设集获取模型：$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\ldots,g_T\in\mathcal H_T$；</li>
-  <li>采用不同的参数：对于梯度下降法，$\eta=0.001,0.01,\ldots,10$；</li>
-  <li>利用算法的随机性：从不同的初始化开始PLA；</li>
-  <li>利用数据的随机性：交叉检验采用不同数据集验证$g_v^-$<sup id="fnref:how-to-gv-x"><a href="#fn:how-to-gv-x" class="footnote">4</a></sup>。</li>
-</ul>
-
-<p>回顾\eqref{eq:bias-variance-decomposition}，算法的性能被拆分为bias和variance两部分进行评估。共识的结果会比$\mathcal A(\mathcal D)$的单一$g$效果好，但是每次都需要用不同的$\mathcal D_t$获得$g_t$。</p>
-
-<p>能否通过有限的$T$和单一的数据集$\mathcal D$得近似的$\bar g$？✅</p>
-
-<p><strong>bootstrapping</strong>是一种通过重采样（re-sample）$\mathcal D$模拟$\mathcal D_t$的统计学工具。bootstrap得到$\tilde{\mathcal D}_t$的方法：从$\mathcal D$中随机抽取一个点，纪录该点后然后放回，重复该过程直到抽取到$N’$个数据。</p>
-
-<blockquote>
-  <h4 id="section-5">自助聚合算法</h4>
-  <hr />
-
-  <ol>
-    <li>利用bootstrapping技术得到$N’$点的数据集$\tilde{\mathcal D}_t$；</li>
-    <li>利用$\mathcal A(\tilde{\mathcal D}_t)$，算法$\mathcal A$在数据集$\tilde{\mathcal D}_t$上得到$g_t$；</li>
-    <li>$G=\mbox{Uniform}(g_t)$。</li>
-  </ol>
-</blockquote>
-
-<p><strong>⾃助聚合</strong>（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）也称为<strong>打包</strong>（bagging）。像⾃助聚合这种，建立在其它基础算法（base algorithm）$\mathcal A$之上的算法称为meta algorithm。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png"><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="bagging pocket方法" /></a><div class="caption">Figure 3:  bagging pocket方法 [<a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png">PNG</a>]</div></div></div>
-
-<p>上图是bagging pocket方法的效果，通过bagging得到各不相同的$g_t$，然后通过聚合得到合适的非线性分类器。</p>
-
-<p>如果基础算法（base algorithm）对数据的随机性很敏感，bagging可以工作得相当好。</p>
-
-<h2 id="section-6">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-7">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:why-large-dvc">
-      <p>为什么会付出很大VC维的代价？ <a href="#fnref:why-large-dvc" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:why-feateure-tansform">
-      <p>为什么相当于特征变换的效果？ <a href="#fnref:why-feateure-tansform" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:how-gt-gt-x">
-      <p>$g_t^-(\mathbf x)$和$g_t(\mathbf x)$具体如何计算？ <a href="#fnref:how-gt-gt-x" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:how-to-gv-x">
-      <p>这步如何操作？「機器學習基石」第十五講有關。 <a href="#fnref:how-to-gv-x" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

@@ -162,7 +162,7 @@ J(\boldsymbol\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(
 
 <p>如果代价函数\eqref{eq:cf_nn}是非凸（non-convex）函数<sup id="fnref:if_no_global_minimum"><a href="#fn:if_no_global_minimum" class="footnote">1</a></sup>，理论上可能会陷入局部极值，事实上，即使不能保证取得全局极值，梯度下降法也能很好的最小化代价函数，使得神经网络工作良好<a href="#ng_ml_nnl_2014">[2, P. 30]</a>。</p>
 
-<p>对比<a href="/2014/10/machine-learning-regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$a_0^{(l)} = 1$对应的系数$\Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
+<p>对比<a href="/2015/01/regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$a_0^{(l)} = 1$对应的系数$\Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
 
 <h3 id="section-4">参数估计</h3>
 

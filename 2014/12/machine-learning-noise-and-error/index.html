@@ -143,7 +143,7 @@ P(y|\mathbf x)=
 
 <p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
 
-<h2 id="section-1">误差度量</h2>
+<h2 id="error-measurement">误差度量</h2>
 
 <p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
 
@@ -165,7 +165,7 @@ f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\
 
 <p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
 
-<h2 id="section-2">误差度量范例</h2>
+<h2 id="section-1">误差度量范例</h2>
 
 <p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
 
@@ -201,11 +201,11 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
   </ol>
 </blockquote>
 
-<h2 id="section-3">参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-4">脚注</h3>
+<h3 id="section-3">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:target-distribution">
