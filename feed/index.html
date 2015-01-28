@@ -4,8 +4,94 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-28T12:01:31+08:00</lastbuilddate>
+    <lastbuilddate>2015-01-29T06:31:19+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>机器学习三原则</title>
+      <link href="http://qianjiye.de/2015/01/three-learning-principles" />
+      <pubdate>2015-01-28T20:05:37+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/01/three-learning-principles</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">使用奥卡姆剃刀</h2>
+
+<blockquote>
+  <p>An explanation of the data should be made as simple as possible, but no simpler.         <br />
+—Albert Einstein? (1879-1955)</p>
+
+  <hr />
+
+  <p>entia non sunt multiplicanda praeter necessitatem (entities must not be multiplied beyond necessity)       <br />
+—William of Occam (1287-1347) </p>
+</blockquote>
+
+<p>奥卡姆剃刀（Occam’s rezor）：剃掉不必要的解释。对机器学习，适合数据的最简单模型也是最合理的模型。</p>
+
+<ul>
+  <li>简单的假设$h$：小的$\Omega(h)$，假设的参数少；</li>
+  <li>简单的模型$\mathcal H$：小的$\Omega(\mathcal H)$，包含较少的假设，成长函数增长很慢。</li>
+</ul>
+
+<p>当$\Omega(\mathcal H)$小时，$\Omega(h)$也小。当假设集大小为$2^\ell$时，每个假设最多有$\ell$个参数<sup id="fnref:why-ell-parameters"><a href="#fn:why-ell-parameters" class="footnote">1</a></sup>。在实际应用中，通过正则化或从简单模型开始尝试，都可以得到简单的假设。</p>
+
+<p>对于简单模型，$m_\mathcal H(N)$小，难以将数据拟合好（拟合好的概率为$m_{\mathcal H}(N)\over 2^N$<sup id="fnref:why-ration"><a href="#fn:why-ration" class="footnote">2</a></sup>）。对简单的模型，如果数据被分开，那么数据是规律的；对于复杂的模型，如果数据能分开，就不能判断数据是否有规律（复杂模型能把任何数据分开）。</p>
+
+<p>在实际应用中，从简单的线性模型开始尝试，经常考量数据是否被模型过度表示（data over-modeled）。</p>
+
+<h2 id="section-1">避免抽样偏差</h2>
+
+<p>如果数据通过有偏抽样得到<a href="#Darrell_Huff_2002">[1]</a>，学习到的结果也是有偏的。</p>
+
+<p>若从$P_1(\mathbf x,y)$的数据中学习，却在$P_2\neq P_1$的数据中测试，VC理论不适用。相当于学了数学却要参加英语考试。VC理论的前提是训练和测试数据都iid来自同一分布。</p>
+
+<p>通过信用卡用户的信用记录，判断是否给新顾客信用卡。——由于没有未开通信用卡用户的信息，这两者分布可能很不一样……</p>
+
+<p>在实际应用中，尽可能的了解测试环境，使训练环境和测试环境尽量一致。</p>
+
+<h2 id="section-2">绝不偷看数据</h2>
+
+<blockquote>
+  <p>If you torture the data long enough, it will confess.</p>
+</blockquote>
+
+<p>使用数据的任何过程都相当于间接偷看了数据。为了让VC维可靠，选择$\Phi$时不应当<a href="/2015/01/nonlinear-transformation/#human-learning">偷看数据</a>。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-snoop-data.png"><img src="/assets/images/2015-01-28-three-learning-principles-snoop-data.png" alt="简单的偷看也会导致结果偏差很大" /></a><div class="caption">Figure 1:  简单的偷看也会导致结果偏差很大 [<a href="/assets/images/2015-01-28-three-learning-principles-snoop-data.png">PNG</a>]</div></div></div>
+
+<p>对使用同样数据集$\mathcal D$的论文，后来作者针对以前论文改进，阅读以前论文也就相当于偷看资料。若把这些论文看成一篇长长的论文，付出的模型复杂度为$d_{VC}(\cup_m\mathcal H_m)$，泛化能力差。</p>
+
+<p>偷看数据很难避免，合理处理偷看数据：</p>
+
+<p><img src="/assets/images/2015-01-28-three-learning-principles-deal-with-snooping.png" alt="合理处理偷看数据" /></p>
+
+<p>“be blind”是指尽量避免用数据做决定，不要在看了数据之后再决定采用什么样的特征等操作。也就是避免human learning的复杂度进入。</p>
+
+<h2 id="section-3">其它三原则</h2>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-three-tools.png"><img src="/assets/images/2015-01-28-three-learning-principles-three-tools.png" alt="三大工具" /></a><div class="caption">Figure 2:  三大工具 [<a href="/assets/images/2015-01-28-three-learning-principles-three-tools.png">PNG</a>]</div></div></div>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png"><img src="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png" alt="三大理论边界" /></a><div class="caption">Figure 3:  三大理论边界 [<a href="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png">PNG</a>]</div></div></div>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol class="bibliography"><li><span id="Darrell_Huff_2002">[1]达莱尔·哈夫, <i>统计陷阱</i>. 上海: 上海财经大学出版社, 2002.</span>
+
+</li></ol>
+
+<h3 id="section-5">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-ell-parameters">
+      <p>为什么最多$\ell$个参数？ <a href="#fnref:why-ell-parameters" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:why-ration">
+      <p>这个比率什么意思？ <a href="#fnref:why-ration" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>验证</title>
@@ -1442,186 +1528,6 @@ accuracy: 0.283000
     </li>
     <li id="fn:why-not-here">
       <p>We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization. <a href="#fnref:why-not-here" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>logistic回归</title>
-      <link href="http://qianjiye.de/2015/01/logistic-regression" />
-      <pubdate>2015-01-17T16:28:27+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/logistic-regression</guid>
-      <content:encoded>&lt;![CDATA[<p>本节的主要参考资料是机器学习基石<a href="#lin_ml_logistic_regression_2014">[1]</a>和机器学习<a href="#ng_ml_lr_2014">[2]</a>网络课程。</p>
-
-<h2 id="soft">soft二分类</h2>
-
-<p>soft二分类感兴趣的不仅仅是$\{-1,+1\}$类别的判断，而是属于某个类别的可能性，比如
-\begin{equation}
-f(\mathbf x)=P(+1|\mathbf x)\in [0,1]。
-\label{eq:f-vs-probility}
-\end{equation}
-但是在实际应用中，难以获取属于某个类别的概率，只能得到是否属于某个类别，也就是与二分类一样的数据集。</p>
-
-<p>不妨将$\{-1,+1\}$类别标签的数据，看作是概率标签数据被噪声污染的结果，e.g. $(\mathbf x_1,y’_1=0.9=P(+1|\mathbf x_1))+{noise}\rightarrow(\mathbf x_1,y_1=\circ\sim P(+1|\mathbf x_1))$。</p>
-
-<p>logistic回归解决的问题，就是在$\{-1,+1\}$类别标签的训练集上，通过soft二分类产生概率标签的输出。</p>
-
-<h2 id="logistic">logistic回归模型</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-logistic-function.png"><img src="/assets/images/2015-01-17-logistic-regression-logistic-function.png" alt="logistic函数" /></a><div class="caption">Figure 1:  logistic函数 [<a href="/assets/images/2015-01-17-logistic-regression-logistic-function.png">PNG</a>]</div></div></div>
-
-<p>对于特征$\mathbf x=(x_0, x_1,\ldots,x_d)$，先计算加权的risk score，$s=\mathbf w^T\mathbf x$，然后再将此得分代入如上图所示的logistic函数<sup id="fnref:logistic-function-properties"><a href="#fn:logistic-function-properties" class="footnote">1</a></sup>
-\begin{equation}
-\theta(s)={1\over 1 + e^{-s}}
-\label{eq:sigmoid-function}
-\end{equation}
-转化为概率的形式。logistic函数也称为sigmoid函数，单调、光滑。也就是可用logistic回归模型
-\begin{equation}
-h(\mathbf x)={1\over 1+\exp(-\mathbf w^T\mathbf x)}，
-\end{equation}
-作为目标函数$f(\mathbf x)=P(y|\mathbf x)$的近似。</p>
-
-<p>建立logistic回归模型的基本思路是，找到最可能产生数据集$\mathcal D$的假设$h$。考虑数据集$\mathcal D=\{(\mathbf x_1,\circ),(\mathbf x_2,\times),\ldots,(\mathbf x_N,\times)\}$，根据\eqref{eq:f-vs-probility}可得<sup id="fnref:andrew-class-label"><a href="#fn:andrew-class-label" class="footnote">2</a></sup>
-\[
-P(y|\mathbf x)=
-\left\{
-\begin{aligned}
-&amp;f(\mathbf x)&amp;\mbox{for }y=+1&amp;\\
-&amp;1-f(\mathbf x)&amp;\mbox{for }y=-1&amp;，
-\end{aligned}
-\right.
-\]
-那么得到这个数据集的概率为
-\[
-\begin{aligned}
-&amp;P(\mathbf x_1)P(\circ|\mathbf x_1)\times P(\mathbf x_2)P(\times|\mathbf x_2)\times\ldots P(\mathbf x_N)P(\times|\mathbf x_N)\\
-=&amp;P(\mathbf x_1)f(\mathbf x_1)\times P(\mathbf x_2)(1-f(\mathbf x_2))\times\ldots P(\mathbf x_N)(1-f(\mathbf x_N))\Rightarrow\mbox{probability using }f\\
-\approx &amp;P(\mathbf x_1)h(\mathbf x_1)\times P(\mathbf x_2)(1-h(\mathbf x_2))\times\ldots P(\mathbf x_N)(1-h(\mathbf x_N))\Rightarrow\mbox{likelihood}(h)，
-\end{aligned}
-\]
-$h$产生这笔数据的可能性（likelihood）和$f$产生这笔数据的概率（probability）差不多，最终得到了$h$产生这笔数据的可能性。期望$f$产生这笔数据的概率相当大<sup id="fnref:why-large-probability"><a href="#fn:why-large-probability" class="footnote">3</a></sup>，因此有
-\[
-\mbox{likelihood}(h)\approx\mbox{probability using }f\approx\mbox{large}，
-\]
-选择可能性最高的那个$h$
-\[
-g=\arg\max_h\mbox{likelihood}(h)。
-\]
-根据logistic函数的性质$\theta(-s)=1-\theta(s)$，可进一步得到
-\[
-\mbox{likelihood}(h)=P(\mathbf x_1)h(+\mathbf x_1)\times P(\mathbf x_2)(-h(\mathbf x_2))\times\ldots P(\mathbf x_N)(-h(\mathbf x_N))，
-\]
-对所有$h$，$P(\mathbf x_i)$都不变，那么可得
-\[
-\mbox{likelihood}(\mbox{logistic }h)\varpropto\prod_{n=1}^Nh(y_n\mathbf x_n)，
-\]
-最佳$\mathbf w$应满足条件
-\[
-\max_{\mathbf w}\mbox{likelihood}(\mathbf w)\varpropto\prod_{n=1}^N\theta(y_n\mathbf w^T\mathbf x_n)。
-\]
-利用$\ln$将乘法化为加法，得到等价的优化问题
-\begin{equation}
-\min_\mathbf wE_{in}(\mathbf w)={1\over N}\sum_{n=1}^N\ln\left(1+\exp\left(-y_n\mathbf w^T\mathbf x_n\right)\right)，
-\end{equation}
-其中$err(\mathbf w,\mathbf x,y)=\ln\left(1+\exp\left(-y\mathbf w^T\mathbf x\right)\right)$称为<strong>交叉熵误差</strong>（cross-entropy error）。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-convex-or-non.png"><img src="/assets/images/2015-01-17-logistic-regression-convex-or-non.png" alt="［左］：平方误差代价函数；［右］交叉熵误差代价函数" /></a><div class="caption">Figure 2:  ［左］：平方误差代价函数；［右］交叉熵误差代价函数 [<a href="/assets/images/2015-01-17-logistic-regression-convex-or-non.png">PNG</a>]</div></div></div>
-
-<p>上图展示了用不同误差度量方式的代价函数，上图左采用了线性回归基于平方误差的代价函数，非凸不利于优化。</p>
-
-<h2 id="section">梯度下降法</h2>
-
-<p>$E_{in}(\mathbf w)$是连续、可微、二次可微的凸函数，理论上取得最小值时$\mathbf w$满足$\nabla E_{in}(\mathbf w)=0$，其中
-\begin{equation}
-\nabla E_{in}(\mathbf w)={1\over N}\sum_{n=1}^N\theta(-y_n\mathbf w^T\mathbf x_n)(-y_n\mathbf x_n)。
-\label{eq:gradient-logistic-object-function}
-\end{equation}
-由于$\nabla E_{in}(\mathbf w)=0$是非线性方程，并且$\theta(-y_n\mathbf w^T\mathbf x_n)＝0$的条件$y_n\mathbf w^T\mathbf x_n\gg 0$也难以满足，因此不存在类似线性回归的闭式解。</p>
-
-<p>回顾<a href="/2014/10/pla/#pla-algorithm">感知器算法</a>的权值更新，稍微修改其表现形式
-\[
-\mathbf w_{t+1}\leftarrow\mathbf w_{t}+1\cdot\left(\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n\right)，
-\]
-简记为
-\[
-\mathbf w_{t+1}\leftarrow\mathbf w_{t}+\eta\mathbf v，
-\]
-其中$\eta=1$表示步长，$\mathbf v=\left[\left[\mbox{sign}\left(\mathbf w_t^T\mathbf x_n\right)\neq y_n\right]\right]y_n\mathbf x_n$表示方向。对$(\eta,\mathbf v)$和终止条件的不同定义，就会得到不同的迭代优化算法。考察梯度计算公式\eqref{eq:gradient-logistic-object-function}，$\theta(-y_n\mathbf w^T\mathbf x_n)$相当于梯度方向的加权值，当$y_n\mathbf w^T\mathbf x_n$越小的时候，权值越大，负值越大表示犯错越厉害。如果按照梯度方向更新，这和PLA有相同的含义，犯错越厉害的对更新贡献越大。</p>
-
-<p>对于logistic回归的$E_{in}$，令$\eta&gt;0$，
-\[
-\min_{\lVert\mathbf v\rVert=1}E_{in}(\mathbf w_t+\eta\mathbf v)
-\]
-利用贪婪法找$\mathbf w_t$附近最好的一个方向，让$E_{in}$下降最多。上式仍然是非线性，且带约束条件，难以求解。当$\eta$足够小时，利用Taylor展式可得
-\[
-E_{in}(\mathbf w_t+\eta\mathbf v)\approx E_{in}(\mathbf w_t)+\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)
-\]
-若要实现
-\[
-\min_{\lVert\mathbf v\rVert=1}\left(E_{in}(\mathbf w_t)+\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)\right)，
-\]
-就要使得$\eta\mathbf v^T\nabla E_{in}(\mathbf w_t)$最小，此时$\eta&gt;0$是常数，因此$\mathbf v$和$\nabla E_{in}(\mathbf w_t)$反向时得到的值最小，
-\[
-\mathbf v=-\frac{\nabla E_{in}(\mathbf w_t)}{\lVert\nabla E_{in}(\mathbf w_t)\rVert}，
-\]
-那么参数的更新规则为
-\begin{equation}
-\mathbf w_{t+1}\leftarrow\mathbf w_{t}-\eta\frac{\nabla E_{in}(\mathbf w_t)}{\lVert\nabla E_{in}(\mathbf w_t)\rVert}。
-\label{eq:gd-iterate}
-\end{equation}
-这种参数更新方法就是梯度下降法，是一种简单且应用广泛的优化算法。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-17-logistic-regression-eta-example.png"><img src="/assets/images/2015-01-17-logistic-regression-eta-example.png" alt="不同步长的迭代效果" /></a><div class="caption">Figure 3:  不同步长的迭代效果 [<a href="/assets/images/2015-01-17-logistic-regression-eta-example.png">PNG</a>]</div></div></div>
-
-<p id="why-fixed-eta">上图展示了利用\eqref{eq:gd-iterate}迭代的效果，$\eta$过小导致收敛太慢，过大导致不稳定，动态调整可以得到不错的效果。对于动态调整的$\eta$，坡度$\lVert\nabla E_{in}(\mathbf w_t)\rVert$大的时候采用大的$\eta$，小的时候采用小的$\eta$。当$\eta\leftarrow{\eta\over\lVert\nabla E_{in}(\mathbf w_t)\rVert}$时，固定住新的$\eta$就会达到动态调整的效果，因此可以采用固定$\eta$的自适应步长更新方式</p>
-<p>\begin{equation}
-\mathbf w_{t+1}\leftarrow\mathbf w_{t}-\eta\nabla E_{in}(\mathbf w_t)。
-\label{eq:gd-iterate-2}
-\end{equation}</p>
-
-<blockquote>
-  <h4 id="logistic-1">梯度下降法求解logistic回归参数</h4>
-  <hr />
-  <p>初始化$\mathbf w_0$和$\eta$；</p>
-
-  <p>对$t=0,1,\ldots$循环以下步骤，直到$\nabla E_{in}(\mathbf w_{t+1})=0$或达到设定迭代次数：       </p>
-
-  <ol>
-    <li>利用公式\eqref{eq:gradient-logistic-object-function}计算$\nabla E_{in}(\mathbf w_{t})$；</li>
-    <li>利用公式\eqref{eq:gd-iterate-2}更新参数$\mathbf w_{t+1}$。</li>
-  </ol>
-</blockquote>
-
-<p>梯度下降法的注意事项可以参考<a href="/2015/01/linear-regression/#gd-method">线性回归梯度法</a>的注意事项。</p>
-
-<h2 id="section-1">参考文献</h2>
-
-<ol class="bibliography"><li><span id="lin_ml_logistic_regression_2014">[1]H.-T. Lin, “Lecture 10: Logistic Regression.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
-
-</li>
-<li><span id="ng_ml_lr_2014">[2]A. Ng, “Logistic Regression.” Coursera, 2014.</span>
-
-[<a href="https://www.coursera.org/course/ml">Online</a>]
-
-</li></ol>
-
-<h3 id="section-2">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:logistic-function-properties">
-      <p>logistic函数的性质：（1）$\theta(-s)=1-\theta(s)$；（2）${d\theta(s)\over ds}=\theta(s)(1-\theta(s))$（${d\theta(s)\over d^Ns}=\theta(s)\prod_{n=0}^N(1-N\theta(s))$<strong>????</strong>）；（3）${\theta(s)\over 1-\theta(s)}=e^s$。 <a href="#fnref:logistic-function-properties" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:andrew-class-label">
-      <p>Andrew NG课程中采用了$\{0,1\}$类别标签<a href="#ng_ml_lr_2014">[2]</a>，因此得到的公式与本文形式不同。 <a href="#fnref:andrew-class-label" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:why-large-probability">
-      <p><del>为什么$f$产生这笔数据的概率很大？</del>期望找到最合适的$h$，使产生数据集$\mathcal D$的可能性最大。 <a href="#fnref:why-large-probability" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
