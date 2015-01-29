@@ -6,6 +6,12 @@
   font-style: normal;
 }
 @font-face {
+  font-family: 'Adobe Caslon Regular';
+  src: url('/assets/font/Adobe-Caslon-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: 'Electrolize';
   src: url('/assets/font/Electrolize-Regular.ttf') format('truetype');
   font-weight: normal;
@@ -31,7 +37,7 @@
 }
 
 
-body{font-size:14px;word-spacing:1px;margin-left:auto;margin-right:auto;font-family:"Galdeano","Tahoma","Verdana","Georgia","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;color:#000000;background-color:#ffffff;}
+body{font-size:14px;word-spacing:1px;margin-left:auto;margin-right:auto;font-family:"Adobe Caslon Regular", "Galdeano","Tahoma","Verdana","Georgia","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;color:#000000;background-color:#ffffff;}
 *{padding:0;margin:0;border:none;outline:none;}
 a{color:#dd0000;text-decoration:none;}
 a:hover{color:#333333;text-decoration:underline;}
@@ -54,10 +60,10 @@ nav{font-family:"Electrolize","Tahoma","Georgia",sans-serif;font-size:1.1em;text
 nav a{display:block;padding:.7em 1em;color:#000000;}
 nav a:hover{background-color:#ff0000;text-decoration:none;color:#f9f9f9;-webkit-transition:color .2s linear;}
 .post{padding:.5em 0em;}
-h1{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.6em;color:#000;}
-h2{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.4em;color:#111;}
-h3{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.2em;color:#222;}
-h4{font-family:"Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1em;color:#333;}
+h1{font-family:"Adobe Caslon Regular", "Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.6em;color:#000;}
+h2{font-family:"Adobe Caslon Regular", "Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.4em;color:#111;}
+h3{font-family:"Adobe Caslon Regular", "Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1.2em;color:#222;}
+h4{font-family:"Adobe Caslon Regular", "Cuprum","Tahoma","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:1em;color:#333;}
 embed,object,iframe{display:block;margin:4px auto;}
 .gist{font-size:12px;line-height:1.6;}
 footer{text-align:center;display:block;border-top:1px dashed #CCC;}
@@ -69,7 +75,7 @@ footer a:hover{border-bottom:1px dashed #BBB;text-decoration:none;}
 .label-warning{background-color:#f89406;}
 .label-success{background-color:#468847;}
 .label-info{background-color:#3a87ad;}
-.paginator{font:14px Arial,Helvetica,sans-serif;color:#AAA;margin:20px 0;line-height:150%;display:block;}
+.paginator{font:14px "Adobe Caslon Regular",Arial,Helvetica,sans-serif;color:#AAA;margin:20px 0;line-height:150%;display:block;}
 .paginator a,.paginator span{padding:0 4px;margin:2px;text-decoration:none;}
 .paginator .current-page{color:white;background:#ff0000;}
 .paginator a:hover{color:white;background:#83BF73;}
