@@ -115,7 +115,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">简介</h2>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_1.png"><img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" /></a><div class="caption">Figure 1:  神经网络结构 [<a href="/assets/images/2014-10-21-neural-networks_1.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_1.png"><img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" /></a><div class="caption">图 1:  神经网络结构 [<a href="/assets/images/2014-10-21-neural-networks_1.png">PNG</a>]</div></div></div>
 
 <p>神经网络是神经元分层级联构成的网络，除输入层外每个神经元对应一个计算模型。最左边和最右边的层分别称为输入（input）和输出（output）层，中间两层为隐藏层（hidden layer）。</p>
 
@@ -127,7 +127,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-1">前向传播计算</h2>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_2.png"><img src="/assets/images/2014-10-21-neural-networks_2.png" alt="神经网络前向传播计算" /></a><div class="caption">Figure 2:  神经网络前向传播计算 [<a href="/assets/images/2014-10-21-neural-networks_2.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_2.png"><img src="/assets/images/2014-10-21-neural-networks_2.png" alt="神经网络前向传播计算" /></a><div class="caption">图 2:  神经网络前向传播计算 [<a href="/assets/images/2014-10-21-neural-networks_2.png">PNG</a>]</div></div></div>
 
 <p>神经网络前向传播，从输入到输出，逐层计算。上图所示<a href="#ng_ml_nnr_2014">[1, P. 23]</a>，假设权值矩阵$\Theta^{(l-1)}$已知，第$l$层可通过第$l-1$层和权值矩阵前向计算，</p>
 
@@ -335,11 +335,11 @@ D_{ij}^{(l)} := \left\{
 
 <h2 id="section-7">神经网络学到了什么？</h2>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_4.png"><img src="/assets/images/2014-10-21-neural-networks_4.png" alt="待识别字符" /></a><div class="caption">Figure 3:  待识别字符 [<a href="/assets/images/2014-10-21-neural-networks_4.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_4.png"><img src="/assets/images/2014-10-21-neural-networks_4.png" alt="待识别字符" /></a><div class="caption">图 3:  待识别字符 [<a href="/assets/images/2014-10-21-neural-networks_4.png">PNG</a>]</div></div></div>
 
 <p><a href="#figure-3">上图</a>展示了部分待识别的字符，通过样本学习建立了3层神经网络的分类器。输入字符图片规格是$20 \times 20$，隐层神经元25个，25个神经元对应的参数向量可视化为<a href="#figure-4">下图</a>。从可视化的参数可以看到，每个神经元和字符的笔画相似，输入的图片将激活符合“笔画”的神经元。估计神经网络参数可视为自动学习特征。</p>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_3.png"><img src="/assets/images/2014-10-21-neural-networks_3.png" alt="参数可视化" /></a><div class="caption">Figure 4:  参数可视化 [<a href="/assets/images/2014-10-21-neural-networks_3.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_3.png"><img src="/assets/images/2014-10-21-neural-networks_3.png" alt="参数可视化" /></a><div class="caption">图 4:  参数可视化 [<a href="/assets/images/2014-10-21-neural-networks_3.png">PNG</a>]</div></div></div>
 
 <h2 id="section-8">应用</h2>
 

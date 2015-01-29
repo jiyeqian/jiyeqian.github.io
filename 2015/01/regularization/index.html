@@ -159,7 +159,7 @@ $\mathcal H(C)$和$\mathcal H’_2$有交集（overlap），对$C\geq 0$存在�
 \end{equation}
 事实上$\mathbf w$位于半径为$\sqrt C$的球中。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-gradient-descent.png"><img src="/assets/images/2015-01-26-regularization-gradient-descent.png" alt="正则化约束的梯度下降法" /></a><div class="caption">Figure 1:  正则化约束的梯度下降法 [<a href="/assets/images/2015-01-26-regularization-gradient-descent.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-gradient-descent.png"><img src="/assets/images/2015-01-26-regularization-gradient-descent.png" alt="正则化约束的梯度下降法" /></a><div class="caption">图 1:  正则化约束的梯度下降法 [<a href="/assets/images/2015-01-26-regularization-gradient-descent.png">PNG</a>]</div></div></div>
 
 <p>上图展示了正则化约束的梯度下降法，蓝色的椭圆曲线表示梯度相同的等高线，红色的圆形表示约束条件。没有正则化约束时，$\mathbf w$沿着$-\nabla E_{in}(\mathbf w)$方向达到最优解$\mathbf w_{lin}$，梯度方向指出了到达最优解的方式。有正则化约束时，大部分情况，最优解都在球面$\mathbf w^T\mathbf w=C$上。$-\nabla E_{in}(\mathbf w)$可以分解为绿色和红色$\mathbf w$（球切面的法向量）两个方向，如果已经在球面上，仍然继续沿着$\mathbf w$下降，会破坏约束条件。正则化梯度下降法，可看作在绿色箭头方向作用下接近最优解。达到最优解的条件是满足约束且不能继续下降，也就是$-\nabla E_{in}(\mathbf w)$平行于$\mathbf w$，那么有$-\nabla E_{in}(\mathbf w_{REG})\propto\mathbf w_{REG}$，此时绿色方向的分量为0，不再下降，优化过程结束。</p>
 
@@ -186,7 +186,7 @@ E_{aug}(\mathbf w)=E_{in}(\mathbf w)+{\lambda\over N}\mathbf w^T\mathbf w，
 \end{equation}
 $\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{in}$，可通过无约束优化$E_{aug}(\mathbf w)$高效求解，每个$C$都有对应的$\lambda$，大的$\lambda$对应着小的$C$，也对应着短的$\mathbf w$。当$\lambda=1$或$C=\infty$或$C\geq\lVert\mathbf w_{LIN}\rVert^2$（相当于红色的圆已经把$\mathbf w_{LIN}$包含在内）时，相当于没有进行正则化。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-regularize-regression.png"><img src="/assets/images/2015-01-26-regularization-regularize-regression.png" alt="不同系数下正则化的效果" /></a><div class="caption">Figure 2:  不同系数下正则化的效果 [<a href="/assets/images/2015-01-26-regularization-regularize-regression.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-regularize-regression.png"><img src="/assets/images/2015-01-26-regularization-regularize-regression.png" alt="不同系数下正则化的效果" /></a><div class="caption">图 2:  不同系数下正则化的效果 [<a href="/assets/images/2015-01-26-regularization-regularize-regression.png">PNG</a>]</div></div></div>
 
 <p>$\lambda$相当于对过拟合的惩罚因子，上图展示了不同$\lambda$惩罚下的效果。</p>
 
@@ -200,7 +200,7 @@ $\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{i
 \]
 特征之间彼此非正交，对低次项容忍度较大，对高次项惩罚力度更大。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png"><img src="/assets/images/2015-01-26-regularization-legendre-polynomials.png" alt="勒让德多项式" /></a><div class="caption">Figure 3:  勒让德多项式 [<a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png"><img src="/assets/images/2015-01-26-regularization-legendre-polynomials.png" alt="勒让德多项式" /></a><div class="caption">图 3:  勒让德多项式 [<a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png">PNG</a>]</div></div></div>
 
 <p>为改善这一问题，可以考虑在多项式空间找到一组正交的基函数（orthonormal basis function），也称为勒让德多项式（legendre polynomials），构造如上图所示的新多项式变换
 \[
@@ -230,7 +230,7 @@ E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
 
 <p>如果正则化选择不合适，还有$\lambda=0$这道防线，可以避免危害。以上正则化选择思路和<a href="/2014/12/machine-learning-noise-and-error/#error-measurement">误差度量</a>一致：用户相关（user-dependent）、合理性、友好。</p>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png"><img src="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png" alt="［左］：L2正则化；［右］L1正则化" /></a><div class="caption">Figure 4:  ［左］：L2正则化；［右］L1正则化 [<a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png"><img src="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png" alt="［左］：L2正则化；［右］L1正则化" /></a><div class="caption">图 4:  ［左］：L2正则化；［右］L1正则化 [<a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png">PNG</a>]</div></div></div>
 
 <p>$L_1$正则化在需要稀疏解时很有用。上图右是$L_1$正则化示意图，$L_1$正则化
 \begin{equation}
@@ -240,7 +240,7 @@ E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
 
 <h2 id="lambda">最优$\lambda$</h2>
 
-<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png"><img src="/assets/images/2015-01-26-regularization-noise-and-lambda.png" alt="噪声对性能的影响" /></a><div class="caption">Figure 5:  噪声对性能的影响 [<a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png"><img src="/assets/images/2015-01-26-regularization-noise-and-lambda.png" alt="噪声对性能的影响" /></a><div class="caption">图 5:  噪声对性能的影响 [<a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png">PNG</a>]</div></div></div>
 
 <p>上图表明，噪声等级越高，正则化的惩罚力度$\lambda$越大。实际上，噪声的等级不可预知，只有通过实验的方法选择最佳$\lambda$，也就是通过<a href="">验证</a>（validation）选择最佳$\lambda$。</p>
 

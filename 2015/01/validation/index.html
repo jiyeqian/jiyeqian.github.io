@@ -168,11 +168,11 @@ E_{out}\left(\underbrace{g_{m^*}}_{\mathcal A_m^*(\mathcal D)}\right)\leq E_{out
 E_{out}(g_{m^*})\leq E_{out}(g_{m^*}^-)\leq E_{val}(g_{m^*}^-)+O\left(\sqrt{\log M\over K}\right)。
 \]</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-27-validation-model-selection.png"><img src="/assets/images/2015-01-27-validation-model-selection.png" alt="基于验证集的模型选择方案" /></a><div class="caption">Figure 1:  基于验证集的模型选择方案 [<a href="/assets/images/2015-01-27-validation-model-selection.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-27-validation-model-selection.png"><img src="/assets/images/2015-01-27-validation-model-selection.png" alt="基于验证集的模型选择方案" /></a><div class="caption">图 1:  基于验证集的模型选择方案 [<a href="/assets/images/2015-01-27-validation-model-selection.png">PNG</a>]</div></div></div>
 
 <p>模型选择整个方案如上图所示，得到$g_{m^*}^-$之后，再回到原来整个数据集上得到$g_{m^*}$效果会更好<sup id="fnref:is-it-necessary"><a href="#fn:is-it-necessary" class="footnote">1</a></sup>。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-27-validation-vlidation-example.png"><img src="/assets/images/2015-01-27-validation-vlidation-example.png" alt="模型选择的学习曲线" /></a><div class="caption">Figure 2:  模型选择的学习曲线 [<a href="/assets/images/2015-01-27-validation-vlidation-example.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-27-validation-vlidation-example.png"><img src="/assets/images/2015-01-27-validation-vlidation-example.png" alt="模型选择的学习曲线" /></a><div class="caption">图 2:  模型选择的学习曲线 [<a href="/assets/images/2015-01-27-validation-vlidation-example.png">PNG</a>]</div></div></div>
 
 <p>上图是在$\mathcal H_{\Phi_5}$和$\mathcal H_{\Phi_{10}}$中进行模型选择的学习曲线。$g_{m^*}$的效果要优于$g_{m^*}^-$。利用$E_{in}$总会选择到复杂的模型，利用$E_{out}$的作弊方案选择结果总最优。随着验证集不断增大，用于模型选择的训练集不断减小，所以$g_{m^*}^-$甚至会比$g_{\widehat m}$效果差，对很小的训练集，采用$E_{in}$还算不错的模型选择方案。</p>
 
@@ -198,7 +198,7 @@ E_{loocv}(\mathcal H,\mathcal A)={1\over N}\sum_{n=1}^Ne_n={1\over N}\sum_{n=1}^
 m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{loocv}(\mathcal H_m,\mathcal A_m))。
 \end{equation}</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-example.png"><img src="/assets/images/2015-01-27-validation-loocv-example.png" alt="loocv选择常数模型而非线性模型" /></a><div class="caption">Figure 3:  loocv选择常数模型而非线性模型 [<a href="/assets/images/2015-01-27-validation-loocv-example.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-example.png"><img src="/assets/images/2015-01-27-validation-loocv-example.png" alt="loocv选择常数模型而非线性模型" /></a><div class="caption">图 3:  loocv选择常数模型而非线性模型 [<a href="/assets/images/2015-01-27-validation-loocv-example.png">PNG</a>]</div></div></div>
 
 <p>用$\underset{\mathcal D_n}{\varepsilon}$表示在训练集上的数学期望，那么有<sup id="fnref:how-expectation-do"><a href="#fn:how-expectation-do" class="footnote">2</a></sup>
 \begin{aligned}
@@ -211,7 +211,7 @@ m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{loocv}(\mathcal H_m,\mathcal A_m))
 \end{aligned}
 因此可得$E_{loocv}(\mathcal H,\mathcal A)$和$E_{out}(g^-)$联系紧密，通常称作$E_{out}(g)$几乎无偏的估计（almost unbiased estimate）。</p>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-practice.jpg"><img src="/assets/images/2015-01-27-validation-loocv-practice.jpg" alt="loocv手写识别示例" /></a><div class="caption">Figure 4:  loocv手写识别示例 [<a href="/assets/images/2015-01-27-validation-loocv-practice.jpg">JPG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-practice.jpg"><img src="/assets/images/2015-01-27-validation-loocv-practice.jpg" alt="loocv手写识别示例" /></a><div class="caption">图 4:  loocv手写识别示例 [<a href="/assets/images/2015-01-27-validation-loocv-practice.jpg">JPG</a>]</div></div></div>
 
 <p>上图手写识别例子中，通过验证确定选择多少维多项式特征。若用$E_{in}$，特征维度越多越好；利用$E_{loocv}$（图中标注为$E_{cv}$），会选到较低纬度的特征。</p>
 

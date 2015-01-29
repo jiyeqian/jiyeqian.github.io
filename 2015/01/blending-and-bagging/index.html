@@ -146,7 +146,7 @@ G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\ri
 
 <p>对于上述1的校验（validation）方法，如果用$E_{in}(g_t)$代替$E_{val}(g_t)$进行选择，最终可能会付出很大VC维的代价<sup id="fnref:why-large-dvc"><a href="#fn:why-large-dvc" class="footnote">1</a></sup>。这种方法需要一个强大优秀的$g_t^-$，否则也只是差中择优。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png"><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="［左］：水平垂直线投票；［右］PLA投票" /></a><div class="caption">Figure 1:  ［左］：水平垂直线投票；［右］PLA投票 [<a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png"><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="［左］：水平垂直线投票；［右］PLA投票" /></a><div class="caption">图 1:  ［左］：水平垂直线投票；［右］PLA投票 [<a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png">PNG</a>]</div></div></div>
 
 <p>上图展示了利用聚合法的投票机制，灰色的判别界表示参与投票的分类器。上图左中，水平线将平面分割成了9块区域，如果按“垂直、水平左，水平右”的顺序投票，每个区域中的投票结果如图中绿色标注，最终结果相当于组合成了黑色的判别界。上图左展示的投票方法，相当于特征变换（feature transform）的效果<sup id="fnref:why-feateure-tansform"><a href="#fn:why-feateure-tansform" class="footnote">2</a></sup>；上图右展示了感知器的投票结果，相当于正则化的效果。通过上图可看出，合理的集合方法能提升性能。</p>
 
@@ -252,7 +252,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p>这就是any blending（stacking）的方法。any blending方法强大，可以实现conditional blending，但是也存在过拟合的风险。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png"><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="混合方法使用实例" /></a><div class="caption">Figure 2:  混合方法使用实例 [<a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png"><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="混合方法使用实例" /></a><div class="caption">图 2:  混合方法使用实例 [<a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png">PNG</a>]</div></div></div>
 
 <p>上图的流程中，Val.-Set Blending就是any blending的方法，使得$E_{test}$降低到$456.24$。然后再将这一步得到的上百个$g，G$用近似的$\tilde E_{test}$（$\tilde E_{test}$好可使真正的$E_{test}$更好）进行linear blending。</p>
 
@@ -290,7 +290,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p><strong>⾃助聚合</strong>（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）也称为<strong>打包</strong>（bagging）。像⾃助聚合这种，建立在其它基础算法（base algorithm）$\mathcal A$之上的算法称为meta algorithm。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png"><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="bagging pocket方法" /></a><div class="caption">Figure 3:  bagging pocket方法 [<a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png"><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="bagging pocket方法" /></a><div class="caption">图 3:  bagging pocket方法 [<a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png">PNG</a>]</div></div></div>
 
 <p>上图是bagging pocket方法的效果，通过bagging得到各不相同的$g_t$，然后通过聚合得到合适的非线性分类器。</p>
 

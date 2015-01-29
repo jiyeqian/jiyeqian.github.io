@@ -164,7 +164,7 @@ K_Q(\mathbf x,\mathbf x’)=\left(\zeta + \gamma\mathbf x^T\mathbf x’\right)^Q
 \end{equation}
 事实上，系数$\zeta$和$\gamma$的取值不会改变多项式所在的空间，这些系数会被$\mathbf w$所吞噬。但是，不同的系数会得到不同的支持向量和判别函数。选择不同的核，相当于改变了边界的定义。多项式核可以在几乎不增加计算量的情况下，得到复杂的判别界。支持向量机通过large-margin控制判别界的复杂度。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png" alt="2阶多项式核SVM的效果" /></a><div class="caption">Figure 1:  2阶多项式核SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png" alt="2阶多项式核SVM的效果" /></a><div class="caption">图 1:  2阶多项式核SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png">PNG</a>]</div></div></div>
 
 <p>上图是2阶多项式核支持向量机的效果，不同系数下的支持向量和判别界不同。</p>
 
@@ -195,7 +195,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 
 <p>高斯核相当于进行了无限维的特征转换，可以得到复杂的判别界，泛化性能通过最大边界“保证”。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png" alt="高斯核的SVM的效果" /></a><div class="caption">Figure 2:  高斯核的SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png" alt="高斯核的SVM的效果" /></a><div class="caption">图 2:  高斯核的SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png">PNG</a>]</div></div></div>
 
 <p>上图是不同系数的高斯核支持向量机的效果，$\gamma$越大，高斯函数越尖，越容易过拟合。当$\gamma\rightarrow\infty$时，$K_{lim}\left(\mathbf x,\mathbf x’\right)=[[\mathbf x＝\mathbf x’]]$，相当于严格判断是否与支持向量一致。</p>
 

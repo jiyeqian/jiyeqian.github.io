@@ -121,7 +121,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>当机器学习面对大数据的时候，是否从大数据中抽取一个小的子集就可以了呢？这需要分析学习曲线，确定影响性能的关键问题是数据量、特征还是模型或其它问题。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png" alt="学习曲线" /></a><div class="caption">Figure 1:  学习曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png" alt="学习曲线" /></a><div class="caption">图 1:  学习曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-is-needed.png">PNG</a>]</div></div></div>
 
 <p>如果是上图左所示的High Variance情况，则采用大数据能提高模型效果。若从大数据中抽取$m=1000$个样本的训练，如上图右所示，这表明机器学习是High Bias，即使加入更多的数据对性能也没有大的提升，应先加入更多的新特征（若神经网络，则增加神经元），再考虑大数据上的训练是否有利。</p>
 
@@ -156,7 +156,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 
 <p>如下图所示，批量梯度下降法通常会向着极小值逼近，随机梯度下降法逼近道路稍显曲折，最总结果通常在极小值的某个区域内徘徊。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png" alt="左：批量梯度下降法，右：随机梯度下降法" /></a><div class="caption">Figure 2:  左：批量梯度下降法，右：随机梯度下降法 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png" alt="左：批量梯度下降法，右：随机梯度下降法" /></a><div class="caption">图 2:  左：批量梯度下降法，右：随机梯度下降法 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-illustration-gradient-descent.png">PNG</a>]</div></div></div>
 
 <h3 id="section-4">小批量梯度下降法</h3>
 
@@ -181,7 +181,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 
 <p>若是在参数更新之后再计算误差，不能真实反映迭代的误差。将最近多次（比如$1000$）迭代的误差平均，作为代价函数曲线上的一个点，下图就是随机梯度下降法的代价函数曲线。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png" alt="代价函数曲线" /></a><div class="caption">Figure 3:  代价函数曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png" alt="代价函数曲线" /></a><div class="caption">图 3:  代价函数曲线 [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-checking-for-convergence.png">PNG</a>]</div></div></div>
 
 <p>小的$\alpha$能否得到更好的结果呢？随机梯度下降法的性质表明其结果会在极小值附近区域震荡，很小的学习率$\alpha$可能得到的结果也只是好一点点而已。如上图左上所示，小的$\alpha$得到稍微光滑一点的曲线，但效果提升并不明显。</p>
 
@@ -206,7 +206,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 
 <p>预测CTR（click-through rate）是经典的在线学习例子。比如用户在网站搜索手机，返回用户最可能点击的10个结果。</p>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png" alt="预测CTR" /></a><div class="caption">Figure 4:  预测CTR [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png"><img src="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png" alt="预测CTR" /></a><div class="caption">图 4:  预测CTR [<a href="/assets/images/2014-12-10-machine-learning-large-scale-machine-learning-online-example.png">PNG</a>]</div></div></div>
 
 <p>如何计算用户点击的概率呢？将搜索匹配的单词等作为特征向量，利用logistic回归可以估计用户点击概率。推荐系统的协同过滤算法学习到的特征向量，也可作为logistic的输入特征。</p>
 

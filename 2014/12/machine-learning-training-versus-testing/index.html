@@ -140,11 +140,11 @@ P(\mbox{BAD}) &amp; = P(\mathcal B_1 \mbox{ or }\mathcal B_2 \mbox{ or }\ldots\m
 
 <p>在$H$中，对相似的假设（判别函数）进行分组合并，有效减少假设的数目$M$。以下两图通过2维平面的线性判别界为例说明判别函数的类别。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png" alt="［左］：1个点的分类情况；［右］：2个点的分类情况" /></a><div class="caption">Figure 1:  ［左］：1个点的分类情况；［右］：2个点的分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png" alt="［左］：1个点的分类情况；［右］：2个点的分类情况" /></a><div class="caption">图 1:  ［左］：1个点的分类情况；［右］：2个点的分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png">PNG</a>]</div></div></div>
 
 <p>上图左可见，对于只有1个点的数据集，只有2种分类情况，$\mathcal H$只需2种假设就够了；上图右可见，对于2个点的数据集，有4种分类情况，$\mathcal H$只需4种假设就够了。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png" alt="［左］：3个点的分类情况；［右］：4个点的部分分类情况" /></a><div class="caption">Figure 2:  ［左］：3个点的分类情况；［右］：4个点的部分分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png" alt="［左］：3个点的分类情况；［右］：4个点的部分分类情况" /></a><div class="caption">图 2:  ［左］：3个点的分类情况；［右］：4个点的部分分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png">PNG</a>]</div></div></div>
 
 <p>上图中，打叉表示线性不可分。上图左可见，对于有3个点的数据集，有6种分类情况，$\mathcal H$只需6种假设就够了；上图右可见，对于4个点的数据集，有14种分类情况（图中只画出了其中一半的情况），$\mathcal H$只需14种假设就够了。</p>
 
@@ -165,7 +165,7 @@ m_{\mathcal H}(N) = \max_{\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N\in\mathc
 
 <p>对2维平面的线性判别界，$m_{\mathcal H}(1)=2$、$m_{\mathcal H}(2)=4$、$m_{\mathcal H}(3)=8$、$m_{\mathcal H}(4)=14$。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png" alt="［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数" /></a><div class="caption">Figure 3:  ［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png" alt="［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数" /></a><div class="caption">图 3:  ［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png">PNG</a>]</div></div></div>
 
 <p>上图左，对1维空间的正射线判别函数，$\mathcal X = \mathbb R$，$h(x)=\mbox{sign}(x-a)$（$a$是分类阈值），$m_{\mathcal H}(N)=N+1$。</p>
 
@@ -182,7 +182,7 @@ $m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
 
 <h2 id="section-2">断点</h2>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png" alt="假设集打碎输入数据" /></a><div class="caption">Figure 4:  假设集打碎输入数据 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png" alt="假设集打碎输入数据" /></a><div class="caption">图 4:  假设集打碎输入数据 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png">PNG</a>]</div></div></div>
 
 <p>对于2维平面上的$N$个点，$\mathcal X\in \mathbb R^2$，若$\mathcal H$是凸包，那么如上图所示，$m_{\mathcal H}(N)=2^N$。</p>
 

@@ -177,7 +177,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="pca-3">理解PCA</h3>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg" alt="［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维" /></a><div class="caption">Figure 1:  ［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg">SVG</a>]</div></div></div>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg" alt="［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维" /></a><div class="caption">图 1:  ［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg">SVG</a>]</div></div></div>
 
 <h4 id="pca-4">一、PCA是一种坐标变换方法</h4>
 
@@ -189,13 +189,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h4 id="pca-5">二、PCA是一种特征提取方法</h4>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png" alt="特征脸" /></a><div class="caption">Figure 2:  特征脸 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png" alt="特征脸" /></a><div class="caption">图 2:  特征脸 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png">PNG</a>]</div></div></div>
 
 <p>协方差矩阵的特征向量可以看作是特征空间，在这个空间中投影，可视为特征提取。上图展示了人脸数据集协方差矩阵的前$36$维特征向量，如果人脸在这个特种空间中投影，相当于利用这$36$张特征脸的线性组合来表示人脸。向左上角靠近的特征脸，表现的是人脸的主要信息；向右下角靠近的特征脸，表现的是人脸的细节信息<sup id="fnref:thinking-pca-for-classfication"><a href="#fn:thinking-pca-for-classfication" class="footnote">1</a></sup>。</p>
 
 <p>用少量特征维表示人脸，可认为是人脸的一种稀疏表示。这是一种目的很明确的表示方法，将对象特征从主要到次要，根据需要依次表示出来。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png" alt="［左］原图；［右］PCA降维后重构的人脸" /></a><div class="caption">Figure 3:  ［左］原图；［右］PCA降维后重构的人脸 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png" alt="［左］原图；［右］PCA降维后重构的人脸" /></a><div class="caption">图 3:  ［左］原图；［右］PCA降维后重构的人脸 [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png">PNG</a>]</div></div></div>
 
 <h4 id="pca-6">三、其它角度理解PCA</h4>
 
@@ -206,7 +206,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="kpca">KPCA</h2>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png" alt="Kernel PCA" /></a><div class="caption">Figure 4:  Kernel PCA [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png">PNG</a>]</div></div></div>
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png"><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png" alt="Kernel PCA" /></a><div class="caption">图 4:  Kernel PCA [<a href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-kpca.png">PNG</a>]</div></div></div>
 
 <p><a href="http://zhanxw.com/blog/2011/02/kernel-pca-原理和演示/">Kernel PCA 原理和演示</a></p>
 
