@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>维数约减（1）：主成分分析</title>
+    <title>降维（1）：主成分分析</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>维数约减（1）：主成分分析</h1>
+        <h1>降维（1）：主成分分析</h1>
         </header>
         <nav id="real_nav">
         
@@ -101,9 +101,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   tags
   
-  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
   
-  <a href="/tags/#维数约减" title="维数约减">维数约减</a>&nbsp;
+  <a href="/tags/#降维" title="降维">降维</a>&nbsp;
   
 </span>
 
@@ -111,18 +111,18 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">简介</h2>
 
-<p>维数约减的作用通常是为了数据压缩和可视化。数据压缩不仅可以节省存储空间，而且可以加速机器学习算法。高维数据需要约减到3维或2维空间，以便观测其特性。 </p>
+<p>降维的作用通常是为了数据压缩和可视化。数据压缩不仅可以节省存储空间，而且可以加速机器学习算法。高维数据需要约减到3维或2维空间，以便观测其特性。 </p>
 
 <h2 id="pca">主成分分析（PCA）</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_dr_2014">[1]</a>。</p>
 
-<p>维数约减最常用的方法是主成分分析（PCA，Principal Component Analysis）。PCA可以理解为在高维空间中寻找一个低维的面，使得高维空间中的点到该面上的距离之和最小，这个距离也叫投影误差。</p>
+<p>降维最常用的方法是主成分分析（PCA，Principal Component Analysis）。PCA可以理解为在高维空间中寻找一个低维的面，使得高维空间中的点到该面上的距离之和最小，这个距离也叫投影误差。</p>
 
 <p>利用PCA将维数从$n$维约减到$k$维，需要寻找$n$维空间中的$k$个向量$\mathbf u^{(1)}, \mathbf u^{(2)},\ldots,\mathbf u^{(k)}\in\mathbb R^n$，使空间中的点到这$k$个向量确定的面的投影误差最小。事实上，$n$维空间中的这$k$个向量是样本协方差矩阵最大的$k$个特征值对应的特征向量。</p>
 
 <blockquote>
-  <h4 id="pca-1">PCA维数约减算法</h4>
+  <h4 id="pca-1">PCA降维算法</h4>
   <hr />
 
   <ol>
@@ -239,7 +239,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2014/12/pca" data-url="http://qianjiye.de/2014/12/pca" data-title="维数约减（1）：主成分分析">
+	<div class="ds-thread" data-thread-key="/2014/12/pca" data-url="http://qianjiye.de/2014/12/pca" data-title="降维（1）：主成分分析">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 

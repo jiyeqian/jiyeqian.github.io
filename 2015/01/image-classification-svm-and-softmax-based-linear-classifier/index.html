@@ -103,11 +103,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
   
-  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
-  
   <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
   
   <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
+  
+  <a href="/tags/#熵" title="熵">熵</a>&nbsp;
+  
+  <a href="/tags/#回归" title="回归">回归</a>&nbsp;
   
 </span>
 
@@ -225,15 +227,13 @@ L
 
 <p>“真实”分布$p$和估计所得分布$q$之间的交叉熵定义为
 \[
-H(p,q)=-\sum_xp(x)\log q(x)。
+H(p,q)=-\sum_xp(x)\log q(x)，
 \]
-对softmax分类器，属于类别$y_i$概率的估计值$q={e^{f_{y_i}}\over\sum_j e^{f_j}}$，属于类别$y_i$概率的“真实”值应为$p=1$。</p>
-
-<p>交叉熵可改写为熵与<a href="http://en.wikipedia.org/wiki/Kullback–Leibler_divergence">Kullback-Leibler散度</a>（divergence）之和的形式
+交叉熵也可记为熵与<a href="http://en.wikipedia.org/wiki/Kullback–Leibler_divergence">Kullback-Leibler散度</a>（divergence）之和的形式
 \[
 H(p,q)=H(p)+D_{KL}(p\| q)，
 \]
-其中$H(p)=-\sum_xp(x)\log p(x)$，对于本文分类问题$H(p)=0$。最小化代价函数等价于最小化两个分布之间的KL散度。通过交叉熵，期望能预测的分布能在正确分类的类别上概率达到最大。</p>
+其中熵$H(p)=-\sum_xp(x)\log p(x)$。对softmax分类器，属于类别$y_i$的概率估值$q={e^{f_{y_i}}\over\sum_j e^{f_j}}$，属于类别$y_i$的“真实”概率$p=1$，因此对本文分类问题$H(p)=0$。最小化代价函数等价于最小化两个分布之间的KL散度。通过交叉熵，期望能预测的分布能在正确分类的类别上概率达到最大。</p>
 
 <p>softmax函数可以视为概率形式
 \[

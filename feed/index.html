@@ -4,7 +4,7 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-01-29T17:35:17+08:00</lastbuilddate>
+    <lastbuilddate>2015-02-04T04:20:17+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
@@ -13,7 +13,219 @@
       <pubdate>2015-01-29T16:12:28+08:00</pubdate>
       <author>Jiye Qian</author>
       <guid>http://qianjiye.de/2015/01/gradient-boosted-decision-tree</guid>
-      <content:encoded>&lt;![CDATA[
+      <content:encoded>&lt;![CDATA[<h2 id="adaboost">AdaBoost决策树</h2>
+
+<blockquote>
+  <h4 id="adaboost-dtreemathcal-d">AdaBoost-DTree($\mathcal D$)</h4>
+  <hr />
+  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
+
+  <ol>
+    <li>更新数据的权重$\mathbf u^{(t)}$；</li>
+    <li>通过决策树算法$\mbox{DTree}\left(\tilde{\mathcal D}, \mathbf u^{(t)}\right)$得到$g_t$；</li>
+    <li>计算$g_t$的投票权重$\alpha_t$。</li>
+  </ol>
+
+  <p>返回$G=\mbox{LinearHypo}(\{\left(g_t,\alpha_t\right)\})$。</p>
+</blockquote>
+
+<p>由此可见，AdaBoost决策树需要加权决策树算法。对于有权重的算法，需要根据权重最小化$E_{in}$，通常有两种方法：</p>
+
+<ul>
+  <li>一种方法是通过算法加权，在计算$E_{in}$的地方嵌入权重计算，比如AdaBoost采用的最小化<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">加权误差</a>；</li>
+  <li>另一种方法是将算法当成黑盒不变更，通过数据集加权，根据权重在bootstrap时“复制”数据，也就是加权的重采样。</li>
+</ul>
+
+<p>AdaBoost决策树通常采用后一种方法，AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
+
+<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#AdaBoost-algorithm">$\alpha_t$通过错误率确定</a>。对于所有$\mathbf x_n$不同的完全成长决策树，$E_{in}(g_t)=0$，那么$E_{in}^{\mathbf u}(g_t)=0$，因此$\epsilon_t=0$并且$\alpha_t=\infty$。合适的方法是让决策树弱些，在部分数据集上训练剪枝的决策树。即使在$\tilde{\mathcal D}_t$上得到错误率为0的决策树$g_t$，回到$\mathcal D$上$\alpha_t$可能是大于、等于或小于0。剪枝可采用常规方法或只限制决策树高度，在数据重采样阶段已经包含了只抽取部分数据的功能。因此，AdaBoost决策树＝AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋剪枝的$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
+
+<p>如果C&amp;RT的高度限制为不超过1，当用二分类的误差作为<a href="/2015/01/decision-tree/#mjx-eqn-eqdtree-decision-stump">不纯度</a>时，AdaBoost决策树就是<a href="/2015/01/adaptive-boosting/#AdaBoost-Stump">AdaBoost-Stump</a>，此时通常有$\epsilon_t\neq 0$，一般不再需要sampling。</p>
+
+<h2 id="functional-gradient-steepest-descent">AdaBoost理论分析：最速函数梯度下降法</h2>
+
+<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-update-u">权重更新</a>可以合并为
+\[
+u_n^{(t+1)}=u_n^{(t)}\cdot\blacklozenge_t^{-y_ng_t(\mathbf x_n)}，
+\]
+由于$\blacklozenge_t=\exp(\alpha_t)$，因此
+\[
+u_n^{(t+1)}=u_n^{(t)}\cdot\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)，
+\]
+那么
+\begin{equation}
+u_n^{(T+1)}=u_n^{(1)}\cdot\prod_{t=1}^T\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)={1\over N}\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)。
+\label{eq:un-t-plus-1}
+\end{equation}
+AdaBoost是<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-Gx">分类器的线性组合</a>，$\sum_{t=1}^T\alpha_tg_t(\mathbf x)$是$\{g_t\}$在$\mathbf x$上的投票得分（voting score），也就是对AdaBoost，$u_n^{(T+1)}\propto \exp\left(-y_n\cdot\left(\mbox{voting score on }\mathbf x_n\right)\right)$。</p>
+
+<p id="decrease-un">线性混合（linear blending），可以看作线性模型和以假设作为特征转换的结合
+\[
+G(\mathbf x_n)=\mbox{sign}\left(\overbrace{\sum_{t=1}^T\underbrace{\alpha_t}_{w_i}\underbrace{g_t(\mathbf x_n)}_{\phi_i(\mathbf x_n)}}^{\mbox{voting score}}\right)。
+\]
+对比<a href="/2015/01/linear-svm/#mjx-eqn-eqhard-margin-svm-origin-model">hard-margin的SVM</a>的边界${y_n\cdot\left(\mathbf w^T\phi(\mathbf x_n)+b\right)\over\lVert\mathbf w\rVert}$，投票得分可视为某种空间中非规范化的边界（距离）的度量，“$y_n$(voting score)=signed &amp; unnormalized margin”。期望$y_n$(voting score)是正的，且越大越好，那么$\exp(-y_n(\mbox{voting score}))$越小越好，$u_n^{(T+1)}$越小越好。AdaBoost的$\sum_{n=1}^Nu_n^{(t)}$随着$t$的增大越来越小，在最后一轮
+\begin{equation}
+\sum_{n=1}^Nu_n^{(T+1)}={1\over N}\sum_{n=1}^N\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)
+\label{eq:sum-un-t-plus-1}
+\end{equation}
+达到最小，边界$y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$最大化实现large margin的效果。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png"><img src="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png" alt="AdaBoost的误差界" /></a><div class="caption">图 1:  AdaBoost的误差界 [<a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png">PNG</a>]</div></div></div>
+
+<p>令线性评分函数$s=\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$，AdaBoost的指数误差度量（exponential error measure）$\widehat{err}_{ADA}(s,y)=\exp(-ys)$是0/1误差$\widehat{err}_{0/1}(s,y)=[[ys\leq 1]]$的上界<sup id="fnref:other-error-bounds"><a href="#fn:other-error-bounds" class="footnote">1</a></sup>，如上图右所示，通过0/1误差的凸上界（convex upper bound）$\widehat{err}_{ADA}$作为算法误差度量（algorithmic error measure），通过上界误差最小化使0/1误差最小化。</p>
+
+<p>AdaBoost通过增加函数$h(\mathbf x)$的方式，使基于\eqref{eq:sum-un-t-plus-1}的误差$\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t+1)}$最小化，
+\begin{equation}
+\begin{aligned}
+\min_h\quad\widehat E_{ADA}
+&amp;\overset{[1]}{=}{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n)\right)\right)\\
+&amp;\overset{[2]}{=}\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)
+\overset{\mbox{taylor}}{\approx}\sum_{n=1}^Nu_n^{(t)}\left(1-y_n\eta h(\mathbf x_n)\right)\\
+&amp;=\sum_{n=1}^Nu_n^{(t)}+\eta\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)，
+\end{aligned}
+\label{eq:min-E-ADA}
+\end{equation}</p>
+
+<ul>
+  <li>[1]：增加函数$h(\mathbf x)$，由\eqref{eq:sum-un-t-plus-1}可得$\sum_{\tau=1}^t\alpha_\tau g_\tau\left(\mathbf x_n\right)=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)+\eta h(\mathbf x_n)$；</li>
+  <li>[2]：由\eqref{eq:un-t-plus-1}可得$u_n^{(t)}={1\over N}\exp\left(-y_n\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)\right)$。</li>
+</ul>
+
+<p>公式\eqref{eq:min-E-ADA}形如<a href="/2015/01/logistic-regression/#mjx-eqn-eqtaylor-expansion-Ein">梯度下降法最小化$E_{in}$</a>
+\[
+\min_{\lVert\mathbf v\rVert=1}E_{in}(\mathbf w_t+\eta\mathbf v)
+\approx \underbrace{E_{in}(\mathbf w_t)}_{\mbox{known}}
++\underbrace{\eta}_{\mbox{given positive}}\mathbf v^T\underbrace{\nabla E_{in}(\mathbf w_t)}_{\mbox{known}}，
+\]
+好的$h(\mathbf x)$能最小化$\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)$。对二分类，$y_n$和$h(\mathbf x_n)$都属于$\{-1,+1\}$，那么
+\[
+\begin{aligned}
+\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)
+&amp;=\sum_{n=1}^Nu_n^{(t)}
+\left\{
+\begin{aligned}
+-1\quad\mbox{if }y_n=h(\mathbf x_n)\\
++1\quad\mbox{if }y_n\neq h(\mathbf x_n)
+\end{aligned}
+\right.\\
+&amp;=-\sum_{n=1}^Nu_n^{(t)}+\sum_{n=1}^Nu_n^{(t)}
+\left\{
+\begin{aligned}
+0\quad\mbox{if }y_n=h(\mathbf x_n)\\
+2\quad\mbox{if }y_n\neq h(\mathbf x_n)
+\end{aligned}
+\right.\\
+&amp;\overset{[1]}{=}-\sum_{n=1}^Nu_n^{(t)}+2E_{in}^{\mathbf u^{(t)}}(h)\cdot N，
+\end{aligned}
+\]</p>
+
+<ul>
+  <li>[1]：根据<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">AdaBoost的$E_{in}^\mathbf u$计算可得</a>。</li>
+</ul>
+
+<p>因此，也就是要使$E_{in}^{\mathbf u^{(t)}}(h)$变小，这就是AdaBoost中算法$\mathcal A$的任务，找出一个好的函数方向$h$。</p>
+
+<p>AdaBoost通过近似最小化$\min_h\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)$，公式\eqref{eq:min-E-ADA}的$[2]$等式，找到新的分类器$g_t=h$之后，还需要找到最佳的$\eta$，
+\[
+\min_\eta\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)，
+\]
+$\eta$越大步越好。最佳的$\eta_t$会比固定的$\eta$在短期内下降更快（greedily faster），在最优化中通常称为<strong>最速（最陡）下降</strong>（steepest descent）。对于分类正确和错误两种情形，$u_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)$分别为$u_n^{(t)}\exp(-\eta)$和$u_n^{(t)}\exp(+\eta)$，那么有
+\[
+\widehat E_{ADA}=\left(\sum_{n=1}^Nu_n^{(t)}\right)\cdot
+\left(
+(1-\epsilon_t)\exp(-\eta)+\epsilon_t\exp(+\eta)
+\right)，
+\]
+$\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错误率</a>。
+通过${\partial\widehat E_{ADA}\over\partial\eta}=0$可得最速梯度步长$\eta_t=\ln\sqrt{1-\epsilon_t\over\epsilon_t}=\alpha_t$。</p>
+
+<p>因此，AdaBoost是近似的函数梯度（functional gradient）最速下降法。</p>
+
+<h2 id="section">任意误差函数的梯度提升</h2>
+
+<p>AdaBoost可以表示为最优化的形式
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n)\right)\right)，
+\end{equation}
+每一轮找到$h$作为$g_t$，并决定该$g_t$要前进的距离$\eta_t$。利用更一般的误差函数，将AdaBoost推广到GradientBoost
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^Nerr\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n),y_n\right)。
+\end{equation}
+GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要采用梯度下降法，需要平滑的误差函数$err$，$h$也不限于二分类，可以推广到实数输出。通过采用不同的误差函数$err$，GradientBoost可实现回归、soft分类等功能。</p>
+
+<h2 id="section-1">梯度提升决策树</h2>
+
+<p>对于回归问题，采用误差函数$err(s,y)=(s-y)^2$，令$s_n=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)$可得
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^N\left(s_n+
+\eta h(\mathbf x_n)-y_n\right)^2，
+\label{eq:min-gradientboost-regression-Ein}
+\end{equation}
+内层最小化
+\[
+\begin{aligned}
+\min_h\ldots
+&amp;\overset{\mbox{taylor}}{\approx}\min_h\left({1\over N}\sum_{n=1}^N\underbrace{err(s_n,y_n)}_{\mbox{constant}}+{1\over N}\sum_{n=1}^N\eta h(\mathbf x_n)\left.{\partial err(s,y_n)\over\partial s}\right\rvert_{s=s_n}\right)\\
+&amp;\overset{\quad\quad}{=}\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N2h(\mathbf x_n)(s_n-y_n)\right)。
+\end{aligned}
+\]
+<del>如果对$h$无约束条件，那么$h(\mathbf x_n)=-\infty\cdot(s_n-y_n)$时取最小值。</del>事实上，只需要$h$的方向，$h$的大小（magnitude）通过步长$\eta$控制。利用拉格朗日乘子法的思想，避免求解复杂的约束优化问题，惩罚大的$h$
+\[
+\begin{aligned}
+&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(2h(\mathbf x_n)(s_n-y_n)+(h(\mathbf x_n))^2\right)\right)\\
+\Longleftrightarrow&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(\mbox{constant}+(h(\mathbf x_n)-(y_n-s_n))^2\right)\right)。
+\end{aligned}
+\]
+去掉常数项，带惩罚的近似函数梯度是数据集$\{(\mathbf x_n,y_n-s_n)\}$上，基于平方误差的回归。$y_n-s_n$表示期望的值与目前能达到的值之间的差异，表示尚未达到的部分，称为余数（residual）。好的$h(\mathbf x_n)$需要弥补余数的差距。</p>
+
+<p>［1/2］因此，GradientBoost的回归问题就是通过余数上的回归找到$g_t=h$。</p>
+
+<p>当$g_t$确定后，继续\eqref{eq:min-gradientboost-regression-Ein}的外层最小化
+\[
+\min_\eta{1\over N}\sum_{n=1}^N(s_n+\eta g_t(\mathbf x_n)-y_n)^2\Leftrightarrow\min_\eta{1\over N}\sum_{n=1}^N((y_n-s_n)-\eta g_t(\mathbf x_n))^2，
+\]
+这是单变量的线性回归，非常容易求解，
+\begin{equation}
+\eta={\sum_{n=1}^Ng_t(\mathbf x_n)(y_n-s_n)\over\sum_{n=1}^Ng_t^2(\mathbf x_n)}。
+\label{eq:gbdt-eta}
+\end{equation}</p>
+
+<p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优的$\eta$作为$\alpha_t$。</p>
+
+<blockquote>
+  <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
+  <hr />
+  <p>初始化$s_1=s_2=\ldots=s_N=0$；</p>
+
+  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
+
+  <ol>
+    <li>利用$\mathcal A(\{(\mathbf x_n,y_n-s_n)\})$得到$g_t$，其中$\mathcal A$是基于平方误差的回归算法（例如C&amp;RT）；</li>
+    <li>利用\eqref{eq:gbdt-eta}更新步长$\alpha_t=\mbox{OneVarLinearRegression}(\{(g_t(\mathbf x_n),y_n-s_n)\})$；</li>
+    <li>更新$s_n\leftarrow s_n+\alpha_tg_t(\mathbf x_n)$；</li>
+  </ol>
+
+  <p>返回$G(\mathbf x)=\sum_{t=1}^T\alpha_tg_t(\mathbf x)$。</p>
+</blockquote>
+
+<p>GBDT就是AdaBoost决策树的回归版本。</p>
+
+<h2 id="section-2">参考文献</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:other-error-bounds">
+      <p><a href="/2015/01/linear-models-for-classification/#error-bound">其它误差界</a>可参考线性分类模型的相关资料。 <a href="#fnref:other-error-bounds" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]&gt;</content:encoded>
     </item>
     
@@ -708,7 +920,7 @@ s=\mathbf w^T\mathbf x
 \mbox{err}_{CE}(s,y)=\ln(1+\exp(-ys))。
 \]</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png"><img src="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png" alt="误差曲线对比" /></a><div class="caption">图 1:  误差曲线对比 [<a href="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png">PNG</a>]</div></div></div>
+<div class="image_line" id="error-bound"><div class="image_card"><a href="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png"><img src="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png" alt="误差曲线对比" /></a><div class="caption">图 1:  误差曲线对比 [<a href="/assets/images/2015-01-25-linear-models-for-classification-error-curves.png">PNG</a>]</div></div></div>
 
 <p>上图展示了误差曲线的对比，为了比较方便，用$\mbox{err}_{SCE}(s,y)=\log_2(1+\exp(-ys))$代替$\mbox{err}_{CE}$。从图中容易看出
 \[
@@ -743,7 +955,7 @@ PLA每次采用一个数据更新参数，但logistic的梯度下降法每次采
 
 <p>logistic回归采用的参数更新方法是
 \begin{equation}
-\mathbf w_{t+1}\leftarrow \mathbf w_{t}+\eta{1\over N}\sum_{n=1}^N\theta\left(-y_n\mathbf w^T\mathbf x_n)(y_n\mathbf x_n\right)，
+\mathbf w_{t+1}\leftarrow \mathbf w_{t}+\eta{1\over N}\sum_{n=1}^N\theta\left(-y_n\mathbf w^T\mathbf x_n\right)(y_n\mathbf x_n)，
 \end{equation}
 按梯度负方向$\mathbf v=-\nabla E_{in}(\mathbf w)$更新。通过$n$个点计算可估计梯度，极端情况用1个点计算估计梯度，称为随机梯度。随机梯度可视为真实梯度与零均值噪声之和，经过足够过的迭代次数，平均的真实梯度和平均的随机梯度基本相同，可利用随机梯度更新参数，
 \begin{equation}
@@ -988,9 +1200,11 @@ $\mathcal D^{(p)}$表示$\mathcal D$的特征$\{x_{n,i}\}$经过重新“洗牌�
 
 <p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
 
+<p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只留下对训练数据有足够分类能力的特征。</p>
+
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png"><img src="/assets/images/2015-01-23-decision-tree-decision-tree-example.png" alt="［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法" /></a><div class="caption">图 1:  ［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法 [<a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png">PNG</a>]</div></div></div>
 
-<p>上图左的决策树用来判断是否观看MOOC课程。决策树是分类器的有条件融合，在不同情况采用不同的$g_t(\mathbf x)$：</p>
+<p>上图左的决策树用来判断是否观看MOOC课程。决策树是分类器的有条件融合，在不同条件采用不同的$g_t(\mathbf x)$：</p>
 
 <ul>
   <li>基本假设（base hypothesis）$g_t(\mathbf x)$：每条路径终点的叶子🍃，此处是常数。</li>
@@ -1005,9 +1219,59 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
 
-<h2 id="section-2">分类回归树</h2>
+<h2 id="section-2">特征选择</h2>
 
-<p>分类回归树（C&amp;RT，classification and regression tree）是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
+<p>特征选择目的是选出有分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
+
+<p><strong>熵</strong>（entropy）表示随机变量不确定性的度量，熵越大随机变量的不确定性就越大。某一维的特征$x$的概率记为$p(x)$，特征$x$的熵表示为
+\begin{equation}
+H(p)=-\sum_{j=1}^Mp(x_j)\log p(x_j)，
+\end{equation}
+$M$表示特征$X$能取不同特征值的个数。对数以2为底或以e为底时熵的单位分别称为比特（bit）或纳特（nat）。从定义可知$0\leq H(p)\leq \log M$。<strong>条件熵</strong>（conditional entropy）$H(Y|X)$表示已知随机变量$X$的条件下，随机变量$Y$的不确定性，定义为给定$X$条件下$Y$的条件概率分布的熵对$X$的数学期望
+\begin{equation}
+H(Y|X)=-\sum_{j=1}^Mp(x_j)H(Y|X=x_j)。
+\end{equation}
+当熵和条件熵中的概率由数据估计（特别是极大似然估计）得到时，熵和条件熵分别称为<strong>经验熵</strong>（empirical entropy）和<strong>经验条件熵</strong>（empirical conditional entropy）。若有$0$概率，令$0\log 0=0$。<strong>信息增益</strong>（information gain）表示得知特征$X$而使类$Y$信息不确定性减少的程度。特征$A$对训练集$\mathcal D$的信息增益定义为
+\begin{equation}
+g(\mathcal D,A)=H(\mathcal D)-H(\mathcal D|A)，
+\end{equation}
+经验熵$H(\mathcal D)$表示对$\mathcal D$分类的不确定性，经验条件熵$H(\mathcal D|A)$表示在给定特征$A$时对$\mathcal D$分类的不确定度。显然，信息增益大的特征具有更强的分类能力。</p>
+
+<p>当数据集的经验熵很大时，信息增益也会偏大，使用<strong>信息增益比</strong>（information gain ratio）
+\begin{equation}
+g_R(\mathcal D,A)={g(\mathcal D,A)\over H(\mathcal D)}，
+\end{equation}
+可校正这一问题。</p>
+
+<p>$|\mathcal D|$表示$\mathcal D$的样本容量（样本个数），$|\mathcal C_k|$表示类$\mathcal C_k$的样本个数，$\sum_{k=1}^K|\mathcal C_k|=|\mathcal D|$。根据特征$A$的取值，将$\mathcal D$划分为$M$个子集$\mathcal D_1,\mathcal D_1,\ldots,\mathcal D_M$，子集$\mathcal D_{j}$中属于类别$\mathcal C_k$的样本集为$\mathcal D_{jk}$，$\mathcal D_{jk}=\mathcal D_{j}\cap \mathcal C_k$。经验熵和经验条件熵计算方式为
+\begin{equation}
+H(\mathcal D)=-\sum_{k=1}^K{|\mathcal C_k|\over |\mathcal D|}\log_2{|\mathcal C_k|\over |\mathcal D|}，\quad H(\mathcal D,A)=-\sum_{j=1}^M{|\mathcal D_j|\over |\mathcal D|}\sum_{k=1}^K{|\mathcal D_{jk}|\over |\mathcal D_j|}\log_2{|\mathcal D_{jk}|\over |\mathcal D_j|}。
+\end{equation}</p>
+
+<p>根据如下贷款数据表</p>
+
+<p><img src="/assets/images/2015-01-23-decision-tree-loan-table.png" alt="贷款数据表" /></p>
+
+<p>利用信息增益准则可以选出最优特征。由表中数据计算经验熵
+\[
+H(\mathcal D)=-{9\over 15}\log_2{9\over 15}-{6\over 15}\log_2{6\over 15}=0.971，
+\]
+年龄特征对数据集$\mathcal D$的经验条件熵为
+\begin{aligned}
+H(\mathcal D,年龄)=
+&amp;-{5\over 15}\left({2\over 5}\log_2{2\over 5}+{3\over 5}\log_2{3\over 5}\right)\\
+&amp;-{5\over 15}\left({3\over 5}\log_2{3\over 5}+{2\over 5}\log_2{2\over 5}\right)\\
+&amp;-{5\over 15}\left({4\over 5}\log_2{4\over 5}+{1\over 5}\log_2{1\over 5}\right)=0.888，
+\end{aligned}
+年龄特征对数据集$\mathcal D$的信息增益为$g(\mathcal D,年龄)=0.971-0.888=0.083$，同样可得其它信息增益为
+\[
+g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\quad g(\mathcal D,借贷情况)=0.363，
+\]
+信息增益最大的特征“有自己的房子”是最优特征。</p>
+
+<h2 id="section-3">分类回归树</h2>
+
+<p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
 
 <ul>
   <li>二分类或多分类问题（基于0／1误差度量$E_{in}$）：$\{y_n\}$中占大多数的；</li>
@@ -1015,9 +1279,10 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 </ul>
 
 <p>C&amp;RT通过基于不纯度函数的<strong>分支条件</strong>用decision stump进行二元分支
-\[
+\begin{equation}
 b(\mathbf x)=\underset{\mbox{decision stumps }h(\mathbf x)}{\arg\min}\sum_{c=1}^2|\mathcal D_c\mbox{ with }h|\cdot\mbox{impurity}(\mathcal D_c\mbox{ with }h)，
-\]
+\label{eq:dtree-decision-stump}
+\end{equation}
 不纯度通过数据集大小加权。</p>
 
 <p>回归的不纯度采用回归误差
@@ -1047,9 +1312,9 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <p>这种被迫停止生长的树称为完全成长树（fully-grown tree）。</p>
 
-<p>C&amp;AT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
+<p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
 
-<h2 id="section-3">决策树剪枝</h2>
+<h2 id="section-4">决策树剪枝</h2>
 
 <p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
@@ -1061,18 +1326,18 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <ul>
   <li>$G^{(0)}$为完全成长树；</li>
-  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子）。</li>
+  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
 </ul>
 
-<h2 id="section-4">决策树优势</h2>
+<h2 id="section-5">决策树优势</h2>
 
 <p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
 
-<h4 id="section-5">一、可解释性好</h4>
+<h4 id="section-6">一、可解释性好</h4>
 
-<h4 id="section-6">二、容易处理多分类问题</h4>
+<h4 id="section-7">二、容易处理多分类问题</h4>
 
-<h4 id="section-7">三、容易处理类别特征</h4>
+<h4 id="section-8">三、容易处理类别特征</h4>
 
 <p>决策树通过decision stump
 \begin{equation}
@@ -1084,7 +1349,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 \end{equation}
 决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
 
-<h4 id="section-8">四、容易处理遗失特征</h4>
+<h4 id="section-9">四、容易处理遗失特征</h4>
 
 <p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
 
@@ -1095,11 +1360,11 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 <p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
 
-<h4 id="section-9">五、高效的训练非线性模型</h4>
+<h4 id="section-10">五、高效的训练非线性模型</h4>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">图 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
 
-<h2 id="section-10">参考资料</h2>
+<h2 id="section-11">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -1110,7 +1375,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 </li></ol>
 
-<h3 id="section-11">脚注</h3>
+<h3 id="section-12">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -1240,15 +1505,13 @@ L
 
 <p>“真实”分布$p$和估计所得分布$q$之间的交叉熵定义为
 \[
-H(p,q)=-\sum_xp(x)\log q(x)。
+H(p,q)=-\sum_xp(x)\log q(x)，
 \]
-对softmax分类器，属于类别$y_i$概率的估计值$q={e^{f_{y_i}}\over\sum_j e^{f_j}}$，属于类别$y_i$概率的“真实”值应为$p=1$。</p>
-
-<p>交叉熵可改写为熵与<a href="http://en.wikipedia.org/wiki/Kullback–Leibler_divergence">Kullback-Leibler散度</a>（divergence）之和的形式
+交叉熵也可记为熵与<a href="http://en.wikipedia.org/wiki/Kullback–Leibler_divergence">Kullback-Leibler散度</a>（divergence）之和的形式
 \[
 H(p,q)=H(p)+D_{KL}(p\| q)，
 \]
-其中$H(p)=-\sum_xp(x)\log p(x)$，对于本文分类问题$H(p)=0$。最小化代价函数等价于最小化两个分布之间的KL散度。通过交叉熵，期望能预测的分布能在正确分类的类别上概率达到最大。</p>
+其中熵$H(p)=-\sum_xp(x)\log p(x)$。对softmax分类器，属于类别$y_i$的概率估值$q={e^{f_{y_i}}\over\sum_j e^{f_j}}$，属于类别$y_i$的“真实”概率$p=1$，因此对本文分类问题$H(p)=0$。最小化代价函数等价于最小化两个分布之间的KL散度。通过交叉熵，期望能预测的分布能在正确分类的类别上概率达到最大。</p>
 
 <p>softmax函数可以视为概率形式
 \[

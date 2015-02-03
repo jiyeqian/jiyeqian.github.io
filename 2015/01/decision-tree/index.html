@@ -101,9 +101,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   tags
   
-  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
   
   <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
+  
+  <a href="/tags/#特征选择" title="特征选择">特征选择</a>&nbsp;
+  
+  <a href="/tags/#熵" title="熵">熵</a>&nbsp;
   
 </span>
 
@@ -146,9 +150,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
 
+<p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只留下对训练数据有足够分类能力的特征。</p>
+
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png"><img src="/assets/images/2015-01-23-decision-tree-decision-tree-example.png" alt="［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法" /></a><div class="caption">图 1:  ［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法 [<a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png">PNG</a>]</div></div></div>
 
-<p>上图左的决策树用来判断是否观看MOOC课程。决策树是分类器的有条件融合，在不同情况采用不同的$g_t(\mathbf x)$：</p>
+<p>上图左的决策树用来判断是否观看MOOC课程。决策树是分类器的有条件融合，在不同条件采用不同的$g_t(\mathbf x)$：</p>
 
 <ul>
   <li>基本假设（base hypothesis）$g_t(\mathbf x)$：每条路径终点的叶子🍃，此处是常数。</li>
@@ -163,9 +169,59 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
 
-<h2 id="section-2">分类回归树</h2>
+<h2 id="section-2">特征选择</h2>
 
-<p>分类回归树（C&amp;RT，classification and regression tree）是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
+<p>特征选择目的是选出有分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
+
+<p><strong>熵</strong>（entropy）表示随机变量不确定性的度量，熵越大随机变量的不确定性就越大。某一维的特征$x$的概率记为$p(x)$，特征$x$的熵表示为
+\begin{equation}
+H(p)=-\sum_{j=1}^Mp(x_j)\log p(x_j)，
+\end{equation}
+$M$表示特征$X$能取不同特征值的个数。对数以2为底或以e为底时熵的单位分别称为比特（bit）或纳特（nat）。从定义可知$0\leq H(p)\leq \log M$。<strong>条件熵</strong>（conditional entropy）$H(Y|X)$表示已知随机变量$X$的条件下，随机变量$Y$的不确定性，定义为给定$X$条件下$Y$的条件概率分布的熵对$X$的数学期望
+\begin{equation}
+H(Y|X)=-\sum_{j=1}^Mp(x_j)H(Y|X=x_j)。
+\end{equation}
+当熵和条件熵中的概率由数据估计（特别是极大似然估计）得到时，熵和条件熵分别称为<strong>经验熵</strong>（empirical entropy）和<strong>经验条件熵</strong>（empirical conditional entropy）。若有$0$概率，令$0\log 0=0$。<strong>信息增益</strong>（information gain）表示得知特征$X$而使类$Y$信息不确定性减少的程度。特征$A$对训练集$\mathcal D$的信息增益定义为
+\begin{equation}
+g(\mathcal D,A)=H(\mathcal D)-H(\mathcal D|A)，
+\end{equation}
+经验熵$H(\mathcal D)$表示对$\mathcal D$分类的不确定性，经验条件熵$H(\mathcal D|A)$表示在给定特征$A$时对$\mathcal D$分类的不确定度。显然，信息增益大的特征具有更强的分类能力。</p>
+
+<p>当数据集的经验熵很大时，信息增益也会偏大，使用<strong>信息增益比</strong>（information gain ratio）
+\begin{equation}
+g_R(\mathcal D,A)={g(\mathcal D,A)\over H(\mathcal D)}，
+\end{equation}
+可校正这一问题。</p>
+
+<p>$|\mathcal D|$表示$\mathcal D$的样本容量（样本个数），$|\mathcal C_k|$表示类$\mathcal C_k$的样本个数，$\sum_{k=1}^K|\mathcal C_k|=|\mathcal D|$。根据特征$A$的取值，将$\mathcal D$划分为$M$个子集$\mathcal D_1,\mathcal D_1,\ldots,\mathcal D_M$，子集$\mathcal D_{j}$中属于类别$\mathcal C_k$的样本集为$\mathcal D_{jk}$，$\mathcal D_{jk}=\mathcal D_{j}\cap \mathcal C_k$。经验熵和经验条件熵计算方式为
+\begin{equation}
+H(\mathcal D)=-\sum_{k=1}^K{|\mathcal C_k|\over |\mathcal D|}\log_2{|\mathcal C_k|\over |\mathcal D|}，\quad H(\mathcal D,A)=-\sum_{j=1}^M{|\mathcal D_j|\over |\mathcal D|}\sum_{k=1}^K{|\mathcal D_{jk}|\over |\mathcal D_j|}\log_2{|\mathcal D_{jk}|\over |\mathcal D_j|}。
+\end{equation}</p>
+
+<p>根据如下贷款数据表</p>
+
+<p><img src="/assets/images/2015-01-23-decision-tree-loan-table.png" alt="贷款数据表" /></p>
+
+<p>利用信息增益准则可以选出最优特征。由表中数据计算经验熵
+\[
+H(\mathcal D)=-{9\over 15}\log_2{9\over 15}-{6\over 15}\log_2{6\over 15}=0.971，
+\]
+年龄特征对数据集$\mathcal D$的经验条件熵为
+\begin{aligned}
+H(\mathcal D,年龄)=
+&amp;-{5\over 15}\left({2\over 5}\log_2{2\over 5}+{3\over 5}\log_2{3\over 5}\right)\\
+&amp;-{5\over 15}\left({3\over 5}\log_2{3\over 5}+{2\over 5}\log_2{2\over 5}\right)\\
+&amp;-{5\over 15}\left({4\over 5}\log_2{4\over 5}+{1\over 5}\log_2{1\over 5}\right)=0.888，
+\end{aligned}
+年龄特征对数据集$\mathcal D$的信息增益为$g(\mathcal D,年龄)=0.971-0.888=0.083$，同样可得其它信息增益为
+\[
+g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\quad g(\mathcal D,借贷情况)=0.363，
+\]
+信息增益最大的特征“有自己的房子”是最优特征。</p>
+
+<h2 id="section-3">分类回归树</h2>
+
+<p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
 
 <ul>
   <li>二分类或多分类问题（基于0／1误差度量$E_{in}$）：$\{y_n\}$中占大多数的；</li>
@@ -173,9 +229,10 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 </ul>
 
 <p>C&amp;RT通过基于不纯度函数的<strong>分支条件</strong>用decision stump进行二元分支
-\[
+\begin{equation}
 b(\mathbf x)=\underset{\mbox{decision stumps }h(\mathbf x)}{\arg\min}\sum_{c=1}^2|\mathcal D_c\mbox{ with }h|\cdot\mbox{impurity}(\mathcal D_c\mbox{ with }h)，
-\]
+\label{eq:dtree-decision-stump}
+\end{equation}
 不纯度通过数据集大小加权。</p>
 
 <p>回归的不纯度采用回归误差
@@ -205,9 +262,9 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <p>这种被迫停止生长的树称为完全成长树（fully-grown tree）。</p>
 
-<p>C&amp;AT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
+<p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
 
-<h2 id="section-3">决策树剪枝</h2>
+<h2 id="section-4">决策树剪枝</h2>
 
 <p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
@@ -219,18 +276,18 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <ul>
   <li>$G^{(0)}$为完全成长树；</li>
-  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子）。</li>
+  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
 </ul>
 
-<h2 id="section-4">决策树优势</h2>
+<h2 id="section-5">决策树优势</h2>
 
 <p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
 
-<h4 id="section-5">一、可解释性好</h4>
+<h4 id="section-6">一、可解释性好</h4>
 
-<h4 id="section-6">二、容易处理多分类问题</h4>
+<h4 id="section-7">二、容易处理多分类问题</h4>
 
-<h4 id="section-7">三、容易处理类别特征</h4>
+<h4 id="section-8">三、容易处理类别特征</h4>
 
 <p>决策树通过decision stump
 \begin{equation}
@@ -242,7 +299,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 \end{equation}
 决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
 
-<h4 id="section-8">四、容易处理遗失特征</h4>
+<h4 id="section-9">四、容易处理遗失特征</h4>
 
 <p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
 
@@ -253,11 +310,11 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 <p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
 
-<h4 id="section-9">五、高效的训练非线性模型</h4>
+<h4 id="section-10">五、高效的训练非线性模型</h4>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">图 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
 
-<h2 id="section-10">参考资料</h2>
+<h2 id="section-11">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -268,7 +325,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 </li></ol>
 
-<h3 id="section-11">脚注</h3>
+<h3 id="section-12">脚注</h3>
 
 <div class="footnotes">
   <ol>

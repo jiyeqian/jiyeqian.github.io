@@ -101,7 +101,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   tags
   
-  <a href="/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
   
   <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
   
@@ -139,13 +139,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \mbox{distance}(\mathbf x, b, \mathbf w)=\frac{1}{\lVert\mathbf w\rVert}\left\lvert\mathbf w^T\mathbf x + b\right\rvert，
 \end{equation*}
 因此可得最大间隔
-\begin{equation*}
+\begin{equation}
 \begin{aligned}
 \max\limits_{b, \mathbf w} &amp;\quad\mbox{margin}(b, \mathbf w)\\
 \mbox{subject to}&amp; \quad\mbox{every } y_n\left(\mathbf w^T\mathbf x_n + b\right) &gt; 0\\
 &amp;\quad\mbox{margin}(b, \mathbf w)=\min\limits_{n=1,\ldots,N}\frac{1}{\lVert\mathbf w\rVert}y_n\left(\mathbf w^T\mathbf x_n + b\right)。
 \end{aligned}
-\end{equation*}
+\label{eq:hard-margin-svm-origin-model}
+\end{equation}
 通过系数缩放，总可以做到$\min\limits_{n=1,\ldots,N}y_n\left(\mathbf w^T\mathbf x_n + b\right) = 1$，最大间隔问题可以转化为等价问题
 \begin{equation*}
 \begin{aligned}
