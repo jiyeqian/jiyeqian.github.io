@@ -4,8 +4,109 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-02-04T04:20:17+08:00</lastbuilddate>
+    <lastbuilddate>2015-02-04T08:08:37+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>分类器融合（6）：融合模型总结</title>
+      <link href="http://qianjiye.de/2015/02/summary-of-aggregation-models" />
+      <pubdate>2015-02-04T13:39:58+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/02/summary-of-aggregation-models</guid>
+      <content:encoded>&lt;![CDATA[<h4 id="section">一、分类器融合策略</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>融合类型</th>
+      <th>混合（blending）</th>
+      <th>学习（learning）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-equniform-blending-hypothesis">均匀</a>（uniform）</td>
+      <td>voting／averaging</td>
+      <td>Bagging</td>
+    </tr>
+    <tr>
+      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-eqlinear-blending-hypothesis">非均匀</a>（non-uniform）</td>
+      <td>linear</td>
+      <td>AdaBoost</td>
+    </tr>
+    <tr>
+      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件</a>（conditional）</td>
+      <td>stacking</td>
+      <td>Decision Tree</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>对于非均匀和条件融合，$g_t$可以视为特征转换。</p>
+
+<p>混合（blending）方法是选择了不同的$g_t$之后再融合，学习（learning）方法是在选择（学习）不同$g_t$的同时进行融合。</p>
+
+<p>均匀融合性能比较稳定，不同$g_t$相互修正，类似正则化的中庸思想。非均匀和条件融合，学习之上的再学习过程，增加了复杂度，功能强大，存在更大的过拟合风险。</p>
+
+<h4 id="section-1">二、基于学习机制的分类器融合方法对比</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>获取不同$g_t$的方法</th>
+      <th>融合策略</th>
+      <th>优化算法</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bagging</td>
+      <td>bootstrapping</td>
+      <td>uniform vote</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>AdaBoost</td>
+      <td>reweighting</td>
+      <td>linear vote</td>
+      <td>steepest search</td>
+    </tr>
+    <tr>
+      <td>GradientBoost</td>
+      <td>residual fitting</td>
+      <td>linear vote</td>
+      <td>steepest search</td>
+    </tr>
+    <tr>
+      <td>Decision Tree</td>
+      <td>data splitting</td>
+      <td>conditional vote</td>
+      <td>branching</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>random forest = randomized bagging + strong DTree;</li>
+  <li>AdaBoost-DTree = AdaBoost + weak DTree;</li>
+  <li>GBDT = GradientBoost + weak DTree.</li>
+</ul>
+
+<p>boosting系列的算法应用非常广泛。</p>
+
+<h4 id="section-2">三、融合机制的双重性</h4>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png"><img src="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png" alt="［左］：融合解决欠拟合；［右］：融合解决过拟合" /></a><div class="caption">图 1:  ［左］：融合解决欠拟合；［右］：融合解决过拟合 [<a href="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png">PNG</a>]</div></div></div>
+
+<ol>
+  <li>融合可以解决欠拟合问题。单一的$g_t$能力较弱，通过AdaBoost或GradientBoost的方法得到强大的$G(\mathbf x)$。融合相当于利用了特征转换的功能。</li>
+  <li>融合可以解决过拟合问题。通过融合可以得到中庸（moderate）的$G(\mathbf x)$。融合相当于利用了正则化的功能，如上图右的large-margin效果。</li>
+</ol>
+
+<p>因此，合适的融合（aggregation or ensemble）机制可以提升分类器的性能。</p>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>分类器融合（5）：梯度提升决策树</title>
@@ -1165,37 +1266,6 @@ $\mathcal D^{(p)}$表示$\mathcal D$的特征$\{x_{n,i}\}$经过重新“洗牌�
       <guid>http://qianjiye.de/2015/01/decision-tree</guid>
       <content:encoded>&lt;![CDATA[<h2 id="section">决策树简介</h2>
 
-<h4 id="section-1">常见的各种不同分类器融合策略：</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>融合类型</th>
-      <th>混合（blending）</th>
-      <th>学习（learning）</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>均匀融合</td>
-      <td>voting／averaging</td>
-      <td>Bagging</td>
-    </tr>
-    <tr>
-      <td>非均匀融合</td>
-      <td>linear</td>
-      <td>AdaBoost</td>
-    </tr>
-    <tr>
-      <td>有条件融合</td>
-      <td>stacking</td>
-      <td>decision tree</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>混合方法是选择$g_t$之后再融合，学习方法是在选择（学习）$g_t$的同时进行融合。</p>
-
 <p>决策树是一种对实例分类的树形结构，由节点（node）和有向边（directed edge）组成，内部节点（internal node）表示特征或属性，叶节点（leaf node）表示类<a href="#lihang_sml_2012">[1, P. 55]</a>。决策树既可以看成if-then规则的集合，也可表示给定特征条件下类别的概率密度分布<a href="#lihang_sml_2012">[1, P. 56]</a>。从分类器融合的角度，决策树是一种<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件分类器融合</a>的学习模型<a href="#lin_ml_dt_2015">[2]</a>。常用的决策树学习算法有ID3、C4.5和C&amp;RT（也记为CART）。</p>
 
 <p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
@@ -1219,7 +1289,7 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
 
-<h2 id="section-2">特征选择</h2>
+<h2 id="section-1">特征选择</h2>
 
 <p>特征选择目的是选出有分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
 
@@ -1269,7 +1339,7 @@ g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\
 \]
 信息增益最大的特征“有自己的房子”是最优特征。</p>
 
-<h2 id="section-3">分类回归树</h2>
+<h2 id="section-2">分类回归树</h2>
 
 <p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
 
@@ -1314,7 +1384,7 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
 
-<h2 id="section-4">决策树剪枝</h2>
+<h2 id="section-3">决策树剪枝</h2>
 
 <p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
@@ -1329,15 +1399,15 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
   <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
 </ul>
 
-<h2 id="section-5">决策树优势</h2>
+<h2 id="section-4">决策树优势</h2>
 
 <p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
 
-<h4 id="section-6">一、可解释性好</h4>
+<h4 id="section-5">一、可解释性好</h4>
 
-<h4 id="section-7">二、容易处理多分类问题</h4>
+<h4 id="section-6">二、容易处理多分类问题</h4>
 
-<h4 id="section-8">三、容易处理类别特征</h4>
+<h4 id="section-7">三、容易处理类别特征</h4>
 
 <p>决策树通过decision stump
 \begin{equation}
@@ -1349,7 +1419,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 \end{equation}
 决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
 
-<h4 id="section-9">四、容易处理遗失特征</h4>
+<h4 id="section-8">四、容易处理遗失特征</h4>
 
 <p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
 
@@ -1360,11 +1430,11 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 <p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
 
-<h4 id="section-10">五、高效的训练非线性模型</h4>
+<h4 id="section-9">五、高效的训练非线性模型</h4>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">图 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
 
-<h2 id="section-11">参考资料</h2>
+<h2 id="section-10">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -1375,211 +1445,12 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 </li></ol>
 
-<h3 id="section-12">脚注</h3>
+<h3 id="section-11">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:categorical-feature">
       <p>例如医生诊断时会给出症状相关的类别特征｛fever, pain, tired, sweaty｝。 <a href="#fnref:categorical-feature" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>图像分类（2）：多分类支持向量机和softmax分类器</title>
-      <link href="http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier" />
-      <pubdate>2015-01-20T12:18:40+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier</guid>
-      <content:encoded>&lt;![CDATA[<p>本文主要参考<em>Convolutional Neural Networks for Visual Recognition</em><a href="#lifeifei_CNN_SVM_2015">[1]</a>课程笔记。</p>
-
-<h2 id="section">预备知识</h2>
-
-<p>k-NN在训练时只是记住了所有的样本，占用空间大，在识别时需和训练集的所有图片比较，耗费时间长。因此，需要开发新的方法克服kNN存在的问题，新方法包含两个关键部分：</p>
-
-<ol>
-  <li><strong>评分函数</strong>（score function）：将输入图像映射为所属类别的评分；</li>
-  <li><strong>损失函数</strong>（loss function）：度量预测的评分与真实结果之间的一致性，也称为代价（cost）函数或目标（objective）函数。当评分函数输出结果与真实结果之间差异越大，损失函数输出越大。</li>
-</ol>
-
-<p>训练时，通过最小化损失函数，得到评分函数的参数；分类时，通过对输入图像所属类别评分，判断图像的类别。</p>
-
-<p>训练集图像$\mathbf x_i\in\mathbb R^D(i=1,2,\ldots,N)$对应的标签$y_i\in 1,2,\ldots,K$，表示训练集有$N$张图像，每个图像表示为一个$D$维向量，图像可分为$K$个类别。对于CIFAR-10数据集，$N=50000,D=32\times 32\times 3,K=10$。评分函数$f:\mathbb R^D\mapsto \mathbb R^K$将图像数据映射为所属类别的评分。</p>
-
-<h2 id="section-1">线性分类器</h2>
-
-<p>线性分类器（linear classifier）就是一个评分函数，它是一个线性映射
-\begin{equation}
-f(\mathbf x_i,\mathbf W, \mathbf b)=\mathbf W\mathbf x_i+\mathbf b，
-\label{multiclass-linear-classifier-1}
-\end{equation}
-其中，$\mathbf x_i$表示图像展成的$D\times 1$维的向量，$\mathbf W$是$K\times D$维的权值矩阵，$\mathbf b$是$K\times 1$维的偏移向量（bias vector）。对CIFAR-10数据集，该映射输入的输入是3072维向量，输出属于这10个类别的评分。$\mathbf W$的用每行表示一个分类器，因此可以并行计算。一旦得到这些参数$\{\mathbf W,\mathbf b\}$之后，不必像k-NN一样存储整个训练集，只需保存参数即可<sup id="fnref:CNN-f-mapping"><a href="#fn:CNN-f-mapping" class="footnote">1</a></sup>。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-imagemap.jpg"><img src="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-imagemap.jpg" alt="线性分类器示意" /></a><div class="caption">图 1:  线性分类器示意 [<a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-imagemap.jpg">JPG</a>]</div></div></div>
-
-<p>上图展示了线性分类器计算过程，将图像简化为4个像素代替，🐶的得分最高导致了🐱误判为🐶，这并不是一个良好的分类器。权值的正负号表示了某个位置的像素对分类结果是赞成还是反对，权值的大小表示强弱程度，从这个角度看就是投票模型。</p>
-
-<p>线性分类器可以理解为模版匹配（template matching），$\mathbf W$的每一行对应一个模版，通过图像与模版的内积（inner product）<sup id="fnref:inner-product-similarity"><a href="#fn:inner-product-similarity" class="footnote">2</a></sup>判断图像与哪个模版最相似。从这个角度看，线性分类器也是最近邻分类器，并且只需和每类学习到的唯一模版比较，效率更高，匹配时采用内积而非$L_1$或$L_2$度量距离。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-templates.jpg"><img src="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-templates.jpg" alt="线性分类器权值矩阵图像化" /></a><div class="caption">图 2:  线性分类器权值矩阵图像化 [<a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-templates.jpg">JPG</a>]</div></div></div>
-
-<p>上图用图像的方式展示了线性分类器在CIFAR-10上学到的权值矩阵，这些图像相当于从每类学习到的模版。</p>
-
-<p>若将图像追加一个值为1的“特征”，可将偏移向量$\mathbf b$合并到权值矩阵$\mathbf W$中，公式\eqref{multiclass-linear-classifier-1}可改写为更简练的形式
-\begin{equation}
-f(\mathbf x_i,\mathbf W)=\mathbf W\mathbf x_i。
-\label{multiclass-linear-classifier-2}
-\end{equation}</p>
-
-<p>在机器学习中，将输入特征归一化是常用的技术。在实际中，将图像的每维特征（像素）减去均值中心化，对图像而言就是将每张图像减去平均图像，得到新图像的像素取值范围是$[-127,127]$。还可进一步将特征取值规范化到$[-1,1]$区间。</p>
-
-<p>在线性分类器（评分函数）基础上，通过定义不同损失函数，可得到具备不同特性的多分类支持向量机和softmax分类器。</p>
-
-<h2 id="multiclass-SVM">多分类支持向量机</h2>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg"><img src="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg" alt="损失函数示意图" /></a><div class="caption">图 3:  损失函数示意图 [<a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-margin.jpg">JPG</a>]</div></div></div>
-
-<p>支持向量机期望评分函数在固定边界$\Delta$控制下，正确分类比错误分类输出更高的评分。$f(\mathbf x_i,\mathbf W)_j$表示图像$\mathbf x_i$属于类别$j$的评分，多分类支持向量机的损失函数定义为
-\begin{equation}
-L_i = \sum_{j\neq y_i}\max(0, f(\mathbf x_i,\mathbf W)_j-f(\mathbf x_i,\mathbf W)_{y_i}+\Delta)，
-\label{eq:m-svm-loss}
-\end{equation}
-损失函数期望正确分类比错误分类输出更小的值。支持向量机期望正确分类比错误分类至少多得分$\Delta$，这样就没有损失，如上图所示，如果任何类别的评分落在红色区间，就会有损失累加。作出好的预测等价于最小化损失。</p>
-
-<p>$\max(0,\cdots)$一般称为<strong>hinge损失</strong>，也称为<strong>最大边界损失</strong>（max-margin loss），$L_2$-SVM的平方损失$\max(0,\cdots)^2$惩罚力度更强。hinge损失比平方hinge损失更标准通用，但有的数据集平方hinge损失效果更好，可以通过交叉验证选择损失度量方式。</p>
-
-<p>假设$f(\mathbf x_i,\mathbf W)＝[13, -7, 11], y_i=0,\Delta=10$，那么
-\[
-L_i=\max(0, -7-13+10)+\max(0,11-13+10)=8。
-\]
-上式右边第1项，正确分类得分（13）要高于错误分类（-7），支持向量机只关心是否二者差异至少为10（事实上二者差距为20分），因此输出为0；上式右边第2项，正确分类得分（13）高于错误分类（11），但二者差异只有2，因此损失了8。</p>
-
-<p>将\eqref{multiclass-linear-classifier-2}代入\eqref{eq:m-svm-loss}可得
-\begin{equation}
-L_i = \sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta)，
-\end{equation}
-其中，$\mathbf w_j^T$是$\mathbf W$的第$j$行元素。</p>
-
-<p>学习（训练）阶段的目标就是期望得到权值矩阵$\mathbf W$，使得正确分类的评分高于其它所有类别，并且使损失函数尽量小。</p>
-
-<p>假设$\mathbf W$将一个数据集的每个样本都正确分类（对所有的$i$，$L_i=0$），$\mathbf W$却不是唯一的存在，当$\lambda&gt;0$时$\lambda\mathbf W$都能胜任。通过正则化惩罚（regularization penalty）$R(\mathbf W)$，可以消除$\mathbf W$的歧义。常用的正则化惩罚抑制$L_2$范数大的$\mathbf W$出现，
-\[
-R(\mathbf W)=\sum_k\sum_l\mathbf W_{k,l}^2，
-\]
-正则化只针对权值与输入数据无关。因此，多分类支持向量机的损失函数包括两部分，数据损失（data loss）和正则化损失（regularization loss），
-\begin{equation}
-L={1\over N}\sum_i\sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta)+\lambda \sum_k\sum_l\mathbf W_{k,l}^2。
-\label{eq:regularization-loss-function}
-\end{equation}</p>
-
-<ol>
-  <li>损失函数\eqref{eq:regularization-loss-function}采用\eqref{multiclass-linear-classifier-1}的权值$\mathbf w_j$包含偏移分量$b_j$，但正则化采用\eqref{multiclass-linear-classifier-2}的权值$\mathbf W$不包含偏移向量$\mathbf b$，实际应用中即使正则化了$\mathbf b$对结果影响也不大。</li>
-  <li>由于增加了正则化项，正常情况下损失函数不可能到达0。</li>
-  <li>控制正则化力度的参数$\lambda$仍然只能通过交叉验证选择。</li>
-  <li>采用$L_2$正则化，可以导出<a href="\sum\_k\sum\_l\mathbf W\_{k,l}^2">支持向量机的最大边界特性</a>。</li>
-</ol>
-
-<p>正则化使得没有哪一个维度可以对评分造成很大的影响，通过惩罚大的权值提高了泛化（generalization）性能，降低了过拟合（overfitting）风险。当$\mathbf x=[1,1,1,1]^T$、$\mathbf w_1=[1,0,0,0]^T$和$\mathbf w_2=[0.25,0.25,0.25,0.25]^T$时，虽然$\mathbf w_1^T\mathbf x=\mathbf w_2^T\mathbf x=1$，但$L_2$对$\mathbf w_1$的惩罚是1对$\mathbf w_2$的惩罚只有0.25，因此结果偏爱$\mathbf w_2$。$L_2$惩罚偏爱取值小且分散的权值向量，最终得到的分类器会尽量考虑所有维度的输入，而非更偏爱哪一个维度<sup id="fnref:the-golden-mean"><a href="#fn:the-golden-mean" class="footnote">3</a></sup>。</p>
-
-<p>$\Delta$和$\lambda$虽是两个不同的参数，但都是相同的折中效果。不需交叉验证选择$\Delta$，直接设置$\Delta=1.0$即可，只需通过交叉验证调节$\lambda$。放大$\mathbf W$可以放大评分，缩小$\mathbf W$也可缩小评分
-，度量评分之间的差距的$\Delta$也同步放大或缩小，而调节$\lambda$可放缩$\mathbf W$，因此固定住$\Delta$只设置$\lambda$即可。</p>
-
-<p>对于二分类支持向量机，<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">损失函数</a>表示为
-\[
-L=C\sum_{i=1}^N\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
-\]
-其中$C$是超参数，$y_i\in\{-1,+1\}$。它可视为本文多分类问题简化为二分类的一个特例，$C$和$\lambda$都有相同的折中作用，$C\propto{1\over \lambda}$。</p>
-
-<p>本文的多分类支持向量机，只是支持向量机解决多分类问题的方法之一。除此之外还有一对多（OVA，one-vs-all）策略和实际中很少使用的多对多（AVA，all-vs-all）。简单的OVA策略能很好处理多分类问题<a href="#Rifkin04indefense">[2]</a>，本文的方法是OVA的增强版<a href="#Weston99supportvector">[3]</a>，理论上数据损失项可达0，常规的OVA方法则不行。</p>
-
-<h2 id="softmax-classifier">softmax分类器</h2>
-
-<p>softmax分类器是logistic回归分类器在多分类问题的推广。$f_j(\mathbf z)={e^{z_j}\over\sum_k e^{z_k}}$被称为softmax函数（softmax function），它将实数转换为$[0,1]$区间的值。softmax分类器采用同样的评分函数\eqref{multiclass-linear-classifier-2}，但采用<strong>交叉熵损失</strong>（cross-entropy loss）函数
-\begin{equation}
-L
-=-{1\over N}\sum_{i=1}^N\log\left({e^{f_{y_i}}\over\sum_j e^{f_j}}\right)+R(\mathbf W)
-=-{1\over N}\sum_{i=1}^N\left(f_{y_i}-\log\sum_j e^{f_j}\right)+R(\mathbf W)。
-\end{equation}</p>
-
-<p>“真实”分布$p$和估计所得分布$q$之间的交叉熵定义为
-\[
-H(p,q)=-\sum_xp(x)\log q(x)，
-\]
-交叉熵也可记为熵与<a href="http://en.wikipedia.org/wiki/Kullback–Leibler_divergence">Kullback-Leibler散度</a>（divergence）之和的形式
-\[
-H(p,q)=H(p)+D_{KL}(p\| q)，
-\]
-其中熵$H(p)=-\sum_xp(x)\log p(x)$。对softmax分类器，属于类别$y_i$的概率估值$q={e^{f_{y_i}}\over\sum_j e^{f_j}}$，属于类别$y_i$的“真实”概率$p=1$，因此对本文分类问题$H(p)=0$。最小化代价函数等价于最小化两个分布之间的KL散度。通过交叉熵，期望能预测的分布能在正确分类的类别上概率达到最大。</p>
-
-<p>softmax函数可以视为概率形式
-\[
-P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
-\]
-表示预测正确分类$y_i$的归一化概率。好的分类结果是$\prod_{i=1}^NP(y_i|\mathbf x_i;\mathbf W)$最大，这可认为是最大似然估计（MLE，maximum likelihood estimation）。正则化项$R(\mathbf W)$可认为源自权值矩阵的高斯先验（Gaussian prior），最小化损失函数相当于最大后验概率估计（maximum a posteriori）。当模型是条件概率分布、损失函数是对数损失函数、模型复杂度由模型的先验概率表示时，结构风险最小化就等价于最大后验概率估计<a href="#lihang_sml_2012">[4, P. 9]</a>。</p>
-
-<p>编程实现时，$e^{f_{y_i}}$和$\sum_j e^{f_j}$的值可能很大，大数值相除不稳定，所以需要采用规范化技巧（normalization trick）。softmax函数可以写为等价的形式
-\[
-\frac{e^{f_{y_i}}}{\sum_j e^{f_j}}=\frac{Ce^{f_{y_i}}}{C\sum_j e^{f_j}}=\frac{e^{f_{y_i}+\log C}}{\sum_j e^{f_j+\log C}}，
-\]
-提高计算的稳定性，通常选择$\log C=-\max_jf_j$，将评分的最大值规范化为0。</p>
-
-<h2 id="svm-vs-softmax">SVM vs. softmax</h2>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-svmvssoftmax.png"><img src="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-svmvssoftmax.png" alt="SVM和softmax的对比" /></a><div class="caption">图 4:  SVM和softmax的对比 [<a href="/assets/images/2015-01-20-image-classification-svm-and-softmax-based-linear-classifier-svmvssoftmax.png">PNG</a>]</div></div></div>
-
-<p>支持向量机的结果不易理解，softmax分类器给出了所属类别的“概率”解释。事实上，概率分布是平坦还是尖峰依赖于正则化参数$\lambda$。</p>
-
-<p>当线性分类器输出$[1, -2, 0]$时，softmax函数输出“概率”
-\[
-[1, -2, 0]\rightarrow 
-[e^1, e^{-2}, e^0]=
-[2.71,0.14,1]\rightarrow
-[0.7,0.04,0.26]。
-\]
-当增大正则化系数$\lambda$，这可能导致更小的权值，线性分类器的输出假设减小到$[0.5, -1, 0]$，此时softmax函数输出“概率”
-\[
-[0.5, -1, 0]\rightarrow 
-[e^{0.5}, e^{-1}, e^0]=
-[1.65,0.37,1]\rightarrow
-[0.55,0.12,0.33]，
-\]
-概率分布变得更均匀。大的正则化系数$\lambda$导致权值变小，类别的输出概率更趋于均匀化（uniform）。因此，softmax函数输出的“概率”之间大小比较有意义，单独看某个“概率”值的大小没有明确意义，也就是相对大小有意义，绝对大小没意义。</p>
-
-<p>多分类支持向量机和softmax分类器，在性能表现上通常很相近。假设$\mathbf x_i$属于第1类，对于$[10, -100, -100]$和$[10, 9, 9]$，多分类支持向量机都不再增加损失函数的值；但对于softmax分类器，$[10, 9, 9]$会比$[10, -100, -100]$让损失函数增加更大的值。softmax分类器永不满足，总是试图让正确的分类概率更大，损失函数的值更小；然而，只要多分类支持向量机满足边界条件，不论评分高低，不再调整评分，这可以看作是多分类支持向量机的一个特性，比如对于一个车辆分类器，它应该关注如何分类轿车和卡车等困难问题，而不应受已经评分很低🐸🐱🐶等的影响。</p>
-
-<h2 id="section-2">参考文献</h2>
-
-<ol class="bibliography"><li><span id="lifeifei_CNN_SVM_2015">[1]F.-F. Li and A. Karpathy, “Linear classification: Support Vector Machine, Softmax.” GitHub, 2015.</span>
-
-[<a href="http://cs231n.github.io/linear-classify/">Online</a>]
-
-</li>
-<li><span id="Rifkin04indefense">[2]R. Rifkin and A. Klautau, “In defense of one-vs-all classification,” <i>Journal of Machine Learning Research</i>, vol. 5, pp. 101–141, 2004.</span>
-
-</li>
-<li><span id="Weston99supportvector">[3]J. Weston and C. Watkins, “Support Vector Machines for Multi-Class Pattern Recognition,” in <i>European Symposium on Artificial Neural Networks</i>, Bruges (Belgium), 1999, pp. 219–224.</span>
-
-[<a href="https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999-461.pdf">Online</a>]
-
-</li>
-<li><span id="lihang_sml_2012">[4]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
-
-</li></ol>
-
-<h3 id="section-3">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:CNN-f-mapping">
-      <p>CNN也会将数据像素映射为得分，只是映射$f$会更复杂，参数更多。 <a href="#fnref:CNN-f-mapping" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:inner-product-similarity">
-      <p>内积就是余弦相似度？ <a href="#fnref:inner-product-similarity" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:the-golden-mean">
-      <p>多么美妙的中庸之道！ <a href="#fnref:the-golden-mean" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

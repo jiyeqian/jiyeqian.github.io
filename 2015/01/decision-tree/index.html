@@ -115,37 +115,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">决策树简介</h2>
 
-<h4 id="section-1">常见的各种不同分类器融合策略：</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>融合类型</th>
-      <th>混合（blending）</th>
-      <th>学习（learning）</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>均匀融合</td>
-      <td>voting／averaging</td>
-      <td>Bagging</td>
-    </tr>
-    <tr>
-      <td>非均匀融合</td>
-      <td>linear</td>
-      <td>AdaBoost</td>
-    </tr>
-    <tr>
-      <td>有条件融合</td>
-      <td>stacking</td>
-      <td>decision tree</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>混合方法是选择$g_t$之后再融合，学习方法是在选择（学习）$g_t$的同时进行融合。</p>
-
 <p>决策树是一种对实例分类的树形结构，由节点（node）和有向边（directed edge）组成，内部节点（internal node）表示特征或属性，叶节点（leaf node）表示类<a href="#lihang_sml_2012">[1, P. 55]</a>。决策树既可以看成if-then规则的集合，也可表示给定特征条件下类别的概率密度分布<a href="#lihang_sml_2012">[1, P. 56]</a>。从分类器融合的角度，决策树是一种<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件分类器融合</a>的学习模型<a href="#lin_ml_dt_2015">[2]</a>。常用的决策树学习算法有ID3、C4.5和C&amp;RT（也记为CART）。</p>
 
 <p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
@@ -169,7 +138,7 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
 
-<h2 id="section-2">特征选择</h2>
+<h2 id="section-1">特征选择</h2>
 
 <p>特征选择目的是选出有分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
 
@@ -219,7 +188,7 @@ g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\
 \]
 信息增益最大的特征“有自己的房子”是最优特征。</p>
 
-<h2 id="section-3">分类回归树</h2>
+<h2 id="section-2">分类回归树</h2>
 
 <p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
 
@@ -264,7 +233,7 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
 
 <p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
 
-<h2 id="section-4">决策树剪枝</h2>
+<h2 id="section-3">决策树剪枝</h2>
 
 <p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
@@ -279,15 +248,15 @@ $y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
   <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
 </ul>
 
-<h2 id="section-5">决策树优势</h2>
+<h2 id="section-4">决策树优势</h2>
 
 <p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
 
-<h4 id="section-6">一、可解释性好</h4>
+<h4 id="section-5">一、可解释性好</h4>
 
-<h4 id="section-7">二、容易处理多分类问题</h4>
+<h4 id="section-6">二、容易处理多分类问题</h4>
 
-<h4 id="section-8">三、容易处理类别特征</h4>
+<h4 id="section-7">三、容易处理类别特征</h4>
 
 <p>决策树通过decision stump
 \begin{equation}
@@ -299,7 +268,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 \end{equation}
 决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
 
-<h4 id="section-9">四、容易处理遗失特征</h4>
+<h4 id="section-8">四、容易处理遗失特征</h4>
 
 <p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
 
@@ -310,11 +279,11 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 <p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
 
-<h4 id="section-10">五、高效的训练非线性模型</h4>
+<h4 id="section-9">五、高效的训练非线性模型</h4>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">图 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
 
-<h2 id="section-11">参考资料</h2>
+<h2 id="section-10">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -325,7 +294,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 </li></ol>
 
-<h3 id="section-12">脚注</h3>
+<h3 id="section-11">脚注</h3>
 
 <div class="footnotes">
   <ol>
