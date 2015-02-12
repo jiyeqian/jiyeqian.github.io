@@ -111,7 +111,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>正则化来源于处理函数逼近（function approximation）中的病态问题（ill-posed problem）。克服过拟合的一个方法是从简单模型开始尝试；正则化是相反的思路，从复杂模型的假设集开始，通过正则化约束求解得到未过拟合的简单模型（复杂项的系数很小或接近0）。</p>
 
-<p>正则化等价于结构风险最小化（SRM，structural risk minimuzation）<a href="#lihang_sml_2012">[1, P. 9]</a>，它是结构风险最小化策略的实现，通过在经验风险上加一个正则化项或惩罚项实现<a href="#lihang_sml_2012">[1, P. 13]</a>。正则化符合奥卡姆剃刀（Occam’s rezor）原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。从贝叶斯估计的角度看，正则化项对应于模型的先验概率，可以假设复杂的模型有较大的先验概率<a href="#lihang_sml_2012">[1, P. 14]</a>。</p>
+<p>正则化等价于结构风险最小化（SRM，structural risk minimuzation）<a href="#lihang_sml_2012">[1, P. 9]</a>，它是结构风险最小化策略的实现，通过在经验风险上加一个正则化项或惩罚项实现<a href="#lihang_sml_2012">[1, P. 13]</a>。正则化符合奥卡姆剃刀（Occam’s rezor）原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。<a href="http://ask.julyedu.com/question/150">从贝叶斯估计的角度看，正则化项对应于模型的先验概率</a>，可以假设复杂的模型有较大的先验概率，简单的模型有较小的先验概率<a href="#lihang_sml_2012">[1, P. 14]</a>。</p>
 
 <p>本文的主要参考资料是机器学习基石<a href="#lin_ml_regularization_2014">[2]</a>。</p>
 

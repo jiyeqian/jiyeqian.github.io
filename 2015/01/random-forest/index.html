@@ -113,11 +113,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <h2 id="section">随机森林</h2>
 
-<p>bagging通过投票或平均的方法，可以减少variance；决策树功能强大， 但是有很大的variance。能否将二者融合起来，优势互补？</p>
-
-<p>［1/3］random forest（RF） = bagging + fully-grown C&amp;RT tree</p>
-
-<p>random描述了bagging中bootstrapping过程的随机性；forest表示很多树的组合。</p>
+<p>bagging通过投票或平均的方法，可以减少variance；决策树功能强大， 但是有很大的variance。能否将二者融合起来，优势互补？  <br />
+［1/3］random forest（RF） = bagging + fully-grown C&amp;RT tree。  <br />
+random描述了bagging中bootstrapping过程的随机性；forest表示很多树的组合。</p>
 
 <blockquote>
   <h4 id="section-1">随机森林算法</h4>
@@ -126,15 +124,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
   <ol>
     <li>通过bootstrapping方法从$\mathcal D$中抽取大小为$N’$的数据集$\tilde{\mathcal D}_t$；</li>
-    <li>通过决策树算法$\mbox{DTree}(\tilde{\mathcal D}_t)$得到$g_t$。</li>
+    <li>通过决策树算法$\mbox{DTree}(\tilde{\mathcal D}_t)$得到非剪枝的完全成长树$g_t$。</li>
   </ol>
 
   <p>返回$G=\mbox{Uniform}(\{g_t\})$就是随机森林。</p>
 </blockquote>
 
-<p>不同的$g_t$是进行分类器融合的关键。bagging通过bootstrapping的方法制造数据的随机性，从而得到不同的$g_t$。</p>
-
-<p>另一种得到不同$g_t$的方法是从$\mathbf x$中随机抽取$d’$维特征：</p>
+<p>不同的$g_t$是分类器融合的关键。一种得到不同的$g_t$的方法是在bagging阶段，通过bootstrapping的方法制造数据集的随机性。另一种得到不同$g_t$的方法是制造特征的随机性，在C&amp;RT阶段从$\mathbf x$中随机抽取$d’$维特征：</p>
 
 <ul>
   <li>随机抽取索引为$i_1,i_2,\ldots,i_{d’}$的特征，特种空间从高维到低维投影，$\Phi(\mathbf x)=\left(x_{i_1},x_{i_1},\ldots,x_{i_{d’}}\right)$；</li>
@@ -142,47 +138,52 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>通常$d’\ll d$，对大的$d$这样更高效<sup id="fnref:small-subspace"><a href="#fn:small-subspace" class="footnote">1</a></sup>；</li>
 </ul>
 
-<p>RF的原作者建议每次在C&amp;RT找$b(\mathbf x)$时，都重采样得到新的$d’$维特征子空间，让得到的树更不一样：</p>
+<p>RF的原作者建议C&amp;RT每次计算$b(\mathbf x)$时，重新抽取特征，得到$d’$维特征子空间，让得到的树更不一样：  <br />
+［2/3］RF ＝ bagging ＋ random-subspace C&amp;RT。  <br />
+随机从$\mathbf x$中采样$d’$维特征可记为$\Phi(\mathbf x)=\mathbf P\mathbf x$，利用$\mathbf P$的行随机抽取1维特征，这样的行属于自然基（natural basis）。树的节点在特征的$d’$维随机子空间进行最优分支<a href="#liaw2002classification">[1]</a>，在森林成长过程中保持$d’$不变。</p>
 
-<p>［2/3］RF ＝ bagging ＋ random-subspace C&amp;RT。</p>
+<p>C&amp;RT利用特征的随机抽样组合，通过$\mathbf p_i$对特征进行投影（组合）实现，$\phi_i(\mathbf x)=\mathbf p_i^T\mathbf x$，可以得到更强大的特征空间。通常采用低维投影，$\mathbf p_i$只有$d’’$个非零元素： <br />
+［3/3］RF ＝ bagging ＋ random-combination C&amp;RT。 <br />
+采用随机组合方式的C&amp;RT，每个分支函数$b(\mathbf x)$相当于感知器（线性分类器）。随机子空间是$d’’=1$的特殊情况，且$\mathbf p_i$属于自然基。    </p>
 
-<p>随机从$\mathbf x$中采样$d’$维特征可记为$\Phi(\mathbf x)=\mathbf P\mathbf x$，利用$\mathbf P$的第$i$随机抽取1维特征，这样的行属于自然基（natural basis）。</p>
+<p><a href="http://www.quora.com/What-is-the-out-of-bag-error-in-Random-Forests">Quora</a>给出了随机森林通俗的解释。随机森林产生不同$g_t$（也就是C&amp;RT）需要的随机性来源于两方面：bootstrap对数据集的随机抽样和C&amp;RT中对特征的随机抽样组合。</p>
 
-<p>采用<strong>随机组合方式</strong>，利用随机的行$\mathbf p_i$对特征进行投影（组合），$\phi_i(\mathbf x)=\mathbf p_i^T\mathbf x$，可以得到更强大的特征空间。通常采用的是低维投影，$\mathbf p_i$中只有$d’’$个非零元素。随机子空间是$d’’=1$的特殊情况，且$\mathbf p_i$属于自然基。</p>
+<p>随机森林的泛化误差由两方面决定<a href="#breiman2001random">[2]</a>：</p>
 
-<p>RF的原作者建议每次在C&amp;RT找$b(\mathbf x)$时，都进行$d’$的随机低维投影（组合）：</p>
+<ol>
+  <li>森林中任意两棵树的相关性增加，随机森林的误差增加；</li>
+  <li>单颗树的能力越强，随机森林的误差越低。</li>
+</ol>
 
-<p>［3/3］RF ＝ bagging ＋ random-combination C&amp;RT</p>
+<p>特征抽取数量$d’$是随机森林敏感的唯一可调节参数（另一个参数是森林中树的数量），可通过后文的$E_{oob}$确定。减小$d’$，能够降低树之间的相关性，同时也削弱了树的能力。</p>
 
-<p>采用随机组合方式的C&amp;RT树，每个分支函数$b(\mathbf x)$相当于感知器（线性分类器）。</p>
+<h2 id="oob">基于OOB数据集的验证</h2>
 
-<h2 id="oob">OOB方法</h2>
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png"><img src="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png" alt="［左］：out-of-sample数据点；［右］：验证集" /></a><div class="caption">图 1:  ［左］：out-of-sample数据点；［右］：验证集 [<a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png">PNG</a>]</div></div></div>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png"><img src="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png" alt="out-of-sample数据点" /></a><div class="caption">图 1:  out-of-sample数据点 [<a href="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png">PNG</a>]</div></div></div>
+<p>采用bagging的时候，没被选中数据点称为out-of-bag（OOB）数据，如上图左所示，星号标注的OOB数据没有参与训练$g_t$。当$N’=N$时，对任意$g_t$，任一数据点$(\mathbf x_n,y_n)$是OOB的概率是$\left(1-{1\over N}\right)^N$，$N$很大时，这个概率是${1\over e}$。训练每个$g_t$时，OOB数据集大小约为${Ne^{-1}}$，也就是大约1/3的数据没有参与训练。当$N’=pN$时，OOB数据集大小约为${Ne^{-p}}$。</p>
 
-<p>采用bagging的时候，没被选中数据点称为out-of-bag（OOB）数据点，如上图左所示，星号标注的点表示没有对训练任何$g_t$有贡献。当$N’=N$时，对每次训练$g_t$的数据集$(\mathbf x_n,y_n)$是OOB的概率是$\left(1-{1\over N}\right)^N$，如果$N$很大时，这个概率是${1\over e}$。$g_t$对应数据集OOB数据大小约为${N\over e}$，这表明数据集中有不少点（大约1/3）没有参与训练。</p>
-
-<p>OOB数据可以看作用于验证的数据，如上图右所示。但是通常不需要验证$g_t$，因为即使$g_t$效果不理想，融合后的分类器$G$仍然可以达到很好的效果。$G_n^-$表示$\{\mathbf x_n,y_n\}$是OOB数据点的分类器的集合，上图左最下一行$G_n^-=\mbox{average}(g_2,g_3,g_T)$，利用OOB数据集校验的误差定义为
+<p>即使$g_t$效果不理想，融合后的分类器$G$仍然可以达到很好的效果，因此不需要验证每个$g_t$。利用OOB数据集替代验证集，评估随机森林的泛化性能。$G_n^-$表示融合所有以$(\mathbf x_n,y_n)$作为OOB数据点的分类器，这样可以使用于验证的OOB数据都没被训练污染。由上图左最下一行可得一种以$(\mathbf x_N,y_N)$为OOB数据点的分类器融合方式$G_N^-=\mbox{average}(g_2,g_3,\ldots,g_T)$。利用OOB数据集的分类器误差（错误率）定义为
 \begin{equation}
 E_{oob}(G)={1\over N}\sum_{n=1}^Nerr\left(y_n,G_n^-(\mathbf x_n)\right)，
 \end{equation}
-利用$E_{oob}$，bagging和RF可以实现自验证（self-validation）。</p>
+也就是通过$G_n^-$对每个OOB数据点的分类错误估计总体误差。增加树的同时可计算树在OOB数据上的误差，在随机森林训练结束之后再综合可得$E_{oob}(G)$，使用过程中动态增加树不需重新训练和验证。基于OOB数据集估计的误差和交叉验证相近，但交叉验证计算复杂度高，$E_{oob}(G)$可代替$E_{val}(G)$作为随机森林泛化误差的无偏估计<sup id="fnref:OOB-observer"><a href="#fn:OOB-observer" class="footnote">2</a></sup>。</p>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-oob-validation.png"><img src="/assets/images/2015-01-24-random-forest-oob-validation.png" alt="［左］：验证集方法［右］：OOB集方法" /></a><div class="caption">图 2:  ［左］：验证集方法［右］：OOB集方法 [<a href="/assets/images/2015-01-24-random-forest-oob-validation.png">PNG</a>]</div></div></div>
 
-<p>上图是传统验证方法和$E_{oob}$的对比，$E_{oob}$通常能很准确的衡量$G$的性能。利用$E_{oob}$进行$d’’$等参数选择，通常不需要重新训练<sup id="fnref:why-not-re-training"><a href="#fn:why-not-re-training" class="footnote">2</a></sup>。</p>
+<p>上图是基于$E_{val}$和基于$E_{oob}$的验证方法对比，当森林中有足够多的树时，$E_{oob}$通常能更准确的衡量$G$的性能<a href="#bylander2002estimating">[3]</a>。利用$E_{oob}$进行$d’’$等参数选择，不需要像交叉验证一样针对每份验证集重新训练分类器，也没有选择了$g_{m^*}^-$再回到整个训练集得到的$g_{m^*}$的步骤。利用$E_{oob}(G)$，bagging和RF实现了自验证（self-validation）。</p>
 
 <h2 id="section-2">特征选择</h2>
 
-<p>特征选择就是移除冗余（redundant）和不相关（irrelevant）的特征。主要优点包括：</p>
+<p>特征选择就是移除冗余（redundant）和不相关（irrelevant）的特征。特征选择的主要优点包括：</p>
 
 <ul>
-  <li>高效：让假设集和简单，预测时间变短；</li>
-  <li>提升泛化能力：移除特征的同时也移除了那些特征的噪声；</li>
+  <li>高效：让假设集合简单，预测时间变短；</li>
+  <li>提升泛化能力：移除特征的同时也移除了特征中的噪声；</li>
   <li>增强可理解性：剩余的特征对结果的解释性更强；</li>
 </ul>
 
-<p>但也存在对应的缺点：</p>
+<p>但也存在相应的缺点：</p>
 
 <ul>
   <li>计算量大：从特征空间选择重要的特征子集本身是组合优化问题；</li>
@@ -196,36 +197,61 @@ E_{oob}(G)={1\over N}\sum_{n=1}^Nerr\left(y_n,G_n^-(\mathbf x_n)\right)，
 \[
 score = \mathbf w^T\mathbf x=\sum_{i=1}^dw_ix_i，
 \]
-对良好的$\mathbf w$（对特征给出合理评分），第$i$维特征的重要性$\mbox{importance}(i)=|w_i|$，大的数值对得分贡献大。$\mathbf w$可通过数据进行学习得到。</p>
-
-<p>对于非线性模型，特征选择通常比较复杂。虽然RF是非线模型，但是由于内在的机制，采用<strong>随机测试</strong>（random test）也能方便选择特征。如果特征$i$很重要，用随机值$\mathbf x_{n,i}$代替该特征就会极大降低性能。产生这些随机值的方法包括：</p>
+对良好的$\mathbf w$（能对特征合理评分），第$i$维特征的重要性为$\mbox{importance}(i)=|w_i|$，重要性大的对得分贡献就大，也就是重要的特征。$\mathbf w$可通过数据学习到。对于非线性模型，特征选择通常比较复杂。虽然RF是非线模型，但是由于内在的机制，采用<strong>随机测试</strong>（random test）也能方便选择特征。如果特征$i$很重要，用随机值$\mathbf x_{n,i}$代替该特征就会极大降低性能。产生这些随机值的方法包括：</p>
 
 <ul>
-  <li>通过均分分布或高斯分布产生：真实数据的分布$P(x_i)$可能并不服从这些分布，不仅加入了噪声，而且改变了分布，不是理想的方法。</li>
-  <li>bootstrap或者组合（permutation）方法：这样就保持了原来的分布$P(x_i)$，组合方法重新排列原始特征（类似洗牌）。</li>
+  <li>通过均匀分布或高斯分布产生：真实数据的分布$P(x_i)$可能并不服从这些分布，不仅加入了噪声，而且改变了分布，不是理想的方法。</li>
+  <li>bootstrap或者组合（permutation）方法：重新排列特征（类似洗牌），这样可保持第$i$维特征的分布$P(x_i)$不变。</li>
 </ul>
 
 <p>利用组合方法重排特征进行性能测试称为<strong>组合测试</strong>（permutation test），
 \[
-\mbox{importance}(i)=\mbox{importance}(\mathcal D)-\mbox{importance}(\mathcal D^{(p)})，
+\mbox{importance}(i)=\mbox{importance}(\mathcal D)-\mbox{importance}\left(\mathcal D^{(p)}\right)，
 \]
-$\mathcal D^{(p)}$表示$\mathcal D$的特征$\{x_{n,i}\}$经过重新“洗牌”。组合测试是一种统计工具，可以用于类似RF的其它非线性模型。</p>
-
-<p>通常需要重新训来呢得到$\mbox{importance}(\mathcal D^{(p)})$，但是可RF利用OOB不需重新训练，
+$\mathcal D^{(p)}$表示$\mathcal D$的第$i$维特征$\{x_{n,i}\}$经过重新“洗牌”。组合测试是一种统计工具，可以用于类似RF的其它非线性模型。计算$\mbox{importance}\left(\mathcal D^{(p)}\right)$通常需要在$\mathcal D^{(p)}$上重新训练和验证，但是RF可以不重新训练，
 \[
 \mbox{importance}(i)=E_{oob}(G)-E_{oob}^{(p)}(G)，
 \]
-得到$E_{oob}^{(p)}(G)$的方法是，在计算过程中需要$x_{n,i}$的地方，用组合的OOB值代替$x_{n,i}$。</p>
+在计算$E_{oob}(G)$过程中，当$g_t$需要第$i$维特征$x_{n,i}$时，随机选择$g_t$的一个OOB数据点的第$i$维特征替代（确保验证数据没有参与训练），这样就可得到$E_{oob}^{(p)}(G)$。</p>
 
-<p>在实际中，RF通过“permutation + OOB”进行特征选择，通常不仅高效而且有效。</p>
+<p>在实际中，利用RF通过“permutation + OOB”进行特征选择，通常高效可行，可作为处理其它非线性问题的特征选择工具。</p>
 
-<h2 id="rf">RF特性</h2>
+<h2 id="section-3">随机森林的特性</h2>
 
-<p>通常随机森林需要的树越多越好🌲🌲🌲🌲，$\bar g=\lim_{T\rightarrow\infty} G$。通过增减树判断随机森林是否稳定，确保有足够多的树，如果不够，继续增加🌲。</p>
+<blockquote>
+  <h4 id="leo-breimanadele-cutlera-hrefbreimanwebintrorf4a">Leo Breiman和Adele Cutler这样说<a href="#BreimanWebIntroRF">[4]</a></h4>
+  <hr />
+
+  <ul>
+    <li>It is unexcelled in accuracy among current algorithms.</li>
+    <li>It runs efficiently on large data bases.</li>
+    <li>It can handle thousands of input variables without variable deletion.</li>
+    <li>It gives estimates of what variables are important in the classification.</li>
+    <li>It generates an internal unbiased estimate of the generalization error as the forest building progresses.</li>
+    <li>It has an effective method for estimating missing data and maintains accuracy when a large proportion of the data are missing.</li>
+    <li>It has methods for balancing error in class population unbalanced data sets.</li>
+    <li>Generated forests can be saved for future use on other data.</li>
+    <li>Prototypes are computed that give information about the relation between the variables and the classification.</li>
+    <li>It computes proximities between pairs of cases that can be used in clustering, locating outliers, or (by scaling) give interesting views of the data.</li>
+    <li>The capabilities of the above can be extended to unlabeled data, leading to unsupervised clustering, data views and outlier detection.</li>
+    <li>It offers an experimental method for detecting variable interactions.</li>
+  </ul>
+</blockquote>
+
+<p>随机森林不会过拟合，可以尽情的增加树的数量<a href="#BreimanWebIntroRF">[4]</a>。通常随机森林需要的树越多越好🌲🌲🌲🌲，$\bar g=\lim_{T\rightarrow\infty} G$。通过增减树判断随机森林是否稳定，确保有足够多的树，如果不够，继续增加🌲。</p>
+
+<p>设随机森林中有$K$棵树$\{g_k\}_{k=1}^K$，$K$是奇数，若每棵树0/1误差为$E_{out}(g_k)=e_k$。当至少有$K+1\over 2$棵树都对某个数据分错时$G$才会将其错分，也就是每个错分点最少要“消耗”掉$K+1\over 2$棵树，随机森林中错分的数据量为$N\cdot E_{out}(G)$，$K$棵树最多可能的错分数据量为$\sum_{k=1}^KN\cdot e_k$，那么有
+\[
+{K+1\over 2}\cdot N\cdot E_{out}(G)\leq \sum_{k=1}^KN\cdot e_k，
+\]
+由此可以得到随机森林的<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=270">误差上界</a>
+\[
+E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
+\]</p>
 
 <p>台湾大学在KDDCup 2013中发现，随机森林的$E_{val}$表现依赖初始的种子点，最终通过将树增加到12000课，固定种子为1，夺得了冠军🏆。</p>
 
-<h4 id="section-3">以下图片展示了随机森林的优点：</h4>
+<h4 id="section-4">以下图片展示了随机森林的优点：</h4>
 
 <div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-large-margin.png"><img src="/assets/images/2015-01-24-random-forest-large-margin.png" alt="通过多棵树得到平滑和类似最大边界的判别界" /></a><div class="caption">图 3:  通过多棵树得到平滑和类似最大边界的判别界 [<a href="/assets/images/2015-01-24-random-forest-large-margin.png">PNG</a>]</div></div></div>
 
@@ -233,19 +259,36 @@ $\mathcal D^{(p)}$表示$\mathcal D$的特征$\{x_{n,i}\}$经过重新“洗牌�
 
 <div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-24-random-forest-noise-corrected.jpg"><img src="/assets/images/2015-01-24-random-forest-noise-corrected.jpg" alt="通过投票机制消除噪声的干扰" /></a><div class="caption">图 5:  通过投票机制消除噪声的干扰 [<a href="/assets/images/2015-01-24-random-forest-noise-corrected.jpg">JPG</a>]</div></div></div>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="section-5">随机森林的应用</h2>
 
-<ol class="bibliography"></ol>
+<p>基于R语言的randomForest应用范例<a href="#liaw2002classification">[1]</a>。</p>
 
-<h3 id="section-5">脚注</h3>
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"><li><span id="liaw2002classification">[1]A. Liaw and M. Wiener, “Classification and regression by randomForest,” <i>R news</i>, vol. 2, no. 3, pp. 18–22, 2002.</span>
+
+</li>
+<li><span id="breiman2001random">[2]L. Breiman, “Random forests,” <i>Machine learning</i>, vol. 45, no. 1, pp. 5–32, 2001.</span>
+
+</li>
+<li><span id="bylander2002estimating">[3]T. Bylander, “Estimating generalization error on two-class datasets using out-of-bag estimates,” <i>Machine Learning</i>, vol. 48, no. 1-3, pp. 287–297, 2002.</span>
+
+</li>
+<li><span id="BreimanWebIntroRF">[4]L. Breiman and A. Cutler, “Random Forests.” .</span>
+
+[<a href="http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm">Online</a>]
+
+</li></ol>
+
+<h3 id="section-7">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:small-subspace">
       <p>这种方法也可以用于其它机器学习模型。 <a href="#fnref:small-subspace" class="reversefootnote">&#8617;</a></p>
     </li>
-    <li id="fn:why-not-re-training">
-      <p>为什么不需要重新训练？ <a href="#fnref:why-not-re-training" class="reversefootnote">&#8617;</a></p>
+    <li id="fn:OOB-observer">
+      <p>Not reliable enough to use as an estimate for error on a separate test set (will typically under-estimate error), but still very useful to observe after adding each tree to verify that your forest is still learning. If it stops decreasing for a few iterations stop adding trees. <a href="http://www.quora.com/How-reliable-are-Random-Forest-OOB-error-estimates">Qoura</a> <a href="#fnref:OOB-observer" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

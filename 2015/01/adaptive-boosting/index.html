@@ -217,9 +217,10 @@ E_{out}(G)\leq E_{in}(G)+O\left(\sqrt{O\left(d_{VC}(\mathcal H)\cdot T\log T\rig
 <h2 id="AdaBoost-Stump">AdaBoost-Stump</h2>
 
 <p>对于一个decision stump分类器
-\[
+\begin{equation}
 h_{s,i,\theta}(\mathbf x)=s\cdot\mbox{sign}(\mathbf x_i-\theta)，
-\]
+\label{eq:decision-stump}
+\end{equation}
 $i$表示特征维，$\theta$表示阈值，$s$控制方向，在2D空间该分类器就是水平或竖直线，该算法优化的时间复杂度为$O(d\cdot N\log N)$。decision stump能够高效的最小化$E_{in}^\mathbf u$，但是自身的性能却很弱。
 将decision stump作为基础分类器，可以组合出功能强大的<strong>AdaBoost-Stump</strong>。</p>
 

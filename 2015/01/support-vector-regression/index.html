@@ -107,6 +107,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#核方法" title="核方法">核方法</a>&nbsp;
   
+  <a href="/tags/#回归" title="回归">回归</a>&nbsp;
+  
 </span>
 
 </section>
@@ -133,7 +135,7 @@ E_{aug}(\boldsymbol\beta)={\lambda\over N}\boldsymbol\beta^T\mathbf K\boldsymbol
 \]
 令$\nabla E_{aug}(\boldsymbol\beta)=0$求解，
 \begin{equation}
-\boldsymbol\beta=(\lambda\mathbf I+\mathbf K)^{-1}\mathbf y。
+\boldsymbol\beta=(\mathbf K+\lambda\mathbf I)^{-1}\mathbf y。
 \label{eq:analytic-solution-ridge-regression}
 \end{equation}
 根据Mercer条件可知$\mathbf K$半正定，并且$\lambda&gt;0$，因此矩阵总可逆。稠密矩阵求逆的时间复杂度为$O\left(N^3\right)$。</p>

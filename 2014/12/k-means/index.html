@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>聚类（1）：k均值聚类</title>
+    <title>聚类（1）：k均值算法</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -65,7 +65,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>聚类（1）：k均值聚类</h1>
+        <h1>聚类（1）：k均值算法</h1>
         </header>
         <nav id="real_nav">
         
@@ -85,7 +85,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <article class="content">
         <section class="meta">
 <span class="time">
-  <time datetime="2014-12-08">2014-12-08</time>
+  <time datetime="2014-12-07">2014-12-07</time>
 </span>
 
  |
@@ -105,6 +105,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#聚类" title="聚类">聚类</a>&nbsp;
   
+  <a href="/tags/#k均值算法" title="k均值算法">k均值算法</a>&nbsp;
+  
 </span>
 
 </section>
@@ -115,14 +117,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>聚类是一种非监督学习方法。上图是scikit-learn中几种聚类方法的比较<a href="#scikit-learn">[1]</a>。</p>
 
-<h2 id="k-means">$k$-means聚类</h2>
+<h2 id="k">k均值聚类</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_c_2014">[2]</a>。</p>
 
-<p>$k$-means算法主要包含两步：为样本分配类标签以及修改类中心。</p>
+<p>k均值算法主要包含两步：为样本分配类标签以及修改类中心。</p>
 
 <blockquote>
-  <h4 id="k-means-1">$k$-means算法</h4>
+  <h4 id="k-1">k均值算法</h4>
   <hr />
   <p>随机初始化$K$个类中心$\boldsymbol\mu_1,\boldsymbol\mu_2,\ldots,\boldsymbol\mu_K\in\mathbb R^n$。 <br />
 重复 {</p>
@@ -135,7 +137,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p>}</p>
 </blockquote>
 
-<p>$k$-means聚类的代价函数为</p>
+<p>k均值聚类的代价函数为</p>
 
 <p>\begin{equation}
 J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\frac{1}{m}\sum_{i=1}^m\left\lVert\mathbf x^{(i)}-\boldsymbol\mu_{c^{(i)}}\right\rVert^2，
@@ -144,9 +146,9 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 
 <p>该代价函数通常也称为distortion function。</p>
 
-<p>从代价函数可以看出，$k$-means算法的第1步是通过修改类标签$c^{(i)}$最小化代价函数，第2步是通过修改类中心$\boldsymbol\mu_k$最小化代价函数。</p>
+<p>从代价函数可以看出，k均值算法的第1步是通过修改类标签$c^{(i)}$最小化代价函数，第2步是通过修改类中心$\boldsymbol\mu_k$最小化代价函数。</p>
 
-<p>从$k$-means算法可知，初始化类中心$\boldsymbol\mu_k$和确定类别数$k$影响着算法的性能。</p>
+<p>从k均值算法可知，初始化类中心$\boldsymbol\mu_k$和确定类别数$k$影响着算法的性能。</p>
 
 <h3 id="boldsymbolmuk">初始化类中心$\boldsymbol\mu_k$</h3>
 
@@ -155,13 +157,13 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 <p>随机初始化类中心的方法通常是，随机从样本中选取$K$个点作为类中心。为了避免陷入局部极致，通常会进行多轮初始化，选择代价函数值最小的作为聚类结果。</p>
 
 <blockquote>
-  <h4 id="k-means-2">随机初始化选择$k$-means的类中心</h4>
+  <h4 id="k-2">随机初始化选择k均值的类中心</h4>
   <hr />
   <p>For i = 1 to 100 {</p>
 
   <ol>
     <li>随机初始化类中心$\boldsymbol\mu_k$；</li>
-    <li>$k$-means算法得到$c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K$；</li>
+    <li>k均值算法得到$c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K$；</li>
     <li>计算代价函数\eqref{eq:cf-k-means}。</li>
   </ol>
 
@@ -171,13 +173,13 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 
 <p>当$K=2,\ldots,10$时，这种方法的代价函数变化明显，当$K$很大（$K&gt;100$）时，代价函数可能没有明显的变化。</p>
 
-<h3 id="k">确定类别数$K$</h3>
+<h3 id="k-3">确定类别数$K$</h3>
 
 <p>通过不停增大类别数$K$，选择代价函数曲线拐点对应的类别数，如下图左所示。</p>
 
 <div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png"><img src="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png" alt="确定类别数的elbow method" /></a><div class="caption">图 3:  确定类别数的elbow method [<a href="/assets/images/2014-11-27-machine-learning-k-means-elbow-method.png">PNG</a>]</div></div></div>
 
-<p>有时，代价函数曲线不存在拐点，如上图右所示。还可以根据$k$-means应用的具体场景，选择聚类数目，比如要制作XS、S、M、L、XL几种规格的服装，当然用类别数$K=5$来划分人的身高体重。</p>
+<p>有时，代价函数曲线不存在拐点，如上图右所示。还可以根据k均值应用的具体场景，选择聚类数目，比如要制作XS、S、M、L、XL几种规格的服装，当然用类别数$K=5$来划分人的身高体重。</p>
 
 <h2 id="section-1">参考文献</h2>
 
@@ -204,7 +206,7 @@ J\left(c^{(1)},\dots,c^{(m)},\boldsymbol\mu_1,\ldots,\boldsymbol\mu_K\right)=\fr
 
 	
 	<ul class="ds-recent-visitors"></ul>
-	<div class="ds-thread" data-thread-key="/2014/12/k-means" data-url="http://qianjiye.de/2014/12/k-means" data-title="聚类（1）：k均值聚类">
+	<div class="ds-thread" data-thread-key="/2014/12/k-means" data-url="http://qianjiye.de/2014/12/k-means" data-title="聚类（1）：k均值算法">
 	</div>
 	<script type="text/javascript">
 	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 

@@ -103,6 +103,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
   
+  <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
+  
+  <a href="/tags/#数据清洗" title="数据清洗">数据清洗</a>&nbsp;
+  
 </span>
 
 </section>
@@ -140,7 +144,7 @@ y=f(x)+\epsilon\sim\mbox{Gaussian}\left(\sum_{q=0}^{Q_f}\alpha_qx^q,\sigma^2\rig
 
 <p>$\sigma^2$表示产生噪声的等级，$Q_f$是模型的复杂度，数据集的大小为$N$。</p>
 
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png" alt="不同参数影响下的过拟合图谱（越红过拟合越厉害）" /></a><div class="caption">图 4:  不同参数影响下的过拟合图谱（越红过拟合越厉害） [<a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png">PNG</a>]</div></div></div>
+<div class="image_line" id="overfitting-illustration"><div class="image_card"><a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png"><img src="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png" alt="不同参数影响下的过拟合图谱（越红过拟合越厉害）" /></a><div class="caption">图 4:  不同参数影响下的过拟合图谱（越红过拟合越厉害） [<a href="/assets/images/2015-01-26-hazard-of-overfitting-overfitting-illustration.png">PNG</a>]</div></div></div>
 
 <p>实验时确保能产生包含模型最高次的数据，过拟合采用$E_{out}(g_{10})-E_{out}(g_{2})$度量。上图分别展示了固定模型复杂度和噪声等级下的过拟合图谱，红色表示过拟合强，蓝色表示过拟合弱。上图左固定住模型复杂度，通过$\sigma^2$产生的噪声称为随机噪声（stochastic noise）；上图右固定住噪声等级，通过模型复杂度$Q_f$导致的“噪声”称为确定性噪声（deterministic noise）。</p>
 

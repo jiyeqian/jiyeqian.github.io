@@ -190,6 +190,7 @@ K\left(\mathbf x,\mathbf x’\right)=\exp\left(-\gamma\left\lVert\mathbf x-\math
 高斯核也成为径向基函数（RBF，Radial Basis Function）核。基于高斯核的判别函数为
 \begin{equation}
 g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_n\right\rVert^2\right)+b\right)，
+\label{eq:rbf-svm}
 \end{equation}
 它是以支持向量为中心的高斯函数的线性组合，不再依赖$\mathbf w$，只依赖于支持向量和系数$\alpha_n$。</p>
 

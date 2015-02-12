@@ -236,7 +236,17 @@ $\eta$越大步越好。最佳的$\eta_t$会比固定的$\eta$在短期内下降
 \right)，
 \]
 $\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错误率</a>。
-通过${\partial\widehat E_{ADA}\over\partial\eta}=0$可得最速梯度步长$\eta_t=\ln\sqrt{1-\epsilon_t\over\epsilon_t}=\alpha_t$。</p>
+通过${\partial\widehat E_{ADA}\over\partial\eta}=0$可得最速梯度步长$\eta_t=\ln\sqrt{1-\epsilon_t\over\epsilon_t}=\alpha_t$。当进行到$t+1$轮迭代时，误差为
+\[
+\widehat E_{ADA}^{(t+1)}=\widehat E_{ADA}^{(t)}\cdot\left(
+(1-\epsilon_t)\exp(-\eta_t)+\epsilon_t\exp(+\eta_t)
+\right)，
+\]
+将$\eta_t$和$\widehat E_{ADA}^{(1)}=\sum_{n=1}^Nu_n^{(1)}=1$带入可得
+\[
+\widehat E_{ADA}^{(t+1)}=\prod_{\tau=1}^{t}\left(2\sqrt{\epsilon_\tau(1-\epsilon_\tau)}\right)。
+\]
+由此可见，最糟糕的情况是当$\epsilon_t={1\over 2}$时（错误率$\epsilon_t$始终小于正确率$1-\epsilon_t$），$\widehat E_{ADA}^{(t+1)}$不减少，否则$\widehat E_{ADA}^{(t+1)}$随着迭代增加不断减少。</p>
 
 <p>因此，AdaBoost是近似的函数梯度（functional gradient）最速下降法。</p>
 
@@ -291,7 +301,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 \label{eq:gbdt-eta}
 \end{equation}</p>
 
-<p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优的$\eta$作为$\alpha_t$。</p>
+<p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优作为步长$\alpha_t=\eta$。</p>
 
 <blockquote>
   <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>

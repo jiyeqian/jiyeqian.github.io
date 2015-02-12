@@ -109,6 +109,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#熵" title="熵">熵</a>&nbsp;
   
+  <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
+  
 </span>
 
 </section>
@@ -118,8 +120,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>决策树是一种对实例分类的树形结构，由节点（node）和有向边（directed edge）组成，内部节点（internal node）表示特征或属性，叶节点（leaf node）表示类<a href="#lihang_sml_2012">[1, P. 55]</a>。决策树既可以看成if-then规则的集合，也可表示给定特征条件下类别的概率密度分布<a href="#lihang_sml_2012">[1, P. 56]</a>。从分类器融合的角度，决策树是一种<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件分类器融合</a>的学习模型<a href="#lin_ml_dt_2015">[2]</a>。常用的决策树学习算法有ID3、C4.5和C&amp;RT（也记为CART）。</p>
 
 <p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
-
-<p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只留下对训练数据有足够分类能力的特征。</p>
 
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png"><img src="/assets/images/2015-01-23-decision-tree-decision-tree-example.png" alt="［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法" /></a><div class="caption">图 1:  ［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法 [<a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png">PNG</a>]</div></div></div>
 
@@ -140,7 +140,7 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <h2 id="section-1">特征选择</h2>
 
-<p>特征选择目的是选出有分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
+<p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只选择对训练数据有足够分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
 
 <p><strong>熵</strong>（entropy）表示随机变量不确定性的度量，熵越大随机变量的不确定性就越大。某一维的特征$x$的概率记为$p(x)$，特征$x$的熵表示为
 \begin{equation}
@@ -193,34 +193,32 @@ g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\
 <p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
 
 <ul>
-  <li>二分类或多分类问题（基于0／1误差度量$E_{in}$）：$\{y_n\}$中占大多数的；</li>
-  <li>回归问题（基于平方误差度量$E_{in}$）：$\{y_n\}$的平均。</li>
+  <li>二分类或多分类问题（基于0／1误差度量$E_{in}$）：$\{y_n\}$中占大多数的类的标签；</li>
+  <li>回归问题（基于平方误差度量$E_{in}$）：$\{y_n\}$的均值。</li>
 </ul>
 
-<p>C&amp;RT通过基于不纯度函数的<strong>分支条件</strong>用decision stump进行二元分支
+<p>C&amp;RT用<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqdecision-stump">decision stump</a>进行二元分支，利用数据集大小加权的不纯度作为<strong>分支条件</strong>，
 \begin{equation}
 b(\mathbf x)=\underset{\mbox{decision stumps }h(\mathbf x)}{\arg\min}\sum_{c=1}^2|\mathcal D_c\mbox{ with }h|\cdot\mbox{impurity}(\mathcal D_c\mbox{ with }h)，
 \label{eq:dtree-decision-stump}
 \end{equation}
-不纯度通过数据集大小加权。</p>
-
-<p>回归的不纯度采用回归误差
+选择加权不纯度最小的分支方法。若用decision stump对有$m$个不同的取值的特征进行划分，对有序的特征共有$m-1$种二分法，对无序的特征共有$2^{m-1}-1$种二分法<a href="#wires11">[3, Pp. 14-15]</a>。回归的不纯度采用回归误差
 \begin{equation}
 \mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N(y_n-\bar y)^2，
 \end{equation}
-$\bar y$表示$\{y_n\}$的平均，分类的候选不纯度可采用分类误差
+$\bar y$表示$\{y_n\}$的均值。分类的不纯度可采用分类误差
 \begin{equation*}
 \mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N[[y_n\neq y^*]]，
 \end{equation*}
-$y^*$表示$\{y_n\}$中占大多数的，通常采用Gini指数
+$y^*$表示$\{y_n\}$中占大多数的类的标签，但通常采用的是Gini指数
 \begin{equation}
 \mbox{impurity}(\mathcal D)=1-\sum_{k=1}^K\left({\sum_{n=1}^N[[y_n=k]]\over N}\right)^2，
 \end{equation}
-或
+$k$表示类标签，${\sum_{n=1}^N[[y_n=k]]\over N}$就是类$k$在$\mathcal D$中占的比率，也可采用
 \begin{equation*}
-\mbox{impurity}(\mathcal D)=1-\max_{1\leq k\leq K}{\sum_{n=1}^N[[y_n=k]]\over N}，
+\mbox{impurity}(\mathcal D)=1-\max_{1\leq k\leq K}{\sum_{n=1}^N[[y_n=k]]\over N}。
 \end{equation*}
-只采用最优的$k=y^*$。</p>
+$\mathcal D$中的类越分散不纯度越高，类似于熵；$\mathcal D$中数据属于同一类时不纯度为0。</p>
 
 <p>分类回归树“被迫”停止生长的两个<strong>终止条件</strong>：</p>
 
@@ -291,6 +289,9 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 <li><span id="lin_ml_dt_2015">[2]H.-T. Lin, “Lecture 9: Decision Tree.” Coursera, 2015.</span>
 
 [<a href="https://class.coursera.org/ntumltwo-001/lecture">Online</a>]
+
+</li>
+<li><span id="wires11">[3]W.-Y. Loh, “Classification and regression trees,” <i>Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery</i>, vol. 1, pp. 14–23, 2011.</span>
 
 </li></ol>
 

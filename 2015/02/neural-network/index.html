@@ -105,6 +105,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#神经网络" title="神经网络">神经网络</a>&nbsp;
   
+  <a href="/tags/#特征学习" title="特征学习">特征学习</a>&nbsp;
+  
   <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
   
 </span>
@@ -135,7 +137,7 @@ G(\mathbf x)=\mbox{sign}(-1+g_1(\mathbf x)+g_2(\mathbf x))，
 \[
 XOR(g_1,g_2)=OR(AND(-g_1,g_2),AND(g_1,-g_2))，
 \]
-并且可以用上图所示的两层级连结构表示。</p>
+并且可以用上图所示的两层级连结构表示<sup id="fnref:five-input-xor"><a href="#fn:five-input-xor" class="footnote">1</a></sup>。</p>
 
 <p>由此可见，虽然感知器算法简单，经过线性融合，以及多层级连，可以得到功能强大的分类器。多层感知器就是基本的神经网络结构。</p>
 
@@ -201,7 +203,7 @@ e_n=\left(y_n-s_1^{(L)}\right)^2=\left(y_n-\sum_{i=0}^{d^{(L-1)}}w_{i1}^{(L)}x_i
 \begin{aligned}
 &amp;{\partial e_n\over\partial w_{i1}^{(L)}}
 ={\partial e_n\over\partial s_{1}^{(L)}}\cdot{\partial s_{1}^{(L)}\over\partial w_{i1}^{(L)}}
-=2\left(y_n-s_1^{(L)}\right)\cdot x_i^{(L-1)}，\\
+=-2\left(y_n-s_1^{(L)}\right)\cdot x_i^{(L-1)}，\\
 &amp;{\partial e_n\over\partial w_{ij}^{(\ell)}}
 ={\partial e_n\over\partial s_{j}^{(\ell)}}\cdot{\partial s_{j}^{(\ell)}\over\partial w_{ij}^{(\ell)}}
 =\delta_j^{(\ell)}x_i^{(\ell-1)}。
@@ -209,17 +211,20 @@ e_n=\left(y_n-s_1^{(L)}\right)^2=\left(y_n-\sum_{i=0}^{d^{(L-1)}}w_{i1}^{(L)}x_i
 \]
 对输出层，令
 \begin{equation}
-\delta_1^{(L)}=2\left(y_n-s_1^{(L)}\right)。
+\delta_1^{(L)}=-2\left(y_n-s_1^{(L)}\right)。
 \end{equation}
 对其它层
 \begin{equation}
 \delta_j^{(\ell)}
 ={\partial e_n\over\partial s_{j}^{(\ell)}}
 =\sum_{k=1}^{d^{(\ell+1)}}{\partial e_n\over\partial s_{k}^{(\ell+1)}}{\partial s_{k}^{(\ell+1)}\over\partial x_{j}^{(\ell)}}{\partial x_{j}^{(\ell)}\over\partial s_{j}^{(\ell)}}
-=\sum_k\delta_k^{(\ell+1)}w_{jk}^{(\ell)}\tanh’\left(s_j^{(\ell)}\right)，
+=\sum_k\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)}\tanh’\left(s_j^{(\ell)}\right)，
 \label{eq:backpropagation-delta}
 \end{equation}
-也就是前一层的$\delta_j^{(\ell)}$，可以通过后一层$\delta_k^{(\ell+1)}$回推计算。</p>
+也就是前一层的$\delta_j^{(\ell)}$，可以通过后一层$\delta_k^{(\ell+1)}$回推计算，<a href="http://www.wolframalpha.com/input/?i=d%2Fdx+tanh">其中</a>
+\[
+\tanh’(x)={2\over e^x + e^{-x}}。
+\]</p>
 
 <blockquote>
   <h4 id="bpbackpropagation">BP（backpropagation）算法</h4>
@@ -252,22 +257,29 @@ E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_
   <li>用小的随机值初始化权值$w_{ij}^{(\ell)}$。</li>
 </ul>
 
+<p>若初始化$w_{ij}^{(\ell)}＝0$，由于$x_0^{(\ell)}=1$，除了${\partial e_n\over \partial w_{01}^{(L)}}\neq 0$外，其它的导数都为0；若初始化$w_{ij}^{(\ell)}＝1$，那么$w_{ij}^{(1)}=w_{i(j+1)}^{(1)}$。因此，$w_{ij}^{(\ell)}$不能初始化为0和1。</p>
+
 <p>虽然神经网络很难最优化，但在实际中很有用。</p>
 
-<h2 id="section-2">正则化</h2>
+<h2 id="regularization">正则化</h2>
 
 <p>若用形如$\tanh$的转换函数，神经网络的$d_{VC}=O(VD)$，$V$为神经元数量，$D$为神经元之间的权值数量。当神经元数目足够时，可以做任意逼近，也更容易导致过拟合。为了避免过拟合，需要采取正则化方法。</p>
 
-<h4 id="weight-elimination">一、weight-elimination正则化</h4>
+<h4 id="regularization-weighted-methods">一、weight-elimination正则化</h4>
 
 <p>常用的方法是基于$L_2$的weight-decay正则化，$\Omega(\mathbf w)=\sum\left(w_{ij}^{(\ell)}\right)^2$。这种正则化对权值的压缩（shrink）力度和权值大小“成比例”，大的权值压缩厉害，小的权值压缩较小。</p>
 
 <p>如果通过正则化使权值部分为0（稀疏），就能有效减小$d_{VC}$，常用的方法是$L_1$正则化，$\Omega(\mathbf w)=\sum\left\lvert w_{ij}^{(\ell)}\right\rvert$，但是不可微。采用weight-elimination正则化（放缩的$L_2$正则化），大的权值中等幅度的压缩（median shrink），小的权值也中等幅度的压缩，小的权值就会接近0，具有权值稀疏化的效果。weight-elimination正则化采用
 \begin{equation}
-\Omega(\mathbf w)=\sum{\left(w_{ij}^{(\ell)}\right)^2\over 1+\left(w_{ij}^{(\ell)}\right)^2}。
-\end{equation}</p>
+\Omega(\mathbf w)=\sum{\left(w_{ij}^{(\ell)}\right)^2\over 1+\left(w_{ij}^{(\ell)}\right)^2}，
+\end{equation}
+那么
+\[
+{\partial\Omega(\mathbf w)\over \partial w_{ij}^{(\ell)}}
+={2w_{ij}^{(\ell)}\over\left(1+\left(w_{ij}^{(\ell)}\right)^2\right)^2}。
+\]</p>
 
-<h4 id="section-3">二、尽早停止迭代</h4>
+<h4 id="regularization-early-stopping">二、尽早停止迭代</h4>
 
 <div class="image_line" id="figure-7"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-early-stopping.png"><img src="/assets/images/2015-02-04-neural-network-early-stopping.png" alt="迭代次数对误差的影响" /></a><div class="caption">图 7:  迭代次数对误差的影响 [<a href="/assets/images/2015-02-04-neural-network-early-stopping.png">PNG</a>]</div></div></div>
 
@@ -275,13 +287,27 @@ E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_
 
 <p>所有和梯度有关的优化算法，都可利用尽早停止迭代的机制，实现某种正则化。</p>
 
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:five-input-xor">
+      <p>如果用神经网络实现$XOR(x_1,\dots,x_5)$，采用结构为5-D-1，那么<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=243">最小的D</a>是多少？ <a href="#fnref:five-input-xor" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
 </section>
 <section align="right">
 <br/>
 <span>
   <a  href="/2015/02/summary-of-aggregation-models" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/02/deep-learning" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -319,6 +345,9 @@ E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/02/deep-learning'; --1> -->
+<!--         url = '/2015/02/deep-learning'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
