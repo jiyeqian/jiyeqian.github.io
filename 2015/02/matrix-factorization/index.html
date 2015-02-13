@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>矩阵分解</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>矩阵分解</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-02-12">2015-02-12</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#推荐系统" title="推荐系统">推荐系统</a>&nbsp;
+  
+  <a href="/tags/#特征学习" title="特征学习">特征学习</a>&nbsp;
+  
+  <a href="/tags/#梯度下降法" title="梯度下降法">梯度下降法</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">线性网络</h2>
+
+<p>对于推荐系统（recommender system）数据集，用户对第$m$部电影的评分表示为
+\[
+\mathcal D_m=
+\left\{\left(
+\tilde x_n=(n), y_n=r_{nm}
+\right)
+\mbox{ user }n\mbox{ rated movie }m
+\right\}，
+\]
+$\tilde x_n=(n)$表示抽象的（abstract）特征，代表用户编号（ID），不代表任何数值上的意义，这类的特征称为<strong>类别特征</strong>（categorical feature）。</p>
+
+<p>常见的类别特征有ID、血型、程序语言……然而，许多机器学习算法都对数值特征友好，比如线性模型、扩展的（extended）线性模型（神经网络等）……决策树可以处理类别特征。若要将类别特征用于对数值特征友好的模型，需要将类别特征转换或编码（transform/encode）为数值特征。二值编码（binary vector encoding）是比较简单的征编码方式，对于血型有
+\[
+A=[1\;0\;0\;0]^\top,\quad
+B=[0\;1\;0\;0]^\top,\quad
+AB=[0\;0\;1\;0]^\top,\quad
+O=[0\;0\;0\;1]^\top。
+\]
+编码之后第$m$部电影的的数据记为
+\[
+\mathcal D_m=
+\left\{\left(
+\tilde x_n=\mbox{BinaryVectorEncoding}(n), y_n=r_{nm}
+\right)
+\mbox{ user }n\mbox{ rated movie }m
+\right\}，
+\]
+所有用户的数据可以统一记为
+\[
+\mathcal D=
+\left\{\left(
+\tilde x_n=\mbox{BinaryVectorEncoding}(n), 
+y_n=\left[r_{n1}\;?\;?\;r_{n4}\;r_{n5}\;\ldots\;r_{nM}\right]^\top
+\right)
+\right\}，
+\]
+“$?$”表示用户没有对电影做出评价。若要学到每个用户的爱好，需要先学到每个用户的特征（年龄、电影类型的偏好等）。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png"><img src="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png" alt="利用神经网络提取特征" /></a><div class="caption">图 1:  利用神经网络提取特征 [<a href="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png">PNG</a>]</div></div></div>
+
+<p>利用不含$x_0^{(\ell)}$神经元<sup id="fnref:why-no-1-neuron"><a href="#fn:why-no-1-neuron" class="footnote">1</a></sup>的$N-\tilde d-M$神经网络（自编码器）提取特征，如上图所示，$\mathbf x$是只有一个非0元的二值向量。中间的$\tanh$转换必要么？</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png"><img src="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png" alt="采用线性神经元提取特征" /></a><div class="caption">图 2:  采用线性神经元提取特征 [<a href="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png">PNG</a>]</div></div></div>
+
+<p>对于$\mathbf x$，只会有一个非0分量进入$\tanh$层的神经元，即使不进行$\tanh$转换（采用线性模型，如上图所示）也能找到特征的恰当描述方式，这样的神经网络称为<strong>线性网络</strong>（linear network）。第一层用$N\times\tilde d$的矩阵$\mathbf V^\top$表示，第二层用$\tilde d\times M$的矩阵$\mathbf W$表示，线性网络可以表示为
+\begin{equation}
+h(\mathbf x)=\mathbf W^\top\mathbf V\mathbf x。
+\end{equation}
+对每个用户而言，由于$\mathbf x_n$只有一个元素为1，相当于抽取矩阵的一列
+\begin{equation*}
+h(\mathbf x_n)=\mathbf W^\top\mathbf v_n，
+\end{equation*}
+$\mathbf v_n$表示$\mathbf V$的第$n$列，相当于对第$n$个用户进行了特征转换。</p>
+
+<p>对于推荐系统，线性网络学习$\mathbf V$和$\mathbf W$。</p>
+
+<h2 id="section-1">矩阵分解</h2>
+
+<p>令$\Phi(\mathbf x)=\mathbf V\mathbf x$，第$m$部电影的评分只是线性模型$h_m(\mathbf x)=\mathbf w_m^\top\Phi(\mathbf x)$。对于$\mathcal D_m$，期望有
+\[
+r_{nm}=y_n\approx\mathbf w_m^\top\mathbf v_n，
+\]
+需要最小化目标函数
+\begin{equation}
+E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
+={1\over \sum_{m=1}^M\lvert\mathcal D_m\rvert}\sum_{\mbox{user }n\mbox{ rated movie }m}
+\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2，
+\end{equation}
+同时学到转换方式$\left\{\mathbf v_n\right\}$和线性模型$\left\{\mathbf w_m\right\}$。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png"><img src="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png" alt="矩阵分解的形式" /></a><div class="caption">图 3:  矩阵分解的形式 [<a href="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png">PNG</a>]</div></div></div>
+
+<p>当$r_{nm}=\mathbf w_m^\top\mathbf v_n=\mathbf v_n^\top\mathbf w_m$时，所有评价可记为矩阵形式$\mathbf R\approx\mathbf V^\top\mathbf W$，将含有缺失值的$\mathbf R$矩阵分解为两个矩阵的乘积，如上图所示，就得到了用户的特征以及特征的线性组合方式。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-recommender.png"><img src="/assets/images/2015-02-12-matrix-factorization-recommender.png" alt="推荐系统" /></a><div class="caption">图 4:  推荐系统 [<a href="/assets/images/2015-02-12-matrix-factorization-recommender.png">PNG</a>]</div></div></div>
+
+<p>通过用户的评分$\mathbf R$，学到了$\mathbf v_n$表示用户的特征（喜好），也学到了$\mathbf w_m$表电影具备哪些元素，如上图所示。</p>
+
+<p>类似的矩阵分解模型可以用于提取其它抽象特征。线性自编码器可看作一种特殊的矩阵分解方法：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><a href="/2015/02/deep-learning/#linear-autoencoder">线性自编码器</a> $\mathbf X\approx\mathbf W\left(\mathbf W^\top\mathbf X\right)$</th>
+      <th>矩阵分解 $\mathbf R\approx \mathbf V^\top\mathbf W$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>motivation</td>
+      <td>特殊的$d-\tilde d-d$的线性神经网络</td>
+      <td>$N-\tilde d-M$的线性神经网络</td>
+    </tr>
+    <tr>
+      <td>误差度量</td>
+      <td>所有数据$x_{ni}$上的平方误差</td>
+      <td>已知数据$r_{nm}$上的平方误差</td>
+    </tr>
+    <tr>
+      <td>求解方法</td>
+      <td>$\mathbf X^\top\mathbf X$特征向量上的全局最优解</td>
+      <td>交替最小二乘法求取的局部最优解</td>
+    </tr>
+    <tr>
+      <td>功能</td>
+      <td>获取数据低维特征表示</td>
+      <td>提取隐含特征</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-2">交替最小二乘法</h2>
+
+<p>通过最优化
+\[
+\min_{\mathbf W,\mathbf V}E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
+\propto\sum_{m=1}^M\left(
+\sum_{(\mathbf x_n,r_{nm})\in\mathcal D_m}
+\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2
+\right)，
+\]
+学到参数矩阵$\mathbf W,\mathbf V$。同时学习两组变量很困难，可以采取类似<a href="/2015/02/radial-basis-function-network/#k-means">k均值算法</a>的<strong>交替最小二乘法</strong>（alternating least squares algorithm）：</p>
+
+<ul>
+  <li>当固定$\mathbf v_n$时，相当于在第$m$部电影的数据$\mathcal D_m$上最小化$E_{in}$得到$\mathbf w_m$，通过对每部电影的线性回归（不含$w_0$）实现；</li>
+  <li>由于用户特征向量和电影特征向量的对称性（二者地位一样），当固定$\mathbf w_m$时，相当于对每个用户的线性回归（不含$v_0$）。</li>
+</ul>
+
+<blockquote>
+  <h4 id="section-3">交替最小二乘法</h4>
+  <hr />
+  <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$；</p>
+
+  <p>交替最小化$E_{in}$直到收敛：</p>
+
+  <ul>
+    <li>最优化$\mathbf w_1,\mathbf w_2,\ldots,\mathbf w_M$：对电影$m$在数据集$\{(\mathbf v_n,r_{nm})\}$做线性回归；</li>
+    <li>最优化$\mathbf v_1,\mathbf v_2,\ldots,\mathbf v_N$：对用户$n$在数据集$\{(\mathbf w_m,r_{nm})\}$做线性回归。</li>
+  </ul>
+</blockquote>
+
+<p>每次交替最小化都会使$E_{in}$减小，收敛是有保障的。采用交替最小二乘法，类似于用户和电影之间的“探戈”（tango）。</p>
+
+<h2 id="section-4">随机梯度下降法</h2>
+
+<p>随机梯度下降法（SGD，stochastic gradient descent）容易实现，每轮迭代高效，容易扩展到平方误差之外的其它误差度量方式。</p>
+
+<p>单个数据产生的误差为
+\[
+err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
+=\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2，
+\]
+那么可得偏微分
+\[
+\begin{aligned}
+\nabla_{\mathbf v_n} &amp;err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
+=-2\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)\mathbf w_m\\
+\nabla_{\mathbf w_m} &amp;err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
+=-2\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)\mathbf v_n。
+\end{aligned}
+\]
+每次跟新量$\propto -(\mbox{residual})(\mbox{the other feature vector})$，余数（residual）为$r_{nm}-\mathbf w_m^T\mathbf v_n$，也就是用余数倍另一个量更新当前量。</p>
+
+<blockquote>
+  <h4 id="section-5">基于随机梯度下降法的矩阵分解</h4>
+  <hr />
+  <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$<sup id="fnref:all-zeros"><a href="#fn:all-zeros" class="footnote">2</a></sup>；</p>
+
+  <p>对$t=0,1,\ldots,T$迭代：</p>
+
+  <ol>
+    <li>对所有已知的$r_{nm}$，随机抽取$(n,m)$；</li>
+    <li>计算余数$\tilde r_{nm}=r_{nm}-\mathbf w_m^T\mathbf v_n$；</li>
+    <li>随机梯度更新：
+\[
+\begin{aligned}
+\mathbf v_n^{new}&amp;\leftarrow\mathbf v_n^{old}+\eta\tilde r_{nm}\mathbf w_m^{old}\\
+\mathbf w_m^{new}&amp;\leftarrow\mathbf w_m^{old}+\eta\tilde r_{nm}\mathbf v_n^{old}。
+\end{aligned}
+\]</li>
+  </ol>
+</blockquote>
+
+<p>随机梯度下降法在大规模矩阵分解中很常用。</p>
+
+<blockquote>
+  <h4 id="kddcup-2011-track-1-world-champion-solution-by-ntu">KDDCup 2011 Track 1: World Champion Solution by NTU</h4>
+  <hr />
+  <p><strong>问题</strong>：训练数据时间上要早于测试数据。也就是训练和测试数据分布不同，有偏采样（sampling bias）。</p>
+
+  <p><strong>对策</strong>：强化时间晚的数据。SGD在最后$T’$轮迭代只选用感兴趣的$T’$个数据。</p>
+
+  <p><strong>结果</strong>：consistent improvements of test performance。</p>
+</blockquote>
+
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-7">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-no-1-neuron">
+      <p>让网络看上去简单些而已，加入$x_0^{(\ell)}$可以得到一个稍微有些不同的模型。 <a href="#fnref:why-no-1-neuron" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:all-zeros">
+      <p>若都初始化为0，$\{\mathbf w_m\}$和$\{\mathbf v_n\}$始终为0，$E_{in}$永远也不会减少。 <a href="#fnref:all-zeros" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/02/radial-basis-function-network" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/02/matrix-factorization" data-url="http://qianjiye.de/2015/02/matrix-factorization" data-title="矩阵分解">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/02/radial-basis-function-network'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/02/matrix-factorization/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

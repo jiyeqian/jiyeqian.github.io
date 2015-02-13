@@ -210,7 +210,7 @@ g_{RBF}(\mathbf x_n)=y_n，
 
 <p>如何找出这些有效的代表点呢？</p>
 
-<h2 id="k">k均值聚类</h2>
+<h2 id="k-means">k均值聚类</h2>
 
 <p>若$\mathbf x_1\approx\mathbf x_2$，不需要$\mbox{RBF}(\mathbf x,\mathbf x_1)$和$\mbox{RBF}(\mathbf x,\mathbf x_2)$都出现在RBF网络中，可以只用一个cluster$\boldsymbol\mu\approx\mathbf x_1\approx\mathbf x_2$替代两个点即可。</p>
 
@@ -223,7 +223,7 @@ g_{RBF}(\mathbf x_n)=y_n，
 
 <ol>
   <li>最优划分：固定$\boldsymbol\mu_1,\ldots,\boldsymbol\mu_M$；选择每个$\mathbf x_n$所属的唯一类别$S_m$，使$\lVert\mathbf x_n-\boldsymbol\mu_m\rVert$最小。</li>
-  <li>最优计算：固定$S_1,\ldots,S_M$；对每个$\boldsymbol\mu_m$，由
+  <li>最优计算：固定$S_1,\ldots,S_M$；对每个$\boldsymbol\mu_m$，由于
 \[
 \nabla_{\boldsymbol\mu_m}E_{in}
 =-2\sum_{n=1}^N[[\mathbf x_n\in S_m]](\mathbf x_n-\boldsymbol\mu_m)
@@ -287,7 +287,7 @@ g_{RBF}(\mathbf x_n)=y_n，
 <span>
   <a  href="/2015/02/deep-learning" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/02/matrix-factorization" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -325,6 +325,9 @@ g_{RBF}(\mathbf x_n)=y_n，
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/02/matrix-factorization'; --1> -->
+<!--         url = '/2015/02/matrix-factorization'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
