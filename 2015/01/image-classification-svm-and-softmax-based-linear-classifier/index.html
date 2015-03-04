@@ -180,7 +180,7 @@ L_i=\max(0, -7-13+10)+\max(0,11-13+10)=8。
 
 <p>将\eqref{multiclass-linear-classifier-2}代入\eqref{eq:m-svm-loss}可得
 \begin{equation}
-L_i = \sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta)，
+L_i = \sum_{j\neq y_i}\max\left(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta\right)，
 \end{equation}
 其中，$\mathbf w_j^T$是$\mathbf W$的第$j$行元素。</p>
 
@@ -188,11 +188,11 @@ L_i = \sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathb
 
 <p>假设$\mathbf W$将一个数据集的每个样本都正确分类（对所有的$i$，$L_i=0$），$\mathbf W$却不是唯一的存在，当$\lambda&gt;0$时$\lambda\mathbf W$都能胜任。通过正则化惩罚（regularization penalty）$R(\mathbf W)$，可以消除$\mathbf W$的歧义。常用的正则化惩罚抑制$L_2$范数大的$\mathbf W$出现，
 \[
-R(\mathbf W)=\sum_k\sum_l\mathbf W_{k,l}^2，
+R(\mathbf W)=\sum_k\sum_l w_{k,l}^2，
 \]
 正则化只针对权值与输入数据无关。因此，多分类支持向量机的损失函数包括两部分，数据损失（data loss）和正则化损失（regularization loss），
 \begin{equation}
-L={1\over N}\sum_i\sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta)+\lambda \sum_k\sum_l\mathbf W_{k,l}^2。
+L={1\over N}\sum_i\sum_{j\neq y_i}\max\left(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{y_i}^T\mathbf x_i +\Delta\right)+\lambda \sum_k\sum_lw_{k,l}^2。
 \label{eq:regularization-loss-function}
 \end{equation}</p>
 
@@ -210,7 +210,7 @@ L={1\over N}\sum_i\sum_{j\neq y_i}\max(0, \mathbf w_j^T\mathbf x_i - \mathbf w_{
 
 <p>对于二分类支持向量机，<a href="/2015/01/kernel-logistic-regression/#mjx-eqn-equniform-soft-margin-svm">损失函数</a>表示为
 \[
-L=C\sum_{i=1}^N\max(0, 1-y_i\mathbf w^T\mathbf x_i)+R(\mathbf w)，
+L=C\sum_{i=1}^N\max\left(0, 1-y_i\mathbf w^T\mathbf x_i\right)+R(\mathbf w)，
 \]
 其中$C$是超参数，$y_i\in\{-1,+1\}$。它可视为本文多分类问题简化为二分类的一个特例，$C$和$\lambda$都有相同的折中作用，$C\propto{1\over \lambda}$。</p>
 

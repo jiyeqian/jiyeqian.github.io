@@ -129,7 +129,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <h3 id="section-3">解决方案</h3>
 
 <ol>
-  <li>基本的方法是必须采用科学的<a href="/2014/11/machine-learning-advice-for-applying-machine-learning/#performance-evaluation">性能评价指标</a>，比如$F_1$ Scorce，避免大样本类淹没了小样本类。对小样本类别的分类性能也能进行有效的评估。</li>
+  <li>基本的方法是必须采用科学的<a href="/2014/11/machine-learning-advice-for-applying-machine-learning/#performance-evaluation">性能评价指标</a>，比如<a href="http://www.bigdataexaminer.com/dealing-with-unbalanced-classes-svm-random-forests-and-decision-trees-in-python/">采用$F_1$ Scorce</a>，避免大样本类淹没了小样本类。对小样本类别的分类性能也能进行有效的评估。</li>
   <li><a href="/2014/12/machine-learning-anomaly-detection">异常检测</a>也是处理这类不均衡样本的方法，只对大样本类别进行建模，小样本类当作异常数据进行检测。</li>
   <li>对不同类别赋予不同重要程度的权值<a href="#lin_ml_ne_2014">[1, P. 24]</a>，小样本赋予更大的权值<a href="#scikit-learn-2015-svm-unbalanced">[2]</a>。</li>
 </ol>
@@ -162,7 +162,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>更多的时候，没有足够的先验知识预知数据特性，无法合理伪造，还得采集跟多的数据。机器学习本来就是探究数据特性的过程。</p>
 
-<h2 id="section-7">其它建议</h2>
+<h2 id="section-7">不是问题的问题</h2>
+
+<p>对于内在不均衡的数据，若数据远离分类边界（比如线性可分的数据集），<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">采用hard-margin的SVM</a>和感知器，不均衡数据不影响分类结果。</p>
+
+<p>在实际应用中，有时需要制造不均衡性，对不同类别数据采用不同权重，比如：<a href="/2015/01/adaptive-boosting">AdaBoost对错分的数据赋予更大的权重</a>，<a href="/2014/12/machine-learning-noise-and-error">虚拟复制处理加权误差</a>。</p>
+
+<p>通过重采样将数据变得均衡<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">不一定能提升分类性能</a>，比如不能提升logistic回归性能，但对随机森林有效（但随机森林不适合用于不均衡数据）。</p>
+
+<h2 id="section-8">其它建议</h2>
 
 <p><a href="http://www.weibo.com/n/机器学习那些事儿">@机器学习那些事儿</a>发起过关于<a href="http://www.weibo.com/p/1001603785752793219283?sudaref=ml.memect.com">不均匀正负样本分布下的机器学习</a>的讨论，部分建议摘录如下：</p>
 
@@ -181,7 +189,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>learning to rank对于训练数据量的要求较高，同时要确定用于learning to rank的pair，还是需要找到负例，从而将正例和负例形成偏序配对。所以learning to rank是一种方法，但个人认为这会将简单问题复杂化，且本质还是需要去找负例。</li>
 </ol>
 
-<h2 id="section-8">参考资料</h2>
+<h2 id="section-9">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lin_ml_ne_2014">[1]H.-T. Lin, “Lecture 8: Noise and Error.” Coursera, 2014.</span>
 
@@ -194,7 +202,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </li></ol>
 
-<h3 id="section-9">脚注</h3>
+<h3 id="section-10">脚注</h3>
 
 
 </section>

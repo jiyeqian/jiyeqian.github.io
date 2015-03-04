@@ -109,6 +109,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
   
+  <a href="/tags/#BP算法" title="BP算法">BP算法</a>&nbsp;
+  
 </span>
 
 </section>
@@ -206,25 +208,32 @@ e_n=\left(y_n-s_1^{(L)}\right)^2=\left(y_n-\sum_{i=0}^{d^{(L-1)}}w_{i1}^{(L)}x_i
 =-2\left(y_n-s_1^{(L)}\right)\cdot x_i^{(L-1)}，\\
 &amp;{\partial e_n\over\partial w_{ij}^{(\ell)}}
 ={\partial e_n\over\partial s_{j}^{(\ell)}}\cdot{\partial s_{j}^{(\ell)}\over\partial w_{ij}^{(\ell)}}
-=\delta_j^{(\ell)}x_i^{(\ell-1)}。
+=x_i^{(\ell-1)}\delta_j^{(\ell)}。
 \end{aligned}
 \]
-对输出层，令
+对输出层，令<sup id="fnref:tanh_output"><a href="#fn:tanh_output" class="footnote">2</a></sup>
 \begin{equation}
 \delta_1^{(L)}=-2\left(y_n-s_1^{(L)}\right)。
+\label{eq:backpropagation-delta-L}
 \end{equation}
 对其它层
 \begin{equation}
 \delta_j^{(\ell)}
 ={\partial e_n\over\partial s_{j}^{(\ell)}}
 =\sum_{k=1}^{d^{(\ell+1)}}{\partial e_n\over\partial s_{k}^{(\ell+1)}}{\partial s_{k}^{(\ell+1)}\over\partial x_{j}^{(\ell)}}{\partial x_{j}^{(\ell)}\over\partial s_{j}^{(\ell)}}
-=\sum_k\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)}\tanh’\left(s_j^{(\ell)}\right)，
-\label{eq:backpropagation-delta}
+=\tanh’\left(s_j^{(\ell)}\right)\sum_{k=1}^{d^{(\ell+1)}}\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)}，
+\label{eq:backpropagation-delta2}
 \end{equation}
 也就是前一层的$\delta_j^{(\ell)}$，可以通过后一层$\delta_k^{(\ell+1)}$回推计算，<a href="http://www.wolframalpha.com/input/?i=d%2Fdx+tanh">其中</a>
 \[
-\tanh’(x)={2\over e^x + e^{-x}}。
-\]</p>
+\tanh’(s)=1-\tanh^2(s)=\left({2\over \exp(s) + \exp(-s)}\right)^2，
+\]
+那么
+\begin{equation}
+\delta_j^{(\ell)}
+=\left(1-\left(x_j^{(\ell)}\right)^2\right)\sum_{k=1}^{d^{(\ell+1)}}\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)},\quad(j\geq 1)。
+\label{eq:backpropagation-delta}
+\end{equation}</p>
 
 <blockquote>
   <h4 id="bpbackpropagation">BP（backpropagation）算法</h4>
@@ -236,7 +245,7 @@ e_n=\left(y_n-s_1^{(L)}\right)^2=\left(y_n-\sum_{i=0}^{d^{(L-1)}}w_{i1}^{(L)}x_i
   <ol>
     <li>随机化：随机选取$n\in\{1,2,\ldots,N\}$；</li>
     <li>前向传播：从$\mathbf x^{(0)}=\mathbf x_n$开始，利用\eqref{eq:forward-x}计算所有$x_i^{(\ell)}$；</li>
-    <li>误差回传：对$\mathbf x^{(0)}=\mathbf x_n$，利用\eqref{eq:backpropagation-delta}计算所有$\delta_j^{(\ell)}$；</li>
+    <li>误差回传：对$\mathbf x^{(0)}=\mathbf x_n$，利用\eqref{eq:backpropagation-delta-L}和\eqref{eq:backpropagation-delta}计算所有$\delta_j^{(\ell)}$；</li>
     <li>梯度下降：$w_{ij}^{(\ell)}\leftarrow w_{ij}^{(\ell)}-\eta x_i^{(\ell-1)}\delta_j^{(\ell)}$；</li>
   </ol>
 
@@ -287,16 +296,69 @@ E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_
 
 <p>所有和梯度有关的优化算法，都可利用尽早停止迭代的机制，实现某种正则化。</p>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="section-2">程序示例</h2>
+
+<div class="highlight"><pre><code class="language-R">nnet_train <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>X<span class="p">,</span> Y<span class="p">,</span> struct<span class="p">,</span> r<span class="p">,</span> eta<span class="p">,</span> TT<span class="p">)</span> <span class="p">{</span>
+  <span class="c1"># X -- a matrix with each feature row </span>
+  <span class="c1"># Y -- a matrix </span>
+  <span class="c1"># struct -- a vector with neuron number of each layer, including the input layer</span>
+  <span class="c1"># r -- initialization range</span>
+  <span class="c1"># eta -- learning rate</span>
+  <span class="c1"># TT -- iteration times</span>
+  
+  X <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> X<span class="p">)</span>
+  num_data <span class="o">&lt;-</span> <span class="kp">nrow</span><span class="p">(</span>X<span class="p">)</span>
+  num_layer <span class="o">&lt;-</span> <span class="kp">length</span><span class="p">(</span>struct<span class="p">)</span> 
+  nnetwork <span class="o">&lt;-</span> Xs <span class="o">&lt;-</span> Deltas <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">()</span>
+  
+  <span class="c1"># initialization</span>
+  <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="p">(</span>num_layer <span class="o">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+    nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span>runif<span class="p">((</span>struct<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="o">*</span> struct<span class="p">[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">],</span> <span class="o">-</span>r<span class="p">,</span> r<span class="p">),</span>
+                            struct<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="m">1</span><span class="p">,</span> struct<span class="p">[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">])</span>
+  <span class="p">}</span>
+  
+  <span class="kr">for</span> <span class="p">(</span>t <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> TT<span class="p">)</span> <span class="p">{</span>
+    n <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span>num_data<span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+    
+    <span class="c1"># forward</span>
+    Xs<span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kp">t</span><span class="p">(</span>X<span class="p">[</span>n<span class="p">,,</span>drop <span class="o">=</span> <span class="bp">F</span><span class="p">])</span>
+    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">2</span> <span class="o">:</span> num_layer<span class="p">)</span> <span class="p">{</span>
+      xx <span class="o">&lt;-</span> <span class="kp">tanh</span><span class="p">(</span><span class="kp">t</span><span class="p">(</span><span class="kp">t</span><span class="p">(</span>Xs<span class="p">[[</span>i <span class="o">-</span> <span class="m">1</span><span class="p">]])</span> <span class="o">%*%</span> nnetwork<span class="p">[[</span>i <span class="o">-</span> <span class="m">1</span><span class="p">]]))</span>
+      <span class="kp">ifelse</span><span class="p">(</span>i <span class="o">!=</span> num_layer<span class="p">,</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> xx<span class="p">),</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> xx<span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># backward</span>
+    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> num_layer <span class="o">:</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kp">ifelse</span><span class="p">(</span>i <span class="o">==</span> num_layer<span class="p">,</span>
+             Deltas<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> 
+               <span class="m">-2</span> <span class="o">*</span> <span class="p">(</span><span class="kp">t</span><span class="p">(</span>Y<span class="p">[</span>n<span class="p">,,</span>drop<span class="o">=</span><span class="bp">F</span><span class="p">])</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]])</span> <span class="o">*</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">^</span> <span class="m">2</span><span class="p">),</span>
+             Deltas<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> 
+               <span class="p">((</span>nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">%*%</span> Deltas<span class="p">[[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">]])</span> <span class="o">*</span>
+                  <span class="p">(</span><span class="m">1</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">^</span> <span class="m">2</span><span class="p">))[</span><span class="m">2</span><span class="o">:</span><span class="kp">nrow</span><span class="p">(</span>nnetwork<span class="p">[[</span>i<span class="p">]]),,</span>drop<span class="o">=</span><span class="bp">F</span><span class="p">])</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># update weight</span>
+    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="p">(</span>num_layer <span class="o">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
+      nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">-</span> eta <span class="o">*</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">%*%</span> <span class="kp">t</span><span class="p">(</span>Deltas<span class="p">[[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">]])</span>
+    <span class="p">}</span>
+    
+  <span class="p">}</span>
+  <span class="kr">return</span><span class="p">(</span>nnetwork<span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="section-3">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="section-4">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:five-input-xor">
       <p>如果用神经网络实现$XOR(x_1,\dots,x_5)$，采用结构为5-D-1，那么<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=243">最小的D</a>是多少？ <a href="#fnref:five-input-xor" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:tanh_output">
+      <p>对于二分类问题的神经网络，输出为$\{-1,+1\}$，输出层的神经元也要采用$\tanh$，此时$e_n=\left(y_n-\tanh\left(s_1^{(L)}\right)\right)^2$，那么$\delta_1^{(L)}=-2\left(y_n-x_1^{(L)}\right)\left(1-\left(x_1^{(L)}\right)^2\right)$。 <a href="#fnref:tanh_output" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
