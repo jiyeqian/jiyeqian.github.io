@@ -326,6 +326,89 @@ L_i=\sum_{j\neq y_i}\max\left(
 
 <p>在实际中，采用mini-batch的方法能提高参数更新频率，更快收敛。若mini-batch梯度下降法只采用一个样本，称为随机梯度下降法（SGD，stochastic gradient descent）或在线（on-line）梯度下降法。但这不太常用，在实际中由于向量化代码的优化，计算100个样本的梯度比1个样本的梯度计算100次高效。虽然人们使用SGD这个称谓，实际通常指的是mini-batch的梯度下降法（MGD／BGD，minbatch/batch gradient descent）。min-batch的样本数量虽是超参数，但很少采用验证法确定，通常根据内存大小来决定，或者直接设定为100左右的值。</p>
 
+<h2 id="bp">BP梯度</h2>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-02-13-image-classification-optimization-circuit2.png"><img src="/assets/images/2015-02-13-image-classification-optimization-circuit2.png" alt="BP梯度计算" /></a><div class="caption">图 3:  BP梯度计算 [<a href="/assets/images/2015-02-13-image-classification-optimization-circuit2.png">PNG</a>]</div></div></div>
+
+<p>对函数$f(x,y,z)=(x+y)z$，令$q=x+y$，那么根据链式法则（chain rule）有${\partial f\over \partial x}={\partial f\over \partial q}{\partial q\over \partial x}$。梯度${\partial f\over \partial x}$从右到左反向计算如上图“电路”所示，通过相邻节点的局部梯度链式相乘得到，每个节点用门（gate）表示。当${\partial f\over \partial q}=-4$和${\partial q\over \partial x}=1$时，${\partial f\over \partial x}=-4\times 1 = -4$。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-02-13-image-classification-optimization-circuit3.png"><img src="/assets/images/2015-02-13-image-classification-optimization-circuit3.png" alt="BP梯度计算" /></a><div class="caption">图 4:  BP梯度计算 [<a href="/assets/images/2015-02-13-image-classification-optimization-circuit3.png">PNG</a>]</div></div></div>
+
+<p>当
+$
+f(\mathbf w,\mathbf x)={1\over 1 + e^{-\left(w_0x_0+w_1x_1+w_2\right)}}
+$
+时，链式计算如上如所示。链式法则的依据是复合函数的求导法则。门可以是任何可导函数（differentiable function），通常选择导数容易计算的函数作为门，如sigmoid函数$\sigma(x)={1\over 1 + e^{-x}}$。将${df\over dx}$简记为<code>dx</code>，${d\sigma(x)\over dx}=(1-\sigma(x))\sigma(x)$，上图的计算过程简化如下：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="c"># assume some random weights and data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c"># forward pass</span>
+<span class="n">dot</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dot</span><span class="p">))</span> <span class="c"># sigmoid function</span>
+
+<span class="c"># backward pass through the neuron (backpropagation)</span>
+<span class="n">ddot</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="n">f</span> <span class="c"># gradient on dot variable, using the sigmoid gradient derivation</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c"># backprop into x</span>
+<span class="n">dw</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c"># backprop into w</span>
+<span class="c"># we&#39;re done! we have the gradients on the inputs to the circuit</span></code></pre></div>
+
+<p>对于复杂的函数，一次求导很复杂，如果采用链式法则，可以降低计算复杂度。对函数
+\[
+f(x,y)={x+\sigma(y)\over\sigma(x)+(x+y)^2}，
+\]
+前向计算如下：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span> <span class="c"># example values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+
+<span class="c"># forward pass</span>
+<span class="n">sigy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">))</span> <span class="c"># sigmoid in numerator   #(1)</span>
+<span class="n">num</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">sigy</span> <span class="c"># numerator                               #(2)</span>
+<span class="n">sigx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span> <span class="c"># sigmoid in denominator #(3)</span>
+<span class="n">xpy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>                                              <span class="c">#(4)</span>
+<span class="n">xpysqr</span> <span class="o">=</span> <span class="n">xpy</span><span class="o">**</span><span class="mi">2</span>                                          <span class="c">#(5)</span>
+<span class="n">den</span> <span class="o">=</span> <span class="n">sigx</span> <span class="o">+</span> <span class="n">xpysqr</span> <span class="c"># denominator                        #(6)</span>
+<span class="n">invden</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">den</span>                                       <span class="c">#(7)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="n">invden</span> <span class="c"># done!                                 #(8)</span></code></pre></div>
+
+<p>反向梯度计算如下：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="c"># backprop f = num * invden</span>
+<span class="n">dnum</span> <span class="o">=</span> <span class="n">invden</span> <span class="c"># gradient on numerator                             #(8)</span>
+<span class="n">dinvden</span> <span class="o">=</span> <span class="n">num</span>                                                     <span class="c">#(8)</span>
+<span class="c"># backprop invden = 1.0 / den </span>
+<span class="n">dden</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">den</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">dinvden</span>                                <span class="c">#(7)</span>
+<span class="c"># backprop den = sigx + xpysqr</span>
+<span class="n">dsigx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                                <span class="c">#(6)</span>
+<span class="n">dxpysqr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                              <span class="c">#(6)</span>
+<span class="c"># backprop xpysqr = xpy**2</span>
+<span class="n">dxpy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">xpy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpysqr</span>                                        <span class="c">#(5)</span>
+<span class="c"># backprop xpy = x + y</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c">#(4)</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c">#(4)</span>
+<span class="c"># backprop sigx = 1.0 / (1 + math.exp(-x))</span>
+<span class="n">dx</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigx</span> <span class="c"># Notice += !! See notes below  #(3)</span>
+<span class="c"># backprop num = x + sigy</span>
+<span class="n">dx</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                  <span class="c">#(2)</span>
+<span class="n">dsigy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                <span class="c">#(2)</span>
+<span class="c"># backprop sigy = 1.0 / (1 + math.exp(-y))</span>
+<span class="n">dy</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigy</span>                                 <span class="c">#(1)</span>
+<span class="c"># done! phew</span></code></pre></div>
+
+<h4 id="section-7">注意事项：</h4>
+
+<ol>
+  <li>将前向计算结果缓存起来，供后向计算使用，如<code>xpy</code>；</li>
+  <li>当变量的导数分成几部分计算时，结果要加起来，采用<code>+=</code>。</li>
+</ol>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-02-13-image-classification-optimization-circuit4.png"><img src="/assets/images/2015-02-13-image-classification-optimization-circuit4.png" alt="BP梯度计算" /></a><div class="caption">图 5:  BP梯度计算 [<a href="/assets/images/2015-02-13-image-classification-optimization-circuit4.png">PNG</a>]</div></div></div>
+
+<p>神经网络中常使用的三种门是$+,\times,\max$，计算法则如上图。</p>
+
+<p>对于线性分类器$\mathbf w^\top\mathbf x_i$，采用乘法门，输入数据的大小会影响权值梯度。输入数据对梯度影响很大，因此数据预处理能极大影响梯度。如果输入数据增大1000倍，权值的梯度也会增大1000倍，此时可以降低学习率补偿数据的影响。</p>
+
 </section>
 <section align="right">
 <br/>
