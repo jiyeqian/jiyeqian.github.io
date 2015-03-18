@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>模式发掘（2）：高效的模式挖掘方法</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>模式发掘（2）：高效的模式挖掘方法</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-03-07">2015-03-07</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#模式发掘" title="模式发掘">模式发掘</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="apriori">Apriori性质</h2>
+
+<p><strong>向下闭包</strong>（downward closure）特性是指频繁项集的所有非空子集也必须是频繁的，这也称为<strong>Apriori性质</strong>。若$\{beer, diaper, nuts\}$是频繁的，那么$\{beer, diaper\}$也是，每个包含$\{beer, diaper, nuts\}$的事务必包含$\{beer, diaper\}$。</p>
+
+<p>如果项集$S$的存在非频繁的子集，那么$S$必不是频繁的。如果项集是非频繁的，它的超集（superset）必是非频繁的，这称为<strong>Apriori剪枝原理</strong>（Apriori pruning principle）。基于这个原理，主要有三种可扩展的（scalable）频繁模式挖掘方法：Apriori、Eclat和FPgrowth。</p>
+
+<h2 id="apriori-1">Apriori算法</h2>
+
+<p>Apriori算法是第一个基于候选集生成与测试的频繁集挖掘方法。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png"><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png" alt="Apriori算法" /></a><div class="caption">图 1:  Apriori算法 [<a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png">PNG</a>]</div></div></div>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png"><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png" alt="Apriori算法示例" /></a><div class="caption">图 2:  Apriori算法示例 [<a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png">PNG</a>]</div></div></div>
+
+<p>Airport算法生成候选项集的集合分两步：</p>
+
+<ol>
+  <li>自连接（self-join）$F_k$生成候选项集的集合；</li>
+  <li>剪枝，删除候选项集的集合中的非频繁模式。</li>
+</ol>
+
+<p>若频繁模式的集合$F_3=\{abc,abd,acd,ace,bcd\}$，自连接可得候选模式的集合$C’_4=\{abcd, acde\}$，但是$ade\notin F_3$，因此剪枝后可得$C_4=\{abcd\}$。</p>
+
+<p>基于SQL语句生成候选项集的集合：</p>
+
+<p><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-SQL.png" alt="SQL implementation" /></p>
+
+<h2 id="section">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-1">脚注</h3>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/03/pattern-discovery-basic-concepts" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/03/statistical-learning-linear-regression" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/03/efficient-pattern-mining-methods" data-url="http://qianjiye.de/2015/03/efficient-pattern-mining-methods" data-title="模式发掘（2）：高效的模式挖掘方法">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/03/pattern-discovery-basic-concepts'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/03/statistical-learning-linear-regression'; --1> -->
+<!--         url = '/2015/03/statistical-learning-linear-regression'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/03/efficient-pattern-mining-methods/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

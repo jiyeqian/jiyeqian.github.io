@@ -2,6 +2,42 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2015/03/statistical-learning-linear-regression</loc>
+    
+    <lastmod>2015-03-13T20:06:43+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/efficient-pattern-mining-methods</loc>
+    
+    <lastmod>2015-03-07T23:11:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/pattern-discovery-basic-concepts</loc>
+    
+    <lastmod>2015-03-07T19:11:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/r-essential</loc>
+    
+    <lastmod>2015-03-06T02:36:23+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2015/02/image-classification-optimization</loc>
     
     <lastmod>2015-02-13T22:53:50+08:00</lastmod>
@@ -434,6 +470,15 @@
   </url>
   
   <url>
+    <loc>http://qianjiye.de/2012/07/python-essential</loc>
+    
+    <lastmod>2012-07-11T00:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2012/07/host-your-pages-at-github-using-jekyll</loc>
     
     <lastmod>2012-07-01T00:00:00+08:00</lastmod>
@@ -522,6 +567,8 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  
   
   
   

@@ -4,8 +4,655 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-03-05T14:45:26+08:00</lastbuilddate>
+    <lastbuilddate>2015-03-19T04:57:20+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>统计学习：线性回归</title>
+      <link href="http://qianjiye.de/2015/03/statistical-learning-linear-regression" />
+      <pubdate>2015-03-13T20:06:43+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/statistical-learning-linear-regression</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">应用场景</h2>
+
+<p>线性回归是研究其它一些统计学习方法的起点，其它方法可看作线性回归的扩展。</p>
+
+<p>在<a href="http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv">Advertising数据集</a>，某种商品销售额（sales）可视为电视（TV）、广播（radio）和报纸（newspaper）广告预算的函数。通过这些数据，能否解决如下问题：</p>
+
+<ol>
+  <li>广告预算和销量有关吗？</li>
+  <li>如果相关，这种相关性有多强？也就是给定广告预算，能否准确预测销售额？</li>
+  <li>各种类型的广告对销售额都有影响么吗？</li>
+  <li>如果准确评估每种广告对销售额的影响？</li>
+  <li>如何准确预测未来销售额？</li>
+  <li>广告和销售额是线性关系吗？</li>
+  <li>广告媒体之间有<strong>协同效应</strong>（synergy effect）吗？协同效应在统计学中称为<strong>相关性</strong>（interaction effect）。例如：在电视和广播分别投放\$50000的广告和将这\$100000投放到其中一种媒体，效果一样吗？</li>
+</ol>
+
+<h2 id="section-1">回归模型</h2>
+
+<p>数学上，回归问题可表示为
+\begin{equation}
+Y\approx \beta_0 + \beta_1 X，
+\end{equation}
+$X$可以指代电视，$Y$表示销售额。$\beta_0 $和$\beta_1$分别表示<strong>截距</strong>（intercept）和<strong>斜率</strong>（slope）。模型参数用训练数据上的最小二乘法估计可得
+\begin{equation}
+\begin{aligned}
+\hat\beta_1&amp;={\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\over\sum_{i=1}^n(x_i-\bar x)^2}\\
+\hat\beta_0&amp;=\bar y-\hat\beta_1\bar x，
+\end{aligned}
+\label{eq:lsm-coefficients}
+\end{equation}
+销售额可以预测
+\[
+\hat y=\hat\beta_0+\hat\beta_1x，
+\]
+符号$\hat{\;}$表示估计值。第$i$个样本的<strong>残差</strong>（residual）记为$e_i=y_i-\hat y_i$，$n$个样本的<strong>残差平方和</strong>（RSS，residual sum of squares）为
+\begin{equation}
+RSS=e_i^2+e_2^2+\ldots+e_n^2。
+\label{eq:rss}
+\end{equation}</p>
+
+<p>假设$X$和$Y$的真实关系为
+\begin{equation}
+Y=\beta_0+\beta_1X+\epsilon，
+\label{eq:population-regression-line}
+\end{equation}
+截断$\beta_0$表示当$X=0$是$Y$的取值，斜率$\beta_1$表示$X$增加一个单位$Y$的平均增加量，误差$\epsilon$代表了这个简单模型缺失的其它所有量。$X$和$Y$的真实关系可能不是线性的，还可能有其它量导致$Y$的改变，也可能有测量误差。通常假定误差项与$X$独立。</p>
+
+<p>模型\eqref{eq:population-regression-line}定义了<strong>总体回归直线</strong>（population regression line），它是$X$和$Y$真实关系的最佳线性近似。最小二乘法估计的系数\eqref{eq:lsm-coefficients}确定了<strong>最小二乘直线</strong>（least squares line）。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-03-13-statistical-learning-linear-regression-experiment1.png"><img src="/assets/images/2015-03-13-statistical-learning-linear-regression-experiment1.png" alt="线性回归模型" /></a><div class="caption">图 1:  线性回归模型 [<a href="/assets/images/2015-03-13-statistical-learning-linear-regression-experiment1.png">PNG</a>]</div></div></div>
+
+<p>上图左中，红色直线表示真实关系$f(X)=2+3X$，也就是总体回归线，深蓝色直线表示最小二乘直线，它是基于数据的最小二乘估计；上图右的浅蓝色直线是10次最小二乘法估计的结果，每次估计采用的不同数据集，但是10次估计的平均值很接近总体回归线。</p>
+
+<p>每次实验的100组数据通过模型$Y=2+3X+\epsilon$随机生成，$\epsilon$由零均值的正态分布产生。在实际应用中，只能通过数据得到最小二乘直线，无法观察到总体回归直线。</p>
+
+<p>在一个数据集上通过\eqref{eq:lsm-coefficients}无法得到参数的准确估计，但是通过在大量数据集上估计结果的平均，最小二乘直线就是总体回归直线的无偏（unbiased）估计。</p>
+
+<p>参数估计估计的精度可以通过<strong>标准误差</strong>（SE，standard error）衡量，</p>
+
+<p>\begin{equation}
+\begin{aligned}
+SE\left(\hat\beta_0\right)^2&amp;=\sigma^2\left[{1\over n}+{\bar x^2\over\sum_{i=1}^n(x_i-\bar x)^2}\right]\\
+SE\left(\hat\beta_1\right)^2&amp;={\sigma^2\over\sum_{i=1}^n(x_i-\bar x)^2}，
+\end{aligned}
+\end{equation}</p>
+
+<p>$\sigma$表示均方差（standard deviation），$\sigma^2=Var(\epsilon)$。</p>
+
+<p>标准误差揭示了参数估计值和真实值之间的平均差异。公式严格成立的条件是每个样本的误差$\epsilon_i$和<strong>公共方差</strong>（common variance）无关。即使这个条件不成立，这个公式也可作为评估的很好近似。当$x_i$越分散时，$SE\left(\hat\beta_1\right)^2$越小；当$\bar x=0$时，$SE\left(\hat\beta_0\right)^2$也更小，此时$\hat\beta_0=\bar y$；随着样本数$n$的增加，$SE\left(\hat\beta_0\right)^2$也越来越小。通常$\sigma^2$未知，但可以通过数据集上的<strong>标准化残差</strong>（RSE，residual standard error）估计，</p>
+
+<p>\begin{equation}
+RSE=\sqrt{RSS\over n-2}。
+\label{eq:rse}
+\end{equation}</p>
+
+<p>标准误差可以用于计算<strong>置信区间</strong>（confidence interval）。$95\%$的置信区间表示该区间有$95\%$的概率包括参数的真实值。对于线性回归的参数估计，$95\%$的置信区间记为<sup id="fnref:confidence-interval"><a href="#fn:confidence-interval" class="footnote">1</a></sup>：</p>
+
+<p>\begin{equation}
+\hat\beta_0\pm 2\cdot SE\left(\hat\beta_0\right)，\qquad
+\hat\beta_1\pm 2\cdot SE\left(\hat\beta_1\right)。
+\label{eq:lr-confidence-interval}
+\end{equation}</p>
+
+<p>标准误差也可用于系数的<strong>假设检验</strong>（hypothesis test）。最常用的两种假设检验是<strong>零假设检验</strong>（null hypothesis）和<strong>替代假设检验</strong>（alternative hypothesis），
+\[
+\begin{aligned}
+H_0&amp;:\mbox{There is no relationship between }X\mbox{ and }Y\\
+H_a&amp;:\mbox{There is some relationship between }X\mbox{ and }Y，
+\end{aligned}
+\]
+数学上表示为
+\[
+H_0:\beta_1=0，\qquad H_a:\beta_1\neq0。
+\]
+若$\beta_1=0$，那么$X$和$Y$无关。进行零假设检验时，需要估计$\hat\beta_1$是否离0足够远，这需要通过$\hat\beta_1$的精度$SE\left(\hat\beta_1\right)$来衡量。如果$SE\left(\hat\beta_1\right)$很小，较小的$\hat\beta_1$可以足够确信$\beta_1\neq 0$；如果$SE\left(\hat\beta_1\right)$很大，$\hat\beta_1$的绝对值要很大才能拒绝零假设。在实际应用中，通过<strong>$t$统计量</strong>（$t$-statistic）</p>
+
+<p>\begin{equation}
+t={\hat\beta_1-0\over SE\left(\hat\beta_1\right)}
+\label{eq:t-statistic}
+\end{equation}</p>
+
+<p>测量$\hat\beta_1$远离$0$的标准差（standard deviation）。如果$X$和$Y$真的无关，\eqref{eq:t-statistic}是$n-2$自由度的<strong>$t$分布</strong>（$t$-distribution）。当$n$大约大于$30$时，$t$分布与正态分布很相似。<strong>$p$值</strong>（$p$-value）表示$\beta_1=0$时观测值大于等于$|t|$的概率。较小的$p$值表示预测（predictor）与响应（response）之间有关联。若$p$值很小时，拒绝零假设（reject the null hypothesis）表示$X$与$Y$有关系。拒绝零假设的典型$p$值是$5\%$或$1\%$，当$n=30$时，相应的$t$统计量分别为$2$和$2.75$。<sup id="fnref:t-and-p-means"><a href="#fn:t-and-p-means" class="footnote">2</a></sup></p>
+
+<div class="highlight"><pre><code>Call:
+lm(formula = Price ~ AGST + WinterRain + HarvestRain + Age + 
+    FrancePop, data = wine)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.48179 -0.24662 -0.00726  0.22012  0.51987 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -4.504e-01  1.019e+01  -0.044 0.965202    
+AGST         6.012e-01  1.030e-01   5.836 1.27e-05 ***
+WinterRain   1.043e-03  5.310e-04   1.963 0.064416 .  
+HarvestRain -3.958e-03  8.751e-04  -4.523 0.000233 ***
+Age          5.847e-04  7.900e-02   0.007 0.994172    
+FrancePop   -4.953e-05  1.667e-04  -0.297 0.769578    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.3019 on 19 degrees of freedom
+Multiple R-squared:  0.8294,    Adjusted R-squared:  0.7845 
+F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
+</code></pre></div>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:confidence-interval">
+      <p>Approximately for several reasons. Equation relies on the assumption that the errors are Gaussian. Also, the factor of $2$ in front of the $SE\left(\hat\beta_1\right)$ term will vary slightly depending on the number of observations $n$ in the linear regression. To be precise, rather than the number $2$, Equation should contain the $97.5\%$ quantile of a $t$-distribution with $n−2$ degrees of freedom.  <a href="#fnref:confidence-interval" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t-and-p-means">
+      <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>模式发掘（2）：高效的模式挖掘方法</title>
+      <link href="http://qianjiye.de/2015/03/efficient-pattern-mining-methods" />
+      <pubdate>2015-03-07T23:11:20+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/efficient-pattern-mining-methods</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="apriori">Apriori性质</h2>
+
+<p><strong>向下闭包</strong>（downward closure）特性是指频繁项集的所有非空子集也必须是频繁的，这也称为<strong>Apriori性质</strong>。若$\{beer, diaper, nuts\}$是频繁的，那么$\{beer, diaper\}$也是，每个包含$\{beer, diaper, nuts\}$的事务必包含$\{beer, diaper\}$。</p>
+
+<p>如果项集$S$的存在非频繁的子集，那么$S$必不是频繁的。如果项集是非频繁的，它的超集（superset）必是非频繁的，这称为<strong>Apriori剪枝原理</strong>（Apriori pruning principle）。基于这个原理，主要有三种可扩展的（scalable）频繁模式挖掘方法：Apriori、Eclat和FPgrowth。</p>
+
+<h2 id="apriori-1">Apriori算法</h2>
+
+<p>Apriori算法是第一个基于候选集生成与测试的频繁集挖掘方法。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png"><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png" alt="Apriori算法" /></a><div class="caption">图 1:  Apriori算法 [<a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-algorithm.png">PNG</a>]</div></div></div>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png"><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png" alt="Apriori算法示例" /></a><div class="caption">图 2:  Apriori算法示例 [<a href="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-example.png">PNG</a>]</div></div></div>
+
+<p>Airport算法生成候选项集的集合分两步：</p>
+
+<ol>
+  <li>自连接（self-join）$F_k$生成候选项集的集合；</li>
+  <li>剪枝，删除候选项集的集合中的非频繁模式。</li>
+</ol>
+
+<p>若频繁模式的集合$F_3=\{abc,abd,acd,ace,bcd\}$，自连接可得候选模式的集合$C’_4=\{abcd, acde\}$，但是$ade\notin F_3$，因此剪枝后可得$C_4=\{abcd\}$。</p>
+
+<p>基于SQL语句生成候选项集的集合：</p>
+
+<p><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-SQL.png" alt="SQL implementation" /></p>
+
+<h2 id="section">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-1">脚注</h3>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>模式发掘（1）：基本概念</title>
+      <link href="http://qianjiye.de/2015/03/pattern-discovery-basic-concepts" />
+      <pubdate>2015-03-07T19:11:20+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/pattern-discovery-basic-concepts</guid>
+      <content:encoded>&lt;![CDATA[<p><strong>模式</strong>（pattern）是数据集中频繁出现或强相关的条目、子序列或子结构组成的集合，它代表了数据集的本质特征和重要属性。<strong>模式发掘</strong>（pattern discovery）就是从大规模数据集中发现模式。</p>
+
+<h2 id="section">模式发掘的重要性</h2>
+
+<p>模式发掘的典型应用场景包括：</p>
+
+<ul>
+  <li>哪些商品常被一起购买？</li>
+  <li>买了iPad之后还会买哪些商品？</li>
+  <li>哪些代码片段可能包括复制粘贴错误（copy-and-paste bug）？</li>
+  <li>语料库中哪些词串可能构成短语？</li>
+</ul>
+
+<p>模式发掘是从数据集中发现内在规则，在数据挖掘中有广泛应用：</p>
+
+<ul>
+  <li>关联分析、相关分析以及因果分析；</li>
+  <li>挖掘序列模式、结构（例如：子图）模式；</li>
+  <li>分析时空数据、多媒体、时间序列和留数据中的模式；</li>
+  <li>基于判别模式分析的分类；</li>
+  <li>基于模式子空间的聚类。</li>
+</ul>
+
+<p>模式发现广泛应用于购物篮分析（market basket analysis）、交叉营销（cross-marketing）、目录设计（catalog design）、销售活动分析（sale campaign analysis）、Web日志分析（Web log analysis）和生物序列分析（biological sequence analysis）。</p>
+
+<h2 id="a-hrefagrawal1993mar1700361700721aa-hrefhan2007frequent2a">频繁模式与关联规则<a href="#Agrawal:1993:MAR:170036.170072">[1]</a><a href="#han2007frequent">[2]</a></h2>
+
+<p>一个或多个项组成的集合称为<strong>项集</strong>（itemset），$k$-项集记为$ X=\{ x_1,\ldots,x_k\}$。<strong>绝对支持度</strong>（absolute support）是指项集$  X$在事务中出现的次数，<strong>相对支持度</strong>（relative support）是指包含项集$  X$的事务所占比率。如果项集$X$的支持度大于某个$minsup$阈值$\sigma$，则称$X$是<strong>频繁模式</strong>。</p>
+
+<p><img src="/assets/images/2015-03-07-pattern-discovery-basic-concepts-itemset-table.png" alt="项集表格" /></p>
+
+<p>令$minsup=50\%$，那么：</p>
+
+<ul>
+  <li>频繁的$1$-项集包括：$Beer: 3(60\%), Nuts: 3(60\%), Diaper: 4(80\%), Eggs:3(60\%)$；</li>
+  <li>频繁的$2$-项集包括：$\{Beer, Diaper\}:3(60\%)$。</li>
+</ul>
+
+<p><strong>关联规则</strong>（association rule）记为$  X\rightarrow  Y(s,c)$，支持度$s$为包含项集$  X\cup  Y$事务出现的概率，<strong>置信度</strong>（confidence）$c$为包含项集$  X$的事务中包含项集$  X\cup  Y$的事务出现的概率，$c={\sup(  X\cup  Y)\over\sup(  X)}$。</p>
+
+<p><strong>关联规则挖掘</strong>是找出大于最小支持度和置信度的所有关联规则$  X\rightarrow  Y$。令$minconf=50\%$，关联规则为
+\[
+Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
+\]</p>
+
+<h2 id="section-1">闭模式与最大模式</h2>
+
+<p>在频繁模式和关联规则挖掘时，一个长的模式包含很多子模式。</p>
+
+<p>若模式（项集）$  X$是频繁的，并且不存在与$  X$有相同支持度的超模式（super-pattern）$  Y\supset  X$，则称$  X$为<strong>闭模式</strong>（closed pattern）<a href="#Pasquier1999discovering">[3]</a>。闭模式是频繁模式的无损压缩，虽降低了模式数量，但没有损失支持度信息。</p>
+
+<p>若模式$X$是频繁的，并且不存在频繁的超模式$Y\supset X$，则称$X$为<strong>最大模式</strong>（max-pattern）<a href="#roberto667815">[4]</a>。最大模式不关注子模式的真实支持度，它是频繁模式的有损压缩，只知道子模式是频繁的，但不知道子模式的真实支持度。</p>
+
+<p>令事务集$TDB_1$的事务为$T_1:\{a_1,\ldots,a_{50}\},T_2:\{a_1,\ldots,a_{100}\}$并且$minsup=1$，那么$TDB_1$只有两个闭模式$\{a_1,\ldots,a_{50}\}:2,\;\{a_1,\ldots,a_{100}\}:1$和唯一的最大模式$\{a_1,\ldots,a_{100}\}:1$。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"><li><span id="Agrawal:1993:MAR:170036.170072">[1]R. Agrawal, T. Imieliński, and A. Swami, “Mining Association Rules Between Sets of Items in Large Databases,” <i>Sigmod Record</i>, vol. 22, no. 2, pp. 207–216, Jun. 1993.</span>
+
+[<a href="http://doi.acm.org/10.1145/170036.170072">Online</a>]
+
+</li>
+<li><span id="han2007frequent">[2]J. Han, H. Cheng, D. Xin, and X. Yan, “Frequent pattern mining: current status and future directions,” <i>Data Mining and Knowledge Discovery</i>, vol. 15, no. 1, pp. 55–86, 2007.</span>
+
+</li>
+<li><span id="Pasquier1999discovering">[3]N. Pasquier, Y. Bastide, R. Taouil, and L. Lakhal, “Discovering Frequent Closed Itemsets for Association Rules,” in <i>International Conference on Database Theory</i>, 1999, pp. 398–416.</span>
+
+</li>
+<li><span id="roberto667815">[4]R. J. Bayardo, “Efficiently Mining Long Patterns from Databases,” <i>Sigmod Record</i>, vol. 27, no. 2, pp. 85–93, 1998.</span>
+
+</li></ol>
+
+<h3 id="section-3">脚注</h3>
+
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>R Essential</title>
+      <link href="http://qianjiye.de/2015/03/r-essential" />
+      <pubdate>2015-03-06T02:36:23+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/r-essential</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">基本操作</h2>
+
+<h4 id="section-1">工作环境</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>命令</th>
+      <th>功能</th>
+      <th>例子</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>?"*"</code></td>
+      <td>查看*的帮组文档</td>
+      <td><code>?"data.frame"</code></td>
+    </tr>
+    <tr>
+      <td><code>??"*"</code></td>
+      <td>在帮助文档中搜索*</td>
+      <td><code>??"network"</code></td>
+    </tr>
+    <tr>
+      <td><code>ls()</code></td>
+      <td>查看可用对象</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>rm()</code></td>
+      <td>移除对象</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>getwd()</code></td>
+      <td>查看工作目录</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>setwd(dir)</code></td>
+      <td>设置工作目录</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1">#删除当前环境中所有对象</span>
+<span class="kp">rm</span><span class="p">(</span><span class="kt">list</span> <span class="o">=</span> <span class="kp">ls</span><span class="p">())</span></code></pre></div>
+
+<h2 id="section-2">基本类型</h2>
+
+<p>R不能直接存取内存，通过称之为<strong>对象</strong>（object）的特殊数据结构存取内存。这些对象通过符号（symbol）或变量（variable）访问，符号本身也是对象。R的<code>typeof</code>函数返回对象的类型<sup id="fnref:R-type"><a href="#fn:R-type" class="footnote">1</a></sup>。<a href="http://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects">R的对象类型</a>包括<code>NULL</code>、<code>closure</code>、<code>integer</code>、<code>complex</code>等。</p>
+
+<p><code>mode</code>函数返回对象的模式（mode），主要是为了和S语言的其它实现兼容。<code>storage.mode</code>函数返回参数的存储模式（storage mode），通常用于调用C或FORTRAN时，确定数据类型。在S语言中，整数和实数向量都是<code>numeric</code>模式，但存储模式不同。</p>
+
+<h3 id="section-3">基本类型</h3>
+
+<p><strong>向量</strong>（vector）是最基本数据结构，R包含6种基本的原子向量（atomic vector）：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>typeof</th>
+      <th>mode</th>
+      <th>storage.mode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>logical</td>
+      <td>logical</td>
+      <td>logical</td>
+    </tr>
+    <tr>
+      <td>integer</td>
+      <td>numeric</td>
+      <td>integer</td>
+    </tr>
+    <tr>
+      <td>double</td>
+      <td>numeric</td>
+      <td>double</td>
+    </tr>
+    <tr>
+      <td>complex</td>
+      <td>complex</td>
+      <td>complex</td>
+    </tr>
+    <tr>
+      <td>character</td>
+      <td>character</td>
+      <td>character</td>
+    </tr>
+    <tr>
+      <td>raw</td>
+      <td>raw</td>
+      <td>raw</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>单个数和字符串也是长度为1的向量，例如4.2和“four point two”。原子向量中的每个元素类型必须相同。向量的长度可为0。</p>
+
+<p><strong>列表</strong>（list）称为通用向量（generic vector），每个元素可以是不同数据类型。虽然列表也是向量，但通常说的向量是不包括列表的原子向量。</p>
+
+<p>R语言由3种不同类型的对象构成，它们是calls、expressions和names，这些对象的模式分别为<code>call</code>、<code>expression</code>和<code>name</code>，可通过<code>as.list</code>和<code>as.call</code>在列表和<strong>语言对象</strong>之间转换。<strong>符号</strong>(symbol)指向R的对象，R对象的名字通常是一个符号。符号能够通过函数<code>as.name</code>和<code>quote</code>创建。符号的模式为<code>name</code>，存储模式和类型都为<code>symbol</code>，可通过<code>as.character</code>和<code>as.name</code>与字符串转换。</p>
+
+<p>R的expression对象包含一个或多个语句（statement）。R的expression对象只有在显示调用<code>eval</code>时才被执行。expression对象与列表相似，访问元素的方法与列表一样。</p>
+
+<p><strong>函数对象</strong>包含三个元素：参数列表、函数体和环境。参数列表用逗号分割，<code>…</code>可包含任意个数的参数。函数体通常是包含在大括号中的R语句。环境在函数创建时激活。这三部分可通过函数<code>formals</code>、<code>body</code>和<code>environment</code>操作。<code>as.list</code>和<code>as.function</code>函数可进行列表和函数的转换。</p>
+
+<p>NULL是特殊的对象，与长度为0的向量不同，R中只有唯一的NULL对象。</p>
+
+<h3 id="section-4">对象属性</h3>
+
+<p>除NULL外的所有对象都可包含一个或多个属性。属性以成对列表（pairlist）方式存储，所有元素都有名字。通过<code>attributes</code>查看属性列表，通过<code>attr</code>获取单个属性。一些特殊的属性有特定的存取函数，例如因子的<code>levels</code>函数，数组的<code>dim</code>和<code>dimnames</code>函数。属性被用于实现R的类结构。If an object has a class attribute then that attribute will be examined during evaluation.</p>
+
+<h2 id="section-5">数据结构</h2>
+
+<p>R的数据结构包括数组（array）和列表（list）。数组的所有元素类型必须一致，列表元素的类型可以不同。向量（vector）是一维素组，矩阵（matrix）是二维数组。数据框（data frame）是特殊的列表。</p>
+
+<p>数据的索引（indexing）有<code>[]</code>、<code>[[]]</code>和<code>$</code>三种方法，形如<code>x[i]</code>、<code>x[i, j]</code>、<code>x[[i]]</code>、<code>x[[i, j]]</code>、<code>x$a</code>和<code>x$”a”</code>。</p>
+
+<ul>
+  <li>对向量和矩阵，<code>[[]]</code>会抛弃所有<code>names</code>和<code>dimnames</code>属性，<code>[]</code>则不会；</li>
+  <li>对列表，<code>[[]]</code>返回列表，<code>[]</code>返回列表的元素；</li>
+  <li><code>[[]]</code>只能对单个元素索引，<code>[]</code>可以通过向量索引多个元素；</li>
+  <li><code>$</code>只能用于列表索引，索引参数不能被计算（如果索引参数需要计算，采用<code>x[[expr]]</code>），索引的对象不存在时返回<code>NULL</code>。</li>
+</ul>
+
+<p>数据的索引从1开始，索引前加负号<code>-</code>表示删除这些索引的元素。</p>
+
+<h3 id="section-6">数据分割与合并</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>命令</th>
+      <th>功能</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>rbind</code></td>
+      <td>行合并</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>cbind</code></td>
+      <td>列合并</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>merge</code></td>
+      <td>列合并</td>
+      <td>用于data frame</td>
+    </tr>
+    <tr>
+      <td><code>subset</code></td>
+      <td>抽取子集</td>
+      <td><code>subset(airquality, Temp &gt; 80 &amp; is.na(Solar.R))</code></td>
+    </tr>
+    <tr>
+      <td><code>append</code></td>
+      <td>插入元素</td>
+      <td>用于向量</td>
+    </tr>
+    <tr>
+      <td><code>stack</code></td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>split</code></td>
+      <td>数据分组</td>
+      <td>用于向量</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight"><pre><code class="language-R">airquality<span class="o">$</span>Temp2 <span class="o">&lt;-</span> airquality<span class="o">$</span>Temp <span class="c1">#增加Temp2列</span>
+airquality<span class="o">$</span>Temp <span class="o">&lt;-</span> <span class="kc">NULL</span> <span class="c1">#删除Temp列</span>
+
+Top5 <span class="o">=</span> <span class="kp">subset</span><span class="p">(</span>mvt<span class="p">,</span> LocationDescription <span class="o">%in%</span> TopLocations<span class="p">)</span>
+<span class="c1"># 删除多余无关的levels（Top5在执行了subset之后会包含整个集合的levels）</span>
+Top5<span class="o">$</span>LocationDescription <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>Top5<span class="o">$</span>LocationDescription<span class="p">)</span>
+
+CPS <span class="o">=</span> <span class="kp">merge</span><span class="p">(</span>CPS<span class="p">,</span> MetroAreaMap<span class="p">,</span> by.x<span class="o">=</span><span class="s">&quot;MetroAreaCode&quot;</span><span class="p">,</span> by.y<span class="o">=</span><span class="s">&quot;Code&quot;</span><span class="p">,</span> all.x<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
+
+<h2 id="section-7">运算符和优先级</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operator</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>[</code> <code>[[</code></td>
+      <td>Indexing</td>
+    </tr>
+    <tr>
+      <td><code>::</code> <code>:::</code></td>
+      <td>Access variables in a name space</td>
+    </tr>
+    <tr>
+      <td><code>$</code> <code>@</code></td>
+      <td>Component extraction, slot extraction</td>
+    </tr>
+    <tr>
+      <td><code>^</code></td>
+      <td>Exponentiation (right to left)</td>
+    </tr>
+    <tr>
+      <td><code>-</code> <code>+</code></td>
+      <td>Unary minus and plus</td>
+    </tr>
+    <tr>
+      <td><code>:</code></td>
+      <td>Sequence creation</td>
+    </tr>
+    <tr>
+      <td><code>%any%</code></td>
+      <td>Special operators</td>
+    </tr>
+    <tr>
+      <td><code>*</code> <code>/</code></td>
+      <td>Multiplication, division</td>
+    </tr>
+    <tr>
+      <td><code>+</code> <code>-</code></td>
+      <td>Addition, subtraction</td>
+    </tr>
+    <tr>
+      <td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td>
+      <td>Comparison</td>
+    </tr>
+    <tr>
+      <td><code>!</code></td>
+      <td>Logical negation</td>
+    </tr>
+    <tr>
+      <td><code>&amp;</code> <code>&amp;&amp;</code></td>
+      <td>Logical “and”, short-circuit “and”</td>
+    </tr>
+    <tr>
+      <td><code>|</code> <code>||</code></td>
+      <td>Logical “or”, short-circuit “or”</td>
+    </tr>
+    <tr>
+      <td><code>~</code></td>
+      <td>Formula</td>
+    </tr>
+    <tr>
+      <td><code>-&gt;</code> <code>-&gt;&gt;</code></td>
+      <td>Rightward assignment</td>
+    </tr>
+    <tr>
+      <td><code>=</code></td>
+      <td>Assignment (right to left)</td>
+    </tr>
+    <tr>
+      <td><code>&lt;-</code> <code>&lt;&lt;-</code></td>
+      <td>Assignment (right to left)</td>
+    </tr>
+    <tr>
+      <td><code>?</code></td>
+      <td>Help</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code>%any%</code>运算符：</p>
+
+<ul>
+  <li><code>%%</code>：求模，<code>7%%4=3</code>；</li>
+  <li><code>%/%</code>：整数除，<code>7%/%4=1</code>；</li>
+  <li><code>%*%</code>：矩阵乘法；</li>
+  <li><code>%o%</code>：外积；</li>
+  <li><code>%x%</code>：Kronecker乘积；</li>
+  <li><code>%in%</code>：匹配运算。</li>
+</ul>
+
+<h2 id="section-8">常用函数</h2>
+
+<h3 id="section-9">查看数据统计特性</h3>
+
+<h4 id="str"><code>str</code>：查看对象结构</h4>
+
+<p>显示对象各属性。</p>
+
+<h4 id="summary"><code>summary</code>：查看对象统计特性</h4>
+
+<p>显示最小值、分位数、最大值等数据，可以通过<code>boxplot</code>直观的显示。</p>
+
+<h4 id="tablefactor"><code>table</code>：按factor类型统计</h4>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1">#将Ozone（行）和Month（列）作为factor类型，统计同时满足两个条件样本的个数，以表格的形式显示。</span>
+<span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span> <span class="kp">table</span><span class="p">(</span>Ozone<span class="p">,</span> Month<span class="p">))</span> 
+
+<span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span>
+   <span class="kp">table</span><span class="p">(</span>OzHi <span class="o">=</span> Ozone <span class="o">&gt;</span> <span class="m">80</span><span class="p">,</span> Month<span class="p">,</span> useNA <span class="o">=</span> <span class="s">&quot;ifany&quot;</span><span class="p">))</span> <span class="c1">#若有NA则显示</span>
+<span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span>
+   <span class="kp">table</span><span class="p">(</span>OzHi <span class="o">=</span> Ozone <span class="o">&gt;</span> <span class="m">80</span><span class="p">,</span> Month<span class="p">,</span> useNA <span class="o">=</span> <span class="s">&quot;always&quot;</span><span class="p">))</span><span class="c1">#总是显示NA</span>
+<span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span>
+   <span class="kp">table</span><span class="p">(</span>OzHi <span class="o">=</span> Ozone <span class="o">&gt;</span> <span class="m">80</span><span class="p">,</span> <span class="kp">addNA</span><span class="p">(</span>Month<span class="p">)))</span>           <span class="c1">#增加一列NA</span></code></pre></div>
+
+<h4 id="hist"><code>hist</code>：直方图</h4>
+
+<div class="highlight"><pre><code class="language-R">hist<span class="p">(</span><span class="kp">sqrt</span><span class="p">(</span>islands<span class="p">),</span> breaks <span class="o">=</span> <span class="m">12</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;lightblue&quot;</span><span class="p">,</span> border <span class="o">=</span> <span class="s">&quot;pink&quot;</span><span class="p">)</span></code></pre></div>
+
+<h4 id="boxplotbox-and-whisker"><code>boxplot</code>：盒须图（box-and-whisker）</h4>
+
+<div class="highlight"><pre><code class="language-R">boxplot<span class="p">(</span>count <span class="o">~</span> spray<span class="p">,</span> data <span class="o">=</span> InsectSprays<span class="p">)</span> <span class="c1"># 横轴为spray，纵轴为count</span></code></pre></div>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-03-05-r-essential-boxplot.png"><img src="/assets/images/2015-03-05-r-essential-boxplot.png" alt="boxplot图示" /></a><div class="caption">图 1:  boxplot图示 [<a href="/assets/images/2015-03-05-r-essential-boxplot.png">PNG</a>]</div></div></div>
+
+<p><a href="http://msenux.redwoods.edu/math/R/boxplot.php"><code>boxplot</code>绘制如上图</a>：</p>
+
+<ul>
+  <li>box中的粗横线表示中位数（median）；</li>
+  <li>box的下边和上边分别表示第一和第三四分位数（quartile），二者之间的距离称为四分位数间距（IQR，inter-quartile range），分位数用<code>quantile</code>函数计算，IQR用<code>IQR</code>函数计算；</li>
+  <li>最下和最上的横线分别表示最小和最大值；</li>
+  <li>小圆圈表示离群点（outlier）。</li>
+</ul>
+
+<p>令$STEP = range\times IQR$（$range$可通过<code>boxplot</code>设置），区间$[first\; quartile - STEP, third\; quartile + STEP]$之外的是离群点，大于$first\; quartile - STEP$的最小值为图中的最小值（minimum），小于$third\; quartile + STEP$的最大值为图中的最大值（maximum），当<code>boxplot</code>的参数<code>range=0</code>时，不探测离群点，显示实际的最大和最小值。</p>
+
+<h3 id="section-10">批处理函数</h3>
+
+<h4 id="tapply"><code>tapply</code>：应用函数操作分组数据</h4>
+
+<p><img src="/assets/images/2015-03-05-r-essential-tapplay.png" alt="tapply" /></p>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1"># 将warpbreaks[,-1]强制转换为factor类型；</span>
+<span class="c1"># 通过warpbreaks[,-1]对warpbreaks$breaks分类；</span>
+<span class="c1"># 将每类的warpbreaks$breaks作为函数sum的输入；</span>
+<span class="c1"># ……</span>
+<span class="kp">tapply</span><span class="p">(</span>warpbreaks<span class="o">$</span>breaks<span class="p">,</span> warpbreaks<span class="p">[,</span><span class="m">-1</span><span class="p">],</span> <span class="kp">sum</span><span class="p">)</span></code></pre></div>
+
+<h3 id="section-11">其它</h3>
+
+<div class="highlight"><pre><code class="language-R">DateConvert <span class="o">=</span> <span class="kp">as.Date</span><span class="p">(</span><span class="kp">strptime</span><span class="p">(</span>mvt<span class="o">$</span>Date<span class="p">,</span> <span class="s">&quot;%m/%d/%y %H:%M&quot;</span><span class="p">))</span> <span class="c1">#日期转换</span>
+mvt<span class="o">$</span>Month <span class="o">=</span> <span class="kp">months</span><span class="p">(</span>DateConvert<span class="p">)</span>
+mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">weekdays</span><span class="p">(</span>DateConvert<span class="p">)</span></code></pre></div>
+
+<h2 id="section-12">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-13">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:R-type">
+      <p>Note that in the C code underlying R, all objects are pointers to a structure with typedef <code>SEXPREC</code>; the different R data types are represented in C by <code>SEXPTYPE</code>, which determines how the information in the various parts of the structure is used. <a href="#fnref:R-type" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>图像分类（3）：最优化</title>
@@ -1314,587 +1961,6 @@ E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_
     </li>
     <li id="fn:tanh_output">
       <p>对于二分类问题的神经网络，输出为$\{-1,+1\}$，输出层的神经元也要采用$\tanh$，此时$e_n=\left(y_n-\tanh\left(s_1^{(L)}\right)\right)^2$，那么$\delta_1^{(L)}=-2\left(y_n-x_1^{(L)}\right)\left(1-\left(x_1^{(L)}\right)^2\right)$。 <a href="#fnref:tanh_output" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>分类器融合（6）：融合模型总结</title>
-      <link href="http://qianjiye.de/2015/02/summary-of-aggregation-models" />
-      <pubdate>2015-02-04T13:39:58+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/02/summary-of-aggregation-models</guid>
-      <content:encoded>&lt;![CDATA[<h4 id="section">一、分类器融合策略</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th>融合类型</th>
-      <th>混合（blending）</th>
-      <th>学习（learning）</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-equniform-blending-hypothesis">均匀</a>（uniform）</td>
-      <td>voting／averaging</td>
-      <td>Bagging</td>
-    </tr>
-    <tr>
-      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-eqlinear-blending-hypothesis">非均匀</a>（non-uniform）</td>
-      <td>linear</td>
-      <td>AdaBoost</td>
-    </tr>
-    <tr>
-      <td><a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件</a>（conditional）</td>
-      <td>stacking</td>
-      <td>Decision Tree</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>对于非均匀和条件融合，$g_t$可以视为特征转换。</p>
-
-<p>混合（blending）方法是选择了不同的$g_t$之后再融合，学习（learning）方法是在选择（学习）不同$g_t$的同时进行融合。</p>
-
-<p>均匀融合性能比较稳定，不同$g_t$相互修正，类似正则化的中庸思想。非均匀和条件融合，学习之上的再学习过程，增加了复杂度，功能强大，存在更大的过拟合风险。</p>
-
-<h4 id="section-1">二、基于学习机制的分类器融合方法对比</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th>获取不同$g_t$的方法</th>
-      <th>融合策略</th>
-      <th>优化算法</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Bagging</td>
-      <td>bootstrapping</td>
-      <td>uniform vote</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>AdaBoost</td>
-      <td>reweighting</td>
-      <td>linear vote</td>
-      <td>steepest search</td>
-    </tr>
-    <tr>
-      <td>GradientBoost</td>
-      <td>residual fitting</td>
-      <td>linear vote</td>
-      <td>steepest search</td>
-    </tr>
-    <tr>
-      <td>Decision Tree</td>
-      <td>data splitting</td>
-      <td>conditional vote</td>
-      <td>branching</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>random forest = randomized bagging + strong DTree;</li>
-  <li>AdaBoost-DTree = AdaBoost + weak DTree;</li>
-  <li>GBDT = GradientBoost + weak DTree.</li>
-</ul>
-
-<p>boosting系列的算法应用非常广泛。</p>
-
-<h4 id="section-2">三、融合机制的双重性</h4>
-
-<div class="image_line" id="aggregation-performance"><div class="image_card"><a href="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png"><img src="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png" alt="［左］：融合解决欠拟合；［右］：融合解决过拟合" /></a><div class="caption">图 1:  ［左］：融合解决欠拟合；［右］：融合解决过拟合 [<a href="/assets/images/2015-02-04-summary-of-aggregation-models-under-and-over-fitting.png">PNG</a>]</div></div></div>
-
-<ol>
-  <li>融合可以解决欠拟合问题。单一的$g_t$能力较弱，通过AdaBoost或GradientBoost的方法得到强大的$G(\mathbf x)$。融合相当于利用了特征转换的功能。</li>
-  <li>融合可以解决过拟合问题。通过融合可以得到中庸（moderate）的$G(\mathbf x)$。融合相当于利用了正则化的功能，如上图右的large-margin效果。</li>
-</ol>
-
-<p>因此，合适的融合（aggregation or ensemble）机制可以提升分类器的性能。</p>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>分类器融合（5）：梯度提升决策树</title>
-      <link href="http://qianjiye.de/2015/01/gradient-boosted-decision-tree" />
-      <pubdate>2015-01-29T16:12:28+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/gradient-boosted-decision-tree</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="adaboost">AdaBoost决策树</h2>
-
-<blockquote>
-  <h4 id="adaboost-dtreemathcal-d">AdaBoost-DTree($\mathcal D$)</h4>
-  <hr />
-  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
-
-  <ol>
-    <li>更新数据的权重$\mathbf u^{(t)}$；</li>
-    <li>通过决策树算法$\mbox{DTree}\left(\tilde{\mathcal D}, \mathbf u^{(t)}\right)$得到$g_t$；</li>
-    <li>计算$g_t$的投票权重$\alpha_t$。</li>
-  </ol>
-
-  <p>返回$G=\mbox{LinearHypo}(\{\left(g_t,\alpha_t\right)\})$。</p>
-</blockquote>
-
-<p>由此可见，AdaBoost决策树需要加权决策树算法。对于有权重的算法，需要根据权重最小化$E_{in}$，通常有两种方法：</p>
-
-<ul>
-  <li>一种方法是通过算法加权，在计算$E_{in}$的地方嵌入权重计算，比如AdaBoost采用的最小化<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">加权误差</a>；</li>
-  <li>另一种方法是将算法当成黑盒不变更，通过数据集加权，根据权重在bootstrap时“复制”数据，也就是加权的重采样。</li>
-</ul>
-
-<p>AdaBoost决策树通常采用后一种方法，AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
-
-<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#AdaBoost-algorithm">$\alpha_t$通过错误率确定</a>。对于所有$\mathbf x_n$不同的完全成长决策树，$E_{in}(g_t)=0$，那么$E_{in}^{\mathbf u}(g_t)=0$，因此$\epsilon_t=0$并且$\alpha_t=\infty$。合适的方法是让决策树弱些，在部分数据集上训练剪枝的决策树。即使在$\tilde{\mathcal D}_t$上得到错误率为0的决策树$g_t$，回到$\mathcal D$上$\alpha_t$可能是大于、等于或小于0。剪枝可采用常规方法或只限制决策树高度，在数据重采样阶段已经包含了只抽取部分数据的功能。因此，AdaBoost决策树＝AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋剪枝的$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
-
-<p>如果C&amp;RT的高度限制为不超过1，当用二分类的误差作为<a href="/2015/01/decision-tree/#mjx-eqn-eqdtree-decision-stump">不纯度</a>时，AdaBoost决策树就是<a href="/2015/01/adaptive-boosting/#AdaBoost-Stump">AdaBoost-Stump</a>，此时通常有$\epsilon_t\neq 0$，一般不再需要sampling。</p>
-
-<h2 id="functional-gradient-steepest-descent">AdaBoost理论分析：最速函数梯度下降法</h2>
-
-<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-update-u">权重更新</a>可以合并为
-\[
-u_n^{(t+1)}=u_n^{(t)}\cdot\blacklozenge_t^{-y_ng_t(\mathbf x_n)}，
-\]
-由于$\blacklozenge_t=\exp(\alpha_t)$，因此
-\[
-u_n^{(t+1)}=u_n^{(t)}\cdot\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)，
-\]
-那么
-\begin{equation}
-u_n^{(T+1)}=u_n^{(1)}\cdot\prod_{t=1}^T\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)={1\over N}\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)。
-\label{eq:un-t-plus-1}
-\end{equation}
-AdaBoost是<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-Gx">分类器的线性组合</a>，$\sum_{t=1}^T\alpha_tg_t(\mathbf x)$是$\{g_t\}$在$\mathbf x$上的投票得分（voting score），也就是对AdaBoost，$u_n^{(T+1)}\propto \exp\left(-y_n\cdot\left(\mbox{voting score on }\mathbf x_n\right)\right)$。</p>
-
-<p id="decrease-un">线性混合（linear blending），可以看作线性模型和以假设作为特征转换的结合
-\[
-G(\mathbf x_n)=\mbox{sign}\left(\overbrace{\sum_{t=1}^T\underbrace{\alpha_t}_{w_i}\underbrace{g_t(\mathbf x_n)}_{\phi_i(\mathbf x_n)}}^{\mbox{voting score}}\right)。
-\]
-对比<a href="/2015/01/linear-svm/#mjx-eqn-eqhard-margin-svm-origin-model">hard-margin的SVM</a>的边界${y_n\cdot\left(\mathbf w^T\phi(\mathbf x_n)+b\right)\over\lVert\mathbf w\rVert}$，投票得分可视为某种空间中非规范化的边界（距离）的度量，“$y_n$(voting score)=signed &amp; unnormalized margin”。期望$y_n$(voting score)是正的，且越大越好，那么$\exp(-y_n(\mbox{voting score}))$越小越好，$u_n^{(T+1)}$越小越好。AdaBoost的$\sum_{n=1}^Nu_n^{(t)}$随着$t$的增大越来越小，在最后一轮
-\begin{equation}
-\sum_{n=1}^Nu_n^{(T+1)}={1\over N}\sum_{n=1}^N\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)
-\label{eq:sum-un-t-plus-1}
-\end{equation}
-达到最小，边界$y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$最大化实现large margin的效果。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png"><img src="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png" alt="AdaBoost的误差界" /></a><div class="caption">图 1:  AdaBoost的误差界 [<a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png">PNG</a>]</div></div></div>
-
-<p>令线性评分函数$s=\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$，AdaBoost的指数误差度量（exponential error measure）$\widehat{err}_{ADA}(s,y)=\exp(-ys)$是0/1误差$\widehat{err}_{0/1}(s,y)=[[ys\leq 1]]$的上界<sup id="fnref:other-error-bounds"><a href="#fn:other-error-bounds" class="footnote">1</a></sup>，如上图右所示，通过0/1误差的凸上界（convex upper bound）$\widehat{err}_{ADA}$作为算法误差度量（algorithmic error measure），通过上界误差最小化使0/1误差最小化。</p>
-
-<p>AdaBoost通过增加函数$h(\mathbf x)$的方式，使基于\eqref{eq:sum-un-t-plus-1}的误差$\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t+1)}$最小化，
-\begin{equation}
-\begin{aligned}
-\min_h\quad\widehat E_{ADA}
-&amp;\overset{[1]}{=}{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
-\eta h(\mathbf x_n)\right)\right)\\
-&amp;\overset{[2]}{=}\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)
-\overset{\mbox{taylor}}{\approx}\sum_{n=1}^Nu_n^{(t)}\left(1-y_n\eta h(\mathbf x_n)\right)\\
-&amp;=\sum_{n=1}^Nu_n^{(t)}+\eta\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)，
-\end{aligned}
-\label{eq:min-E-ADA}
-\end{equation}</p>
-
-<ul>
-  <li>[1]：增加函数$h(\mathbf x)$，由\eqref{eq:sum-un-t-plus-1}可得$\sum_{\tau=1}^t\alpha_\tau g_\tau\left(\mathbf x_n\right)=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)+\eta h(\mathbf x_n)$；</li>
-  <li>[2]：由\eqref{eq:un-t-plus-1}可得$u_n^{(t)}={1\over N}\exp\left(-y_n\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)\right)$。</li>
-</ul>
-
-<p>公式\eqref{eq:min-E-ADA}形如<a href="/2015/01/logistic-regression/#mjx-eqn-eqtaylor-expansion-Ein">梯度下降法最小化$E_{in}$</a>
-\[
-\min_{\lVert\mathbf v\rVert=1}E_{in}(\mathbf w_t+\eta\mathbf v)
-\approx \underbrace{E_{in}(\mathbf w_t)}_{\mbox{known}}
-+\underbrace{\eta}_{\mbox{given positive}}\mathbf v^T\underbrace{\nabla E_{in}(\mathbf w_t)}_{\mbox{known}}，
-\]
-好的$h(\mathbf x)$能最小化$\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)$。对二分类，$y_n$和$h(\mathbf x_n)$都属于$\{-1,+1\}$，那么
-\[
-\begin{aligned}
-\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)
-&amp;=\sum_{n=1}^Nu_n^{(t)}
-\left\{
-\begin{aligned}
--1\quad\mbox{if }y_n=h(\mathbf x_n)\\
-+1\quad\mbox{if }y_n\neq h(\mathbf x_n)
-\end{aligned}
-\right.\\
-&amp;=-\sum_{n=1}^Nu_n^{(t)}+\sum_{n=1}^Nu_n^{(t)}
-\left\{
-\begin{aligned}
-0\quad\mbox{if }y_n=h(\mathbf x_n)\\
-2\quad\mbox{if }y_n\neq h(\mathbf x_n)
-\end{aligned}
-\right.\\
-&amp;\overset{[1]}{=}-\sum_{n=1}^Nu_n^{(t)}+2E_{in}^{\mathbf u^{(t)}}(h)\cdot N，
-\end{aligned}
-\]</p>
-
-<ul>
-  <li>[1]：根据<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">AdaBoost的$E_{in}^\mathbf u$计算可得</a>。</li>
-</ul>
-
-<p>因此，也就是要使$E_{in}^{\mathbf u^{(t)}}(h)$变小，这就是AdaBoost中算法$\mathcal A$的任务，找出一个好的函数方向$h$。</p>
-
-<p>AdaBoost通过近似最小化$\min_h\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)$，公式\eqref{eq:min-E-ADA}的$[2]$等式，找到新的分类器$g_t=h$之后，还需要找到最佳的$\eta$，
-\[
-\min_\eta\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)，
-\]
-$\eta$越大步越好。最佳的$\eta_t$会比固定的$\eta$在短期内下降更快（greedily faster），在最优化中通常称为<strong>最速（最陡）下降</strong>（steepest descent）。对于分类正确和错误两种情形，$u_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)$分别为$u_n^{(t)}\exp(-\eta)$和$u_n^{(t)}\exp(+\eta)$，那么有
-\[
-\widehat E_{ADA}=\left(\sum_{n=1}^Nu_n^{(t)}\right)\cdot
-\left(
-(1-\epsilon_t)\exp(-\eta)+\epsilon_t\exp(+\eta)
-\right)，
-\]
-$\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错误率</a>。
-通过${\partial\widehat E_{ADA}\over\partial\eta}=0$可得最速梯度步长$\eta_t=\ln\sqrt{1-\epsilon_t\over\epsilon_t}=\alpha_t$。当进行到$t+1$轮迭代时，误差为
-\[
-\widehat E_{ADA}^{(t+1)}=\widehat E_{ADA}^{(t)}\cdot\left(
-(1-\epsilon_t)\exp(-\eta_t)+\epsilon_t\exp(+\eta_t)
-\right)，
-\]
-将$\eta_t$和$\widehat E_{ADA}^{(1)}=\sum_{n=1}^Nu_n^{(1)}=1$带入可得
-\[
-\widehat E_{ADA}^{(t+1)}=\prod_{\tau=1}^{t}\left(2\sqrt{\epsilon_\tau(1-\epsilon_\tau)}\right)。
-\]
-由此可见，最糟糕的情况是当$\epsilon_t={1\over 2}$时（错误率$\epsilon_t$始终小于正确率$1-\epsilon_t$），$\widehat E_{ADA}^{(t+1)}$不减少，否则$\widehat E_{ADA}^{(t+1)}$随着迭代增加不断减少。</p>
-
-<p>因此，AdaBoost是近似的函数梯度（functional gradient）最速下降法。</p>
-
-<h2 id="section">任意误差函数的梯度提升</h2>
-
-<p>AdaBoost可以表示为最优化的形式
-\begin{equation}
-\min_\eta\min_h{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
-\eta h(\mathbf x_n)\right)\right)，
-\end{equation}
-每一轮找到$h$作为$g_t$，并决定该$g_t$要前进的距离$\eta_t$。利用更一般的误差函数，将AdaBoost推广到GradientBoost
-\begin{equation}
-\min_\eta\min_h{1\over N}\sum_{n=1}^Nerr\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
-\eta h(\mathbf x_n),y_n\right)。
-\end{equation}
-GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要采用梯度下降法，需要平滑的误差函数$err$，$h$也不限于二分类，可以推广到实数输出。通过采用不同的误差函数$err$，GradientBoost可实现回归、soft分类等功能。</p>
-
-<h2 id="section-1">梯度提升决策树</h2>
-
-<p>对于回归问题，采用误差函数$err(s,y)=(s-y)^2$，令$s_n=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)$可得
-\begin{equation}
-\min_\eta\min_h{1\over N}\sum_{n=1}^N\left(s_n+
-\eta h(\mathbf x_n)-y_n\right)^2，
-\label{eq:min-gradientboost-regression-Ein}
-\end{equation}
-内层最小化
-\[
-\begin{aligned}
-\min_h\ldots
-&amp;\overset{\mbox{taylor}}{\approx}\min_h\left({1\over N}\sum_{n=1}^N\underbrace{err(s_n,y_n)}_{\mbox{constant}}+{1\over N}\sum_{n=1}^N\eta h(\mathbf x_n)\left.{\partial err(s,y_n)\over\partial s}\right\rvert_{s=s_n}\right)\\
-&amp;\overset{\quad\quad}{=}\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N2h(\mathbf x_n)(s_n-y_n)\right)。
-\end{aligned}
-\]
-<del>如果对$h$无约束条件，那么$h(\mathbf x_n)=-\infty\cdot(s_n-y_n)$时取最小值。</del>事实上，只需要$h$的方向，$h$的大小（magnitude）通过步长$\eta$控制。利用拉格朗日乘子法的思想，避免求解复杂的约束优化问题，惩罚大的$h$
-\[
-\begin{aligned}
-&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(2h(\mathbf x_n)(s_n-y_n)+(h(\mathbf x_n))^2\right)\right)\\
-\Longleftrightarrow&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(\mbox{constant}+(h(\mathbf x_n)-(y_n-s_n))^2\right)\right)。
-\end{aligned}
-\]
-去掉常数项，带惩罚的近似函数梯度是数据集$\{(\mathbf x_n,y_n-s_n)\}$上，基于平方误差的回归。$y_n-s_n$表示期望的值与目前能达到的值之间的差异，表示尚未达到的部分，称为余数（residual）。好的$h(\mathbf x_n)$需要弥补余数的差距。</p>
-
-<p>［1/2］因此，GradientBoost的回归问题就是通过余数上的回归找到$g_t=h$。</p>
-
-<p>当$g_t$确定后，继续\eqref{eq:min-gradientboost-regression-Ein}的外层最小化
-\[
-\min_\eta{1\over N}\sum_{n=1}^N(s_n+\eta g_t(\mathbf x_n)-y_n)^2\Leftrightarrow\min_\eta{1\over N}\sum_{n=1}^N((y_n-s_n)-\eta g_t(\mathbf x_n))^2，
-\]
-这是单变量的线性回归，非常容易求解，
-\begin{equation}
-\eta={\sum_{n=1}^Ng_t(\mathbf x_n)(y_n-s_n)\over\sum_{n=1}^Ng_t^2(\mathbf x_n)}。
-\label{eq:gbdt-eta}
-\end{equation}</p>
-
-<p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优作为步长$\alpha_t=\eta$。</p>
-
-<blockquote>
-  <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
-  <hr />
-  <p>初始化$s_1=s_2=\ldots=s_N=0$；</p>
-
-  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
-
-  <ol>
-    <li>利用$\mathcal A(\{(\mathbf x_n,y_n-s_n)\})$得到$g_t$，其中$\mathcal A$是基于平方误差的回归算法（例如C&amp;RT）；</li>
-    <li>利用\eqref{eq:gbdt-eta}更新步长$\alpha_t=\mbox{OneVarLinearRegression}(\{(g_t(\mathbf x_n),y_n-s_n)\})$；</li>
-    <li>更新$s_n\leftarrow s_n+\alpha_tg_t(\mathbf x_n)$；</li>
-  </ol>
-
-  <p>返回$G(\mathbf x)=\sum_{t=1}^T\alpha_tg_t(\mathbf x)$。</p>
-</blockquote>
-
-<p>GBDT就是AdaBoost决策树的回归版本。</p>
-
-<h2 id="section-2">参考文献</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-3">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:other-error-bounds">
-      <p><a href="/2015/01/linear-models-for-classification/#error-bound">其它误差界</a>可参考线性分类模型的相关资料。 <a href="#fnref:other-error-bounds" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>机器学习三原则</title>
-      <link href="http://qianjiye.de/2015/01/three-learning-principles" />
-      <pubdate>2015-01-28T20:05:37+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/three-learning-principles</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">使用奥卡姆剃刀</h2>
-
-<blockquote>
-  <p>An explanation of the data should be made as simple as possible, but no simpler.         <br />
-—Albert Einstein? (1879-1955)</p>
-
-  <hr />
-
-  <p>entia non sunt multiplicanda praeter necessitatem (entities must not be multiplied beyond necessity)       <br />
-—William of Occam (1287-1347) </p>
-</blockquote>
-
-<p>奥卡姆剃刀（Occam’s rezor）：剃掉不必要的解释。对机器学习，适合数据的最简单模型也是最合理的模型。</p>
-
-<ul>
-  <li>简单的假设$h$：小的$\Omega(h)$，假设的参数少；</li>
-  <li>简单的模型$\mathcal H$：小的$\Omega(\mathcal H)$，包含较少的假设，成长函数增长很慢。</li>
-</ul>
-
-<p>当$\Omega(\mathcal H)$小时，$\Omega(h)$也小。当假设集大小为$2^\ell$时，每个假设最多有$\ell$个参数<sup id="fnref:why-ell-parameters"><a href="#fn:why-ell-parameters" class="footnote">1</a></sup>。在实际应用中，通过正则化或从简单模型开始尝试，都可以得到简单的假设。</p>
-
-<p>对于简单模型，$m_\mathcal H(N)$小，难以将数据拟合好（拟合好的概率为$m_{\mathcal H}(N)\over 2^N$<sup id="fnref:why-ration"><a href="#fn:why-ration" class="footnote">2</a></sup>）。对简单的模型，如果数据被分开，那么数据是规律的；对于复杂的模型，如果数据能分开，就不能判断数据是否有规律（复杂模型能把任何数据分开）。</p>
-
-<p>在实际应用中，从简单的线性模型开始尝试，经常考量数据是否被模型过度表示（data over-modeled）。</p>
-
-<h2 id="section-1">避免抽样偏差</h2>
-
-<p>如果数据通过有偏抽样得到<a href="#Darrell_Huff_2002">[1]</a>，学习到的结果也是有偏的。</p>
-
-<p>若从$P_1(\mathbf x,y)$的数据中学习，却在$P_2\neq P_1$的数据中测试，VC理论不适用。相当于学了数学却要参加英语考试。VC理论的前提是训练和测试数据都iid来自同一分布。</p>
-
-<p>通过信用卡用户的信用记录，判断是否给新顾客信用卡。——由于没有未开通信用卡用户的信息，这两者分布可能很不一样……</p>
-
-<p>在实际应用中，尽可能的了解测试环境，使训练环境和测试环境尽量一致。</p>
-
-<h2 id="no-snooping">绝不偷看数据</h2>
-
-<blockquote>
-  <p>If you torture the data long enough, it will confess.</p>
-</blockquote>
-
-<p>使用数据的任何过程都相当于间接偷看了数据。为了让VC维可靠，选择$\Phi$时不应当<a href="/2015/01/nonlinear-transformation/#human-learning">偷看数据</a>。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-snoop-data.png"><img src="/assets/images/2015-01-28-three-learning-principles-snoop-data.png" alt="简单的偷看也会导致结果偏差很大" /></a><div class="caption">图 1:  简单的偷看也会导致结果偏差很大 [<a href="/assets/images/2015-01-28-three-learning-principles-snoop-data.png">PNG</a>]</div></div></div>
-
-<p>对使用同样数据集$\mathcal D$的论文，后来作者针对以前论文改进，阅读以前论文也就相当于偷看资料。若把这些论文看成一篇长长的论文，付出的模型复杂度为$d_{VC}(\cup_m\mathcal H_m)$，泛化能力差。</p>
-
-<p>偷看数据很难避免，合理处理偷看数据：</p>
-
-<p><img src="/assets/images/2015-01-28-three-learning-principles-deal-with-snooping.png" alt="合理处理偷看数据" /></p>
-
-<p>“be blind”是指尽量避免用数据做决定，不要在看了数据之后再决定采用什么样的特征等操作。也就是避免human learning的复杂度进入。</p>
-
-<h2 id="section-2">其它三原则</h2>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-three-tools.png"><img src="/assets/images/2015-01-28-three-learning-principles-three-tools.png" alt="三大工具" /></a><div class="caption">图 2:  三大工具 [<a href="/assets/images/2015-01-28-three-learning-principles-three-tools.png">PNG</a>]</div></div></div>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png"><img src="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png" alt="三大理论边界" /></a><div class="caption">图 3:  三大理论边界 [<a href="/assets/images/2015-01-28-three-learning-principles-three-theoretical-bounds.png">PNG</a>]</div></div></div>
-
-<h2 id="section-3">参考资料</h2>
-
-<ol class="bibliography"><li><span id="Darrell_Huff_2002">[1]达莱尔·哈夫, <i>统计陷阱</i>. 上海: 上海财经大学出版社, 2002.</span>
-
-</li></ol>
-
-<h3 id="section-4">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:why-ell-parameters">
-      <p>为什么最多$\ell$个参数？ <a href="#fnref:why-ell-parameters" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:why-ration">
-      <p>这个比率什么意思？ <a href="#fnref:why-ration" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>验证</title>
-      <link href="http://qianjiye.de/2015/01/validation" />
-      <pubdate>2015-01-27T23:28:10+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/01/validation</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">模型选择问题</h2>
-
-<p>若有$M$个<a href="/assets/images/2015-01-27-validation-so-many-models.png">候选模型</a>$\mathcal H_1,\mathcal H_2,\ldots,\mathcal H_M$和相应的算法$\mathcal A_1,\mathcal A_2,\ldots,\mathcal A_M$，如何选择$\mathcal H_{m^*}$使得$g_{m^*}=\mathcal A_{m^*}(\mathcal D)$有低的$E_{out}(g_{m^*})$？</p>
-
-<p>由于$P(\mathbf x)$和$P(y|\mathbf x)$未知，那么$E_{out}$未也知……</p>
-
-<h4 id="section-1">一、利用数据可视化不可行</h4>
-
-<p>只有一些数据集……基于视觉化的选择是“<a href="/2015/01/nonlinear-transformation/#human-learning">human learning</a>”，并且高维度的数据不能视觉化。</p>
-
-<h4 id="ein">二、利用$E_{in}$很危险</h4>
-
-<p>如果利用$E_{in}$选择，高维特征变换通常犹豫低维，非正则化方法通常优于正则化方法。若$\mathcal A_1$在$\mathcal H_1$最小化$E_{in}$，$\mathcal A_2$在$\mathcal H_2$最小化$E_{in}$，二者再择优$g_{m^*}$在$\mathcal H_1\cup\mathcal H_2$中得到最小的$E_{in}$，这样增加了额外的模型复杂度，VC维$d_{VC}(\mathcal H_1\cup\mathcal H_2)$变大了，泛化能力差。</p>
-
-<h4 id="etest">三、利用$E_{test}$是作弊</h4>
-
-<p>根据finite-bin Hoeffding可得
-\[
-E_{out}(g_{m^*})\leq E_{test}(g_{m^*})+O\left(\sqrt{\log M\over N_{test}}\right)，
-\]
-看上去很美，$\mathcal D_{test}$是没用于模型训来的干净数据，可是$\mathcal D_{test}$（相当于老师的考卷）从哪里来呢？</p>
-
-<h4 id="einetesteval">四、$E_{in}$和$E_{test}$折中的合法作弊方案$E_{val}$</h4>
-
-<ul>
-  <li>$\mathcal D_{val}\subset\mathcal D$；</li>
-  <li>可以获取的；</li>
-  <li>若$\mathcal D_{val}$没用于$\mathcal A_m$，那么它是干净的，就像测试数据一样。</li>
-</ul>
-
-<h2 id="section-2">单一验证集</h2>
-
-<p>数据$\mathcal D$的划分和相应关系如下：</p>
-
-<p>\begin{align*}
-E_{in}(h)\quad&amp;\quad&amp;\quad&amp;\quad &amp;E_{val}(h)\\
-\uparrow\quad\quad&amp;\quad&amp;\quad&amp;\quad &amp;\uparrow\;\;\,\,\\
-\quad\underbrace{\mathcal D}_{\mbox{size }N}\quad\,&amp;\rightarrow&amp;\underbrace{\mathcal D_{train}}_{\mbox{size }N-K}\quad\quad\,&amp;\cup&amp;\underbrace{\mathcal D_{val}}_{\mbox{size }K}\;\\
-\downarrow\quad\quad&amp;\quad &amp;\downarrow\quad\quad\quad\;&amp;\quad&amp;\quad\\
-g_m=\mathcal A_m(\mathcal D)&amp;\quad &amp;g_m^-=\mathcal A_m(\mathcal D_{trian})&amp;\quad&amp;\quad
-\end{align*}</p>
-
-<p>$\mathcal D_{val}\subset\mathcal D$称为<strong>验证集</strong>（validation set），用于模拟测试集。$\mathcal D_{val}$是随机从$\mathcal D$中抽取的$K$个样本，那么$\mathcal D_{val}\overset{iid}{\sim} P(\mathbf x,y)$，通过数据建立了$E_{val}$与$E_{out}$的联系。确保$\mathcal D_{val}$是干净的，$\mathcal A_m$只使用了$\mathcal D_{train}$进行模型选择（也就是训练得到模型参数，从$\mathcal H$中选出$h$）。</p>
-
-<p>原来使用$\mathcal D$扮演两个角色，既要计算$E_{in}$进行模型选择，又要通过算法得到$g$，两个角色导致资料被污染。利用$D_{val}$，通过最佳$E_{val}$进行模型选择
-\[
-m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{val}(\mathcal A_m(\mathcal D_{train})))，
-\]
-可得如下误差保证
-\begin{equation}
-E_{out}(g_m^-)\leq E_{val}(g_m^-)+O\left(\sqrt{\log M\over K}\right)，
-\end{equation}
-但是只用$N-K$个训练模型out-of-sample误差会偏大（也可从学习曲线看出，理论上若要成立，还需更严格的限制条件），
-\[
-E_{out}\left(\underbrace{g_{m^*}}_{\mathcal A_m^*(\mathcal D)}\right)\leq E_{out}\left(\underbrace{g_{m^*}^-}_{\mathcal A_m^*(\mathcal D_{train})}\right)，
-\]
-因此，
-\[
-E_{out}(g_{m^*})\leq E_{out}(g_{m^*}^-)\leq E_{val}(g_{m^*}^-)+O\left(\sqrt{\log M\over K}\right)。
-\]</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-27-validation-model-selection.png"><img src="/assets/images/2015-01-27-validation-model-selection.png" alt="基于验证集的模型选择方案" /></a><div class="caption">图 1:  基于验证集的模型选择方案 [<a href="/assets/images/2015-01-27-validation-model-selection.png">PNG</a>]</div></div></div>
-
-<p>模型选择整个方案如上图所示，得到$g_{m^*}^-$之后，再回到原来整个数据集上得到$g_{m^*}$效果会更好<sup id="fnref:is-it-necessary"><a href="#fn:is-it-necessary" class="footnote">1</a></sup>。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-27-validation-vlidation-example.png"><img src="/assets/images/2015-01-27-validation-vlidation-example.png" alt="模型选择的学习曲线" /></a><div class="caption">图 2:  模型选择的学习曲线 [<a href="/assets/images/2015-01-27-validation-vlidation-example.png">PNG</a>]</div></div></div>
-
-<p>上图是在$\mathcal H_{\Phi_5}$和$\mathcal H_{\Phi_{10}}$中进行模型选择的学习曲线。$g_{m^*}$的效果要优于$g_{m^*}^-$。利用$E_{in}$总会选择到复杂的模型，利用$E_{out}$的作弊方案选择结果总最优。随着验证集不断增大，用于模型选择的训练集不断减小，所以$g_{m^*}^-$甚至会比$g_{\widehat m}$效果差，对很小的训练集，采用$E_{in}$还算不错的模型选择方案。</p>
-
-<p>对大的验证集样本数$K$，有$E_{val}(g^-)\approx E_{out}(g^-)$，但$g_{m^*}^-$通常比$g_{m^*}$糟糕；对小的$K$，有$g_m^-\approx g_m$和$E_{out}(g)\approx E_{out}(g^-)$，但$E_{val}$和$E_{out}$差异较大；
-\[
-E_{out}(g)\underset{\mbox{small }K}{\approx}E_{out}(g^-)\underset{\mbox{large }K}{\approx}E_{val}(g^-)。
-\]</p>
-
-<p>从时间上看，由于部分数据当作了验证集，在训练集上选择每个模型的时间会缩短。</p>
-
-<p>$K={N\over 5}$通常是不错的选择。</p>
-
-<h2 id="section-3">留1交叉验证</h2>
-
-<p>当在验证集的$K=1$的极端情况下，$g^-$和$g$就会非常接近，但$E_{out}$和$E_{val}$差异就很大。能否在$K=1$时找到方案，使得$E_{out}\approx E_{val}$？✅</p>
-
-<p>当$K=1$时，验证集$\mathcal D_{val}^{(n)}=\{(\mathbf x_n,y_n)\}$，误差为$E_{val}^{(n)}(g_n^-)=err(g_n^-(\mathbf x_n),y_n)=e_n$，将留1交叉验证（leave-one-out cross validation）误差
-\begin{equation}
-E_{loocv}(\mathcal H,\mathcal A)={1\over N}\sum_{n=1}^Ne_n={1\over N}\sum_{n=1}^Nerr(g_n^-(\mathbf x_n),y_n)
-\end{equation}
-作为$E_{out}(g)$的近似，$E_{loocv}(\mathcal H,\mathcal A)\approx E_{out}(g)$，然后进行模型选择，
-\begin{equation}
-m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{loocv}(\mathcal H_m,\mathcal A_m))。
-\end{equation}</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-example.png"><img src="/assets/images/2015-01-27-validation-loocv-example.png" alt="loocv选择常数模型而非线性模型" /></a><div class="caption">图 3:  loocv选择常数模型而非线性模型 [<a href="/assets/images/2015-01-27-validation-loocv-example.png">PNG</a>]</div></div></div>
-
-<p>用$\underset{\mathcal D_n}{\varepsilon}$表示在训练集上的数学期望，那么有<sup id="fnref:how-expectation-do"><a href="#fn:how-expectation-do" class="footnote">2</a></sup>
-\begin{aligned}
-\underset{\mathcal D}{\varepsilon}E_{loocv}(\mathcal H,\mathcal A) = \underset{\mathcal D}{\varepsilon}{1\over N}\sum_{n=1}^Ne_n 
-&amp;= {1\over N}\sum_{n=1}^N\underset{\mathcal D}{\varepsilon}e_n\\
-&amp;={1\over N}\sum_{n=1}^N\underset{\mathcal D_n}{\varepsilon}\underset{(\mathbf x_n,y_n)}{\varepsilon}err(g_n^-(\mathbf x_n),y_n)\\
-&amp;={1\over N}\sum_{n=1}^N\underset{\mathcal D_n}{\varepsilon}E_{out}(g_n^-)\\
-&amp;={1\over N}\sum_{n=1}^N\overline{E_{out}}(N-1)\\
-&amp;=\overline{E_{out}}(N-1)，
-\end{aligned}
-因此可得$E_{loocv}(\mathcal H,\mathcal A)$和$E_{out}(g^-)$联系紧密，通常称作$E_{out}(g)$几乎无偏的估计（almost unbiased estimate）。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-practice.jpg"><img src="/assets/images/2015-01-27-validation-loocv-practice.jpg" alt="loocv手写识别示例" /></a><div class="caption">图 4:  loocv手写识别示例 [<a href="/assets/images/2015-01-27-validation-loocv-practice.jpg">JPG</a>]</div></div></div>
-
-<p>上图手写识别例子中，通过验证确定选择多少维多项式特征。若用$E_{in}$，特征维度越多越好；利用$E_{loocv}$（图中标注为$E_{cv}$），会选到较低纬度的特征。</p>
-
-<h2 id="v-fold-cross-validation">V-fold交叉验证</h2>
-
-<p>由于loocv需要训练$N$次，时间复杂度非常大，在实际中并不总是可行的。但也有特例，线性回归的的loocv容易计算。通过单点估计误差波动较大，结果不是很稳定，曲线上有些跳动的点。如何降低loocv的计算量？</p>
-
-<p>将数据集$\mathcal D$随机分为$V$等份（loocv相当于将数据集分为$N$等份），$V-1$份用于训练模型，剩余的1份用于验证，这称为V-fold交叉验证，
-\begin{equation}
-E_{cv}(\mathcal H,\mathcal A)={1\over V}\sum_{v=1}^VE_{val}^{(v)}(g_v^-)，
-\end{equation}
-模型选择方式为
-\begin{equation}
-m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{cv}(\mathcal H_m,\mathcal A_m))。
-\end{equation}</p>
-
-<p>通常情况，$V=10$。</p>
-
-<p>通常，V-fold交叉验证要优于单一验证集方法，计算量也更大，5-fold或10-fold通常都会工作得很好，实际中loocv并不常用。</p>
-
-<h2 id="section-4">小结</h2>
-
-<p>各种模型选择的关系：</p>
-
-<ul>
-  <li>模型训练（初赛）：从假设集中选择；</li>
-  <li>验证方案（复赛）：从训练好的模型中选择；</li>
-  <li>测试：衡量最终的表现（测试集只在此时才能使用1次）。</li>
-</ul>
-
-<p>由于资料污染，以及付出了模型复杂度代价等因素，通常验证的结果仍然会比最终测试结果乐观。因此，提交测试结果而非验证结果更客观。</p>
-
-<h2 id="section-5">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-6">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:is-it-necessary">
-      <p><a href="/2015/01/image-classification-knn-based-introduction/#is-validation-set-need">并不是所有的人都这样做</a>…… <a href="#fnref:is-it-necessary" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:how-expectation-do">
-      <p>数学期望如何分离计算的？ <a href="#fnref:how-expectation-do" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

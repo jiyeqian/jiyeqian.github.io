@@ -219,6 +219,7 @@ code{
   /* border-color: #e1cc89; */
   border-color: #e1e1e8;
   border-width: 0 1px;
+  word-spacing:0px;
 }
 .highlight pre code {
   margin: 20px 0 0;
