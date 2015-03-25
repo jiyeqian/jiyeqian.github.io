@@ -25,8 +25,8 @@
         }
     });
     </script>
-    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
   <!-- <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
@@ -101,7 +101,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   tags
   
-  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
   
   <a href="/tags/#回归" title="回归">回归</a>&nbsp;
   
@@ -127,7 +127,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>广告媒体之间有<strong>协同效应</strong>（synergy effect）吗？协同效应在统计学中称为<strong>相关性</strong>（interaction effect）。例如：在电视和广播分别投放\$50000的广告和将这\$100000投放到其中一种媒体，效果一样吗？</li>
 </ol>
 
-<h2 id="section-1">回归模型</h2>
+<h2 id="section-1">单变量回归分析</h2>
 
 <p>数学上，回归问题可表示为
 \begin{equation}
@@ -182,7 +182,7 @@ SE\left(\hat\beta_1\right)^2&amp;={\sigma^2\over\sum_{i=1}^n(x_i-\bar x)^2}，
 <p>标准误差揭示了参数估计值和真实值之间的平均差异。公式严格成立的条件是每个样本的误差$\epsilon_i$和<strong>公共方差</strong>（common variance）无关。即使这个条件不成立，这个公式也可作为评估的很好近似。当$x_i$越分散时，$SE\left(\hat\beta_1\right)^2$越小；当$\bar x=0$时，$SE\left(\hat\beta_0\right)^2$也更小，此时$\hat\beta_0=\bar y$；随着样本数$n$的增加，$SE\left(\hat\beta_0\right)^2$也越来越小。通常$\sigma^2$未知，但可以通过数据集上的<strong>标准化残差</strong>（RSE，residual standard error）估计，</p>
 
 <p>\begin{equation}
-RSE=\sqrt{RSS\over n-2}。
+RSE=\sqrt{RSS\over n-2}=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\hat y_i\right)^2}。
 \label{eq:rse}
 \end{equation}</p>
 
@@ -194,7 +194,7 @@ RSE=\sqrt{RSS\over n-2}。
 \label{eq:lr-confidence-interval}
 \end{equation}</p>
 
-<p>标准误差也可用于系数的<strong>假设检验</strong>（hypothesis test）。最常用的两种假设检验是<strong>零假设检验</strong>（null hypothesis）和<strong>替代假设检验</strong>（alternative hypothesis），
+<p>标准误差也可用于系数的<strong>假设检验</strong>（hypothesis test）。最常用的两种假设检验是<strong>无效假设检验</strong>（null hypothesis）和<strong>备选假设检验</strong>（alternative hypothesis），
 \[
 \begin{aligned}
 H_0&amp;:\mbox{There is no relationship between }X\mbox{ and }Y\\
@@ -205,44 +205,164 @@ H_a&amp;:\mbox{There is some relationship between }X\mbox{ and }Y，
 \[
 H_0:\beta_1=0，\qquad H_a:\beta_1\neq0。
 \]
-若$\beta_1=0$，那么$X$和$Y$无关。进行零假设检验时，需要估计$\hat\beta_1$是否离0足够远，这需要通过$\hat\beta_1$的精度$SE\left(\hat\beta_1\right)$来衡量。如果$SE\left(\hat\beta_1\right)$很小，较小的$\hat\beta_1$可以足够确信$\beta_1\neq 0$；如果$SE\left(\hat\beta_1\right)$很大，$\hat\beta_1$的绝对值要很大才能拒绝零假设。在实际应用中，通过<strong>$t$统计量</strong>（$t$-statistic）</p>
+若$\beta_1=0$，那么$X$和$Y$无关。进行无效假设检验时，需要估计$\hat\beta_1$是否离0足够远，这需要通过$\hat\beta_1$的精度$SE\left(\hat\beta_1\right)$来衡量。如果$SE\left(\hat\beta_1\right)$很小，较小的$\hat\beta_1$可以足够确信$\beta_1\neq 0$；如果$SE\left(\hat\beta_1\right)$很大，$\hat\beta_1$的绝对值要很大才能拒绝无效假设。在实际应用中，通过<strong>$t$统计量</strong>（$t$-statistic）</p>
 
 <p>\begin{equation}
 t={\hat\beta_1-0\over SE\left(\hat\beta_1\right)}
 \label{eq:t-statistic}
 \end{equation}</p>
 
-<p>测量$\hat\beta_1$远离$0$的标准差（standard deviation）。如果$X$和$Y$真的无关，\eqref{eq:t-statistic}是$n-2$自由度的<strong>$t$分布</strong>（$t$-distribution）。当$n$大约大于$30$时，$t$分布与正态分布很相似。<strong>$p$值</strong>（$p$-value）表示$\beta_1=0$时观测值大于等于$|t|$的概率。较小的$p$值表示预测（predictor）与响应（response）之间有关联。若$p$值很小时，拒绝零假设（reject the null hypothesis）表示$X$与$Y$有关系。拒绝零假设的典型$p$值是$5\%$或$1\%$，当$n=30$时，相应的$t$统计量分别为$2$和$2.75$。<sup id="fnref:t-and-p-means"><a href="#fn:t-and-p-means" class="footnote">2</a></sup></p>
+<p>测量$\hat\beta_1$远离$0$（假设$H_0$成立）的标准差（standard deviation）。如果$X$和$Y$真的无关，\eqref{eq:t-statistic}是$n-2$自由度的<strong>$t$分布</strong>（$t$-distribution）。当$n$大约大于$30$时，$t$分布与正态分布很相似。<strong>$p$值</strong>（$p$-value）表示$\beta_1=0$时观测值大于等于$|t|$的概率。较小的$p$值表示预测（predictor）与响应（response）之间有关联。若$p$值很小时，拒绝无效假设（reject the null hypothesis）表示$X$与$Y$有关系。拒绝无效假设的典型$p$值是$5\%$或$1\%$，当$n=30$时，相应的$t$统计量分别为$2$和$2.75$。<sup id="fnref:t-and-p-means"><a href="#fn:t-and-p-means" class="footnote">2</a></sup></p>
 
-<div class="highlight"><pre><code>Call:
-lm(formula = Price ~ AGST + WinterRain + HarvestRain + Age + 
-    FrancePop, data = wine)
+<p>利用R的回归模型，可以得到如下的结果：</p>
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.48179 -0.24662 -0.00726  0.22012  0.51987 
+<div class="highlight"><pre><code class="language-R">advertising <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Advertising.csv&#39;</span><span class="p">)</span>
+lm.advertising <span class="o">&lt;-</span> lm<span class="p">(</span>Sales <span class="o">~</span> TV<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>lm.advertising<span class="p">)</span>
 
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -4.504e-01  1.019e+01  -0.044 0.965202    
-AGST         6.012e-01  1.030e-01   5.836 1.27e-05 ***
-WinterRain   1.043e-03  5.310e-04   1.963 0.064416 .  
-HarvestRain -3.958e-03  8.751e-04  -4.523 0.000233 ***
-Age          5.847e-04  7.900e-02   0.007 0.994172    
-FrancePop   -4.953e-05  1.667e-04  -0.297 0.769578    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+<span class="c1"># 结果如下：</span>
+Call<span class="o">:</span>
+lm<span class="p">(</span>formula <span class="o">=</span> Sales <span class="o">~</span> TV<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
 
-Residual standard error: 0.3019 on 19 degrees of freedom
-Multiple R-squared:  0.8294,    Adjusted R-squared:  0.7845 
-F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
-</code></pre></div>
+Residuals<span class="o">:</span>
+    Min      <span class="m">1</span>Q  Median      <span class="m">3</span>Q     Max 
+<span class="m">-8.3860</span> <span class="m">-1.9545</span> <span class="m">-0.1913</span>  <span class="m">2.0671</span>  <span class="m">7.2124</span> 
 
-<h2 id="section-2">参考资料</h2>
+Coefficients<span class="o">:</span>
+            Estimate Std. Error t value Pr<span class="p">(</span><span class="o">&gt;|</span><span class="kp">t</span><span class="o">|</span><span class="p">)</span>    
+<span class="p">(</span>Intercept<span class="p">)</span> <span class="m">7.032594</span>   <span class="m">0.457843</span>   <span class="m">15.36</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+TV          <span class="m">0.047537</span>   <span class="m">0.002691</span>   <span class="m">17.67</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+<span class="o">---</span>
+Signif. codes<span class="o">:</span>  <span class="m">0</span> ‘<span class="o">***</span>’ <span class="m">0.001</span> ‘<span class="o">**</span>’ <span class="m">0.01</span> ‘<span class="o">*</span>’ <span class="m">0.05</span> ‘<span class="m">.</span>’ <span class="m">0.1</span> ‘ ’ <span class="m">1</span>
+
+Residual standard error<span class="o">:</span> <span class="m">3.259</span> on <span class="m">198</span> degrees of freedom
+Multiple R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.6119</span><span class="p">,</span>    Adjusted R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.6099</span> 
+<span class="bp">F</span><span class="o">-</span>statistic<span class="o">:</span> <span class="m">312.1</span> on <span class="m">1</span> and <span class="m">198</span> DF<span class="p">,</span>  p<span class="o">-</span>value<span class="o">:</span> <span class="o">&lt;</span> <span class="m">2.2e-16</span></code></pre></div>
+
+<p>Coefficients的最后一列$Pr(&gt;|t|)$表示$H_0$成立的概率，若很小就拒绝$H_0$接受$H_1$。拒绝$H_0$以为着$\beta_1\neq0$，表明$X$与$Y$相关。星号表示相关性强弱。最后一列表明销售额与电视广告有关系。$RSE$衡量了模型拟合结果与数据真实表现的差异。</p>
+
+<p>$RSE$衡量了模型拟合结果与数据真实表现的差异。$R^2$统计量是度量拟合的另一种方式，
+\begin{equation}
+R^2 = {TSS-RSS\over TSS}=1-{RSS\over TSS}，\qquad TSS=\sum_{i=1}^n\left(y_i-\bar y\right)^2。
+\label{eq:r2-statistic}
+\end{equation}
+$R^2$越大越好。加入新的变量会使得$R^2$增大<sup id="fnref:R2-increase"><a href="#fn:R2-increase" class="footnote">3</a></sup>，在测试集上$R^2$可能为负数，$R^2\in(-\infty, 1]$。若$R^2$接近$0$，这表明回归模型没有很好的解释响应变化，可能是线性模型有误或内在误差$\sigma^2$很高。本例中，$R^2\approx 0.61$表示少于三分之二的销售额变化能通过基于电视广告的回归模型解释。虽然$R^2\in[0,1]$，要比较哪个$R^2$更好还要根据具体应用而定。</p>
+
+<p>$R^2$是衡量$X$与$Y$线性相关的统计量。相关系数（correlation）
+\begin{equation}
+r=Cor(X,Y)={
+    \sum_{i=1}^n\left(x_i-\bar x\right)\left(y_i-\bar y\right)
+    \over
+    \sqrt{\sum_{i=1}^n\left(x_i-\bar x\right)^2}\sqrt{\sum_{i=1}^n\left(y_i-\bar y\right)^2}
+}
+\label{eq:correlation}
+\end{equation}
+也是衡量$X$与$Y$线性相关的统计量。事实上，$R^2=r^2$。</p>
+
+<h2 id="section-2">多变量回归分析</h2>
+
+<p>$p$个不同预测变量（predictor）的多变量回归模型为</p>
+
+<p>\begin{equation}
+Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p+\epsilon。
+\label{eq:population-regression-line2}
+\end{equation}</p>
+
+<p>这些预测变量对响应的贡献如何呢？</p>
+
+<p>无效假设和备选假设分别为
+\[
+\begin{aligned}
+H_0&amp;:\beta_1=\beta_2=\cdots=\beta_p=0\\
+H_a&amp;:\mbox{at least one }\beta_j\mbox{ is non-zero}。
+\end{aligned}
+\]</p>
+
+<p>假设检验利用$F$统计量
+\begin{equation}
+F={(TSS-RSS)/p\over RSS/(n-p-1)}。
+\label{eq:f-statistic}
+\end{equation}</p>
+
+<p>若线性模型的假设成立，那么有</p>
+
+<p>\[
+E\{RSS/(n-p-1)\}=\sigma^2，
+\]</p>
+
+<p>如果$H_0$同时也为真，那么有</p>
+
+<p>\[
+E\{(TSS-RSS)/p\}=\sigma^2。
+\]</p>
+
+<p>当预测变量和响应之间没有关系时，$F\approx 1$。若$H_a$为真，那么$E\{(TSS-RSS)/p\}&gt;\sigma^2$，因此$F &gt; 1$。</p>
+
+<div class="highlight"><pre><code class="language-R">advertising <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Advertising.csv&#39;</span><span class="p">)</span>
+lm.advertising <span class="o">&lt;-</span> lm<span class="p">(</span>Sales <span class="o">~</span> TV <span class="o">+</span> Radio <span class="o">+</span> Newspaper<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>lm.advertising<span class="p">)</span>
+
+<span class="c1"># 结果如下：</span>
+Call<span class="o">:</span>
+lm<span class="p">(</span>formula <span class="o">=</span> Sales <span class="o">~</span> TV <span class="o">+</span> Radio <span class="o">+</span> Newspaper<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+
+Residuals<span class="o">:</span>
+    Min      <span class="m">1</span>Q  Median      <span class="m">3</span>Q     Max 
+<span class="m">-8.8277</span> <span class="m">-0.8908</span>  <span class="m">0.2418</span>  <span class="m">1.1893</span>  <span class="m">2.8292</span> 
+
+Coefficients<span class="o">:</span>
+             Estimate Std. Error t value Pr<span class="p">(</span><span class="o">&gt;|</span><span class="kp">t</span><span class="o">|</span><span class="p">)</span>    
+<span class="p">(</span>Intercept<span class="p">)</span>  <span class="m">2.938889</span>   <span class="m">0.311908</span>   <span class="m">9.422</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+TV           <span class="m">0.045765</span>   <span class="m">0.001395</span>  <span class="m">32.809</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+Radio        <span class="m">0.188530</span>   <span class="m">0.008611</span>  <span class="m">21.893</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+Newspaper   <span class="m">-0.001037</span>   <span class="m">0.005871</span>  <span class="m">-0.177</span>     <span class="m">0.86</span>    
+<span class="o">---</span>
+Signif. codes<span class="o">:</span>  <span class="m">0</span> ‘<span class="o">***</span>’ <span class="m">0.001</span> ‘<span class="o">**</span>’ <span class="m">0.01</span> ‘<span class="o">*</span>’ <span class="m">0.05</span> ‘<span class="m">.</span>’ <span class="m">0.1</span> ‘ ’ <span class="m">1</span>
+
+Residual standard error<span class="o">:</span> <span class="m">1.686</span> on <span class="m">196</span> degrees of freedom
+Multiple R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.8972</span><span class="p">,</span>    Adjusted R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.8956</span> 
+<span class="bp">F</span><span class="o">-</span>statistic<span class="o">:</span> <span class="m">570.3</span> on <span class="m">3</span> and <span class="m">196</span> DF<span class="p">,</span>  p<span class="o">-</span>value<span class="o">:</span> <span class="o">&lt;</span> <span class="m">2.2e-16</span></code></pre></div>
+
+<p>上例中$F\approx 570$，远大于$1$，这表明销售额至少与一种媒体广告有关。</p>
+
+<p>通过$F$拒绝$H_0$还需要考虑$n$和$p$的值。当$n$很大时，略大于$1$的$F$值也可拒绝$H_0$；当$n$很小时，$F$的值远大于$1$才可拒绝$H_0$。如果$H_0$为真，$\epsilon_i$是正态分布，那么$F$统计量服从$F$分布。当$n$和$p$已知，可以利用$F$分布计算$p$值（$p$-value），然后根据$p$值判断是否拒绝$H_0$。上例中，最后一个参数的$p$-value$\approx 0$，这表明销售额至少与一种媒体广告有关。</p>
+
+<p>有时需要测试其中的$q$个系数是否为$0$，</p>
+
+<p>\[
+H_0:\beta_{p-q+1}=\beta_{p-q+2}=\cdots=\beta_p=0，
+\]</p>
+
+<p>这可以通过对需忽略的$q$个数据排在最后实现。在这种情况下，线性回归模型需要去除最后的$q$个数据，此时的残差平方和记为$RSS_0$，那么$F$统计量为</p>
+
+<p>\begin{equation}
+F={(RSS_0-RSS)/q\over RSS/(n-p-1)}。
+\label{eq:f-statistic2}
+\end{equation}</p>
+
+<p>单变量回归表明报纸广告与销售额也有关，但多变量回归表明报纸广告与销售额关系不大。对于单变量和多变量回归，电视的系数很相近，但是报纸的系数差异很大。虽然报纸对销售额的直接贡献很小，但从下面的相关系数可以看出，报纸和广播的相关系数高达$0.35$，也就是报纸投放的广告多广播也会多，从而报纸能间接提高销售额<sup id="fnref:absurd-example"><a href="#fn:absurd-example" class="footnote">4</a></sup>。报纸可作为广播广告的替代品。报纸是通过广播对销售额的促进而获益的。</p>
+
+<div class="highlight"><pre><code class="language-R"><span class="o">&gt;</span> cor<span class="p">(</span>advertising<span class="p">[,</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">])</span>
+
+                  TV      Radio  Newspaper     Sales
+TV        <span class="m">1.00000000</span> <span class="m">0.05480866</span> <span class="m">0.05664787</span> <span class="m">0.7822244</span>
+Radio     <span class="m">0.05480866</span> <span class="m">1.00000000</span> <span class="m">0.35410375</span> <span class="m">0.5762226</span>
+Newspaper <span class="m">0.05664787</span> <span class="m">0.35410375</span> <span class="m">1.00000000</span> <span class="m">0.2282990</span>
+Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <span class="m">0.22829903</span> <span class="m">1.0000000</span></code></pre></div>
+
+<p>利用多变量回归分析每个变量的$t$统计量和$p$值，可以分析它们对销售额的影响，这等价于$q=1$时分别剔除每个变量的$F$统计量。这揭示了加入变量到模型的<strong>偏效应</strong>（partial effect）<sup id="fnref:partial-effect"><a href="#fn:partial-effect" class="footnote">5</a></sup>。$p$值表明电视和广播的广告与销售额相关，但是没有证据表明在有电视和广播的广告时，报纸广告与销量相关。</p>
+
+<p>为什么有了每个$p$值还需要全局的$F$统计量？如果存在一个很小的$p$值，那么至少有一个变量与响应相关——这个逻辑是有瑕疵的，特别是变量个数$p$很大时。例如：当$p=100$时，$H_0$为真，事实上没有那个变量与响应相关。在这种情况下，仍然大约$5\%$变量的$p$值会小于$0.05$，也就是即使在变量与响应无关的情况下也可能发现大约5个很小的$p$值，几乎可以保证至少存在一个$p$值小于$0.05$。因此，用每个变量对应的$t$统计量和$p$值判断变量与响应是否相关很可能得到错误的结果。但是，$F$统计量不存在这样的问题。如果$H_0$为真，不论变量有多少，只有$5\%$的机会使得$F$统计量会导致存在一个小于$5\%$的$p$值。</p>
+
+<p>用$F$统计量判断变量与响应是否相关的条件是$p$（变量数）较小，一定要比$n$小。当$p&gt;n$时，不能用最小二乘法拟合回归模型，因此也不能使用$F$统计量和前文讨论的其它概念。当$p$很大时可以采用<strong>前向选择</strong>（forward selection）。</p>
+
+<p>好的回归模型要求$F$较大，$R^2$较大，在这种情况下，小的$p$值表明变量与响应相关。</p>
+
+<h2 id="section-3">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="section-4">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -251,6 +371,15 @@ F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
     </li>
     <li id="fn:t-and-p-means">
       <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:R2-increase">
+      <p>The model’s $R^2$ value can never decrease from adding new variables to the model. This is due to the fact that it is always possible to set the coefficient for the new variable to zero in the new model. However, this would be the same as the old model. So the only reason to make the coefficient non-zero is if it improves the $R^2$ value of the model, since linear regression picks the coefficients to minimize the error terms, which is the same as maximizing the $R^2$. <a href="#fnref:R2-increase" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:absurd-example">
+      <p>This slightly counterintuitive result is very common in many real life situations. Consider an absurd example to illustrate the point. Running a regression of shark attacks versus ice cream sales for data collected at a given beach community over a period of time would show a positive relationship, similar to that seen between sales and newspaper. Of course no one (yet) has suggested that ice creams should be banned at beaches to reduce shark attacks. In reality, higher temperatures cause more people to visit the beach, which in turn results in more ice cream sales and more shark attacks. A multiple regression of attacks versus ice cream sales and temperature reveals that, as intuition implies, the former predictor is no longer significant after adjusting for temperature. <a href="#fnref:absurd-example" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:partial-effect">
+      <p>偏效应：回归模型中的其他因素保持不变时，某个解释变量对因变量的影响。 <a href="#fnref:partial-effect" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -261,7 +390,7 @@ F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
 <span>
   <a  href="/2015/03/efficient-pattern-mining-methods" class="pageNav"  >上一篇</a>
   &nbsp;&nbsp;&nbsp;
-  <a   class="pageNavInvalid"  >下一篇</a>
+  <a  href="/2015/03/industrial-robot-industry-development" class="pageNav"  >下一篇</a>
 </span>
 </section>
 
@@ -299,6 +428,9 @@ F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/03/industrial-robot-industry-development'; --1> -->
+<!--         url = '/2015/03/industrial-robot-industry-development'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->

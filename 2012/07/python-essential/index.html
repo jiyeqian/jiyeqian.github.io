@@ -25,8 +25,8 @@
         }
     });
     </script>
-    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
   <!-- <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
@@ -824,6 +824,27 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>定义一个特殊的<code>__slots__</code>变量，来限制该类能添加的属性。<code>__slots__</code>定义的属性仅对当前类起作用，对继承的子类不起作用。</p>
 
+<h3 id="newinit"><code>__new__</code>与<code>__init__</code></h3>
+
+<p><code>__new__</code>创建实例，<code>__init__</code>初始化实例。</p>
+
+<p><code>__new__(cls[, ...])</code>用于创建类<code>cls</code>的实例，它是静态方法，第一个参数是实例化采用的类。通常通过调用超类（superclass）的<code>__new__()</code>实现，<code>super(currentclass, cls).__new__(cls[, ...])</code>，返回按需修改后创建的实例。</p>
+
+<ul>
+  <li>若<code>__new__()</code>返回<code>cls</code>的实例，新实例的方法<code>__init__(self[, ...])</code>将被调用（其它参数与传给<code>__new__()</code>的相同）；</li>
+  <li>若<code>__new__()</code>不返回<code>cls</code>的实例，不会调用<code>__init__()</code>。</li>
+</ul>
+
+<p><code>__new__()</code>通常用于定制不可变类型（例如整型、字符串和元组等）子类的实例创建，以及在元类（metaclass）中定制类的创建。</p>
+
+<p><code>__init__(self[, ...])</code>在实例创建后调用。</p>
+
+<h3 id="getattributegetattr"><code>__getattribute__</code>与<code>__getattr__</code></h3>
+
+<h3 id="super"><code>super</code>函数</h3>
+
+<p>Things to Know About Python Super（［<a href="http://www.artima.com/weblogs/viewpost.jsp?thread=236275">1/3</a>］、［<a href="http://www.artima.com/weblogs/viewpost.jsp?thread=236278">2/3</a>］）</p>
+
 <h3 id="staticmethodclassmethod"><code>@staticmethod</code>与<code>@classmethod</code></h3>
 
 <p>用<code>@staticmethod</code>修饰的静态方法对它所在类一无所知，没有隐式的第一参数，即可从类调用也可从实例调用。</p>
@@ -832,7 +853,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="descriptor">描述符（descriptor）</h3>
 
-<p>从根本上讲，描述符就是可以<a href="http://www.geekfan.net/7862/">重复使用的属性</a>。为了让描述符能够正常工作，它们必须定义在类的层次上。</p>
+<p>从根本上讲，描述符就是可以<a href="http://www.geekfan.net/7862/">重复使用的属性</a>。<a href="http://users.rcn.com/python/download/Descriptor.htm">描述符可以实现属性、函数与方法、静态方法和动态方法等特性</a>。</p>
+
+<p>为了让描述符能够正常工作，它们必须定义在类的层次上。</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">class</span> <span class="nc">Broken</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">NonNegative</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>           <span class="c"># descriptor</span>
@@ -843,8 +866,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="k">print</span> <span class="s">&quot;X is </span><span class="si">%s</span><span class="s">, Y is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 
 <span class="c"># 输出：X is &lt;__main__.NonNegative object at 0x10432c250&gt;, Y is 5</span></code></pre></div>
-
-<p>Python的描述符（descriptor）可参考<a href="http://www.geekfan.net/7862/">描述符解密</a>。</p>
 
 <h3 id="metaclass"><code>__metaclass__</code>元类</h3>
 
@@ -868,25 +889,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">meta_func</span></code></pre></div>
-
-<h3 id="newinit"><code>__new__</code>与<code>__init__</code></h3>
-
-<p><code>__new__</code>创建实例，<code>__init__</code>初始化实例。</p>
-
-<p><code>__new__(cls[, ...])</code>用于创建类<code>cls</code>的实例，它是静态方法，第一个参数是实例化采用的类。通常通过调用超类（superclass）的<code>__new__()</code>实现，<code>super(currentclass, cls).__new__(cls[, ...])</code>，返回按需修改后创建的实例。</p>
-
-<ul>
-  <li>若<code>__new__()</code>返回<code>cls</code>的实例，新实例的方法<code>__init__(self[, ...])</code>将被调用（其它参数与传给<code>__new__()</code>的相同）；</li>
-  <li>若<code>__new__()</code>不返回<code>cls</code>的实例，不会调用<code>__init__()</code>。</li>
-</ul>
-
-<p><code>__new__()</code>通常用于定制不可变类型（例如整型、字符串和元组等）子类的实例创建，以及在元类（metaclass）中定制类的创建。</p>
-
-<p><code>__init__(self[, ...])</code>在实例创建后调用。</p>
-
-<h3 id="getattributegetattr"><code>__getattribute__</code>与<code>__getattr__</code></h3>
-
-<h3 id="super"><code>super</code>函数</h3>
 
 <h2 id="section-20">模块和包</h2>
 
@@ -1055,7 +1057,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="section-29">生成器</h3>
 
-<h3 id="section-30">修饰器</h3>
+<h3 id="decorator">修饰器（decorator）</h3>
+
+<p>一个函数返回另一个函数，通常利用<code>@wrapper</code>语法实现函数变换，<code>classmethod()</code>和<code> staticmethod()</code>是典型的修饰器。</p>
 
 <h3 id="with"><code>with</code>语句</h3>
 
@@ -1067,7 +1071,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="yield">yield</h3>
 
-<h3 id="section-31">函数式编程</h3>
+<h3 id="section-30">函数式编程</h3>
 
 <p>与序列配套使用的三个有用的函数：<code>filter()</code>、<code>map()</code>和<code>reduce()</code>。</p>
 
@@ -1109,9 +1113,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">([])</span>
 <span class="mi">0</span></code></pre></div>
 
-<h3 id="section-32">常见约定</h3>
+<h3 id="section-31">常见约定</h3>
 
-<h3 id="section-33">其它常用函数</h3>
+<h3 id="section-32">其它常用函数</h3>
 
 <h4 id="zip"><code>zip()</code>：序列合并与反合并</h4>
 
@@ -1131,7 +1135,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <div class="highlight"><pre><code class="language-python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">__builtin__</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">__builtin__</span><span class="p">)</span></code></pre></div>
 
-<h2 id="section-34">常用库</h2>
+<h2 id="section-33">常用库</h2>
 
 <h3 id="collections">collections</h3>
 
@@ -1143,7 +1147,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h3 id="weakref">weakref</h3>
 
-<h2 id="section-35">参考资料</h2>
+<h2 id="section-34">参考资料</h2>
 
 <p><a href="https://gist.github.com/upsuper/2517847">一行 Python 实现树</a>  <br />
 <a href="http://www.zhihu.com/question/20979326">Python 的哪些特性或用法让你相见恨晚？</a>     <br />
@@ -1151,7 +1155,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-36">脚注</h3>
+<h3 id="section-35">脚注</h3>
 
 <div class="footnotes">
   <ol>

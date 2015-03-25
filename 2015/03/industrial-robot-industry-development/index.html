@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>工业机器人（1）：行业发展综述</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>工业机器人（1）：行业发展综述</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-03-19">2015-03-19</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器人" title="机器人">机器人</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">摘要</h2>
+
+<p>本文主要从机器人市场占有率的角度，以及国家政府主导下机器人发展的历程，对中国工业机器人行业的发展进行简要概述。</p>
+
+<h2 id="section-1">简介</h2>
+
+<p><strong>工业机器人</strong>是机器人在应用环境中的一个重要分支，其操作机具有自动控制、可重复编、多用途、可对3个以上轴进行编程等显著特点，其底座可固定也可移动<a href="#iso8373">[1]</a>。工业机器人是集机械、电子、控制、计算机、传感器、人工智能等多学科的技术于一体的现代制造业自动化装备<a href="#jianggang2011industrialrobot">[2]</a>，广泛应用于汽车制造、机械制造<a href="#hanjiexiehui2014robot">[3]</a>、电子器件、集成电路、电力系统<a href="#liuzhenghong2014robot">[4]</a>、基建<a href="#heqinghua2005robot">[5]</a>等领域。</p>
+
+<p><strong>机器人代替人工，主要解决三个层次问题</strong>：人干不了（特种机器人<sup id="fnref:robot-in-danger"><a href="#fn:robot-in-danger" class="footnote">1</a></sup>）、人干不好（汽车等高端领域）和人不想干（国内一般制造业）的，“现在到了人不想干的阶段，需要用到大量的机器人”。<sup id="fnref:persistent-ailment"><a href="#fn:persistent-ailment" class="footnote">2</a></sup></p>
+
+<p>根据应用领域的不同，工业机器人可分为焊接机器人、切割机器人、装配机器人、喷涂机器人、搬运机器人、码垛机器人、自动牵引车（AGV）机器人等。根据发展过程，工业机器人分三代<sup id="fnref:strong-robot-china"><a href="#fn:strong-robot-china" class="footnote">3</a></sup>：</p>
+
+<ol>
+  <li>第一代是示教再现型机器人，给它编程，教它干什么活，它会忠实地按程序做。这种机器人不能感知环境变化，不能规划自己的行为。<strong>现在90%都是第一代机器人，国外工业机器人应用最多的还是第一代机器人。</strong></li>
+  <li>第二代是具有感知功能的机器人，比如说有视觉功能，它能判断零件的位置和运动的方向，甚至可以将圆形、方形、三角形等不同形状的零件放到不同的箱子里。具有感知功能的机器人在生产中已经有少量的应用了。</li>
+  <li>第三代的智能机器人还没有出现，它们能完全自主判断、决定自己该怎么做。</li>
+</ol>
+
+<p>国内十分重视机器人产业的发展，尤其是近几年。“机器人革命”有望成为“第三次工业革命”的一个切入点和重要增长点，将影响全球制造业格局，而且中国将成为全球最大的机器人市场。国际上有舆论认为，机器人是“制造业皇冠顶端的明珠”，其研发、制造、应用是衡量一个国家科技创新和高端制造业水平的重要标志<sup id="fnref:xis-robot"><a href="#fn:xis-robot" class="footnote">4</a></sup>。但是，中国机器人产业仍然比较落后。在2014年6月9日的两院院士大会上，国家主席习近平表示了自己忧虑<sup id="fnref:xis-robot:1"><a href="#fn:xis-robot" class="footnote">4</a></sup>：<strong>我国将成为机器人的最大市场，但我们的技术和制造能力能不能应对这场竞争？</strong>我们不仅要把我国机器人水平提高上去，而且要尽可能多地占领市场。这样的新技术新领域还很多，我们要审时度势、全盘考虑、抓紧谋划、扎实推进。</p>
+
+<h2 id="section-2">行业现状</h2>
+
+<p><strong>哈尔滨工业大学和中国科学院沈阳自动化研究所是中国最具实力的机器人科研机构</strong>，<a href="http://robot.hit.edu.cn">分别拥有机器人技术与系统国家重点实验室</a>（哈尔滨工业大学）和<a href="http://www.rlab.ac.cn">机器人学国家重点实验室</a>（中国科学院沈阳自动化研究所）。中科院沈阳自动化主要从事水下机器人的研究，哈尔滨工业大学主要从事焊接机器人的研究。中科院沈阳自动化所研制了中国第一台水下机器人“海人一号”，潜水深度达200米<sup id="fnref:30-years-chinese-robot"><a href="#fn:30-years-chinese-robot" class="footnote">5</a></sup>；哈尔滨工业大学研制成功了“天龙一号”5自由度弧焊机器人<a href="#TL01-1991">[6]</a>。</p>
+
+<p>2013年4月21日，<a href="http://cria.mei.net.cn/hyzx.asp">中国机器人产业联盟</a>（CRIA，China Robot Industry Alliance）成立，国内主要的机器人企业都是该联盟的成员单位，目前已有成员单位152家，包括2家理事长单位：</p>
+
+<ul>
+  <li>沈阳新松机器人自动化股份有限公司，</li>
+  <li>中国机械工业联合会；</li>
+</ul>
+
+<p>包括14家副理事长单位：</p>
+
+<ul>
+  <li>安徽埃夫特智能装备有限公司，</li>
+  <li>安川电机（中国）有限公司［日本］，</li>
+  <li>广州数控设备有限公司，</li>
+  <li>固高科技（深圳）有限公司［香港］，</li>
+  <li>库卡机器人（上海）有限公司［德国］，</li>
+  <li>南京埃斯顿机器人工程有限公司，</li>
+  <li>欧德神思软件系统（北京）有限公司［德国］，</li>
+  <li>唐山开元电器集团，</li>
+  <li>中国科学院深圳先进技术研究院，</li>
+  <li>长沙长泰机器人有限公司，</li>
+  <li>上海ABB工程有限公司［瑞士］，</li>
+  <li>三菱电机自动化（中国）有限公司［日本］，</li>
+  <li>上海发那科机器人有限公司［日本］，</li>
+  <li>哈尔滨博实自动化股份有限公司。</li>
+</ul>
+
+<p>这些企业主要专注工业机器人，该领域涉及的技术面广、要求极高，<strong>需要长期的资金投入和深厚的技术积累</strong>。它们要么与高校有长期合作关系、要么有大企业作为支撑，要么是国外企业在中国设立的分公司。<strong>新松机器人是国内机工业器人的领军企业</strong>，它是中国科学院直属的国有大型企业；博实自动化发源于哈尔滨工业大学；长泰机器人是中轻集团下属公司；埃夫特智能装备的前身为芜湖奇瑞装备有限责任公司。</p>
+
+<p>2005年~2012年，全球工业机器人的年均销售增长率为9%，同期中国工业机器人的年均销售增长率达到25%，2012年底中国超越韩国成为仅次于日本的全球第二大机器人市场，占全球市场15%<sup id="fnref:huge-robot-market"><a href="#fn:huge-robot-market" class="footnote">6</a></sup>。2013年，全球销售工业机器人17.9万台，同比增长12%，其中，中国市场销量达到3.65万台，同比大幅增长59%，占比20.4%，超过日本（2.6万台），<strong>中国已成为全球最大的工业机器人消费市场</strong>，但是国产的只占9500台，<strong>中国市场并未被本土企业所占有</strong>。国产机器人处于行业低端，以搬运和上下料机器人为主，且主体多是单价较低的三、四轴机器人，六轴的多关节型机器人占全国工业机器人销量的比重不足6%<sup id="fnref:chinese-robot-longrun"><a href="#fn:chinese-robot-longrun" class="footnote">7</a></sup>；<strong>国外品牌的机器人几乎垄断了汽车制造、焊接等高端行业领域</strong>，占比达96%<sup id="fnref:4-questions-to-robot"><a href="#fn:4-questions-to-robot" class="footnote">8</a></sup><sup id="fnref:robot-war"><a href="#fn:robot-war" class="footnote">9</a></sup>。截至2014年9月，中国机器人相关企业数量已达到428家，其中88%是系统集成商，从区域看，广东地区117家，占27%，如把浙江、江苏和上海企业加起来，则长三角的企业数量超过珠三角<sup id="fnref:robot-domestic-confidence"><a href="#fn:robot-domestic-confidence" class="footnote">10</a></sup>。2014年底，有70余家上市公司并购或者投资了机器人、智能自动化项目，并且这一势头延续到了2015年；全国已建和在建的工业机器人产业园近40家，相当于平均每个省有超过一家工业机器人产业园，而更多的园区还在筹备中；中国机器人相关企业的数量甚至超过了4000家<sup id="fnref:behind-beautiful-data"><a href="#fn:behind-beautiful-data" class="footnote">11</a></sup>。</p>
+
+<p><strong>核心零部件技术落后是制约中国机器人产业发展最重要的因素</strong>。核心零部件主要分成三部分：精密减速器、伺服电机和控制器<sup id="fnref:robot-controller"><a href="#fn:robot-controller" class="footnote">12</a></sup>。在工业机器人成本中，<strong>核心部件成本约占75%</strong>，成本占比最高的为减速机，约占35%，伺服电机约占25%，控制器约占15%，机器人本体在总成本中占比不到25%<sup id="fnref:ART-8321202-8420-28925966"><a href="#fn:ART-8321202-8420-28925966" class="footnote">13</a></sup>。目前，国内还没有能够提供规模化且性能可靠的精密减速器生产企业，几乎垄断在纳博特斯克（Nabtesco）和哈默纳科（Harmonic）两家日本企业手上<sup id="fnref:lost-key-techniques"><a href="#fn:lost-key-techniques" class="footnote">14</a></sup>。由国产材料生产的谐波减速器寿命只能是一至两年，一年后磨损就非常严重，直接影响了机器人的速度和精度<sup id="fnref:oversea-robot-company"><a href="#fn:oversea-robot-company" class="footnote">15</a></sup>。相对于减速器，伺服电机和控制器市场虽未形成主要厂商垄断现象，但几大国际厂商在中国也建立了分工厂，供应充足，产品价格相对合理。国产机器人中80%~90%使用国外减速器，60%~70%使用的是国外电机、40%~50%使用国外控制器<sup id="fnref:4-questions-to-robot:1"><a href="#fn:4-questions-to-robot" class="footnote">8</a></sup>。虽然国内劳动力便宜，但关键元器件必须从外国进口，因此国产企业想降低机器人制造成本非常困难<sup id="fnref:strong-robot-china:1"><a href="#fn:strong-robot-china" class="footnote">3</a></sup>。国内多数机器人企业聚集在机器人本体等领域争夺菲薄的利润，挣扎在盈亏线上。目前国内机器人企业只有广州数控、南京埃斯顿、沈阳新松机器人等少数公司在进行控制系统、驱动和伺服电机等核心零部件自主研发<sup id="fnref:persistent-ailment:1"><a href="#fn:persistent-ailment" class="footnote">2</a></sup>。即使像新松这样的公司，它的减速器、电机、轴承等机器人的核心零部件也都是采用国外的。</p>
+
+<p><strong>提升整体系统设计和软件开发能力是当前国产机器人亟需解决的问题</strong>。面对核心部件靠采购，机器人市场需求巨大的现实，通过提升系统设计能力，充分利用现有资源才是解决问题之道。即使国外著名的机器人企业，也是采购核心部件。库卡机器人的软件和整个系统的设计是他做的，控制器、驱动器、电机等部件外包给其它公司（驱动由德国力士乐定制生产，电机是西门子的，减速机是日本Nabtesco和捷克Spinea的），最后在松江的总装厂组装到一起<sup id="fnref:newsDetail_forward_1298169"><a href="#fn:newsDetail_forward_1298169" class="footnote">16</a></sup>。由于国内机器人在轨迹平滑算法上都不够领先，打磨、焊接等机器人还是以国外品牌居多<sup id="fnref:oversea-robot-company:1"><a href="#fn:oversea-robot-company" class="footnote">15</a></sup>。若能在算法上下功夫，通过提升软件性能，也能提高国产机器人的竞争力。</p>
+
+<h2 id="section-3">发展历程</h2>
+
+<h3 id="section-4">国内行业自身的发展</h3>
+
+<p>中国机器人的发展主要由政府主导，主要集中在水下机器人和焊接机器人，从特种机器人开始，逐步转向工业机器人：</p>
+
+<ul>
+  <li>1977年，机器人获准被列入中科院1978至1985年发展规划<sup id="fnref:200307_t20030704_1866103"><a href="#fn:200307_t20030704_1866103" class="footnote">17</a></sup>。</li>
+  <li>1985年，国家科学技术委员会开始组织实施工业机器人<strong>“七五”计划</strong>，列入计划的主要项目有：主机，包括点焊、弧焊、上下料、喷漆等工业机器人，机器人关键元部件技术<sup id="fnref:content_283986"><a href="#fn:content_283986" class="footnote">18</a></sup>。</li>
+  <li>1985年12月，中国科学院沈阳自动化研究所和上海交通大学研制的<strong>海人一号</strong>在南海下潜到199米，创造了我国自行制造的无人遥控潜水器深潜纪录<a href="#JL1987">[7]</a>。</li>
+  <li>1986年，<strong>智能机器人</strong>被中央列为863计划自动化领域两个主题之一，研究目标是跟踪世界先进水平，工作内容是围绕特种机器人进行攻关<sup id="fnref:content_283986:1"><a href="#fn:content_283986" class="footnote">18</a></sup>。</li>
+  <li>1987年10月29日，上海交通大学和上海机床厂联合研制的<strong>上海一号弧焊机器人</strong>通过专家鉴定<a href="#SHHT1997">[8]</a>。</li>
+  <li>1991年，中华人民共和国科学技术发展十年规划和<strong>“八五”计划</strong>纲要：建成机器人装配示范实验线，研制用于核工业的遥控移动式作业机器人、壁面爬行检查机器人和恶劣环境下作业机器人、水下无缆机器人、精密装配机器人等5种机器人产品<sup id="fnref:t20050831_24436"><a href="#fn:t20050831_24436" class="footnote">19</a></sup>。</li>
+  <li>1991年3月27日，上海交通大学和上海机床厂共同研制的<strong>上海三号（SHⅢ）喷涂机器人</strong>通过鉴定；机器人采用电、液伺服系统控制，为空间关节式机器人，有6个自由度，最大手腕负荷为5kg<a href="#SHIII1991">[9]</a>。</li>
+  <li>1994年，中国科学院沈阳自动化研究所的<strong>探索者号无缆水下机器人</strong>研制成功，工作深度达到1000米；它是我国第一台无缆水下机器人<a href="#TSZ1995">[10]</a>。</li>
+  <li>1995年5月8日，上海交通大学的<strong>精密1号装配机器人</strong>原型样机通过国家验收；该机器人是国家863计划智械机器人主题型号样机之一，带有多传感器、多任务操作、可离线编程的高速、高精度、4轴SCARA平面关节型、直接驱动伺服控制的智能精密装配机器人<a href="#SHJM1995">[11]</a>。</li>
+  <li>1995年8月， 中俄联合的<strong>CR-01 6000米无缆自治水下机器人</strong>研制成功（获国家科技进步一等奖）；它的本体长4.374米，宽0.8米，高0.93米，它在空气中的重量为1305公斤，最大潜深6000米，最大水下航速2节，续航能力10小时，定位精度10～15米；我国成为世界上拥有潜深6000米自治水下机器人的少数国家之一<sup id="fnref:6000meter-robot"><a href="#fn:6000meter-robot" class="footnote">20</a></sup>。</li>
+  <li>1995年9月，全国科技发展<strong>“九五”计划</strong>和到2010年长期规划纲要：先进制造技术，要以计算机集成制造系统为发展方向，重点研究开发现代设计、精密成形与加工、激光、<strong>机器人</strong>、数控、传感、系统管理等技术，为传统制造业的高技术化提供技术支撑<sup id="fnref:t20050831_24435"><a href="#fn:t20050831_24435" class="footnote">21</a></sup>。</li>
+  <li>1997年5月，由北京航空航天大学、清华大学和海军总医院共同研制开发的<strong>脑外科机器人</strong>为病人实施了首例脑手术<sup id="fnref:863plan-15years"><a href="#fn:863plan-15years" class="footnote">22</a></sup>。</li>
+  <li>1999年7月15日，哈尔滨工业大学和沈阳自动化所自联合研制的<strong>HT—100A点焊机器人</strong>通过验收<a href="#HT100A1999">[12]</a>。</li>
+  <li>2000年11月底，由湖南湘潭江麓工程机械有限公司与国防科技大学联合开发研制的<strong>W1102DZ型高性能无人驾驶振动压路机</strong>通过了国家“863”专家组的验收<a href="#W1102DZ2002">[13]</a>。</li>
+  <li>2001年5月，国民经济和社会发展<strong>第十个五年计划</strong>科技教育发展专项规划（科技发展规划）：围绕现代集成制造系统技术和机器人技术，重点研究在全球化敏捷制造环境下的产品开发与设计技术，系统集成与优化技术，现代管理技术，先进制造工艺与装备，攻克面向先进制造的基于机器人的制造单元及系统、特种机器人以及微机电系统等关键技术<sup id="fnref:t20050831_24434"><a href="#fn:t20050831_24434" class="footnote">23</a></sup>。</li>
+  <li>2006年2月，<strong>国家中长期科学和技术发展规划纲要</strong>：以服务机器人和危险作业机器人应用需求为重点，研究设计方法、制造工艺、智能控制和应用系统集成等共性基础技术<sup id="fnref:t20081129_65774"><a href="#fn:t20081129_65774" class="footnote">24</a></sup>。</li>
+  <li>2006年10月，<strong>国家“十一五”科学技术发展规划</strong>：重点研究极端制造技术、智能机器人技术、重大产品和重大设施寿命预测技术、现代制造集成技术<sup id="fnref:t20061031_55485"><a href="#fn:t20061031_55485" class="footnote">25</a></sup>。</li>
+  <li>2011年07月，<strong>国家“十二五”科学技术发展规划</strong>：发展工业机器人、智能控制、微纳制造、制造业信息化等相关系统和装备，重点研发工业机器人的模块化核心技术和功能部件、重大工程自动化控制系统和智能测试仪器及基础件等技术装备<sup id="fnref:sewkjfzgh"><a href="#fn:sewkjfzgh" class="footnote">26</a></sup>。</li>
+  <li>2012年7月，<strong>蛟龙号</strong>在马里亚纳海沟试验海区创造了下潜7062米的中国载人深潜纪录，同时也创造了世界同类作业型潜水器的最大下潜深度纪录<sup id="fnref:jiaolong2012"><a href="#fn:jiaolong2012" class="footnote">27</a></sup>。</li>
+  <li>2013年4月21日，<strong>中国机器人产业联盟</strong>（CRIA，China Robot Industry Alliance）成立，目前共有成员单位152家，其中2家理事长单位和14家副理事长单位。</li>
+  <li>2013年12月30日，工信部发布<strong>《关于推进工业机器人产业发展的指导意见》</strong>，强调要在核心技术及零部件上实现突破。</li>
+  <li>2014年11月初，北京赛福斯特技术有限公司与德国库卡机器人联合开发的国内首台<strong>重载机器人搅拌摩擦焊系统</strong>向广州有色金属研究院成功验收交付<sup id="fnref:robot8838"><a href="#fn:robot8838" class="footnote">28</a></sup>。</li>
+  <li>2015年2月，国家质检总局同意由中国科学院沈阳自动化研究所和沈阳产品质量监督检验院按B级国家质检中心标准，联合筹建<strong>国家机器人质量监督检验中心</strong><sup id="fnref:t20150223_1584021"><a href="#fn:t20150223_1584021" class="footnote">29</a></sup>。</li>
+</ul>
+
+<p>早在1999年9月18日，国家就授予9家单位<sup id="fnref:the-nine-companies"><a href="#fn:the-nine-companies" class="footnote">30</a></sup>“国家863计划智能机器人主题产业化基地”的称号<a href="#863plan1999robot">[14]</a>。16年之后，这些产业化基地中，如今仅剩沈阳新松机器人自动化股份有限公司和哈尔滨博实自动化股份有限公司继续留在机器人行业，天津市南开太阳高技术发展有限公司转行做门卡和管理系统，其余6家单位在机器人行业难觅踪影<sup id="fnref:9-863plan-robot-companies"><a href="#fn:9-863plan-robot-companies" class="footnote">31</a></sup>。</p>
+
+<p>从中国机器人发展的历程可以看出，<strong>国家从20世纪80年代开始就大力扶持机器人的发展</strong>。“七五”以来，机器人产业始终榜上有名，“十二五”规划中更将其列为国家战略性新兴产业。过于丰厚的援助金反而成为中国国产机器人水平提升的阻碍。很多企业上机器人项目，都是在玩机器人概念，其实是在变相地圈国家的钱，这些企业大部分不是做机器人的，这帮人不会把心思放在产业发展上。但近30年过去，<strong>机器人核心零部件技术却依然攻而不克、制而不精</strong>。政府投入大量资金的“863”攻关似乎没有根本突破。<strong>机器人产业国内专利多，国际专利少，转化价值不大</strong>，这些专利还是拿来报喜用的，是拿来争取项目、评职称用的，不是市场化用的。<sup id="fnref:persistent-ailment:2"><a href="#fn:persistent-ailment" class="footnote">2</a></sup></p>
+
+<h3 id="section-5">国外企业在中国的发展</h3>
+
+<p>1954年，美国人G・C・戴万获得了一项工业机器人专利；1958年，美国机械与铸造公司研制成功一台数控自动通用机器Versatran，并以工业机器人为商品广告投入市场，这是世界上最早的工业机器人。日本、苏联、西欧等国大都从1967、1968年开始，以美国的Versatran和Unimate型机器人为蓝本开始研制。1967年，日本丰田织机和川崎重工分别引进了美国的Versatran和Unimate，通过引进技术、仿制、改造创新，很快赶上美国并超越了其它国家，从1980年开始进入广泛的普及时代<a href="#zhang1988industrial-robot">[15]</a>。</p>
+
+<p>目前，工业机器人的<strong>四大企业</strong>，瑞士的ABB、德国的库卡、日本的发那科和安川，占有的全球市场份额已超过五成，在中国占有的市场份额已经超过80%，他们<strong>以上海为中心</strong>在中国开展业务：</p>
+
+<ul>
+  <li>1979年，瑞士的<strong>ABB</strong>在北京设立办事处，成为四巨头中最早进驻中国的公司；1992年，在<strong>厦门</strong>投资建立了第一家合资企业；1995年，在<strong>北京</strong>注册了投资性控股公司——ABB（中国）有限公司；2006年，其全球机器人业务总部正式进驻<strong>上海</strong>；2013年，在华销售收入超过56亿美元，保持ABB集团全球第二大市场的地位<sup id="fnref:robot-war:1"><a href="#fn:robot-war" class="footnote">9</a></sup>。</li>
+  <li>1986年，德国的<strong>库卡</strong>将一台机器人赠送给一汽卡车，这台机器人也是中国汽车工业应用的第一台工业机器人；2000年，成立全资子公司——库卡机器人（<strong>上海</strong>）有限公司。</li>
+  <li>1992年，日本的<strong>发那科</strong>成立北京发那科机电有限公司；1994年后开始大批量进入中国，东风汽车及长安汽车分别引进了库卡公司的一条焊装线；2000年，与上海电气兴建合资公司——<strong>上海</strong>发那科机器人有限公司。</li>
+  <li>1996年，日本的<strong>安川</strong>与首钢成立了安川首钢机器人有限公司（前身为首钢莫托曼机器人有限公司）；1999年，在<strong>上海</strong>成立全资公司——安川电机（中国）有限公司。</li>
+</ul>
+
+<p><strong>技术和资金资源最为集中的汽车制造业是工业机器人最主要的应用领域</strong><sup id="fnref:robot-war:2"><a href="#fn:robot-war" class="footnote">9</a></sup>。汽车工厂使用最多是ABB和库卡的机器人。库卡机器人主要用在德系汽车工厂，ABB机器人在国产汽车、日系汽车，甚至德系车厂都有用，国产车厂似乎尤其偏爱ABB机器人。在价格上，ABB、库卡这种欧洲品牌的比较高，日系的相对比较便宜<sup id="fnref:abb-invade"><a href="#fn:abb-invade" class="footnote">32</a></sup>。</p>
+
+<h2 id="section-6">结论</h2>
+
+<p>中国机器人的发展由政府主导的模式不再有效。从历史发展来看，在中国政府的主导和扶持下，中国的机器人已经成功的实现了从无到有。从目前现状来看，中国机器人如果要从有到做强，实现产业化，应对国际竞争，这种依靠国家政府主导科研院所研发的模式是失败的。</p>
+
+<p>如今机器人的蓬勃发展，不仅是技术的积累与进步，主要是市场需求推动的结果。机器人涵盖的技术领域广泛，其发展既需要关键技术的突破，也依赖系统工程的积累和行业技术的积淀。曾经的技术积累，至少从产业化和批量化生产的角度来看，也明显不足。如今中国的机器人产业仍处于摸索阶段，还未进入发展期。</p>
+
+<h2 id="section-7">附录</h2>
+
+<h3 id="representative-figure">代表人物<sup id="fnref:representative-figure"><a href="#fn:representative-figure" class="footnote">33</a></sup></h3>
+
+<ul>
+  <li><strong>蒋新松</strong>：1931年8月3日～1997年3月30日，中国工程院院士，原沈阳中科院自动化研究所所长、研究员、博士生导师，提出、组织并直接负责水下机器人的研究、开发及产品系列化工作，负责组织研制工业机器人及特种机器人，创建国家机器人技术研究开发工程中心和机器人学开放实验室。</li>
+  <li><strong>王天然</strong>：生于1943年3月，中国工程院院士，现任中国科学院沈阳自动化研究所研究员、博士生导师，我国机器人和自动化工程技术界的学科带头人之一，在智能机器人体系结构、工业机器人控制系统、大型自动化系统技术等方面做出了重要贡献，<a href="http://www.siasun.com">沈阳新松机器人自动化股份有限公司</a>董事长。</li>
+  <li><strong>蒋厚宗</strong>：生于1935年7月，现任上海交通大学教授，先后担任“上海1号弧焊机器人”、“上海3号喷涂机器人”总设计师，“863精密装配机器人”前期总设计师。创建了上海交通大学海泰科技发展有限公司并任总经理。</li>
+  <li><strong>徐如玉</strong>：1942年7月29日～2012年2月17日，中国工程院院士，生前任哈尔滨工程大学海洋综合技术工程研究中心主任，教授、博士生指导教师，在发展我国水下智能机器人技术方面做出了突出贡献，“探索者”号水下机器人主要研究成员。</li>
+  <li><strong>封锡盛</strong>：生于1941年12月17日，中国工程院院士，中国科学院沈阳自动化研究所研究员、博士生导师、水下机器人研究室副主任，曾经担任我国第一台有缆遥控水下机器人“海人一号”电控系统负责人、我国第一台无缆自治水下机器人“探索者号”的总设计师。</li>
+  <li><strong>张启先</strong>：1925年8月25日～2002年5月25日，中国工程院院士，北京航天航空大学教授、机器人研究所所长，70年代后期，率先突破传统机构学范畴开展机器人技术的研究，负责主持了七自由度机器人、新型三指灵巧手、基于多传感器局部自主的机器人臂与灵巧手集成系统、新型擦窗机器人等项目。</li>
+  <li><strong>潘际銮</strong>：生于1927年12月24日，中国科学院院士，著名焊接专家、南昌大学博士生导师，2003年研制成功爬行式弧焊机器人，属国际领先水平。</li>
+  <li><strong>蔡鹤皋</strong>：生于1934年6月5日，中国工程院院士，哈尔滨工业大学机器人研究所名誉所长，国产工业机器人事业的开创者之一，研制成功我国第一台弧焊机器人和点焊机器人，解决了机器人轨迹控制精度及路径预测控制等关键技术。<a href="http://www.boshi.cn">哈尔滨博实自动化股份有限公司</a>董事，在<a href="http://www.sgcc.com.cn/xwzx/gsxw/2010/11/234884.shtml">山东电力研究院</a>和<a href="http://www.efort.com.cn">安徽埃夫特智能装备有限公司</a>建有院士工作站。</li>
+  <li><strong>熊有伦</strong>：生于1939年，中国科学院院士，中国机器人、机械工程专家，华中科技大学机械科学与工程学院工程信息和智能技术研究所名誉所长，为机器人分析和运动规划提供了统一的准则和方法，开发了机器人离线编程系统HOLPS，建立了点接触约束的机器人操作定性分析理论。</li>
+  <li><strong>徐杨生</strong>：中国工程院院士，香港中文大学机械与自动化工程学讲座教授、香港中文大学副校长、香港中文大学（深圳）首任校长，研究的领域为空间机器人、机器人动力学与控制、智能系统、人机界面、及电动车辆。</li>
+  <li><strong>张建伟</strong>：德国科学院（汉堡）院士，德国汉堡大学信息学科学系教授，从事及领导高端传感器、认知机器人技术、服务机器人、人机界面的研究与开发。<a href="http://www.flyingwings.cn">弗徕威智能机器人科技有限公司</a>首席科学家，指导弗徕威公司研发团队开发出首款基于3G/4G/Wifi环境的智能服务机器人，并已率先实用化。</li>
+  <li><strong>黄田</strong>：生于1955年7月，天津大学教授，现任机械工程学院机械电子工程系主任、机械设计制造及自动化专业负责人，成功开发出中国第一台大型六自由度键锐类并联数控机床和第一台三自由度高速多功能并联数控机床，达到国际领先水平。</li>
+  <li><strong>马宏绪</strong>：国防科大机电工程与自动化学院教授、博士生导师、机器人技术专家，我国第一台类人型机器人主要研制者。</li>
+  <li><strong>王田苗</strong>：生于1960年，北航机械工程及自动化学院院长、北航机器人研究所所长，主要从事嵌入式智能感知与控制以及在医疗外科机器人、特种服务机器人等方面理论技术和应用研究。</li>
+  <li><strong>王杰高</strong>：加拿大拉瓦尔大学机器人学博士，<a href="http://www.estun-robotics.com">埃斯顿机器人</a>总工程师，在加拿大从事了15年的机器人研发工作，曾参与美国国防部卫星修复工程，设计机器人到太空为卫星添加燃料。</li>
+</ul>
+
+<h2 id="section-8">参考资料</h2>
+
+<ol class="bibliography"><li><span id="iso8373">[1]ISO, “ISO 8373: Manipulating Industrial Robots–Vocabulary.” 1994.</span>
+
+</li>
+<li><span id="jianggang2011industrialrobot">[2]蒋刚, 龚迪琛, 蔡勇, 刘念聪, and 张静, <i>工业机器人</i>. 西南交通大学出版社, 2011.</span>
+
+</li>
+<li><span id="hanjiexiehui2014robot">[3]中国焊接协会成套设备与专业机具分会 and 中国机械工程学会焊接学会机器人与自动化专业委员会, <i>中国焊接协会会员读物之六：焊接机器人实用手册</i>. 机械工业出版社, 2014.</span>
+
+</li>
+<li><span id="liuzhenghong2014robot">[4]刘洪正, <i>输电线路巡检机器人</i>. 中国电力出版社, 2014.</span>
+
+</li>
+<li><span id="heqinghua2005robot">[5]何清华, <i>隧道凿岩机器人</i>. 中南大学出版社, 2005.</span>
+
+</li>
+<li><span id="TL01-1991">[6]晏金华, “国产弧焊机器人在汽车车厢焊接生产线上的应用,” <i>电焊机</i>, no. 4, 1991.</span>
+
+</li>
+<li><span id="JL1987">[7]王季平, <i>吉林年鉴</i>. 吉林省地方志编纂委员会, 1987.</span>
+
+</li>
+<li><span id="SHHT1997">[8]陆正廷, 王德鸿, 陈永一, 郭建伟, and 张蓉蓉, <i>上海航天志</i>. 上海社会科学院出版社, 1997.</span>
+
+</li>
+<li><span id="SHIII1991">[9]朱云龙, “上海三号喷涂机器人通过鉴定,” <i>磨床与磨削</i>, no. 3, 1991.</span>
+
+</li>
+<li><span id="TSZ1995">[10]李硕, 郭廷志, and 封锡盛, “‘探索者’号无缆水下机器人控制系统,” <i>机器人技术与应用</i>, no. 4, 1995.</span>
+
+</li>
+<li><span id="SHJM1995">[11]赵锡芳, “我国第一台高性能精密装配机器人——‘精密1号’装配机器人,” <i>机电一体化</i>, no. 1, 1995.</span>
+
+</li>
+<li><span id="HT100A1999">[12]“国产机器人走向实用化——HT-100A点焊机器人通过专家验收,” <i>机器人技术与应用</i>, no. 5, 1999.</span>
+
+</li>
+<li><span id="W1102DZ2002">[13]陈罗星, “W1102DZ型高性能无人驾驶振动压路机,” <i>工程机械</i>, no. 7, 2002.</span>
+
+</li>
+<li><span id="863plan1999robot">[14]“‘国家863计划智能机器人主题产业化基地’发牌仪式在北京举行,” <i>机器人技术与应用</i>, no. 6, 1999.</span>
+
+</li>
+<li><span id="zhang1988industrial-robot">[15]张建民, <i>工业机器人</i>. 北京理工大学出版社, 1988.</span>
+
+</li></ol>
+
+<h3 id="section-9">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:robot-in-danger">
+      <p><a href="http://robot.ofweek.com/2015-03/ART-8321202-8120-28939020.html">安监总局局长：危险岗位机器人操作是方向</a> <a href="#fnref:robot-in-danger" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:persistent-ailment">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28927492_2.html">庆父不死 鲁难未已：机器人发展四大”顽固派”应给予打压</a> <a href="#fnref:persistent-ailment" class="reversefootnote">&#8617;</a> <a href="#fnref:persistent-ailment:1" class="reversefootnote">&#8617;<sup>2</sup></a> <a href="#fnref:persistent-ailment:2" class="reversefootnote">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:strong-robot-china">
+      <p><a href="http://www.guancha.cn/Industry/2014_08_04_253239.shtml?BJJX">院士谈工业机器人制造：中国1亿人完成美国1000万人工作量</a>。 <a href="#fnref:strong-robot-china" class="reversefootnote">&#8617;</a> <a href="#fnref:strong-robot-china:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:xis-robot">
+      <p><a href="http://www.guancha.cn/Science/2014_06_10_236328.shtml">习近平科学院工程院院士大会谈机器人革命：我在想如何应对</a>。 <a href="#fnref:xis-robot" class="reversefootnote">&#8617;</a> <a href="#fnref:xis-robot:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:30-years-chinese-robot">
+      <p><a href="http://www.lwdf.cn/article_881_1.html">中国机器人30年：一直在追赶</a>。 <a href="#fnref:30-years-chinese-robot" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:huge-robot-market">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28930467.html">中国蕴藏千亿机器人大市场 机器人企业仍不能过于乐观</a> <a href="#fnref:huge-robot-market" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:chinese-robot-longrun">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28933950.html">国产机器人四大困扰 未来之路漫长艰辛</a> <a href="#fnref:chinese-robot-longrun" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4-questions-to-robot">
+      <p><a href="http://www.lwdf.cn/article_879_1.html">四问中国机器人</a>。 <a href="#fnref:4-questions-to-robot" class="reversefootnote">&#8617;</a> <a href="#fnref:4-questions-to-robot:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:robot-war">
+      <p><a href="http://www.lwdf.cn/article_880_1.html">中国市场上的机器人之战</a>。 <a href="#fnref:robot-war" class="reversefootnote">&#8617;</a> <a href="#fnref:robot-war:1" class="reversefootnote">&#8617;<sup>2</sup></a> <a href="#fnref:robot-war:2" class="reversefootnote">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:robot-domestic-confidence">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28920963_2.html">好事不怕晚 给国产机器人以更多信心</a> <a href="#fnref:robot-domestic-confidence" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:behind-beautiful-data">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28935174.html">中国机器人市场美好数据的背后</a> <a href="#fnref:behind-beautiful-data" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:robot-controller">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28920889.html">机器人控制器的现状分析及未来展望</a> <a href="#fnref:robot-controller" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:ART-8321202-8420-28925966">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28925966.html">缺乏核心技术 国产机器人正艰难走在“非标”路上</a> <a href="#fnref:ART-8321202-8420-28925966" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:lost-key-techniques">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28932427.html">无核心技术 何谈崛起：核心零部件成中国机器人最大掣肘</a> <a href="#fnref:lost-key-techniques" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:oversea-robot-company">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8120-28933923_2.html">跨国公司技术垄断 中国工业机器人难“自主”</a> <a href="#fnref:oversea-robot-company" class="reversefootnote">&#8617;</a> <a href="#fnref:oversea-robot-company:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:newsDetail_forward_1298169">
+      <p><a href="http://www.thepaper.cn/newsDetail_forward_1298169">机器人产业调查②：上海机器人产业只能走高端路线</a> <a href="#fnref:newsDetail_forward_1298169" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:200307_t20030704_1866103">
+      <p><a href="http://www.syb.ac.cn/zt/sycx/200307/t20030704_1866103.html">水下机器人从零到6000米的突破</a> <a href="#fnref:200307_t20030704_1866103" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:content_283986">
+      <p><a href="http://wb.lzbs.com.cn/html/2011-08/12/content_283986.htm">中国机器人是如何发展起来的？</a> <a href="#fnref:content_283986" class="reversefootnote">&#8617;</a> <a href="#fnref:content_283986:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:t20050831_24436">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24436.htm">中华人民共和国科学技术发展十年规划和“八五”计划纲要（1991-2000）</a> <a href="#fnref:t20050831_24436" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:6000meter-robot">
+      <p><a href="http://www.kepu.net.cn/gb/technology/robot/special/spe202.html">历史性突破——水下6000米无缆自治机器人</a> <a href="#fnref:6000meter-robot" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20050831_24435">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24435.htm">全国科技发展“九五”计划和到2010年长期规划纲要（汇报稿）</a>。 <a href="#fnref:t20050831_24435" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:863plan-15years">
+      <p><a href="http://www.ca800.com/news/d_1nrusj6oaltln.html">863计划15周年成就展“机器人”唱主角</a> <a href="#fnref:863plan-15years" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20050831_24434">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24434.htm">国民经济和社会发展第十个五年计划科技教育发展专项规划（科技发展规划）</a> <a href="#fnref:t20050831_24434" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20081129_65774">
+      <p><a href="http://www.most.gov.cn/mostinfo/xinxifenlei/gjkjgh/200811/t20081129_65774.htm">国家中长期科学和技术发展规划纲要（2006━2020年）</a> <a href="#fnref:t20081129_65774" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20061031_55485">
+      <p><a href="http://www.most.gov.cn/kjgh/kjfzgh/200610/t20061031_55485.htm">国家“十一五”科学技术发展规划</a>。 <a href="#fnref:t20061031_55485" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:sewkjfzgh">
+      <p><a href="http://www.most.gov.cn/kjgh/sewkjfzgh/">“十二五”科技发展规划</a> <a href="#fnref:sewkjfzgh" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:jiaolong2012">
+      <p><a href="http://baike.baidu.com/link?url=yeh4j2zezT1DvQuTFrsSBQv352ELHOeKX_eVUIU-Kydd02qAHN8Fu8rwZ7f7OvFubeO5ZvRUd2GMHXfFqy8QQK">蛟龙号载人潜水器</a> <a href="#fnref:jiaolong2012" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:robot8838">
+      <p><a href="http://news.weldinfo.net/show.php?itemid=8838">中国首台重载机器人搅拌摩擦焊系统顺利交付</a> <a href="#fnref:robot8838" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20150223_1584021">
+      <p><a href="http://www.ln.gov.cn/zfxx/jrln/wzxw/201502/t20150223_1584021.html">沈阳市筹建国内首家机器人质量监督检验中心</a> <a href="#fnref:t20150223_1584021" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:the-nine-companies">
+      <p>国家863计划智能机器人主题产业化基地：<a href="http://www.siasun.com">沈阳新松机器人自动化股份有限公司</a>、<a href="http://www.boshi.cn">哈尔滨博实自动化股份有限公司</a>、<a href="http://www.riambsoft.com">北京机械工业自动化研究所工业机器人与应用技术工程研究中心</a>、<a href="http://www.nkty.com">天津市南开太阳高技术发展有限公司</a>、一汽集团涂装技术开发中心、大连贤科机器人技术有限公司、上海交大海泰科技发展有限公司、上海机电一体化工程有限公司、四川绵阳四维焊接自动化设备有限公司。 <a href="#fnref:the-nine-companies" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:9-863plan-robot-companies">
+      <p>单位的现状来源于网络资料。 <a href="#fnref:9-863plan-robot-companies" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:abb-invade">
+      <p><a href="http://gongkong.ofweek.com/2015-01/ART-310058-8420-28926968.html">ABB机器人入侵中国市场 狼早就来了</a>。 <a href="#fnref:abb-invade" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:representative-figure">
+      <p>资料来源于网络。 <a href="#fnref:representative-figure" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/03/statistical-learning-linear-regression" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/03/industrial-robot-techniques" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/03/industrial-robot-industry-development" data-url="http://qianjiye.de/2015/03/industrial-robot-industry-development" data-title="工业机器人（1）：行业发展综述">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/03/statistical-learning-linear-regression'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/03/industrial-robot-techniques'; --1> -->
+<!--         url = '/2015/03/industrial-robot-techniques'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/03/industrial-robot-industry-development/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

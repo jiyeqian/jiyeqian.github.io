@@ -4,8 +4,317 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-03-19T04:57:20+08:00</lastbuilddate>
+    <lastbuilddate>2015-03-25T11:31:13+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>工业机器人（2）：技术综述</title>
+      <link href="http://qianjiye.de/2015/03/industrial-robot-techniques" />
+      <pubdate>2015-03-25T19:29:43+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/industrial-robot-techniques</guid>
+      <content:encoded>&lt;![CDATA[
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>工业机器人（1）：行业发展综述</title>
+      <link href="http://qianjiye.de/2015/03/industrial-robot-industry-development" />
+      <pubdate>2015-03-19T21:38:49+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/industrial-robot-industry-development</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">摘要</h2>
+
+<p>本文主要从机器人市场占有率的角度，以及国家政府主导下机器人发展的历程，对中国工业机器人行业的发展进行简要概述。</p>
+
+<h2 id="section-1">简介</h2>
+
+<p><strong>工业机器人</strong>是机器人在应用环境中的一个重要分支，其操作机具有自动控制、可重复编、多用途、可对3个以上轴进行编程等显著特点，其底座可固定也可移动<a href="#iso8373">[1]</a>。工业机器人是集机械、电子、控制、计算机、传感器、人工智能等多学科的技术于一体的现代制造业自动化装备<a href="#jianggang2011industrialrobot">[2]</a>，广泛应用于汽车制造、机械制造<a href="#hanjiexiehui2014robot">[3]</a>、电子器件、集成电路、电力系统<a href="#liuzhenghong2014robot">[4]</a>、基建<a href="#heqinghua2005robot">[5]</a>等领域。</p>
+
+<p><strong>机器人代替人工，主要解决三个层次问题</strong>：人干不了（特种机器人<sup id="fnref:robot-in-danger"><a href="#fn:robot-in-danger" class="footnote">1</a></sup>）、人干不好（汽车等高端领域）和人不想干（国内一般制造业）的，“现在到了人不想干的阶段，需要用到大量的机器人”。<sup id="fnref:persistent-ailment"><a href="#fn:persistent-ailment" class="footnote">2</a></sup></p>
+
+<p>根据应用领域的不同，工业机器人可分为焊接机器人、切割机器人、装配机器人、喷涂机器人、搬运机器人、码垛机器人、自动牵引车（AGV）机器人等。根据发展过程，工业机器人分三代<sup id="fnref:strong-robot-china"><a href="#fn:strong-robot-china" class="footnote">3</a></sup>：</p>
+
+<ol>
+  <li>第一代是示教再现型机器人，给它编程，教它干什么活，它会忠实地按程序做。这种机器人不能感知环境变化，不能规划自己的行为。<strong>现在90%都是第一代机器人，国外工业机器人应用最多的还是第一代机器人。</strong></li>
+  <li>第二代是具有感知功能的机器人，比如说有视觉功能，它能判断零件的位置和运动的方向，甚至可以将圆形、方形、三角形等不同形状的零件放到不同的箱子里。具有感知功能的机器人在生产中已经有少量的应用了。</li>
+  <li>第三代的智能机器人还没有出现，它们能完全自主判断、决定自己该怎么做。</li>
+</ol>
+
+<p>国内十分重视机器人产业的发展，尤其是近几年。“机器人革命”有望成为“第三次工业革命”的一个切入点和重要增长点，将影响全球制造业格局，而且中国将成为全球最大的机器人市场。国际上有舆论认为，机器人是“制造业皇冠顶端的明珠”，其研发、制造、应用是衡量一个国家科技创新和高端制造业水平的重要标志<sup id="fnref:xis-robot"><a href="#fn:xis-robot" class="footnote">4</a></sup>。但是，中国机器人产业仍然比较落后。在2014年6月9日的两院院士大会上，国家主席习近平表示了自己忧虑<sup id="fnref:xis-robot:1"><a href="#fn:xis-robot" class="footnote">4</a></sup>：<strong>我国将成为机器人的最大市场，但我们的技术和制造能力能不能应对这场竞争？</strong>我们不仅要把我国机器人水平提高上去，而且要尽可能多地占领市场。这样的新技术新领域还很多，我们要审时度势、全盘考虑、抓紧谋划、扎实推进。</p>
+
+<h2 id="section-2">行业现状</h2>
+
+<p><strong>哈尔滨工业大学和中国科学院沈阳自动化研究所是中国最具实力的机器人科研机构</strong>，<a href="http://robot.hit.edu.cn">分别拥有机器人技术与系统国家重点实验室</a>（哈尔滨工业大学）和<a href="http://www.rlab.ac.cn">机器人学国家重点实验室</a>（中国科学院沈阳自动化研究所）。中科院沈阳自动化主要从事水下机器人的研究，哈尔滨工业大学主要从事焊接机器人的研究。中科院沈阳自动化所研制了中国第一台水下机器人“海人一号”，潜水深度达200米<sup id="fnref:30-years-chinese-robot"><a href="#fn:30-years-chinese-robot" class="footnote">5</a></sup>；哈尔滨工业大学研制成功了“天龙一号”5自由度弧焊机器人<a href="#TL01-1991">[6]</a>。</p>
+
+<p>2013年4月21日，<a href="http://cria.mei.net.cn/hyzx.asp">中国机器人产业联盟</a>（CRIA，China Robot Industry Alliance）成立，国内主要的机器人企业都是该联盟的成员单位，目前已有成员单位152家，包括2家理事长单位：</p>
+
+<ul>
+  <li>沈阳新松机器人自动化股份有限公司，</li>
+  <li>中国机械工业联合会；</li>
+</ul>
+
+<p>包括14家副理事长单位：</p>
+
+<ul>
+  <li>安徽埃夫特智能装备有限公司，</li>
+  <li>安川电机（中国）有限公司［日本］，</li>
+  <li>广州数控设备有限公司，</li>
+  <li>固高科技（深圳）有限公司［香港］，</li>
+  <li>库卡机器人（上海）有限公司［德国］，</li>
+  <li>南京埃斯顿机器人工程有限公司，</li>
+  <li>欧德神思软件系统（北京）有限公司［德国］，</li>
+  <li>唐山开元电器集团，</li>
+  <li>中国科学院深圳先进技术研究院，</li>
+  <li>长沙长泰机器人有限公司，</li>
+  <li>上海ABB工程有限公司［瑞士］，</li>
+  <li>三菱电机自动化（中国）有限公司［日本］，</li>
+  <li>上海发那科机器人有限公司［日本］，</li>
+  <li>哈尔滨博实自动化股份有限公司。</li>
+</ul>
+
+<p>这些企业主要专注工业机器人，该领域涉及的技术面广、要求极高，<strong>需要长期的资金投入和深厚的技术积累</strong>。它们要么与高校有长期合作关系、要么有大企业作为支撑，要么是国外企业在中国设立的分公司。<strong>新松机器人是国内机工业器人的领军企业</strong>，它是中国科学院直属的国有大型企业；博实自动化发源于哈尔滨工业大学；长泰机器人是中轻集团下属公司；埃夫特智能装备的前身为芜湖奇瑞装备有限责任公司。</p>
+
+<p>2005年~2012年，全球工业机器人的年均销售增长率为9%，同期中国工业机器人的年均销售增长率达到25%，2012年底中国超越韩国成为仅次于日本的全球第二大机器人市场，占全球市场15%<sup id="fnref:huge-robot-market"><a href="#fn:huge-robot-market" class="footnote">6</a></sup>。2013年，全球销售工业机器人17.9万台，同比增长12%，其中，中国市场销量达到3.65万台，同比大幅增长59%，占比20.4%，超过日本（2.6万台），<strong>中国已成为全球最大的工业机器人消费市场</strong>，但是国产的只占9500台，<strong>中国市场并未被本土企业所占有</strong>。国产机器人处于行业低端，以搬运和上下料机器人为主，且主体多是单价较低的三、四轴机器人，六轴的多关节型机器人占全国工业机器人销量的比重不足6%<sup id="fnref:chinese-robot-longrun"><a href="#fn:chinese-robot-longrun" class="footnote">7</a></sup>；<strong>国外品牌的机器人几乎垄断了汽车制造、焊接等高端行业领域</strong>，占比达96%<sup id="fnref:4-questions-to-robot"><a href="#fn:4-questions-to-robot" class="footnote">8</a></sup><sup id="fnref:robot-war"><a href="#fn:robot-war" class="footnote">9</a></sup>。截至2014年9月，中国机器人相关企业数量已达到428家，其中88%是系统集成商，从区域看，广东地区117家，占27%，如把浙江、江苏和上海企业加起来，则长三角的企业数量超过珠三角<sup id="fnref:robot-domestic-confidence"><a href="#fn:robot-domestic-confidence" class="footnote">10</a></sup>。2014年底，有70余家上市公司并购或者投资了机器人、智能自动化项目，并且这一势头延续到了2015年；全国已建和在建的工业机器人产业园近40家，相当于平均每个省有超过一家工业机器人产业园，而更多的园区还在筹备中；中国机器人相关企业的数量甚至超过了4000家<sup id="fnref:behind-beautiful-data"><a href="#fn:behind-beautiful-data" class="footnote">11</a></sup>。</p>
+
+<p><strong>核心零部件技术落后是制约中国机器人产业发展最重要的因素</strong>。核心零部件主要分成三部分：精密减速器、伺服电机和控制器<sup id="fnref:robot-controller"><a href="#fn:robot-controller" class="footnote">12</a></sup>。在工业机器人成本中，<strong>核心部件成本约占75%</strong>，成本占比最高的为减速机，约占35%，伺服电机约占25%，控制器约占15%，机器人本体在总成本中占比不到25%<sup id="fnref:ART-8321202-8420-28925966"><a href="#fn:ART-8321202-8420-28925966" class="footnote">13</a></sup>。目前，国内还没有能够提供规模化且性能可靠的精密减速器生产企业，几乎垄断在纳博特斯克（Nabtesco）和哈默纳科（Harmonic）两家日本企业手上<sup id="fnref:lost-key-techniques"><a href="#fn:lost-key-techniques" class="footnote">14</a></sup>。由国产材料生产的谐波减速器寿命只能是一至两年，一年后磨损就非常严重，直接影响了机器人的速度和精度<sup id="fnref:oversea-robot-company"><a href="#fn:oversea-robot-company" class="footnote">15</a></sup>。相对于减速器，伺服电机和控制器市场虽未形成主要厂商垄断现象，但几大国际厂商在中国也建立了分工厂，供应充足，产品价格相对合理。国产机器人中80%~90%使用国外减速器，60%~70%使用的是国外电机、40%~50%使用国外控制器<sup id="fnref:4-questions-to-robot:1"><a href="#fn:4-questions-to-robot" class="footnote">8</a></sup>。虽然国内劳动力便宜，但关键元器件必须从外国进口，因此国产企业想降低机器人制造成本非常困难<sup id="fnref:strong-robot-china:1"><a href="#fn:strong-robot-china" class="footnote">3</a></sup>。国内多数机器人企业聚集在机器人本体等领域争夺菲薄的利润，挣扎在盈亏线上。目前国内机器人企业只有广州数控、南京埃斯顿、沈阳新松机器人等少数公司在进行控制系统、驱动和伺服电机等核心零部件自主研发<sup id="fnref:persistent-ailment:1"><a href="#fn:persistent-ailment" class="footnote">2</a></sup>。即使像新松这样的公司，它的减速器、电机、轴承等机器人的核心零部件也都是采用国外的。</p>
+
+<p><strong>提升整体系统设计和软件开发能力是当前国产机器人亟需解决的问题</strong>。面对核心部件靠采购，机器人市场需求巨大的现实，通过提升系统设计能力，充分利用现有资源才是解决问题之道。即使国外著名的机器人企业，也是采购核心部件。库卡机器人的软件和整个系统的设计是他做的，控制器、驱动器、电机等部件外包给其它公司（驱动由德国力士乐定制生产，电机是西门子的，减速机是日本Nabtesco和捷克Spinea的），最后在松江的总装厂组装到一起<sup id="fnref:newsDetail_forward_1298169"><a href="#fn:newsDetail_forward_1298169" class="footnote">16</a></sup>。由于国内机器人在轨迹平滑算法上都不够领先，打磨、焊接等机器人还是以国外品牌居多<sup id="fnref:oversea-robot-company:1"><a href="#fn:oversea-robot-company" class="footnote">15</a></sup>。若能在算法上下功夫，通过提升软件性能，也能提高国产机器人的竞争力。</p>
+
+<h2 id="section-3">发展历程</h2>
+
+<h3 id="section-4">国内行业自身的发展</h3>
+
+<p>中国机器人的发展主要由政府主导，主要集中在水下机器人和焊接机器人，从特种机器人开始，逐步转向工业机器人：</p>
+
+<ul>
+  <li>1977年，机器人获准被列入中科院1978至1985年发展规划<sup id="fnref:200307_t20030704_1866103"><a href="#fn:200307_t20030704_1866103" class="footnote">17</a></sup>。</li>
+  <li>1985年，国家科学技术委员会开始组织实施工业机器人<strong>“七五”计划</strong>，列入计划的主要项目有：主机，包括点焊、弧焊、上下料、喷漆等工业机器人，机器人关键元部件技术<sup id="fnref:content_283986"><a href="#fn:content_283986" class="footnote">18</a></sup>。</li>
+  <li>1985年12月，中国科学院沈阳自动化研究所和上海交通大学研制的<strong>海人一号</strong>在南海下潜到199米，创造了我国自行制造的无人遥控潜水器深潜纪录<a href="#JL1987">[7]</a>。</li>
+  <li>1986年，<strong>智能机器人</strong>被中央列为863计划自动化领域两个主题之一，研究目标是跟踪世界先进水平，工作内容是围绕特种机器人进行攻关<sup id="fnref:content_283986:1"><a href="#fn:content_283986" class="footnote">18</a></sup>。</li>
+  <li>1987年10月29日，上海交通大学和上海机床厂联合研制的<strong>上海一号弧焊机器人</strong>通过专家鉴定<a href="#SHHT1997">[8]</a>。</li>
+  <li>1991年，中华人民共和国科学技术发展十年规划和<strong>“八五”计划</strong>纲要：建成机器人装配示范实验线，研制用于核工业的遥控移动式作业机器人、壁面爬行检查机器人和恶劣环境下作业机器人、水下无缆机器人、精密装配机器人等5种机器人产品<sup id="fnref:t20050831_24436"><a href="#fn:t20050831_24436" class="footnote">19</a></sup>。</li>
+  <li>1991年3月27日，上海交通大学和上海机床厂共同研制的<strong>上海三号（SHⅢ）喷涂机器人</strong>通过鉴定；机器人采用电、液伺服系统控制，为空间关节式机器人，有6个自由度，最大手腕负荷为5kg<a href="#SHIII1991">[9]</a>。</li>
+  <li>1994年，中国科学院沈阳自动化研究所的<strong>探索者号无缆水下机器人</strong>研制成功，工作深度达到1000米；它是我国第一台无缆水下机器人<a href="#TSZ1995">[10]</a>。</li>
+  <li>1995年5月8日，上海交通大学的<strong>精密1号装配机器人</strong>原型样机通过国家验收；该机器人是国家863计划智械机器人主题型号样机之一，带有多传感器、多任务操作、可离线编程的高速、高精度、4轴SCARA平面关节型、直接驱动伺服控制的智能精密装配机器人<a href="#SHJM1995">[11]</a>。</li>
+  <li>1995年8月， 中俄联合的<strong>CR-01 6000米无缆自治水下机器人</strong>研制成功（获国家科技进步一等奖）；它的本体长4.374米，宽0.8米，高0.93米，它在空气中的重量为1305公斤，最大潜深6000米，最大水下航速2节，续航能力10小时，定位精度10～15米；我国成为世界上拥有潜深6000米自治水下机器人的少数国家之一<sup id="fnref:6000meter-robot"><a href="#fn:6000meter-robot" class="footnote">20</a></sup>。</li>
+  <li>1995年9月，全国科技发展<strong>“九五”计划</strong>和到2010年长期规划纲要：先进制造技术，要以计算机集成制造系统为发展方向，重点研究开发现代设计、精密成形与加工、激光、<strong>机器人</strong>、数控、传感、系统管理等技术，为传统制造业的高技术化提供技术支撑<sup id="fnref:t20050831_24435"><a href="#fn:t20050831_24435" class="footnote">21</a></sup>。</li>
+  <li>1997年5月，由北京航空航天大学、清华大学和海军总医院共同研制开发的<strong>脑外科机器人</strong>为病人实施了首例脑手术<sup id="fnref:863plan-15years"><a href="#fn:863plan-15years" class="footnote">22</a></sup>。</li>
+  <li>1999年7月15日，哈尔滨工业大学和沈阳自动化所自联合研制的<strong>HT—100A点焊机器人</strong>通过验收<a href="#HT100A1999">[12]</a>。</li>
+  <li>2000年11月底，由湖南湘潭江麓工程机械有限公司与国防科技大学联合开发研制的<strong>W1102DZ型高性能无人驾驶振动压路机</strong>通过了国家“863”专家组的验收<a href="#W1102DZ2002">[13]</a>。</li>
+  <li>2001年5月，国民经济和社会发展<strong>第十个五年计划</strong>科技教育发展专项规划（科技发展规划）：围绕现代集成制造系统技术和机器人技术，重点研究在全球化敏捷制造环境下的产品开发与设计技术，系统集成与优化技术，现代管理技术，先进制造工艺与装备，攻克面向先进制造的基于机器人的制造单元及系统、特种机器人以及微机电系统等关键技术<sup id="fnref:t20050831_24434"><a href="#fn:t20050831_24434" class="footnote">23</a></sup>。</li>
+  <li>2006年2月，<strong>国家中长期科学和技术发展规划纲要</strong>：以服务机器人和危险作业机器人应用需求为重点，研究设计方法、制造工艺、智能控制和应用系统集成等共性基础技术<sup id="fnref:t20081129_65774"><a href="#fn:t20081129_65774" class="footnote">24</a></sup>。</li>
+  <li>2006年10月，<strong>国家“十一五”科学技术发展规划</strong>：重点研究极端制造技术、智能机器人技术、重大产品和重大设施寿命预测技术、现代制造集成技术<sup id="fnref:t20061031_55485"><a href="#fn:t20061031_55485" class="footnote">25</a></sup>。</li>
+  <li>2011年07月，<strong>国家“十二五”科学技术发展规划</strong>：发展工业机器人、智能控制、微纳制造、制造业信息化等相关系统和装备，重点研发工业机器人的模块化核心技术和功能部件、重大工程自动化控制系统和智能测试仪器及基础件等技术装备<sup id="fnref:sewkjfzgh"><a href="#fn:sewkjfzgh" class="footnote">26</a></sup>。</li>
+  <li>2012年7月，<strong>蛟龙号</strong>在马里亚纳海沟试验海区创造了下潜7062米的中国载人深潜纪录，同时也创造了世界同类作业型潜水器的最大下潜深度纪录<sup id="fnref:jiaolong2012"><a href="#fn:jiaolong2012" class="footnote">27</a></sup>。</li>
+  <li>2013年4月21日，<strong>中国机器人产业联盟</strong>（CRIA，China Robot Industry Alliance）成立，目前共有成员单位152家，其中2家理事长单位和14家副理事长单位。</li>
+  <li>2013年12月30日，工信部发布<strong>《关于推进工业机器人产业发展的指导意见》</strong>，强调要在核心技术及零部件上实现突破。</li>
+  <li>2014年11月初，北京赛福斯特技术有限公司与德国库卡机器人联合开发的国内首台<strong>重载机器人搅拌摩擦焊系统</strong>向广州有色金属研究院成功验收交付<sup id="fnref:robot8838"><a href="#fn:robot8838" class="footnote">28</a></sup>。</li>
+  <li>2015年2月，国家质检总局同意由中国科学院沈阳自动化研究所和沈阳产品质量监督检验院按B级国家质检中心标准，联合筹建<strong>国家机器人质量监督检验中心</strong><sup id="fnref:t20150223_1584021"><a href="#fn:t20150223_1584021" class="footnote">29</a></sup>。</li>
+</ul>
+
+<p>早在1999年9月18日，国家就授予9家单位<sup id="fnref:the-nine-companies"><a href="#fn:the-nine-companies" class="footnote">30</a></sup>“国家863计划智能机器人主题产业化基地”的称号<a href="#863plan1999robot">[14]</a>。16年之后，这些产业化基地中，如今仅剩沈阳新松机器人自动化股份有限公司和哈尔滨博实自动化股份有限公司继续留在机器人行业，天津市南开太阳高技术发展有限公司转行做门卡和管理系统，其余6家单位在机器人行业难觅踪影<sup id="fnref:9-863plan-robot-companies"><a href="#fn:9-863plan-robot-companies" class="footnote">31</a></sup>。</p>
+
+<p>从中国机器人发展的历程可以看出，<strong>国家从20世纪80年代开始就大力扶持机器人的发展</strong>。“七五”以来，机器人产业始终榜上有名，“十二五”规划中更将其列为国家战略性新兴产业。过于丰厚的援助金反而成为中国国产机器人水平提升的阻碍。很多企业上机器人项目，都是在玩机器人概念，其实是在变相地圈国家的钱，这些企业大部分不是做机器人的，这帮人不会把心思放在产业发展上。但近30年过去，<strong>机器人核心零部件技术却依然攻而不克、制而不精</strong>。政府投入大量资金的“863”攻关似乎没有根本突破。<strong>机器人产业国内专利多，国际专利少，转化价值不大</strong>，这些专利还是拿来报喜用的，是拿来争取项目、评职称用的，不是市场化用的。<sup id="fnref:persistent-ailment:2"><a href="#fn:persistent-ailment" class="footnote">2</a></sup></p>
+
+<h3 id="section-5">国外企业在中国的发展</h3>
+
+<p>1954年，美国人G・C・戴万获得了一项工业机器人专利；1958年，美国机械与铸造公司研制成功一台数控自动通用机器Versatran，并以工业机器人为商品广告投入市场，这是世界上最早的工业机器人。日本、苏联、西欧等国大都从1967、1968年开始，以美国的Versatran和Unimate型机器人为蓝本开始研制。1967年，日本丰田织机和川崎重工分别引进了美国的Versatran和Unimate，通过引进技术、仿制、改造创新，很快赶上美国并超越了其它国家，从1980年开始进入广泛的普及时代<a href="#zhang1988industrial-robot">[15]</a>。</p>
+
+<p>目前，工业机器人的<strong>四大企业</strong>，瑞士的ABB、德国的库卡、日本的发那科和安川，占有的全球市场份额已超过五成，在中国占有的市场份额已经超过80%，他们<strong>以上海为中心</strong>在中国开展业务：</p>
+
+<ul>
+  <li>1979年，瑞士的<strong>ABB</strong>在北京设立办事处，成为四巨头中最早进驻中国的公司；1992年，在<strong>厦门</strong>投资建立了第一家合资企业；1995年，在<strong>北京</strong>注册了投资性控股公司——ABB（中国）有限公司；2006年，其全球机器人业务总部正式进驻<strong>上海</strong>；2013年，在华销售收入超过56亿美元，保持ABB集团全球第二大市场的地位<sup id="fnref:robot-war:1"><a href="#fn:robot-war" class="footnote">9</a></sup>。</li>
+  <li>1986年，德国的<strong>库卡</strong>将一台机器人赠送给一汽卡车，这台机器人也是中国汽车工业应用的第一台工业机器人；2000年，成立全资子公司——库卡机器人（<strong>上海</strong>）有限公司。</li>
+  <li>1992年，日本的<strong>发那科</strong>成立北京发那科机电有限公司；1994年后开始大批量进入中国，东风汽车及长安汽车分别引进了库卡公司的一条焊装线；2000年，与上海电气兴建合资公司——<strong>上海</strong>发那科机器人有限公司。</li>
+  <li>1996年，日本的<strong>安川</strong>与首钢成立了安川首钢机器人有限公司（前身为首钢莫托曼机器人有限公司）；1999年，在<strong>上海</strong>成立全资公司——安川电机（中国）有限公司。</li>
+</ul>
+
+<p><strong>技术和资金资源最为集中的汽车制造业是工业机器人最主要的应用领域</strong><sup id="fnref:robot-war:2"><a href="#fn:robot-war" class="footnote">9</a></sup>。汽车工厂使用最多是ABB和库卡的机器人。库卡机器人主要用在德系汽车工厂，ABB机器人在国产汽车、日系汽车，甚至德系车厂都有用，国产车厂似乎尤其偏爱ABB机器人。在价格上，ABB、库卡这种欧洲品牌的比较高，日系的相对比较便宜<sup id="fnref:abb-invade"><a href="#fn:abb-invade" class="footnote">32</a></sup>。</p>
+
+<h2 id="section-6">结论</h2>
+
+<p>中国机器人的发展由政府主导的模式不再有效。从历史发展来看，在中国政府的主导和扶持下，中国的机器人已经成功的实现了从无到有。从目前现状来看，中国机器人如果要从有到做强，实现产业化，应对国际竞争，这种依靠国家政府主导科研院所研发的模式是失败的。</p>
+
+<p>如今机器人的蓬勃发展，不仅是技术的积累与进步，主要是市场需求推动的结果。机器人涵盖的技术领域广泛，其发展既需要关键技术的突破，也依赖系统工程的积累和行业技术的积淀。曾经的技术积累，至少从产业化和批量化生产的角度来看，也明显不足。如今中国的机器人产业仍处于摸索阶段，还未进入发展期。</p>
+
+<h2 id="section-7">附录</h2>
+
+<h3 id="representative-figure">代表人物<sup id="fnref:representative-figure"><a href="#fn:representative-figure" class="footnote">33</a></sup></h3>
+
+<ul>
+  <li><strong>蒋新松</strong>：1931年8月3日～1997年3月30日，中国工程院院士，原沈阳中科院自动化研究所所长、研究员、博士生导师，提出、组织并直接负责水下机器人的研究、开发及产品系列化工作，负责组织研制工业机器人及特种机器人，创建国家机器人技术研究开发工程中心和机器人学开放实验室。</li>
+  <li><strong>王天然</strong>：生于1943年3月，中国工程院院士，现任中国科学院沈阳自动化研究所研究员、博士生导师，我国机器人和自动化工程技术界的学科带头人之一，在智能机器人体系结构、工业机器人控制系统、大型自动化系统技术等方面做出了重要贡献，<a href="http://www.siasun.com">沈阳新松机器人自动化股份有限公司</a>董事长。</li>
+  <li><strong>蒋厚宗</strong>：生于1935年7月，现任上海交通大学教授，先后担任“上海1号弧焊机器人”、“上海3号喷涂机器人”总设计师，“863精密装配机器人”前期总设计师。创建了上海交通大学海泰科技发展有限公司并任总经理。</li>
+  <li><strong>徐如玉</strong>：1942年7月29日～2012年2月17日，中国工程院院士，生前任哈尔滨工程大学海洋综合技术工程研究中心主任，教授、博士生指导教师，在发展我国水下智能机器人技术方面做出了突出贡献，“探索者”号水下机器人主要研究成员。</li>
+  <li><strong>封锡盛</strong>：生于1941年12月17日，中国工程院院士，中国科学院沈阳自动化研究所研究员、博士生导师、水下机器人研究室副主任，曾经担任我国第一台有缆遥控水下机器人“海人一号”电控系统负责人、我国第一台无缆自治水下机器人“探索者号”的总设计师。</li>
+  <li><strong>张启先</strong>：1925年8月25日～2002年5月25日，中国工程院院士，北京航天航空大学教授、机器人研究所所长，70年代后期，率先突破传统机构学范畴开展机器人技术的研究，负责主持了七自由度机器人、新型三指灵巧手、基于多传感器局部自主的机器人臂与灵巧手集成系统、新型擦窗机器人等项目。</li>
+  <li><strong>潘际銮</strong>：生于1927年12月24日，中国科学院院士，著名焊接专家、南昌大学博士生导师，2003年研制成功爬行式弧焊机器人，属国际领先水平。</li>
+  <li><strong>蔡鹤皋</strong>：生于1934年6月5日，中国工程院院士，哈尔滨工业大学机器人研究所名誉所长，国产工业机器人事业的开创者之一，研制成功我国第一台弧焊机器人和点焊机器人，解决了机器人轨迹控制精度及路径预测控制等关键技术。<a href="http://www.boshi.cn">哈尔滨博实自动化股份有限公司</a>董事，在<a href="http://www.sgcc.com.cn/xwzx/gsxw/2010/11/234884.shtml">山东电力研究院</a>和<a href="http://www.efort.com.cn">安徽埃夫特智能装备有限公司</a>建有院士工作站。</li>
+  <li><strong>熊有伦</strong>：生于1939年，中国科学院院士，中国机器人、机械工程专家，华中科技大学机械科学与工程学院工程信息和智能技术研究所名誉所长，为机器人分析和运动规划提供了统一的准则和方法，开发了机器人离线编程系统HOLPS，建立了点接触约束的机器人操作定性分析理论。</li>
+  <li><strong>徐杨生</strong>：中国工程院院士，香港中文大学机械与自动化工程学讲座教授、香港中文大学副校长、香港中文大学（深圳）首任校长，研究的领域为空间机器人、机器人动力学与控制、智能系统、人机界面、及电动车辆。</li>
+  <li><strong>张建伟</strong>：德国科学院（汉堡）院士，德国汉堡大学信息学科学系教授，从事及领导高端传感器、认知机器人技术、服务机器人、人机界面的研究与开发。<a href="http://www.flyingwings.cn">弗徕威智能机器人科技有限公司</a>首席科学家，指导弗徕威公司研发团队开发出首款基于3G/4G/Wifi环境的智能服务机器人，并已率先实用化。</li>
+  <li><strong>黄田</strong>：生于1955年7月，天津大学教授，现任机械工程学院机械电子工程系主任、机械设计制造及自动化专业负责人，成功开发出中国第一台大型六自由度键锐类并联数控机床和第一台三自由度高速多功能并联数控机床，达到国际领先水平。</li>
+  <li><strong>马宏绪</strong>：国防科大机电工程与自动化学院教授、博士生导师、机器人技术专家，我国第一台类人型机器人主要研制者。</li>
+  <li><strong>王田苗</strong>：生于1960年，北航机械工程及自动化学院院长、北航机器人研究所所长，主要从事嵌入式智能感知与控制以及在医疗外科机器人、特种服务机器人等方面理论技术和应用研究。</li>
+  <li><strong>王杰高</strong>：加拿大拉瓦尔大学机器人学博士，<a href="http://www.estun-robotics.com">埃斯顿机器人</a>总工程师，在加拿大从事了15年的机器人研发工作，曾参与美国国防部卫星修复工程，设计机器人到太空为卫星添加燃料。</li>
+</ul>
+
+<h2 id="section-8">参考资料</h2>
+
+<ol class="bibliography"><li><span id="iso8373">[1]ISO, “ISO 8373: Manipulating Industrial Robots–Vocabulary.” 1994.</span>
+
+</li>
+<li><span id="jianggang2011industrialrobot">[2]蒋刚, 龚迪琛, 蔡勇, 刘念聪, and 张静, <i>工业机器人</i>. 西南交通大学出版社, 2011.</span>
+
+</li>
+<li><span id="hanjiexiehui2014robot">[3]中国焊接协会成套设备与专业机具分会 and 中国机械工程学会焊接学会机器人与自动化专业委员会, <i>中国焊接协会会员读物之六：焊接机器人实用手册</i>. 机械工业出版社, 2014.</span>
+
+</li>
+<li><span id="liuzhenghong2014robot">[4]刘洪正, <i>输电线路巡检机器人</i>. 中国电力出版社, 2014.</span>
+
+</li>
+<li><span id="heqinghua2005robot">[5]何清华, <i>隧道凿岩机器人</i>. 中南大学出版社, 2005.</span>
+
+</li>
+<li><span id="TL01-1991">[6]晏金华, “国产弧焊机器人在汽车车厢焊接生产线上的应用,” <i>电焊机</i>, no. 4, 1991.</span>
+
+</li>
+<li><span id="JL1987">[7]王季平, <i>吉林年鉴</i>. 吉林省地方志编纂委员会, 1987.</span>
+
+</li>
+<li><span id="SHHT1997">[8]陆正廷, 王德鸿, 陈永一, 郭建伟, and 张蓉蓉, <i>上海航天志</i>. 上海社会科学院出版社, 1997.</span>
+
+</li>
+<li><span id="SHIII1991">[9]朱云龙, “上海三号喷涂机器人通过鉴定,” <i>磨床与磨削</i>, no. 3, 1991.</span>
+
+</li>
+<li><span id="TSZ1995">[10]李硕, 郭廷志, and 封锡盛, “‘探索者’号无缆水下机器人控制系统,” <i>机器人技术与应用</i>, no. 4, 1995.</span>
+
+</li>
+<li><span id="SHJM1995">[11]赵锡芳, “我国第一台高性能精密装配机器人——‘精密1号’装配机器人,” <i>机电一体化</i>, no. 1, 1995.</span>
+
+</li>
+<li><span id="HT100A1999">[12]“国产机器人走向实用化——HT-100A点焊机器人通过专家验收,” <i>机器人技术与应用</i>, no. 5, 1999.</span>
+
+</li>
+<li><span id="W1102DZ2002">[13]陈罗星, “W1102DZ型高性能无人驾驶振动压路机,” <i>工程机械</i>, no. 7, 2002.</span>
+
+</li>
+<li><span id="863plan1999robot">[14]“‘国家863计划智能机器人主题产业化基地’发牌仪式在北京举行,” <i>机器人技术与应用</i>, no. 6, 1999.</span>
+
+</li>
+<li><span id="zhang1988industrial-robot">[15]张建民, <i>工业机器人</i>. 北京理工大学出版社, 1988.</span>
+
+</li></ol>
+
+<h3 id="section-9">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:robot-in-danger">
+      <p><a href="http://robot.ofweek.com/2015-03/ART-8321202-8120-28939020.html">安监总局局长：危险岗位机器人操作是方向</a> <a href="#fnref:robot-in-danger" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:persistent-ailment">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28927492_2.html">庆父不死 鲁难未已：机器人发展四大”顽固派”应给予打压</a> <a href="#fnref:persistent-ailment" class="reversefootnote">&#8617;</a> <a href="#fnref:persistent-ailment:1" class="reversefootnote">&#8617;<sup>2</sup></a> <a href="#fnref:persistent-ailment:2" class="reversefootnote">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:strong-robot-china">
+      <p><a href="http://www.guancha.cn/Industry/2014_08_04_253239.shtml?BJJX">院士谈工业机器人制造：中国1亿人完成美国1000万人工作量</a>。 <a href="#fnref:strong-robot-china" class="reversefootnote">&#8617;</a> <a href="#fnref:strong-robot-china:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:xis-robot">
+      <p><a href="http://www.guancha.cn/Science/2014_06_10_236328.shtml">习近平科学院工程院院士大会谈机器人革命：我在想如何应对</a>。 <a href="#fnref:xis-robot" class="reversefootnote">&#8617;</a> <a href="#fnref:xis-robot:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:30-years-chinese-robot">
+      <p><a href="http://www.lwdf.cn/article_881_1.html">中国机器人30年：一直在追赶</a>。 <a href="#fnref:30-years-chinese-robot" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:huge-robot-market">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28930467.html">中国蕴藏千亿机器人大市场 机器人企业仍不能过于乐观</a> <a href="#fnref:huge-robot-market" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:chinese-robot-longrun">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28933950.html">国产机器人四大困扰 未来之路漫长艰辛</a> <a href="#fnref:chinese-robot-longrun" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4-questions-to-robot">
+      <p><a href="http://www.lwdf.cn/article_879_1.html">四问中国机器人</a>。 <a href="#fnref:4-questions-to-robot" class="reversefootnote">&#8617;</a> <a href="#fnref:4-questions-to-robot:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:robot-war">
+      <p><a href="http://www.lwdf.cn/article_880_1.html">中国市场上的机器人之战</a>。 <a href="#fnref:robot-war" class="reversefootnote">&#8617;</a> <a href="#fnref:robot-war:1" class="reversefootnote">&#8617;<sup>2</sup></a> <a href="#fnref:robot-war:2" class="reversefootnote">&#8617;<sup>3</sup></a></p>
+    </li>
+    <li id="fn:robot-domestic-confidence">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28920963_2.html">好事不怕晚 给国产机器人以更多信心</a> <a href="#fnref:robot-domestic-confidence" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:behind-beautiful-data">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28935174.html">中国机器人市场美好数据的背后</a> <a href="#fnref:behind-beautiful-data" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:robot-controller">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28920889.html">机器人控制器的现状分析及未来展望</a> <a href="#fnref:robot-controller" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:ART-8321202-8420-28925966">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28925966.html">缺乏核心技术 国产机器人正艰难走在“非标”路上</a> <a href="#fnref:ART-8321202-8420-28925966" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:lost-key-techniques">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8420-28932427.html">无核心技术 何谈崛起：核心零部件成中国机器人最大掣肘</a> <a href="#fnref:lost-key-techniques" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:oversea-robot-company">
+      <p><a href="http://robot.ofweek.com/2015-02/ART-8321202-8120-28933923_2.html">跨国公司技术垄断 中国工业机器人难“自主”</a> <a href="#fnref:oversea-robot-company" class="reversefootnote">&#8617;</a> <a href="#fnref:oversea-robot-company:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:newsDetail_forward_1298169">
+      <p><a href="http://www.thepaper.cn/newsDetail_forward_1298169">机器人产业调查②：上海机器人产业只能走高端路线</a> <a href="#fnref:newsDetail_forward_1298169" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:200307_t20030704_1866103">
+      <p><a href="http://www.syb.ac.cn/zt/sycx/200307/t20030704_1866103.html">水下机器人从零到6000米的突破</a> <a href="#fnref:200307_t20030704_1866103" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:content_283986">
+      <p><a href="http://wb.lzbs.com.cn/html/2011-08/12/content_283986.htm">中国机器人是如何发展起来的？</a> <a href="#fnref:content_283986" class="reversefootnote">&#8617;</a> <a href="#fnref:content_283986:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:t20050831_24436">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24436.htm">中华人民共和国科学技术发展十年规划和“八五”计划纲要（1991-2000）</a> <a href="#fnref:t20050831_24436" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:6000meter-robot">
+      <p><a href="http://www.kepu.net.cn/gb/technology/robot/special/spe202.html">历史性突破——水下6000米无缆自治机器人</a> <a href="#fnref:6000meter-robot" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20050831_24435">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24435.htm">全国科技发展“九五”计划和到2010年长期规划纲要（汇报稿）</a>。 <a href="#fnref:t20050831_24435" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:863plan-15years">
+      <p><a href="http://www.ca800.com/news/d_1nrusj6oaltln.html">863计划15周年成就展“机器人”唱主角</a> <a href="#fnref:863plan-15years" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20050831_24434">
+      <p><a href="http://www.most.gov.cn/ztzl/gjzcqgy/zcqgylshg/200508/t20050831_24434.htm">国民经济和社会发展第十个五年计划科技教育发展专项规划（科技发展规划）</a> <a href="#fnref:t20050831_24434" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20081129_65774">
+      <p><a href="http://www.most.gov.cn/mostinfo/xinxifenlei/gjkjgh/200811/t20081129_65774.htm">国家中长期科学和技术发展规划纲要（2006━2020年）</a> <a href="#fnref:t20081129_65774" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20061031_55485">
+      <p><a href="http://www.most.gov.cn/kjgh/kjfzgh/200610/t20061031_55485.htm">国家“十一五”科学技术发展规划</a>。 <a href="#fnref:t20061031_55485" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:sewkjfzgh">
+      <p><a href="http://www.most.gov.cn/kjgh/sewkjfzgh/">“十二五”科技发展规划</a> <a href="#fnref:sewkjfzgh" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:jiaolong2012">
+      <p><a href="http://baike.baidu.com/link?url=yeh4j2zezT1DvQuTFrsSBQv352ELHOeKX_eVUIU-Kydd02qAHN8Fu8rwZ7f7OvFubeO5ZvRUd2GMHXfFqy8QQK">蛟龙号载人潜水器</a> <a href="#fnref:jiaolong2012" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:robot8838">
+      <p><a href="http://news.weldinfo.net/show.php?itemid=8838">中国首台重载机器人搅拌摩擦焊系统顺利交付</a> <a href="#fnref:robot8838" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:t20150223_1584021">
+      <p><a href="http://www.ln.gov.cn/zfxx/jrln/wzxw/201502/t20150223_1584021.html">沈阳市筹建国内首家机器人质量监督检验中心</a> <a href="#fnref:t20150223_1584021" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:the-nine-companies">
+      <p>国家863计划智能机器人主题产业化基地：<a href="http://www.siasun.com">沈阳新松机器人自动化股份有限公司</a>、<a href="http://www.boshi.cn">哈尔滨博实自动化股份有限公司</a>、<a href="http://www.riambsoft.com">北京机械工业自动化研究所工业机器人与应用技术工程研究中心</a>、<a href="http://www.nkty.com">天津市南开太阳高技术发展有限公司</a>、一汽集团涂装技术开发中心、大连贤科机器人技术有限公司、上海交大海泰科技发展有限公司、上海机电一体化工程有限公司、四川绵阳四维焊接自动化设备有限公司。 <a href="#fnref:the-nine-companies" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:9-863plan-robot-companies">
+      <p>单位的现状来源于网络资料。 <a href="#fnref:9-863plan-robot-companies" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:abb-invade">
+      <p><a href="http://gongkong.ofweek.com/2015-01/ART-310058-8420-28926968.html">ABB机器人入侵中国市场 狼早就来了</a>。 <a href="#fnref:abb-invade" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:representative-figure">
+      <p>资料来源于网络。 <a href="#fnref:representative-figure" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>统计学习：线性回归</title>
@@ -29,7 +338,7 @@
   <li>广告媒体之间有<strong>协同效应</strong>（synergy effect）吗？协同效应在统计学中称为<strong>相关性</strong>（interaction effect）。例如：在电视和广播分别投放\$50000的广告和将这\$100000投放到其中一种媒体，效果一样吗？</li>
 </ol>
 
-<h2 id="section-1">回归模型</h2>
+<h2 id="section-1">单变量回归分析</h2>
 
 <p>数学上，回归问题可表示为
 \begin{equation}
@@ -84,7 +393,7 @@ SE\left(\hat\beta_1\right)^2&amp;={\sigma^2\over\sum_{i=1}^n(x_i-\bar x)^2}，
 <p>标准误差揭示了参数估计值和真实值之间的平均差异。公式严格成立的条件是每个样本的误差$\epsilon_i$和<strong>公共方差</strong>（common variance）无关。即使这个条件不成立，这个公式也可作为评估的很好近似。当$x_i$越分散时，$SE\left(\hat\beta_1\right)^2$越小；当$\bar x=0$时，$SE\left(\hat\beta_0\right)^2$也更小，此时$\hat\beta_0=\bar y$；随着样本数$n$的增加，$SE\left(\hat\beta_0\right)^2$也越来越小。通常$\sigma^2$未知，但可以通过数据集上的<strong>标准化残差</strong>（RSE，residual standard error）估计，</p>
 
 <p>\begin{equation}
-RSE=\sqrt{RSS\over n-2}。
+RSE=\sqrt{RSS\over n-2}=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\hat y_i\right)^2}。
 \label{eq:rse}
 \end{equation}</p>
 
@@ -96,7 +405,7 @@ RSE=\sqrt{RSS\over n-2}。
 \label{eq:lr-confidence-interval}
 \end{equation}</p>
 
-<p>标准误差也可用于系数的<strong>假设检验</strong>（hypothesis test）。最常用的两种假设检验是<strong>零假设检验</strong>（null hypothesis）和<strong>替代假设检验</strong>（alternative hypothesis），
+<p>标准误差也可用于系数的<strong>假设检验</strong>（hypothesis test）。最常用的两种假设检验是<strong>无效假设检验</strong>（null hypothesis）和<strong>备选假设检验</strong>（alternative hypothesis），
 \[
 \begin{aligned}
 H_0&amp;:\mbox{There is no relationship between }X\mbox{ and }Y\\
@@ -107,44 +416,164 @@ H_a&amp;:\mbox{There is some relationship between }X\mbox{ and }Y，
 \[
 H_0:\beta_1=0，\qquad H_a:\beta_1\neq0。
 \]
-若$\beta_1=0$，那么$X$和$Y$无关。进行零假设检验时，需要估计$\hat\beta_1$是否离0足够远，这需要通过$\hat\beta_1$的精度$SE\left(\hat\beta_1\right)$来衡量。如果$SE\left(\hat\beta_1\right)$很小，较小的$\hat\beta_1$可以足够确信$\beta_1\neq 0$；如果$SE\left(\hat\beta_1\right)$很大，$\hat\beta_1$的绝对值要很大才能拒绝零假设。在实际应用中，通过<strong>$t$统计量</strong>（$t$-statistic）</p>
+若$\beta_1=0$，那么$X$和$Y$无关。进行无效假设检验时，需要估计$\hat\beta_1$是否离0足够远，这需要通过$\hat\beta_1$的精度$SE\left(\hat\beta_1\right)$来衡量。如果$SE\left(\hat\beta_1\right)$很小，较小的$\hat\beta_1$可以足够确信$\beta_1\neq 0$；如果$SE\left(\hat\beta_1\right)$很大，$\hat\beta_1$的绝对值要很大才能拒绝无效假设。在实际应用中，通过<strong>$t$统计量</strong>（$t$-statistic）</p>
 
 <p>\begin{equation}
 t={\hat\beta_1-0\over SE\left(\hat\beta_1\right)}
 \label{eq:t-statistic}
 \end{equation}</p>
 
-<p>测量$\hat\beta_1$远离$0$的标准差（standard deviation）。如果$X$和$Y$真的无关，\eqref{eq:t-statistic}是$n-2$自由度的<strong>$t$分布</strong>（$t$-distribution）。当$n$大约大于$30$时，$t$分布与正态分布很相似。<strong>$p$值</strong>（$p$-value）表示$\beta_1=0$时观测值大于等于$|t|$的概率。较小的$p$值表示预测（predictor）与响应（response）之间有关联。若$p$值很小时，拒绝零假设（reject the null hypothesis）表示$X$与$Y$有关系。拒绝零假设的典型$p$值是$5\%$或$1\%$，当$n=30$时，相应的$t$统计量分别为$2$和$2.75$。<sup id="fnref:t-and-p-means"><a href="#fn:t-and-p-means" class="footnote">2</a></sup></p>
+<p>测量$\hat\beta_1$远离$0$（假设$H_0$成立）的标准差（standard deviation）。如果$X$和$Y$真的无关，\eqref{eq:t-statistic}是$n-2$自由度的<strong>$t$分布</strong>（$t$-distribution）。当$n$大约大于$30$时，$t$分布与正态分布很相似。<strong>$p$值</strong>（$p$-value）表示$\beta_1=0$时观测值大于等于$|t|$的概率。较小的$p$值表示预测（predictor）与响应（response）之间有关联。若$p$值很小时，拒绝无效假设（reject the null hypothesis）表示$X$与$Y$有关系。拒绝无效假设的典型$p$值是$5\%$或$1\%$，当$n=30$时，相应的$t$统计量分别为$2$和$2.75$。<sup id="fnref:t-and-p-means"><a href="#fn:t-and-p-means" class="footnote">2</a></sup></p>
 
-<div class="highlight"><pre><code>Call:
-lm(formula = Price ~ AGST + WinterRain + HarvestRain + Age + 
-    FrancePop, data = wine)
+<p>利用R的回归模型，可以得到如下的结果：</p>
 
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.48179 -0.24662 -0.00726  0.22012  0.51987 
+<div class="highlight"><pre><code class="language-R">advertising <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Advertising.csv&#39;</span><span class="p">)</span>
+lm.advertising <span class="o">&lt;-</span> lm<span class="p">(</span>Sales <span class="o">~</span> TV<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>lm.advertising<span class="p">)</span>
 
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -4.504e-01  1.019e+01  -0.044 0.965202    
-AGST         6.012e-01  1.030e-01   5.836 1.27e-05 ***
-WinterRain   1.043e-03  5.310e-04   1.963 0.064416 .  
-HarvestRain -3.958e-03  8.751e-04  -4.523 0.000233 ***
-Age          5.847e-04  7.900e-02   0.007 0.994172    
-FrancePop   -4.953e-05  1.667e-04  -0.297 0.769578    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+<span class="c1"># 结果如下：</span>
+Call<span class="o">:</span>
+lm<span class="p">(</span>formula <span class="o">=</span> Sales <span class="o">~</span> TV<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
 
-Residual standard error: 0.3019 on 19 degrees of freedom
-Multiple R-squared:  0.8294,    Adjusted R-squared:  0.7845 
-F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
-</code></pre></div>
+Residuals<span class="o">:</span>
+    Min      <span class="m">1</span>Q  Median      <span class="m">3</span>Q     Max 
+<span class="m">-8.3860</span> <span class="m">-1.9545</span> <span class="m">-0.1913</span>  <span class="m">2.0671</span>  <span class="m">7.2124</span> 
 
-<h2 id="section-2">参考资料</h2>
+Coefficients<span class="o">:</span>
+            Estimate Std. Error t value Pr<span class="p">(</span><span class="o">&gt;|</span><span class="kp">t</span><span class="o">|</span><span class="p">)</span>    
+<span class="p">(</span>Intercept<span class="p">)</span> <span class="m">7.032594</span>   <span class="m">0.457843</span>   <span class="m">15.36</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+TV          <span class="m">0.047537</span>   <span class="m">0.002691</span>   <span class="m">17.67</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+<span class="o">---</span>
+Signif. codes<span class="o">:</span>  <span class="m">0</span> ‘<span class="o">***</span>’ <span class="m">0.001</span> ‘<span class="o">**</span>’ <span class="m">0.01</span> ‘<span class="o">*</span>’ <span class="m">0.05</span> ‘<span class="m">.</span>’ <span class="m">0.1</span> ‘ ’ <span class="m">1</span>
+
+Residual standard error<span class="o">:</span> <span class="m">3.259</span> on <span class="m">198</span> degrees of freedom
+Multiple R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.6119</span><span class="p">,</span>    Adjusted R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.6099</span> 
+<span class="bp">F</span><span class="o">-</span>statistic<span class="o">:</span> <span class="m">312.1</span> on <span class="m">1</span> and <span class="m">198</span> DF<span class="p">,</span>  p<span class="o">-</span>value<span class="o">:</span> <span class="o">&lt;</span> <span class="m">2.2e-16</span></code></pre></div>
+
+<p>Coefficients的最后一列$Pr(&gt;|t|)$表示$H_0$成立的概率，若很小就拒绝$H_0$接受$H_1$。拒绝$H_0$以为着$\beta_1\neq0$，表明$X$与$Y$相关。星号表示相关性强弱。最后一列表明销售额与电视广告有关系。$RSE$衡量了模型拟合结果与数据真实表现的差异。</p>
+
+<p>$RSE$衡量了模型拟合结果与数据真实表现的差异。$R^2$统计量是度量拟合的另一种方式，
+\begin{equation}
+R^2 = {TSS-RSS\over TSS}=1-{RSS\over TSS}，\qquad TSS=\sum_{i=1}^n\left(y_i-\bar y\right)^2。
+\label{eq:r2-statistic}
+\end{equation}
+$R^2$越大越好。加入新的变量会使得$R^2$增大<sup id="fnref:R2-increase"><a href="#fn:R2-increase" class="footnote">3</a></sup>，在测试集上$R^2$可能为负数，$R^2\in(-\infty, 1]$。若$R^2$接近$0$，这表明回归模型没有很好的解释响应变化，可能是线性模型有误或内在误差$\sigma^2$很高。本例中，$R^2\approx 0.61$表示少于三分之二的销售额变化能通过基于电视广告的回归模型解释。虽然$R^2\in[0,1]$，要比较哪个$R^2$更好还要根据具体应用而定。</p>
+
+<p>$R^2$是衡量$X$与$Y$线性相关的统计量。相关系数（correlation）
+\begin{equation}
+r=Cor(X,Y)={
+    \sum_{i=1}^n\left(x_i-\bar x\right)\left(y_i-\bar y\right)
+    \over
+    \sqrt{\sum_{i=1}^n\left(x_i-\bar x\right)^2}\sqrt{\sum_{i=1}^n\left(y_i-\bar y\right)^2}
+}
+\label{eq:correlation}
+\end{equation}
+也是衡量$X$与$Y$线性相关的统计量。事实上，$R^2=r^2$。</p>
+
+<h2 id="section-2">多变量回归分析</h2>
+
+<p>$p$个不同预测变量（predictor）的多变量回归模型为</p>
+
+<p>\begin{equation}
+Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p+\epsilon。
+\label{eq:population-regression-line2}
+\end{equation}</p>
+
+<p>这些预测变量对响应的贡献如何呢？</p>
+
+<p>无效假设和备选假设分别为
+\[
+\begin{aligned}
+H_0&amp;:\beta_1=\beta_2=\cdots=\beta_p=0\\
+H_a&amp;:\mbox{at least one }\beta_j\mbox{ is non-zero}。
+\end{aligned}
+\]</p>
+
+<p>假设检验利用$F$统计量
+\begin{equation}
+F={(TSS-RSS)/p\over RSS/(n-p-1)}。
+\label{eq:f-statistic}
+\end{equation}</p>
+
+<p>若线性模型的假设成立，那么有</p>
+
+<p>\[
+E\{RSS/(n-p-1)\}=\sigma^2，
+\]</p>
+
+<p>如果$H_0$同时也为真，那么有</p>
+
+<p>\[
+E\{(TSS-RSS)/p\}=\sigma^2。
+\]</p>
+
+<p>当预测变量和响应之间没有关系时，$F\approx 1$。若$H_a$为真，那么$E\{(TSS-RSS)/p\}&gt;\sigma^2$，因此$F &gt; 1$。</p>
+
+<div class="highlight"><pre><code class="language-R">advertising <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Advertising.csv&#39;</span><span class="p">)</span>
+lm.advertising <span class="o">&lt;-</span> lm<span class="p">(</span>Sales <span class="o">~</span> TV <span class="o">+</span> Radio <span class="o">+</span> Newspaper<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>lm.advertising<span class="p">)</span>
+
+<span class="c1"># 结果如下：</span>
+Call<span class="o">:</span>
+lm<span class="p">(</span>formula <span class="o">=</span> Sales <span class="o">~</span> TV <span class="o">+</span> Radio <span class="o">+</span> Newspaper<span class="p">,</span> data <span class="o">=</span> advertising<span class="p">)</span>
+
+Residuals<span class="o">:</span>
+    Min      <span class="m">1</span>Q  Median      <span class="m">3</span>Q     Max 
+<span class="m">-8.8277</span> <span class="m">-0.8908</span>  <span class="m">0.2418</span>  <span class="m">1.1893</span>  <span class="m">2.8292</span> 
+
+Coefficients<span class="o">:</span>
+             Estimate Std. Error t value Pr<span class="p">(</span><span class="o">&gt;|</span><span class="kp">t</span><span class="o">|</span><span class="p">)</span>    
+<span class="p">(</span>Intercept<span class="p">)</span>  <span class="m">2.938889</span>   <span class="m">0.311908</span>   <span class="m">9.422</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+TV           <span class="m">0.045765</span>   <span class="m">0.001395</span>  <span class="m">32.809</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+Radio        <span class="m">0.188530</span>   <span class="m">0.008611</span>  <span class="m">21.893</span>   <span class="o">&lt;</span><span class="m">2e-16</span> <span class="o">***</span>
+Newspaper   <span class="m">-0.001037</span>   <span class="m">0.005871</span>  <span class="m">-0.177</span>     <span class="m">0.86</span>    
+<span class="o">---</span>
+Signif. codes<span class="o">:</span>  <span class="m">0</span> ‘<span class="o">***</span>’ <span class="m">0.001</span> ‘<span class="o">**</span>’ <span class="m">0.01</span> ‘<span class="o">*</span>’ <span class="m">0.05</span> ‘<span class="m">.</span>’ <span class="m">0.1</span> ‘ ’ <span class="m">1</span>
+
+Residual standard error<span class="o">:</span> <span class="m">1.686</span> on <span class="m">196</span> degrees of freedom
+Multiple R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.8972</span><span class="p">,</span>    Adjusted R<span class="o">-</span>squared<span class="o">:</span>  <span class="m">0.8956</span> 
+<span class="bp">F</span><span class="o">-</span>statistic<span class="o">:</span> <span class="m">570.3</span> on <span class="m">3</span> and <span class="m">196</span> DF<span class="p">,</span>  p<span class="o">-</span>value<span class="o">:</span> <span class="o">&lt;</span> <span class="m">2.2e-16</span></code></pre></div>
+
+<p>上例中$F\approx 570$，远大于$1$，这表明销售额至少与一种媒体广告有关。</p>
+
+<p>通过$F$拒绝$H_0$还需要考虑$n$和$p$的值。当$n$很大时，略大于$1$的$F$值也可拒绝$H_0$；当$n$很小时，$F$的值远大于$1$才可拒绝$H_0$。如果$H_0$为真，$\epsilon_i$是正态分布，那么$F$统计量服从$F$分布。当$n$和$p$已知，可以利用$F$分布计算$p$值（$p$-value），然后根据$p$值判断是否拒绝$H_0$。上例中，最后一个参数的$p$-value$\approx 0$，这表明销售额至少与一种媒体广告有关。</p>
+
+<p>有时需要测试其中的$q$个系数是否为$0$，</p>
+
+<p>\[
+H_0:\beta_{p-q+1}=\beta_{p-q+2}=\cdots=\beta_p=0，
+\]</p>
+
+<p>这可以通过对需忽略的$q$个数据排在最后实现。在这种情况下，线性回归模型需要去除最后的$q$个数据，此时的残差平方和记为$RSS_0$，那么$F$统计量为</p>
+
+<p>\begin{equation}
+F={(RSS_0-RSS)/q\over RSS/(n-p-1)}。
+\label{eq:f-statistic2}
+\end{equation}</p>
+
+<p>单变量回归表明报纸广告与销售额也有关，但多变量回归表明报纸广告与销售额关系不大。对于单变量和多变量回归，电视的系数很相近，但是报纸的系数差异很大。虽然报纸对销售额的直接贡献很小，但从下面的相关系数可以看出，报纸和广播的相关系数高达$0.35$，也就是报纸投放的广告多广播也会多，从而报纸能间接提高销售额<sup id="fnref:absurd-example"><a href="#fn:absurd-example" class="footnote">4</a></sup>。报纸可作为广播广告的替代品。报纸是通过广播对销售额的促进而获益的。</p>
+
+<div class="highlight"><pre><code class="language-R"><span class="o">&gt;</span> cor<span class="p">(</span>advertising<span class="p">[,</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">])</span>
+
+                  TV      Radio  Newspaper     Sales
+TV        <span class="m">1.00000000</span> <span class="m">0.05480866</span> <span class="m">0.05664787</span> <span class="m">0.7822244</span>
+Radio     <span class="m">0.05480866</span> <span class="m">1.00000000</span> <span class="m">0.35410375</span> <span class="m">0.5762226</span>
+Newspaper <span class="m">0.05664787</span> <span class="m">0.35410375</span> <span class="m">1.00000000</span> <span class="m">0.2282990</span>
+Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <span class="m">0.22829903</span> <span class="m">1.0000000</span></code></pre></div>
+
+<p>利用多变量回归分析每个变量的$t$统计量和$p$值，可以分析它们对销售额的影响，这等价于$q=1$时分别剔除每个变量的$F$统计量。这揭示了加入变量到模型的<strong>偏效应</strong>（partial effect）<sup id="fnref:partial-effect"><a href="#fn:partial-effect" class="footnote">5</a></sup>。$p$值表明电视和广播的广告与销售额相关，但是没有证据表明在有电视和广播的广告时，报纸广告与销量相关。</p>
+
+<p>为什么有了每个$p$值还需要全局的$F$统计量？如果存在一个很小的$p$值，那么至少有一个变量与响应相关——这个逻辑是有瑕疵的，特别是变量个数$p$很大时。例如：当$p=100$时，$H_0$为真，事实上没有那个变量与响应相关。在这种情况下，仍然大约$5\%$变量的$p$值会小于$0.05$，也就是即使在变量与响应无关的情况下也可能发现大约5个很小的$p$值，几乎可以保证至少存在一个$p$值小于$0.05$。因此，用每个变量对应的$t$统计量和$p$值判断变量与响应是否相关很可能得到错误的结果。但是，$F$统计量不存在这样的问题。如果$H_0$为真，不论变量有多少，只有$5\%$的机会使得$F$统计量会导致存在一个小于$5\%$的$p$值。</p>
+
+<p>用$F$统计量判断变量与响应是否相关的条件是$p$（变量数）较小，一定要比$n$小。当$p&gt;n$时，不能用最小二乘法拟合回归模型，因此也不能使用$F$统计量和前文讨论的其它概念。当$p$很大时可以采用<strong>前向选择</strong>（forward selection）。</p>
+
+<p>好的回归模型要求$F$较大，$R^2$较大，在这种情况下，小的$p$值表明变量与响应相关。</p>
+
+<h2 id="section-3">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="section-4">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -153,6 +582,15 @@ F-statistic: 18.47 on 5 and 19 DF,  p-value: 1.044e-06
     </li>
     <li id="fn:t-and-p-means">
       <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:R2-increase">
+      <p>The model’s $R^2$ value can never decrease from adding new variables to the model. This is due to the fact that it is always possible to set the coefficient for the new variable to zero in the new model. However, this would be the same as the old model. So the only reason to make the coefficient non-zero is if it improves the $R^2$ value of the model, since linear regression picks the coefficients to minimize the error terms, which is the same as maximizing the $R^2$. <a href="#fnref:R2-increase" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:absurd-example">
+      <p>This slightly counterintuitive result is very common in many real life situations. Consider an absurd example to illustrate the point. Running a regression of shark attacks versus ice cream sales for data collected at a given beach community over a period of time would show a positive relationship, similar to that seen between sales and newspaper. Of course no one (yet) has suggested that ice creams should be banned at beaches to reduce shark attacks. In reality, higher temperatures cause more people to visit the beach, which in turn results in more ice cream sales and more shark attacks. A multiple regression of attacks versus ice cream sales and temperature reveals that, as intuition implies, the former predictor is no longer significant after adjusting for temperature. <a href="#fnref:absurd-example" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:partial-effect">
+      <p>偏效应：回归模型中的其他因素保持不变时，某个解释变量对因变量的影响。 <a href="#fnref:partial-effect" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -1437,530 +1875,6 @@ g_{RBF}(\mathbf x_n)=y_n，
   <ol>
     <li id="fn:edit-distance">
       <p>$\mbox{EditDistance}$表示一个字符串如何通过最小的修改变为另一个字符串。 <a href="#fnref:edit-distance" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>深度学习</title>
-      <link href="http://qianjiye.de/2015/02/deep-learning" />
-      <pubdate>2015-02-04T19:31:41+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/02/deep-learning</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">深度神经网络</h2>
-
-<p>确定神经网络的结构是非常核心也是非常困难的问题。</p>
-
-<p>需要多少神经元？网络多少层？神经元之间如何连接？……这些选择一方面凭主观意愿，另一方面通过验证的方法确定。</p>
-
-<p>浅层（shallow）神经网络只有少量的隐层，深度（deep）神经网络有很多层，它们之间的对比如下：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>浅层神经网络</th>
-      <th>深度神经网络</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>✅训练较高效</td>
-      <td>❌训练极具挑战性</td>
-    </tr>
-    <tr>
-      <td>✅结构简单</td>
-      <td>❌结构复杂</td>
-    </tr>
-    <tr>
-      <td>✅非常强大</td>
-      <td>✅非常强大</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>✅能提取有意义的特征</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-04-deep-learning-meaningfulness-of-DL.png"><img src="/assets/images/2015-02-04-deep-learning-meaningfulness-of-DL.png" alt="深度学习提取有意义的特征" /></a><div class="caption">图 1:  深度学习提取有意义的特征 [<a href="/assets/images/2015-02-04-deep-learning-meaningfulness-of-DL.png">PNG</a>]</div></div></div>
-
-<p>若只有一层，它需要完成的任务就很复杂。层数增多，每层或层与层之间功能简单，如上图所示，只需从输入中提取简单的笔画，若还有下一层，继续从简单笔画中找出更复杂的笔画。层与层之间，实现从简单到复杂的特征转换。若原始特征是raw feature（每个特征物理意义有限，比如图像的每个像素），最终需要完成复杂的分类动作，深度学习处理这样的问题更自然。</p>
-
-<h4 id="section-1">一、深度学习的挑战与关键技术</h4>
-
-<ul>
-  <li>决定网络结构很困难。
-    <ul>
-      <li>验证能帮忙但并非易事；</li>
-      <li>借助领域知识（domain knowledge），比如用于图像的convolutional NNet，像素物理位置有意义，相邻像素连接到下层同一神经元可描述更高阶的特征，相距太远的像素不连接在一起。</li>
-    </ul>
-  </li>
-  <li>模型复杂度很高。
-    <ul>
-      <li>数据足够多时模型复杂度不是问题，但计算复杂度会更高；</li>
-      <li>利用正则化（在某些神经元坏掉时，dropout能使网络很好工作；输入出问题时，denoising能使网络很好工作）。</li>
-    </ul>
-  </li>
-  <li>最优化很困难。局部极小值比神经网络更容易出现。
-    <ul>
-      <li>精心初始化，避免陷入糟糕的局部极小值（利用pre-training）。</li>
-    </ul>
-  </li>
-  <li>计算复杂度很高，尤其是面对大数据的时候。
-    <ul>
-      <li>利用新的硬件软件架构，比如mini-batch+GPU。</li>
-    </ul>
-  </li>
-</ul>
-
-<p>其中，正则化和初始化是尤为关键的两项技术。</p>
-
-<blockquote>
-  <h4 id="section-2">二、深度学习两步走策略</h4>
-  <hr />
-
-  <ol>
-    <li>预训练：对$\ell=1,\dots,L$，假设$\mathbf w_*^{(1)},\ldots\mathbf w_*^{(\ell-1)}$已知，逐层训练权值$\left\{w_{ij}^{(\ell)}\right\}$。</li>
-    <li>训练：利用BP算法在预训练的基础上调整（fine-tune）权值$\left\{w_{ij}^{(\ell)}\right\}$。</li>
-  </ol>
-</blockquote>
-
-<h2 id="section-3">非线性自编码器：神经网络</h2>
-
-<p>权值的作用是进行特征转换，将数据换成另一种表现形式，也就是编码（encoding）。在预训练深度神经网络时，并不清楚当前层的权重对以后层有何影响。因此，好的权值需要能保持信息（information-preserving），不同层的权值以不同的形式表示信息。保持信息的意思是数据经过编码之后能重建或精确解码（decode accurately）出原来的信息。预训练权值就是保持信息的编码。</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-02-04-deep-learning-information-preserving-NN.png"><img src="/assets/images/2015-02-04-deep-learning-information-preserving-NN.png" alt="自编码器（保持信息的神经网络）" /></a><div class="caption">图 2:  自编码器（保持信息的神经网络） [<a href="/assets/images/2015-02-04-deep-learning-information-preserving-NN.png">PNG</a>]</div></div></div>
-
-<p>上图的$d-\tilde d-d$结构的神经网络力求输出与输入一致，$g(\mathbf x) = \mathbf x$，这种保持信息的神经网络称为<strong>自编码器</strong>（autoencoder），它的目的是做函数到它本身的逼近（approximate identity function）。$w_{ij}^{(1)}$称为编码权值，$w_{ji}^{(2)}$称为解码权值。</p>
-
-<p>自编码器的变换$g(\mathbf x) = \mathbf x$采用了数据集上的隐含结构（hidden structure），其价值在于：</p>
-
-<ul>
-  <li>对于监督学习：$\mathbf x$的隐含结构（权值）很好的保持了信息，可用作特征变换$\Phi(\mathbf x)$。——informative representation of data</li>
-  <li>对于非监督学习：（1）密度估计（density estimation）：稠密的区域$g(\mathbf x)\approx\mathbf x$效果好<sup id="fnref:why-density-estimate"><a href="#fn:why-density-estimate" class="footnote">1</a></sup>，新的数据若表现好则位于稠密区域；（2）异常检测（outlier detection）：异常点的$g(\mathbf x)\ne\mathbf x$。——typical representation of data</li>
-</ul>
-
-<p>自编码器通过学习identity function得到了数据的表现形式。</p>
-
-<p>基本的自编码器就是$d-\tilde d-d$结构的神经网络，误差函数为
-$
-\sum_{i=1}^d(g_i(\mathbf x)-x_i)^2。
-$
-这是浅层网络，可以容易利用BP算法训练。通常情况$\tilde d&lt;d$，这是数据的压缩表示。数据集是$\{(\mathbf x_1, \mathbf y_1=\mathbf x_1),(\mathbf x_2,\mathbf y_2=\mathbf x_2),\ldots,(\mathbf x_N, \mathbf y_N=\mathbf x_N)\}$，因此这也被视为非监督学习。有时会用约束条件$w_{ij}^{(1)}=w_{ji}^{(2)}$让网络更简单，也就是进行正则化，这也会让算法更复杂。</p>
-
-<p>在深度学习中，采用基本的自编码器在数据集$\left\{\mathbf x_n^{(\ell-1)}\right\}$上训练（其中$\tilde d=d^{(\ell)}$），将自编码器权值$\left\{w_{ij}^{(1)}\right\}$作为深度神经网络预训练的权值$\left\{w_{ij}^{(\ell)}\right\}$。</p>
-
-<p>许多成功的预训练技术，利用不同的网络结构或正则化机制等方法，实现了更精妙的自编码器。</p>
-
-<h2 id="section-4">去噪自编码器：正则化</h2>
-
-<p>复杂的神经网络模型复杂度高，需要利用正则化避免过拟合。通常采用的正则化技术包括：</p>
-
-<ul>
-  <li>选择简单的网络结构；</li>
-  <li><a href="/2015/02/neural-network/#regularization-weighted-methods">weight-decay或weight-elimination正则化</a>；</li>
-  <li><a href="/2015/02/neural-network/#regularization-early-stopping">尽早停止迭代</a>。</li>
-</ul>
-
-<p>深度学习和自编码器采用了不同的正则化方法。</p>
-
-<p>噪声是导致过拟合的重要原因，<a href="/2015/01/hazard-of-overfitting/#overfitting-illustration">数据越少噪声越多时，越容易过拟合</a>。当模型和数据确定时，去噪是避免过拟合的正则化方法。最直接的去噪技术可以采用<a href="/2015/01/hazard-of-overfitting/#data-cleaning">数据清洗或者数据剪枝</a>。能否反其道而行之，加入噪声？✅</p>
-
-<p>对于鲁棒的自编码器，不仅能对原始数据$\mathbf x$有$g(\mathbf x)\approx \mathbf x$，而且对噪声数据$\tilde{\mathbf x}$有$g(\tilde{\mathbf x})\approx \mathbf x$，这就是<strong>去噪自编码器</strong>（denoising autoencoder）的任务。在数据集$\{(\tilde{\mathbf x}_1, \mathbf y_1=\mathbf x_1),(\tilde{\mathbf x}_2,\mathbf y_2=\mathbf x_2),\ldots,(\tilde{\mathbf x}_N, \mathbf y_N=\mathbf x_N)\}$训练自编码器，其中$\tilde{\mathbf x}_n$是对${\mathbf x}_n$加入了人工噪声的数据。在图像处理领域，$g(\tilde{\mathbf x})$可以得到$\tilde{\mathbf x}$的去噪版本。</p>
-
-<p>在有噪声的数据集上训练出正则化的$g$具备抗噪的能力，这种正则化方法在神经网络模型中非常实用<sup id="fnref:data-hinting"><a href="#fn:data-hinting" class="footnote">2</a></sup>。</p>
-
-<h2 id="linear-autoencoder">线性自编码器／主成分分析</h2>
-
-<p>神经网络是复杂的非线性自编码器，能否利用简单高效且不易过拟合的线性自编码器呢？✅</p>
-
-<p>对于第$k$个元素的线性模型
-\[
-h_k(\mathbf x)=\sum_{j=0}^{\tilde d}w_{jk}^{(2)}\left(
-\sum_{i=0}^{d}w_{ij}^{(1)}x_i
-\right)，
-\]
-加入限制条件：</p>
-
-<ul>
-  <li>去除掉常数项$x_0$，使$i$和$k$取值范围相同；</li>
-  <li>加入正则化约束$w_{ij}^{(1)}=w_{ji}^{(2)}=w_{ij}$，$\mathbf W=[w_{ij}]$是$d\times\tilde d$的权值矩阵；</li>
-  <li>$\tilde d&lt;d$；</li>
-</ul>
-
-<p>可得
-\[
-h_k(\mathbf x)=\sum_{j=0}^{\tilde d}w_{kj}\left(
-\sum_{i=1}^{d}w_{ij}x_i
-\right)。
-\]</p>
-
-<p>因此，线性自编码器的假设（hypothesis）可以表示为
-\begin{equation}
-h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
-\end{equation}
-好的自编码器就是对$\mathbf W$做最优化
-\[
-\mathbf W=\arg\min_{\mathbf W} E_{in}(\mathbf h)=E_{in}(\mathbf W)=
-{1\over N}\sum_{n=1}^N\left\lVert\mathbf x_n-\mathbf W\mathbf W^\top\mathbf x_n\right\rVert^2，
-\]
-这是$w_{ij}$的4次多项式，不易得到解析解。</p>
-
-<p>$\mathbf W\mathbf W^\top$是半正定矩阵，进行特征值分解$\mathbf W\mathbf W^\top=\mathbf V\boldsymbol\Gamma\mathbf V^\top$：</p>
-
-<ul>
-  <li>$d\times d$的矩阵$\mathbf V$是正交的（orthogonal）$\mathbf V\mathbf V^\top=\mathbf V^\top\mathbf V=\mathbf I_d$；</li>
-  <li>$d\times d$的对角（diagonal）矩阵$\boldsymbol\Gamma$非零对角线元素最多$\tilde d$个。</li>
-</ul>
-
-<p>由此可得$\mathbf W\mathbf W^\top\mathbf x_n=\mathbf V\boldsymbol\Gamma\mathbf V^\top\mathbf x_n$：</p>
-
-<ul>
-  <li>$\mathbf V^\top\mathbf x_n$表示对$\mathbf x_n$的坐标转换，几何上看是一种旋转或镜射（rotate or reflect），$\mathbf x_n$的长度不会改变；</li>
-  <li>$\boldsymbol\Gamma(\cdots)$中$\boldsymbol\Gamma$对角线有$d-\tilde d$个0元素，其余的非0元素进行尺度缩放；</li>
-  <li>$\mathbf V(\cdots)$表示还原到原始坐标系。</li>
-</ul>
-
-<p>由于$\mathbf x_n=\mathbf V\mathbf I\mathbf V^\top\mathbf x_n$，最优化问题可变为
-\[
-\min_{\mathbf V}\min_{\boldsymbol\Gamma}{1\over N}\sum_{n=1}^N\left\lVert\mathbf V\mathbf I\mathbf V^\top\mathbf x_n-\mathbf V\boldsymbol\Gamma\mathbf V^\top\mathbf x_n\right\rVert^2，
-\]
-可先对$\boldsymbol\Gamma$最优化再对$\mathbf V$最优化，并且$\mathbf V$不影响向量在变换过程中的长度，可省去$\mathbf V$。最优化的形式可记为$\min_{\boldsymbol\Gamma}\sum\lVert(\mathbf I-\boldsymbol\Gamma)(\cdots)\rVert^2$，这需要$\mathbf I-\boldsymbol\Gamma$的0元素越多越好，也就是$\boldsymbol\Gamma$的对角线1越多越好。由于$\boldsymbol\Gamma$的秩不超过$\tilde d$，$\boldsymbol\Gamma$的对角线最多$\tilde d$个1，$\boldsymbol\Gamma$的最佳形式为
-\[
-\boldsymbol\Gamma=
-\left[
-\begin{aligned}
-\mathbf I_{\tilde d}&amp;\quad 0\\
-0&amp;\quad 0
-\end{aligned}
-\right]。
-\]
-接下来对$\mathbf V$优化
-\[
-\min_{\mathbf V}
-\sum_{n=1}^N
-\left\lVert
-\left[
-\begin{aligned}
-0&amp;\quad 0\\
-0&amp;\quad \mathbf I_{d-\tilde d}
-\end{aligned}
-\right]
-\mathbf V^\top\mathbf x_n
-\right\rVert^2，
-\]
-上式的意思是保留$\mathbf V^\top\mathbf x_n$的$d-\tilde d$个维度实现最小化，这可以通过最大化实现
-\[
-\max_{\mathbf V}
-\sum_{n=1}^N
-\left\lVert
-\left[
-\begin{aligned}
-\mathbf I_{\tilde d}&amp;\quad 0\\
-0&amp;\quad 0
-\end{aligned}
-\right]
-\mathbf V^\top\mathbf x_n
-\right\rVert^2。
-\]
-当$\tilde d=1$时，只有$\mathbf V^\top$的第一行$\mathbf v^\top$参与优化，也就是
-\[
-\max_{\mathbf v}\sum_{n=1}^N\mathbf v^\top\mathbf x_n\mathbf x_n^\top\mathbf v\quad\mbox{ s.t. }\mathbf v^\top\mathbf v=1，
-\]
-最佳的$\mathbf v$满足$\sum_{n=1}^N\mathbf x_n\mathbf x_n^\top\mathbf v=\lambda\mathbf v$（$\lambda$是拉格朗日乘子）<sup id="fnref:get-optimal-v"><a href="#fn:get-optimal-v" class="footnote">3</a></sup>，此时最佳目标值为$\lambda$，这个最佳的$\mathbf v$是$\mathbf X^\top\mathbf X$的“最大”（topmost）特征向量。一般地，$\{\mathbf v_j\}_{j=1}^{\tilde d}$是$\mathbf X^\top\mathbf X$“最大”的$\tilde d$个特征向量。</p>
-
-<p>最佳的$\{\mathbf w_j\}$就是$\mathbf X^\top\mathbf X$“最大”的特征向量。线性自编码器就是投影到最符合数据$\{\mathbf x_n\}$的正交模式（orthogonal pattern）$\mathbf w_j$。</p>
-
-<p>线性编码器的目标是最大化$\sum(\mbox{maginitude after projection})^2$；主成分分析（PCA，principal component analysis）的目标是最大化$\sum(\mbox{variance after projection})$，变化量$\mbox{variance}$是相对于平均数差距的平方。线性编码器和主成分分析都是线性降维方法，主成分分析＝数据0均值化 ＋ 线性自编码器，在降维中应用更普遍。</p>
-
-<blockquote>
-  <h4 id="section-5">线性编码器／主成分分析</h4>
-  <hr />
-
-  <ol>
-    <li>令$\bar{\mathbf x}={1\over N}\sum_{n=1}^N\mathbf x_n$，$\mathbf x_n\leftarrow\mathbf x_n-\bar{\mathbf x}$<sup id="fnref:zero-mean-vector"><a href="#fn:zero-mean-vector" class="footnote">4</a></sup>；</li>
-    <li>计算$\mathbf X^\top\mathbf X$的最大$\tilde d$个特征向量$\mathbf w_1,\mathbf w_2,\ldots,\mathbf w_{\tilde d}$；</li>
-    <li>返回转换后的特征$\Phi(\mathbf x)=\mathbf W(\mathbf x-\bar{\mathbf x})$。</li>
-  </ol>
-</blockquote>
-
-<h2 id="section-6">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-7">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:why-density-estimate">
-      <p>为啥稠密区域效果好？ <a href="#fnref:why-density-estimate" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:data-hinting">
-      <p>可视为<a href="/2015/02/neural-network/#data-hinting">data hinting</a>的正则化技术。 <a href="#fnref:data-hinting" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:get-optimal-v">
-      <p>利用拉格朗日乘子法求导可得。 <a href="#fnref:get-optimal-v" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:zero-mean-vector">
-      <p>在0均值数据集基础上进行线性编码，自然实现了投影方向上变化最大。 <a href="#fnref:zero-mean-vector" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>神经网络</title>
-      <link href="http://qianjiye.de/2015/02/neural-network" />
-      <pubdate>2015-02-04T16:15:04+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/02/neural-network</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">感知器融合</h2>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-aggregation-of-perceptrons.png"><img src="/assets/images/2015-02-04-neural-network-aggregation-of-perceptrons.png" alt="感知器的线性融合" /></a><div class="caption">图 1:  感知器的线性融合 [<a href="/assets/images/2015-02-04-neural-network-aggregation-of-perceptrons.png">PNG</a>]</div></div></div>
-
-<p>上图展示了感知器的线性融合结构，其中包含两层的权重$\mathbf w_t$和$\boldsymbol\alpha$，还包含两层的符号函数（sign function）$g_t$和$G$。这样的融合可以表示什么样的分类边界呢？</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-and-xor-operator.png"><img src="/assets/images/2015-02-04-neural-network-and-xor-operator.png" alt="AND和XOR运算" /></a><div class="caption">图 2:  AND和XOR运算 [<a href="/assets/images/2015-02-04-neural-network-and-xor-operator.png">PNG</a>]</div></div></div>
-
-<p>单层感知器可以实现如上图所示的AND运算（+1表示TRUE，-1表示FALSE）
-\[
-G(\mathbf x)=\mbox{sign}(-1+g_1(\mathbf x)+g_2(\mathbf x))，
-\]
-也可实现OR和NOT运算。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-enough-perceptrons.png"><img src="/assets/images/2015-02-04-neural-network-enough-perceptrons.png" alt="足够多感知器的融合" /></a><div class="caption">图 3:  足够多感知器的融合 [<a href="/assets/images/2015-02-04-neural-network-enough-perceptrons.png">PNG</a>]</div></div></div>
-
-<p>即使感知器的线性组合，分类能力也很强大，如上图所示。只要对足够多的感知器融合，可以在空间中切割出任意凸集（convex set），但$d_{VC}\rightarrow\infty$。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-xor-multi-layer-perceptrons.png"><img src="/assets/images/2015-02-04-neural-network-xor-multi-layer-perceptrons.png" alt="两层感知器的线性融合实现XOR运算" /></a><div class="caption">图 4:  两层感知器的线性融合实现XOR运算 [<a href="/assets/images/2015-02-04-neural-network-xor-multi-layer-perceptrons.png">PNG</a>]</div></div></div>
-
-<p>但是，单层感知器不能实现XOR运算，经过XOR运算的特征转换$\phi(\mathbf x)=(g_1(\mathbf x),g_2(\mathbf x))$后数据线性不可分。线性不可分数据继续特征转换，最终将XOR用AND和OR实现
-\[
-XOR(g_1,g_2)=OR(AND(-g_1,g_2),AND(g_1,-g_2))，
-\]
-并且可以用上图所示的两层级连结构表示<sup id="fnref:five-input-xor"><a href="#fn:five-input-xor" class="footnote">1</a></sup>。</p>
-
-<p>由此可见，虽然感知器算法简单，经过线性融合，以及多层级连，可以得到功能强大的分类器。多层感知器就是基本的神经网络结构。</p>
-
-<h2 id="section-1">神经网络</h2>
-
-<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-simple-NN.png"><img src="/assets/images/2015-02-04-neural-network-simple-NN.png" alt="简单的神经网络模型" /></a><div class="caption">图 5:  简单的神经网络模型 [<a href="/assets/images/2015-02-04-neural-network-simple-NN.png">PNG</a>]</div></div></div>
-
-<p>事实上，对最后一层OUTPUT神经元，除了用感知器外，可以采用其它的<a href="/2015/01/linear-models-for-classification/#linear-models">线性模型</a>。若要分类，OUTPUT采用线性分类模型；若要回归分析，OUTPUT采用线性回归（不做任何处理）；若要soft分类，OUTPUT采用logistic回归。</p>
-
-<p>中间层神经元采用的转换函数（transformation function），除了使用阶梯（符号）函数，也可采用其它转换函数。若所有神经元都采用线性回归，整个网络都是线性运算，用一个线性模型就可以实现。因此，很少用线性回归作为转换函数。阶梯函数是离散的，难以通过最优化求解$\mathbf w$，也很少使用。通常使用的是S形的转换函数
-\[
-\tanh(s)={\exp(s)-\exp(-s)\over\exp(s)+\exp(-s)}=2\theta(2s)-1，
-\]
-可以通过<a href="/2015/01/logistic-regression/#mjx-eqn-eqsigmoid-function">logistic函数</a>得到。该函数是阶梯函数的近似，且容易优化，传说和生物神经元也相近。</p>
-
-<div class="image_line" id="figure-6"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-common-NN.png"><img src="/assets/images/2015-02-04-neural-network-common-NN.png" alt="常用的神经网络模型" /></a><div class="caption">图 6:  常用的神经网络模型 [<a href="/assets/images/2015-02-04-neural-network-common-NN.png">PNG</a>]</div></div></div>
-
-<p>常用的神经网络采用$\tanh$作为转换函数，输出采用线性回归，如上图所示。$d^{(0)},d^{(1)},\ldots,d^{(L)}$表示每层神经元数目（节点数目），每层的权值为
-\[
-w_{ij}^{(\ell)}:\left\{
-\begin{aligned}
-&amp;1\leq\ell\leq L&amp;\mbox{layers}&amp;\\
-&amp;0\leq i\leq d^{(\ell-1)}&amp;\mbox{inputs}&amp;\\
-&amp;1\leq j\leq d^{(\ell)}&amp;\mbox{outputs}&amp;，
-\end{aligned}
-\right.
-\]
-常数+1的神经元相当于偏移项，评分函数为
-\begin{equation}
-s_j^{(\ell)}=\sum_{i=0}^{d^{(\ell-1)}}w_{ij}^{(\ell)}x_i^{(\ell-1)}，
-\end{equation}
-转换后的特征为
-\begin{equation}
-x_j^{(\ell)}=\left\{
-\begin{aligned}
-&amp;\tanh\left(s_j^{(\ell)}\right)&amp;\mbox{if }\ell&lt;L\\
-&amp;s_j^{(\ell)}&amp;\mbox{if }\ell=L
-\end{aligned}
-\right.
-\label{eq:forward-x}
-\end{equation}</p>
-
-<p>神经网络将$\mathbf x$当作输入层$\mathbf x^{(0)}$，隐层计算变换后的特征$\mathbf x^{(\ell)}$，输出层计算预测结果$x_1^{(L)}$。</p>
-
-<p>神经网络隐层相当于模式（特征）提取（pattern extraction），进行$\mathbf x^{(\ell)}$和权值向量的模式匹配（利用基于内积的余弦相似度），每个神经元提取一种特征，权值向量纪录了从数据中学到的模式。</p>
-
-<h2 id="bp">BP算法</h2>
-
-<p>如何通过最小化$E_{in}\left(\left\{w_{ij}^{(\ell)}\right\}\right)$学到权值$\left\{w_{ij}^{(\ell)}\right\}$？</p>
-
-<p>如果只有一个隐层，神经网络相当于感知器的融合，可以通过GradientBoost方法一个接一个的确定隐层的神经元。如果有多个隐层，问题就变得复杂了。</p>
-
-<p>每个数据的误差记为
-\[
-e_n=(y_n-\mbox{NNet}(\mathbf x_n))^2，
-\]
-若能计算$\partial e_n\over \partial w_{ij}^{(\ell)}$，就可以通过梯度下降法求解。对输出层
-\[
-e_n=\left(y_n-s_1^{(L)}\right)^2=\left(y_n-\sum_{i=0}^{d^{(L-1)}}w_{i1}^{(L)}x_i^{(L-1)}\right)^2，
-\]
-对输出层和其它层分别求偏微分
-\[
-\begin{aligned}
-&amp;{\partial e_n\over\partial w_{i1}^{(L)}}
-={\partial e_n\over\partial s_{1}^{(L)}}\cdot{\partial s_{1}^{(L)}\over\partial w_{i1}^{(L)}}
-=-2\left(y_n-s_1^{(L)}\right)\cdot x_i^{(L-1)}，\\
-&amp;{\partial e_n\over\partial w_{ij}^{(\ell)}}
-={\partial e_n\over\partial s_{j}^{(\ell)}}\cdot{\partial s_{j}^{(\ell)}\over\partial w_{ij}^{(\ell)}}
-=x_i^{(\ell-1)}\delta_j^{(\ell)}。
-\end{aligned}
-\]
-对输出层，令<sup id="fnref:tanh_output"><a href="#fn:tanh_output" class="footnote">2</a></sup>
-\begin{equation}
-\delta_1^{(L)}=-2\left(y_n-s_1^{(L)}\right)。
-\label{eq:backpropagation-delta-L}
-\end{equation}
-对其它层
-\begin{equation}
-\delta_j^{(\ell)}
-={\partial e_n\over\partial s_{j}^{(\ell)}}
-=\sum_{k=1}^{d^{(\ell+1)}}{\partial e_n\over\partial s_{k}^{(\ell+1)}}{\partial s_{k}^{(\ell+1)}\over\partial x_{j}^{(\ell)}}{\partial x_{j}^{(\ell)}\over\partial s_{j}^{(\ell)}}
-=\tanh’\left(s_j^{(\ell)}\right)\sum_{k=1}^{d^{(\ell+1)}}\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)}，
-\label{eq:backpropagation-delta2}
-\end{equation}
-也就是前一层的$\delta_j^{(\ell)}$，可以通过后一层$\delta_k^{(\ell+1)}$回推计算，<a href="http://www.wolframalpha.com/input/?i=d%2Fdx+tanh">其中</a>
-\[
-\tanh’(s)=1-\tanh^2(s)=\left({2\over \exp(s) + \exp(-s)}\right)^2，
-\]
-那么
-\begin{equation}
-\delta_j^{(\ell)}
-=\left(1-\left(x_j^{(\ell)}\right)^2\right)\sum_{k=1}^{d^{(\ell+1)}}\delta_k^{(\ell+1)}w_{jk}^{(\ell+1)},\quad(j\geq 1)。
-\label{eq:backpropagation-delta}
-\end{equation}</p>
-
-<blockquote>
-  <h4 id="bpbackpropagation">BP（backpropagation）算法</h4>
-  <hr />
-  <p>用小的随机值初始化所有的$w_{ij}^{(\ell)}$；</p>
-
-  <p>对于$t=1,2,\ldots,T$，循环执行： </p>
-
-  <ol>
-    <li>随机化：随机选取$n\in\{1,2,\ldots,N\}$；</li>
-    <li>前向传播：从$\mathbf x^{(0)}=\mathbf x_n$开始，利用\eqref{eq:forward-x}计算所有$x_i^{(\ell)}$；</li>
-    <li>误差回传：对$\mathbf x^{(0)}=\mathbf x_n$，利用\eqref{eq:backpropagation-delta-L}和\eqref{eq:backpropagation-delta}计算所有$\delta_j^{(\ell)}$；</li>
-    <li>梯度下降：$w_{ij}^{(\ell)}\leftarrow w_{ij}^{(\ell)}-\eta x_i^{(\ell-1)}\delta_j^{(\ell)}$；</li>
-  </ol>
-
-  <p>返回$g_{\mbox{NNET}}(\mathbf x)=\left(\ldots\tanh\left(\sum_jw_{jk}^{(2)}\cdot\tanh\left(\sum_iw_{ij}^{(1)}x_i\right)\right)\right)$。</p>
-
-  <p>在实际应用中，第1步至第3步可以先执行多次后，再用$x_i^{(\ell-1)}\delta_j^{(\ell)}$的平均值执行第4步的更新，这就是mini-batch的方法。</p>
-</blockquote>
-
-<p>神经网络通过最小化
-\[
-E_{in}(\mathbf w)={1\over N}\sum_{n=1}^Nerr\left(\left(\ldots\tanh\left(\sum_jw_{jk}^{(2)}\cdot\tanh\left(\sum_iw_{ij}^{(1)}x_i\right)\right)\right),y_n\right)
-\]
-计算权值。通常多隐层神经网络的误差函数是非凸的（non-convex），难以达到全局最小值（global minimum），梯度下降法通过BP算法也仅仅得到局部极小值（local minimum）。不同的初始化$w_{ij}^{(\ell)}$，会得到不同的局部极值：</p>
-
-<ul>
-  <li>BP算法对权重初始值敏感；</li>
-  <li>若权值太大，会落到$\tanh$的saturate区域（梯度很小），每次按梯度更新很小；</li>
-  <li>用小的随机值初始化权值$w_{ij}^{(\ell)}$。</li>
-</ul>
-
-<p>若初始化$w_{ij}^{(\ell)}＝0$，由于$x_0^{(\ell)}=1$，除了${\partial e_n\over \partial w_{01}^{(L)}}\neq 0$外，其它的导数都为0；若初始化$w_{ij}^{(\ell)}＝1$，那么$w_{ij}^{(1)}=w_{i(j+1)}^{(1)}$。因此，$w_{ij}^{(\ell)}$不能初始化为0和1。</p>
-
-<p>虽然神经网络很难最优化，但在实际中很有用。</p>
-
-<h2 id="regularization">正则化</h2>
-
-<p>若用形如$\tanh$的转换函数，神经网络的$d_{VC}=O(VD)$，$V$为神经元数量，$D$为神经元之间的权值数量。当神经元数目足够时，可以做任意逼近，也更容易导致过拟合。为了避免过拟合，需要采取正则化方法。</p>
-
-<h4 id="regularization-weighted-methods">一、weight-elimination正则化</h4>
-
-<p>常用的方法是基于$L_2$的weight-decay正则化，$\Omega(\mathbf w)=\sum\left(w_{ij}^{(\ell)}\right)^2$。这种正则化对权值的压缩（shrink）力度和权值大小“成比例”，大的权值压缩厉害，小的权值压缩较小。</p>
-
-<p>如果通过正则化使权值部分为0（稀疏），就能有效减小$d_{VC}$，常用的方法是$L_1$正则化，$\Omega(\mathbf w)=\sum\left\lvert w_{ij}^{(\ell)}\right\rvert$，但是不可微。采用weight-elimination正则化（放缩的$L_2$正则化），大的权值中等幅度的压缩（median shrink），小的权值也中等幅度的压缩，小的权值就会接近0，具有权值稀疏化的效果。weight-elimination正则化采用
-\begin{equation}
-\Omega(\mathbf w)=\sum{\left(w_{ij}^{(\ell)}\right)^2\over 1+\left(w_{ij}^{(\ell)}\right)^2}，
-\end{equation}
-那么
-\[
-{\partial\Omega(\mathbf w)\over \partial w_{ij}^{(\ell)}}
-={2w_{ij}^{(\ell)}\over\left(1+\left(w_{ij}^{(\ell)}\right)^2\right)^2}。
-\]</p>
-
-<h4 id="regularization-early-stopping">二、尽早停止迭代</h4>
-
-<div class="image_line" id="figure-7"><div class="image_card"><a href="/assets/images/2015-02-04-neural-network-early-stopping.png"><img src="/assets/images/2015-02-04-neural-network-early-stopping.png" alt="迭代次数对误差的影响" /></a><div class="caption">图 7:  迭代次数对误差的影响 [<a href="/assets/images/2015-02-04-neural-network-early-stopping.png">PNG</a>]</div></div></div>
-
-<p>迭代的次数$t$越多，选择过的$\mathbf w$也就越多，有效的$d_{VC}$也越大。小的$t$使得$d_{VC}$也较小。尽早停止（early stopping）迭代，通过如上图右的最佳$t^*$，获得如上图左的最佳$d_{VC}^*$，克服过拟合。通过验证（validation）确定停止迭代的参数$t$。</p>
-
-<p>所有和梯度有关的优化算法，都可利用尽早停止迭代的机制，实现某种正则化。</p>
-
-<h2 id="section-2">程序示例</h2>
-
-<div class="highlight"><pre><code class="language-R">nnet_train <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>X<span class="p">,</span> Y<span class="p">,</span> struct<span class="p">,</span> r<span class="p">,</span> eta<span class="p">,</span> TT<span class="p">)</span> <span class="p">{</span>
-  <span class="c1"># X -- a matrix with each feature row </span>
-  <span class="c1"># Y -- a matrix </span>
-  <span class="c1"># struct -- a vector with neuron number of each layer, including the input layer</span>
-  <span class="c1"># r -- initialization range</span>
-  <span class="c1"># eta -- learning rate</span>
-  <span class="c1"># TT -- iteration times</span>
-  
-  X <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> X<span class="p">)</span>
-  num_data <span class="o">&lt;-</span> <span class="kp">nrow</span><span class="p">(</span>X<span class="p">)</span>
-  num_layer <span class="o">&lt;-</span> <span class="kp">length</span><span class="p">(</span>struct<span class="p">)</span> 
-  nnetwork <span class="o">&lt;-</span> Xs <span class="o">&lt;-</span> Deltas <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">()</span>
-  
-  <span class="c1"># initialization</span>
-  <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="p">(</span>num_layer <span class="o">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
-    nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kt">matrix</span><span class="p">(</span>runif<span class="p">((</span>struct<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="o">*</span> struct<span class="p">[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">],</span> <span class="o">-</span>r<span class="p">,</span> r<span class="p">),</span>
-                            struct<span class="p">[</span>i<span class="p">]</span> <span class="o">+</span> <span class="m">1</span><span class="p">,</span> struct<span class="p">[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">])</span>
-  <span class="p">}</span>
-  
-  <span class="kr">for</span> <span class="p">(</span>t <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> TT<span class="p">)</span> <span class="p">{</span>
-    n <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span>num_data<span class="p">,</span> <span class="m">1</span><span class="p">)</span>
-    
-    <span class="c1"># forward</span>
-    Xs<span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kp">t</span><span class="p">(</span>X<span class="p">[</span>n<span class="p">,,</span>drop <span class="o">=</span> <span class="bp">F</span><span class="p">])</span>
-    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">2</span> <span class="o">:</span> num_layer<span class="p">)</span> <span class="p">{</span>
-      xx <span class="o">&lt;-</span> <span class="kp">tanh</span><span class="p">(</span><span class="kp">t</span><span class="p">(</span><span class="kp">t</span><span class="p">(</span>Xs<span class="p">[[</span>i <span class="o">-</span> <span class="m">1</span><span class="p">]])</span> <span class="o">%*%</span> nnetwork<span class="p">[[</span>i <span class="o">-</span> <span class="m">1</span><span class="p">]]))</span>
-      <span class="kp">ifelse</span><span class="p">(</span>i <span class="o">!=</span> num_layer<span class="p">,</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="kp">rbind</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> xx<span class="p">),</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> xx<span class="p">)</span>
-    <span class="p">}</span>
-    
-    <span class="c1"># backward</span>
-    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> num_layer <span class="o">:</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kp">ifelse</span><span class="p">(</span>i <span class="o">==</span> num_layer<span class="p">,</span>
-             Deltas<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> 
-               <span class="m">-2</span> <span class="o">*</span> <span class="p">(</span><span class="kp">t</span><span class="p">(</span>Y<span class="p">[</span>n<span class="p">,,</span>drop<span class="o">=</span><span class="bp">F</span><span class="p">])</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]])</span> <span class="o">*</span> <span class="p">(</span><span class="m">1</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">^</span> <span class="m">2</span><span class="p">),</span>
-             Deltas<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> 
-               <span class="p">((</span>nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">%*%</span> Deltas<span class="p">[[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">]])</span> <span class="o">*</span>
-                  <span class="p">(</span><span class="m">1</span> <span class="o">-</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">^</span> <span class="m">2</span><span class="p">))[</span><span class="m">2</span><span class="o">:</span><span class="kp">nrow</span><span class="p">(</span>nnetwork<span class="p">[[</span>i<span class="p">]]),,</span>drop<span class="o">=</span><span class="bp">F</span><span class="p">])</span>
-    <span class="p">}</span>
-    
-    <span class="c1"># update weight</span>
-    <span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="p">(</span>num_layer <span class="o">-</span> <span class="m">1</span><span class="p">))</span> <span class="p">{</span>
-      nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> nnetwork<span class="p">[[</span>i<span class="p">]]</span> <span class="o">-</span> eta <span class="o">*</span> Xs<span class="p">[[</span>i<span class="p">]]</span> <span class="o">%*%</span> <span class="kp">t</span><span class="p">(</span>Deltas<span class="p">[[</span>i <span class="o">+</span> <span class="m">1</span><span class="p">]])</span>
-    <span class="p">}</span>
-    
-  <span class="p">}</span>
-  <span class="kr">return</span><span class="p">(</span>nnetwork<span class="p">)</span>
-<span class="p">}</span></code></pre></div>
-
-<h2 id="section-3">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-4">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:five-input-xor">
-      <p>如果用神经网络实现$XOR(x_1,\dots,x_5)$，采用结构为5-D-1，那么<a href="https://class.coursera.org/ntumltwo-001/forum/thread?thread_id=243">最小的D</a>是多少？ <a href="#fnref:five-input-xor" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:tanh_output">
-      <p>对于二分类问题的神经网络，输出为$\{-1,+1\}$，输出层的神经元也要采用$\tanh$，此时$e_n=\left(y_n-\tanh\left(s_1^{(L)}\right)\right)^2$，那么$\delta_1^{(L)}=-2\left(y_n-x_1^{(L)}\right)\left(1-\left(x_1^{(L)}\right)^2\right)$。 <a href="#fnref:tanh_output" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

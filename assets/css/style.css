@@ -139,6 +139,10 @@ p {
   margin: 20px 0 0 ;
 }
 
+li p {
+  margin: 0; 
+}
+
 /* blockquote { */
 /*   padding: 8px; */
 /*   margin: 20px 0 0; */
