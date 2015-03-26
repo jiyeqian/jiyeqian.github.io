@@ -4,16 +4,117 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-03-25T11:31:13+08:00</lastbuilddate>
+    <lastbuilddate>2015-03-26T08:57:24+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
-      <title>工业机器人（2）：技术综述</title>
-      <link href="http://qianjiye.de/2015/03/industrial-robot-techniques" />
+      <title>工业机器人（2）：技术发展综述</title>
+      <link href="http://qianjiye.de/2015/03/industrial-robot-technique-development" />
       <pubdate>2015-03-25T19:29:43+08:00</pubdate>
       <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/03/industrial-robot-techniques</guid>
-      <content:encoded>&lt;![CDATA[
+      <guid>http://qianjiye.de/2015/03/industrial-robot-technique-development</guid>
+      <content:encoded>&lt;![CDATA[<p>未完成……</p>
+
+<h2 id="section">简介</h2>
+
+<p><strong>工业机器人</strong>是制造业竞争的基石，它能以较小代价实现高生产力、质量和自适应性的制造。快速成长的行业和新兴的制造工艺将越来越多的依赖先进的机器人技术。这些行业装备的机器人数量一直在稳步增长。</p>
+
+<p>为满足大规模的制造，机器人的设计应当满足最广泛的潜在需求，但这在实际中很难做到。不同类别机器人的设计会根据负载、自由度而定，并且工作空间会根据应用类别（比如装配、码垛、喷漆、焊接、机械加工和一般的处理任务）而确定。一个<strong>机器人工作单元</strong>（robot workcell）包括一个或多个带控制器的机器人，以及外设：夹持器或工具<a href="#chenwenjie2014handbook">[1]</a>、安全装置、传感器、物料传送装置等。通常，一个完整的机器人工作单元的成本是机器人本身的4倍。机器人工作单元根据实际需求而确定，标准化的工程方法，工具和最佳实践范例能够降低成本，并能预估性能。目前，工业机器人的需求主要来自于资本密集和批量化生产的行业，比如：汽车工业、电子和电器工业。未来的机器人不仅是现今机器人特点和性能的扩展，它应当遵循新的设计原则，以满足更广阔的应用领域和行业。同时，新技术特别是IT技术，也将极大影响未来工业机器人的设计、性能和成本<a href="#martin2008handbook">[2]</a>。</p>
+
+<p>如今，国际和国内标准有助于量化机器人的性能，定义安全防范措施、几何尺寸和媒介接口。大多数机器人都在安全屏障后面操作，确保人员工作在安全距离范围<a href="#dhillon2002robot">[3]</a>。随着安全标准的提高，人和机器人可以直接协作，允许他们在同一个工作空间工作<a href="#dieter2002man">[4]</a>。</p>
+
+<h2 id="section-1">技术发展简史</h2>
+
+<ul>
+  <li>1954年，George Devol申请了专利“programmed article transfer”。</li>
+  <li>1961年，George Devol与Joseph Engelberger合作，成立了第一家机器人公司Unimation，并在通用汽车工厂将机器人用于从压铸机中提取部件。此后几年，大多数液压驱动的Unimate机器人被用于工件处理和汽车点焊<a href="#nof1999handbook">[5]</a>。由于机器人工作和效果都很稳定，很多公司迅速投入工业机器人的研发。</li>
+  <li>1969年，斯坦福人工智能实验室学生Victor Scheinman设计出了6自由度的斯坦福臂（Stanford Arm）<a href="#scheinman1969design">[6]</a>。</li>
+  <li>1973年，ASEA（如今的ABB）推出了第一台微电脑控制的全电动工业机器人IRB-6，能够连续轨迹运动，这是弧焊和加工的前提。这种方案稳定性好，机器人的寿命可长达20年<a href="#groover2007automation">[7]</a>。20世纪70年代，机器人在汽车制造业中迅猛发展，主要用于点焊和操纵应用（handling application）。</li>
+  <li>1978年，日本山梨大学的Hiroshi Makino发明了平面双关节型机器人 (SCARA，Selective Compliance Assembly Robot Arm)<a href="#makino1982assembly">[8]</a>。这种独创的四轴廉价方案能实现快速和复杂的手臂运动，非常适合小部件组装，这为全球电子和消费产品的繁荣做出了贡献<a href="#boothroyd1992design">[9]</a>。</li>
+  <li>1998年，Güdel公司推出了弧形轨道龙门，不同于传统的三个正交平移轴方案，它以高的速度和精度极大增加了机器人的工作空间。这对物流（或machine tending）尤为重要<a href="#bloss2003innovation">[10]</a>。</li>
+  <li>2005年，MOTOMAN推出第一个同步的双手操控机器人的商用产品。灵巧的双手操控对复杂的装配至关重要，可以同时完成处理和工件加工，或者处理大型对象<a href="#wilson2006international">[11]</a>。</li>
+  <li>2006年，KUKA实现了拥有先进动力控制能力的紧凑型7自由度机器手臂<a href="#hirzinger2002dlr">[12]</a><sup id="fnref:Another-approach-towards-lightweight"><a href="#fn:Another-approach-towards-lightweight" class="footnote">1</a></sup>，它是轻巧型机器人，满足了对机器人速度和重量的要求<sup id="fnref:weight-to-load-ratio"><a href="#fn:weight-to-load-ratio" class="footnote">2</a></sup>。</li>
+  <li>到2007年：（1）机器人的平均价格大约降到了1990年的三分之一，性能指标，比如速度、负载、平均无故障时间（MTBF，mean time between failures ），都大大提高了。（2）可以通过一个控制器对多个机器人编程和同步，使得它们可以在同一个工件上精确协作。（3）用于识别、定位和质量控制的视觉系统，逐步成为机器人控制器的组成部分。（4）机器人通过现场总线或以太网联网，进行控制、配置和维护。（5）机器人租赁和专业提供机器人服务的公司逐步发展。</li>
+</ul>
+
+<p>在工业机器人发展的同时，自动导引车（AGV，automated guided vehicles）也出现了。这些移动的机器人用于将工件从一点运到另一点。在自动化柔性制造系统（FMS，flexible manufacturing systems），AGV已经成为实现其弹性流程的重要部分。起初，AGV依靠地板下预置的电缆或磁体进行运动引导。与此同时，自由导航的AGV用于大规模制造和物流。AGV的导航通常利用激光扫描器获得的真实环境的精确二维地图，进行自我定位和避障<a href="#siegwart2011introduction">[13]</a>。在早期，AGV和机器手臂的组合用于加载和卸载机床（machine tool），只有在特定环境，例如半导体行业加载和卸载设别的过程，这些移动手臂才有经济价值。</p>
+
+<h2 id="section-2">……</h2>
+
+<p>工业机器人的4个显著特点：</p>
+
+<ol>
+  <li>仿人功能：利用传感器感知环境，在功能上模仿人的腰、臂、手腕、手爪等部位以实现工业自动化；</li>
+  <li>可编程：通过编程适应工作环境的改变；</li>
+  <li>通用性：通过更换末端执行器完成不同的工业生产任务；</li>
+  <li>良好的环境交互：在无人为干预的条件下，对工作环境自适应控制能力和自我规划能力。</li>
+</ol>
+
+<ul>
+  <li>传统类容：运动学、动力学、基本控制系统等</li>
+  <li>新技术：机器视觉、机器听觉、移动机器人的自主定位等</li>
+</ul>
+
+<p>工业机器人如果安装在生产线上，一旦坏掉，就意味着整条生产线都会受影响，这是我们无法承受之重。所以现在使用国外品牌机器人，也是无奈之举。</p>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol class="bibliography"><li><span id="chenwenjie2014handbook">[1]W. Chen, S. Zhao, and S. L. Chow, <i>Handbook of Manufacturing Engineering and Technology: Grippers and End-Effectors</i>. Springer, 2014.</span>
+
+[<a href="http://link.springer.com/referenceworkentry/10.1007%2F978-1-4471-4670-4_96">Online</a>]
+
+</li>
+<li><span id="martin2008handbook">[2]M. Hägele, K. Nilsson, and J. N. Pires, <i>Handbook of Robotics: Industrial Robotics</i>. Springer, 2008.</span>
+
+</li>
+<li><span id="dhillon2002robot">[3]B. S. Dhillon, A. R. M. Fashandi, and K. L. Liu, “Robot systems reliability and safety: A review,” <i>Journal of quality in maintenance engineering</i>, vol. 8, no. 3, pp. 170–212, 2002.</span>
+
+</li>
+<li><span id="dieter2002man">[4]R. Dieter Schraft, S. Schmid, and S. Thiemermann, “Man-robot cooperation in a flexible assembly cell,” <i>Assembly Automation</i>, vol. 22, no. 2, pp. 136–138, 2002.</span>
+
+</li>
+<li><span id="nof1999handbook">[5]S. Y. Nof, <i>Handbook of industrial robotics</i>, vol. 1. John Wiley &amp; Sons, 1999.</span>
+
+</li>
+<li><span id="scheinman1969design">[6]V. D. Scheinman, “Design of a computer controlled manipulator.,” DTIC Document, 1969.</span>
+
+</li>
+<li><span id="groover2007automation">[7]M. P. Groover, <i>Automation, production systems, and computer-integrated manufacturing</i>. Prentice Hall Press, 2007.</span>
+
+</li>
+<li><span id="makino1982assembly">[8]H. Makino, “Assembly robot.” Google Patents, Jul-1982.</span>
+
+[<a href="https://www.google.com/patents/US4341502">Online</a>]
+
+</li>
+<li><span id="boothroyd1992design">[9]G. Boothroyd and L. Alting, “Design for assembly and disassembly,” <i>CIRP Annals-Manufacturing Technology</i>, vol. 41, no. 2, pp. 625–636, 1992.</span>
+
+</li>
+<li><span id="bloss2003innovation">[10]R. Bloss, “Innovation at IMTS,” <i>Industrial Robot: An International Journal</i>, vol. 30, no. 2, pp. 159–161, 2003.</span>
+
+</li>
+<li><span id="wilson2006international">[11]M. Wilson and Y. Kusuda, “The international robot exhibition 2005 in Tokyo,” <i>Industrial Robot: An International Journal</i>, vol. 33, no. 5, pp. 342–348, 2006.</span>
+
+</li>
+<li><span id="hirzinger2002dlr">[12]G. Hirzinger, N. Sporer, A. Albu-Schaffer, M. Hahnle, R. Krenn, A. Pascucci, and M. Schedl, “DLR’s torque-controlled light weight robot III-are we reaching the technological limits now?,” in <i>Robotics and Automation, 2002. Proceedings. ICRA’02. IEEE International Conference on</i>, 2002, vol. 2, pp. 1710–1716.</span>
+
+</li>
+<li><span id="siegwart2011introduction">[13]R. Siegwart, I. R. Nourbakhsh, and D. Scaramuzza, <i>Introduction to autonomous mobile robots</i>. MIT press, 2011.</span>
+
+</li></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:Another-approach-towards-lightweight">
+      <p>Another approach towards lightweight and stiff structures has been pursued since the 1980s by developing parallel kinematic machines which connect the machine’s basis with its end-effector by three to six parallel struts<a href="#bloss2003innovation">[10]</a>. These so-called parallel robots are particularly suited to achieve the highest speeds (e.g., for picking), precision (e.g., for machining), or handling high work loads. However, workspace volumes tend to be smaller than those of serial or open kinematic chain robots which are comparable in size. <a href="#fnref:Another-approach-towards-lightweight" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:weight-to-load-ratio">
+      <p>From early on, the reduction of the mass and inertia of robot structures was a primary research target, where the human arm with a weight-to-load ratio of 1:1 was con- sidered the ultimate benchmark.  <a href="#fnref:weight-to-load-ratio" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]&gt;</content:encoded>
     </item>
     
@@ -119,7 +220,7 @@
 
 <h3 id="section-5">国外企业在中国的发展</h3>
 
-<p>1954年，美国人G・C・戴万获得了一项工业机器人专利；1958年，美国机械与铸造公司研制成功一台数控自动通用机器Versatran，并以工业机器人为商品广告投入市场，这是世界上最早的工业机器人。日本、苏联、西欧等国大都从1967、1968年开始，以美国的Versatran和Unimate型机器人为蓝本开始研制。1967年，日本丰田织机和川崎重工分别引进了美国的Versatran和Unimate，通过引进技术、仿制、改造创新，很快赶上美国并超越了其它国家，从1980年开始进入广泛的普及时代<a href="#zhang1988industrial-robot">[15]</a>。</p>
+<p>1954年，美国人George Devol获得了一项工业机器人专利<a href="#martin2008handbook">[15]</a>；1958年，美国机械与铸造公司研制成功一台数控自动通用机器Versatran，并以工业机器人为商品广告投入市场，这是世界上最早的工业机器人。日本、苏联、西欧等国大都从1967、1968年开始，以美国的Versatran和Unimate型机器人为蓝本开始研制。1967年，日本丰田织机和川崎重工分别引进了美国的Versatran和Unimate，通过引进技术、仿制、改造创新，很快赶上美国并超越了其它国家，从1980年开始进入广泛的普及时代<a href="#zhang1988industrial-robot">[16]</a>。</p>
 
 <p>目前，工业机器人的<strong>四大企业</strong>，瑞士的ABB、德国的库卡、日本的发那科和安川，占有的全球市场份额已超过五成，在中国占有的市场份额已经超过80%，他们<strong>以上海为中心</strong>在中国开展业务：</p>
 
@@ -130,7 +231,7 @@
   <li>1996年，日本的<strong>安川</strong>与首钢成立了安川首钢机器人有限公司（前身为首钢莫托曼机器人有限公司）；1999年，在<strong>上海</strong>成立全资公司——安川电机（中国）有限公司。</li>
 </ul>
 
-<p><strong>技术和资金资源最为集中的汽车制造业是工业机器人最主要的应用领域</strong><sup id="fnref:robot-war:2"><a href="#fn:robot-war" class="footnote">9</a></sup>。汽车工厂使用最多是ABB和库卡的机器人。库卡机器人主要用在德系汽车工厂，ABB机器人在国产汽车、日系汽车，甚至德系车厂都有用，国产车厂似乎尤其偏爱ABB机器人。在价格上，ABB、库卡这种欧洲品牌的比较高，日系的相对比较便宜<sup id="fnref:abb-invade"><a href="#fn:abb-invade" class="footnote">32</a></sup>。</p>
+<p><strong>技术和资金资源最为集中的汽车制造业是工业机器人最主要的应用领域</strong><sup id="fnref:robot-war:2"><a href="#fn:robot-war" class="footnote">9</a></sup>。汽车工厂使用最多是ABB和库卡的机器人。库卡机器人主要用在德系汽车工厂，ABB机器人在国产汽车、日系汽车，甚至德系车厂都有用，国产车厂似乎尤其偏爱ABB机器人。在价格上，ABB、库卡这种欧洲品牌的比较高，日系的相对比较便宜<sup id="fnref:abb-invade"><a href="#fn:abb-invade" class="footnote">32</a></sup>。工业机器人如果安装在生产线上，一旦坏掉，就意味着整条生产线都会受影响，这是无法承受之重。现在使用国外品牌机器人，也是无奈之举<sup id="fnref:ART-8321202-8420-28925037_3"><a href="#fn:ART-8321202-8420-28925037_3" class="footnote">33</a></sup>。</p>
 
 <h2 id="section-6">结论</h2>
 
@@ -140,7 +241,7 @@
 
 <h2 id="section-7">附录</h2>
 
-<h3 id="representative-figure">代表人物<sup id="fnref:representative-figure"><a href="#fn:representative-figure" class="footnote">33</a></sup></h3>
+<h3 id="representative-figure">代表人物<sup id="fnref:representative-figure"><a href="#fn:representative-figure" class="footnote">34</a></sup></h3>
 
 <ul>
   <li><strong>蒋新松</strong>：1931年8月3日～1997年3月30日，中国工程院院士，原沈阳中科院自动化研究所所长、研究员、博士生导师，提出、组织并直接负责水下机器人的研究、开发及产品系列化工作，负责组织研制工业机器人及特种机器人，创建国家机器人技术研究开发工程中心和机器人学开放实验室。</li>
@@ -204,7 +305,10 @@
 <li><span id="863plan1999robot">[14]“‘国家863计划智能机器人主题产业化基地’发牌仪式在北京举行,” <i>机器人技术与应用</i>, no. 6, 1999.</span>
 
 </li>
-<li><span id="zhang1988industrial-robot">[15]张建民, <i>工业机器人</i>. 北京理工大学出版社, 1988.</span>
+<li><span id="martin2008handbook">[15]M. Hägele, K. Nilsson, and J. N. Pires, <i>Handbook of Robotics: Industrial Robotics</i>. Springer, 2008.</span>
+
+</li>
+<li><span id="zhang1988industrial-robot">[16]张建民, <i>工业机器人</i>. 北京理工大学出版社, 1988.</span>
 
 </li></ol>
 
@@ -307,6 +411,9 @@
     </li>
     <li id="fn:abb-invade">
       <p><a href="http://gongkong.ofweek.com/2015-01/ART-310058-8420-28926968.html">ABB机器人入侵中国市场 狼早就来了</a>。 <a href="#fnref:abb-invade" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:ART-8321202-8420-28925037_3">
+      <p><a href="http://robot.ofweek.com/2015-01/ART-8321202-8420-28925037_3.html">技术攻关竹篮打水 机器人项目沦为“赚钱工具”</a> <a href="#fnref:ART-8321202-8420-28925037_3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:representative-figure">
       <p>资料来源于网络。 <a href="#fnref:representative-figure" class="reversefootnote">&#8617;</a></p>

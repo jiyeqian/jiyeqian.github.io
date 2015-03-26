@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>工业机器人（2）：技术发展综述</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+
+    <script type="text/javascript" src="/assets/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+  <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>工业机器人（2）：技术发展综述</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="Logs" href="/logs/">Logs</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Subscribe" href="/feed/">Subscribe</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="meta">
+<span class="time">
+  <time datetime="2015-03-25">2015-03-25</time>
+</span>
+
+ |
+<span class="categories">
+  categories
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  tags
+  
+  <a href="/tags/#机器人" title="机器人">机器人</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>未完成……</p>
+
+<h2 id="section">简介</h2>
+
+<p><strong>工业机器人</strong>是制造业竞争的基石，它能以较小代价实现高生产力、质量和自适应性的制造。快速成长的行业和新兴的制造工艺将越来越多的依赖先进的机器人技术。这些行业装备的机器人数量一直在稳步增长。</p>
+
+<p>为满足大规模的制造，机器人的设计应当满足最广泛的潜在需求，但这在实际中很难做到。不同类别机器人的设计会根据负载、自由度而定，并且工作空间会根据应用类别（比如装配、码垛、喷漆、焊接、机械加工和一般的处理任务）而确定。一个<strong>机器人工作单元</strong>（robot workcell）包括一个或多个带控制器的机器人，以及外设：夹持器或工具<a href="#chenwenjie2014handbook">[1]</a>、安全装置、传感器、物料传送装置等。通常，一个完整的机器人工作单元的成本是机器人本身的4倍。机器人工作单元根据实际需求而确定，标准化的工程方法，工具和最佳实践范例能够降低成本，并能预估性能。目前，工业机器人的需求主要来自于资本密集和批量化生产的行业，比如：汽车工业、电子和电器工业。未来的机器人不仅是现今机器人特点和性能的扩展，它应当遵循新的设计原则，以满足更广阔的应用领域和行业。同时，新技术特别是IT技术，也将极大影响未来工业机器人的设计、性能和成本<a href="#martin2008handbook">[2]</a>。</p>
+
+<p>如今，国际和国内标准有助于量化机器人的性能，定义安全防范措施、几何尺寸和媒介接口。大多数机器人都在安全屏障后面操作，确保人员工作在安全距离范围<a href="#dhillon2002robot">[3]</a>。随着安全标准的提高，人和机器人可以直接协作，允许他们在同一个工作空间工作<a href="#dieter2002man">[4]</a>。</p>
+
+<h2 id="section-1">技术发展简史</h2>
+
+<ul>
+  <li>1954年，George Devol申请了专利“programmed article transfer”。</li>
+  <li>1961年，George Devol与Joseph Engelberger合作，成立了第一家机器人公司Unimation，并在通用汽车工厂将机器人用于从压铸机中提取部件。此后几年，大多数液压驱动的Unimate机器人被用于工件处理和汽车点焊<a href="#nof1999handbook">[5]</a>。由于机器人工作和效果都很稳定，很多公司迅速投入工业机器人的研发。</li>
+  <li>1969年，斯坦福人工智能实验室学生Victor Scheinman设计出了6自由度的斯坦福臂（Stanford Arm）<a href="#scheinman1969design">[6]</a>。</li>
+  <li>1973年，ASEA（如今的ABB）推出了第一台微电脑控制的全电动工业机器人IRB-6，能够连续轨迹运动，这是弧焊和加工的前提。这种方案稳定性好，机器人的寿命可长达20年<a href="#groover2007automation">[7]</a>。20世纪70年代，机器人在汽车制造业中迅猛发展，主要用于点焊和操纵应用（handling application）。</li>
+  <li>1978年，日本山梨大学的Hiroshi Makino发明了平面双关节型机器人 (SCARA，Selective Compliance Assembly Robot Arm)<a href="#makino1982assembly">[8]</a>。这种独创的四轴廉价方案能实现快速和复杂的手臂运动，非常适合小部件组装，这为全球电子和消费产品的繁荣做出了贡献<a href="#boothroyd1992design">[9]</a>。</li>
+  <li>1998年，Güdel公司推出了弧形轨道龙门，不同于传统的三个正交平移轴方案，它以高的速度和精度极大增加了机器人的工作空间。这对物流（或machine tending）尤为重要<a href="#bloss2003innovation">[10]</a>。</li>
+  <li>2005年，MOTOMAN推出第一个同步的双手操控机器人的商用产品。灵巧的双手操控对复杂的装配至关重要，可以同时完成处理和工件加工，或者处理大型对象<a href="#wilson2006international">[11]</a>。</li>
+  <li>2006年，KUKA实现了拥有先进动力控制能力的紧凑型7自由度机器手臂<a href="#hirzinger2002dlr">[12]</a><sup id="fnref:Another-approach-towards-lightweight"><a href="#fn:Another-approach-towards-lightweight" class="footnote">1</a></sup>，它是轻巧型机器人，满足了对机器人速度和重量的要求<sup id="fnref:weight-to-load-ratio"><a href="#fn:weight-to-load-ratio" class="footnote">2</a></sup>。</li>
+  <li>到2007年：（1）机器人的平均价格大约降到了1990年的三分之一，性能指标，比如速度、负载、平均无故障时间（MTBF，mean time between failures ），都大大提高了。（2）可以通过一个控制器对多个机器人编程和同步，使得它们可以在同一个工件上精确协作。（3）用于识别、定位和质量控制的视觉系统，逐步成为机器人控制器的组成部分。（4）机器人通过现场总线或以太网联网，进行控制、配置和维护。（5）机器人租赁和专业提供机器人服务的公司逐步发展。</li>
+</ul>
+
+<p>在工业机器人发展的同时，自动导引车（AGV，automated guided vehicles）也出现了。这些移动的机器人用于将工件从一点运到另一点。在自动化柔性制造系统（FMS，flexible manufacturing systems），AGV已经成为实现其弹性流程的重要部分。起初，AGV依靠地板下预置的电缆或磁体进行运动引导。与此同时，自由导航的AGV用于大规模制造和物流。AGV的导航通常利用激光扫描器获得的真实环境的精确二维地图，进行自我定位和避障<a href="#siegwart2011introduction">[13]</a>。在早期，AGV和机器手臂的组合用于加载和卸载机床（machine tool），只有在特定环境，例如半导体行业加载和卸载设别的过程，这些移动手臂才有经济价值。</p>
+
+<h2 id="section-2">……</h2>
+
+<p>工业机器人的4个显著特点：</p>
+
+<ol>
+  <li>仿人功能：利用传感器感知环境，在功能上模仿人的腰、臂、手腕、手爪等部位以实现工业自动化；</li>
+  <li>可编程：通过编程适应工作环境的改变；</li>
+  <li>通用性：通过更换末端执行器完成不同的工业生产任务；</li>
+  <li>良好的环境交互：在无人为干预的条件下，对工作环境自适应控制能力和自我规划能力。</li>
+</ol>
+
+<ul>
+  <li>传统类容：运动学、动力学、基本控制系统等</li>
+  <li>新技术：机器视觉、机器听觉、移动机器人的自主定位等</li>
+</ul>
+
+<p>工业机器人如果安装在生产线上，一旦坏掉，就意味着整条生产线都会受影响，这是我们无法承受之重。所以现在使用国外品牌机器人，也是无奈之举。</p>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol class="bibliography"><li><span id="chenwenjie2014handbook">[1]W. Chen, S. Zhao, and S. L. Chow, <i>Handbook of Manufacturing Engineering and Technology: Grippers and End-Effectors</i>. Springer, 2014.</span>
+
+[<a href="http://link.springer.com/referenceworkentry/10.1007%2F978-1-4471-4670-4_96">Online</a>]
+
+</li>
+<li><span id="martin2008handbook">[2]M. Hägele, K. Nilsson, and J. N. Pires, <i>Handbook of Robotics: Industrial Robotics</i>. Springer, 2008.</span>
+
+</li>
+<li><span id="dhillon2002robot">[3]B. S. Dhillon, A. R. M. Fashandi, and K. L. Liu, “Robot systems reliability and safety: A review,” <i>Journal of quality in maintenance engineering</i>, vol. 8, no. 3, pp. 170–212, 2002.</span>
+
+</li>
+<li><span id="dieter2002man">[4]R. Dieter Schraft, S. Schmid, and S. Thiemermann, “Man-robot cooperation in a flexible assembly cell,” <i>Assembly Automation</i>, vol. 22, no. 2, pp. 136–138, 2002.</span>
+
+</li>
+<li><span id="nof1999handbook">[5]S. Y. Nof, <i>Handbook of industrial robotics</i>, vol. 1. John Wiley &amp; Sons, 1999.</span>
+
+</li>
+<li><span id="scheinman1969design">[6]V. D. Scheinman, “Design of a computer controlled manipulator.,” DTIC Document, 1969.</span>
+
+</li>
+<li><span id="groover2007automation">[7]M. P. Groover, <i>Automation, production systems, and computer-integrated manufacturing</i>. Prentice Hall Press, 2007.</span>
+
+</li>
+<li><span id="makino1982assembly">[8]H. Makino, “Assembly robot.” Google Patents, Jul-1982.</span>
+
+[<a href="https://www.google.com/patents/US4341502">Online</a>]
+
+</li>
+<li><span id="boothroyd1992design">[9]G. Boothroyd and L. Alting, “Design for assembly and disassembly,” <i>CIRP Annals-Manufacturing Technology</i>, vol. 41, no. 2, pp. 625–636, 1992.</span>
+
+</li>
+<li><span id="bloss2003innovation">[10]R. Bloss, “Innovation at IMTS,” <i>Industrial Robot: An International Journal</i>, vol. 30, no. 2, pp. 159–161, 2003.</span>
+
+</li>
+<li><span id="wilson2006international">[11]M. Wilson and Y. Kusuda, “The international robot exhibition 2005 in Tokyo,” <i>Industrial Robot: An International Journal</i>, vol. 33, no. 5, pp. 342–348, 2006.</span>
+
+</li>
+<li><span id="hirzinger2002dlr">[12]G. Hirzinger, N. Sporer, A. Albu-Schaffer, M. Hahnle, R. Krenn, A. Pascucci, and M. Schedl, “DLR’s torque-controlled light weight robot III-are we reaching the technological limits now?,” in <i>Robotics and Automation, 2002. Proceedings. ICRA’02. IEEE International Conference on</i>, 2002, vol. 2, pp. 1710–1716.</span>
+
+</li>
+<li><span id="siegwart2011introduction">[13]R. Siegwart, I. R. Nourbakhsh, and D. Scaramuzza, <i>Introduction to autonomous mobile robots</i>. MIT press, 2011.</span>
+
+</li></ol>
+
+<h3 id="section-4">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:Another-approach-towards-lightweight">
+      <p>Another approach towards lightweight and stiff structures has been pursued since the 1980s by developing parallel kinematic machines which connect the machine’s basis with its end-effector by three to six parallel struts<a href="#bloss2003innovation">[10]</a>. These so-called parallel robots are particularly suited to achieve the highest speeds (e.g., for picking), precision (e.g., for machining), or handling high work loads. However, workspace volumes tend to be smaller than those of serial or open kinematic chain robots which are comparable in size. <a href="#fnref:Another-approach-towards-lightweight" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:weight-to-load-ratio">
+      <p>From early on, the reduction of the mass and inertia of robot structures was a primary research target, where the human arm with a weight-to-load ratio of 1:1 was con- sidered the ultimate benchmark.  <a href="#fnref:weight-to-load-ratio" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="right">
+<br/>
+<span>
+  <a  href="/2015/03/industrial-robot-industry-development" class="pageNav"  >上一篇</a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid"  >下一篇</a>
+</span>
+</section>
+
+	
+	<ul class="ds-recent-visitors"></ul>
+	<div class="ds-thread" data-thread-key="/2015/03/industrial-robot-technique-development" data-url="http://qianjiye.de/2015/03/industrial-robot-technique-development" data-title="工业机器人（2）：技术发展综述">
+	</div>
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+		
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/03/industrial-robot-industry-development'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/03/industrial-robot-technique-development/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2015 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
