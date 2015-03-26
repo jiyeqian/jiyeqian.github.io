@@ -4,7 +4,7 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-03-26T10:49:55+08:00</lastbuilddate>
+    <lastbuilddate>2015-03-26T12:04:39+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
     
     <item>
@@ -233,7 +233,7 @@
 
 <h2 id="section-6">结论</h2>
 
-<p>中国已沦为全球工业机器人最大的消费市场，由于国产机器人技术落后，中国并未从这个市场获益多少，绝大部分市场被国外品牌占领，尤其是在高端市场。</p>
+<p>中国已沦为全球工业机器人最大的消费市场，由于国产机器人技术落后，中国并未从这个市场直接获得足够利益，绝大部分市场被国外品牌占领，尤其是在高端市场。</p>
 
 <p>中国机器人的发展由政府主导的模式不再有效。从历史发展来看，在中国政府的主导和扶持下，中国的机器人已经成功的实现了从无到有。从目前现状来看，中国机器人如果要从有到做强，实现产业化，应对国际竞争，这种依靠国家政府主导科研院所研发的模式是失败的。</p>
 
@@ -420,6 +420,54 @@
     </li>
   </ol>
 </div>
+]]&gt;</content:encoded>
+    </item>
+    
+    <item>
+      <title>纹理分类系统</title>
+      <link href="http://qianjiye.de/2015/03/texture-classification-system" />
+      <pubdate>2015-03-16T19:28:50+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/03/texture-classification-system</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">概述</h2>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-03-26-texture-classification-system-texture-example.jpg"><img src="/assets/images/2015-03-26-texture-classification-system-texture-example.jpg" alt="纹理示例" /></a><div class="caption">图 1:  纹理示例 [<a href="/assets/images/2015-03-26-texture-classification-system-texture-example.jpg">JPG</a>]</div></div></div>
+
+<p>本项目利用计算机视觉算法，对不同材质的纹理进行分类，纹理样式如上图所示。系统面临的主要问题包括：</p>
+
+<ul>
+  <li>相同纹路的材质，色彩或亮度之间存在差异；</li>
+  <li>相同颜色或亮度的材质，纹路之间存在差异；</li>
+  <li>待分类的纹理种类很多，超过100种，各类别之间差异很小。</li>
+</ul>
+
+<h4 id="section-1">系统需要实现的主要功能是：</h4>
+
+<ul>
+  <li>对不同纹理的材质分类；</li>
+</ul>
+
+<h4 id="section-2">系统需要实现的辅助功能包括：</h4>
+
+<ul>
+  <li>工件尺寸检测（误差大小于1mm）：检测上图所示不同纹理材质的几何尺寸；</li>
+  <li>物料缺陷检测：材质是否有划痕、是否平坦；</li>
+  <li>打孔质量评估：若在材质上打孔，是否在预设误差范围；</li>
+  <li>颜色花型检测；</li>
+  <li>条码识别。</li>
+</ul>
+
+<p>根据功能需求，系统划分为两部分（两个子系统）：</p>
+
+<ol>
+  <li>实现色彩相关的功能：采用彩色面阵工业相机，成像分辨率精度略低，主要实现纹理分类。</li>
+  <li>实现色彩无关的功能：采用黑白面阵工业相机，成像分辨率较高，实现测量、缺陷检测等剩余功能。颜色花型检测可能会同时使用这个两个子系统。</li>
+</ol>
+
+<h2 id="section-3">成像系统</h2>
+
+<h2 id="section-4">分类模型</h2>
+
 ]]&gt;</content:encoded>
     </item>
     
@@ -1812,176 +1860,6 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
     </li>
     <li id="fn:all-zeros">
       <p>若都初始化为0，$\{\mathbf w_m\}$和$\{\mathbf v_n\}$始终为0，$E_{in}$永远也不会减少。 <a href="#fnref:all-zeros" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>径向基函数网络</title>
-      <link href="http://qianjiye.de/2015/02/radial-basis-function-network" />
-      <pubdate>2015-02-11T23:59:57+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/02/radial-basis-function-network</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">径向基函数网络</h2>
-
-<p><a href="/2015/01/kernel-svm/#mjx-eqn-eqrbf-svm">高斯核SVM</a>，可以实现无限维特征空间的最大边界分类器，它的实现方式是利用$\alpha_n$实现以支持向量$\mathbf x_n$为中心高斯函数的线性组合。</p>
-
-<p>高斯核通常也称为径向基函数（RBF，radial basis function）。radial表示函数值只依赖于$\mathbf x$与“中心”$\mathbf x_n$之间的距离；basis function表示用来组合的系数$\alpha_n，y_n$。</p>
-
-<p>令$g_n(\mathbf x)=y_n\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_n\right\rVert^2\right)$，它表示基于$\mathbf x$与$\mathbf x_n$之间距离权重的加权投票（$+1$或$-1$的票）。高斯核SVM可以表示为
-\[
-g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ng_n(\mathbf x)+b\right)，
-\]
-它是径向基假设的线性融合。</p>
-
-<p><strong>径向基函数网络</strong>就是径向基假设的线性融合，它也是一种神经网络。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-11-radial-basis-function-network-NN-vs-RBFN.png"><img src="/assets/images/2015-02-11-radial-basis-function-network-NN-vs-RBFN.png" alt="神经网络与径向基函数网络" /></a><div class="caption">图 1:  神经网络与径向基函数网络 [<a href="/assets/images/2015-02-11-radial-basis-function-network-NN-vs-RBFN.png">PNG</a>]</div></div></div>
-
-<p>神经网络与径向基函数网络如上图所示：</p>
-
-<ul>
-  <li>隐藏层：神经网络采用“内积＋$\tanh$”，径向基函数网络采用“距离＋高斯函数”；</li>
-  <li>输出层都是同样的线性融合模型。</li>
-</ul>
-
-<p>径向基函数网络的假设为
-\begin{equation}
-h(\mathbf x)=\mbox{Output}\left(
-\sum_{m=1}^{M}\beta_m\mbox{RBF}(\mathbf x,\boldsymbol\mu_m)+b
-\right)，
-\end{equation}
-高斯函数只是一种径向基函数$\mbox{RBF}$，$\beta_m$是投票权值，$\mbox{Output}$形式由不同的回归或分类问题确定。$\boldsymbol\mu_m$和$\beta_m$（带符号）是两个关键参数。高斯核SVM是一种径向基函数网络：径向基函数$\mbox{RBF}$采用高斯函数；对二分类问题输出是$\pm 1$；$M=\#SV$；$\boldsymbol\mu_m$是支持向量$\mathbf x_m$；$\beta_m$是从对偶SVM推导的$\alpha_my_m$。</p>
-
-<p>给定径向基函数$\mbox{RBF}$和输出，径向基函数网络需要学习的参数是$\mu_m$和$\beta_m$。</p>
-
-<p>核和RBF是两种不同的相似度度量方法。核描述基于$\mathcal Z$空间内积的相似性，需要满足<a href="/2015/01/kernel-svm">Mercer条件</a>。RBF通过$\mathcal X$空间的距离度量相似性，这种相似性与距离是单调递减（monotonically non-increasing）关系。一般采用度量$\mathbf x$和$\mathbf x’$相似性的函数还可以是<sup id="fnref:edit-distance"><a href="#fn:edit-distance" class="footnote">1</a></sup>
-\[
-\mbox{Neuron}(\mathbf x,\mathbf x’)=\tanh\left(\gamma\mathbf x^\top\mathbf x’+1\right)，\quad\mbox{DNASim}(\mathbf x,\mathbf x’)=\mbox{EditDistance}(\mathbf x,\mathbf x’)。
-\]
-神经网络的神经元也是在比较输入向量与权值向量之间的相似性。</p>
-
-<p>RBF网络展示了通过度量到中心的距离也是一种很好的特征转换。 相似性是一种很好的特征转换方法，相似性不一定与距离有关，也不一定与核有关。</p>
-
-<h2 id="section-1">学习算法</h2>
-
-<p>当$M=N$和$\boldsymbol\mu_m=\mathbf x_m$时，称为完全RBF网络。它的物理含义是每个点$\mathbf x_m$对周围的数据$\mathbf x$有权重$\beta_m$的影响，假设对二分类问题均匀影响（uniform influence）周围的数据，$\beta_m=1\cdot y_m$，那么
-\begin{equation}
-g_{uniform}(\mathbf x)=\mbox{sign}\left(\sum_{m=1}^Ny_m\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_m\right\rVert^2\right)\right)，
-\end{equation}
-这就是每个数据通过相似度对新数据的投票融合。这和<a href="/2015/01/image-classification-knn-based-introduction/#kNN">k最近邻算法</a>思想很相似。离$\mathbf x$最近的$\mathbf x_m$让$\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_m\right\rVert^2\right)$取得最大值。高斯函数衰减很快，最大的投票很可能会左右投票结果，不需要让所有数据投票，只用离$\mathbf x$最近数据投票，用选择法（selection）替代融合法（aggregation），
-\begin{equation}
-g_{nbor}=y_m\mbox{ such that }\mathbf x\mbox{ closest to }\mathbf x_m， 
-\end{equation}
-这就是最近邻算法。若让k个$\mathbf x_m$参与对$\mathbf x$投票就是k最近邻算法。</p>
-
-<p>如果不直接用$y_m$作为$\beta_m$投票，而更进一步考虑对$\beta_m$进行优化，用完全RBF网络解决基于平方误差的回归问题，
-\begin{equation}
-h(\mathbf x)=\sum_{m=1}^{M}\beta_m\mbox{RBF}(\mathbf x,\mathbf x_m)。
-\end{equation}
-这是基于RBF特征转换的线性回归，
-\[
-\mathbf z_n=[\mbox{RBF}(\mathbf x_n,\mathbf x_1),\mbox{RBF}(\mathbf x_n,\mathbf x_2),\ldots,\mbox{RBF}(\mathbf x_n,\mathbf x_N)]，
-\]
-最优解为$\boldsymbol\beta=\left(\mathbf Z^\top\mathbf Z\right)^{-1}\mathbf Z^\top\mathbf y$（若$\mathbf Z^\top\mathbf Z$可逆），$\mathbf Z$是$N\times N$的对称方阵，那么就有
-\begin{equation}
-\boldsymbol\beta=\mathbf Z^{-1}\mathbf y。
-\end{equation}
-若每个$\mathbf x_n$都不一样，那么$\mathbf Z$总可逆。对于数据$\mathbf x_1$，
-\[
-g_{RBF}(\mathbf x_1)
-=\boldsymbol\beta^\top\mathbf z_1
-=\mathbf y^\top\mathbf Z^{-1}\cdot(\mbox{first column of }\mathbf Z)
-=\mathbf y^\top\left[1,0,\ldots,0\right]^\top
-=y_1，
-\]
-那么就有
-\begin{equation}
-g_{RBF}(\mathbf x_n)=y_n，
-\end{equation}
-对于回归问题$E_{in}(g_{RBF})=0$。在函数逼近（function approximation）领域这叫完美内插（exact interpolation）；对机器学习而言这是过拟合，需要正则化。</p>
-
-<h2 id="section-2">正则化</h2>
-
-<p>对正则化的完全RBF网络的脊回归可得
-\begin{equation}
-\boldsymbol\beta=\left(\mathbf Z^\top\mathbf Z+\lambda\mathbf I\right)^{-1}\mathbf Z^\top\mathbf y，
-\end{equation}
-其中$\mathbf Z$可以看作<a href="/2015/01/kernel-svm">高斯核矩阵</a>，$\mathbf K=\mathbf Z$，对比<a href="/2015/01/support-vector-regression/#mjx-eqn-eqanalytic-solution-ridge-regression">脊回归的核模型</a>，二则只相差矩阵$\mathbf Z^\top$，前者是有限$N$维转换的回归，后者是无限维转换的回归。</p>
-
-<p>对于<a href="/2015/01/kernel-svm/#mjx-eqn-eqrbf-svm">SVM核模型</a>，只采用了支持向量作为参考进行距离度量。减少中心数量（也就减少了参与投票的权值），只使用部分代表点（prototype）作为中心，使$M\ll N$，也是一种有效的正则化方法。</p>
-
-<p>如何找出这些有效的代表点呢？</p>
-
-<h2 id="k-means">k均值聚类</h2>
-
-<p>若$\mathbf x_1\approx\mathbf x_2$，不需要$\mbox{RBF}(\mathbf x,\mathbf x_1)$和$\mbox{RBF}(\mathbf x,\mathbf x_2)$都出现在RBF网络中，可以只用一个cluster$\boldsymbol\mu\approx\mathbf x_1\approx\mathbf x_2$替代两个点即可。</p>
-
-<p>聚类是将数据$\{\mathbf x_n\}$分为不相交的集合（类）$S_1,S_2,\ldots,S_M$。当每个集合用$\boldsymbol\mu_m$作为代表时，若$\mathbf x_1$和$\mathbf x_2$都属于$S_m$，当且仅当$\boldsymbol\mu_m\approx\mathbf x_1\approx\mathbf x_2$。聚类的目标函数为
-\begin{equation}
-\min_{\{S_1,\ldots,S_M;\boldsymbol\mu_1,\ldots,\boldsymbol\mu_M\}}E_{in}(S_1,\ldots,S_M;\boldsymbol\mu_1,\ldots,\boldsymbol\mu_M)
-={1\over N}\sum_{n=1}^{N}\sum_{m=1}^M[[\mathbf x_n\in S_m]]\lVert\mathbf x_n-\boldsymbol\mu_m\rVert^2。
-\end{equation}
-这是混合的组合数值优化问题，很难最优化，但是可以简化为分别交替最优化$S_m$和$\boldsymbol\mu_m$：</p>
-
-<ol>
-  <li>最优划分：固定$\boldsymbol\mu_1,\ldots,\boldsymbol\mu_M$；选择每个$\mathbf x_n$所属的唯一类别$S_m$，使$\lVert\mathbf x_n-\boldsymbol\mu_m\rVert$最小。</li>
-  <li>最优计算：固定$S_1,\ldots,S_M$；对每个$\boldsymbol\mu_m$，由于
-\[
-\nabla_{\boldsymbol\mu_m}E_{in}
-=-2\sum_{n=1}^N[[\mathbf x_n\in S_m]](\mathbf x_n-\boldsymbol\mu_m)
-=-2\left(\left(\sum_{\mathbf x_n\in S_m}\mathbf x_n\right)-\left|S_m\right|\boldsymbol\mu_m\right)=0，
-\]
-可得最佳$\boldsymbol\mu_m$是属于$S_m$所有$\mathbf x_n$的均值。</li>
-</ol>
-
-<p>以上就是<a href="/2014/12/k-means">k均值算法</a>的关键步骤，$k=M$，重复以上2步直至收敛。通常随机选择k个$\mathbf x_n$作为$\boldsymbol\mu_k$的初始值。收敛是指$S_1,\ldots,S_k$不再改变。算法通过交替最小化使$E_{in}$减小，一定能收敛。</p>
-
-<blockquote>
-  <h4 id="krbf">基于k均值的RBF网络</h4>
-  <hr />
-
-  <ol>
-    <li>利用k均值算法，$k=M$，得到$\{\boldsymbol\mu_m\}$；</li>
-    <li>进行特征转换
-\[
-\Phi(\mathbf x)=\left[\mbox{RBF}(\mathbf x,\boldsymbol\mu_1),\mbox{RBF}(\mathbf x,\boldsymbol\mu_2),\ldots,\mbox{RBF}(\mathbf x,\boldsymbol\mu_M)\right]；
-\]</li>
-    <li>通过$\{(\Phi(\mathbf x_n),y_n)\}$上的线性模型得到参数$\boldsymbol\beta$；</li>
-    <li>返回$g_{RBFNET}(\mathbf x)=\mbox{LinearHypothesis}(\boldsymbol\beta, \Phi(\mathbf x))$。</li>
-  </ol>
-</blockquote>
-
-<p>上述算法采用非监督的k均值作为特征转换，如同自编码器。RBF网络需要确定的的参数是$M$和$\mbox{RBF}$函数，这些可通过验证方法确定。</p>
-
-<p>虽然RBF网络和SVM的核模型与神经网络性能差不多，但在实际中并不常用。</p>
-
-<h2 id="section-3">实战技能</h2>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-02-11-radial-basis-function-network-k-means.png"><img src="/assets/images/2015-02-11-radial-basis-function-network-k-means.png" alt="k均值算法对参数敏感" /></a><div class="caption">图 2:  k均值算法对参数敏感 [<a href="/assets/images/2015-02-11-radial-basis-function-network-k-means.png">PNG</a>]</div></div></div>
-
-<p>只要选择合适的$k$和恰当的初始化，k均值算法通常表现良好。k均值算法对参数敏感，选择不同的$k$和不同的初始化，结果差异大，如上图所示。对参数交替最优化不能保证得到全局最优。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-02-11-radial-basis-function-network-k-means-and-RBFN.jpg"><img src="/assets/images/2015-02-11-radial-basis-function-network-k-means-and-RBFN.jpg" alt="基于k均值的RBF网络" /></a><div class="caption">图 3:  基于k均值的RBF网络 [<a href="/assets/images/2015-02-11-radial-basis-function-network-k-means-and-RBFN.jpg">JPG</a>]</div></div></div>
-
-<p>上图是利用了k均值的RBF网络，蓝色和红色表示两类的标签，阴影渐变区域表示k均值聚类的结果，黑色线条展示分类结果。上图左完全没办法分出两类，输出都是同一类的结果。如果k均值的效果较好，RBF网络效果也更好。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-02-11-radial-basis-function-network-full-RBFN.jpg"><img src="/assets/images/2015-02-11-radial-basis-function-network-full-RBFN.jpg" alt="完全RBF网络" /></a><div class="caption">图 4:  完全RBF网络 [<a href="/assets/images/2015-02-11-radial-basis-function-network-full-RBFN.jpg">JPG</a>]</div></div></div>
-
-<p>上图左和右分别展示了两种完全RBF网络的效果，所有的数据都参与分类计算，由于计算量很大，在实际中很少使用。或者说这类算法还需要借助其它方式，克服计算复杂度。</p>
-
-<h2 id="section-4">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-5">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:edit-distance">
-      <p>$\mbox{EditDistance}$表示一个字符串如何通过最小的修改变为另一个字符串。 <a href="#fnref:edit-distance" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
