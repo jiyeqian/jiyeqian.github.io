@@ -4,8 +4,241 @@
     <title>Jiye Qian</title>
     <link href="http://qianjiye.de/feed/" rel="self" />
     <link href="http://qianjiye.de" />
-    <lastbuilddate>2015-03-30T11:14:38+08:00</lastbuilddate>
+    <lastbuilddate>2015-04-03T20:45:15+08:00</lastbuilddate>
     <webmaster>ccf.developer@gmail.com</webmaster>
+    
+    <item>
+      <title>向量空间模型</title>
+      <link href="http://qianjiye.de/2015/04/vector-space-model" />
+      <pubdate>2015-04-03T19:40:53+08:00</pubdate>
+      <author>Jiye Qian</author>
+      <guid>http://qianjiye.de/2015/04/vector-space-model</guid>
+      <content:encoded>&lt;![CDATA[<h2 id="section">基本概念</h2>
+
+<p><strong>向量空间模型</strong>（VSM，vector space model）是用向量表示文本的代数模型，它将文本转换为向量，也称为<strong>词语向量模型</strong>（term vector model）<a href="#Salton:1975:VSM:361219.361220">[1]</a><sup id="fnref:tfidf"><a href="#fn:tfidf" class="footnote">1</a></sup>。最容易想到的方法就是利用词频（TF，term frequency）。</p>
+
+<h3 id="section-1">词频</h3>
+
+<p><strong>词频</strong>就是统计词语在文本中出现的次数。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">mydoclist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Julie loves me more than Linda loves me&#39;</span><span class="p">,</span>
+<span class="s">&#39;Jane likes me more than Julie loves me&#39;</span><span class="p">,</span>
+<span class="s">&#39;He likes basketball more than baseball&#39;</span><span class="p">]</span>
+
+<span class="c">#mydoclist = [&#39;sun sky bright&#39;, &#39;sun sun bright&#39;]</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">mydoclist</span><span class="p">:</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">tf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">print</span> <span class="n">tf</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    
+<span class="c"># Output:</span>
+<span class="c"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;loves&#39;, 2), (&#39;Linda&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
+<span class="c"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;likes&#39;, 1), (&#39;loves&#39;, 1), (&#39;Jane&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
+<span class="c"># [(&#39;basketball&#39;, 1), (&#39;baseball&#39;, 1), (&#39;likes&#39;, 1), (&#39;He&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span></code></pre></div>
+
+<p>以上代码统计了每个文本中词语出现的频率。虽然将文本量化，但是由于生成每个文本的字典不同，文本之间无法比较。因此，需要将每个文本表示成长度相同的向量，这个长度是由全体词语构成的<strong>语料库</strong>（corpus）决定的。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">string</span> <span class="c">#allows for format()</span>
+    
+<span class="k">def</span> <span class="nf">build_lexicon</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+    <span class="n">lexicon</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">:</span>
+        <span class="n">lexicon</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="n">lexicon</span>
+
+<span class="k">def</span> <span class="nf">tf</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">freq</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">document</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">freq</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">document</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">build_lexicon</span><span class="p">(</span><span class="n">mydoclist</span><span class="p">)</span>
+
+<span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">print</span> <span class="s">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">mydoclist</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;The doc is &quot;&#39;</span> <span class="o">+</span> <span class="n">doc</span> <span class="o">+</span> <span class="s">&#39;&quot;&#39;</span>
+    <span class="n">tf_vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">]</span>
+    <span class="n">tf_vector_string</span> <span class="o">=</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">tf_vector</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;The tf vector for Document </span><span class="si">%d</span><span class="s"> is [</span><span class="si">%s</span><span class="s">]&#39;</span> <span class="o">%</span> <span class="p">((</span><span class="n">mydoclist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf_vector_string</span><span class="p">)</span>
+    <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">)</span>
+    
+    <span class="c"># here&#39;s a test: why did I wrap mydoclist.index(doc)+1 in parens?  it returns an int...</span>
+    <span class="c"># try it!  type(mydoclist.index(doc) + 1)</span>
+
+<span class="k">print</span> <span class="s">&#39;All combined, here is our master document term matrix: &#39;</span>
+<span class="k">print</span> <span class="n">doc_term_matrix</span>
+
+<span class="c"># Output:</span>
+<span class="c"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
+<span class="c"># The doc is &quot;Julie loves me more than Linda loves me&quot;</span>
+<span class="c"># The tf vector for Document 1 is [2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1]</span>
+<span class="c"># The doc is &quot;Jane likes me more than Julie loves me&quot;</span>
+<span class="c"># The tf vector for Document 2 is [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1]</span>
+<span class="c"># The doc is &quot;He likes basketball more than baseball&quot;</span>
+<span class="c"># The tf vector for Document 3 is [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]</span>
+<span class="c"># All combined, here is our master document term matrix: </span>
+<span class="c"># [[2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]]</span></code></pre></div>
+
+<p>通过这一过程，将文本转换到了向量空间。如果有一篇文本单词频率出现过高，会破坏分析，需将向量规范化，比如$L_2$规范化，使得向量元素的平方和为$1$。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">l2_normalizer</span><span class="p">(</span><span class="n">vec</span><span class="p">):</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">el</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">vec</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">el</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">denom</span><span class="p">))</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">vec</span><span class="p">]</span>
+
+<span class="n">doc_term_matrix_l2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">doc_term_matrix</span><span class="p">:</span>
+    <span class="n">doc_term_matrix_l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2_normalizer</span><span class="p">(</span><span class="n">vec</span><span class="p">))</span>
+
+<span class="k">print</span> <span class="s">&#39;A regular old document term matrix: &#39;</span> 
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">A document term matrix with row-wise L2 norms of 1:&#39;</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix_l2</span><span class="p">)</span>
+
+<span class="c"># if you want to check this math, perform the following:</span>
+<span class="c"># from numpy import linalg as la</span>
+<span class="c"># la.norm(doc_term_matrix[0])</span>
+<span class="c"># la.norm(doc_term_matrix_l2[0])</span>
+
+<span class="c"># Output:</span>
+
+<span class="c"># A regular old document term matrix: </span>
+<span class="c"># [[2 0 1 0 0 2 0 1 0 1 1]</span>
+<span class="c">#  [2 0 1 0 1 1 1 0 0 1 1]</span>
+<span class="c">#  [0 1 0 1 1 0 0 0 1 1 1]]</span>
+
+<span class="c"># A document term matrix with row-wise L2 norms of 1:</span>
+<span class="c"># [[ 0.57735027  0.          0.28867513  0.          0.          0.57735027</span>
+<span class="c">#    0.          0.28867513  0.          0.28867513  0.28867513]</span>
+<span class="c">#  [ 0.63245553  0.          0.31622777  0.          0.31622777  0.31622777</span>
+<span class="c">#    0.31622777  0.          0.          0.31622777  0.31622777]</span>
+<span class="c">#  [ 0.          0.40824829  0.          0.40824829  0.40824829  0.          0.</span>
+<span class="c">#    0.          0.40824829  0.40824829  0.40824829]]</span></code></pre></div>
+
+<p>通过$L_2$规范化，向量元素的取值范围变为了$[0, 1]$。如果要提升某篇文本和主题的相关性，可以一遍遍重复单词，这种方法可以压低这样的频率提升。</p>
+
+<h3 id="section-2">逆文档频率</h3>
+
+<p>词频只考虑了词语在某个特定文档中出现的频率，并未考虑词语在所有文档中的价值。如果某个词比较少见，但是它在这篇文章中多次出现，那么它很可能就反映了这篇文章的特性，正是我们所需要的关键词。<a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html">例如</a>：一篇文本中“中国”、“蜜蜂”、“养殖”这三个词的出现次数一样多。这是不是意味着，作为关键词，它们的重要性是一样的？显然不是这样。因为“中国”是很常见的词，相对而言，“蜜蜂”和“养殖”不那么常见。如果这三个词在一篇文章的出现次数一样多，有理由认为，“蜜蜂”和“养殖”的重要程度要大于“中国”，也就是说，在关键词排序上面，“蜜蜂”和“养殖”应该排在“中国”的前面。</p>
+
+<p>用统计学语言表达，就是在词频的基础上，要对每个词分配一个重要性权重。最常见的词给予最小的权重，较常见的词给予较小的权重，较少见的词给予较大的权重。这个权重叫做<strong>逆文档频率</strong>（IDF，inverse document frequency），它的大小与一个词的常见程度成反比<sup id="fnref:log-base"><a href="#fn:log-base" class="footnote">2</a></sup>，</p>
+
+<p>\begin{equation}
+IDF(\mbox{word}) = \log\left(\mbox{num of documents}\over\mbox{num of documents including word}+1\right)。
+\end{equation}</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">numDocsContaining</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doclist</span><span class="p">):</span>
+    <span class="n">doccount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">doclist</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">freq</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">doccount</span> <span class="o">+=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">doccount</span> 
+
+<span class="k">def</span> <span class="nf">idf</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doclist</span><span class="p">):</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">doclist</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">numDocsContaining</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doclist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span><span class="o">+</span><span class="n">df</span><span class="p">))</span>
+
+<span class="n">my_idf_vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">idf</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">mydoclist</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
+<span class="k">print</span> <span class="s">&#39;The inverse document frequency vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">my_idf_vector</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
+
+<span class="c"># Output:</span>
+
+<span class="c"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
+<span class="c"># The inverse document frequency vector is [0.000000, 0.405465, 0.000000, 0.405465, 0.000000, 0.000000, 0.405465, 0.405465, 0.405465, -0.287682, -0.287682]</span></code></pre></div>
+
+<p>如果一个词越常见，那么分母就越大，逆文档频率就越小越接近0。分母之所以要加1，是为了避免分母为0（即所有文档都不包含该词）。</p>
+
+<h3 id="tf-idf">TF-IDF</h3>
+
+<p>\begin{equation}
+TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
+\end{equation}</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">doc_term_matrix_tfidf</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c">#performing tf-idf matrix multiplication</span>
+<span class="k">for</span> <span class="n">tf_vector</span> <span class="ow">in</span> <span class="n">doc_term_matrix</span><span class="p">:</span>
+    <span class="n">doc_term_matrix_tfidf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">,</span> <span class="n">my_idf_vector</span><span class="p">))</span>
+
+<span class="c">#normalizing</span>
+<span class="n">doc_term_matrix_tfidf_l2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tf_vector</span> <span class="ow">in</span> <span class="n">doc_term_matrix_tfidf</span><span class="p">:</span>
+    <span class="n">doc_term_matrix_tfidf_l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2_normalizer</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">))</span>
+                                    
+<span class="k">print</span> <span class="n">vocabulary</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix_tfidf_l2</span><span class="p">)</span> <span class="c"># np.matrix() just to make it easier to look at</span>
+
+<span class="c"># Output:</span>
+<span class="c"># </span>
+<span class="c"># set([&#39;me&#39;, &#39;basketball&#39;, &#39;Julie&#39;, &#39;baseball&#39;, &#39;likes&#39;, &#39;loves&#39;, &#39;Jane&#39;, &#39;Linda&#39;, &#39;He&#39;, &#39;than&#39;, &#39;more&#39;])</span>
+<span class="c"># [[ 0.          0.          0.          0.          0.          0.          0.</span>
+<span class="c">#    0.70590555  0.         -0.50084796 -0.50084796]</span>
+<span class="c">#  [ 0.          0.          0.          0.          0.          0.</span>
+<span class="c">#    0.70590555  0.          0.         -0.50084796 -0.50084796]</span>
+<span class="c">#  [ 0.          0.49957476  0.          0.49957476  0.          0.          0.</span>
+<span class="c">#    0.          0.49957476 -0.35445393 -0.35445393]]</span></code></pre></div>
+
+<p>事实上，scikits-learn包含了计算TF-IDF的算法，但由于处理除以0的问题，<code>TfidfVectorizer/TfidfTransformer</code>得到的<a href="http://stackoverflow.com/questions/18687879/error-in-computing-text-similarity-using-scikit-learn/18692538#18692538">结果与以上计算过程不同</a>。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">term_freq_matrix</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mydoclist</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;Vocabulary:&quot;</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">vocabulary_</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
+
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="s">&quot;l2&quot;</span><span class="p">)</span>
+<span class="n">tfidf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">term_freq_matrix</span><span class="p">)</span>
+
+<span class="n">tf_idf_matrix</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">term_freq_matrix</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">tf_idf_matrix</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+
+<span class="c"># Output:</span>
+<span class="c"># Vocabulary: {u&#39;me&#39;: 8, u&#39;basketball&#39;: 1, u&#39;julie&#39;: 4, u&#39;baseball&#39;: 0, u&#39;likes&#39;: 5, u&#39;loves&#39;: 7, u&#39;jane&#39;: 3, u&#39;linda&#39;: 6, u&#39;more&#39;: 9, u&#39;than&#39;: 10, u&#39;he&#39;: 2}</span>
+<span class="c"># [[ 0.          0.          0.          0.          0.28945906  0.</span>
+<span class="c">#    0.38060387  0.57891811  0.57891811  0.22479078  0.22479078]</span>
+<span class="c">#  [ 0.          0.          0.          0.41715759  0.3172591   0.3172591</span>
+<span class="c">#    0.          0.3172591   0.6345182   0.24637999  0.24637999]</span>
+<span class="c">#  [ 0.48359121  0.48359121  0.48359121  0.          0.          0.36778358</span>
+<span class="c">#    0.          0.          0.          0.28561676  0.28561676]]</span></code></pre></div>
+
+<h2 id="section-3">应用示例</h2>
+
+<p>向量空间模型的TF-IDF可用于<a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html">自动提取关键词</a>、<a href="http://www.ruanyifeng.com/blog/2013/03/cosine_similarity.html">找出相似文章</a>和<a href="http://www.ruanyifeng.com/blog/2013/03/automatic_summarization.html">自动摘要</a>等。</p>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol class="bibliography"><li><span id="Salton:1975:VSM:361219.361220">[1]G. Salton, A. Wong, and C.-S. Yang, “A Vector Space Model for Automatic Indexing,” <i>Communications of the ACM</i>, vol. 18, no. 11, pp. 613–620, Nov. 1975.</span>
+
+[<a href="http://doi.acm.org/10.1145/361219.361220">Online</a>]
+
+</li></ol>
+
+<h3 id="section-5">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:tfidf">
+      <p>代码主要参考了<a href="http://stanford.edu/~rjweiss/public_html/IRiSS2013/text2/notebooks/tfidf.html">The Vector Space Model of text</a>，但文中计算有错误。 <a href="#fnref:tfidf" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:log-base">
+      <p>$\log$的底是多少？ <a href="#fnref:log-base" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]&gt;</content:encoded>
+    </item>
     
     <item>
       <title>工业机器人（2）：技术发展综述</title>
@@ -686,9 +919,10 @@ $X$可以指代电视，$Y$表示销售额。$\beta_0 $和$\beta_1$分别表示<
 \]
 符号$\hat{\;}$表示估计值。第$i$个样本的<strong>残差</strong>（residual）记为$e_i=y_i-\hat y_i$，$n$个样本的<strong>残差平方和</strong>（RSS，residual sum of squares）为
 \begin{equation}
-RSS=e_i^2+e_2^2+\ldots+e_n^2。
+RSS=e_i^2+e_2^2+\ldots+e_n^2，
 \label{eq:rss}
-\end{equation}</p>
+\end{equation}
+RSS也称为SSE。</p>
 
 <p>假设$X$和$Y$的真实关系为
 \begin{equation}
@@ -725,7 +959,13 @@ RSE=\sqrt{RSS\over n-2}=\sqrt{\frac{1}{n-2}\sum_{i=1}^n\left(y_i-\hat y_i\right)
 \label{eq:rse}
 \end{equation}</p>
 
-<p>标准误差可以用于计算<strong>置信区间</strong>（confidence interval）。$95\%$的置信区间表示该区间有$95\%$的概率包括参数的真实值。对于线性回归的参数估计，$95\%$的置信区间记为<sup id="fnref:confidence-interval"><a href="#fn:confidence-interval" class="footnote">1</a></sup>：</p>
+<p>标准误差可以用于计算<strong>置信区间</strong>（confidence interval）。$95\%$的置信区间表示该区间有$95\%$的概率包括参数的真实值。类似的均方根误差（RMSE，root-mean-square error）则定义为</p>
+
+<p>\[
+RMSE=\sqrt{RSS\over n}。
+\]</p>
+
+<p>对于线性回归的参数估计，$95\%$的置信区间记为<sup id="fnref:confidence-interval"><a href="#fn:confidence-interval" class="footnote">1</a></sup>：</p>
 
 <p>\begin{equation}
 \hat\beta_0\pm 2\cdot SE\left(\hat\beta_0\right)，\qquad
@@ -780,12 +1020,12 @@ Multiple R<span class="o">-</span>squared<span class="o">:</span>  <span class="
 
 <p>Coefficients的最后一列$Pr(&gt;|t|)$表示$H_0$成立的概率，若很小就拒绝$H_0$接受$H_1$。拒绝$H_0$以为着$\beta_1\neq0$，表明$X$与$Y$相关。星号表示相关性强弱。最后一列表明销售额与电视广告有关系。$RSE$衡量了模型拟合结果与数据真实表现的差异。</p>
 
-<p>$RSE$衡量了模型拟合结果与数据真实表现的差异。$R^2$统计量是度量拟合的另一种方式，
+<p>$RSE$衡量了模型拟合结果与数据真实表现的差异。$R^2$统计量是度量拟合的另一种方式<sup id="fnref:tss-computation"><a href="#fn:tss-computation" class="footnote">3</a></sup>，
 \begin{equation}
-R^2 = {TSS-RSS\over TSS}=1-{RSS\over TSS}，\qquad TSS=\sum_{i=1}^n\left(y_i-\bar y\right)^2。
+R^2 = {TSS-RSS\over TSS}=1-{RSS\over TSS}，\qquad TSS=\sum_{i=1}^n\left(y_i-\bar y\right)^2，
 \label{eq:r2-statistic}
 \end{equation}
-$R^2$越大越好。加入新的变量会使得$R^2$增大<sup id="fnref:R2-increase"><a href="#fn:R2-increase" class="footnote">3</a></sup>，在测试集上$R^2$可能为负数，$R^2\in(-\infty, 1]$。若$R^2$接近$0$，这表明回归模型没有很好的解释响应变化，可能是线性模型有误或内在误差$\sigma^2$很高。本例中，$R^2\approx 0.61$表示少于三分之二的销售额变化能通过基于电视广告的回归模型解释。虽然$R^2\in[0,1]$，要比较哪个$R^2$更好还要根据具体应用而定。</p>
+TSS也记为SST。$R^2$越大越好。加入新的变量会使得$R^2$增大<sup id="fnref:R2-increase"><a href="#fn:R2-increase" class="footnote">4</a></sup>，在测试集上$R^2$可能为负数，$R^2\in(-\infty, 1]$。若$R^2$接近$0$，这表明回归模型没有很好的解释响应变化，可能是线性模型有误或内在误差$\sigma^2$很高。本例中，$R^2\approx 0.61$表示少于三分之二的销售额变化能通过基于电视广告的回归模型解释。虽然$R^2\in[0,1]$，要比较哪个$R^2$更好还要根据具体应用而定。</p>
 
 <p>$R^2$是衡量$X$与$Y$线性相关的统计量。相关系数（correlation）
 \begin{equation}
@@ -879,7 +1119,7 @@ F={(RSS_0-RSS)/q\over RSS/(n-p-1)}。
 \label{eq:f-statistic2}
 \end{equation}</p>
 
-<p>单变量回归表明报纸广告与销售额也有关，但多变量回归表明报纸广告与销售额关系不大。对于单变量和多变量回归，电视的系数很相近，但是报纸的系数差异很大。虽然报纸对销售额的直接贡献很小，但从下面的相关系数可以看出，报纸和广播的相关系数高达$0.35$，也就是报纸投放的广告多广播也会多，从而报纸能间接提高销售额<sup id="fnref:absurd-example"><a href="#fn:absurd-example" class="footnote">4</a></sup>。报纸可作为广播广告的替代品。报纸是通过广播对销售额的促进而获益的。</p>
+<p>单变量回归表明报纸广告与销售额也有关，但多变量回归表明报纸广告与销售额关系不大。对于单变量和多变量回归，电视的系数很相近，但是报纸的系数差异很大。虽然报纸对销售额的直接贡献很小，但从下面的相关系数可以看出，报纸和广播的相关系数高达$0.35$，也就是报纸投放的广告多广播也会多，从而报纸能间接提高销售额<sup id="fnref:absurd-example"><a href="#fn:absurd-example" class="footnote">5</a></sup>。报纸可作为广播广告的替代品。报纸是通过广播对销售额的促进而获益的。</p>
 
 <div class="highlight"><pre><code class="language-R"><span class="o">&gt;</span> cor<span class="p">(</span>advertising<span class="p">[,</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">])</span>
 
@@ -889,7 +1129,7 @@ Radio     <span class="m">0.05480866</span> <span class="m">1.00000000</span> <s
 Newspaper <span class="m">0.05664787</span> <span class="m">0.35410375</span> <span class="m">1.00000000</span> <span class="m">0.2282990</span>
 Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <span class="m">0.22829903</span> <span class="m">1.0000000</span></code></pre></div>
 
-<p>利用多变量回归分析每个变量的$t$统计量和$p$值，可以分析它们对销售额的影响，这等价于$q=1$时分别剔除每个变量的$F$统计量。这揭示了加入变量到模型的<strong>偏效应</strong>（partial effect）<sup id="fnref:partial-effect"><a href="#fn:partial-effect" class="footnote">5</a></sup>。$p$值表明电视和广播的广告与销售额相关，但是没有证据表明在有电视和广播的广告时，报纸广告与销量相关。</p>
+<p>利用多变量回归分析每个变量的$t$统计量和$p$值，可以分析它们对销售额的影响，这等价于$q=1$时分别剔除每个变量的$F$统计量。这揭示了加入变量到模型的<strong>偏效应</strong>（partial effect）<sup id="fnref:partial-effect"><a href="#fn:partial-effect" class="footnote">6</a></sup>。$p$值表明电视和广播的广告与销售额相关，但是没有证据表明在有电视和广播的广告时，报纸广告与销量相关。</p>
 
 <p>为什么有了每个$p$值还需要全局的$F$统计量？如果存在一个很小的$p$值，那么至少有一个变量与响应相关——这个逻辑是有瑕疵的，特别是变量个数$p$很大时。例如：当$p=100$时，$H_0$为真，事实上没有那个变量与响应相关。在这种情况下，仍然大约$5\%$变量的$p$值会小于$0.05$，也就是即使在变量与响应无关的情况下也可能发现大约5个很小的$p$值，几乎可以保证至少存在一个$p$值小于$0.05$。因此，用每个变量对应的$t$统计量和$p$值判断变量与响应是否相关很可能得到错误的结果。但是，$F$统计量不存在这样的问题。如果$H_0$为真，不论变量有多少，只有$5\%$的机会使得$F$统计量会导致存在一个小于$5\%$的$p$值。</p>
 
@@ -897,11 +1137,38 @@ Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <s
 
 <p>好的回归模型要求$F$较大，$R^2$较大，在这种情况下，小的$p$值表明变量与响应相关。</p>
 
-<h2 id="section-3">参考资料</h2>
+<h2 id="section-3">编程实例</h2>
+
+<h3 id="r">R处理因子类型变量</h3>
+
+<p>数据集中<a href="https://courses.edx.org/c4x/MITx/15.071x_2/asset/pisa2009test.csv">pisa2009test.csv</a>和<a href="https://courses.edx.org/c4x/MITx/15.071x_2/asset/pisa2009train.csv">pisa2009train.csv</a>中，<code>raceeth</code>的数据类型是因子，线性模型不能直接使用该数据。<code>raceeth</code>有7种取值<code>White</code>、<code>American Indian/Alaska Native</code>、<code>Asian</code>、<code>Black</code>、<code>Hispanic</code>、<code>More than one race</code>、<code>Native Hawaiian/Other Pacific Islander</code>。R会选择出现频率最高的作为参考，本例中为<code>White</code>，自动将<code>raceeth</code>用6个变量替代，形如<code>raceethAmerican Indian/Alaska Native</code>。如果<code>raceeth</code>原来取值为<code>White</code>，那么新的6个变量取值均为<code>0</code>；如果原来取值为<code>American Indian/Alaska Native</code>，那么新变量<code>raceethAmerican Indian/Alaska Native</code>取值为<code>1</code>，其余5个取值为<code>0</code>。这也是一种<strong>特征变换</strong>策略。</p>
+
+<div class="highlight"><pre><code class="language-R">pisaTrain <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Data/pisa2009train.csv&#39;</span><span class="p">)</span>
+pisaTest <span class="o">&lt;-</span> read.csv<span class="p">(</span><span class="s">&#39;Data/pisa2009test.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># 忽略NA数据</span>
+pisaTrain <span class="o">&lt;-</span> na.omit<span class="p">(</span>pisaTrain<span class="p">)</span>
+pisaTest <span class="o">&lt;-</span> na.omit<span class="p">(</span>pisaTest<span class="p">)</span>
+
+<span class="c1"># White出现频率最高，排在最前面</span>
+pisaTrain<span class="o">$</span>raceeth <span class="o">=</span> relevel<span class="p">(</span>pisaTrain<span class="o">$</span>raceeth<span class="p">,</span> <span class="s">&quot;White&quot;</span><span class="p">)</span>
+pisaTest<span class="o">$</span>raceeth <span class="o">=</span> relevel<span class="p">(</span>pisaTest<span class="o">$</span>raceeth<span class="p">,</span> <span class="s">&quot;White&quot;</span><span class="p">)</span>
+
+<span class="c1"># 带因子（factor）变量的线性回归</span>
+lmScore <span class="o">&lt;-</span> lm<span class="p">(</span>readingScore <span class="o">~</span> <span class="m">.</span><span class="p">,</span> data <span class="o">=</span> pisaTrain<span class="p">)</span></code></pre></div>
+
+<h3 id="step"><code>step</code>逐步回归</h3>
+
+<p>R中的<code>step</code>是<code>MASS</code>包中<code>stepAIC</code>函数的简版，它通过AIC准则进行模型选择，可以得到减缓的模型。</p>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1"># 接上例</span>
+lmScoreSimple <span class="o">&lt;-</span> step<span class="p">(</span>lmScore<span class="p">)</span></code></pre></div>
+
+<h2 id="section-4">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-4">脚注</h3>
+<h3 id="section-5">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -910,6 +1177,9 @@ Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <s
     </li>
     <li id="fn:t-and-p-means">
       <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:tss-computation">
+      <p>在测试集上计算TSS时，$\bar y$是在训练集上计算的。 <a href="#fnref:tss-computation" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:R2-increase">
       <p>The model’s $R^2$ value can never decrease from adding new variables to the model. This is due to the fact that it is always possible to set the coefficient for the new variable to zero in the new model. However, this would be the same as the old model. So the only reason to make the coefficient non-zero is if it improves the $R^2$ value of the model, since linear regression picks the coefficients to minimize the error terms, which is the same as maximizing the $R^2$. <a href="#fnref:R2-increase" class="reversefootnote">&#8617;</a></p>
@@ -1404,11 +1674,34 @@ CPS <span class="o">=</span> <span class="kp">merge</span><span class="p">(</spa
 mvt<span class="o">$</span>Month <span class="o">=</span> <span class="kp">months</span><span class="p">(</span>DateConvert<span class="p">)</span>
 mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">weekdays</span><span class="p">(</span>DateConvert<span class="p">)</span></code></pre></div>
 
-<h2 id="section-12">参考资料</h2>
+<h2 id="section-12">机器学习</h2>
+
+<h3 id="section-13">数据集处理</h3>
+
+<ul>
+  <li><code>sample.split</code>：［caTools］将数据分为训练集合测试集；</li>
+  <li><code>complete(mice())</code>：[mice]数据补齐；</li>
+  <li>[CROC]：ROC曲线。</li>
+</ul>
+
+<h3 id="section-14">回归分析</h3>
+
+<ul>
+  <li><code>lm</code>：线性回归；</li>
+  <li><code>glm</code>：logistic回归。</li>
+</ul>
+
+<h3 id="section-15">模型优化</h3>
+
+<ul>
+  <li><code>step</code>：机遇AIC的模型选择。</li>
+</ul>
+
+<h2 id="section-16">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-13">脚注</h3>
+<h3 id="section-17">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -1810,229 +2103,6 @@ f(x,y)={x+\sigma(y)\over\sigma(x)+(x+y)^2}，
   <ol>
     <li id="fn:v-equals-w">
       <p>$\mathbf v_n$和$\mathbf w_m$实际上是对称的（等价的）。 <a href="#fnref:v-equals-w" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
-]]&gt;</content:encoded>
-    </item>
-    
-    <item>
-      <title>矩阵分解</title>
-      <link href="http://qianjiye.de/2015/02/matrix-factorization" />
-      <pubdate>2015-02-12T18:33:54+08:00</pubdate>
-      <author>Jiye Qian</author>
-      <guid>http://qianjiye.de/2015/02/matrix-factorization</guid>
-      <content:encoded>&lt;![CDATA[<h2 id="section">线性网络</h2>
-
-<p>对于推荐系统（recommender system）数据集，用户对第$m$部电影的评分表示为
-\[
-\mathcal D_m=
-\left\{\left(
-\tilde x_n=(n), y_n=r_{nm}
-\right)
-\mbox{ user }n\mbox{ rated movie }m
-\right\}，
-\]
-$\tilde x_n=(n)$表示抽象的（abstract）特征，代表用户编号（ID），不代表任何数值上的意义，这类的特征称为<strong>类别特征</strong>（categorical feature）。</p>
-
-<p>常见的类别特征有ID、血型、程序语言……然而，许多机器学习算法都对数值特征友好，比如线性模型、扩展的（extended）线性模型（神经网络等）……决策树可以处理类别特征。若要将类别特征用于对数值特征友好的模型，需要将类别特征转换或编码（transform/encode）为数值特征。二值编码（binary vector encoding）是比较简单的征编码方式，对于血型有
-\[
-A=[1\;0\;0\;0]^\top,\quad
-B=[0\;1\;0\;0]^\top,\quad
-AB=[0\;0\;1\;0]^\top,\quad
-O=[0\;0\;0\;1]^\top。
-\]
-编码之后第$m$部电影的的数据记为
-\[
-\mathcal D_m=
-\left\{\left(
-\tilde x_n=\mbox{BinaryVectorEncoding}(n), y_n=r_{nm}
-\right)
-\mbox{ user }n\mbox{ rated movie }m
-\right\}，
-\]
-所有用户的数据可以统一记为
-\[
-\mathcal D=
-\left\{\left(
-\tilde x_n=\mbox{BinaryVectorEncoding}(n), 
-y_n=\left[r_{n1}\;?\;?\;r_{n4}\;r_{n5}\;\ldots\;r_{nM}\right]^\top
-\right)
-\right\}，
-\]
-“$?$”表示用户没有对电影做出评价。若要学到每个用户的爱好，需要先学到每个用户的特征（年龄、电影类型的偏好等）。</p>
-
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png"><img src="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png" alt="利用神经网络提取特征" /></a><div class="caption">图 1:  利用神经网络提取特征 [<a href="/assets/images/2015-02-12-matrix-factorization-NN-for-features.png">PNG</a>]</div></div></div>
-
-<p>利用不含$x_0^{(\ell)}$神经元<sup id="fnref:why-no-1-neuron"><a href="#fn:why-no-1-neuron" class="footnote">1</a></sup>的$N-\tilde d-M$神经网络（自编码器）提取特征，如上图所示，$\mathbf x$是只有一个非0元的二值向量。中间的$\tanh$转换必要么？</p>
-
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png"><img src="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png" alt="采用线性神经元提取特征" /></a><div class="caption">图 2:  采用线性神经元提取特征 [<a href="/assets/images/2015-02-12-matrix-factorization-linear-neuron-for-features.png">PNG</a>]</div></div></div>
-
-<p>对于$\mathbf x$，只会有一个非0分量进入$\tanh$层的神经元，即使不进行$\tanh$转换（采用线性模型，如上图所示）也能找到特征的恰当描述方式，这样的神经网络称为<strong>线性网络</strong>（linear network）。第一层用$N\times\tilde d$的矩阵$\mathbf V^\top$表示，第二层用$\tilde d\times M$的矩阵$\mathbf W$表示，线性网络可以表示为
-\begin{equation}
-h(\mathbf x)=\mathbf W^\top\mathbf V\mathbf x。
-\end{equation}
-对每个用户而言，由于$\mathbf x_n$只有一个元素为1，相当于抽取矩阵的一列
-\begin{equation*}
-h(\mathbf x_n)=\mathbf W^\top\mathbf v_n，
-\end{equation*}
-$\mathbf v_n$表示$\mathbf V$的第$n$列，相当于对第$n$个用户进行了特征转换。</p>
-
-<p>对于推荐系统，线性网络学习$\mathbf V$和$\mathbf W$。</p>
-
-<h2 id="section-1">矩阵分解</h2>
-
-<p>令$\Phi(\mathbf x)=\mathbf V\mathbf x$，第$m$部电影的评分只是线性模型$h_m(\mathbf x)=\mathbf w_m^\top\Phi(\mathbf x)$。对于$\mathcal D_m$，期望有
-\[
-r_{nm}=y_n\approx\mathbf w_m^\top\mathbf v_n，
-\]
-需要最小化目标函数
-\begin{equation}
-E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
-={1\over \sum_{m=1}^M\lvert\mathcal D_m\rvert}\sum_{\mbox{user }n\mbox{ rated movie }m}
-\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2，
-\end{equation}
-同时学到转换方式$\left\{\mathbf v_n\right\}$和线性模型$\left\{\mathbf w_m\right\}$。</p>
-
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png"><img src="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png" alt="矩阵分解的形式" /></a><div class="caption">图 3:  矩阵分解的形式 [<a href="/assets/images/2015-02-12-matrix-factorization-matrix-factorization.png">PNG</a>]</div></div></div>
-
-<p>当$r_{nm}=\mathbf w_m^\top\mathbf v_n=\mathbf v_n^\top\mathbf w_m$时，所有评价可记为矩阵形式$\mathbf R\approx\mathbf V^\top\mathbf W$，将含有缺失值的$\mathbf R$矩阵分解为两个矩阵的乘积，如上图所示，就得到了用户的特征以及特征的线性组合方式。</p>
-
-<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-02-12-matrix-factorization-recommender.png"><img src="/assets/images/2015-02-12-matrix-factorization-recommender.png" alt="推荐系统" /></a><div class="caption">图 4:  推荐系统 [<a href="/assets/images/2015-02-12-matrix-factorization-recommender.png">PNG</a>]</div></div></div>
-
-<p>通过用户的评分$\mathbf R$，学到了$\mathbf v_n$表示用户的特征（喜好），也学到了$\mathbf w_m$表电影具备哪些元素，如上图所示。当有新用户$N+1$时，$\mathbf v_{N+1}$初始化为$\mathbf v_{N+1}={1\over N}\sum_{n=1}^N\mathbf v_n$，新用户$N+1$的评分$r_{(N+1)m}$最高的电影是有最高平均评分的电影。</p>
-
-<p>类似的矩阵分解模型可以用于提取其它抽象特征。线性自编码器可看作一种特殊的矩阵分解方法：</p>
-
-<table>
-  <thead>
-    <tr>
-      <th> </th>
-      <th><a href="/2015/02/deep-learning/#linear-autoencoder">线性自编码器</a> $\mathbf X\approx\mathbf W\left(\mathbf W^\top\mathbf X\right)$</th>
-      <th>矩阵分解 $\mathbf R\approx \mathbf V^\top\mathbf W$</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>motivation</td>
-      <td>特殊的$d-\tilde d-d$的线性神经网络</td>
-      <td>$N-\tilde d-M$的线性神经网络</td>
-    </tr>
-    <tr>
-      <td>误差度量</td>
-      <td>所有数据$x_{ni}$上的平方误差</td>
-      <td>已知数据$r_{nm}$上的平方误差</td>
-    </tr>
-    <tr>
-      <td>求解方法</td>
-      <td>$\mathbf X^\top\mathbf X$特征向量上的全局最优解</td>
-      <td>交替最小二乘法求取的局部最优解</td>
-    </tr>
-    <tr>
-      <td>功能</td>
-      <td>获取数据低维特征表示</td>
-      <td>提取隐含特征</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="section-2">交替最小二乘法</h2>
-
-<p>通过最优化
-\[
-\min_{\mathbf W,\mathbf V}E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
-\propto\sum_{m=1}^M\left(
-\sum_{(\mathbf x_n,r_{nm})\in\mathcal D_m}
-\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2
-\right)，
-\]
-学到参数矩阵$\mathbf W,\mathbf V$。同时学习两组变量很困难，可以采取类似<a href="/2015/02/radial-basis-function-network/#k-means">k均值算法</a>的<strong>交替最小二乘法</strong>（alternating least squares algorithm）：</p>
-
-<ul>
-  <li>当固定$\mathbf v_n$时，相当于在第$m$部电影的数据$\mathcal D_m$上最小化$E_{in}$得到$\mathbf w_m$，通过对每部电影的线性回归（不含$w_0$）实现；</li>
-  <li>由于用户特征向量和电影特征向量的对称性（二者地位一样），当固定$\mathbf w_m$时，相当于对每个用户的线性回归（不含$v_0$）。</li>
-</ul>
-
-<blockquote>
-  <h4 id="section-3">交替最小二乘法</h4>
-  <hr />
-  <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$；</p>
-
-  <p>交替最小化$E_{in}$直到收敛：</p>
-
-  <ul>
-    <li>最优化$\mathbf w_1,\mathbf w_2,\ldots,\mathbf w_M$：对电影$m$在数据集$\{(\mathbf v_n,r_{nm})\}$做线性回归；</li>
-    <li>最优化$\mathbf v_1,\mathbf v_2,\ldots,\mathbf v_N$：对用户$n$在数据集$\{(\mathbf w_m,r_{nm})\}$做线性回归。</li>
-  </ul>
-</blockquote>
-
-<p>每次交替最小化都会使$E_{in}$减小，收敛是有保障的。采用交替最小二乘法，类似于用户和电影之间的“探戈”（tango）。</p>
-
-<h2 id="section-4">随机梯度下降法</h2>
-
-<p>随机梯度下降法（SGD，stochastic gradient descent）容易实现，每轮迭代高效，容易扩展到平方误差之外的其它误差度量方式。</p>
-
-<p>单个数据产生的误差为
-\[
-err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
-=\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)^2，
-\]
-那么可得偏微分
-\[
-\begin{aligned}
-\nabla_{\mathbf v_n} &amp;err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
-=-2\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)\mathbf w_m\\
-\nabla_{\mathbf w_m} &amp;err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
-=-2\left(r_{nm}-\mathbf w_m^\top\mathbf v_n\right)\mathbf v_n。
-\end{aligned}
-\]
-每次跟新量$\propto -(\mbox{residual})(\mbox{the other feature vector})$，余数（residual）为$r_{nm}-\mathbf w_m^T\mathbf v_n$，也就是用余数倍另一个量更新当前量。</p>
-
-<blockquote>
-  <h4 id="section-5">基于随机梯度下降法的矩阵分解</h4>
-  <hr />
-  <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$<sup id="fnref:all-zeros"><a href="#fn:all-zeros" class="footnote">2</a></sup>；</p>
-
-  <p>对$t=0,1,\ldots,T$迭代：</p>
-
-  <ol>
-    <li>对所有已知的$r_{nm}$，随机抽取$(n,m)$；</li>
-    <li>计算余数$\tilde r_{nm}=r_{nm}-\mathbf w_m^T\mathbf v_n$；</li>
-    <li>随机梯度更新：
-\[
-\begin{aligned}
-\mathbf v_n^{new}&amp;\leftarrow\mathbf v_n^{old}+\eta\tilde r_{nm}\mathbf w_m^{old}\\
-\mathbf w_m^{new}&amp;\leftarrow\mathbf w_m^{old}+\eta\tilde r_{nm}\mathbf v_n^{old}。
-\end{aligned}
-\]</li>
-  </ol>
-</blockquote>
-
-<p>随机梯度下降法在大规模矩阵分解中很常用。</p>
-
-<blockquote>
-  <h4 id="kddcup-2011-track-1-world-champion-solution-by-ntu">KDDCup 2011 Track 1: World Champion Solution by NTU</h4>
-  <hr />
-  <p><strong>问题</strong>：训练数据时间上要早于测试数据。也就是训练和测试数据分布不同，有偏采样（sampling bias）。</p>
-
-  <p><strong>对策</strong>：强化时间晚的数据。SGD在最后$T’$轮迭代只选用感兴趣的$T’$个数据。</p>
-
-  <p><strong>结果</strong>：consistent improvements of test performance。</p>
-</blockquote>
-
-<h2 id="section-6">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-7">脚注</h3>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:why-no-1-neuron">
-      <p>让网络看上去简单些而已，加入$x_0^{(\ell)}$可以得到一个稍微有些不同的模型。 <a href="#fnref:why-no-1-neuron" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:all-zeros">
-      <p>若都初始化为0，$\{\mathbf w_m\}$和$\{\mathbf v_n\}$始终为0，$E_{in}$永远也不会减少。 <a href="#fnref:all-zeros" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>

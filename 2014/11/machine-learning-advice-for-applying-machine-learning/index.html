@@ -250,6 +250,24 @@ J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\t
 
 <p>根据应用的具体需求，可以在准确率和召回率之间折中。若采用Logistic回归分类器，调高分类的阈值，可以提升该类别分类的准确率和降低召回率。</p>
 
+<p>Sensitivity和Specificity定义为</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\mbox{Sensitivity} &amp;= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}\\
+\mbox{Specificity} &amp;= \frac{\mbox{true negatives}}{\mbox{true negatives + false positives}}，
+\end{aligned}
+\end{equation}</p>
+
+<p>那么有</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\mbox{False Negative Error Rate} &amp;= 1 -  \mbox{Sensitivity}\\
+\mbox{False Positive Error Rate} &amp;= 1 -  \mbox{Specificity}。
+\end{aligned}
+\end{equation}</p>
+
 <h3 id="ff1-score">$F$/$F_1$ Score</h3>
 
 <p>采用准确率和召回率可以合理评估分类器性能，但是两个数值不如单数值的评估直接明了。$F$/$F_1$ Score是基于准确率和召回率的单数值评估指标，</p>
