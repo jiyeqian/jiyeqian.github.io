@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>Jiye Qian - Take Me Home, Country Roads
+    <title>Jiye Qian - 站内搜索
     </title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
@@ -76,7 +76,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>Take Me Home, Country Roads</h1>
+        <h1>站内搜索</h1>
         </header>
         <nav id="real_nav">
         
@@ -97,26 +97,12 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         </nav>
         <article class="content">
         <section class="post">
-<script>
-  var posts =
-{
-                                                                     
-};
+<form>
+<input type="text" id="st-search-input" class="st-search-input" />
+</form>
 
-var path = location.pathname;
-if(path.charAt(path.length - 1) == '/') path = path.substring(0, path.length - 1);
-var name = path.substring(path.lastIndexOf('/') + 1);
-var url = posts[name];
-if (url)
-{
-  document.write("您访问的文章已经转移到新网址，正在为您转跳到 <a href=" + url + ">" + url + "</a>");
-  location.href = url;
-}
-else
-{
-  document.write("文章或附件未找到，请转到 <a href='/categories'>分类</a> 或返回 <a href='/'>首页</a>。如有问题请联系 <a href='mailto:jyq080601@gmail.com'>jyq080601@gmail.com</a><iframe scrolling='no' frameborder='0' src='http://yibo.iyiyun.com/js/yibo404/key/7349' width='640' height='462' style='display:block;'></iframe>");
-}
-</script>
+<div id="st-results-container"></div>
+
 
 </section>
 
