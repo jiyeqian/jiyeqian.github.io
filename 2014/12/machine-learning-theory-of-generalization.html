@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：泛化理论</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：泛化理论</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-12-20">2014-12-20</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_tg_2014">[1]</a>。</p>
+
+<p>泛化是指在训练集上得到的模型可以推广到整个数据集，也就是$E_{out}\approx E_{in}$，就是要使坏事$\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon$发生的概率足够小。</p>
+
+<p>Generelization: $E_{out}\approx E_{in}$ possible, if $m_{\mathcal H}(N)$ breaks somewhere and $N$ large enough.</p>
+
+<h2 id="mmathcal-hn">最大可能的$m_{\mathcal H}(N)$</h2>
+
+<p>如何通过断点$k$限定$m_{\mathcal H}(N)$的值？</p>
+
+<p>由前文可得，正射线的断点是$2$，$m_{\mathcal H}(2)＝3$；正区间的断点是$3$，$m_{\mathcal H}(3)＝7$；2维感知器的断点是$4$，$m_{\mathcal H}(4)＝14$。</p>
+
+<p>如果最小断点$k=2$，在$N=1,2,3,\ldots$的情况下，对任意的$\mathcal H$而言，可能得到的最大$m_{\mathcal H}(N)$是多少呢？</p>
+
+<ul>
+  <li>若$N=1$，只有1个点，永远不存在2个点能被打碎的情况，因此$m_{\mathcal H}(1)=2^1=2$；</li>
+  <li>若$N=2$，由于最小断点$k=2$，不能打碎$2$个点，因此$m_{\mathcal H}(2)&lt;2^2=4$，最多为$3$；</li>
+  <li>若$N=3$，$3$个点中任取$2$个点都不能被打碎时，最多可能的二分法有多少种？</li>
+  <li>……</li>
+</ul>
+
+<p>当$N=3,k=2$时，如果$m_{\mathcal H}(3)＝3$，可以肯定从3个点中任意抽取2个都不会被打碎，因为打碎2个点至少要4种二分类方法，因此$m_{\mathcal H}(3)$最少为3，可以从$4$开始考察。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-max-mH(N).png"><img src="/assets/images/2014-12-19-machine-learning-theory-of-generalization-max-mH(N).png" alt="4个二分类的情况" /></a><div class="caption">图 1:  4个二分类的情况 [<a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-max-mH(N).png">PNG</a>]</div></div></div>
+
+<p>对于$4$个二分类的情况，如上图所示。上图左的二分类使得$\mathbf x_2$和$\mathbf x_3$被打碎了；上图右修改了最后一种分类方法，任意两个点都没有被打碎，因此$m_{\mathcal H}(3)$最少为4。</p>
+
+<p>还需考察$m_{\mathcal H}(3)=5$的情况。结果表明，$m_{\mathcal H}(3)=5$时总会让其中的$2$个点被打碎。因此，若$N=3,k=2$，最多可能的二分法只有$4$种。</p>
+
+<h2 id="section">上限函数</h2>
+
+<p>期望对$m_{\mathcal H}(N)$进一步进行限定，
+\[
+m_{\mathcal H}(N)\leq\mbox{maximum possible }m_{\mathcal H}(N)\mbox{ given }k\leq\mbox{poly}(N)。
+\]</p>
+
+<p>当断点为$k$时，将最大可能的$m_{\mathcal H}(N)$定义为上限函数（bounding function）$B(N,k)$。该上限函数和假设集$\mathcal H$无关，不受感知器等特定分类器的约束，它的取值是所有$\mathcal H$中的最大值。</p>
+
+<p>$m_{\mathcal H}(N)$受假设集（分类器）$\mathcal H$和样本点数目$N$的约束；$B(N,k)$受样本点数目$N$和断点$k$约束，而与假设集$\mathcal H$无关。但是，如果知道假设集$\mathcal H$的断点$k$，就可以用$B(N,k)$对$m_{\mathcal H}(N)$进一步约束，$m_{\mathcal H}(N)\leq B(N,k)$。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-B(N,k).png"><img src="/assets/images/2014-12-19-machine-learning-theory-of-generalization-B(N,k).png" alt="上限函数计算表" /></a><div class="caption">图 2:  上限函数计算表 [<a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-B(N,k).png">PNG</a>]</div></div></div>
+
+<p>当$N\leq k$时$B(N,k)$的计算公式容易推导，当$N&gt;k$时$B(N,k)$的计算比较复杂，
+\begin{equation}
+B(N,k)=
+\left\{
+\begin{aligned}
+&amp; 2^N &amp; N&lt;k \\
+&amp; 2^N-1 &amp; N=k \\
+&amp; \sum_{i=1}^{k-1}\binom{N}{i} &amp; N&gt;k
+\end{aligned}
+\right. 。
+\end{equation}</p>
+
+<h2 id="vc">VC界</h2>
+<p>通过
+\[
+P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right]\leq 2m_{\mathcal H}(N)\exp\left(-2\epsilon^2N\right)
+\]
+证明VC界（Vapnik-Chervonenkis bound）
+\begin{equation}
+P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right]\leq 4m_{\mathcal H}(2N)\exp\left(-{1\over 8}\epsilon^2N\right)
+\label{eq:vc-bound}
+\end{equation}
+分三步，对应着3个常数的变化。</p>
+
+<h4 id="eineout">第一步：用$E’_{in}$替换$E_{out}$</h4>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-Eout_Ein.png"><img src="/assets/images/2014-12-19-machine-learning-theory-of-generalization-Eout_Ein.png" alt="替换掉out-sample误差" /></a><div class="caption">图 3:  替换掉out-sample误差 [<a href="/assets/images/2014-12-19-machine-learning-theory-of-generalization-Eout_Ein.png">PNG</a>]</div></div></div>
+
+<p>另抽取$N$个点的数据集$\mathcal D’ $计算$E’_{in}$来估计$E_{out}$的值，$E’_{in}$和$E_{in}$的取值如上图，以$E_{out}$为中心分布。${1\over 2}P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right]$对应着上图粉色区域的面积（取$1\over 2$是忽略对称的左半区域），在满足该条件下，上图淡绿区域对应着$P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;\epsilon\right]$，于是显然有</p>
+
+<p>\[
+\begin{aligned}
+{1\over 2}P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right] 
+\leq &amp; P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;\epsilon\right]  \\
+\leq &amp; P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;{\epsilon\over 2}\right] 。
+\end{aligned}
+\]</p>
+
+<h4 id="section-1">第二步：利用成长函数约束二分类情况的数量</h4>
+
+<p>上一步将问题转化为只考虑$N$个点数据集$\mathcal D $和$N$个点数据集$\mathcal D’ $的问题，最多有$m_{\mathcal H}(2N)$种二分类情况，可进一步得到坏事儿发生概率的上界</p>
+
+<p>\[
+\begin{aligned}
+P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right] 
+\leq &amp; 2P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;{\epsilon\over 2}\right]  \\
+\leq &amp; 2m_{\mathcal H}(2N)P\left[\mbox{fixed } h\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;{\epsilon\over 2}\right] 。
+\end{aligned}
+\]</p>
+
+<h4 id="hoeffding-without-replacement">第三步：利用Hoeffding without Replacement约束</h4>
+
+<p>易知$\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;{\epsilon\over 2}$和$\left\lvert E_{in}(h)-\frac{E_{in}(h)+E’_{in}(h)}{2}\right\rvert&gt;{\epsilon\over 4}$等价，$\frac{E_{in}(h)+E’_{in}(h)}{2}$可以认为是out-sample数据的误差估计，所以直接利用Hoeffding可得</p>
+
+<p>\[
+\begin{aligned}
+P\left[\exists h\in\mathcal H\mbox{ s.t. }\left\lvert E_{in}(h)-E_{out}(h)\right\rvert&gt;\epsilon\right] \leq &amp; 2m_{\mathcal H}(2N)P\left[\mbox{fixed } h\mbox{ s.t. }\left\lvert E_{in}(h)-E’_{in}(h)\right\rvert&gt;{\epsilon\over 2}\right] \\
+= &amp; 2m_{\mathcal H}(2N)P\left[\mbox{fixed } h\mbox{ s.t. }\left\lvert E_{in}(h)-\frac{E_{in}(h)+E’_{in}(h)}{2}\right\rvert&gt;{\epsilon\over 4}\right] \\
+\leq &amp; 2m_{\mathcal H}(2N)\cdot 2\exp\left(-2\left(\epsilon\over 4\right)^2N\right)\\
+= &amp; 4m_{\mathcal H}(2N)\exp\left(-{1\over 8}\epsilon^2N\right)。
+\end{aligned}
+\]</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_tg_2014">[1]H.-T. Lin, “Lecture 6: Theory of Generalization.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li></ol>
+
+<h3 id="section-3">脚注</h3>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/12/machine-learning-training-versus-testing" class="pageNav" style="float:left"   >上一篇：机器学习：训练与测试 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/machine-learning-the-vc-dimension" class="pageNav" style="float:right"   >下一篇：机器学习：VC维 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-theory-of-generalization" 	data-url="http://qianjiye.de/2014/12/machine-learning-theory-of-generalization" data-title="机器学习：泛化理论">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-training-versus-testing'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-the-vc-dimension'; --1> -->
+<!--         url = '/2014/12/machine-learning-the-vc-dimension'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-theory-of-generalization/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>CSS Essential</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>CSS Essential</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-10-25">2014-10-25</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<blockquote>
+  <h4 id="what-is-css">What is CSS?</h4>
+  <hr />
+  <p>The basic goal of the Cascading Stylesheet (CSS) language is to allow a browser engine to paint elements of the page with specific features, like colors, positioning, or decorations.</p>
+
+  <p>CSS主要作用是设定元素（通常称为盒子）的属性，并将设定这些元素在页面的位置关系。CSS解决的主要问题是：</p>
+
+  <ol>
+    <li>如何选择指定的元素？选择器（Selector）</li>
+    <li>如何设定元素的属性？盒子模型（Box Model）</li>
+    <li>如何设置元素间的位置关系？定位机制（Positioning Scheme）</li>
+  </ol>
+</blockquote>
+
+<p>本文主要介绍CSS的基本用法，包括如何使用选择器，如何设定样式以及如何布局定位，这些涉及到选择器、盒子模型、普通流、可视化格式模型和块格式化环境等核心概念，理解这些核心概念是熟练运用CSS的基础。</p>
+
+<p>若要详细了解相关内容，可参考文中链接，以及<a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN</a>、<a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3</a>和<a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school</a>关于CSS的详细介绍。</p>
+
+<h2 id="section">基础知识</h2>
+
+<h3 id="section-1">基本语法</h3>
+
+<p>CCS语法元素主要由选择器，属性和值构成，通过规则给选择器范围内的属性赋值。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset.png" alt="CSS语法" />
+<div class="caption">CSS语法（规则）</div>
+</div>
+</div>
+
+<h4 id="section-2">各部分元素含义：</h4>
+
+<ul>
+  <li><code>div p</code>：属性选择器</li>
+  <li><code>#id</code>：id选择器</li>
+  <li><code>first_line</code>：伪元素（pseudo-element）</li>
+  <li><code>background-color</code>：属性（property）</li>
+  <li><code>red</code>：值（value）</li>
+</ul>
+
+<h3 id="section-3">基本选择器</h3>
+
+<p>选择器相当于作用域规则，选择属性设置起作用的范围。另一个相关概念是<a href="#block-formatting-context">块格式化环境</a>。</p>
+
+<h4 id="section-4">常用选择器</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>*</td>
+      <td>通用选择器，匹配任何元素。</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>标签选择器，匹配所有使用E标签的元素。</td>
+    </tr>
+    <tr>
+      <td>.info</td>
+      <td>class选择器，匹配所有class属性中包含info的元素。</td>
+    </tr>
+    <tr>
+      <td>#footer</td>
+      <td>id选择器，匹配所有id属性等于footer的元素。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>id选择器和class选择器的区别：</strong></p>
+
+<ul>
+  <li>在CSS文件中，id加前缀<code>#</code>，class用<code>.</code>；</li>
+  <li>同一个页面id只可使用一次，class可多次引用：id是一个标签，用于区分不同的结构和内容，就象名字；class是一个样式，可套在任何结构和内容上，就象衣服，同一内容也可以套多个class的样式；</li>
+  <li>从概念上说不一样：id是先找到结构/内容，再给它定义样式；class是先定义好一种样式，再套给多个结构/内容。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-html"><span class="nt">&lt;style&gt;</span>
+<span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
+<span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span> <span class="na">id=</span><span class="s">&quot;lavender&quot;</span><span class="nt">&gt;</span>The air was fragrant with lavender.<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<h4 id="section-5">多选择器组合</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>E,F</td>
+      <td>多元素选择器，同时匹配所有E元素或F元素，E和F之间用逗号分隔。</td>
+    </tr>
+    <tr>
+      <td>E F</td>
+      <td>后代元素选择器，匹配所有属于E元素后代的F元素，E和F之间用空格分隔。</td>
+    </tr>
+    <tr>
+      <td>E &gt; F</td>
+      <td>子元素选择器，匹配所有E元素的子元素F。</td>
+    </tr>
+    <tr>
+      <td>E + F</td>
+      <td>毗邻元素选择器，匹配所有紧随E元素之后的同级元素F。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>如果两个选择器紧连，表示同时满足两个条件的内容。</p>
+
+<div class="highlight"><pre><code class="language-html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>上例中，<code>div.emphasis</code>表示套用<code>.emphasis</code>样式的<code>div</code>标签。</p>
+
+<h3 id="section-6">优先级别</h3>
+
+<p>基本规则是<code>行内样式 &gt; id样式 &gt; class样式 &gt; 标签名样式</code>，也就是，选择越具体优先级越高。如下元素：</p>
+
+<div class="highlight"><pre><code class="language-css"><span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;ID&quot;</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;CLASS&quot;</span> <span class="nt">style</span><span class="o">=</span><span class="s2">&quot;color:black;&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">div</span><span class="o">&gt;</span></code></pre></div>
+
+<p>作用在其上样式的优先级从低到高是<code>div &lt; .CLASS &lt; div.CLASS &lt; #ID &lt; div#ID &lt; #ID.CLASS &lt; div#ID.CLASS</code>。</p>
+
+<p><strong>继承与覆盖：</strong></p>
+
+<p>子元素没有设置的属性会从父元素继承而来。同一元素的同一属性如有多次设置，优先级高的覆盖优先级低的；若是同一优先级，后设设置覆盖前设置。</p>
+
+<div class="highlight"><pre><code class="language-html"><span class="nt">&lt;style&gt;</span>
+<span class="nt">div</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1em</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.content</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.2em</span><span class="p">;</span> <span class="k">line-height</span><span class="o">:</span> <span class="m">200%</span><span class="p">}</span>
+<span class="nt">div</span><span class="nc">.emphasis</span> <span class="p">{</span><span class="k">font-size</span><span class="o">:</span> <span class="m">1.4em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">}</span>
+<span class="nt">div</span><span class="nf">#lily</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span> <span class="nb">black</span><span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content emphasis&quot;</span> <span class="na">id=</span><span class="s">&quot;lily&quot;</span><span class="nt">&gt;</span>
+The flower of lily of the valley is like tinkler, be born at spending cauline top to show raceme.
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;water_lily&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>上例中，<code>div</code>设定的<code>font-size</code>优先级太低，不会生效；<code>.emphasis</code>覆盖<code>.content</code>的<code>font-size</code>，<code>#lily</code>的<code>font-size</code>最终为<code>1.4em</code>；<code>#water_lily</code>继承了<code>#lily</code>的所有属性。</p>
+
+<h3 id="section-7">属性赋值</h3>
+
+<p>确定属性最终取值要<a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">经历3步</a>（<a href="http://www.w3.org/TR/CSS2/cascade.html#value-stages" title="Specified, computed, and actual values">CSS2经历4步</a>）：首先获取CSS样式中的指定值（specified value），然后如有必要则转换为绝对值或计算值（computed value），最后根据局部环境的约束再转换为实际值（actual value）。</p>
+
+<p>指定值可能是绝对值（例如：<code>2mm</code>、<code>red</code>等），也可能是相对值（例如：<code>auto</code>、<code>1.2em</code>、<code>12%</code>等）。对于绝对值而言不需要计算即可获得计算值，相对值需要再借助参考值计算获得计算值。如果属性没有指定值，它的取值继承父元素。</p>
+
+<p>在特定的客户端环境，可能还需要将计算值转换为实际值，比如可能需要将小数的边界近似取整。</p>
+
+<blockquote>
+  <h4 id="section-8">常用的赋值规则</h4>
+  <hr />
+  <ol>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" title="&lt;color&gt;">颜色</a>赋值的三种形式：关键字、RGB空间、HSL空间；</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/length" title="&lt;length&gt;">长度</a>赋值的两种形式：以<code>em</code>、<code>ex</code>、<code>ch</code>、<code>rem</code>、<code>vw</code>、<code>vh</code>、<code>vmin</code>、<code>vmax</code>为单位的相对赋值，以<code>cm</code>、<code>mm</code>、<code>in</code>、<code>pt</code>、<code>pc</code>、<code>px</code>为单位的绝对赋值；</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">百分数</a>赋值：<code>width</code>、<code>margin</code>和<code>padding</code>等接受百分数赋值。</li>
+  </ol>
+
+  <p>示例：</p>
+
+  <p><code>em</code>等单位和百分数都是相对赋值，需要继承父属性的参考值。<code>em</code>是针对字体大小的值，$w$ <code>em</code> = $w$ $\times$ <code>font-size</code>。</p>
+
+  <div class="highlight"><pre><code class="language-html"><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;font-size:18px;&quot;</span><span class="nt">&gt;</span>
+ Full size text (18px)
+ <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:50%;&quot;</span><span class="nt">&gt;</span>50%<span class="nt">&lt;/span&gt;</span>
+ <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;font-size:200%;&quot;</span><span class="nt">&gt;</span>200%<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+  <p>上述代码中，<code>50%</code>从父属性继承而来的值是<code>18px</code>，然后再乘以<code>50%</code>（等价于<code>0.5em</code>），实际大小是<code>9px</code>（<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/percentage" title="&lt;percentage&gt;">查看效果</a>）。</p>
+</blockquote>
+
+<p>当一个属性可以有多个方向可设置值时，存在形如以下简写的赋值规则：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">位置</th>
+      <th style="text-align: left">赋值规则</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border1.png" alt="1" /></td>
+      <td style="text-align: left"><code>border-width: 1em</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border2.png" alt="2" /></td>
+      <td style="text-align: left"><code>border-width: 1em 2em</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border3.png" alt="3" /></td>
+      <td style="text-align: left"><code>border-width: 1em 2em 3em</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="/assets/images/2014-10-25-css-essential_border4.png" alt="4" /></td>
+      <td style="text-align: left"><code>border-width: 1em 2em 3em 4em</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-9">盒子模型</h2>
+
+<p>CSS将HTML的元素（可认为是标签）定义为适合CSS处理的矩形盒（rectangular box）。<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model">盒子模型（box model）</a>描述了这些矩形盒的尺寸、属性（颜色、背景和边框等）和位置特性，浏览器根据盒子模型实现页面的渲染与显示。</p>
+
+<p>按照HTML的元素是否新开一行可分为块（block-level）元素和内联（inline）元素，这一特性对设置元素的布局至关重要。</p>
+
+<blockquote>
+  <h4 id="htmlblock-levelinline">HTML的块（block-level）元素和内联（inline）元素</h4>
+  <hr />
+  <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements">块元素</a>充满父元素的所有空间，每个块元素都会另起一个新行显示。块元素之内还可以包含块元素和行内元素。HTML定义的块元素包括<code>&lt;div&gt;, &lt;span&gt;, &lt;p&gt;</code>等。<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elemente">内联元素</a>只占据标签包含内容的空间，不会另起新行显示。内联元素通常只包含内联元素。HTML定义的内联元素包括<code>&lt;span&gt;, &lt;code&gt;, &lt;textarea&gt;</code>等。</p>
+
+  <p><img src="/assets/images/2014-10-25-css-essential_css_box-intro.png" alt="d" /></p>
+
+  <p>上例中，<code>&lt;p&gt;</code>是块元素，新起一行显示，并且撑满了行，<code>&lt;em&gt;</code>是内联元素，紧接上一元素显示。</p>
+</blockquote>
+
+<p>CSS的<code>display</code>属性可设定HTML元素生成盒子的类型是块还是内联，常用的属性值有<code>block, inline, inline-block, none</code>。将<code>display</code>属性设为<code>block</code>，可将内联元素转为块元素。盒子模型有四类边：margin edge，border edge，padding edge，content edge。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_box_model.gif" alt="CSS语法" />
+<div class="caption">盒子模型的四类边</div>
+</div>
+</div>
+
+<p><code>.box {with: ...; height: ...}</code>设置的是只是<code>Content</code>尺寸。相关边的的设置方法是：</p>
+
+<div class="highlight"><pre><code class="language-css"><span class="nc">.box</span> <span class="p">{</span>
+    <span class="k">width</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="o">...</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>内联元素设置属性<code>height</code>和<code>width</code>是没有用的，致使它变宽变大的原因是内部元素的宽高<code>+padding</code>。</p>
+
+<p>满足一定条件俩个盒子的外边届（margin）会叠加，使得估计这俩个盒子的位置关系变得复杂。</p>
+
+<blockquote>
+  <h4 id="margin-collapsing">外边叠加（margin collapsing）</h4>
+  <hr />
+  <p>上边距（top margin）和下边距（bottom margin）有时会叠加，叠加后两者最大值作为两者间的边距。发生外边叠加的3种情况（<a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html#CSS 外边距合并">图解</a>）<sup id="fnref:ccs_master"><a href="#fn:ccs_master" class="footnote">1</a></sup>：</p>
+
+  <ol>
+    <li>兄弟（Adjacent siblings）块：相邻块中，兄的下边界和弟的上边界会叠加；</li>
+    <li>父与首尾孩子（Parent and first/last child）块：父块和首个孩子的margin-top之间不被任何东西分隔，则它们会叠加；父块和最后孩子的margin-bottom之间不被任何东西分隔，则它们会叠加；</li>
+    <li>空块（Empty blocks）：不存在border、padding、inline content、height或min-height分隔块的margin-top和margin-bottom，上下边界会叠加。</li>
+  </ol>
+
+  <p>注意事项：</p>
+
+  <ul>
+    <li>当与负边界叠加时，叠加后的边界是最大正边界和最小边界之和；</li>
+    <li>浮动的（floating）和绝对定位的（absolutely positioned）元素不参与外边叠加（这是因为创建了新的<a href="#block-formatting-context">块格式化环境</a>，而边界叠加只发生在同一块格式化环境）。</li>
+  </ul>
+
+</blockquote>
+
+<h2 id="section-10">可视化格式模型</h2>
+
+<blockquote>
+  <h4 id="section-11">可视化格式模型解决的主要问题</h4>
+  <hr />
+  <ol>
+    <li>如何生成盒子？</li>
+    <li>盒子如何在页面布局？</li>
+  </ol>
+</blockquote>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Visual_formatting_model">可视化格式模型（Visual formatting model）</a>是用于处理网页文档并显示到虚拟设备上的算法，该模型将文档中的每个元素生成符合盒子模型的盒子，然后对这些模型进行布局。可视化格式模型包括盒子的生成和定位两部分。</p>
+
+<h3 id="box-generation">生成机制（Box Generation）</h3>
+
+<p>生成盒子的类型通过CSS属性<code>display</code>设定，当设定属性为<code>block</code>、<code>list-item</code>和<code>table</code>时，生成块盒子，当设定属性为<code>inline</code>、<code>inline-block</code>和<code>inline-table</code>时，生成内联盒子。<a href="#htmlblock-levelinline">HTML元素的属性</a>决定了该元素生成盒子类型的默认值，块元素默认生成块盒子，内联元素默认生成内联盒子。不同类型盒子的定位机制不同。</p>
+
+<h3 id="positioning-scheme">定位机制（Positioning Scheme）</h3>
+
+<p>CSS的盒子有3种基本定位机制：普通流（normal flow）、浮动（floats）和绝对定位（absolute position），默认定位机制是普通流。在普通流中，盒子一个接一个排列，floats算法可以将盒子从普通流中抽出来，绝对定位通过包含它盒子的坐标系统来定位。</p>
+
+<h4 id="normal-flow">Normal Flow</h4>
+
+<blockquote>
+  <h4 id="normal-flow-1">如何进入普通流（normal flow）</h4>
+  <hr />
+  <p>CCS将盒子的<code>position</code>属性设置为<code>static</code>或<code>relative</code>，并且将<code>float</code>属性设置为<code>none</code>。默认值<code>position: static</code>，<code>float: none</code>。</p>
+
+  <p>普通流可以理解为盒子按照读入的先后次序依次处理，就像水流一样连续有序，每个页面对应一个流。浮动和绝对定位，可将读入序列中的某些盒子从这个流中抽取出来，单独处理。</p>
+</blockquote>
+
+<p>在普通流中，块盒子（block-level boxes ）和内联盒子（inline boxes）分别从纵向和横向对元素进行布局。块盒子通过垂直的方式一个接一个的排列，盒子之间的距离通过垂直方向的边界（margin-top和margin-bottom）控制（计算距离时要注意盒子<a href="#margin-collapsing">外边叠加问题</a>）。内联盒子通过水平方式排列，设置垂自方向的padding、borders和margins无效。水平排列的内联盒子通过行盒子（line box）组织在一起，行盒子的高度总是足够容纳包含在其中的所有盒子，可以通过设置行高（line height）控制行盒子的高度。因此，改变内联盒子尺寸的参数只有水平方向上的borders、padding、margins以及line height。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_css-syntax-ruleset_line_box.jpeg" alt="CSS语法" />
+<div class="caption">包含在行盒子中的内联元素</div>
+</div>
+</div>
+
+<p>CSS2.1可以设置<code>display</code>属性为<code>inline-block</code>，融合inline和block的属性。在水平方向按内联盒子的方式布局，同时可以像块盒子一样设置widths、heights和垂自方向的 margins、padding。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_relative.png" alt="设置relative的效果" />
+<div class="caption">设置relative的效果"position: relative; left: 20px; top: 20px;"</div>
+</div>
+</div>
+
+<h4 id="floats">Floats</h4>
+
+<blockquote>
+  <h4 id="floats-1">如何使用浮动模式（floats）</h4>
+  <hr />
+  <p>CCS将盒子的<code>float</code>属性设置为<code>left</code>或<code>right</code>，并且将<code>position</code>属性设置为<code>static</code>或<code>relative</code>。</p>
+
+  <p><code>float</code>的非<code>none</code>属性暗示了盒子是<code>block</code>类型，因此，非块类型盒子的<code>display</code>属性会因为设置了<code>float</code>属性而改变为块类型。</p>
+</blockquote>
+
+<p>当盒子采用floats算法定位时，盒子会从普通流中被抽取出来，向左或向右移动，直到遇到父盒子或设置了float属性盒子的边界。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_floats.png" alt="设置floats的效果" />
+<div class="caption">设置<code>float</code>的效果</div>
+</div>
+</div>
+
+<p>上图3个红色的方块，两个左浮（<code>float: left</code>），一个右浮。第二个左浮窗口位于第一个左浮动窗口右边，如果再增加左浮窗口，会不断的照此叠加，充满父盒子后会换行继续显示。</p>
+
+<p>一个盒子设置了浮动后，会影响它的兄弟元素，具体的影响方式较为复杂，这要视乎这些兄弟元素是块级元素还是内联元素，若是块级元素会无视这个浮动的块框，使自身尽可能与这个浮动元素处于同一行，导致被浮动元素覆盖，除非这些<code>div</code>设置了宽度，并且父元素的宽度不足以包含它们，这样兄弟元素才会被强制换行；若是内联元素，则会尽可能围绕浮动元素。</p>
+
+<p>浮动元素脱离了普通流，因此包含它的父元素不会因为这个浮动元素的存在而自动撑高，这就造成了高度塌陷。下图所示，由于左边盒子浮动而脱离了普通流，父元素的高度只是由<code>span</code>盒子决定，看起来就像父元素高度塌陷了。</p>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_clearfloat1.png" alt="浮动的影响" />
+<div class="caption">浮动的影响</div>
+</div>
+</div>
+
+<p>当浮动影响到盒子的布局时，需要<a href="#clearing-floats">清除浮动</a>。</p>
+
+<h4 id="absolute-positioning">Absolute Positioning</h4>
+
+<blockquote>
+  <h4 id="absolute-positioning-1">如何采用绝对定位（absolute positioning）</h4>
+  <hr />
+  <p>CCS将盒子的<code>position</code>属性设置为<code>absolute</code>或<code>fixed</code>。</p>
+
+  <p>当设置为<code>fixed</code>的时候，盒子的位置相对于浏览器可见的视窗固定，即使拖动浏览器的滚动条，盒子的位置也固定不变。</p>
+
+</blockquote>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-25-css-essential_absolute.png" alt="设置absolute的效果" />
+<div class="caption">设置absolute的效果"position: absolute; left: 20px; top: 20px;"</div>
+</div>
+</div>
+
+<h4 id="clearing-floats">清除浮动（clearing floats）</h4>
+
+<p>由于浮动元素会影响它的兄弟元素的位置和父元素产生高度塌陷，需要清除浮动。</p>
+
+<p>常用的清除浮动方法是<code>clear: both</code>，<code>clear</code>的属性值<code>both</code>、<code>left</code>、<code>right</code>、<code>none</code>、<code>inherit</code> 分别代表在元素左右两侧不允许出现浮动元素、左侧不允许出现浮动元素、右侧不允许出现浮动元素、不清除浮动、继承父元素的值。</p>
+
+<p>但是，<code>clear</code>只是清除了浮动对兄弟元素的影响，而高度塌陷问题还没有解决，需要更高级的清除浮动——闭合浮动。为什么叫闭合浮动？因为浮动的元素脱离了普通流，对于它的父元素，它并没有闭合，这时候就需要闭合浮动了。</p>
+
+<blockquote>
+  <h4 id="section-12">闭合浮动的3种方法</h4>
+  <hr />
+  <p>（1）空<code>div</code>方法</p>
+
+  <div class="highlight"><pre><code class="language-html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">&quot;clear: both;&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside&quot;</span><span class="nt">&gt;</span>我是页脚，我的上面添加了一个设置了 clear: both 的空 div<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+  <p>空<code>div</code>方法很方便，但是加入了没有涵义的<code>div</code>，这违背了结构与表现分离的原则，并且后期维护也不方便。</p>
+
+  <p>（2）<code>overflow</code>方法</p>
+
+  <div class="highlight"><pre><code class="language-html"><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box&quot;</span> <span class="na">style=</span><span class="s">&quot;overflow: hidden; *zoom: 1;&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+  <p>当元素内包含会超出父元素边界的子元素时，<code>overflow</code>方法可能会覆盖掉有用的子元素，或是产生了多余的滚动条。</p>
+
+  <p>（3）<code>:after</code>伪元素的方法</p>
+
+  <div class="highlight"><pre><code class="language-html"><span class="nt">&lt;style&gt;</span>
+   <span class="nc">.clearfix</span> <span class="p">{</span><span class="c">/* 触发 hasLayout */</span> <span class="n">zoom</span><span class="o">:</span> <span class="m">1</span><span class="p">;</span> <span class="p">}</span>
+   <span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span><span class="k">content</span><span class="o">:</span> <span class="s1">&#39;.&#39;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">clear</span><span class="o">:</span> <span class="k">both</span><span class="p">;</span> <span class="k">visibility</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;box clearfix&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;main left&quot;</span><span class="nt">&gt;</span>我设置了左浮动 float: left<span class="nt">&lt;/div&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;aside left&quot;</span><span class="nt">&gt;</span>我是页脚，但是我也设置了左浮动。<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></div>
+  <p>这个办法不但完美兼容主流浏览器，并且也很方便，使用重用的类，可以减轻代码编写，另外网页的结构也会更加清晰。</p>
+</blockquote>
+
+<p>清除浮动的详细介绍可参考<a href="http://kayosite.com/remove-floating-style-in-detail.html">《详说清除浮动》</a>（<a href="/assets/images/../html/clearfloat.html">示例</a>）。</p>
+
+<h2 id="section-13">块格式化环境</h2>
+
+<blockquote>
+  <h4 id="block-formatting-context">块格式化环境（block formatting context）</h4>
+  <hr />
+  <p>块格式化环境是CCS渲染Web页面的一块区域，块盒子在该区域内布局。</p>
+
+  <p>块格式化环境对（<code>float</code>）定位和清除（<code>clear</code>）浮动至关重要，定位和清除浮动只对同一块格式化环境中的对象有效。<code>float</code>不会影响到其它块格式化环境中的盒子，<code>clear</code>只清除同一块格式化环境中之前的float效果。</p>
+
+  <p>简单来说，块格式化环境是一种属性，这种属性会影响着元素的定位以及与其兄弟元素之间的相互作用。</p>
+</blockquote>
+
+<p>块格式化环境就是一个作用范围，可理解为一个独立的容器，这个容器的里盒子的布局与这个容器外的不相干。</p>
+
+<p>块格式化环境不存在嵌套包含关系，块格式化环境只包含该环境内的对象，不会再包含该环境中对象再创建的块格式化环境。（A block formatting context contains everything inside of the element creating it that is not also inside a descendant element that creates a new block formatting context.）</p>
+
+<blockquote>
+  <h4 id="section-14">创建块格式化环境的条件（满足任意一条即可）</h4>
+  <hr />
+  <ul>
+    <li>the root element or something that contains it；</li>
+    <li><code>float</code>设置为<strong>非</strong><code>none</code>；</li>
+    <li><code>position</code>设置为<code>absolute</code>或<code>fixed</code>；</li>
+    <li><code>display</code>设置为<code>inline-block</code>、<code>table-cell</code>、<code>table-caption</code>、<code>flex</code>或<code>inline-flex</code>；</li>
+    <li><code>overflow</code>设置为<strong>非</strong><code>visible</code>。</li>
+  </ul>
+</blockquote>
+
+<p>块格式化环境主要有三个特性（详见<a href="http://www.cnblogs.com/leejersey/p/3991400.html">《详说 Block Formatting Contexts (块级格式化上下文)》</a>，<a href="/assets/images/../html/bfc.html">示例</a>）：</p>
+
+<ol>
+  <li>阻止<a href="#margin-collapsing">外边距折叠</a>；</li>
+  <li>包含浮动的元素（<a href="#clearing-floats">清除浮动</a>之<code>overflow</code>方法）；</li>
+  <li>阻止元素被浮动元素覆盖。</li>
+</ol>
+
+<h2 id="section-15">高级选择器</h2>
+
+<h4 id="css-21-">CSS 2.1 属性选择器</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>E[att]</td>
+      <td>匹配所有具有att属性的E元素，不考虑它的值。（注意：E在此处可以省略，比如”[cheacked]”。以下同。）</td>
+    </tr>
+    <tr>
+      <td>E[att=val]</td>
+      <td>匹配所有att属性等于”val”的E元素。</td>
+    </tr>
+    <tr>
+      <td>E[att~=val]</td>
+      <td>匹配所有att属性具有多个空格分隔的值、其中一个值等于”val”的E元素。</td>
+    </tr>
+    <tr>
+      <td>E[att|=val]</td>
+      <td>匹配所有att属性具有多个连字号分隔（hyphen-separated）的值、其中一个值以”val”开头的E元素，主要用于lang属性，比如”en”、”en-us”、”en-gb”等等。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例：</p>
+
+<div class="highlight"><pre><code class="language-css"><span class="nt">p</span><span class="o">[</span><span class="nt">title</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">div</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">error</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">td</span><span class="o">[</span><span class="nt">headers</span><span class="o">~=</span><span class="nt">col1</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">p</span><span class="o">[</span><span class="nt">lang</span><span class="o">|=</span><span class="nt">en</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">blockquote</span><span class="o">[</span><span class="nt">class</span><span class="o">=</span><span class="nt">quote</span><span class="o">][</span><span class="nt">cite</span><span class="o">]</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#f00</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+
+<h4 id="css-21-pseudo-classes">CSS 2.1 伪类（pseudo-classes）</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>E:first-child</td>
+      <td>匹配父元素的第一个子元素。</td>
+    </tr>
+    <tr>
+      <td>E:link</td>
+      <td>匹配所有未被点击的链接。</td>
+    </tr>
+    <tr>
+      <td>E:visited</td>
+      <td>匹配所有已被点击的链接。</td>
+    </tr>
+    <tr>
+      <td>E:active</td>
+      <td>匹配鼠标已经其上按下、还没有释放的E元素。</td>
+    </tr>
+    <tr>
+      <td>E:hover</td>
+      <td>匹配鼠标悬停其上的E元素。</td>
+    </tr>
+    <tr>
+      <td>E:focus</td>
+      <td>匹配获得当前焦点的E元素。</td>
+    </tr>
+    <tr>
+      <td>E:lang(c)</td>
+      <td>匹配lang属性等于c的E元素。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例：</p>
+
+<div class="highlight"><pre><code class="language-css"><span class="nt">p</span><span class="nd">:first-child</span> <span class="p">{</span> <span class="k">font-style</span><span class="o">:</span><span class="k">italic</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus</span> <span class="p">{</span> <span class="k">color</span><span class="o">:</span><span class="m">#000</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="m">#ffe</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="nt">text</span><span class="o">]</span><span class="nd">:focus:hover</span> <span class="p">{</span> <span class="k">background</span><span class="o">:</span><span class="m">#fff</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">q</span><span class="nd">:lang</span><span class="o">(</span><span class="nt">sv</span><span class="o">)</span> <span class="p">{</span> <span class="k">quotes</span><span class="o">:</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\201D&quot;</span> <span class="s2">&quot;\2019&quot;</span> <span class="s2">&quot;\2019&quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+
+<h4 id="css-21-pseudo-elements">CSS 2.1 伪元素（pseudo-elements）</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>E:first-line</td>
+      <td>匹配E元素的第一行。</td>
+    </tr>
+    <tr>
+      <td>E:first-letter</td>
+      <td>匹配E元素的第一个字母。</td>
+    </tr>
+    <tr>
+      <td>E:before</td>
+      <td>在E元素之前插入生成的内容。</td>
+    </tr>
+    <tr>
+      <td>E:after</td>
+      <td>在E元素之后插入生成的内容。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>示例：</p>
+
+<div class="highlight"><pre><code class="language-css"><span class="nt">p</span><span class="nd">:first-line</span> <span class="p">{</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="p">;</span><span class="m">#600</span><span class="p">;</span> <span class="p">}</span>
+<span class="nc">.preamble</span><span class="nd">:first-letter</span> <span class="p">{</span> <span class="k">font-size</span><span class="o">:</span><span class="m">1.5em</span><span class="p">;</span> <span class="k">font-weight</span><span class="o">:</span><span class="k">bold</span><span class="p">;</span> <span class="p">}</span>
+<span class="nc">.cbb</span><span class="nd">:before</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span><span class="k">block</span><span class="p">;</span> <span class="k">height</span><span class="o">:</span><span class="m">17px</span><span class="p">;</span> <span class="k">width</span><span class="o">:</span><span class="m">18px</span><span class="p">;</span> <span class="k">background</span><span class="o">:</span><span class="sx">url(top.png)</span> <span class="k">no-repeat</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">-18px</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">a</span><span class="nd">:link:after</span> <span class="p">{</span> <span class="k">content</span><span class="o">:</span> <span class="s2">&quot; (&quot;</span> <span class="n">attr</span><span class="p">(</span><span class="n">href</span><span class="p">)</span> <span class="s2">&quot;) &quot;</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+
+<p>更多关于CSS选选择器类容可参考<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">CSS reference</a>。</p>
+
+<h2 id="section-16">使用技巧</h2>
+
+<blockquote>
+  <h4 id="important">!important规则</h4>
+  <hr />
+  <p>多条CSS语句互相冲突时，具有!important的语句将覆盖其他语句。由于IE不支持!important，所以也可以利用它区分不同的浏览器。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">h1</span> <span class="p">{</span><span class="k">color</span><span class="o">:</span> <span class="nb">red</span> <span class="cp">!important</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">blue</span><span class="p">;}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="section-17">容器水平居中</h4>
+  <hr />
+  <p>先为该容器设置一个明确宽度，然后将margin的水平值设为auto即可。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">div</span><span class="nf">#container</span> <span class="p">{</span><span class="k">width</span><span class="o">:</span> <span class="m">760px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="section-18">禁止自动换行</h4>
+  <hr />
+  <p>文字在一行中显示完成，不要自动换行。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">h1</span> <span class="p">{</span> <span class="k">white-space</span><span class="o">:</span> <span class="k">nowrap</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="section-19">图片宽度自适应</h4>
+  <hr />
+  <p>如何使得较大的图片，能够自动适应小容器的宽度？</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">img</span> <span class="p">{</span><span class="k">max-width</span><span class="o">:</span> <span class="m">100%</span><span class="p">}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="link">设置link状态的顺序</h4>
+  <hr />
+  <p>link的四种状态，需要按照下面的前后顺序进行设置。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">a</span><span class="nd">:link</span> 
+<span class="nt">a</span><span class="nd">:visited</span> 
+<span class="nt">a</span><span class="nd">:hover</span> 
+<span class="nt">a</span><span class="nd">:active</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="text-transformfont-variant">Text-transform和Font Variant</h4>
+  <hr />
+  <p>Text-transform用于将所有字母变成小写字母、大写字母或首字母大写。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">uppercase</span><span class="p">}</span> 
+<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">lowercase</span><span class="p">}</span> 
+<span class="nt">p</span> <span class="p">{</span><span class="k">text-transform</span><span class="o">:</span> <span class="k">capitalize</span><span class="p">}</span></code></pre></div>
+  <p>Font Variant用于将字体变成小型的大写字母（即与小写字母等高的大写字母）。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">p</span> <span class="p">{</span><span class="k">font-variant</span><span class="o">:</span> <span class="k">small-caps</span><span class="p">}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="section-20">用图片充当列表标志</h4>
+  <hr />
+  <p>默认情况下，浏览器使用一个黑圆圈作为列表标志，可以用图片取代它。</p>
+
+  <div class="highlight"><pre><code class="language-css"><span class="nt">ul</span> <span class="p">{</span><span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">}</span>
+<span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
+   <span class="k">background-image</span><span class="o">:</span> <span class="sx">url(&quot;path-to-your-image&quot;)</span><span class="p">;</span>
+   <span class="k">background-repeat</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+   <span class="k">background-position</span><span class="o">:</span> <span class="m">0</span> <span class="m">0.5em</span><span class="p">;</span> 
+<span class="p">}</span></code></pre></div>
+</blockquote>
+
+<blockquote>
+  <h4 id="section-21">用图片替换文字</h4>
+  <hr />
+  <p>在标题栏中使用图片，但是又必须保证搜索引擎能够读到标题。</p>
+
+  <div class="highlight"><pre><code class="language-CSS"><span class="nt">h1</span> <span class="p">{</span> 
+   <span class="k">text-indent</span><span class="o">:</span> <span class="m">-9999px</span><span class="p">;</span> 
+   <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;h1-image.jpg&quot;)</span> <span class="k">no-repeat</span><span class="p">;</span> 
+   <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
+   <span class="k">height</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+</blockquote>
+
+<h2 id="section-22">预处理器</h2>
+
+<p>CSS预处理器（css preprocessor）的基本思想是，用一种专门的编程语言，进行网页样式设计，然后再编译成CSS文件。常用的CSS预处理器有<a href="http://lesscss.org">Less</a>、<a href="http://sass-lang.com">Sass</a>等。</p>
+
+<h3 id="less">Less</h3>
+
+<p><a href="http://lesscss.org">Less</a>使用变量（variables）、混合（mixins）、函数（functions）和许多其他的技术，让你的CSS更具维护性、主题性、扩展性。Less可运行在Node环境，浏览器环境和Rhino环境，同时也有3种可选工具供你编译文件和监视任何改变。</p>
+
+<p>具体用法可参考Bootstrap中文网的<a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">Less教程</a>。</p>
+
+<h3 id="sass--compass">Sass &amp; Compass</h3>
+
+<p><a href="http://sass-lang.com">Sass</a>使用变量（variables）、混合（mixins）、嵌套规则（nested rules）、内联导入（inline imports）等，让CSS更加优雅和强大。Sass让CSS更好的组织、体积更小、速度更快。</p>
+
+<p><a href="http://compass-style.org">Compass</a>是Sass的工具库（toolkit）。Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。它们之间的关系，有点像Javascript和jQuery、Ruby和Rails、python和Django的关系。</p>
+
+<p>具体使用可参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">Sass</a>和<a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">Compass</a>用法指南。</p>
+
+<h2 id="section-23">参考资料</h2>
+
+<ol>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS" title="Cascading Style Sheets">MDN: CSS</a></li>
+  <li><a href="http://www.w3.org/Style/CSS/" title="Cascading Style Sheets home page">W3: Cascading Style Sheets home page</a></li>
+  <li><a href="http://www.w3school.com.cn/css/index.asp" title="CSS 教程">w3school: CSS 教程</a></li>
+  <li><a href="http://www.w3.org/TR/2001/WD-css3-values-20010713/#specified" title="Specified, computed, and actual values">W3: Specified, computed, and actual values</a></li>
+  <li><a href="http://www.w3.org/TR/css3-values/" title="CSS Values and Units Module Level 3">W3: CSS Values and Units Module Level 3</a></li>
+  <li><a href="http://www.w3.org/TR/2011/REC-css3-color-20110607/">W3: CSS Color Module Level 3</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-box/">W3: CSS basic box model</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-grid/">W3: CSS Grid Layout Module Level 1</a></li>
+  <li><a href="http://dev.w3.org/csswg/css-flexbox/">W3: CSS Flexible Box Layout Module Level 1</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2010/03/css_cookbook.html">阮一峰：CSS使用技巧</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2009/03/css_selectors.html">阮一峰：CSS选择器笔记</a></li>
+  <li><a href="http://www.cnblogs.com/cuishengli/archive/2012/06/22/2558859.html">cuishengli：CSS 框模型概述</a></li>
+  <li><a href="http://www.cnblogs.com/leejersey/p/3991400.html">leejersey：详说 Block Formatting Contexts (块级格式化上下文)</a></li>
+  <li><a href="http://kayosite.com/remove-floating-style-in-detail.html">Kayo：详说清除浮动</a></li>
+  <li><a href="http://www.catswhocode.com/blog/8-css-preprocessors-to-speed-up-development-time" title="8 CSS preprocessors to speed up development time">Jean: 8 CSS preprocessors to speed up development time</a></li>
+  <li><a href="http://www.bootcss.com/p/lesscss/" title="LESS « 一种动态样式语言">LESS « 一种动态样式语言</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" title="SASS用法指南">阮一峰：SASS用法指南</a></li>
+  <li><a href="http://www.ruanyifeng.com/blog/2012/11/compass.html" title="Compass用法指南">阮一峰：Compass用法指南</a></li>
+</ol>
+
+<h3 id="section-24">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:ccs_master">
+      <p>也可参考”CSS Mastery: Advanced Web Standards Solutions, Second Edition”一书的”Chapter 3: Visual Formatting Model Overview”。 <a href="#fnref:ccs_master" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/10/pla" class="pageNav" style="float:left"   >上一篇：感知器学习算法 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/11/introducation-to-neural-networks" class="pageNav" style="float:right"   >下一篇：神经网络简介 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/10/css-essential" 	data-url="http://qianjiye.de/2014/10/css-essential" data-title="CSS Essential">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/pla'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/11/introducation-to-neural-networks'; --1> -->
+<!--         url = '/2014/11/introducation-to-neural-networks'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/css-essential/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

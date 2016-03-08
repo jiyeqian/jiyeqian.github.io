@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>arules：频繁项集与关联规则的挖掘</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>arules：频繁项集与关联规则的挖掘</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-05-02">2015-05-02</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#模式发掘" title="模式发掘">模式发掘</a>&nbsp;
+  
+  <a href="/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="/tags/#翻译" title="翻译">翻译</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 class="no_toc" id="section">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">概述</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">基础知识</a></li>
+  <li><a href="#section-4" id="markdown-toc-section-4">数据结构</a>    <ul>
+      <li><a href="#section-5" id="markdown-toc-section-5">项集矩阵</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">事务数据</a></li>
+      <li><a href="#section-7" id="markdown-toc-section-7">关联信息</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-8" id="markdown-toc-section-8">算法接口</a></li>
+  <li><a href="#section-9" id="markdown-toc-section-9">辅助函数</a>    <ul>
+      <li><a href="#counting-support-for-itemsets" id="markdown-toc-counting-support-for-itemsets">支持度的计算</a></li>
+      <li><a href="#section-10" id="markdown-toc-section-10">规则的推导</a></li>
+      <li><a href="#section-11" id="markdown-toc-section-11">事务的抽样</a></li>
+      <li><a href="#section-12" id="markdown-toc-section-12">事务的伪造</a></li>
+      <li><a href="#section-13" id="markdown-toc-section-13">子集、超集、最大集与闭集</a></li>
+      <li><a href="#section-14" id="markdown-toc-section-14">其它的兴趣度量</a></li>
+      <li><a href="#section-15" id="markdown-toc-section-15">事务和关联的聚类</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-16" id="markdown-toc-section-16">应用示例</a>    <ul>
+      <li><a href="#section-17" id="markdown-toc-section-17">例一：事务数据集的准备和分析</a></li>
+      <li><a href="#section-18" id="markdown-toc-section-18">例二：调查问卷数据的挖掘</a></li>
+      <li><a href="#section-19" id="markdown-toc-section-19">例三：兴趣度量的扩展</a></li>
+      <li><a href="#section-20" id="markdown-toc-section-20">例四：事务数据的抽样</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-21" id="markdown-toc-section-21">结论与展望</a></li>
+  <li><a href="#section-22" id="markdown-toc-section-22">参考资料</a></li>
+</ul>
+
+<h2 id="section-1">概述</h2>
+
+<p>本文是对R中arules包<a href="#Michael2005arules">[1]</a>的随包文档“Introduction to arules – A computational environment for mining association rules and frequent item sets”的意译。源文档采用R Markdown撰写，并按如下流程生成本页面：</p>
+
+<script src="/assets/js/mermaid.full.min.js"></script>
+<div class="mermaid">
+graph LR;
+    A[R Markdown &amp;#40*.Rmd&amp;#41]-- R --&gt;B[Markdown &amp;#40*.md&amp;#41];
+    B-- Jekyll --&gt;C[HTML &amp;#40*.html&amp;#41];
+</div>
+
+<p>重要词语英汉对照表：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>英文</th>
+      <th>汉译</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>support</td>
+      <td>支持度</td>
+    </tr>
+    <tr>
+      <td>confidence</td>
+      <td>置信度</td>
+    </tr>
+    <tr>
+      <td>lift</td>
+      <td>提升度</td>
+    </tr>
+    <tr>
+      <td>interestingness</td>
+      <td>兴趣度</td>
+    </tr>
+    <tr>
+      <td>transaction</td>
+      <td>事务</td>
+    </tr>
+    <tr>
+      <td>item</td>
+      <td>项</td>
+    </tr>
+    <tr>
+      <td>superset</td>
+      <td>超集</td>
+    </tr>
+    <tr>
+      <td>subset</td>
+      <td>子集</td>
+    </tr>
+    <tr>
+      <td>itemset／item set</td>
+      <td>项集</td>
+    </tr>
+    <tr>
+      <td>association</td>
+      <td>关联信息</td>
+    </tr>
+    <tr>
+      <td>association rule</td>
+      <td>关联规则</td>
+    </tr>
+    <tr>
+      <td>frequent itemset</td>
+      <td>频繁项集</td>
+    </tr>
+    <tr>
+      <td>maximal frequent itemset</td>
+      <td>最大频繁项集</td>
+    </tr>
+    <tr>
+      <td>frequent closed itemset</td>
+      <td>频繁闭项集</td>
+    </tr>
+    <tr>
+      <td>sample with replacement</td>
+      <td>放回抽样</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="section-2">基础知识</h2>
+
+<blockquote>
+  <h4 class="no_toc" id="section-3">基本定义</h4>
+  <hr />
+  <ul>
+    <li>$\mathcal I=\{i_1, i_2,\ldots, i_n\}$：$n$个二值属性<strong>项</strong>（item）构成的集合。</li>
+    <li>$\mathcal D=\{t_1,t_2,\ldots,t_m\}$：$m$个<strong>事务</strong>构成的集合，称为数据库（database），每个事务拥有唯一的ID并包含$\mathcal I$的一个子集。</li>
+    <li>$X\rightarrow Y$：表示<strong>规则</strong>（rule），其中$X,Y\subseteq I$并且$X\cap Y=\emptyset$，<strong>项集</strong>（itemset）$X$和$Y$分别称为规则的前提（antecedent）和结论（consequent），或者分别称为左手边（LHS，left-hand-side）和右手边（RHS，right-hand-side）。</li>
+    <li>$supp(X)$：项集$X$的<strong>支持度</strong>，$conf(X\rightarrow Y)$：规则$X\rightarrow Y$的<strong>置信度</strong><sup id="fnref:supp-and-conf-define"><a href="#fn:supp-and-conf-define" class="footnote">1</a></sup>。</li>
+  </ul>
+</blockquote>
+
+<p>频繁项集与关联规则的挖掘是一种流行的并经过深入研究的方法，用于发现大规模数据库中变量之间的有趣关系。本文展示了R的arules包，它提供了一种基本工具，用于创建和处理输入数据集，分析输出数据集和输出规则。该包还提供了调用两种快速挖掘算法的接口，它们是Apriori和Eclat算法的流行的C语言版本，由Christian Borgelt实现。这些算法可用于挖掘频繁项集、最大频繁项集、闭频繁项集以及关联规则。</p>
+
+<p>Piatetsky-Shapiro<a href="#piatetsky1991discovery">[2]</a>利用不同兴趣度度量，分析和表示从数据库发现的<strong>强规则</strong>。Agrawal等<a href="#Agrawal:1993:MAR:170036.170072">[3]</a>在强规则的基础上，提出了从事务数据中挖掘关联规则的问题。以<a href="#example-itemsets">超市为例</a>，交易数据集中的规则$\{milk, bread\}\rightarrow\{butter\}$表示：若顾客购买了$milk$和$bread$，也会购买$butter$。</p>
+
+<p>为了从包含所有可能规则的集合中抽取出感兴趣的规则，可以利用基于各种显著性和兴趣度的度量作为约束条件。最著名约束条件就是支持度和置信度的最小阈值。</p>
+
+<p>发现频繁项集（frequent itemset）可视为非监督学习问题的一种简化形式，称之为<strong>模型发现</strong>（mode finding）或<strong>块搜索</strong>（bump hunting）<a href="#hastie2009elements">[4]</a>。在这些问题中，每个项视为一个变量。它们的目标是找到模型值（prototype value），使得概率密度估值在取这些值时足够大。然而，对于变量众多的实际应用，概率估计不一定可靠，且计算太复杂。这就是在实际应用中用频繁项集代替概率估计的原因。置信度可解释为概率$P(Y|X)$的一种估计，它表示事务包含规则的LHS时，从事务中找到规则的RHS的概率<a href="#hipp2000algorithms">[5]</a>。</p>
+
+<p><strong>关联规则</strong>（association rule）需要同时满足最小支持度和最小置信度的约束。在支持度的中间值到最低值范围内，通常可从数据库找出大量的频繁项集。支持度的定义保证了频繁项集的所有子集也必是频繁的。因此，只挖掘所有的<strong>最大频繁项集</strong>（maximal frequent itemset）就够了，这些频繁项集不是其它任何频繁项集的子集<a href="#zaki2004mining">[6]</a>。另一种减少挖掘项集数目的方法是只挖掘<strong>频繁闭项集</strong>（frequent closed itemset）<sup id="fnref:closed-and-max-itemset"><a href="#fn:closed-and-max-itemset" class="footnote">2</a></sup>。若包含项集的所有事务都不包含与该项集相适的超集，则称<strong>该项集是闭的</strong>。频繁闭项集是最大频繁项集的一个超集（superset）。最大频繁项集的优势不仅在于它可生成所有的频繁项集，而且它们还包含了所有频繁项集的支持度信息，这些信息在数据挖掘过程完成后，对计算额外的兴趣度量（interest measure）起着至关重要的作用（例如，计算所得项集生成的规则的置信度、全置信度<a href="#omiecinski2003alternative">[7]</a>）。</p>
+
+<p>当挖掘到过多满足支持度和置信度约束的关联规则时，解决该问题切实可行的方法是利用额外的兴趣度量，进一步过滤或排列这些规则。基于此的一个流行度量是提升度（lift）<a href="#brin1997dynamic">[8]</a>。规则的提升度定义为</p>
+
+<p>\begin{equation}
+lift(X\to Y)={supp(X\cup Y)\over supp(X)supp(Y)}，
+\end{equation}</p>
+
+<p>它可认为是整条规则的支持度与LHS和RHS支持度相互独立时规则支持度之间的偏差。更大的提升度意味着更强的关联性。</p>
+
+<p>近十年，关于解决频繁项集问题的算法研究已经十分丰富。Goethals等对比了目前最快的算法<a href="#govindaraju2003advances">[9]</a>。这些算法包括Apriori和Eclat的实现，Borgelt将它们接入到了arules环境<a href="#borgelt2003efficient">[10]</a>。这两种算法采用了很不相同的挖掘策略。Agrawal等开发的Apriori是一种分级的广度优先算法，它对事务计数；相比之下，Eclat利用等价类（equivalence classes）、深度优先搜索和交集运算代替计数。它们可用于挖掘频繁项集、最大频繁项集和闭频繁项集。Apriori还额外实现了生成关联规则。</p>
+
+<p>本文描述的arules是R的扩展包，它提供了一种基础架构，创建和操作挖掘算法的输入数据集，分析输出项集和输出规则。该包常用于处理很大的规则和项集的集合，因此采用稀疏矩阵使内存占用最小化。该包的架构也非常便于扩展，包括接入新的算法和加入新的兴趣度量类型和关联规则。</p>
+
+<h2 id="section-4">数据结构</h2>
+
+<p>在R中，为了用户表示和操作关联规则挖掘算法的输入输出数据，需要设计良好的（数据）结构，高效处理大规模的稀疏二值数据（sparse binary data）。arules中的S4类的（数据）结构实现如下：</p>
+
+<p><img src="/assets/images/2015-05-02-arules-S4-UML-Class.png" alt="UML class diagram of the arules package" /></p>
+
+<p>arules为输入数据提供了<code>transactions</code>和<code>tidLists</code>类（事务ID的列表，另一种表示事务数据的方法）。挖掘算法的输出包含<code>itemsets</code>和<code>rules</code>类，分别表示项集和规则的集合。这两个类直接扩展通用虚类<code>associations</code>，该虚类提供了通用接口。在这种结构下，通过加入扩展<code>associations</code>的新类，很容易加入新的关联规则类型。<code>associations</code>和<code>transactions</code>中的项由<code>itemMatrix</code>类实现，该类提供了访问<code>ngCMatrix</code>的接口，它是R的Matrix包中的稀疏矩阵。</p>
+
+<p><code>ASparameter</code>和<code>AScontrol</code>两个类控制挖掘算法的表现。由于每个算法能够采用与算法相关的额外参数，我们为每个接入的算法实现了自己的控制类集。我们用<code>AP</code>前缀表示Apriori算法，用<code>EC</code>前缀表示Eclat算法。按这种方式，接入新算法时易于扩展控制类。</p>
+
+<h3 id="section-5">项集矩阵</h3>
+
+<p>根据关联规则挖掘问题的描述，我们发现事务数据库和关联规则集的共同之处在于它们都包含项集以及附加信息。例如：数据库中的一条事务包含一个事务ID和一个项集；挖出的关联规则集中的一条规则包含两个项集，一个表示LHS，另一个表示RHS，以及附加的品质信息（比如各种兴趣度量的值）。</p>
+
+<p>二值索引矩阵可表示事务数据库中项集的集合以及关联规则集，矩阵的列对应着项，矩阵的行对应着项集。矩阵的元素表示项在某个项集中出现（1）还是未出现（0）。二值索引矩阵的示例如下：</p>
+
+<p><img src="/assets/images/2015-05-02-arules-collection-of-itemsets.png" alt="Example of a collection of itemsets represented as a binary incidence matrix" id="example-itemsets" /></p>
+
+<p>注意，我们可能需要存储的集合包含相同元素（相同的行）的项集，也就是项集的项完全相同。 这是必要的，因为事务数据库可以包含具有相同项的不同事务。由于每个事务也包含唯一的事务ID，这样的数据库仍是事务的集合。</p>
+
+<p>与所有可用项的数量比起来，典型的频繁项集或典型的事务（比如超市的事务）只使用了少部分项，因此二值索引矩阵通常非常稀疏，占用了许多项和大量行。这样的数据，自然适合采用稀疏矩阵的格式表示。我们选择Matrix包中定义的<code>ngCMatrix</code>类来实现。<code>ngCMatrix</code>是紧凑的稀疏逻辑列导向的矩阵，该矩阵包含了<code>TRUE</code>行的索引，以及矩阵每列元素初始索引的“指针”。尽管<code>ngCMatrix</code>沿列方向，使用行导向的索引矩阵更方便。这使得最重要的操作——从数据集中抽取用于挖掘的事务子集——更加便捷高效。因此，我们实现了<code>itemMatrix</code>类，它提供了到行导向的转置索引矩阵<code>ngCMatrix</code>的接口。在稀疏表示中，上例项集的集合需要保存的信息包括：一个非0元素的索引向量（按行从第1行开始）<code>1, 2, 2, 4, 1, 2, 3, 3</code>，以及每行在索引向量起始位置的“指针”<code>1, 3, 5, 8</code>。开始的两个“指针”<code>1, 3</code>表明矩阵第1行包括索引向量的第1和第2个元素<code>1, 3</code>，即矩阵<code>(1, 1)</code>和<code>(1, 2)</code>两个元素非0，也就是第1个项集包含$milk$和$bread$两项。这两个向量存储在<code>ngCMatrix</code>中。注意，<code>ngCMatrix</code>的索引从0而非1开始，因此实际存储的向量为<code>0, 1, 1, 3, 0, 1, 2, 2</code>和<code>0, 2, 4, 7</code><sup id="fnref:is-wrong-index-in-paper"><a href="#fn:is-wrong-index-in-paper" class="footnote">3</a></sup>。然而，<code>ngCMatrix</code>类的数据结构并非是为arules的终端用户直接访问而设计的。其接口能在不知道数据内部表示如何工作的情况下调用。然而，若有必要，开发者可通过给arules增加功能直接访问<code>ngCMatrix</code>（比如，开发新的关联规则类型或兴趣度量，或者高效计算用于聚类的项集的距离矩阵）。在这种情况下，这通过<code>as()</code>，借助<code>itemMatrix</code>到<code>ngCMatrix</code>的类型转换机制，能够访问<code>ngCMatrix</code>。</p>
+
+<p>除稀疏矩阵外，<code>itemMatrix</code>还存储项标签（比如项的名称），以及处理项标签和索引矩阵相应列号之间的必要映射。作为可选功能，<code>itemMatrix</code>还能存储项的附加信息。例如，可以存储超市类别层次结构，这使得能够
+只选择包含特定类别（例如，所有乳制品）的项的事务（也可以是规则或项集）进行分析。</p>
+
+<p><code>itemMatrix</code>的基本操作包括：</p>
+
+<ul>
+  <li><code>dim()</code>和<code>[</code>：第1个元素对应项集或事务，第2个元素对应项（列）。例如，在变量<code>x</code>的事务数据集上，子集选择<code>x[1:10, 16:20]</code>抽取出一个包含前10条事务和16到20项的矩阵。</li>
+  <li><code>length()</code>：获得<code>itemMatrix</code>的项集数量（行数目），等价于<code>dim()</code>返回的第1个元素。</li>
+  <li><code>duplicated()</code>：找出相同的项集。</li>
+  <li><code>unique()</code>：移除重复的项集。</li>
+  <li><code>match()</code>：找出两个项集的集合之间匹配的元素。</li>
+  <li><code>c()</code>：当几个<code>itemMatrix</code>对象兼容时（列数相同且项的顺序相同），按行相继连接。</li>
+  <li><code>recode()</code>：参与<code>c()</code>操作的两个对象，若包含相同的项（项标签）但排列顺序不同，或其中一个存在缺失项，那么可用<code>recode()</code>重排项和插入列，使二者兼容。</li>
+  <li><code>size()</code>：获取<code>itemMatrix</code>中实际存储的项集包含项的数目，它返回一个向量，其每个元素表示集合中项（1）的数目（矩阵的行和）。利用该信息可过滤掉那些太长或太短的异常事务。</li>
+  <li><code>itemFrequency()</code>：计算<code>itemMatrix</code>中每个项出现的频率，也就是二值矩阵列元素之和。该元素可用于计算兴趣度量，还可用于<code>itemFrequencyPlot()</code>绘制项数目频率或支持度的条形图。通过该图，可以快速预览项集集合和展示按出现频率标准哪些是最重要的项。</li>
+  <li><code>as()</code>：进行矩阵（<code>matrix</code>）和列表(<code>list</code>)元素之间的类型转换，其中名字和维名字（dimname）用作项标签。从<code>itemMatrix</code>到<code>list</code>的转换有两种可能：通常采用<code>as()</code>进行转换，得到字符串向量的列表，其每个元素包含<code>itemMatrix</code>中相应行的项标签，实际转换通过调用默认参数的<code>LIST()</code>（参数<code>decode</code>设为<code>TRUE</code>）完成；若反过来，调用<code>LIST()</code>时的参数<code>decode</code>设为<code>FALSE</code>，将返回项的列号构成的整数向量列表，而非项标签。<code>decode()</code>可用于将列号解码为项标签。</li>
+  <li><code>image()</code>：可用于生成<code>itemMatrix</code>的等级图，这对快速可视化探测有用。对事务数据集，这样的图对检查数据集是否包含结构性的变化很有用（比如，没提供项、观察期内脱销），或者找出异常事务（例如，包含几乎所有项的事务可能表明录入有问题）。准备数据时，发现数据中的那些问题非常有用。</li>
+</ul>
+
+<h3 id="section-6">事务数据</h3>
+
+<p>市场购物篮分析是关联规则的主要应用，它需要对大规模的事务数据集进行挖掘。在这种情况下，每条事务表示一次光顾购买商品的记录<a href="#berry1997data">[11]</a>。事务数据通常由销售点的扫码器纪录，常常由如下形式元素构成：</p>
+
+<p>\[
+&lt;transaction\;ID,\;\;item\; ID,\ldots&gt;。
+\]</p>
+
+<p>所有具有相同事务ID的元素构成一条事务，它包括元素中由事务ID确定的所有项。用省略号标记的地方可能会提供附加信息，例如：可能通过超市的积分程序提供顾客ID，还可能提供更多信息，包括：事务相关的（交易时间、地点等），商品相关的（类别、价格等）或顾客相关的（年龄、性别等社会背景资料）。</p>
+
+<p>对数据挖掘，事务数据首先被转换为二值购买索引矩阵，其列对应不同商品（项），其行对应不同事务。矩阵元素用于表达某个事务中出现（1）或缺失（0）了某项。这种格式通常称之为<strong>水平数据库布局</strong>。此外，事务数据可用<strong>垂直数据库布局</strong>，按事务ID列表的形式表示<a href="#zaki2000scalable">[12]</a>。在这种格式下，对于每项，保存了那些包含该项的事务的ID构成的列表。<a href="#example-itemsets">前例</a>的水平和垂直风格的数据库分别如下左右所示：</p>
+
+<p><img src="/assets/images/2015-05-02-arules-horizontal-and-vertial-database.png" alt="Example of a set of transactions represented in horizontal layout and in vertical layout." id="horizontal-and-vertical-transaction-layout" /></p>
+
+<p>采用何种布局的数据库由算法确定。在arules中，两种布局都由<code>transactions</code>和<code>tidLists</code>类实现了。类似于<code>transactions</code>，<code>tidLists</code>类也采用了稀疏表示以高效存储其列表。<code>transactions</code>和<code>tidLists</code>类的对象之间可利用类型转换直接相互转换。</p>
+
+<p><code>transactions</code>类直接扩展了<code>itemMatrix</code>，并继承了其基本功能（比如，子集抽选、获得项集大小、绘制项频率）。此外，<code>transactions</code>拥有一个<code>data.frame</code>格式的<strong>槽</strong>（slot），用以存储每条事务的更多信息。槽可以容纳和已保存事务数量长度相同的任意命名的向量。在arules中，该槽目前用于存储事务ID，然而它也可用于存储用户ID、总收入或利润，或者每条事务的其它信息。利用这些信息，可以抽取出事务的子集（比如，特定用户的事务或者超出规定利润水平的事务）。</p>
+
+<p>通过类型转换，易于从<code>matrix</code>和<code>list</code>创建<code>transactions</code>类的对象。若这些数据结构有名字或维名字可用，它们分别被用于项标签和事务ID。<code>read.transactions()</code>函数被用于从文件导入数据。该函数读入的文件具有<a href="#horizontal-and-vertical-transaction-layout">上例所示</a>的结构，它也是一种很常用的格式，每行记录一条事务，项被预定义的字符分割。最后，<code>inspect()</code>可用于审查事务（比如，通过抽取子集得到的有趣事务）。</p>
+
+<p>Piatetsky-Shapiro<a href="#piatetsky1991discovery">[2]</a>和Srikant<a href="#srikant1996mining">[13]</a>等人提出了关联规则挖掘的另一个重要应用，发现类别价值和量化属性之间的有趣关系。为了挖掘关联规则，非二值属性必须映射为二值属性。最直接的映射方法是创建类别，将量化属性转为$k$个有序属性（比如，收入属性可转换为具有低中高三个类别的有序属性）。然后，在第二步中，每个拥有$k$个类别的类别属性用$k$个二值伪属性表示，这些伪属性相当于挖掘中使用的项<sup id="fnref:hastie-chapter-about-association-rule-mining"><a href="#fn:hastie-chapter-about-association-rule-mining" class="footnote">4</a></sup>。</p>
+
+<p>R表示拥有类别属性和量化属性数据的典型方法是采用<code>data.frame</code>：</p>
+
+<ol>
+  <li>第一步：领域专家必须为所有的量化属性创建有意义的类别。arules中的<code>discretize()</code>等函数对该任务提供了支持，该函数实现了按相同区间长度、相同频率，以及基于聚类和用户自定义区间的离散化。在离散化后，<code>data.frame</code>的所有列须是逻辑或因子类型。</li>
+  <li>第二步：arules包通过<code>data.frame</code>到<code>transactions</code>的类型转换，自动生成二值伪项。在该过程中，原始属性名和类别作为附加项信息被保留。默认情况下缺失值不带信息，因此所有相应的伪项都被置为0。若实际上，当特定属性的值缺失提供了信息时（比如，采访中受访者拒绝回答某个问题），领域专家要为该属性创建一个表示缺失值的类别，该类别将以伪项的形式包含在事务中。</li>
+</ol>
+
+<h3 id="section-7">关联信息</h3>
+
+<p id="common-association-functionality">arules挖掘事务数据得到的是<strong>关联信息</strong>（association）。从概念上说，关联信息是描述某些项（例如，作为项集或作为规则）之间关系的对象构成的集合，它们为不同的质量度量赋了值。这些度量可以作为显著性度量（比如，支持度），或者感兴趣度量（比如，置信度、提升度），或者其它度量（比如，关联信息涉及的收入）。arules中的所有关联信息类型都拥有如下方法提供的功能：</p>
+
+<ul>
+  <li><code>summary()</code>：展示集合的概述；</li>
+  <li><code>inspect()</code>：展示单独的关联信息；</li>
+  <li><code>length()</code>：获得集合中元素的个数；</li>
+  <li><code>items()</code>：获得每条关联信息包含的项的集合（例如，每条规则的LHS和RHS中项的并集）；</li>
+  <li><code>sort()</code>：按不同质量的度量对集合排序；</li>
+  <li><code>subset()</code>：抽取子集；</li>
+  <li><code>union(), intersect(), setequal()</code>：集合操作；</li>
+  <li><code>match()</code>：匹配两个集合的元素；</li>
+  <li><code>write()</code>：将关联信息以人可读的格式写入磁盘；</li>
+  <li><code>save(), load()</code>：base包提供提供的以紧凑形式保存、加载关联信息；</li>
+  <li><code>write.pmml(), read.pmml()</code>：通过pmml包，按<strong>PMML</strong>（predictive model markup language）格式写入、读取关联信息。</li>
+</ul>
+
+<p>arules包目前实现的关联信息是项集的集合（例如，用于频繁项集的项集的最大或闭子集），以及规则的集合（例如，关联规则）。<code>itemsets</code>和<code>rules</code>两种类，直接扩展了<code>associations</code>虚类，并提供了<a href="#common-association-functionality">上述功能</a>。</p>
+
+<p><code>itemsets</code>类包含一个用于将项存储为二值矩阵的<code>itemMatrix</code>对象，其中矩阵的每行表示一个项集。此外，它还可以将事务ID列表按<code>tidLists</code>类的对象形式包含其中。值得注意，当表示事务时，<code>tidLists</code>为每个项存储一个事务列表，此处为每个项集存储一个该项集出现过的事务ID的列表<sup id="fnref:what-this-mean-1"><a href="#fn:what-this-mean-1" class="footnote">5</a></sup>。目前只有<code>eclat()</code>返回该列表。</p>
+
+<p><code>rules</code>类由两个<code>itemMatrix</code>对象构成，分别表示规则的LHS和RHS。</p>
+
+<p>关联信息中的项和质量度量，能以一种安全的方式使用<code>items, lhs, rhs, quality</code>的访问和替换方法，进行访问和操作。此外，关联信息类拥有内建的有效性校验机制，这保证了所有的元素拥有兼容的维。</p>
+
+<p>为已有的关联信息加入新的质量度量很简单。由于<code>quality</code>槽有一个<code>data.frame</code>，可以加入具有新的质量度量的附加列。然后，这些新的度量可通过<code>sort()</code>和<code>subset()</code>对关联信息排序或筛选。为arules加入新的关联信息类型也同样直接。为了做到这些，开发者须创建新的类以扩展<code>associations</code>虚类，并实现<a href="#common-association-functionality">上述通用功能</a>。</p>
+
+<h2 id="section-8">算法接口</h2>
+
+<p>在arules包中，我们接入了Christian Borgelt提供的Apriori和Eclat的免费的参考实现。这些代码可以通过R的<code>apriori()</code>和<code>eclat()</code>直接调用，并且数据对象可以在R和C代码之间直接传递，而不需写入外部文件。这些实现可挖掘频繁项集、以及闭的和最大的频繁项集。此外，<code>apriori()</code>还能挖掘关联规则。</p>
+
+<p>输入<code>apriori()</code>和<code>eclat()</code>函数的数据必须是<code>transactions</code>或者能被转换成<code>transactions</code>的数据（比如，<code>matrix</code>和<code>list</code>）。算法的参数分为两组，用<code>parameter</code>和<code>control</code>参数表示。挖掘参数（<code>parameter</code>）改变挖掘到的项集或规则的特征（比如，最小支持度）；控制参数（<code>control</code>）影响挖掘算法的性能（比如，是否按频率对项进行初始排序）。<code>apriori()</code>函数的这些参数必须是<code>APparameter</code>和<code>APcontrol</code>类的实例；<code>eclat()</code>函数的参数必须是<code>ECparameter</code>和<code>ECcontrol</code>类的实例。另外，那些可被转换为这些类的数据（比如，<code>NULL</code>表示默认参数，与槽名称一致的列表改变参数默认值），也能作为参数。在这些类中，每个槽确定一个不同的参数与取值。参数的默认值与独立C程序的默认值相同，除非要求规则支持度的标准定义用于指定的最小支持度（Borgelt将规则前提的支持度定义为规则的支持度）。</p>
+
+<p>Christian Borgelt实现的显现特征（appearance feature）也能用于<code>apriori()</code><a href="#borgelt2004finding">[14]</a>。<code>apriori()</code>函数的<code>appearance</code>参数可指定哪些项必须或不必出现在项集或规则中。关于该特征的更多信息，我们可参考Apriori手册<a href="#borgelt2004finding">[14]</a>。</p>
+
+<p><code>apriori()</code>和<code>eclat()</code>函数的输出是一个<code>associations</code>扩展类的对象，它包含挖掘到的关联信息集，并且可利用针对这些类的函数对它作进一步分析。</p>
+
+<p>许多不同的算法采用索引矩阵或事务ID列表的表示形式作为输入，解决频繁项集和闭的频繁项集问题。每个算法拥有专门的能力，能在超大规模数据库中发挥重要作用，Goethals等<a href="#goethals2003fimi">[15]</a>对这类算法，比如kDCI、LCM、FP-Growth和Patricia，进行了讨论。大多数算法的源代码都可通过互联网获取，并且当需要某个算法时，接入到arules也很简单，必要的步骤包括：</p>
+
+<ol>
+  <li>为算法添加接口代码，推荐直接调用原生实现语言（而非利用文件通信），并且添加R函数调用该接口；</li>
+  <li>实现对<code>ASparameter</code>和<code>AScontrol</code>的扩展。</li>
+</ol>
+
+<h2 id="section-9">辅助函数</h2>
+
+<p>arules实现了几个有用的函数用以支持度计算、规则推导，采样等。接下来我们将讨论其中的几个函数。</p>
+
+<h3 id="counting-support-for-itemsets">支持度的计算</h3>
+
+<p>在挖掘数据库的过程中，通常在最小支持度约束条件下计算项集的支持度。在此过程，计算了所有的频繁项集外加一些非频繁候选项集（或者支持度通过其它方式确定）。特别是当数据库项很多且最小支持度值很小时，该过程在最坏的情况下可能非常耗时，频繁项集的数目按项的数目以指数形式增长。</p>
+
+<p>当仅需要一个或少许项集的支持度信息时，我们可能不想挖掘数据库得到所有频繁项集。我们事先也不知道最小支持度设为多高（或多低），仍需得到了问题中（所有）项集的支持度信息。针对该问题，arules包含的<code>support()</code>能确定给定项集集合（以<code>itemMatrix</code>形式）的支持度。</p>
+
+<p>为了计数，我们使用一颗前缀树（prefix tree）<a href="#knuth1998art">[16]</a>组织计数器，所使用的前缀树类似Borgelt描述的项集树<a href="#borgelt2002induction">[17]</a>。尽管这样，我们不会按层生成树，我们会首先生成一颗只包含必要节点的前缀树，这些节点拥有所有需要计数的项集的计数器。只采用该树的节点，我们为每条事务递归的对项集计数。完成计数后，每个项集的支持度包含在前缀和项集相同的节点中<a href="#hahsler2008selective">[18]</a>。Hahsler等描述了具体过程<a href="#hahsler2008selective">[18]</a>。</p>
+
+<p>除了能在不挖掘所有频繁项集时确定少数项集的支持度，<code>support()</code>也能用于找出支持度很低的非频繁项集，支持度过低会导致组合爆炸使得挖掘不可行。</p>
+
+<h3 id="section-10">规则的推导</h3>
+
+<p>为了方便，我们将长度为$l$的项集的集合记为$\mathcal X=\{X_1, X_2,\ldots,X_l\}$。类似地，我们将规则的集合记为$\mathcal R$。部分关联规则挖掘问题就是从频繁项集$\mathcal X$中生成（或推导）出规则的集合$\mathcal R$。arules中实现的Apriori算法已包含了规则生成引擎，并默认返回$X\to Y$形式的关联规则集合，该关联规则满足最小支持度和最小置信度条件。根据Agrawal等的定义<a href="#Agrawal:1993:MAR:170036.170072">[3]</a>，$Y$被限制为单个项。</p>
+
+<p>某些情况下，有必要将挖掘项集和从项集生成规则分开。例如，用户可能只对所有频繁项集的一个子集生成的规则感兴趣。Apriori通过重用挖掘频繁项集时建立的数据结构，高效的生成规则。然而，如果Apriori只用于返回项集，或者采用Eclat等其它算法挖掘项集，规则推导所需的数据结构不再能用于计算规则的置信度。</p>
+
+<p>如果规则需从项集的任意集合推导，计算置信度所需的支持度值通常缺失。例如，若所有可用的信息是一个包含5个项的项集，并且我们期望推导出规则，我们需要项集的支持度（我们可能知道），也需要知道所有长度为4的所有子集的支持度。缺失的支持度信息必须从数据库计算。最终，为了高效的从项集给定的集合推导规则，我们还须将支持度值存储在合适的数据结构中，在计算规则置信度时可对该结构高效的查找。</p>
+
+<p>给定置信度，arules中的<code>ruleInduction()</code>函数采用一颗前缀树从项集$\mathcal X$的任意集合按如下方式推导规则：</p>
+
+<ol>
+  <li>计算每个项集$X\in \mathcal X$及子集$\{X\not \{x\}: x\in X \}$的支持度值。这些值用于规则生成，它们通过对数据库单轮扫描得到，存储在恰当的数据结构中。</li>
+  <li>利用上一步创建的数据结构中的支持度信息，只选择性的生成满足条件的规则，为项集$\mathcal X$产生集合$\mathcal R$。</li>
+</ol>
+
+<p><a href="#counting-support-for-itemsets">前文介绍的方法</a>完成了高效的支持度计算。经过计算，所有必要的支持度包含在前缀树中。我们能很容易的取回所需的支持度值。Hahsler等描述了具体过程<a href="#hahsler2008selective">[18]</a>。</p>
+
+<h3 id="section-11">事务的抽样</h3>
+
+<p>从大规模数据库中抽取用于挖掘的样本是一种强大的技术，它在原始数据库无法放入主存（main memory）而样本集可放入时尤其有用。然而，就算数据库能放入主存，抽样能在只牺牲很少精度时极大的加速挖掘。</p>
+
+<p>Mannila等<a href="#mannila1994efficient">[19]</a>提出了用于关联规则挖掘的放回抽样方法，并对抽样导致的误差进行了量化估计。基于二项分布（包含样本中给定项集的事务的数量）的Chernov界，作者认为即使比较小的样本集在理论上也能很好的估计支持度。在此理论基础上，Zaki等<a href="#zaki2004mining">[6]</a>认为对于持度为$\tau =supp(X)$的项集$X$，在给定置信水平$1-c$下可接受的支持度相对误差为$\epsilon$时，抽样数据集所需的大小$n$可以计算，</p>
+
+<p>\begin{equation}
+n={-2\ln(c)\over \tau\epsilon^2}。
+\label{eq:sample-sizez-evaluation}
+\end{equation}</p>
+
+<p>对于每个项集，恰当的方法是依据其支持度确定不同的样本集大小。 抽样数据集的大小由支持度确定。作为启示<sup id="fnref:as-a-heuristic"><a href="#fn:as-a-heuristic" class="footnote">6</a></sup>，作者建议将用户设定的最小支持度阈值作为$\tau$。这意味着对于接近最小支持度的项集，满足给定的误差和置信水平，而更频繁项集的错误率会更低。然而，在该启发式方法下，小于最小支持度的项集的错误率，在给定的置信水平会超过$\epsilon$，因此一些非频繁项集可能作为频繁项集出现在样本中。</p>
+
+<p>Zaki等<a href="#zaki1997evaluation">[20]</a>还通过实践对几个数据集的抽样进行了评估，他们认为抽样不仅显著加速了挖掘，误差也明显低于Chernov界给出的那些误差，因此小于公式\eqref{eq:sample-sizez-evaluation}给定大小的样本集通常也够用。</p>
+
+<p>另一种获得关联规则挖掘所需样本集大小的方法是逐步抽样（progressive sampling）<a href="#parthasarathy2002efficient">[21]</a>。该方法从一个小的样本集开始，使样本集逐步增大，直到模型精度不再明显提高。Parthasarathy通过度量两个项集的集合之间相似性，为模型精度提升定义了一个代理。基本思想是：由于更大的样本集会产生更高精度的结果，若精度提升高，并且精度按精度提升递减的方式增加，那么两个连续样本集的关联信息的集合的相似度就低。因此，若连续样本集之间的相似性到达了一个稳定区域，样本集大小的增加就可以停止了。</p>
+
+<p>Toivonen<a href="#toivonen1996sampling">[22]</a>提出了运用采样，降低无法放入主存的大规模数据库所需的I/O开销。 其基本思想是：利用数据库的随机样本集，按低于集合最小支持度的一个支持度阈值，挖掘频繁项集。然后，在整个数据库计算这些项集的支持度，并且丢弃非频繁的项集。若挖掘样本集的支持度阈值选取得足够低，遍历一轮这个大数据库，几乎可得所有的频繁项集和它们的支持度。</p>
+
+<p>在arules中，<code>sample()</code>实现抽样，它提供了R标准抽样函数的所有功能（比如，放回、非放回和按概率权值的抽样）。</p>
+
+<h3 id="section-12">事务的伪造</h3>
+
+<p>伪造的数据可用于估计和对比不同的挖掘算法，以及研究兴趣度度量的表现。</p>
+
+<p>arules中的<code>random.transactions()</code>函数可用于创建伪造的事务数据。目前有两种可行方法：</p>
+
+<ol>
+  <li>第一种方法是重新实现广为人知的生成器，它由Agrawal等人<a href="#agrawal1994fast">[23]</a>开发，用于生成挖掘关联规则的事务数据；</li>
+  <li>第二种方法是实现一个简单概率模型，每条事务是对每个项的一次独立的伯努利实验的结果<a href="#hahsler2005implications">[24]</a>。</li>
+</ol>
+
+<h3 id="section-13">子集、超集、最大集与闭集</h3>
+
+<p>对某些计算，有必要找出项集集合中特定项集的所有子集或超集。该功能通过<code>is.subset()</code>和<code>is.superset()</code>实现。例如，<code>is.subset(x, y, proper = TRUE)</code>从<code>y</code>中找出<code>x</code>中项集的所有合适的子集。输出是行<code>length(x)</code>列<code>length(y)</code>的逻辑矩阵。每个逻辑行向量表示<code>y</code>中哪些元素是<code>x</code>中相应元素的子集。如果忽略参数<code>y</code>，返回集合<code>x</code>中的子集或超集结构。</p>
+
+<p>类似的方法，<code>is.maximal()</code>和<code>is.closed()</code>，可用于从集合中找出所有的最大项集和闭项集。若集合没有项集合适的超级，那么项集在集合中是最大的<a href="#zaki1997new">[25]</a>。若项集是它自身的闭，那么项集是闭的（也就是，对于项集不存在同样支持度的超级）<a href="#Pasquier1999discovering">[26]</a>。</p>
+
+<p>需要注意，当集合包含很多项集时，这些方法可能很慢并且内存消耗高。</p>
+
+<h3 id="section-14">其它的兴趣度量</h3>
+
+<p>arules提供的<code>interestMeasure()</code>可计算项集和规则的各种各样的兴趣度量。为了加速计算，我们尽量重用项集集合和规则集提供的质量信息（比如，支持度、置信度、提升度）。只在必要时，才从挖掘关联信息的事务中获取缺失信息。</p>
+
+<p>例如，项集可用的度量包括：</p>
+
+<ul>
+  <li>全置信度（all-confidence）<a href="#omiecinski2003alternative">[7]</a>；</li>
+  <li>交叉支持率（cross-support ration）<a href="#xiong2003mining">[27]</a>；</li>
+  <li>支持度。</li>
+</ul>
+
+<p>对于规则，如下度量可行：</p>
+
+<ul>
+  <li>卡方度量（chi square measure）<a href="#liu1999pruning">[28]</a>；</li>
+  <li>确信度（conviction）<a href="#brin1997dynamic">[8]</a>；</li>
+  <li>置信度（confidence）；</li>
+  <li>置信度差（DOC，difference of confidence）<a href="#hofmann2001visual">[29]</a>；</li>
+  <li>超提升度和超置信度（hyper-lift and hyper-confidence）<a href="#hahsler2007new">[30]</a>；</li>
+  <li>杠杆作用（leverage）<a href="#piatetsky1991discovery">[2]</a>；</li>
+  <li>改进度（improvement）<a href="#bayardo1999constraint">[31]</a>；</li>
+  <li>支持度（support）；</li>
+  <li>其它度量，包括余弦（cosine）、基尼系数（gini index）、$\phi$系数（$\phi$-coefficient）、奇异率（odds ratio）等<a href="#tan2004selecting">[32]</a>。</li>
+</ul>
+
+<h3 id="section-15">事务和关联的聚类</h3>
+
+<p>为了实现基于距离的聚类，arules提供了<code>dissimilarity()</code>，它能用于计算事务和关联信息（也就是，项集和规则）之间的相异度和交叉相异度（cross-dissimilarity）<a href="#strehl1999distance">[33]</a>。目前，可用的二值数据的标准度量包括：Jaccard系数、简单的匹配系数以及骰子系数。此外，事务之间的相异度可基于项之间的亲和度（affinity）计算<a href="#aggarwal2002finding">[34]</a>。</p>
+
+<p><code>dissimilarity()</code>的结果要么是<code>dist</code>对象——它可以直接用于R中的大多数聚类算法（比如，用于层次聚类的<code>hclust</code>），要么是<code>ar_cross_dissimilarity</code>类的对象。</p>
+
+<p>由于事务和关联信息的数量通常太大，而无法高效的计算相异度矩阵和使用聚类算法。<code>sample()</code>可用于只在事务（关联信息）的子集上聚类。为了将余下的事务（关联信息）分配到类中，<code>predict()</code>实现了用于预测新数据成员关系的最近邻方法<a href="#hahsler2007building">[35]</a>。</p>
+
+<p>一个简单的例子可从Hahsler等人的文献中找到<a href="#hahsler2007building">[35]</a>。</p>
+
+<h2 id="section-16">应用示例</h2>
+
+<h3 id="section-17">例一：事务数据集的准备和分析</h3>
+
+<p>通过本例，我们展示在关联信息挖掘之前如何分析和处理数据集。发现数据集中存在的问题至关重要，这些问题可能导致挖掘到的关联信息无用，或者至少会比在恰当准备的数据集上，挖掘到更差的关联信息。作为例子，我们看看arules包中的<a href="http://epub.wu-wien.ac.at"><code>Epub</code>事务数据集</a>。该数据集包含了2003年1月到2008年12月间，维也纳金融大学电子出版平台文档的下载信息。</p>
+
+<p>首先，我们加载arules包和数据集：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span><span class="s">&quot;arules&quot;</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Loading required package: Matrix
+## Loading required package: methods
+## 
+## Attaching package: &#39;arules&#39;
+## 
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     %in%, write</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Epub&quot;</span><span class="p">)</span>
+Epub</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+##  15729 transactions (rows) and
+##  936 items (columns)</code></pre></figure>
+
+<p>我们看到该数据集由15729条事务构成，它用15729个行和936个表示项的列的稀疏矩阵表示。接下来，我们利用<code>summary()</code>获得关于数据集的更多信息：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>Epub<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions as itemMatrix in sparse format with
+##  15729 rows (elements/itemsets/transactions) and
+##  936 columns (items) and a density of 0.001758755 
+## 
+## most frequent items:
+## doc_11d doc_813 doc_4c6 doc_955 doc_698 (Other) 
+##     356     329     288     282     245   24393 
+## 
+## element (itemset/transaction) length distribution:
+## sizes
+##     1     2     3     4     5     6     7     8     9    10    11    12 
+## 11615  2189   854   409   198   121    93    50    42    34    26    12 
+##    13    14    15    16    17    18    19    20    21    22    23    24 
+##    10    10     6     8     6     5     8     2     2     3     2     3 
+##    25    26    27    28    30    34    36    38    41    43    52    58 
+##     4     5     1     1     1     2     1     2     1     1     1     1 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   1.000   1.000   1.646   2.000  58.000 
+## 
+## includes extended item information - examples:
+##    labels
+## 1 doc_11d
+## 2 doc_13d
+## 3 doc_14c
+## 
+## includes extended transaction information - examples:
+##       transactionID           TimeStamp
+## 10792  session_4795 2003-01-02 09:59:00
+## 10793  session_4797 2003-01-02 20:46:01
+## 10794  session_479a 2003-01-02 23:50:38</code></pre></figure>
+
+<p><code>summary()</code>展示了数据集中最频繁的项、事务长度分布信息，以及数据集中包含的一些扩展的事务信息。我们看到数据集包含事务ID以及附带的时间戳（采用<code>POSIXct</code>类的格式），这些额外的信息可用于分析数据集：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">year <span class="o">&lt;-</span> <span class="kp">strftime</span><span class="p">(</span><span class="kp">as.POSIXlt</span><span class="p">(</span>transactionInfo<span class="p">(</span>Epub<span class="p">)[[</span><span class="s">&quot;TimeStamp&quot;</span><span class="p">]]),</span> <span class="s">&quot;%Y&quot;</span><span class="p">)</span>
+<span class="kp">table</span><span class="p">(</span>year<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## year
+## 2003 2004 2005 2006 2007 2008 2009 
+##  986 1376 1610 3010 4052 4692    3</code></pre></figure>
+
+<p>对2003年，数据集中的第一年，我们拥有986条事务。我们能够选择相应的事务，并且通过等级图探查其结构：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">Epub2003 <span class="o">&lt;-</span> Epub<span class="p">[</span>year <span class="o">==</span> <span class="s">&quot;2003&quot;</span><span class="p">]</span>
+<span class="kp">length</span><span class="p">(</span>Epub2003<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 986</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">image<span class="p">(</span>Epub2003<span class="p">)</span></code></pre></figure>
+
+<p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-4-1.png" title="testing" alt="testing" width="400" /></p>
+
+<p>该图是二值索引矩阵的直接可视化，其中黑点表示矩阵中的1。从图中我们可看出数据集中的项不是均匀分布的。实际上，靠近右边的大部分白色区域表示在2003年初只有很少的项可用（不足50）；然后这一年中，加入了更多的项，直到项的数目接近300。从图还我们还可知数据集中有些事务包含非常多的项（更稠密的水平线）。这些事务需要进一步考察，因为它们可能源于数据收集的问题（比如，网络爬虫从出版网站下载了很多文档）。我们可以利用<code>size()</code>查找出很长的事务，并筛选出很长的事务（包含20个以上的项）：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">transactionInfo<span class="p">(</span>Epub2003<span class="p">[</span>size<span class="p">(</span>Epub2003<span class="p">)</span> <span class="o">&gt;</span> <span class="m">20</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##       transactionID           TimeStamp
+## 11092  session_56e2 2003-04-30 01:30:38
+## 11371  session_6308 2003-08-18 06:16:12</code></pre></figure>
+
+<p>我们发现了3条很长的事务，并打印了相应的事务信息。当然，按相似的方式，<code>size()</code>可用于移除长的或短的事务。<code>inspect()</code>可用于检测事务。因为上面确定的事务会导致打印结果很长，我们可以检测2003年子集的前5条事务：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##   items     transactionID           TimeStamp
+## 1 {doc_154}  session_4795 2003-01-02 09:59:00
+## 2 {doc_3d6}  session_4797 2003-01-02 20:46:01
+## 3 {doc_16f}  session_479a 2003-01-02 23:50:38
+## 4 {doc_11d,                                  
+##    doc_1a7,                                  
+##    doc_f4}   session_47b7 2003-01-03 07:55:50
+## 5 {doc_83}   session_47bb 2003-01-03 10:27:44</code></pre></figure>
+
+<p>多数事务包含一项。仅有第4条事务包含3项。为了进一步探测，事务可转换为列表：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">as<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## $session_4795
+## [1] &quot;doc_154&quot;
+## 
+## $session_4797
+## [1] &quot;doc_3d6&quot;
+## 
+## $session_479a
+## [1] &quot;doc_16f&quot;
+## 
+## $session_47b7
+## [1] &quot;doc_11d&quot; &quot;doc_1a7&quot; &quot;doc_f4&quot; 
+## 
+## $session_47bb
+## [1] &quot;doc_83&quot;</code></pre></figure>
+
+<p>最后，按水平布局的事务数据，能被转换为垂直布局的事务ID列表：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">EpubTidLists <span class="o">&lt;-</span> as<span class="p">(</span>Epub<span class="p">,</span> <span class="s">&quot;tidLists&quot;</span><span class="p">)</span>
+EpubTidLists</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## tidLists in sparse format with
+##  936 items/itemsets (rows) and
+##  15729 transactions (columns)</code></pre></figure>
+
+<p>由于性能的原因，事务ID列表也存储在稀疏矩阵中。为了获得列表，可采用到列表的类型转换：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">as<span class="p">(</span>EpubTidLists<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## $doc_11d
+##   [1] &quot;session_47b7&quot;    &quot;session_47c2&quot;    &quot;session_47d8&quot;   
+##   [4] &quot;session_4855&quot;    &quot;session_488d&quot;    &quot;session_4898&quot;   
+##   [7] &quot;session_489b&quot;    &quot;session_489c&quot;    &quot;session_48a1&quot;   
+##  [10] &quot;session_4897&quot;    &quot;session_48a0&quot;    &quot;session_489d&quot;   
+##  [13] &quot;session_48a5&quot;    &quot;session_489a&quot;    &quot;session_4896&quot;   
+##  [16] &quot;session_48aa&quot;    &quot;session_48d0&quot;    &quot;session_49de&quot;   
+##  [19] &quot;session_4b35&quot;    &quot;session_4bac&quot;    &quot;session_4c54&quot;   
+##  [22] &quot;session_4c9a&quot;    &quot;session_4d8c&quot;    &quot;session_4de5&quot;   
+##  [25] &quot;session_4e89&quot;    &quot;session_5071&quot;    &quot;session_5134&quot;   
+##  [28] &quot;session_51e6&quot;    &quot;session_5227&quot;    &quot;session_522a&quot;   
+##  [31] &quot;session_5265&quot;    &quot;session_52e0&quot;    &quot;session_52ea&quot;   
+##  [34] &quot;session_53e1&quot;    &quot;session_5522&quot;    &quot;session_558a&quot;   
+##  [37] &quot;session_558b&quot;    &quot;session_5714&quot;    &quot;session_5739&quot;   
+##  [40] &quot;session_57c5&quot;    &quot;session_5813&quot;    &quot;session_5861&quot;   
+##  [43] &quot;session_wu48452&quot; &quot;session_5955&quot;    &quot;session_595a&quot;   
+##  [46] &quot;session_5aaa&quot;    &quot;session_5acd&quot;    &quot;session_5b5f&quot;   
+##  [49] &quot;session_5bfc&quot;    &quot;session_5f3d&quot;    &quot;session_5f42&quot;   
+##  [52] &quot;session_5f69&quot;    &quot;session_5fcf&quot;    &quot;session_6044&quot;   
+##  [55] &quot;session_6053&quot;    &quot;session_6081&quot;    &quot;session_61b5&quot;   
+##  [58] &quot;session_635b&quot;    &quot;session_64b4&quot;    &quot;session_64e4&quot;   
+##  [61] &quot;session_65d2&quot;    &quot;session_67d1&quot;    &quot;session_6824&quot;   
+##  [64] &quot;session_68c4&quot;    &quot;session_68f8&quot;    &quot;session_6b2c&quot;   
+##  [67] &quot;session_6c95&quot;    &quot;session_6e19&quot;    &quot;session_6eab&quot;   
+##  [70] &quot;session_6ff8&quot;    &quot;session_718e&quot;    &quot;session_71c1&quot;   
+##  [73] &quot;session_72d6&quot;    &quot;session_7303&quot;    &quot;session_73d0&quot;   
+##  [76] &quot;session_782d&quot;    &quot;session_7856&quot;    &quot;session_7864&quot;   
+##  [79] &quot;session_7a9b&quot;    &quot;session_7b24&quot;    &quot;session_7bf9&quot;   
+##  [82] &quot;session_7cf2&quot;    &quot;session_7d5d&quot;    &quot;session_7dae&quot;   
+##  [85] &quot;session_819b&quot;    &quot;session_8329&quot;    &quot;session_834d&quot;   
+##  [88] &quot;session_84d7&quot;    &quot;session_85b0&quot;    &quot;session_861b&quot;   
+##  [91] &quot;session_867f&quot;    &quot;session_8688&quot;    &quot;session_86bb&quot;   
+##  [94] &quot;session_86ee&quot;    &quot;session_8730&quot;    &quot;session_8764&quot;   
+##  [97] &quot;session_87a9&quot;    &quot;session_880a&quot;    &quot;session_8853&quot;   
+## [100] &quot;session_88b0&quot;    &quot;session_8986&quot;    &quot;session_8a08&quot;   
+## [103] &quot;session_8a73&quot;    &quot;session_8a87&quot;    &quot;session_8aad&quot;   
+## [106] &quot;session_8ae2&quot;    &quot;session_8db4&quot;    &quot;session_8e1f&quot;   
+## [109] &quot;session_wu53a42&quot; &quot;session_8fad&quot;    &quot;session_8fd3&quot;   
+## [112] &quot;session_9083&quot;    &quot;session_90d8&quot;    &quot;session_9128&quot;   
+## [115] &quot;session_9145&quot;    &quot;session_916e&quot;    &quot;session_9170&quot;   
+## [118] &quot;session_919e&quot;    &quot;session_91df&quot;    &quot;session_9226&quot;   
+## [121] &quot;session_9333&quot;    &quot;session_9376&quot;    &quot;session_937e&quot;   
+## [124] &quot;session_94d5&quot;    &quot;session_9539&quot;    &quot;session_9678&quot;   
+## [127] &quot;session_96a0&quot;    &quot;session_9745&quot;    &quot;session_97b3&quot;   
+## [130] &quot;session_985b&quot;    &quot;session_9873&quot;    &quot;session_9881&quot;   
+## [133] &quot;session_9994&quot;    &quot;session_9a20&quot;    &quot;session_9a2f&quot;   
+## [136] &quot;session_wu54edf&quot; &quot;session_9af9&quot;    &quot;session_9b69&quot;   
+## [139] &quot;session_9ba4&quot;    &quot;session_9c27&quot;    &quot;session_9c99&quot;   
+## [142] &quot;session_9ce8&quot;    &quot;session_9de3&quot;    &quot;session_9e8a&quot;   
+## [145] &quot;session_9ebc&quot;    &quot;session_a051&quot;    &quot;session_a16e&quot;   
+## [148] &quot;session_a19f&quot;    &quot;session_a229&quot;    &quot;session_a24a&quot;   
+## [151] &quot;session_a328&quot;    &quot;session_a340&quot;    &quot;session_a3ab&quot;   
+## [154] &quot;session_a3ee&quot;    &quot;session_a43a&quot;    &quot;session_a4b2&quot;   
+## [157] &quot;session_a515&quot;    &quot;session_a528&quot;    &quot;session_a555&quot;   
+## [160] &quot;session_a5bb&quot;    &quot;session_a62d&quot;    &quot;session_a77a&quot;   
+## [163] &quot;session_ab9c&quot;    &quot;session_abe9&quot;    &quot;session_ac0e&quot;   
+## [166] &quot;session_ad30&quot;    &quot;session_adc9&quot;    &quot;session_af06&quot;   
+## [169] &quot;session_af4a&quot;    &quot;session_af8d&quot;    &quot;session_b0b7&quot;   
+## [172] &quot;session_b391&quot;    &quot;session_b6d3&quot;    &quot;session_b807&quot;   
+## [175] &quot;session_b8c7&quot;    &quot;session_b91f&quot;    &quot;session_bb0b&quot;   
+## [178] &quot;session_bb8a&quot;    &quot;session_bc3d&quot;    &quot;session_bc40&quot;   
+## [181] &quot;session_bceb&quot;    &quot;session_bea7&quot;    &quot;session_bf9f&quot;   
+## [184] &quot;session_c359&quot;    &quot;session_c3c2&quot;    &quot;session_c442&quot;   
+## [187] &quot;session_c62d&quot;    &quot;session_c6ba&quot;    &quot;session_c936&quot;   
+## [190] &quot;session_ca81&quot;    &quot;session_cad3&quot;    &quot;session_cbd4&quot;   
+## [193] &quot;session_cbe1&quot;    &quot;session_cd63&quot;    &quot;session_d14f&quot;   
+## [196] &quot;session_d370&quot;    &quot;session_d69f&quot;    &quot;session_d815&quot;   
+## [199] &quot;session_d82e&quot;    &quot;session_d849&quot;    &quot;session_d8b5&quot;   
+## [202] &quot;session_da68&quot;    &quot;session_db51&quot;    &quot;session_db75&quot;   
+## [205] &quot;session_dbcd&quot;    &quot;session_dde2&quot;    &quot;session_deac&quot;   
+## [208] &quot;session_dfb7&quot;    &quot;session_dfe9&quot;    &quot;session_e00a&quot;   
+## [211] &quot;session_e2ad&quot;    &quot;session_e3c7&quot;    &quot;session_e7d2&quot;   
+## [214] &quot;session_e7e5&quot;    &quot;session_e7f2&quot;    &quot;session_ea38&quot;   
+## [217] &quot;session_edbc&quot;    &quot;session_edf9&quot;    &quot;session_edfc&quot;   
+## [220] &quot;session_f0be&quot;    &quot;session_f2d9&quot;    &quot;session_f2fe&quot;   
+## [223] &quot;session_f39b&quot;    &quot;session_f5e9&quot;    &quot;session_f650&quot;   
+## [226] &quot;session_f853&quot;    &quot;session_f989&quot;    &quot;session_fab1&quot;   
+## [229] &quot;session_fcef&quot;    &quot;session_fd0e&quot;    &quot;session_fe49&quot;   
+## [232] &quot;session_fe4f&quot;    &quot;session_ffa0&quot;    &quot;session_10057&quot;  
+## [235] &quot;session_1019a&quot;   &quot;session_1028a&quot;   &quot;session_10499&quot;  
+## [238] &quot;session_10513&quot;   &quot;session_105e3&quot;   &quot;session_10b03&quot;  
+## [241] &quot;session_10b53&quot;   &quot;session_10c0c&quot;   &quot;session_10cb2&quot;  
+## [244] &quot;session_10e4d&quot;   &quot;session_10e67&quot;   &quot;session_10e92&quot;  
+## [247] &quot;session_10fbd&quot;   &quot;session_10fcc&quot;   &quot;session_114f1&quot;  
+## [250] &quot;session_116fb&quot;   &quot;session_11822&quot;   &quot;session_1185e&quot;  
+## [253] &quot;session_118d0&quot;   &quot;session_11b0d&quot;   &quot;session_12182&quot;  
+## [256] &quot;session_121af&quot;   &quot;session_121ee&quot;   &quot;session_12405&quot;  
+## [259] &quot;session_126db&quot;   &quot;session_12825&quot;   &quot;session_12896&quot;  
+## [262] &quot;session_12a0b&quot;   &quot;session_12c7c&quot;   &quot;session_12e21&quot;  
+## [265] &quot;session_1346d&quot;   &quot;session_13622&quot;   &quot;session_13886&quot;  
+## [268] &quot;session_13d33&quot;   &quot;session_140bd&quot;   &quot;session_14428&quot;  
+## [271] &quot;session_14b8a&quot;   &quot;session_14e58&quot;   &quot;session_14fdc&quot;  
+## [274] &quot;session_1517f&quot;   &quot;session_151b2&quot;   &quot;session_15549&quot;  
+## [277] &quot;session_155a9&quot;   &quot;session_1571b&quot;   &quot;session_15b18&quot;  
+## [280] &quot;session_15b99&quot;   &quot;session_15d2c&quot;   &quot;session_15e0c&quot;  
+## [283] &quot;session_15f75&quot;   &quot;session_15fbf&quot;   &quot;session_16621&quot;  
+## [286] &quot;session_16691&quot;   &quot;session_16f0d&quot;   &quot;session_17027&quot;  
+## [289] &quot;session_173fe&quot;   &quot;session_17eaf&quot;   &quot;session_17ecd&quot;  
+## [292] &quot;session_180dd&quot;   &quot;session_18641&quot;   &quot;session_187ae&quot;  
+## [295] &quot;session_18a0b&quot;   &quot;session_18b18&quot;   &quot;session_18db4&quot;  
+## [298] &quot;session_19048&quot;   &quot;session_19051&quot;   &quot;session_19510&quot;  
+## [301] &quot;session_19788&quot;   &quot;session_197ee&quot;   &quot;session_19c04&quot;  
+## [304] &quot;session_19c7a&quot;   &quot;session_19f0c&quot;   &quot;session_1a557&quot;  
+## [307] &quot;session_1ac3c&quot;   &quot;session_1b733&quot;   &quot;session_1b76a&quot;  
+## [310] &quot;session_1b76b&quot;   &quot;session_1ba83&quot;   &quot;session_1c0a6&quot;  
+## [313] &quot;session_1c11c&quot;   &quot;session_1c304&quot;   &quot;session_1c4c3&quot;  
+## [316] &quot;session_1cea1&quot;   &quot;session_1cfb9&quot;   &quot;session_1db2a&quot;  
+## [319] &quot;session_1db96&quot;   &quot;session_1dbea&quot;   &quot;session_1dc94&quot;  
+## [322] &quot;session_1e361&quot;   &quot;session_1e36e&quot;   &quot;session_1e91e&quot;  
+## [325] &quot;session_wu6bf8f&quot; &quot;session_1f3a8&quot;   &quot;session_1f56c&quot;  
+## [328] &quot;session_1f61e&quot;   &quot;session_1f831&quot;   &quot;session_1fced&quot;  
+## [331] &quot;session_1fd39&quot;   &quot;session_wu6c9e5&quot; &quot;session_20074&quot;  
+## [334] &quot;session_2019f&quot;   &quot;session_201a1&quot;   &quot;session_209f9&quot;  
+## [337] &quot;session_20e87&quot;   &quot;session_2105b&quot;   &quot;session_212a2&quot;  
+## [340] &quot;session_2143b&quot;   &quot;session_wu6decf&quot; &quot;session_218ca&quot;  
+## [343] &quot;session_21bea&quot;   &quot;session_21bfd&quot;   &quot;session_223e1&quot;  
+## [346] &quot;session_2248d&quot;   &quot;session_22ae6&quot;   &quot;session_2324d&quot;  
+## [349] &quot;session_23636&quot;   &quot;session_23912&quot;   &quot;session_23a70&quot;  
+## [352] &quot;session_23b0d&quot;   &quot;session_23c17&quot;   &quot;session_240ea&quot;  
+## [355] &quot;session_24256&quot;   &quot;session_24484&quot;  
+## 
+## $doc_13d
+##  [1] &quot;session_4809&quot;  &quot;session_5dbc&quot;  &quot;session_8e0b&quot;  &quot;session_cf4b&quot; 
+##  [5] &quot;session_d92a&quot;  &quot;session_102bb&quot; &quot;session_10e9f&quot; &quot;session_11344&quot;
+##  [9] &quot;session_11ca4&quot; &quot;session_12dc9&quot; &quot;session_155b5&quot; &quot;session_1b563&quot;
+## [13] &quot;session_1c411&quot; &quot;session_1f384&quot; &quot;session_22e97&quot;
+## 
+## $doc_14c
+##  [1] &quot;session_53fb&quot;  &quot;session_564b&quot;  &quot;session_5697&quot;  &quot;session_56e2&quot; 
+##  [5] &quot;session_630b&quot;  &quot;session_6e80&quot;  &quot;session_6f7c&quot;  &quot;session_7c8a&quot; 
+##  [9] &quot;session_8903&quot;  &quot;session_890c&quot;  &quot;session_89d2&quot;  &quot;session_907e&quot; 
+## [13] &quot;session_98b4&quot;  &quot;session_c268&quot;  &quot;session_c302&quot;  &quot;session_cb86&quot; 
+## [17] &quot;session_d70a&quot;  &quot;session_d854&quot;  &quot;session_e4c7&quot;  &quot;session_f220&quot; 
+## [21] &quot;session_fd57&quot;  &quot;session_fe31&quot;  &quot;session_10278&quot; &quot;session_115b0&quot;
+## [25] &quot;session_11baa&quot; &quot;session_11e26&quot; &quot;session_12185&quot; &quot;session_1414b&quot;
+## [29] &quot;session_14dba&quot; &quot;session_14e47&quot; &quot;session_15738&quot; &quot;session_15a38&quot;
+## [33] &quot;session_16305&quot; &quot;session_17b35&quot; &quot;session_19af2&quot; &quot;session_1d074&quot;
+## [37] &quot;session_1fcc4&quot; &quot;session_2272e&quot; &quot;session_23a3e&quot;</code></pre></figure>
+
+<p>在这种表现方式下，每项拥有一个条目，它是该项出现过的所有事务构成的向量。<code>tidLists</code>可以直接作为输入，用于那些使用这类垂直数据库布局的挖掘算法，挖掘关联信息。</p>
+
+<p>在下一个例子中，我们将看到如何创建数据集，以及规则是如何被挖掘的。</p>
+
+<h3 id="section-18">例二：调查问卷数据的挖掘</h3>
+
+<p>作为第二个例子，我们准备和挖掘调查问卷数据。我们采用源自UCI机器学习源的Adult数据集<a href="#asuncionuci">[36]</a>，它由arules包提供。这个数据集，类似于Hastie等人在关联规则挖掘章节使用的市场数据集<a href="#hastie2009elements">[4]</a>。该数据来源于美国人口普查局数据库，它包含48842个例子，并拥有年龄、工作类别、受教育程度等14个属性。数据最早用于通过这些属性预测个人的收入水平。我们加入了<code>income</code>属性，它具有等级<code>small</code>和<code>large</code>，分别表示收入不高于5万美元和高于5万美元。该数据作为数据集<code>AdultUCI</code>包含在arules包中：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;AdultUCI&quot;</span><span class="p">)</span>
+<span class="kp">dim</span><span class="p">(</span>AdultUCI<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 48842    15</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##   age        workclass fnlwgt education education-num     marital-status
+## 1  39        State-gov  77516 Bachelors            13      Never-married
+## 2  50 Self-emp-not-inc  83311 Bachelors            13 Married-civ-spouse
+##        occupation  relationship  race  sex capital-gain capital-loss
+## 1    Adm-clerical Not-in-family White Male         2174            0
+## 2 Exec-managerial       Husband White Male            0            0
+##   hours-per-week native-country income
+## 1             40  United-States  small
+## 2             13  United-States  small</code></pre></figure>
+
+<p><code>AdultUCI</code>混合了类别属性和量化属性，在它能转换成适合关联规则挖掘的事务数据前，需要一些预处理。首先，我们移除<code>fnlwgt</code>和<code>education-num</code>两个属性：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[[</span><span class="s">&quot;fnlwgt&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+AdultUCI<span class="p">[[</span><span class="s">&quot;education-num&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span></code></pre></figure>
+
+<p>第一个属性是权重数据，它是数据集的创建者通过美国人口普查局人口司提供的控制数据计算而得。第二个移除的属性只是属性<code>education</code>的数值表示，该属性也是数据集的一部分。</p>
+
+<p>接下来，我们需要将4个余下的量化数据（<code>age</code>、<code>hour-per-week</code>、<code>capitcal-gain</code>和<code>capital-loss</code>），通过建立合适的类别映射为有序属性。我们借助关于典型的年龄组和工作小时数的知识，将属性<code>age</code>和<code>hour-per-week</code>分为合适的类别。对于资本相关的两个属性，我们为没有收益（损失）的情况创建称为<code>None</code>的类别。然后，我们按它们的中位数，进一步将收入（损失）组分为<code>Low</code>和<code>High</code>两个类别：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[[</span><span class="s">&quot;age&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
+  <span class="kp">ordered</span><span class="p">(</span><span class="kp">cut</span><span class="p">(</span>AdultUCI<span class="p">[[</span><span class="s">&quot;age&quot;</span><span class="p">]],</span> 
+              <span class="kt">c</span><span class="p">(</span><span class="m">15</span><span class="p">,</span><span class="m">25</span><span class="p">,</span><span class="m">45</span><span class="p">,</span><span class="m">65</span><span class="p">,</span><span class="m">100</span><span class="p">)),</span>
+          labels<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Yong&quot;</span><span class="p">,</span> <span class="s">&quot;Middle-aged&quot;</span><span class="p">,</span> <span class="s">&quot;Senior&quot;</span><span class="p">,</span> <span class="s">&quot;Old&quot;</span><span class="p">))</span>
+AdultUCI<span class="p">[[</span><span class="s">&quot;hours-per-week&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
+  <span class="kp">ordered</span><span class="p">(</span><span class="kp">cut</span><span class="p">(</span>AdultUCI<span class="p">[[</span><span class="s">&quot;hours-per-week&quot;</span><span class="p">]],</span> 
+              <span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">40</span><span class="p">,</span> <span class="m">60</span><span class="p">,</span> <span class="m">168</span><span class="p">)),</span>
+          labels<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Part-time&quot;</span><span class="p">,</span> <span class="s">&quot;Full-time&quot;</span><span class="p">,</span> <span class="s">&quot;Over-time&quot;</span><span class="p">,</span> <span class="s">&quot;Workaholic&quot;</span><span class="p">))</span>
+AdultUCI<span class="p">[[</span><span class="s">&quot;capital-gain&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
+  <span class="kp">ordered</span><span class="p">(</span><span class="kp">cut</span><span class="p">(</span>AdultUCI<span class="p">[[</span> <span class="s">&quot;capital-gain&quot;</span><span class="p">]],</span> 
+              <span class="kt">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="m">0</span><span class="p">,</span>median<span class="p">(</span>AdultUCI<span class="p">[[</span><span class="s">&quot;capital-gain&quot;</span><span class="p">]][</span>AdultUCI<span class="p">[[</span><span class="s">&quot;capital-gain&quot;</span><span class="p">]]</span><span class="o">&gt;</span><span class="m">0</span><span class="p">]),</span><span class="kc">Inf</span><span class="p">)),</span> 
+          labels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;None&quot;</span><span class="p">,</span> <span class="s">&quot;Low&quot;</span><span class="p">,</span> <span class="s">&quot;High&quot;</span><span class="p">))</span>
+AdultUCI<span class="p">[[</span><span class="s">&quot;capital-loss&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
+  <span class="kp">ordered</span><span class="p">(</span><span class="kp">cut</span><span class="p">(</span>AdultUCI<span class="p">[[</span> <span class="s">&quot;capital-loss&quot;</span><span class="p">]],</span>
+              <span class="kt">c</span><span class="p">(</span><span class="o">-</span><span class="kc">Inf</span><span class="p">,</span><span class="m">0</span><span class="p">,</span>median<span class="p">(</span>AdultUCI<span class="p">[[</span><span class="s">&quot;capital-loss&quot;</span><span class="p">]][</span>AdultUCI<span class="p">[[</span><span class="s">&quot;capital-loss&quot;</span><span class="p">]]</span><span class="o">&gt;</span><span class="m">0</span><span class="p">]),</span><span class="kc">Inf</span><span class="p">)),</span>
+          labels <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;none&quot;</span><span class="p">,</span> <span class="s">&quot;low&quot;</span><span class="p">,</span> <span class="s">&quot;high&quot;</span><span class="p">))</span></code></pre></figure>
+
+<p>现在，通过数据集到<code>transactions</code>的类型转换，数据能被自动重编码为二值索引矩阵。</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">Adult <span class="o">&lt;-</span> as<span class="p">(</span>AdultUCI<span class="p">,</span> <span class="s">&quot;transactions&quot;</span><span class="p">)</span>
+Adult</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+##  48842 transactions (rows) and
+##  115 items (columns)</code></pre></figure>
+
+<p>剩下的115个类别属性，被自动重编码为115个二值项。在编码过程中，项标签按<code>&lt;variable name&gt;=&lt;category label&gt;</code>的形式生成。注意，对于有缺失值的情况，有缺失值的属性对应的所有项被设为0。</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>Adult<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions as itemMatrix in sparse format with
+##  48842 rows (elements/itemsets/transactions) and
+##  115 columns (items) and a density of 0.1089939 
+## 
+## most frequent items:
+##            capital-loss=none            capital-gain=None 
+##                        46560                        44807 
+## native-country=United-States                   race=White 
+##                        43832                        41762 
+##            workclass=Private                      (Other) 
+##                        33906                       401333 
+## 
+## element (itemset/transaction) length distribution:
+## sizes
+##     9    10    11    12    13 
+##    19   971  2067 15623 30162 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    9.00   12.00   13.00   12.53   13.00   13.00 
+## 
+## includes extended item information - examples:
+##            labels variables      levels
+## 1        age=Yong       age        Yong
+## 2 age=Middle-aged       age Middle-aged
+## 3      age=Senior       age      Senior
+## 
+## includes extended transaction information - examples:
+##   transactionID
+## 1             1
+## 2             2
+## 3             3</code></pre></figure>
+
+<p>事务数据集的摘要给出了一个粗糙的预览，展示了最频繁的项、事务的长度分布，以及扩展的项信息，它展示了每个二值项由哪些变量和哪些值创建。在例一中，我们看到标签为<code>age=Middle-aged</code>的项由变量<code>age</code>和等级<code>middle-aged</code>产生。</p>
+
+<p>为了看到哪些项在数据集中重要，我们可以使用<code>itemFrequencyPlot()</code>。为了减少项的数目，我们只绘出支持度大于$10\%$（利用参数<code>support</code>）的那些项的项频率。为了标签更好的可读性，我们通过参数<code>cex.names</code>减小了标签大小：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>Adult<span class="p">,</span> support <span class="o">=</span> <span class="m">0.1</span><span class="p">,</span> cex.names<span class="o">=</span><span class="m">0.8</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-15-1.png" alt="testing" /></p>
+
+<p>接下来，我们按最小支持度$1\%$、置信度$0.6$，调用<code>apriori()</code>函数找出所有的规则（<code>apriori()</code>默认的关联信息类型）：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">rules <span class="o">&lt;-</span> apriori<span class="p">(</span>Adult<span class="p">,</span>
+                 parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> <span class="m">0.01</span><span class="p">,</span> confidence <span class="o">=</span> <span class="m">0.6</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Parameter specification:
+##  confidence minval smax arem  aval originalSupport support minlen maxlen
+##         0.6    0.1    1 none FALSE            TRUE    0.01      1     10
+##  target   ext
+##   rules FALSE
+## 
+## Algorithmic control:
+##  filter tree heap memopt load sort verbose
+##     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+## 
+## apriori - find association rules with the apriori algorithm
+## version 4.21 (2004.05.09)        (c) 1996-2004   Christian Borgelt
+## set item appearances ...[0 item(s)] done [0.00s].
+## set transactions ...[115 item(s), 48842 transaction(s)] done [0.03s].
+## sorting and recoding items ... [67 item(s)] done [0.01s].
+## creating transaction tree ... done [0.03s].
+## checking subsets of size 1 2 3 4 5 6 7 8 9 10 done [0.79s].
+## writing ... [276443 rule(s)] done [0.04s].
+## creating S4 object  ... done [0.23s].</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">rules</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 276443 rules</code></pre></figure>
+
+<p>首先，函数打印出采用的参数。除了设定最小支持度和最小置信度外，所有参数都使用默认值。值得一提的是参数<code>maxlen</code>，挖掘出频繁项集的大小，默认被限定为5。若将<code>maxlen</code>设为更大的值，更长的关联规则才能被挖掘。设定了参数之后，C实现的算法的输出和时间信息会被显示。</p>
+
+<p>挖掘算法的结果是276443条规则构成的集合。<code>summary()</code>可用于显示挖掘到的规则的摘要信息：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>rules<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 276443 rules
+## 
+## rule length distribution (lhs + rhs):sizes
+##     1     2     3     4     5     6     7     8     9    10 
+##     6   432  4981 22127 52669 75104 67198 38094 13244  2588 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   5.000   6.000   6.289   7.000  10.000 
+## 
+## summary of quality measures:
+##     support          confidence          lift        
+##  Min.   :0.01001   Min.   :0.6000   Min.   : 0.7171  
+##  1st Qu.:0.01253   1st Qu.:0.7691   1st Qu.: 1.0100  
+##  Median :0.01701   Median :0.9051   Median : 1.0554  
+##  Mean   :0.02679   Mean   :0.8600   Mean   : 1.3109  
+##  3rd Qu.:0.02741   3rd Qu.:0.9542   3rd Qu.: 1.2980  
+##  Max.   :0.95328   Max.   :1.0000   Max.   :20.6826  
+## 
+## mining info:
+##   data ntransactions support confidence
+##  Adult         48842    0.01        0.6</code></pre></figure>
+
+<p>它展示了规则数量，LHS和RHS中最频繁的项和它们分别的长度分布，以及挖掘算法返回的用于质量度量的统计信息的摘要。</p>
+
+<p>作为典型的关联规则挖掘，找到的规则数量大。为了分析这些规则，比如，<code>subset()</code>可为每个项产生独立的规则子集，其项从规则的RHS的<code>income</code>变量而来，同时我们要求提升度的度量超过1.2：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">rulesIncomeSmall <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>rules<span class="p">,</span> subset <span class="o">=</span> rhs <span class="o">%in%</span> <span class="s">&quot;income=small&quot;</span> <span class="o">&amp;</span> lift <span class="o">&gt;</span> <span class="m">1.2</span><span class="p">)</span>
+rulesIncomeLarge <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>rules<span class="p">,</span> subset <span class="o">=</span> rhs <span class="o">%in%</span> <span class="s">&quot;income=large&quot;</span> <span class="o">&amp;</span> lift <span class="o">&gt;</span> <span class="m">1.2</span><span class="p">)</span></code></pre></figure>
+
+<p>我们现在分别得到了低收入和高收入人群的规则集。为了比较，我们考察两个集合置信度最高的3条规则：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##   lhs                               rhs               support confidence     lift
+## 1 {workclass=Private,                                                            
+##    marital-status=Never-married,                                                 
+##    relationship=Own-child,                                                       
+##    sex=Male,                                                                     
+##    hours-per-week=Part-time,                                                     
+##    native-country=United-States} =&gt; {income=small} 0.01074895  0.7104195 1.403653
+## 2 {workclass=Private,                                                            
+##    marital-status=Never-married,                                                 
+##    relationship=Own-child,                                                       
+##    sex=Male,                                                                     
+##    hours-per-week=Part-time}     =&gt; {income=small} 0.01144507  0.7102922 1.403402
+## 3 {workclass=Private,                                                            
+##    marital-status=Never-married,                                                 
+##    relationship=Own-child,                                                       
+##    sex=Male,                                                                     
+##    capital-gain=None,                                                            
+##    hours-per-week=Part-time,                                                     
+##    native-country=United-States} =&gt; {income=small} 0.01046231  0.7097222 1.402276</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeLarge<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##   lhs                                    rhs               support confidence     lift
+## 1 {marital-status=Married-civ-spouse,                                                 
+##    capital-gain=High,                                                                 
+##    native-country=United-States}      =&gt; {income=large} 0.01562180  0.6849192 4.266398
+## 2 {marital-status=Married-civ-spouse,                                                 
+##    capital-gain=High,                                                                 
+##    capital-loss=none,                                                                 
+##    native-country=United-States}      =&gt; {income=large} 0.01562180  0.6849192 4.266398
+## 3 {relationship=Husband,                                                              
+##    race=White,                                                                        
+##    capital-gain=High,                                                                 
+##    native-country=United-States}      =&gt; {income=large} 0.01302158  0.6846071 4.264454</code></pre></figure>
+
+<p>从规则中，我们看出私营部门工作的的工人、兼职工作或在服务业工作<sup id="fnref:how_service-industry"><a href="#fn:how_service-industry" class="footnote">7</a></sup>收入偏低，然而那些出生在美国的资本收益高的人收入偏高。这个例子展示了使用子集抽取和排序，挖掘到的关联信息集合就算很大也能被分析。</p>
+
+<p>最后，找出的规则可被写入磁盘与其它应用共享。<code>write()</code>函数可将规则保存为纯文本格式。如下命令，按逗号分隔值（CSV）格式，将规则集合存为名为“data.csv”的文件：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">write</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.csv&quot;</span><span class="p">,</span> sep <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> col.names <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span></code></pre></figure>
+
+<p>另外，利用pmml包，规则还能存为PMML（predictive modelling markup language）格式<a href="#Graham2014pmml">[37]</a>：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">write.PMML<span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.xml&quot;</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] &quot;data.xml&quot;</code></pre></figure>
+
+<p>这是一种基于XML的标准化表示方式，被许多数据挖掘工具采用。注意，pmml需要XML包，该包可能不是在所有操作系统中都可用。</p>
+
+<p>其它程序现在能容易的分享和使用保存的数据。项集（事务用<code>write()</code>也可）可按同样的方式写为文档。</p>
+
+<h3 id="section-19">例三：兴趣度量的扩展</h3>
+
+<p>在本例中，我们展示加入新的兴趣度量——使用Omiecinski提出的全置信度（all-confidence）<a href="#omiecinski2003alternative">[7]</a>——多么的容易。项集$X$的全置信度定义为</p>
+
+<p>\begin{equation}
+all\mbox{-}confidence(X) = {supp(X)\over \max_{I\subset X}supp(I)}。
+\label{eq:all-confidence}
+\end{equation}</p>
+
+<p>该度量拥有这样的特性：对所有$I\subset X$，都有$conf(I \to X\not I) \geq all\mbox{-}confidence(X)$。这意味着从项集$X$产生的所有可能规则，必须至少拥有一个置信度，该置信度由项集的全置信度给定。Omiecinski指出公式\eqref{eq:all-confidence}分母的支持度一定来自于单个的项，因此能简化为$\max_{i\subset X}supp(\{i\})$。为了获得计算全支持度的项集，我们使用Eclat算法，从先前用过的Adult数据挖掘频繁项集：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
+fsets <span class="o">&lt;-</span> eclat<span class="p">(</span>Adult<span class="p">,</span> parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> <span class="m">0.05</span><span class="p">),</span>
+               control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose<span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span></code></pre></figure>
+
+<p>为了得到全置信度的分母，我们需要找出全部挖掘到的单个项集，以及它们对应的置信度值。我们创建一个以项的列号命名的向量，并将项的支持度作为向量的元素：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">singleItems <span class="o">&lt;-</span> fsets<span class="p">[</span>size<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">))</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span>
+<span class="c1">## Get the col numbers we have support for</span>
+singleSupport <span class="o">&lt;-</span> quality<span class="p">(</span>singleItems<span class="p">)</span><span class="o">$</span>support
+<span class="kp">names</span><span class="p">(</span>singleSupport<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">unlist</span><span class="p">(</span>LIST<span class="p">(</span>items<span class="p">(</span>singleItems<span class="p">),</span> decode <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
+<span class="kp">head</span><span class="p">(</span>singleSupport<span class="p">,</span> n <span class="o">=</span> <span class="m">5</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##        66        63       111        60         8 
+## 0.9532779 0.9173867 0.8974243 0.8550428 0.6941976</code></pre></figure>
+
+<p>接下来，我们可用公式\eqref{eq:all-confidence}计算所有项集的全支持度。作为分母的单个项的支持度从带命名的向量<code>singleSupport</code>中查找，最终得到的度量加入到（衡量）集合质量的数据框：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsetList <span class="o">&lt;-</span> LIST<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">),</span> decode <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+allConfidence <span class="o">&lt;-</span> quality<span class="p">(</span>fsets<span class="p">)</span><span class="o">$</span>support <span class="o">/</span> 
+  <span class="kp">sapply</span><span class="p">(</span>itemsetList<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="kp">max</span><span class="p">(</span>singleSupport<span class="p">[</span><span class="kp">as.character</span><span class="p">(</span>x<span class="p">)]))</span>
+quality<span class="p">(</span>fsets<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span>quality<span class="p">(</span>fsets<span class="p">),</span> allConfidence<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>fsets<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8496 itemsets
+## 
+## most frequent items:
+##            capital-loss=None native-country=United-States 
+##                         4082                         3973 
+##            capital-gain=None                   race=White 
+##                         3962                         3781 
+##            workclass=Private                      (Other) 
+##                         3142                        21931 
+## 
+## element (itemset/transaction) length distribution:sizes
+##    1    2    3    4    5    6    7    8    9   10 
+##   36  303 1078 2103 2388 1689  706  171   21    1 
+## 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   4.000   5.000   4.811   6.000  10.000 
+## 
+## summary of quality measures:
+##     support        allConfidence    
+##  Min.   :0.05002   Min.   :0.05247  
+##  1st Qu.:0.06038   1st Qu.:0.06597  
+##  Median :0.07546   Median :0.08428  
+##  Mean   :0.10124   Mean   :0.11667  
+##  3rd Qu.:0.11279   3rd Qu.:0.12711  
+##  Max.   :0.95328   Max.   :1.00000  
+## 
+## includes transaction ID lists: FALSE 
+## 
+## mining info:
+##   data ntransactions support
+##  Adult         48842    0.05</code></pre></figure>
+
+<p>新的质量度量现在是项集集合的一部分。</p>
+
+<p>该度量可用于操作集合。例如，我们可以查找哪些包含一个与受教育程度相关的项的项集（采用部分匹配<code>%pin%</code>），并且将它们按全支持度排序（我们首先过滤掉长度为1的项集，因为它们的的全支持度为1）：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">fsetsEducation <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>fsets<span class="p">,</span> subset <span class="o">=</span> items <span class="o">%pin%</span> <span class="s">&quot;education&quot;</span><span class="p">)</span>
+inspect<span class="p">(</span><span class="kp">sort</span><span class="p">(</span>fsetsEducation<span class="p">[</span>size<span class="p">(</span>fsetsEducation<span class="p">)</span><span class="o">&gt;</span><span class="m">1</span><span class="p">],</span> 
+             by <span class="o">=</span> <span class="s">&quot;allConfidence&quot;</span><span class="p">)[</span><span class="m">1</span> <span class="o">:</span> <span class="m">3</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##   items                        support allConfidence
+## 1 {education=HS-grad,                               
+##    hours-per-week=Full-time} 0.2090209     0.3572453
+## 2 {education=HS-grad,                               
+##    income=small}             0.1807051     0.3570388
+## 3 {workclass=Private,                               
+##    education=HS-grad}        0.2391794     0.3445408</code></pre></figure>
+
+<p>最终得到的项集表明：高中毕业（没有受更高程度的教育）项与全职工作、低收入和私营企业工作高度相关。在arlues中，全支持度和其它一些兴趣度的度量方法通过<code>interestMeasure()</code>函数的形式已经实现了。</p>
+
+<h3 id="section-20">例四：事务数据的抽样</h3>
+
+<p>通过本例，我们展示抽样如何被用于arules。我们仍采用Adult数据集：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
+Adult </code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+##  48842 transactions (rows) and
+##  115 items (columns)</code></pre></figure>
+
+<p>我们采用公式\eqref{eq:sample-sizez-evaluation}计算可行的样本集大小$n$。我们将最小支持度设为$5\%$。我们将可接受的支持度的错误率$\epsilon$设为$10\%$，作为置信水平（$1-c$）我们设为$90\%$）：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">supp <span class="o">&lt;-</span> <span class="m">0.05</span>
+epsilon <span class="o">&lt;-</span> <span class="m">0.1</span>
+<span class="kt">c</span> <span class="o">&lt;-</span> <span class="m">0.1</span>
+n <span class="o">&lt;-</span> <span class="m">-2</span> <span class="o">*</span> <span class="kp">log</span><span class="p">(</span><span class="kt">c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>supp <span class="o">*</span> epsilon<span class="o">^</span><span class="m">2</span><span class="p">)</span> 
+n</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 9210.34</code></pre></figure>
+
+<p>结果的抽样数据集的大小比原始数据库小得多。我们使用<code>sample()</code>对原始数据库进行放回抽样，生成大小为$n$的抽样数据集：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultSample <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>Adult<span class="p">,</span> n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+
+<p>使用项的频率图，可以对样本集和数据库（总体）进行对比：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span> support <span class="o">=</span> supp<span class="p">,</span>
+                  cex.names <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-29-1.png" alt="testing" /></p>
+
+<p>样本集的项频率显示为长条，原始数据库的项频率表示为线。为了标签的可读性更好，我们在图中只显示了频繁的项，并且采用参数<code>cex.names</code>减小了标签的大小。</p>
+
+<p>另外，样本可以通过提升率（lift ratio）将样本集与population进行比较：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span>
+                  support <span class="o">=</span> supp<span class="p">,</span> lift <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+                  cex.names <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-30-1.png" alt="testing" /></p>
+
+<p>另外，可通过提升率（设置<code>lift=TRUE</code>）比较样本与总体。每个项$i$的<strong>提升率</strong>（lift ration）定义为${P(i|sample)\over P(i|population)}$，其中概率通过项的频率估计。提升率为1表示项在样本集中出现的比例与在总体中出现的一样；提升率大于1表示项在样本集中被过度表示，反之亦然。采用该图，较小频率项的大的相对偏差可以直观的辨识。</p>
+
+<p>为了比较通过采样获得的性能提升，我们采用Eclat算法在数据库和样本集上挖掘频繁项集，并且对比挖掘耗费的系统时间（以秒计）：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">time <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsets <span class="o">&lt;-</span> eclat<span class="p">(</span>Adult<span class="p">,</span>
+                    parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> supp<span class="p">),</span> control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)))</span>
+time</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##    user  system elapsed 
+##   0.190   0.002   0.193</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">timeSample <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsetsSample <span class="o">&lt;-</span> eclat<span class="p">(</span>AdultSample<span class="p">,</span>
+                          parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> supp<span class="p">),</span> control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)))</span>
+timeSample</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##    user  system elapsed 
+##   0.043   0.001   0.046</code></pre></figure>
+
+<p><code>system.time()</code>返回向量的第1个元素，给出了用于执行其参数中语句的（用户）CPU时间。因此，在抽样数据集而非全部数据库上挖掘获得的提速因子为：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">time<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">/</span> timeSample<span class="p">[</span><span class="m">1</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## user.self 
+##  4.418605</code></pre></figure>
+
+<p>为了评估在样本集上项集挖掘的精度，我们分析在两个集合上（表现）的差异：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsets</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8496 itemsets</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsetsSample</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8585 itemsets</code></pre></figure>
+
+<p>以上两个集合大小差不多。为了检查集合是否包含相似的项集，我们匹配集合，并且查看在数据库中出现的频繁项集也在样本集中出现的比率：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">match <span class="o">&lt;-</span> <span class="kp">match</span><span class="p">(</span>itemsets<span class="p">,</span> itemsetsSample<span class="p">,</span> nomatch <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
+<span class="c1">## remove no matches</span>
+<span class="kp">sum</span><span class="p">(</span><span class="kp">match</span><span class="o">&gt;</span><span class="m">0</span><span class="p">)</span> <span class="o">/</span> <span class="kp">length</span><span class="p">(</span>itemsets<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 0.9679849</code></pre></figure>
+
+<p>使用样本集，几乎所有的频繁项集都找到了。如下展示了那些没有在样本集中找到的频繁项集的支持度摘要信息，以及在样本中频繁但在数据库中非频繁的项集的支持度摘要信息：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span><span class="o">!</span><span class="kp">match</span><span class="p">)])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.05002 0.05051 0.05104 0.05162 0.05223 0.05823</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsetsSample<span class="p">[</span><span class="o">-</span><span class="kp">match</span><span class="p">])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.05005 0.05071 0.05136 0.05170 0.05244 0.05755</code></pre></figure>
+
+<p>以上信息表明只有那些支持度非常接近最小支持度的项集，错误的缺失或错误的找到了。</p>
+
+<p>通过从数据库和样本找到的频繁项集，我们可以通过错误率计算精度：</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r">supportItemsets <span class="o">&lt;-</span> quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span>match <span class="o">&gt;</span> <span class="m">0</span><span class="p">)])</span><span class="o">$</span>support
+supportSample <span class="o">&lt;-</span> quality<span class="p">(</span>itemsetsSample<span class="p">[</span><span class="kp">match</span><span class="p">])</span><span class="o">$</span>support
+accuracy <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">-</span> <span class="kp">abs</span><span class="p">(</span>supportSample <span class="o">-</span> supportItemsets<span class="p">)</span> <span class="o">/</span> supportItemsets
+<span class="kp">summary</span><span class="p">(</span>accuracy<span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.8398  0.9478  0.9697  0.9643  0.9861  1.0000</code></pre></figure>
+
+<p>以上摘要信息表明抽样可获得项集高精度的支持度。 这个简单的例子表明对于很大的数据库或看重挖掘时间的应用，抽样可作为一种强大技术。</p>
+
+<h2 id="section-21">结论与展望</h2>
+
+<p>通过arules包，我们提供了基础架构，它使我们能挖掘关联信息以及分析和处理挖掘结果。在此之前，R中并无这类的架构可用。arules的主要特性包括：</p>
+
+<ul>
+  <li>利用稀疏矩阵高效的实现；</li>
+  <li>供了简单和直观的接口处理和分析事务数据提、以及具有子集抽取和排序功能的项集和规则的集合；</li>
+  <li>接入了两个快速的挖掘算法；</li>
+  <li>能够灵活的增加新的质量度量、额外的项以及事务描述，这可用于选取事务和分析所得的关联信息；</li>
+  <li>提供了可扩展的数据结构，能容易实现新的关联信息类型和接入新的算法。</li>
+</ul>
+
+<p>这里存在几个arules的有趣的可行扩展方案，比如，接入那些使用统计量发现有趣项集的算法会十分有用（不必是关联规则相关的频繁项集）。这类算法包括实现基于$\mathcal X^2$测试的算法<a href="#silverstein1998beyond">[38]</a>，或者基线频率方法（baseline frequency approach）<a href="#dumouchel2001empirical">[39]</a>，还可以实现arules中基于距离的聚类以用于关联信息的可视化<a href="#strehl2003relationship">[40]</a>。</p>
+
+<h2 id="section-22">参考资料</h2>
+
+<ol class="bibliography"><li><span id="Michael2005arules">[1]M. Hahsler, B. Gruen, and K. Hornik, “arules – A Computational Environment for Mining Association Rules and Frequent Item Sets,” <i>Journal of Statistical Software</i>, vol. 14, no. 15, pp. 1–25, Oct. 2005.</span>
+
+[<a href="http://www.jstatsoft.org/v14/i15/">Online</a>]
+
+</li>
+<li><span id="piatetsky1991discovery">[2]G. Piatetsky-Shapiro, “Discovery, analysis, and presentation of strong rules,” <i>Knowledge discovery in databases</i>, pp. 229–238, 1991.</span>
+
+</li>
+<li><span id="Agrawal:1993:MAR:170036.170072">[3]R. Agrawal, T. Imieliński, and A. Swami, “Mining Association Rules Between Sets of Items in Large Databases,” <i>Sigmod Record</i>, vol. 22, no. 2, pp. 207–216, Jun. 1993.</span>
+
+[<a href="http://doi.acm.org/10.1145/170036.170072">Online</a>]
+
+</li>
+<li><span id="hastie2009elements">[4]T. Hastie, R. Tibshirani, and J. Friedman, <i>The elements of statistical learning</i>. Springer.</span>
+
+</li>
+<li><span id="hipp2000algorithms">[5]J. Hipp, U. Güntzer, and G. Nakhaeizadeh, “Algorithms for association rule mining—a general survey and comparison,” <i>ACM sigkdd explorations newsletter</i>, vol. 2, no. 1, pp. 58–64, 2000.</span>
+
+</li>
+<li><span id="zaki2004mining">[6]M. J. Zaki, “Mining non-redundant association rules,” <i>Data mining and knowledge discovery</i>, vol. 9, no. 3, pp. 223–248, 2004.</span>
+
+</li>
+<li><span id="omiecinski2003alternative">[7]E. R. Omiecinski, “Alternative interest measures for mining associations in databases,” <i>Knowledge and Data Engineering, IEEE Transactions on</i>, vol. 15, no. 1, pp. 57–69, 2003.</span>
+
+</li>
+<li><span id="brin1997dynamic">[8]S. Brin, R. Motwani, J. D. Ullman, and S. Tsur, “Dynamic itemset counting and implication rules for market basket data,” in <i>ACM SIGMOD Record</i>, 1997, vol. 26, no. 2, pp. 255–264.</span>
+
+</li>
+<li><span id="govindaraju2003advances">[9]N. Govindaraju and M. Zaki, “Advances in Frequent Itemset Mining Implementations,” 2003.</span>
+
+</li>
+<li><span id="borgelt2003efficient">[10]C. Borgelt, “Efficient implementations of apriori and eclat,” in <i>FIMI’03: Proceedings of the IEEE ICDM workshop on frequent itemset mining implementations</i>, 2003.</span>
+
+</li>
+<li><span id="berry1997data">[11]M. J. Berry and G. Linoff, <i>Data mining techniques: for marketing, sales, and customer support</i>. John Wiley &amp; Sons, Inc., 1997.</span>
+
+</li>
+<li><span id="zaki2000scalable">[12]M. J. Zaki, “Scalable algorithms for association mining,” <i>IEEE Transactions on Knowledge and Data Engineering</i>, vol. 12, no. 3, pp. 372–390, 2000.</span>
+
+</li>
+<li><span id="srikant1996mining">[13]R. Srikant and R. Agrawal, “Mining quantitative association rules in large relational tables,” in <i>ACM SIGMOD Record</i>, 1996, vol. 25, no. 2, pp. 1–12.</span>
+
+</li>
+<li><span id="borgelt2004finding">[14]C. Borgelt, “Finding association rules/hyperedges with the apriori algorithm.” Working Group Neural Networks and Fuzzy Systems, Otto-von-Guericke-University of Magdeburg, Universitätsplatz, 2004.</span>
+
+</li>
+<li><span id="goethals2003fimi">[15]B. Goethals and M. J. Zaki, “FIMI’03: Workshop on frequent itemset mining implementations,” in <i>Third IEEE International Conference on Data Mining Workshop on Frequent Itemset Mining Implementations</i>, 2003, pp. 1–13.</span>
+
+</li>
+<li><span id="knuth1998art">[16]D. E. Knuth, <i>The art of computer programming: sorting and searching</i>, vol. 3. Pearson Education, 1998.</span>
+
+</li>
+<li><span id="borgelt2002induction">[17]C. Borgelt and R. Kruse, “Induction of association rules: Apriori implementation,” in <i>Compstat</i>, 2002, pp. 395–400.</span>
+
+</li>
+<li><span id="hahsler2008selective">[18]M. Hahsler, C. Buchta, and K. Hornik, “Selective association rule generation,” <i>Computational Statistics</i>, vol. 23, no. 2, pp. 303–315, 2008.</span>
+
+</li>
+<li><span id="mannila1994efficient">[19]H. Mannila, H. Toivonen, and A. I. Verkamo, “Efficient algorithms for discovering association rules,” in <i>KDD-94: AAAI workshop on Knowledge Discovery in Databases</i>, 1994, pp. 181–192.</span>
+
+</li>
+<li><span id="zaki1997evaluation">[20]M. J. Zaki, S. Parthasarathy, W. Li, and M. Ogihara, “Evaluation of sampling for data mining of association rules,” in <i>Research Issues in Data Engineering, 1997. Proceedings. Seventh International Workshop on</i>, 1997, pp. 42–50.</span>
+
+</li>
+<li><span id="parthasarathy2002efficient">[21]S. Parthasarathy, “Efficient progressive sampling for association rules,” in <i>Data Mining, 2002. ICDM 2003. Proceedings. 2002 IEEE International Conference on</i>, 2002, pp. 354–361.</span>
+
+</li>
+<li><span id="toivonen1996sampling">[22]H. Toivonen and others, “Sampling large databases for association rules,” in <i>VLDB</i>, 1996, vol. 96, pp. 134–145.</span>
+
+</li>
+<li><span id="agrawal1994fast">[23]R. Agrawal, R. Srikant, and others, “Fast algorithms for mining association rules,” in <i>Proc. 20th int. conf. very large data bases, VLDB</i>, 1994, vol. 1215, pp. 487–499.</span>
+
+</li>
+<li><span id="hahsler2005implications">[24]M. Hahsler, K. Hornik, and T. Reutterer, “Implications of probabilistic data modeling for rule mining,” 2005.</span>
+
+</li>
+<li><span id="zaki1997new">[25]M. J. Zaki, S. Parthasarathy, M. Ogihara, W. Li, and others, “New Algorithms for Fast Discovery of Association Rules.,” in <i>KDD</i>, 1997, vol. 97, pp. 283–286.</span>
+
+</li>
+<li><span id="Pasquier1999discovering">[26]N. Pasquier, Y. Bastide, R. Taouil, and L. Lakhal, “Discovering Frequent Closed Itemsets for Association Rules,” in <i>International Conference on Database Theory</i>, 1999, pp. 398–416.</span>
+
+</li>
+<li><span id="xiong2003mining">[27]H. Xiong, P.-N. Tan, and V. Kumar, “Mining strong affinity association patterns in data sets with skewed support distribution,” in <i>Data Mining, 2003. ICDM 2003. Third IEEE International Conference on</i>, 2003, pp. 387–394.</span>
+
+</li>
+<li><span id="liu1999pruning">[28]B. Liu, W. Hsu, and Y. Ma, “Pruning and summarizing the discovered associations,” in <i>Proceedings of the fifth ACM SIGKDD international conference on Knowledge discovery and data mining</i>, 1999, pp. 125–134.</span>
+
+</li>
+<li><span id="hofmann2001visual">[29]H. Hofmann and A. Wilhelm, “Visual comparison of association rules,” <i>Computational Statistics</i>, vol. 16, no. 3, pp. 399–415, 2001.</span>
+
+</li>
+<li><span id="hahsler2007new">[30]M. Hahsler and K. Hornik, “New probabilistic interest measures for association rules,” <i>Intelligent Data Analysis</i>, vol. 11, no. 5, pp. 437–455, 2007.</span>
+
+</li>
+<li><span id="bayardo1999constraint">[31]R. J. Bayardo Jr, R. Agrawal, and D. Gunopulos, “Constraint-based rule mining in large, dense databases,” in <i>Data Engineering, 1999. Proceedings., 15th International Conference on</i>, 1999, pp. 188–197.</span>
+
+</li>
+<li><span id="tan2004selecting">[32]P.-N. Tan, V. Kumar, and J. Srivastava, “Selecting the right objective measure for association analysis,” <i>Information Systems</i>, vol. 29, no. 4, pp. 293–313, 2004.</span>
+
+</li>
+<li><span id="strehl1999distance">[33]A. Strehl, G. K. Gupta, and J. Ghosh, “Distance based clustering of association rules,” <i>Proceedings ANNIE 1999</i>, vol. 9, pp. 759–764, 1999.</span>
+
+</li>
+<li><span id="aggarwal2002finding">[34]C. C. Aggarwal, C. Procopiuc, and P. S. Yu, “Finding localized associations in market basket data,” <i>Knowledge and Data Engineering, IEEE Transactions on</i>, vol. 14, no. 1, pp. 51–62, 2002.</span>
+
+</li>
+<li><span id="hahsler2007building">[35]M. Hahsler and K. Hornik, “Building on the arules infrastructure for analyzing transaction data with R,” in <i>Advances in Data Analysis</i>, Springer, 2007, pp. 449–456.</span>
+
+</li>
+<li><span id="asuncionuci">[36]A. Asuncion and D. Newman, “UCI repository of machine learning databases (2007).”</span>
+
+[<a href="http://www.ics.uci.edu/ mlearn/MLRepository.html">Online</a>]
+
+</li>
+<li><span id="Graham2014pmml">[37]G. Williams, T. Jena, W. C. Lin, M. Hahsler, Z. Inc, H. Ishwaran, U. B. Kogalur, and R. Guha, <i>pmml: Generate PMML for various models</i>. 2014.</span>
+
+[<a href="http://CRAN.R-project.org/package=pmml">Online</a>]
+
+</li>
+<li><span id="silverstein1998beyond">[38]C. Silverstein, S. Brin, and R. Motwani, “Beyond market baskets: generalizing association rules to dependence rules,” <i>Data mining and knowledge discovery</i>, vol. 2, no. 1, pp. 39–68, 1998.</span>
+
+</li>
+<li><span id="dumouchel2001empirical">[39]W. DuMouchel and D. Pregibon, “Empirical bayes screening for multi-item associations,” in <i>Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining</i>, 2001, pp. 67–76.</span>
+
+</li>
+<li><span id="strehl2003relationship">[40]A. Strehl and J. Ghosh, “Relationship-based clustering and visualization for high-dimensional data mining,” <i>INFORMS Journal on Computing</i>, vol. 15, no. 2, pp. 208–230, 2003.</span>
+
+</li></ol>
+
+<h3 class="no_toc" id="section-23">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:supp-and-conf-define">
+      <p>支持度和置信度的定义见<a href="/2015/03/pattern-discovery-basic-concepts/#supp-and-conf-define">前文</a>。 <a href="#fnref:supp-and-conf-define" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:closed-and-max-itemset">
+      <p>这里的最大频繁项集和频繁闭项集分别为<a href="/2015/03/pattern-discovery-basic-concepts/#closed-and-max-pattern">最大模式和闭模式</a>。 <a href="#fnref:closed-and-max-itemset" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:is-wrong-index-in-paper">
+      <p>论文中为<code>0, 1, 1, 3, 0, 3, 3</code>和<code>0, 3, 4, 7</code>，是否有误？ <a href="#fnref:is-wrong-index-in-paper" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:hastie-chapter-about-association-rule-mining">
+      <p>An example application using questionnaire data can be found in Hastie<a href="#hastie2009elements">[4]</a> in the chapter about association rule mining. <a href="#fnref:hastie-chapter-about-association-rule-mining" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:what-this-mean-1">
+      <p>Note that when representing transactions, tidLists store for each item a transaction list, but here store for each itemset a list of transaction IDs in which the itemset appears. <a href="#fnref:what-this-mean-1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:as-a-heuristic">
+      <p>As a heuristic, the authors suggest to use the user specified minimum support threshold for $\tau$. <a href="#fnref:as-a-heuristic" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:how_service-industry">
+      <p>哪里看出服务业收入偏低？ <a href="#fnref:how_service-industry" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/04/speed-up-r" class="pageNav" style="float:left"   >上一篇：高性能R程序 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/05/TLD" class="pageNav" style="float:right"   >下一篇：TLD：跟踪－学习－检测 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/05/arules" 	data-url="http://qianjiye.de/2015/05/arules" data-title="arules：频繁项集与关联规则的挖掘">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/04/speed-up-r'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/05/TLD'; --1> -->
+<!--         url = '/2015/05/TLD'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/05/arules/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

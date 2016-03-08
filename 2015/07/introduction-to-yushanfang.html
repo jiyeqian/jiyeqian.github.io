@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>御膳房使用简介</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>御膳房使用简介</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-07-03">2015-07-03</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="/tags/#SQL" title="SQL">SQL</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文主要通过视频演示如何在<a href="http://yushanfang.com">御膳房</a>平台进行第二赛季的<a href="http://tianchi.aliyun.com/competition/introduction.htm?spm=5176.100066.333.2.QlL5cn&amp;raceId=3">资金流入流出预测</a>，主要参考了<a href="http://bbs.aliyun.com/read/249347.html">[资金流入流出预测]第二赛季参赛(平台使用)攻略之混沌队</a>的使用说明。</p>
+
+<h2 id="section">视频演示</h2>
+
+<!-- <div id="playerCnt"></div>
+<style type="text/css">
+    #playerCnt{height:360px;margin:0 auto;border:0px solid #CA0008;background-origin:content-box;background-size:cover;}
+</style>
+<script type="text/javascript">
+    var ivaInstance = new Iva('playerCnt', {
+        logoPosition: 'right',
+        title: 'videojj',
+        video: 'http://v.youku.com/v_show/id_XMTI3NjI4MzU0OA==',
+        cover: 'http://g.alicdn.com/base-tech-fe/base_fe_common/src/common/images/portal/1.png',
+        autoplay: false
+    });
+</script> -->
+
+<embed src="http://player.youku.com/player.php/sid/XMTI3NjI4MzU0OA==/v.swf" allowfullscreen="true" quality="high" width="672" height="460" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
+
+<p><strong>基本步骤：</strong></p>
+
+<ol>
+  <li>在“数据开发”，使用SQL创建表<code>lt_user_balance_table_sum_baseline</code>（每天的购买赎回总额）和<code>lt_basic_feature4to8_baseline</code>（4至8月的特征及其购买赎回总额）；</li>
+  <li>在“算法平台”，使用R生成9月的特征表<code>lt_basic_feature9_baseline</code>；</li>
+  <li>在“算法平台”，使用R中的线性回归预测9月的购买赎回情况表<code>tc_comp_predict_table</code>，系统自动根据此表评分。</li>
+</ol>
+
+<h2 id="section-1">相关代码</h2>
+
+<h3 id="democreatetable">创建表［demo_create_table］</h3>
+
+<p><strong>注意事项</strong>：</p>
+
+<ul>
+  <li>使用平台提供的数据表须加上项目名<code>tianchi_finance</code>，比如<code>tianchi_finance.user_balance_table</code>；</li>
+  <li>“算法平台”不能直接使用系统的表，只能使用自己生成的表，比如<code>lt_user_balance_table_sum_baseline</code>。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-SQL"><span class="c1">--日申购赎回汇总表</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_user_balance_table_sum_baseline</span><span class="p">(</span>
+    <span class="n">report_date</span> <span class="n">string</span> <span class="k">comment</span> <span class="s1">&#39;日期&#39;</span><span class="p">,</span>
+    <span class="n">total_purchase_amt</span> <span class="nb">bigint</span> <span class="k">comment</span> <span class="s1">&#39;日申购总额&#39;</span><span class="p">,</span>
+    <span class="n">total_redeem_amt</span> <span class="nb">bigint</span> <span class="k">comment</span> <span class="s1">&#39;日赎回总额&#39;</span>
+<span class="p">)</span> <span class="k">comment</span> <span class="s1">&#39;日申购赎回汇总表&#39;</span> <span class="n">partitioned</span> <span class="k">by</span> <span class="p">(</span><span class="n">ds</span> <span class="n">string</span><span class="p">);</span> <span class="c1">--ds：不同的分区，不同的时间区间。</span>
+
+<span class="k">insert</span> <span class="n">overwrite</span> <span class="k">table</span> <span class="n">lt_user_balance_table_sum_baseline</span> <span class="n">partition</span><span class="p">(</span><span class="n">ds</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="k">select</span> 
+    <span class="n">report_date</span><span class="p">,</span> 
+    <span class="k">sum</span><span class="p">(</span><span class="n">total_purchase_amt</span><span class="p">)</span> <span class="n">total_purchase_amt</span><span class="p">,</span> 
+    <span class="k">sum</span><span class="p">(</span><span class="n">total_redeem_amt</span><span class="p">)</span> <span class="n">total_redeem_amt</span>
+<span class="k">from</span> <span class="n">tianchi_finance</span><span class="p">.</span><span class="n">user_balance_table</span> <span class="c1">--内部赛主办方提供的申购赎回记录表。</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">report_date</span><span class="p">;</span>
+
+<span class="c1">--例如要用4-8月数据作为训练集</span>
+<span class="k">insert</span> <span class="n">overwrite</span> <span class="k">table</span> <span class="n">lt_user_balance_table_sum_baseline</span> <span class="n">partition</span><span class="p">(</span><span class="n">ds</span><span class="o">=</span><span class="s1">&#39;45678month&#39;</span><span class="p">)</span>
+<span class="k">select</span> <span class="n">report_date</span><span class="p">,</span> <span class="n">total_purchase_amt</span><span class="p">,</span> <span class="n">total_redeem_amt</span>
+<span class="k">from</span> <span class="n">lt_user_balance_table_sum_baseline</span>
+<span class="k">where</span> <span class="n">ds</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span> <span class="k">and</span> <span class="n">report_date</span> <span class="o">&gt;=</span><span class="s1">&#39;20140401&#39;</span> <span class="k">and</span> <span class="n">report_date</span> <span class="o">&lt;</span> <span class="s1">&#39;20140901&#39;</span><span class="p">;</span>
+
+<span class="c1">--构建训练集基础特征：</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_basic_feature4to8_baseline</span> <span class="k">as</span> 
+<span class="k">select</span>
+    <span class="n">t1</span><span class="p">.</span><span class="n">report_date</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">monday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">1</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">tuesday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">2</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">wednesday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">3</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">thursday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">4</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">friday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">5</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">saturday</span><span class="p">,</span>
+    <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">6</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">sunday</span><span class="p">,</span>
+    <span class="n">total_purchase_amt</span><span class="p">,</span>
+    <span class="n">total_redeem_amt</span>
+<span class="k">from</span> <span class="p">(</span>
+    <span class="k">select</span> 
+        <span class="n">report_date</span><span class="p">,</span>
+        <span class="n">weekday</span><span class="p">(</span><span class="n">to_date</span><span class="p">(</span><span class="n">report_date</span><span class="p">,</span><span class="ss">&quot;yyyyMMdd&quot;</span><span class="p">))</span> <span class="n">dayOfWeek</span><span class="p">,</span>
+        <span class="n">total_purchase_amt</span><span class="p">,</span>
+        <span class="n">total_redeem_amt</span>
+    <span class="k">from</span> <span class="n">lt_user_balance_table_sum_baseline</span>
+    <span class="k">where</span> <span class="n">ds</span> <span class="o">=</span> <span class="s1">&#39;45678month&#39;</span> 
+<span class="p">)</span> <span class="n">t1</span><span class="p">;</span></code></pre></div>
+
+<h3 id="demoproducefeatures">生成9月特征［demo_produce_features］</h3>
+
+<p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-demo_produce_features.png" alt="" width="256px" /></p>
+
+<p><strong>注意事项：</strong></p>
+
+<ol>
+  <li>R脚本必须要添加“ODPS源”，虽然有时实际上并未使用；</li>
+  <li>使用星期作为特征，例如，某天是<code>monday</code>，对应值为1，其余全为0；</li>
+  <li>R脚本输出的“ODPS目标”，自动根据<code>data.frame</code>的格式生成特征表<code>lt_basic_feature9_baseline</code>。</li>
+</ol>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1"># 请链接输入数据</span>
+<span class="c1"># 链接完成后，系统会自动生成映射代码，将输入数据映射成变量参数，用户可直接使用</span>
+<span class="c1"># 切记不可修改系统生成代码，否则运行将报错</span>
+<span class="c1"># 端口1的表数据映射成dataset1</span>
+dataset1 <span class="o">&lt;-</span> pai.inputPort<span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="c1"># class: data.frame</span>
+
+start_date <span class="o">&lt;-</span> <span class="kp">as.Date</span><span class="p">(</span><span class="s">&quot;2014-09-01&quot;</span><span class="p">)</span>
+num_days <span class="o">&lt;-</span> <span class="m">30</span>
+num_features <span class="o">&lt;-</span> <span class="m">7</span>
+
+date_Ymd <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span><span class="kp">format</span><span class="p">(</span><span class="kp">as.Date</span><span class="p">(</span>start_date <span class="o">:</span> <span class="p">(</span>start_date <span class="o">+</span> num_days <span class="o">-</span> <span class="m">1</span><span class="p">),</span>
+                                      origin<span class="o">=</span><span class="s">&quot;1970-01-01&quot;</span><span class="p">),</span> <span class="s">&quot;%Y%m%d&quot;</span><span class="p">))</span>
+september_features <span class="o">=</span> <span class="kt">matrix</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> num_days<span class="p">,</span> num_features <span class="o">+</span> <span class="m">1</span><span class="p">)</span>
+september_features<span class="p">[,</span> <span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> date_Ymd
+feature_indexs <span class="o">&lt;-</span> <span class="p">(</span>date_Ymd <span class="o">+</span> <span class="m">3</span><span class="p">)</span> <span class="o">%%</span> <span class="m">7</span> <span class="o">+</span> <span class="m">2</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> num_days<span class="p">)</span> 
+<span class="p">{</span>
+  september_features<span class="p">[</span>i<span class="p">,</span> feature_indexs<span class="p">[</span>i<span class="p">]]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+<span class="p">}</span>
+
+<span class="kp">colnames</span><span class="p">(</span>september_features<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;report_date&quot;</span><span class="p">,</span> 
+                                  <span class="s">&quot;monday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;tuesday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;wednesday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;thursday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;friday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;saturday&quot;</span><span class="p">,</span>
+                                  <span class="s">&quot;sunday&quot;</span><span class="p">)</span>
+september_features <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>september_features<span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="p">(</span>num_features <span class="o">+</span> <span class="m">1</span><span class="p">))</span> 
+<span class="p">{</span>
+  september_features<span class="p">[,</span> i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span>september_features<span class="p">[,</span> i<span class="p">])</span>
+<span class="p">}</span>
+
+
+<span class="c1"># 用户指定数据变量dataname(class:data.frame)到输出端口</span>
+<span class="c1"># 平台会将该数据生成ODPS表</span>
+<span class="c1"># dataname务必修改成自己的变量名称</span>
+pai.outputPort<span class="p">(</span><span class="m">1</span><span class="p">,</span> september_features<span class="p">)</span></code></pre></div>
+
+<h3 id="demopredict">回归预测［demo_predict］</h3>
+
+<p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-demo_predict.png" alt="" width="512px" /></p>
+
+<p><strong>注意事项：</strong></p>
+
+<ul>
+  <li>“R脚本”框上方左一小圆点连线表示<code>dataset1 &lt;- pai.inputPort(1)</code>，左二小圆点连线表示<code>dataset2 &lt;- pai.inputPort(2)</code>，“R脚本”框共支持4个输入；</li>
+  <li>R脚本输出的“ODPS目标”，自动根据<code>data.frame</code>格式生成表<code>tc_comp_predict_table</code>（系统会自动根据此表评分）。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-R"><span class="c1"># 请链接输入数据</span>
+<span class="c1"># 链接完成后，系统会自动生成映射代码，将输入数据映射成变量参数，用户可直接使用</span>
+<span class="c1"># 切记不可修改系统生成代码，否则运行将报错</span>
+<span class="c1"># 端口2的表数据映射成dataset2</span>
+dataset2 <span class="o">&lt;-</span> pai.inputPort<span class="p">(</span><span class="m">2</span><span class="p">)</span> <span class="c1"># class: data.frame</span>
+<span class="c1"># 端口1的表数据映射成dataset1</span>
+dataset1 <span class="o">&lt;-</span> pai.inputPort<span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="c1"># class: data.frame</span>
+
+result <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>report_date <span class="o">=</span> <span class="kp">as.integer</span><span class="p">(</span>dataset2<span class="o">$</span>report_date<span class="p">))</span>
+
+<span class="c1"># predict purchase</span>
+model <span class="o">&lt;-</span> lm<span class="p">(</span>total_purchase_amt <span class="o">~</span> 
+              monday <span class="o">+</span> tuesday <span class="o">+</span> wednesday <span class="o">+</span> thursday <span class="o">+</span> friday <span class="o">+</span> 
+              saturday <span class="o">+</span> sunday<span class="p">,</span> 
+            dataset1<span class="p">)</span>
+model.predict <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>predict<span class="p">(</span>model<span class="p">,</span> dataset2<span class="p">,</span> 
+                                    interval<span class="o">=</span><span class="s">&quot;prediction&quot;</span><span class="p">,</span>
+                                    level<span class="o">=</span><span class="m">0.95</span><span class="p">,</span> se.fit<span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+result<span class="o">$</span>purchase <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span><span class="kp">round</span><span class="p">(</span>model.predict<span class="o">$</span>fit<span class="p">))</span>
+
+<span class="c1"># predict redeem</span>
+model <span class="o">&lt;-</span> lm<span class="p">(</span>total_redeem_amt <span class="o">~</span> 
+              monday <span class="o">+</span> tuesday <span class="o">+</span> wednesday <span class="o">+</span> thursday <span class="o">+</span> friday <span class="o">+</span> 
+              saturday <span class="o">+</span> sunday<span class="p">,</span> 
+            dataset1<span class="p">)</span>
+model.predict <span class="o">&lt;-</span><span class="kt">data.frame</span><span class="p">(</span>predict<span class="p">(</span>model<span class="p">,</span> dataset2<span class="p">,</span> 
+                                   interval<span class="o">=</span><span class="s">&quot;prediction&quot;</span><span class="p">,</span> 
+                                   level<span class="o">=</span><span class="m">0.95</span><span class="p">,</span> se.fit<span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span>
+result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span><span class="kp">round</span><span class="p">(</span>model.predict<span class="o">$</span>fit<span class="p">))</span>
+
+
+<span class="c1"># 用户指定数据变量dataname(class:data.frame)到输出端口</span>
+<span class="c1"># 平台会将该数据生成ODPS表</span>
+<span class="c1"># dataname务必修改成自己的变量名称</span>
+pai.outputPort<span class="p">(</span><span class="m">1</span><span class="p">,</span> result<span class="p">)</span></code></pre></div>
+
+<h2 id="section-2">实用技能</h2>
+
+<h3 id="r">查看平台的R版本</h3>
+
+<p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-get-R-version.png" alt="" width="480px" /></p>
+
+<p><strong>注意：</strong>由于平台禁止了调用<code>installed.packages</code>、<code>.packages</code>和<code>.libPaths</code>函数，目前还无法得知平台安装了哪些R包。</p>
+
+<div class="highlight"><pre><code class="language-R">R_version <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>name <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span><span class="kp">version</span><span class="p">)))</span>
+<span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">1</span> <span class="o">:</span> <span class="kp">length</span><span class="p">(</span><span class="kp">version</span><span class="p">))</span>
+<span class="p">{</span>
+  R_version<span class="p">[</span>i<span class="p">,</span> <span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">as.character</span><span class="p">(</span><span class="kp">version</span><span class="p">[[</span>i<span class="p">]])</span>
+<span class="p">}</span>
+R_version<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">as.character</span><span class="p">(</span>R_version<span class="p">[[</span><span class="m">1</span><span class="p">]])</span>
+<span class="kp">colnames</span><span class="p">(</span>R_version<span class="p">)[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s">&#39;value&#39;</span></code></pre></div>
+
+<h3 id="section-3">硬写入数据到评分表</h3>
+
+<p>本机离线得到的预测结果，直接利用“算法平台”的R代码，写入评分表。</p>
+
+<div class="highlight"><pre><code class="language-R">manual_input <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">20140901</span><span class="p">,</span><span class="m">973211410</span><span class="p">,</span><span class="m">1121867054</span><span class="p">,</span>
+                  <span class="m">20140902</span><span class="p">,</span><span class="m">1065557799</span><span class="p">,</span><span class="m">1048471809</span><span class="p">,</span>
+                  <span class="m">20140903</span><span class="p">,</span><span class="m">996550847</span><span class="p">,</span><span class="m">998207189</span><span class="p">,</span>
+                  <span class="m">20140904</span><span class="p">,</span><span class="m">934368548</span><span class="p">,</span><span class="m">939173481</span><span class="p">,</span>
+                  <span class="m">20140905</span><span class="p">,</span><span class="m">805889443</span><span class="p">,</span><span class="m">834056370</span><span class="p">,</span>
+                  <span class="m">20140906</span><span class="p">,</span><span class="m">559946861</span><span class="p">,</span><span class="m">582517716</span><span class="p">,</span>
+                  <span class="m">20140907</span><span class="p">,</span><span class="m">623372630</span><span class="p">,</span><span class="m">666986337</span><span class="p">,</span>
+                  <span class="m">20140908</span><span class="p">,</span><span class="m">973211410</span><span class="p">,</span><span class="m">1121867054</span><span class="p">,</span>
+                  <span class="m">20140909</span><span class="p">,</span><span class="m">1065557799</span><span class="p">,</span><span class="m">1048471809</span><span class="p">,</span>
+                  <span class="m">20140910</span><span class="p">,</span><span class="m">996550847</span><span class="p">,</span><span class="m">998207189</span><span class="p">,</span>
+                  <span class="m">20140911</span><span class="p">,</span><span class="m">934368548</span><span class="p">,</span><span class="m">939173481</span><span class="p">,</span>
+                  <span class="m">20140912</span><span class="p">,</span><span class="m">805889443</span><span class="p">,</span><span class="m">834056370</span><span class="p">,</span>
+                  <span class="m">20140913</span><span class="p">,</span><span class="m">559946861</span><span class="p">,</span><span class="m">582517716</span><span class="p">,</span>
+                  <span class="m">20140914</span><span class="p">,</span><span class="m">623372630</span><span class="p">,</span><span class="m">666986337</span><span class="p">,</span>
+                  <span class="m">20140915</span><span class="p">,</span><span class="m">973211410</span><span class="p">,</span><span class="m">1121867054</span><span class="p">,</span>
+                  <span class="m">20140916</span><span class="p">,</span><span class="m">1065557799</span><span class="p">,</span><span class="m">1048471809</span><span class="p">,</span>
+                  <span class="m">20140917</span><span class="p">,</span><span class="m">996550847</span><span class="p">,</span><span class="m">998207189</span><span class="p">,</span>
+                  <span class="m">20140918</span><span class="p">,</span><span class="m">934368548</span><span class="p">,</span><span class="m">939173481</span><span class="p">,</span>
+                  <span class="m">20140919</span><span class="p">,</span><span class="m">805889443</span><span class="p">,</span><span class="m">834056370</span><span class="p">,</span>
+                  <span class="m">20140920</span><span class="p">,</span><span class="m">559946861</span><span class="p">,</span><span class="m">582517716</span><span class="p">,</span>
+                  <span class="m">20140921</span><span class="p">,</span><span class="m">623372630</span><span class="p">,</span><span class="m">666986337</span><span class="p">,</span>
+                  <span class="m">20140922</span><span class="p">,</span><span class="m">973211410</span><span class="p">,</span><span class="m">1121867054</span><span class="p">,</span>
+                  <span class="m">20140923</span><span class="p">,</span><span class="m">1065557799</span><span class="p">,</span><span class="m">1048471809</span><span class="p">,</span>
+                  <span class="m">20140924</span><span class="p">,</span><span class="m">996550847</span><span class="p">,</span><span class="m">998207189</span><span class="p">,</span>
+                  <span class="m">20140925</span><span class="p">,</span><span class="m">934368548</span><span class="p">,</span><span class="m">939173481</span><span class="p">,</span>
+                  <span class="m">20140926</span><span class="p">,</span><span class="m">805889443</span><span class="p">,</span><span class="m">834056370</span><span class="p">,</span>
+                  <span class="m">20140927</span><span class="p">,</span><span class="m">559946861</span><span class="p">,</span><span class="m">582517716</span><span class="p">,</span>
+                  <span class="m">20140928</span><span class="p">,</span><span class="m">623372630</span><span class="p">,</span><span class="m">666986337</span><span class="p">,</span>
+                  <span class="m">20140929</span><span class="p">,</span><span class="m">973211410</span><span class="p">,</span><span class="m">1121867054</span><span class="p">,</span>
+                  <span class="m">20140930</span><span class="p">,</span><span class="m">1065557799</span><span class="p">,</span><span class="m">1048471809</span><span class="p">);</span>
+
+num_days <span class="o">&lt;-</span> <span class="m">30</span>
+num_result_col <span class="o">&lt;-</span> <span class="m">3</span>
+
+result <span class="o">&lt;-</span> <span class="kp">t</span><span class="p">(</span><span class="kt">matrix</span><span class="p">(</span>manual_input<span class="p">,</span> num_result_col<span class="p">,</span> num_days<span class="p">))</span>
+<span class="kp">colnames</span><span class="p">(</span>result<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;report_date&#39;</span><span class="p">,</span> <span class="s">&#39;purchase&#39;</span><span class="p">,</span> <span class="s">&#39;redeem&#39;</span><span class="p">)</span>
+result <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>result<span class="p">)</span>
+result<span class="o">$</span>report_date <span class="o">&lt;-</span> <span class="kp">as.character</span><span class="p">(</span>result<span class="o">$</span>report_date<span class="p">)</span>
+result<span class="o">$</span>purchase <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span>result<span class="o">$</span>purchase<span class="p">)</span>
+result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span>result<span class="o">$</span>redeem<span class="p">)</span></code></pre></div>
+
+<h2 id="section-4">问题处理</h2>
+
+<p><strong>子查询记录超过1000</strong></p>
+
+<div class="highlight"><pre><code>FAILED: ODPS-0130111:Subquery partition pruning exception - records returned from subquery exceeded limit of 1000
+</code></pre></div>
+
+<p>解决办法：<a href="http://help.aliyun.com/knowledge_detail.htm?knowledgeId=5990606&amp;keyWords=&amp;categoryId=8315117">用<code>JOIN</code>改写<code>IN</code></a>。</p>
+
+<p>原来的<code>IN</code>查询：</p>
+
+<div class="highlight"><pre><code class="language-SQL"><span class="k">CREATE</span> <span class="k">TABLE</span>
+<span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">vip_balance_table</span> <span class="k">AS</span> <span class="k">SELECT</span>
+  <span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">user_balance_table</span>
+<span class="k">WHERE</span>
+  <span class="n">user_id</span> <span class="k">IN</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+      <span class="n">user_id</span>
+    <span class="k">FROM</span>
+      <span class="p">(</span>
+        <span class="k">SELECT</span>
+          <span class="n">user_id</span><span class="p">,</span>
+          <span class="k">MAX</span> <span class="p">(</span><span class="n">total_purchase_amt</span><span class="p">)</span> <span class="k">AS</span> <span class="n">max_purchase</span><span class="p">,</span>
+          <span class="k">MAX</span> <span class="p">(</span><span class="n">total_redeem_amt</span><span class="p">)</span> <span class="k">AS</span> <span class="n">max_redeem</span>
+        <span class="k">FROM</span>
+          <span class="n">user_balance_table</span>
+        <span class="k">GROUP</span> <span class="k">BY</span>
+          <span class="n">user_id</span>
+      <span class="p">)</span> <span class="n">T</span>
+    <span class="k">WHERE</span>
+      <span class="n">max_purchase</span> <span class="o">&gt;=</span> <span class="mi">2000000</span>
+    <span class="k">AND</span> <span class="n">max_redeem</span> <span class="o">&gt;=</span> <span class="mi">2000000</span>
+  <span class="p">);</span></code></pre></div>
+
+<p>用<code>JOIN</code>改写：</p>
+
+<div class="highlight"><pre><code class="language-SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">vip_balance_table</span> <span class="k">AS</span> <span class="k">SELECT</span>
+  <span class="n">user_balance_table</span><span class="p">.</span><span class="o">*</span>
+<span class="k">FROM</span>
+  <span class="n">user_balance_table</span>
+<span class="k">JOIN</span> <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="k">DISTINCT</span>
+    <span class="n">user_id</span>
+  <span class="k">FROM</span>
+    <span class="p">(</span>
+      <span class="k">SELECT</span>
+        <span class="n">user_id</span><span class="p">,</span>
+        <span class="k">MAX</span> <span class="p">(</span><span class="n">total_purchase_amt</span><span class="p">)</span> <span class="k">AS</span> <span class="n">max_purchase</span><span class="p">,</span>
+        <span class="k">MAX</span> <span class="p">(</span><span class="n">total_redeem_amt</span><span class="p">)</span> <span class="k">AS</span> <span class="n">max_redeem</span>
+      <span class="k">FROM</span>
+        <span class="n">user_balance_table</span>
+      <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="n">user_id</span>
+    <span class="p">)</span> <span class="n">T</span>
+  <span class="k">WHERE</span>
+    <span class="n">max_purchase</span> <span class="o">&gt;=</span> <span class="mi">2000000</span>
+  <span class="k">AND</span> <span class="n">max_redeem</span> <span class="o">&gt;=</span> <span class="mi">2000000</span>
+<span class="p">)</span> <span class="n">vip_user_id</span> <span class="k">ON</span> <span class="p">(</span><span class="n">user_balance_table</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">vip_user_id</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span></code></pre></div>
+
+<h2 id="section-5">参考资料</h2>
+
+<ul class="bibliography">
+  <li><a href="http://docs.aliyun.com/#/pub/odps">开放数据处理服务ODPS</a></li>
+  <li><a href="http://docs.aliyun.com/#/pub/odps/SQL/summary">开放数据处理服务ODPS › SQL</a></li>
+  <li><a href="http://www.yushanfang.com/portal/help/doc.html?spm=0.0.0.0.K2Nrc6&amp;file=SuanFaPingTai">算法平台 用户手册</a></li>
+  <li><a href="http://bbs.aliyun.com/read/249632.html?spm=5176.7189909.0.0.h87xKi">资金流入流出预测大赛第二赛季参赛公告（含参考文档）</a></li>
+  <li><a href="http://bbs.aliyun.com/read/249347.html">第二赛季参赛(平台使用)攻略之混沌队</a></li>
+  <li><a href="http://bbs.aliyun.com/read/249539.html?spm=5176.7189909.0.0.AbaWv5">一点心得、一份攻略、一段baseline code —— I’m PLUS</a></li>
+</ul>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/06/mvgcv-chapter01" class="pageNav" style="float:left"   >上一篇：计算机视觉中的多视几何：1. 简介——多视几何之旅 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/07/HPC-overview" class="pageNav" style="float:right"   >下一篇：高性能计算概述 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/07/introduction-to-yushanfang" 	data-url="http://qianjiye.de/2015/07/introduction-to-yushanfang" data-title="御膳房使用简介">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/06/mvgcv-chapter01'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/07/HPC-overview'; --1> -->
+<!--         url = '/2015/07/HPC-overview'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/07/introduction-to-yushanfang/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

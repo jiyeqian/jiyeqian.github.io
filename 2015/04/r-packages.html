@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>R包开发</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>R包开发</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-04-28">2015-04-28</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#R" title="R">R</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 class="no_toc" id="section">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">概述</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">快速入门</a>    <ul>
+      <li><a href="#section-3" id="markdown-toc-section-3">创建包</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">包的不同形式</a>        <ul>
+          <li><a href="#source" id="markdown-toc-source">一、source包</a></li>
+          <li><a href="#bundled" id="markdown-toc-bundled">二、bundled包</a></li>
+          <li><a href="#binary" id="markdown-toc-binary">三、binary包</a></li>
+          <li><a href="#installed" id="markdown-toc-installed">四、installed包</a></li>
+          <li><a href="#memory" id="markdown-toc-memory">五、memory包</a></li>
+        </ul>
+      </li>
+      <li><a href="#section-5" id="markdown-toc-section-5">库</a></li>
+    </ul>
+  </li>
+  <li><a href="#r" id="markdown-toc-r">R编程风格</a>    <ul>
+      <li><a href="#section-6" id="markdown-toc-section-6">编码风格</a></li>
+      <li><a href="#section-7" id="markdown-toc-section-7">对象命名</a></li>
+      <li><a href="#section-8" id="markdown-toc-section-8">空格</a></li>
+      <li><a href="#section-9" id="markdown-toc-section-9">花括号</a></li>
+      <li><a href="#section-10" id="markdown-toc-section-10">行长度</a></li>
+      <li><a href="#section-11" id="markdown-toc-section-11">缩进</a></li>
+      <li><a href="#section-12" id="markdown-toc-section-12">赋值</a></li>
+      <li><a href="#section-13" id="markdown-toc-section-13">注释风格</a></li>
+      <li><a href="#section-14" id="markdown-toc-section-14">包与脚本中代码的区别</a>        <ul>
+          <li><a href="#section-15" id="markdown-toc-section-15">一、慎写顶层代码</a></li>
+          <li><a href="#section-16" id="markdown-toc-section-16">二、注重代码的普适性</a></li>
+        </ul>
+      </li>
+      <li><a href="#section-17" id="markdown-toc-section-17">合理利用副作用</a>        <ul>
+          <li><a href="#onloadonattach" id="markdown-toc-onloadonattach"><code>.onLoad()</code>和<code>.onAttach()</code></a></li>
+          <li><a href="#s4" id="markdown-toc-s4">S4类、范型与方法</a></li>
+        </ul>
+      </li>
+      <li><a href="#cran" id="markdown-toc-cran">CRAN事项</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-18" id="markdown-toc-section-18">包的元信息</a></li>
+  <li><a href="#section-19" id="markdown-toc-section-19">参考资料</a></li>
+</ul>
+
+<h2 id="section-1">概述</h2>
+
+<div class="highlight"><pre><code class="language-r">install.packages<span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="c1"># 安装包</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="c1"># 加载包</span>
+help<span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span> <span class="c1"># 寻求帮助（需要先加载）</span></code></pre></div>
+
+<p>包（package）常作为分享代码的基本单元，代码封装成包可以方便其他用户使用。包开发的哲学是能自动化完成的就应当被自动化。</p>
+
+<p>devtools使包开变得轻松，并且加少了潜在的错误，使得可以专注于解决具体问题而非包开发。它与RStudio协同工作，将包开发从底层细节中中解脱出来。学习包开发的最好资源是官方文档“<a href="http://cran.r-project.org/doc/manuals/R-exts.html#Creating-R-packages">writing R extensions</a>”，若缺乏必要的基础知识，理解起来仍然吃力。</p>
+
+<p>包开发的几个部分，按重要程度递减大致为：</p>
+
+<ul>
+  <li>R代码：位于<code>R/</code>文件夹，放置R代码文件，只有这一个目录的文件夹也是有用的包。</li>
+  <li>包的元信息（metadata）：<code>DESCRIPTION</code>文件描述包工作的前提条件，如果分享该包，文件中一般还包含该包的功能说明、使用权限等。</li>
+  <li>文档：介绍如何使用该包，可以采用<code>roxygen2</code>生成函数的文档。</li>
+  <li>Vignettes：描述包中每个函数细节的文档，展示了包中各部分配合使用解决具体问题。可用Rmarkdown和knitr创造惊艳的效果。</li>
+  <li>测试集：确保包按设计工作，testthat包可将已完成的交互式测试转换为正式的自动化测试。</li>
+  <li>命名空间（Namespace）：定义该包的哪些函数可供其它包使用，以及需要哪些包的其它函数。命名空间可用<code>roxygen2</code>生成。它是包开发最具挑战性的工作之一。若要让包可靠的工作需要精通它。</li>
+  <li>外部数据：<code>data/</code>目录为包提供数据，可以供R用户方便的使用，或者为文档提供令人信服的例子。</li>
+  <li>可编译的代码：R代码让人使用高效，而不是让计算机高效工作。<code>src/</code>文件夹包含C和C++代码以解决包中的性能瓶颈。</li>
+  <li>其它部分：<code>demo/</code>、<code>exec/</code>、<code>po/</code>和<code>tools/</code>等。</li>
+</ul>
+
+<p>R通过<code>R CMD check</code>提供了非常有用的自动化质量检测工具，通过它可以避免很多常见问题。</p>
+
+<h2 id="section-2">快速入门</h2>
+
+<h3 id="section-3">创建包</h3>
+
+<p>安装包开发需要的相关包：</p>
+
+<div class="highlight"><pre><code class="language-r">install.packages<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">,</span> <span class="s">&quot;roxygen2&quot;</span><span class="p">,</span> <span class="s">&quot;testthat&quot;</span><span class="p">,</span> <span class="s">&quot;knitr&quot;</span><span class="p">))</span>
+
+<span class="c1"># 需要最新的RStudio（预览版）</span>
+install.packages<span class="p">(</span><span class="s">&quot;rstudioapi&quot;</span><span class="p">)</span>
+rstudioapi<span class="o">::</span>isAvailable<span class="p">(</span><span class="s">&quot;0.99.149&quot;</span><span class="p">)</span>
+
+<span class="c1"># 增强的devtools</span>
+devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">&quot;hadley/devtools&quot;</span><span class="p">)</span>
+
+<span class="c1"># 检查是否有编译C代码的相关工具链，若没有则需安装</span>
+devtools<span class="o">::</span>has_devel<span class="p">()</span></code></pre></div>
+
+<p>创建包之前首先要为包选择一个合适的名字，名字只能包含字母、数字和英语句号，必须以字母开头且不能以句号结尾。</p>
+
+<p>创建包可以用RStudio的图形化界面或者命令：</p>
+
+<div class="highlight"><pre><code class="language-r">devtools<span class="o">::</span>create<span class="p">(</span><span class="s">&quot;path/to/package/pkgname&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>以上方法会为包增加一个<code>.Rproj</code>文件方便RStduio使用，如果现有的包没有这个文件，可以为其创建：</p>
+
+<div class="highlight"><pre><code class="language-r">devtools<span class="o">::</span>use_rstudio<span class="p">(</span><span class="s">&quot;path/to/package&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>一般不要用<code>package.skeleton()</code>创建包，在让尽快包运行之前，还得删掉那些不必要的文件。</p>
+
+<h3 id="section-4">包的不同形式</h3>
+
+<p>包的生命周期可能会经历 <code>source</code>、<code>bundled</code>、<code>binary</code>、<code>installed</code>和<code>in-memory</code>五个阶段。</p>
+
+<h4 id="source">一、source包</h4>
+
+<p>开发时的源代码包，包含<code>R/</code>、<code>DESCRIPTION</code>等。</p>
+
+<h4 id="bundled">二、bundled包</h4>
+
+<p>将source包压缩成一个<code>.tar.gz</code>文件的包，可以用<code>devtools::build()</code>创建。它和source包的区别在于：</p>
+
+<ul>
+  <li>Vignettes被编译成了HTML和PDF文件；</li>
+  <li>没有了source包中的临时文件。</li>
+</ul>
+
+<p>source包中.Rbuildignore文件中标明的文件被排除在bundled包外，.Rbuildignore的每一行是Perl兼容的正则表达式，大小写不敏感，即可匹配目录也可匹配文件。</p>
+
+<div class="highlight"><pre><code class="language-bash">^.*<span class="se">\.</span>Rproj<span class="nv">$ </span>        <span class="c"># Automatically added by RStudio,</span>
+^<span class="se">\.</span>Rproj<span class="se">\.</span>user<span class="nv">$ </span>    <span class="c"># used for temporary files. </span>
+^README<span class="se">\.</span>Rmd<span class="nv">$ </span>      <span class="c"># An Rmarkdown file used to generate README.md</span>
+^cran-comments<span class="se">\.</span>md<span class="nv">$ </span><span class="c"># Comments for CRAN submission</span>
+^NEWS<span class="se">\.</span>md<span class="nv">$ </span>         <span class="c"># A news file written in Markdown</span>
+^<span class="se">\.</span>travis<span class="se">\.</span>yml<span class="nv">$ </span>    <span class="c"># Used for continuous integration testing with travis</span></code></pre></div>
+
+<p>正则表达式<code>^notes$</code>匹配包含notes的任意文件，比如：R/notes.R、man/important-notes.R、data/endnotes.Rdata等。比较保险的做法是采用<code>devtools::use_build_ignore("notes")</code>，自动添加了转意字符处理，将<code>.</code>变为<code>\.</code>并且添加了<code>^</code>和<code>$</code>。</p>
+
+<h4 id="binary">三、binary包</h4>
+
+<p>binary包可供没有编译环境的R用户使用，它也是单个文件，但是解压开和source包差别很大：</p>
+
+<ul>
+  <li><code>R/</code>文件夹中并没有R文件，而是3个解析后可供高效调用的文件。这是加载R代码用<code>save()</code>函数保存的结果。</li>
+  <li><code>Meta/</code>文件夹包含一些rd文件，这些是包相关的元数据缓存，可以用<code>readRDS()</code>查看文件内容，这些文件加速了包的加载。</li>
+  <li><code>html/</code>文件夹包含了HTML帮助需要的文件。</li>
+  <li><code>src/</code>目录变成<code>libs/</code>目录，包含了将源代码编译成的库。</li>
+  <li><code>inst/</code>的内容被移到了顶层目录。</li>
+</ul>
+
+<p>binary包和平台相关，Mac的binary包.tgz和Windows的.zip不能通用，可以利用<code>devtools::build(binary = TRUE)</code>制作binary包。</p>
+
+<p><img src="/assets/images/2015-04-28-r-packages-package-files.png" alt="包之间的文件转换关系" /></p>
+
+<h4 id="installed">四、installed包</h4>
+
+<p>installed包是将binary包解压（安装）到特定的库目录，下图展示了包的不同安装方法。</p>
+
+<p><img src="/assets/images/2015-04-28-r-packages-installation.png" alt="包的安装方法" /></p>
+
+<p><code>R CMD INSTALL</code>命令可以安装各种不同的包，devtools的函数对该命令封装后可在R环境中执行。</p>
+
+<ul>
+  <li><code>devtools::install()</code>是对<code>R CMD INSTALL</code>的封装，<code>devtools::build()</code>是对<code>R CMD build</code>的封装。</li>
+  <li><code>devtools::install_github()</code>从github下载源码包后用<code>build()</code>编译后再<code>R CMD INSTALL</code>，<code>devtools::install_gitorious()</code>和<code>devtools::install_bitbucket()</code>包与其类似。</li>
+  <li><code>install.packages()</code>和<code>devtools::install_github()</code>可以安装远程包。</li>
+</ul>
+
+<p>bundled包中的定制.Rinstignore文件可以阻止哪些文件被安装。</p>
+
+<h4 id="memory">五、memory包</h4>
+
+<p>使用包之前，必须先加载到内存。用<code>library()</code>加载包后，使用包时不需要用包名，比如：用<code>install()</code>而不用<code>devtools::install()</code>。各种包的不同加载方法：</p>
+
+<p><img src="/assets/images/2015-04-28-r-packages-loading.png" alt="包的加载方法" /></p>
+
+<h3 id="section-5">库</h3>
+
+<p>库是包含installed包的文件夹，可以同时拥有多个库，可以用<code>.libPaths()</code>查看库的位置：</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># 查看所有库的路径</span>
+<span class="m">.</span>libPaths<span class="p">()</span>
+
+<span class="c1"># 查看每个库中的所有包</span>
+<span class="kp">lapply</span><span class="p">(</span><span class="m">.</span>libPaths<span class="p">(),</span> <span class="kp">dir</span><span class="p">)</span></code></pre></div>
+
+<p>用<code>library(pkg)</code>或<code>require(pkg)</code>加载包时，R会到<code>.libPaths()</code>的路径下去搜索，如果该库不存在就会报错。<code>library()</code>和<code>require()</code>的最大区别：找不到包时，<code>library()</code>抛出错误，<code>require()</code>打印警告信息并返回<code>FALSE</code>。</p>
+
+<p>packrat应用可以管理项目的包依赖关系，通过packrat升级项目中的包只会影响该项目。</p>
+
+<h2 id="r">R编程风格</h2>
+
+<p>所有的R代码位于<code>R/</code>目录，通常建议用文件组织函数。脚本中的函数和包中的函数有区别。重新加载所有代码用<code>devtools::load_all()</code>或RStudio的快捷键<code>Ctrl/Cmd + Shift + L</code>，它同时会保存所有打开的文件。</p>
+
+<p>虽然可以按任意文件组织函数，但是不建议将所有函数都放入一个文件，也不建议将每个函数作为一个文件。不要用大小写区分文件名，因为有的操作系统不区分大小写。</p>
+
+<h3 id="section-6">编码风格</h3>
+
+<p>推荐遵循Google的“<a href="https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml">R style guide</a>”。如果要继续在前人的基础上开发，最好继续遵循以前的编码风格，而非使用自己的新风格。</p>
+
+<p>formatR包可以方便整洁化糟糕的代码风格，但使用前请阅读<a href="http://yihui.name/formatR/">说明文档</a>。</p>
+
+<div class="highlight"><pre><code class="language-r">install.packages<span class="p">(</span><span class="s">&quot;formatR&quot;</span><span class="p">)</span>
+formatR<span class="o">::</span>tidy_dir<span class="p">(</span><span class="s">&quot;R&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>代码linter可作为补充工具，它只是给出警告信息而不修改代码，因此可以发现更多潜在问题，但也会出现误报的情况。</p>
+
+<div class="highlight"><pre><code class="language-r">install.packages<span class="p">(</span><span class="s">&quot;lintr&quot;</span><span class="p">)</span>
+lintr<span class="o">::</span>lint_package<span class="p">()</span></code></pre></div>
+
+<h3 id="section-7">对象命名</h3>
+
+<ul>
+  <li>变量和函数名应为小写，可用下划线分割单词，英文句号是S3方法的保留字；</li>
+  <li>驼峰命名法亦可作为备选方案；</li>
+  <li>变量名为名词，函数名为动词；</li>
+  <li>名字应当简洁且有意义，避免采用已经有的名字。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Good</span>
+day_one
+day_1
+
+<span class="c1"># Bad</span>
+first_day_of_the_month
+DayOne
+dayone
+djm1
+<span class="bp">T</span> <span class="o">&lt;-</span> <span class="kc">FALSE</span>
+<span class="kt">c</span> <span class="o">&lt;-</span> <span class="m">10</span>
+mean <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="kp">sum</span><span class="p">(</span>x<span class="p">)</span></code></pre></div>
+
+<h3 id="section-8">空格</h3>
+
+<ul>
+  <li>中缀表达式的运算符前后加空格，逗号后通常加空格；</li>
+  <li>不要为<code>::</code>和<code>:::</code>加空格；</li>
+  <li>除函数调用外，左括号左加空格；</li>
+  <li>为了美化对其方案，可以增加额外的空格；</li>
+  <li>圆括号和方括号内侧不要加空格，除非紧邻逗号。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Good</span>
+average <span class="o">&lt;-</span> <span class="kp">mean</span><span class="p">(</span>feet <span class="o">/</span> <span class="m">12</span> <span class="o">+</span> inches<span class="p">,</span> na.rm <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+x <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">10</span>
+base<span class="o">::</span><span class="kp">get</span>
+<span class="kr">if</span> <span class="p">(</span><span class="kp">debug</span><span class="p">)</span> do<span class="p">(</span>x<span class="p">)</span>
+plot<span class="p">(</span>x<span class="p">,</span> y<span class="p">)</span>
+<span class="kt">list</span><span class="p">(</span>
+  total <span class="o">=</span> a <span class="o">+</span> b <span class="o">+</span> <span class="kt">c</span><span class="p">,</span> 
+  mean  <span class="o">=</span> <span class="p">(</span>a <span class="o">+</span> b <span class="o">+</span> <span class="kt">c</span><span class="p">)</span> <span class="o">/</span> n
+<span class="p">)</span>
+diamonds<span class="p">[</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span>
+
+<span class="c1"># Bad</span>
+average<span class="o">&lt;-</span><span class="kp">mean</span><span class="p">(</span>feet<span class="o">/</span><span class="m">12</span><span class="o">+</span>inches<span class="p">,</span>na.rm<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+x <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">:</span> <span class="m">10</span>
+base <span class="o">::</span> <span class="kp">get</span>
+<span class="kr">if</span><span class="p">(</span><span class="kp">debug</span><span class="p">)</span>do<span class="p">(</span>x<span class="p">)</span>
+plot <span class="p">(</span>x<span class="p">,</span> y<span class="p">)</span>
+<span class="kr">if</span> <span class="p">(</span> debug <span class="p">)</span> do<span class="p">(</span>x<span class="p">)</span>  <span class="c1"># No spaces around debug</span>
+x<span class="p">[</span><span class="m">1</span><span class="p">,]</span>   <span class="c1"># Needs a space after the comma</span>
+x<span class="p">[</span><span class="m">1</span> <span class="p">,]</span>  <span class="c1"># Space goes after comma not before</span></code></pre></div>
+
+<h3 id="section-9">花括号</h3>
+
+<ul>
+  <li>开花括号不要新启行；</li>
+  <li>闭花括号独占新行，除非有<code>else</code>语句；</li>
+  <li>非常简单的语句可位于同一行。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Good</span>
+
+<span class="kr">if</span> <span class="p">(</span>y <span class="o">&lt;</span> <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="kp">debug</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kp">message</span><span class="p">(</span><span class="s">&quot;Y is negative&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">if</span> <span class="p">(</span>y <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kp">log</span><span class="p">(</span>x<span class="p">)</span>
+<span class="p">}</span> <span class="kr">else</span> <span class="p">{</span>
+  y <span class="o">^</span> x
+<span class="p">}</span>
+
+<span class="kr">if</span> <span class="p">(</span>y <span class="o">&lt;</span> <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="kp">debug</span><span class="p">)</span> <span class="kp">message</span><span class="p">(</span><span class="s">&quot;Y is negative&quot;</span><span class="p">)</span>
+
+<span class="c1"># Bad</span>
+
+<span class="kr">if</span> <span class="p">(</span>y <span class="o">&lt;</span> <span class="m">0</span> <span class="o">&amp;&amp;</span> <span class="kp">debug</span><span class="p">)</span>
+<span class="kp">message</span><span class="p">(</span><span class="s">&quot;Y is negative&quot;</span><span class="p">)</span>
+
+<span class="kr">if</span> <span class="p">(</span>y <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kp">log</span><span class="p">(</span>x<span class="p">)</span>
+<span class="p">}</span> 
+<span class="kr">else</span> <span class="p">{</span>
+  y <span class="o">^</span> x
+<span class="p">}</span></code></pre></div>
+
+<h3 id="section-10">行长度</h3>
+
+<p>每行代码长度不要超过80个字符。如果超越这个长度，或许意味着该用新的函数实现这个功能。</p>
+
+<h3 id="section-11">缩进</h3>
+
+<ul>
+  <li>用2个空格缩进代码，不要用tab或者混用tab和空格；</li>
+  <li>若函数的定义占用了多行，第2行对其定义起始点。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r">long_function_name <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>a <span class="o">=</span> <span class="s">&quot;a long argument&quot;</span><span class="p">,</span> 
+                               b <span class="o">=</span> <span class="s">&quot;another argument&quot;</span><span class="p">,</span>
+                               <span class="kt">c</span> <span class="o">=</span> <span class="s">&quot;another long argument&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1"># As usual code is indented by two spaces.</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="section-12">赋值</h3>
+
+<p>用<code>&lt;-</code>赋值，而非<code>=</code>。</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Good</span>
+x <span class="o">&lt;-</span> <span class="m">5</span>
+<span class="c1"># Bad</span>
+x <span class="o">=</span> <span class="m">5</span></code></pre></div>
+
+<h3 id="section-13">注释风格</h3>
+
+<ul>
+  <li>注释行以<code>#</code>开始，紧接一个空格；</li>
+  <li>注释指出为何这样做，而非做什么；</li>
+  <li>用<code>-</code>和<code>=</code>注释行，将文件分割成易于阅读的片段。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Load data ---------------------------</span>
+
+<span class="c1"># Plot data ---------------------------</span></code></pre></div>
+
+<h3 id="section-14">包与脚本中代码的区别</h3>
+
+<p>保存为文件的R脚本通过<code>source()</code>函数加载。脚本中的代码和包中的代码有两个主要区别：</p>
+
+<ol>
+  <li>脚本中的代码在加载时运行；包中的代码在生成（build）时运行。这就意味着包中的代码只应当用于创建对象，大多数应当是函数。</li>
+  <li>包中的函数将会用在那些你无法预见的场景，设计时务必考虑周全。</li>
+</ol>
+
+<h4 id="section-15">一、慎写顶层代码</h4>
+
+<p>当采用<code>source()</code>加载脚本时，每行代码被执行，结果立即可用。包的加载分两步。当生成包时（例如CRAN），<code>R/</code>中所有代码被执行，结果被保存。当用<code>library()</code>或<code>require()</code>加载包时，缓存的结果就可用了。若要像使用包一样加载脚本，可以用如下方式：</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># Load a script into a new environment and save it</span>
+env <span class="o">&lt;-</span> <span class="kp">new.env</span><span class="p">(</span>parent <span class="o">=</span> <span class="kp">emptyenv</span><span class="p">())</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&quot;my-script.R&quot;</span><span class="p">,</span> local <span class="o">=</span> env<span class="p">)</span>
+<span class="kp">save</span><span class="p">(</span>envir <span class="o">=</span> env<span class="p">,</span> <span class="s">&quot;my-script.Rdata&quot;</span><span class="p">)</span>
+
+<span class="c1"># Later, in another R session</span>
+<span class="kp">load</span><span class="p">(</span><span class="s">&quot;my-script.Rdata&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>对于<code>x &lt;- Sys.time()</code>：在脚本中，<code>x</code>为执行<code>source()</code>的时间；在包中，<code>x</code>为生成包的时间。这就意味着，不要在顶层运行代码。包的代码只应用于创建对象，多数为函数。假设foo包中包含如下代码：</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+
+show_mtcars <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">()</span> <span class="p">{</span>
+  qplot<span class="p">(</span>mpg<span class="p">,</span> wt<span class="p">,</span> data <span class="o">=</span> mtcars<span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+
+<p>若以如下方式调用：</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="kn">library</span><span class="p">(</span>foo<span class="p">)</span>
+show_mtcars<span class="p">()</span></code></pre></div>
+
+<p>由于<code>qplot()</code>不可用，代码不会工作。顶层代码只在生成包时执行，用<code>library(foo)</code>加载时不会重新执行<code>library(gpplot2)</code>。可以改为如下方案：</p>
+
+<div class="highlight"><pre><code class="language-r">show_mtcars <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+  qplot<span class="p">(</span>mpg<span class="p">,</span> wt<span class="p">,</span> data <span class="o">=</span> mtcars<span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+
+<h4 id="section-16">二、注重代码的普适性</h4>
+
+<p>其他用户可能将包用在作者不可预知的场景。因此，要要重视R的应用环境，不仅是函数和对象还包括所有的全局设置。通过<code>library()</code>加载包会改变R的应用环境，或者通过<code>options()</code>和<code>setwd()</code>等改变。改变R的应用环境让代码难以理解，不是好习惯。</p>
+
+<p>不要使用那些会改变全局设置的函数，因为有更好的选择：</p>
+
+<ul>
+  <li>不要使用<code>library()</code>和<code>require()</code>：这会改变搜索路径，影响全局环境中函数的可用性。更好的选择是使用<code>DESCRIPTION</code>指出包的需求，这也使得安装包时，相关的依赖包也被安装。</li>
+  <li>不要使用<code>source()</code>从文件中加载代码：<code>source()</code>改变了当前环境，插入了程序的执行结果。可以使用<code>devtools::load_all()</code>自动source在<code>R/</code>目录中的所有文件。用<code>data/</code>替代<code>source()</code>创建数据集。</li>
+</ul>
+
+<p>其它一些函数也务必当心使用，若使用它们，用<code>on.exit()</code>清除它们的影响：</p>
+
+<div class="highlight"><pre><code class="language-r"><span class="c1"># 1</span>
+old <span class="o">&lt;-</span> <span class="kp">options</span><span class="p">(</span>stringsAsFactors <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="kp">on.exit</span><span class="p">(</span><span class="kp">options</span><span class="p">(</span>old<span class="p">),</span> add <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1"># 2</span>
+old <span class="o">&lt;-</span> <span class="kp">setwd</span><span class="p">(</span><span class="kp">tempdir</span><span class="p">())</span>
+<span class="kp">on.exit</span><span class="p">(</span><span class="kp">setwd</span><span class="p">(</span>old<span class="p">),</span> add <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
+
+<p>绘图和打印通常也会影响全局R环境，可以通过使用函数将它们和全局环境隔离开。</p>
+
+<p>另一方面，或许应当避免对用户环境的依赖。用户和开发者的环境可能不一致。<code>read.csv()</code>的参数<code>stringsAsFactors</code>的取值来自全局变量<code>stringsAsFactors</code>，用户可能是<code>TRUE</code>，也可能是<code>FALSE</code>。</p>
+
+<h3 id="section-17">合理利用副作用</h3>
+
+<h4 id="onloadonattach"><code>.onLoad()</code>和<code>.onAttach()</code></h4>
+
+<p>包在与外部系统衔接过程中，可能需要在加载时进行初始化设置，这可以通过<code>.onLoad()</code>和<code>.onAttach()</code>函数实现。当包load和attach时会调用这两个函数。这两个函数可以用在如下场景：</p>
+
+<ul>
+  <li>加载包时显示相关信息，启动信息用<code>.onAttach()</code>显示，而非用<code>.onLoad()</code>，显示信息通常用<code>packageStartupMessage()</code>和<code>message()</code>。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="m">.</span>onAttach <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>libname<span class="p">,</span> pkgname<span class="p">)</span> <span class="p">{</span>
+  <span class="kp">packageStartupMessage</span><span class="p">(</span><span class="s">&quot;Welcome to my package&quot;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+  <li>利用<code>options()</code>自定义用户设置。为避免和其它包冲突，设置项名称钱应当有包名作为前缀，同时要注意不要覆盖已有设置。可用<code>getOption("devtools.name")</code>获得设置信息。</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-r"><span class="m">.</span>onLoad <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>libname<span class="p">,</span> pkgname<span class="p">)</span> <span class="p">{</span>
+  op <span class="o">&lt;-</span> <span class="kp">options</span><span class="p">()</span>
+  op.devtools <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>
+    devtools.path <span class="o">=</span> <span class="s">&quot;~/R-dev&quot;</span><span class="p">,</span>
+    devtools.install.args <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+    devtools.name <span class="o">=</span> <span class="s">&quot;Your name goes here&quot;</span><span class="p">,</span>
+    devtools.desc.author <span class="o">=</span> <span class="s">&#39;&quot;First Last &lt;first.last@example.com&gt; [aut, cre]&quot;&#39;</span><span class="p">,</span>
+    devtools.desc.license <span class="o">=</span> <span class="s">&quot;What license is it under?&quot;</span><span class="p">,</span>
+    devtools.desc.suggests <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+    devtools.desc <span class="o">=</span> <span class="kt">list</span><span class="p">()</span>
+  <span class="p">)</span>
+  toset <span class="o">&lt;-</span> <span class="o">!</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>op.devtools<span class="p">)</span> <span class="o">%in%</span> <span class="kp">names</span><span class="p">(</span>op<span class="p">))</span>
+  <span class="kr">if</span><span class="p">(</span><span class="kp">any</span><span class="p">(</span>toset<span class="p">))</span> <span class="kp">options</span><span class="p">(</span>op.devtools<span class="p">[</span>toset<span class="p">])</span>
+
+  <span class="kp">invisible</span><span class="p">()</span>
+<span class="p">}</span></code></pre></div>
+
+<ul>
+  <li>R链接其它编程语言时，比如用<code>rJava::.jpackage()</code>和<code>Rcpp::loadRcppModules()</code>等。</li>
+  <li>通过<code>tools::vignetteEngine()</code>注册vignette引擎。</li>
+</ul>
+
+<p>调用<code>.onLoad()</code>和<code>.onAttach()</code>的参数<code>libname</code>和<code>pkgname</code>很少被使用，可用<code>.onUnload()</code>清除设置。这些函数通常保存在文件zzz.R中。<sup id="fnref:old-load-unload"><a href="#fn:old-load-unload" class="footnote">1</a></sup></p>
+
+<h4 id="s4">S4类、范型与方法</h4>
+
+<p>R包捕获这些副作用，使得他们能在重新加载时被重现，但是它们必须以正确的顺序调用。比如：在定义方法前，必须先定义范型和类。这要求R文件按特定的顺序被source，这个顺序通过<code>DESCRIPTION</code>文件中的<code>Collate</code>来控制。</p>
+
+<h3 id="cran">CRAN事项</h3>
+
+<p>提交到CRAN的包的R文件必须只包含ASCII字符。可以在字符串中包含Unicode字符，但必须使用形如<code>\u1234</code>的转意方式，最容易的是使用<code>stringi::stri_escape_unicode()</code>函数：</p>
+
+<div class="highlight"><pre><code class="language-r">x <span class="o">&lt;-</span> <span class="s">&quot;This is a bullet •&quot;</span>
+y <span class="o">&lt;-</span> <span class="s">&quot;This is a bullet \u2022&quot;</span>
+<span class="kp">identical</span><span class="p">(</span>x<span class="p">,</span> y<span class="p">)</span>
+<span class="c1">#&gt; [1] TRUE</span>
+
+<span class="kp">cat</span><span class="p">(</span>stringi<span class="o">::</span>stri_escape_unicode<span class="p">(</span>x<span class="p">))</span>
+<span class="c1">#&gt; This is a bullet \u2022</span></code></pre></div>
+
+<h2 id="section-18">包的元信息</h2>
+
+<h2 id="section-19">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<ul>
+  <li><a href="http://r-pkgs.had.co.nz">R packages</a></li>
+</ul>
+
+<h3 class="no_toc" id="section-20">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:old-load-unload">
+      <p>Note that <code>.First.lib()</code> and<code> .Last.lib()</code> are old versions of <code>.onLoad()</code> and <code>.onUnload()</code> and should no longer be used. <a href="#fnref:old-load-unload" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/04/postgresql-essential" class="pageNav" style="float:left"   >上一篇：PostgreSQL Essential </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/04/speed-up-r" class="pageNav" style="float:right"   >下一篇：高性能R程序 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/04/r-packages" 	data-url="http://qianjiye.de/2015/04/r-packages" data-title="R包开发">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/04/postgresql-essential'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/04/speed-up-r'; --1> -->
+<!--         url = '/2015/04/speed-up-r'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/04/r-packages/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

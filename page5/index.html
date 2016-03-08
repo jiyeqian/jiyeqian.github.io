@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>CHANGE・業・德 - CHANGE・業・德</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>CHANGE・業・德</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="post">
+<ul class="listing">
+
+<!--   
+  
+    
+    <li class="listing-seperator">2014</li>
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-10">2014-12-10</time>
+    <a href="/2014/12/large-scale-machine-learning" title="大数据上的机器学习">大数据上的机器学习</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-09">2014-12-09</time>
+    <a href="/2014/12/computational-advertising-foundation" title="计算广告学：广告基础">计算广告学：广告基础</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-09">2014-12-09</time>
+    <a href="/2014/12/introduction-to-recommender-systems" title="推荐系统简介">推荐系统简介</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-08">2014-12-08</time>
+    <a href="/2014/12/anomaly-detection" title="异常检测">异常检测</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-08">2014-12-08</time>
+    <a href="/2014/12/pca" title="降维：主成分分析">降维：主成分分析</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-12-07">2014-12-07</time>
+    <a href="/2014/12/k-means" title="聚类（1）：k均值算法">聚类（1）：k均值算法</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-11-27">2014-11-27</time>
+    <a href="/2014/11/introduction-to-support-vector-machines" title="支持向量机简介">支持向量机简介</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-11-25">2014-11-25</time>
+    <a href="/2014/11/advice-for-applying-machine-learning" title="机器学习实战技能">机器学习实战技能</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-11-22">2014-11-22</time>
+    <a href="/2014/11/machine-learning-resources" title="机器学习资源">机器学习资源</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-11-09">2014-11-09</time>
+    <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-10-25">2014-10-25</time>
+    <a href="/2014/10/css-essential" title="CSS Essential">CSS Essential</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-10-21">2014-10-21</time>
+    <a href="/2014/10/pla" title="感知器学习算法">感知器学习算法</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2014-10-20">2014-10-20</time>
+    <a href="/2014/10/multiple-classes" title="多分类问题">多分类问题</a>
+    
+  </li>
+
+<!--   
+  
+    
+    <li class="listing-seperator">2012</li>
+   -->
+  <li class="listing-item">
+    <time datetime="2012-07-01">2012-07-01</time>
+    <a href="/2012/07/host-your-pages-at-github-using-jekyll" title="基于Jekyll的GitHub建站指南">基于Jekyll的GitHub建站指南</a>
+    
+  </li>
+
+<!--   
+  
+    
+    <li class="listing-seperator">2011</li>
+   -->
+  <li class="listing-item">
+    <time datetime="2011-10-08">2011-10-08</time>
+    <a href="/2011/10/foreign-poems" title="外国诗歌赏析">外国诗歌赏析</a>
+    
+  </li>
+
+<!--   
+   -->
+  <li class="listing-item">
+    <time datetime="2011-09-19">2011-09-19</time>
+    <a href="/2011/09/stories" title="故事赏析">故事赏析</a>
+    
+  </li>
+
+</ul>
+
+<div id="post-pagination" class="paginator">
+
+  
+    
+    <a href="/page4">&lt;前页</a>
+    
+  
+
+      
+      <a href="/">1</a>
+      
+
+    
+      
+      <a href="/page2">2</a>
+      
+    
+      
+      <a href="/page3">3</a>
+      
+    
+      
+      <a href="/page4">4</a>
+      
+    
+      
+      <span class="current-page">5</span>
+      
+    
+      
+      <a href="/page6">6</a>
+      
+    
+
+  
+    <a class="next" href="/page6">后页&gt;</a>
+  
+  (共87篇)
+</div>
+
+
+</section>
+
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

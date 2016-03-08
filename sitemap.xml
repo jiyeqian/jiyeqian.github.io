@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://qianjiye.de/2015/10/minimum-cut-based-inference</loc>
+    
+    <lastmod>2015-10-13T19:17:43+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/09/fast-ncc</loc>
+    
+    <lastmod>2015-09-26T19:56:39+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut</loc>
+    
+    <lastmod>2015-09-25T00:36:11+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/09/reparameterization-and-dp</loc>
+    
+    <lastmod>2015-09-22T23:36:39+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/09/introduction-to-av-with-dgm</loc>
+    
+    <lastmod>2015-09-19T23:03:33+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/09/haze-removal-kaiming</loc>
+    
+    <lastmod>2015-09-16T18:01:49+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/08/tesseract-ocr</loc>
+    
+    <lastmod>2015-08-13T23:42:42+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/07/HPC-overview</loc>
+    
+    <lastmod>2015-07-28T19:03:36+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/07/introduction-to-yushanfang</loc>
+    
+    <lastmod>2015-07-03T23:01:04+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/06/mvgcv-chapter01</loc>
+    
+    <lastmod>2015-06-06T22:25:35+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/06/mvgcv-preface</loc>
+    
+    <lastmod>2015-06-04T08:27:07+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/06/mvgcv-foreword</loc>
+    
+    <lastmod>2015-06-03T19:27:23+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/05/speed-up-python</loc>
+    
+    <lastmod>2015-05-10T21:29:58+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/05/TLD</loc>
+    
+    <lastmod>2015-05-10T19:26:59+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/05/arules</loc>
+    
+    <lastmod>2015-05-02T13:30:42+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/speed-up-r</loc>
+    
+    <lastmod>2015-04-28T21:23:25+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/r-packages</loc>
+    
+    <lastmod>2015-04-28T21:18:59+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/postgresql-essential</loc>
+    
+    <lastmod>2015-04-20T14:23:07+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/camera-calibration</loc>
+    
+    <lastmod>2015-04-18T18:14:52+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/opencv-a-python-tutorial</loc>
+    
+    <lastmod>2015-04-11T23:40:53+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/python-essential</loc>
+    
+    <lastmod>2015-04-10T00:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/04/vector-space-model</loc>
+    
+    <lastmod>2015-04-03T19:40:53+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/industrial-robot-technique-development</loc>
+    
+    <lastmod>2015-03-25T19:29:43+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/industrial-robot-industry-development</loc>
+    
+    <lastmod>2015-03-19T21:38:49+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/texture-classification-system</loc>
+    
+    <lastmod>2015-03-16T19:28:50+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/statistical-learning-linear-regression</loc>
+    
+    <lastmod>2015-03-13T20:06:43+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/efficient-pattern-mining-methods</loc>
+    
+    <lastmod>2015-03-07T23:11:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/pattern-discovery-basic-concepts</loc>
+    
+    <lastmod>2015-03-07T19:11:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/03/r-essential</loc>
+    
+    <lastmod>2015-03-06T02:36:23+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/image-classification-optimization</loc>
+    
+    <lastmod>2015-02-13T22:53:50+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/summary-of-extraction-models</loc>
+    
+    <lastmod>2015-02-13T17:48:53+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/matrix-factorization</loc>
+    
+    <lastmod>2015-02-12T18:33:54+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/radial-basis-function-network</loc>
+    
+    <lastmod>2015-02-11T23:59:57+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/deep-learning</loc>
+    
+    <lastmod>2015-02-04T19:31:41+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/neural-network</loc>
+    
+    <lastmod>2015-02-04T16:15:04+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/02/summary-of-aggregation-models</loc>
+    
+    <lastmod>2015-02-04T13:39:58+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/gradient-boosted-decision-tree</loc>
+    
+    <lastmod>2015-01-29T16:12:28+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/three-learning-principles</loc>
+    
+    <lastmod>2015-01-28T20:05:37+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/validation</loc>
+    
+    <lastmod>2015-01-27T23:28:10+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/regularization</loc>
+    
+    <lastmod>2015-01-26T17:50:30+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/hazard-of-overfitting</loc>
+    
+    <lastmod>2015-01-26T13:47:38+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/nonlinear-transformation</loc>
+    
+    <lastmod>2015-01-25T19:03:12+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/linear-models-for-classification</loc>
+    
+    <lastmod>2015-01-25T12:23:40+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/random-forest</loc>
+    
+    <lastmod>2015-01-24T17:33:22+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/decision-tree</loc>
+    
+    <lastmod>2015-01-23T22:49:52+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier</loc>
+    
+    <lastmod>2015-01-20T12:18:40+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/image-classification-knn-based-introduction</loc>
+    
+    <lastmod>2015-01-19T17:20:03+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/logistic-regression</loc>
+    
+    <lastmod>2015-01-17T16:28:27+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/adaptive-boosting</loc>
+    
+    <lastmod>2015-01-17T13:02:33+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/blending-and-bagging</loc>
+    
+    <lastmod>2015-01-15T15:12:32+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/linear-regression</loc>
+    
+    <lastmod>2015-01-13T20:17:01+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/support-vector-regression</loc>
+    
+    <lastmod>2015-01-12T18:31:45+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/kernel-logistic-regression</loc>
+    
+    <lastmod>2015-01-09T15:01:15+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/soft-margin-svm</loc>
+    
+    <lastmod>2015-01-07T17:24:31+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/kernel-svm</loc>
+    
+    <lastmod>2015-01-06T14:25:58+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/dual-svm</loc>
+    
+    <lastmod>2015-01-05T18:24:26+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2015/01/linear-svm</loc>
+    
+    <lastmod>2015-01-03T18:57:13+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-noise-and-error</loc>
+    
+    <lastmod>2014-12-27T16:56:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/map-reduce-essential</loc>
+    
+    <lastmod>2014-12-25T02:08:25+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/unbalanced-data-sets</loc>
+    
+    <lastmod>2014-12-23T22:15:19+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-the-vc-dimension</loc>
+    
+    <lastmod>2014-12-23T19:02:45+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-theory-of-generalization</loc>
+    
+    <lastmod>2014-12-20T07:36:39+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-training-versus-testing</loc>
+    
+    <lastmod>2014-12-18T04:32:08+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/machine-learning-feasibility-of-learning</loc>
+    
+    <lastmod>2014-12-14T06:19:24+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/large-scale-machine-learning</loc>
+    
+    <lastmod>2014-12-10T19:51:50+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/computational-advertising-foundation</loc>
+    
+    <lastmod>2014-12-09T09:02:19+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/introduction-to-recommender-systems</loc>
+    
+    <lastmod>2014-12-09T07:20:25+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/anomaly-detection</loc>
+    
+    <lastmod>2014-12-08T10:29:01+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/pca</loc>
+    
+    <lastmod>2014-12-08T04:53:42+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/12/k-means</loc>
+    
+    <lastmod>2014-12-07T18:38:59+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/introduction-to-support-vector-machines</loc>
+    
+    <lastmod>2014-11-27T08:05:56+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/advice-for-applying-machine-learning</loc>
+    
+    <lastmod>2014-11-25T09:44:20+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/machine-learning-resources</loc>
+    
+    <lastmod>2014-11-22T00:00:36+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/11/introducation-to-neural-networks</loc>
+    
+    <lastmod>2014-11-09T11:09:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/10/css-essential</loc>
+    
+    <lastmod>2014-10-25T15:37:41+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/10/pla</loc>
+    
+    <lastmod>2014-10-21T18:09:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2014/10/multiple-classes</loc>
+    
+    <lastmod>2014-10-20T00:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2012/07/host-your-pages-at-github-using-jekyll</loc>
+    
+    <lastmod>2012-07-01T00:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2011/10/foreign-poems</loc>
+    
+    <lastmod>2011-10-08T23:09:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2011/09/stories</loc>
+    
+    <lastmod>2011-09-19T17:45:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2010/12/acknowledgements-from-theses</loc>
+    
+    <lastmod>2010-12-28T00:49:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2010/12/doctor-oath</loc>
+    
+    <lastmod>2010-12-28T00:39:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2010/07/chinese-classical-poems</loc>
+    
+    <lastmod>2010-07-15T03:09:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2010/03/gpu-and-cg-programming</loc>
+    
+    <lastmod>2010-03-07T07:25:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2010/01/chinese-new-poems</loc>
+    
+    <lastmod>2010-01-23T03:55:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2008/10/key-to-success-in-modern-society</loc>
+    
+    <lastmod>2008-10-27T21:09:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2008/07/lenna-romance</loc>
+    
+    <lastmod>2008-07-26T16:47:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</urlset>

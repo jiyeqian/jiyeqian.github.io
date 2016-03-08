@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>支持向量机（3）：核支持向量机</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>支持向量机（3）：核支持向量机</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-01-06">2015-01-06</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#支持向量机" title="支持向量机">支持向量机</a>&nbsp;
+  
+  <a href="/tags/#核方法" title="核方法">核方法</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">回顾对偶支持向量机</h2>
+
+<p>当特征空间维数$\tilde d$很大时，计算$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$是对偶支持向量机的求解瓶颈。</p>
+
+<p>能否找到比$O(\tilde d)$快的方法计算$\mathbf z_n^T\mathbf z_m=\Phi(\mathbf x_n)^T\Phi(\mathbf x_m)$？能否将先特征转换再计算内积的两步合为一步呢？</p>
+
+<h2 id="kernel-trick">核技巧</h2>
+
+<p>对于2阶多项式变换
+\[
+\Phi_2(\mathbf x)=\left(1, x_1,x_2,\ldots,x_d,x_1^2,x_1x_2,\ldots,x_1x_d,x_2x_1,x_2^2,\ldots,x_2x_d,\ldots,x_d^2\right)，
+\]
+为了简化同时包含了$x_1x_2$和$x_2x_1$这样的项。变换之后$Z$空间的内积可以可直接通过$X$空间计算
+\[
+\Phi_2(\mathbf x)^T\Phi_2(\mathbf x’)=1+\left(\mathbf x^T\mathbf x’\right)+\left(\mathbf x^T\mathbf x’\right)^2。
+\]
+这种特征转换和内积合并的方法称之为<strong>核函数</strong>，
+\begin{equation*}
+K_{\Phi_2}\left(\mathbf x,\mathbf x’\right)=\Phi_2(\mathbf x)^T\Phi_2(\mathbf x’)。
+\end{equation*}
+利用核函数，可以简化对偶支持向量机的实现，二次项的系数为
+\begin{equation}
+q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m=y_ny_mK\left(\mathbf x_n,\mathbf x_m\right)，
+\end{equation}
+利用支持向量$\left(\mathbf x_s, y_s\right)$计算偏移量
+\begin{equation}
+\begin{aligned}
+b
+=&amp;y_s-\mathbf w^T\mathbf z_s\\
+=&amp;y_s-\left(\sum_{n=1}^N\alpha_ny_n\mathbf z_n\right)^T\mathbf z_s\\
+=&amp;y_s-\sum_{n=1}^N\alpha_ny_nK\left(\mathbf x_n,\mathbf x_s\right)
+，
+\end{aligned}
+\end{equation}
+对于特定的输入$\mathbf x$，判别函数为
+\begin{equation}
+\begin{aligned}
+g_{SVM}(\mathbf x)
+=&amp;\mbox{sign}\left(\mathbf w^T\Phi(\mathbf x)+b\right)\\
+=&amp;\mbox{sign}\left(\sum_{n=1}^N\alpha_ny_nK\left(\mathbf x_n,\mathbf x\right)+b\right)
+。
+\end{aligned}
+\end{equation}
+从上面的公式可以看出，计算不再依赖变换后的空间，只依赖原空间，$b$和判别函数只依赖原空间的支持向量，大大简化了计算。</p>
+
+<h2 id="section-1">多项式核</h2>
+
+<p>仿照2阶多项式核的定义，可以推导高阶多项式核的定义为
+\begin{equation}
+K_Q(\mathbf x,\mathbf x’)=\left(\zeta + \gamma\mathbf x^T\mathbf x’\right)^Q\quad\zeta\geq 0,\gamma &gt; 0。
+\end{equation}
+事实上，系数$\zeta$和$\gamma$的取值不会改变多项式所在的空间，这些系数会被$\mathbf w$所吞噬。但是，不同的系数会得到不同的支持向量和判别函数。选择不同的核，相当于改变了边界的定义。多项式核可以在几乎不增加计算量的情况下，得到复杂的判别界。支持向量机通过large-margin控制判别界的复杂度。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png" alt="2阶多项式核SVM的效果" /></a><div class="caption">图 1:  2阶多项式核SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-poly2-kernel-svm.png">PNG</a>]</div></div></div>
+
+<p>上图是2阶多项式核支持向量机的效果，不同系数下的支持向量和判别界不同。</p>
+
+<p>当$\zeta=0,\gamma=1$时，多项式核就变为了线性核。线性核利用原始支持向量机就比较高效。因此，应当首先尝试线性核，当线性核不能满足要求时再尝试其它高阶核。</p>
+
+<h2 id="section-2">高斯核</h2>
+
+<p>对于1维数据的高斯核，利用Taylor展式可得
+\begin{equation*}
+\begin{aligned}
+K(x,x’)
+=&amp;\exp\left(-\left(x-x’\right)^2\right)\\
+=&amp;\exp\left(-x^2\right)\exp\left(-x’^2\right)\exp\left(2xx’\right)\\
+=&amp;\exp\left(-x^2\right)\exp\left(-x’^2\right)\sum_{i=0}^\infty\frac{\left(2xx’\right)^i}{i!}\\
+=&amp;\sum_{i=0}^\infty\exp\left(-x^2\right)\exp\left(-x’^2\right)\sqrt{\frac{2^i}{i!}}\sqrt{\frac{2^i}{i!}}x^ix’^i\\
+=&amp;\Phi(x)^T\Phi(x’)，
+\end{aligned}
+\end{equation*}
+其中$\Phi(x)=\exp\left(-x^2\right)\cdot\left(1,\sqrt{\frac{2^1}{1!}}x,\sqrt{\frac{2^2}{2!}}x^2,\ldots\right)$，容易看出这是无穷维的特征变换。更一般的高斯核定义为
+\begin{equation}
+K\left(\mathbf x,\mathbf x’\right)=\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x’\right\rVert^2\right)\quad \gamma&gt;0。
+\end{equation}
+高斯核也成为径向基函数（RBF，Radial Basis Function）核。基于高斯核的判别函数为
+\begin{equation}
+g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_n\right\rVert^2\right)+b\right)，
+\label{eq:rbf-svm}
+\end{equation}
+它是以支持向量为中心的高斯函数的线性组合，不再依赖$\mathbf w$，只依赖于支持向量和系数$\alpha_n$。</p>
+
+<p>高斯核相当于进行了无限维的特征转换，可以得到复杂的判别界，泛化性能通过最大边界“保证”。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png"><img src="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png" alt="高斯核的SVM的效果" /></a><div class="caption">图 2:  高斯核的SVM的效果 [<a href="/assets/images/2015-01-06-svm-kernel-svm-gaussian-kernel-svm.png">PNG</a>]</div></div></div>
+
+<p>上图是不同系数的高斯核支持向量机的效果，$\gamma$越大，高斯函数越尖，越容易过拟合。当$\gamma\rightarrow\infty$时，$K_{lim}\left(\mathbf x,\mathbf x’\right)=[[\mathbf x＝\mathbf x’]]$，相当于严格判断是否与支持向量一致。</p>
+
+<h2 id="section-3">小结</h2>
+
+<p>各种核函数的比较如下表：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>核函数</th>
+      <th>优势</th>
+      <th>局限性</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>线性核</td>
+      <td>计算快；<br />通过$\mathbf w$和支持向量容易解释</td>
+      <td>无法处理线性不可分数据</td>
+    </tr>
+    <tr>
+      <td>多项式核</td>
+      <td>可以通过次数$Q$控制复杂度</td>
+      <td>当$Q$很大时数值计算困难<br />（当$\left\lvert\zeta+\gamma\mathbf x^T\mathbf x’\right\rvert&lt;1$时，$K(\mathbf x, \mathbf x’)\rightarrow 0$）；<br />3个参数难以选择</td>
+    </tr>
+    <tr>
+      <td>高斯核</td>
+      <td>强大；<br />$K(\mathbf x, \mathbf x’)$有界；<br />1个参数容易选择；</td>
+      <td>没有显示的$\mathbf w$供解读；<br />计算比线性核慢；<br />太强大导致容易过拟合</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>当采用多项式核时，如果$Q$较小，可以尝试直接利用特征变换和原始支持向量机，求解速度可能比核方法更快。</p>
+
+<p>核是一种特殊的相似性度量，但是不是所有的相似性度量都可以作为核。有效的核必须满足<strong>Mercer条件</strong>（充要条件）：核函数矩阵
+\begin{equation*}
+\begin{aligned}
+\mathbf K
+=&amp;\begin{bmatrix}
+\Phi(\mathbf x_1)^T\Phi(\mathbf x_1) &amp; \Phi(\mathbf x_1)^T\Phi(\mathbf x_2) &amp;\ldots &amp;\Phi(\mathbf x_1)^T\Phi(\mathbf x_N)\\
+\Phi(\mathbf x_2)^T\Phi(\mathbf x_1) &amp; \Phi(\mathbf x_2)^T\Phi(\mathbf x_2) &amp;\ldots &amp;\Phi(\mathbf x_2)^T\Phi(\mathbf x_N)\\
+\ldots&amp;\ldots&amp;\ldots&amp;\ldots\\
+\Phi(\mathbf x_N)^T\Phi(\mathbf x_1) &amp; \Phi(\mathbf x_N)^T\Phi(\mathbf x_2) &amp;\ldots &amp;\Phi(\mathbf x_N)^T\Phi(\mathbf x_N)
+\end{bmatrix}\\
+=&amp;\left[\mathbf z_1\quad\mathbf z_2\quad\ldots\quad\mathbf z_N\right]^T\left[\mathbf z_1\quad\mathbf z_2\quad\ldots\quad\mathbf z_N\right]\\
+=&amp;\mathbf Z\mathbf Z^T
+\end{aligned}
+\end{equation*}
+必须是对称半正定。</p>
+
+<p>若$K_1(\mathbf x,\mathbf x’)=\Phi_1(\mathbf x)^T\Phi_1(\mathbf x’)$和$K_2(\mathbf x,\mathbf x’)=\Phi_2(\mathbf x)^T\Phi_2(\mathbf x’)$是两个有效的核，那么下面生成的也是有效的核：</p>
+
+<ul>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)\cdot K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = K_1(\mathbf x,\mathbf x’)+K_2(\mathbf x,\mathbf x’)$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = (1-K_1(\mathbf x,\mathbf x’))^{-1},\quad 0&lt;K_1(\mathbf x,\mathbf x’)&lt;1$；</li>
+  <li>$K(\mathbf x,\mathbf x’) = \alpha K_1(\mathbf x,\mathbf x’),\quad\alpha\in\mathbb R$。</li>
+</ul>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/01/dual-svm" class="pageNav" style="float:left"   >上一篇：支持向量机（2）：对偶支持向量机 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/01/soft-margin-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（4）：soft-margin支持向量机 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/01/kernel-svm" 	data-url="http://qianjiye.de/2015/01/kernel-svm" data-title="支持向量机（3）：核支持向量机">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/dual-svm'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/soft-margin-svm'; --1> -->
+<!--         url = '/2015/01/soft-margin-svm'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/kernel-svm/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

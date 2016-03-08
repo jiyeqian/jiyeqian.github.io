@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>分类器融合（3）：决策树</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>分类器融合（3）：决策树</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-01-23">2015-01-23</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
+  
+  <a href="/tags/#特征选择" title="特征选择">特征选择</a>&nbsp;
+  
+  <a href="/tags/#熵" title="熵">熵</a>&nbsp;
+  
+  <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">决策树简介</h2>
+
+<p>决策树是一种对实例分类的树形结构，由节点（node）和有向边（directed edge）组成，内部节点（internal node）表示特征或属性，叶节点（leaf node）表示类<a href="#lihang_sml_2012">[1, P. 55]</a>。决策树既可以看成if-then规则的集合，也可表示给定特征条件下类别的概率密度分布<a href="#lihang_sml_2012">[1, P. 56]</a>。从分类器融合的角度，决策树是一种<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件分类器融合</a>的学习模型<a href="#lin_ml_dt_2015">[2]</a>。常用的决策树学习算法有ID3、C4.5和C&amp;RT（也记为CART）。</p>
+
+<p>决策树在实际中很有用，它可解释性强（广泛应用于商业和医学数据分析），简单容易实现，能高效的学习和预测，但是它是启发式方法，理论基础较薄弱。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png"><img src="/assets/images/2015-01-23-decision-tree-decision-tree-example.png" alt="［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法" /></a><div class="caption">图 1:  ［左］：观看MOOC课程的决策树［右］：递归定义的决策树算法 [<a href="/assets/images/2015-01-23-decision-tree-decision-tree-example.png">PNG</a>]</div></div></div>
+
+<p>上图左的决策树用来判断是否观看MOOC课程。决策树是分类器的有条件融合，在不同条件采用不同的$g_t(\mathbf x)$：</p>
+
+<ul>
+  <li>基本假设（base hypothesis）$g_t(\mathbf x)$：每条路径终点的叶子🍃，此处是常数。</li>
+  <li>条件$q_t(\mathbf x)$：每条路径的内部节点，$\mathbf x$在路径$t$上么？上图左中菱形区域。</li>
+</ul>
+
+<p>决策树是递归结构，每个分支对应一颗子决策树
+\[
+G(\mathbf x)=\sum_{c=1}^C[[b(\mathbf x)=c]]\cdot G_c(\mathbf x)，
+\]
+$b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子树。</p>
+
+<p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
+
+<h2 id="section-1">特征选择</h2>
+
+<p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只选择对训练数据有足够分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
+
+<p><strong>熵</strong>（entropy）表示随机变量不确定性的度量，熵越大随机变量的不确定性就越大。某一维的特征$x$的概率记为$p(x)$，特征$x$的熵表示为
+\begin{equation}
+H(p)=-\sum_{j=1}^Mp(x_j)\log p(x_j)，
+\end{equation}
+$M$表示特征$X$能取不同特征值的个数。对数以2为底或以e为底时熵的单位分别称为比特（bit）或纳特（nat）。从定义可知$0\leq H(p)\leq \log M$。<strong>条件熵</strong>（conditional entropy）$H(Y|X)$表示已知随机变量$X$的条件下，随机变量$Y$的不确定性，定义为给定$X$条件下$Y$的条件概率分布的熵对$X$的数学期望
+\begin{equation}
+H(Y|X)=-\sum_{j=1}^Mp(x_j)H(Y|X=x_j)。
+\end{equation}
+当熵和条件熵中的概率由数据估计（特别是极大似然估计）得到时，熵和条件熵分别称为<strong>经验熵</strong>（empirical entropy）和<strong>经验条件熵</strong>（empirical conditional entropy）。若有$0$概率，令$0\log 0=0$。<strong>信息增益</strong>（information gain）表示得知特征$X$而使类$Y$信息不确定性减少的程度。特征$A$对训练集$\mathcal D$的信息增益定义为
+\begin{equation}
+g(\mathcal D,A)=H(\mathcal D)-H(\mathcal D|A)，
+\end{equation}
+经验熵$H(\mathcal D)$表示对$\mathcal D$分类的不确定性，经验条件熵$H(\mathcal D|A)$表示在给定特征$A$时对$\mathcal D$分类的不确定度。显然，信息增益大的特征具有更强的分类能力。</p>
+
+<p>当数据集的经验熵很大时，信息增益也会偏大，使用<strong>信息增益比</strong>（information gain ratio）
+\begin{equation}
+g_R(\mathcal D,A)={g(\mathcal D,A)\over H(\mathcal D)}，
+\end{equation}
+可校正这一问题。</p>
+
+<p>$|\mathcal D|$表示$\mathcal D$的样本容量（样本个数），$|\mathcal C_k|$表示类$\mathcal C_k$的样本个数，$\sum_{k=1}^K|\mathcal C_k|=|\mathcal D|$。根据特征$A$的取值，将$\mathcal D$划分为$M$个子集$\mathcal D_1,\mathcal D_1,\ldots,\mathcal D_M$，子集$\mathcal D_{j}$中属于类别$\mathcal C_k$的样本集为$\mathcal D_{jk}$，$\mathcal D_{jk}=\mathcal D_{j}\cap \mathcal C_k$。经验熵和经验条件熵计算方式为
+\begin{equation}
+H(\mathcal D)=-\sum_{k=1}^K{|\mathcal C_k|\over |\mathcal D|}\log_2{|\mathcal C_k|\over |\mathcal D|}，\quad H(\mathcal D,A)=-\sum_{j=1}^M{|\mathcal D_j|\over |\mathcal D|}\sum_{k=1}^K{|\mathcal D_{jk}|\over |\mathcal D_j|}\log_2{|\mathcal D_{jk}|\over |\mathcal D_j|}。
+\end{equation}</p>
+
+<p>根据如下贷款数据表</p>
+
+<p><img src="/assets/images/2015-01-23-decision-tree-loan-table.png" alt="贷款数据表" /></p>
+
+<p>利用信息增益准则可以选出最优特征。由表中数据计算经验熵
+\[
+H(\mathcal D)=-{9\over 15}\log_2{9\over 15}-{6\over 15}\log_2{6\over 15}=0.971，
+\]
+年龄特征对数据集$\mathcal D$的经验条件熵为
+\begin{aligned}
+H(\mathcal D,年龄)=
+&amp;-{5\over 15}\left({2\over 5}\log_2{2\over 5}+{3\over 5}\log_2{3\over 5}\right)\\
+&amp;-{5\over 15}\left({3\over 5}\log_2{3\over 5}+{2\over 5}\log_2{2\over 5}\right)\\
+&amp;-{5\over 15}\left({4\over 5}\log_2{4\over 5}+{1\over 5}\log_2{1\over 5}\right)=0.888，
+\end{aligned}
+年龄特征对数据集$\mathcal D$的信息增益为$g(\mathcal D,年龄)=0.971-0.888=0.083$，同样可得其它信息增益为
+\[
+g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\quad g(\mathcal D,借贷情况)=0.363，
+\]
+信息增益最大的特征“有自己的房子”是最优特征。</p>
+
+<h2 id="section-2">分类回归树</h2>
+
+<p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT的$g_t(\mathbf x)$比较简单：</p>
+
+<ul>
+  <li>二分类或多分类问题（基于0／1误差度量$E_{in}$）：$\{y_n\}$中占大多数的类的标签；</li>
+  <li>回归问题（基于平方误差度量$E_{in}$）：$\{y_n\}$的均值。</li>
+</ul>
+
+<p>C&amp;RT用<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqdecision-stump">decision stump</a>进行二元分支，利用数据集大小加权的不纯度作为<strong>分支条件</strong>，
+\begin{equation}
+b(\mathbf x)=\underset{\mbox{decision stumps }h(\mathbf x)}{\arg\min}\sum_{c=1}^2|\mathcal D_c\mbox{ with }h|\cdot\mbox{impurity}(\mathcal D_c\mbox{ with }h)，
+\label{eq:dtree-decision-stump}
+\end{equation}
+选择加权不纯度最小的分支方法。若用decision stump对有$m$个不同的取值的特征进行划分，对有序的特征共有$m-1$种二分法，对无序的特征共有$2^{m-1}-1$种二分法<a href="#wires11">[3, Pp. 14-15]</a>。回归的不纯度采用回归误差
+\begin{equation}
+\mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N(y_n-\bar y)^2，
+\end{equation}
+$\bar y$表示$\{y_n\}$的均值。分类的不纯度可采用分类误差
+\begin{equation*}
+\mbox{impurity}(\mathcal D)={1\over N}\sum_{n=1}^N[[y_n\neq y^*]]，
+\end{equation*}
+$y^*$表示$\{y_n\}$中占大多数的类的标签，但通常采用的是Gini指数
+\begin{equation}
+\mbox{impurity}(\mathcal D)=1-\sum_{k=1}^K\left({\sum_{n=1}^N[[y_n=k]]\over N}\right)^2，
+\end{equation}
+$k$表示类标签，${\sum_{n=1}^N[[y_n=k]]\over N}$就是类$k$在$\mathcal D$中占的比率，也可采用
+\begin{equation*}
+\mbox{impurity}(\mathcal D)=1-\max_{1\leq k\leq K}{\sum_{n=1}^N[[y_n=k]]\over N}。
+\end{equation*}
+$\mathcal D$中的类越分散不纯度越高，类似于熵；$\mathcal D$中数据属于同一类时不纯度为0。</p>
+
+<p>分类回归树“被迫”停止生长的两个<strong>终止条件</strong>：</p>
+
+<ol>
+  <li>所有$y_n$都相同，不纯度为0，返回$g_t(\mathbf x)=y_n$；</li>
+  <li>所有$\mathbf x_n$都相同，不存在decision stump。</li>
+</ol>
+
+<p>这种被迫停止生长的树称为完全成长树（fully-grown tree）。</p>
+
+<p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
+
+<h2 id="section-3">决策树剪枝</h2>
+
+<p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
+
+<p>决策树需要正则化机制避免过拟合。利用控制树叶数目$\Omega(G)$，正则化决策树
+\begin{equation}
+\underset{\mbox{all possible }G}{\arg\min}E_{in}(G)+\lambda\Omega(G)，
+\end{equation}
+称为剪枝（pruning）。通常是采用交叉验证选择$\lambda$。若要列举所有的$G$，计算量非常大，通常的做法是从完全成长树入手构造可能的$G$：</p>
+
+<ul>
+  <li>$G^{(0)}$为完全成长树；</li>
+  <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
+</ul>
+
+<h2 id="section-4">决策树优势</h2>
+
+<p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
+
+<h4 id="section-5">一、可解释性好</h4>
+
+<h4 id="section-6">二、容易处理多分类问题</h4>
+
+<h4 id="section-7">三、容易处理类别特征</h4>
+
+<p>决策树通过decision stump
+\begin{equation}
+b(\mathbf x)=[[x_i\leq \theta]]+1\quad\theta\in\mathbb R，
+\end{equation}
+可以对数值特征进行分类；利用决策子集（decision subset）
+\begin{equation}
+b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
+\end{equation}
+决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
+
+<h4 id="section-8">四、容易处理遗失特征</h4>
+
+<p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
+
+<ul>
+  <li>获取体重特征；</li>
+  <li>用身高特征代替。</li>
+</ul>
+
+<p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
+
+<h4 id="section-9">五、高效的训练非线性模型</h4>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png"><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="C&amp;RT vs. AdaBoost" /></a><div class="caption">图 2:  C&amp;RT vs. AdaBoost [<a href="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png">PNG</a>]</div></div></div>
+
+<h2 id="section-10">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
+
+</li>
+<li><span id="lin_ml_dt_2015">[2]H.-T. Lin, “Lecture 9: Decision Tree.” Coursera, 2015.</span>
+
+[<a href="https://class.coursera.org/ntumltwo-001/lecture">Online</a>]
+
+</li>
+<li><span id="wires11">[3]W.-Y. Loh, “Classification and regression trees,” <i>Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery</i>, vol. 1, pp. 14–23, 2011.</span>
+
+</li></ol>
+
+<h3 id="section-11">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:categorical-feature">
+      <p>例如医生诊断时会给出症状相关的类别特征｛fever, pain, tired, sweaty｝。 <a href="#fnref:categorical-feature" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" class="pageNav" style="float:left"   >上一篇：CNN（3）：多分类支持向量机和softmax分类器 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/01/random-forest" class="pageNav" style="float:right"   >下一篇：分类器融合（4）：随机森林 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/01/decision-tree" 	data-url="http://qianjiye.de/2015/01/decision-tree" data-title="分类器融合（3）：决策树">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/image-classification-svm-and-softmax-based-linear-classifier'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/random-forest'; --1> -->
+<!--         url = '/2015/01/random-forest'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/decision-tree/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

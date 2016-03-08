@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>感知器学习算法</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>感知器学习算法</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-10-21">2014-10-21</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">问题描述</h2>
+
+<p>对于线性二分类问题<br />
+\begin{equation}
+y = \left\{
+\begin{aligned}
+&amp; +1 &amp; \sum\nolimits_{i=1}^dw_ix_i &gt; \mbox{threshold} \\
+&amp; -1 &amp; \sum\nolimits_{i=1}^dw_ix_i &lt; \mbox{threshold}
+\end{aligned}
+\right. 
+\end{equation}</p>
+
+<p>也可以记为
+\begin{equation}
+h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sign}\left(\sum_{i=0}^dw_ix_i\right) = \mbox{sign}\left(\mathbf{w^Tx}\right)
+\end{equation} <br />
+其中，$w_0 = -\mbox{threshold}, x_0 = +1$。</p>
+
+<p>问：如何估计模型模型$h(x)$的参数$\mathbf{w}$？  <br />
+答：感知器算法（PLA，Perceptron Learning Algorithm）。</p>
+
+<h2 id="pla-algorithm">感知器算法</h2>
+
+<p>感知器算法通过迭代更新模型参数，直到没有错分的样本点。</p>
+
+<blockquote>
+  <h4 id="pla">PLA</h4>
+  <hr />
+  <p>repeat until a full cycle of not encountering mistakes { <br />
+1. 找到参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
+2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$。  <br />
+}</p>
+</blockquote>
+
+<div class="image_line">
+<div class="image_card">
+<img src="/assets/images/2014-10-21-pla_1.png" alt="PLA更新模型参数示意图" />
+<div class="caption">PLA更新模型参数示意图</div>
+</div>
+</div>
+
+<p>PLA更新模型参数解释： <br />
+1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
+2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。</p>
+
+<p>通过参数更新规则可知  <br />
+\[
+\mathbf w_{t+1} ＝ \mathbf w_t + y_{n}\mathbf x_{n}
+\]<br />
+两边转置后同时乘上$y_n\mathbf x_n$，可得
+\[
+y_n\mathbf w^T_{t+1} \mathbf x_n \geq y_n\mathbf w^T_t\mathbf x_n
+\]
+这表明，参数更新始终在试图纠正模型参数。</p>
+
+<p><strong>注意事项</strong>：$\mathbf w$是决策界（判别面）的法向量。</p>
+
+<h2 id="section-1">理论分析</h2>
+
+<blockquote>
+  <ol>
+    <li>PLA算法会终止么？</li>
+    <li>能否从候选模式$h$中学习到目标模式$f$？</li>
+  </ol>
+</blockquote>
+
+<p>如果数据集$\mathcal D$线性可分，存在一个完美$\mathbf w_f$，使得对数据集中所有样本点$y_n = \mbox{sign}\left(\mathbf w_f^T\mathbf x_n\right)$，对于任意一个样本点总有</p>
+
+<p>\begin{equation}
+y_{n(t)}\mathbf w_f^T\mathbf x_{n(t)} \geq \min_n y_n\mathbf x_f^T\mathbf x_n &gt; 0
+\end{equation}</p>
+
+<p>根据感知器算法的更新规则可知
+\begin{equation}
+\begin{aligned}
+\mathbf w_f^T\mathbf w_{t+1} 
+&amp; =  \mathbf w_f^T\left(\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\right) \\
+&amp; \geq \mathbf w_f^T\mathbf w_t + \min_n y_n\mathbf x_f^T\mathbf x_n \\
+&amp; &gt; \mathbf w_f^T\mathbf w_t 
+\end{aligned}
+\end{equation}
+由此可见，参数更新后，$\mathbf w_{t+1}$<em>可能会</em>更加接近$\mathbf w_f$。但是，还不能确定是由于向量间夹角变小还是$\mathbf w_{t+1}$长度变大导致的内积增加。
+\begin{equation}
+\begin{aligned}
+\|\mathbf w_{t+1}\|^2
+&amp; = \|\mathbf w_t + y_{n(t)}\mathbf x_{n(t)}\|^2 \\
+&amp; = \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 + 2y_{n(t)}\mathbf w_t^T\mathbf x_{n(t)} \\
+&amp; \leq \|\mathbf w_t\|^2 + \|y_{n(t)}\mathbf x_{n(t)}\|^2 \\
+&amp; \leq \|\mathbf w_t\|^2 + \max_n\|\mathbf x_{n}\|^2
+\end{aligned}
+\end{equation}
+由此可见，每次更新的时候，向量长度的增加是有限的，最多增加样本最长向量的长度。</p>
+
+<p>事实上，从$\mathbf w_0$开始，经过$T$次迭代后有
+\begin{equation}
+\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\frac{\mathbf w_T}{\|\mathbf w_T\|}\geq
+\sqrt T \times \mbox{constant}
+\label{eq:need_to_be_done_1}
+\end{equation}
+PLA算法迭代次数的上界满足$T\leq R^2/\rho^2$，其中
+\begin{equation}
+R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w_f\|}\mathbf x_n
+\label{eq:need_to_be_done_2}
+\end{equation}</p>
+
+<p>相关的证明如下：  <br />
+<img src="/assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
+
+<p><strong>结论：</strong>     <br />
+1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
+2. 对于未知的样本集，作用在其上的PLA算法可能长时间不收敛，导致这样的情况可能是迭代次数不够（理论上的参数$T$由于目标模型$f$未知而难以估计）或者样本集存在噪声（线性不可分）。</p>
+
+<h2 id="pocket-pla">Pocket PLA</h2>
+
+<p>判断样本集是否线性可分的复杂度为NP-hard。实际上，通常样本集存在一些噪声，不可能严格的线性可分，PLA算法无法满足收敛条件。Pocket PLA通过改变PLA迭代结束的条件和参数更新规则仍然可以估计模型参数。</p>
+
+<blockquote>
+  <h4 id="pocket-pla-1">Pocket PLA</h4>
+  <hr />
+  <p>repeat until enough iterations {<br />
+1. 随机抽取参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
+2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$；<br />
+3. 如果$\mathbf w_{t+1}$在样本集上的表现优于$\hat{\mathbf w}$，$\hat{\mathbf w}\leftarrow \mathbf w_{t+1}$。 <br />
+}</p>
+</blockquote>
+
+<p>从第3步可知，Pocket PLA的算法时间复杂度要高于PLA，如果对于线性可分的样本集，Pocket PLA比PLA慢。</p>
+
+<h2 id="section-2">对偶形式</h2>
+
+<!--
+## 思考问题
+
+1. PLA和梯度下降法有无联系？
+2. 在分类性能上PLA求解的线性模型和Logistic回归有何差别？
+3. 如何推导公式\eqref{eq:need\_to\_be\_done\_1}\eqref{eq:need\_to\_be\_done\_2}？ [答案](https://class.coursera.org/ntumlone-002/forum/thread?thread_id=28)
+-->
+
+<h2 id="section-3">參考資料</h2>
+
+<ol>
+  <li><a href="https://class.coursera.org/ntumlone-002">機器學習基石(Machine Learning Foundations)</a></li>
+  <li><a href="http://www.cs.columbia.edu/~mcollins/courses/6998-2012/notes/perc.converge.pdf">Convergence Proof for the Perceptron Algorithm</a></li>
+</ol>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/10/multiple-classes" class="pageNav" style="float:left"   >上一篇：多分类问题 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/css-essential" class="pageNav" style="float:right"   >下一篇：CSS Essential </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/10/pla" 	data-url="http://qianjiye.de/2014/10/pla" data-title="感知器学习算法">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/10/multiple-classes'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/css-essential'; --1> -->
+<!--         url = '/2014/10/css-essential'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/10/pla/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

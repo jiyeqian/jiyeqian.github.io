@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>分类器融合（5）：梯度提升决策树</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>分类器融合（5）：梯度提升决策树</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-01-29">2015-01-29</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
+  
+  <a href="/tags/#梯度下降法" title="梯度下降法">梯度下降法</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="adaboost">AdaBoost决策树</h2>
+
+<blockquote>
+  <h4 id="adaboost-dtreemathcal-d">AdaBoost-DTree($\mathcal D$)</h4>
+  <hr />
+  <p>对于$t=1,2,\ldots,T$，循环执行：</p>
+
+  <ol>
+    <li>更新数据的权重$\mathbf u^{(t)}$；</li>
+    <li>通过决策树算法$\mbox{DTree}\left(\tilde{\mathcal D}, \mathbf u^{(t)}\right)$得到$g_t$；</li>
+    <li>计算$g_t$的投票权重$\alpha_t$。</li>
+  </ol>
+
+  <p>返回$G=\mbox{LinearHypo}(\{\left(g_t,\alpha_t\right)\})$。</p>
+</blockquote>
+
+<p>由此可见，AdaBoost决策树需要加权决策树算法。对于有权重的算法，需要根据权重最小化$E_{in}$，通常有两种方法：</p>
+
+<ul>
+  <li>一种方法是通过算法加权，在计算$E_{in}$的地方嵌入权重计算，比如AdaBoost采用的最小化<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">加权误差</a>；</li>
+  <li>另一种方法是将算法当成黑盒不变更，通过数据集加权，根据权重在bootstrap时“复制”数据，也就是加权的重采样。</li>
+</ul>
+
+<p>AdaBoost决策树通常采用后一种方法，AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
+
+<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#AdaBoost-algorithm">$\alpha_t$通过错误率确定</a>。对于所有$\mathbf x_n$不同的完全成长决策树，$E_{in}(g_t)=0$，那么$E_{in}^{\mathbf u}(g_t)=0$，因此$\epsilon_t=0$并且$\alpha_t=\infty$。合适的方法是让决策树弱些，在部分数据集上训练剪枝的决策树。即使在$\tilde{\mathcal D}_t$上得到错误率为0的决策树$g_t$，回到$\mathcal D$上$\alpha_t$可能是大于、等于或小于0。剪枝可采用常规方法或只限制决策树高度，在数据重采样阶段已经包含了只抽取部分数据的功能。因此，AdaBoost决策树＝AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋剪枝的$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
+
+<p>如果C&amp;RT的高度限制为不超过1，当用二分类的误差作为<a href="/2015/01/decision-tree/#mjx-eqn-eqdtree-decision-stump">不纯度</a>时，AdaBoost决策树就是<a href="/2015/01/adaptive-boosting/#AdaBoost-Stump">AdaBoost-Stump</a>，此时通常有$\epsilon_t\neq 0$，一般不再需要sampling。</p>
+
+<h2 id="functional-gradient-steepest-descent">AdaBoost理论分析：最速函数梯度下降法</h2>
+
+<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-update-u">权重更新</a>可以合并为
+\[
+u_n^{(t+1)}=u_n^{(t)}\cdot\blacklozenge_t^{-y_ng_t(\mathbf x_n)}，
+\]
+由于$\blacklozenge_t=\exp(\alpha_t)$，因此
+\[
+u_n^{(t+1)}=u_n^{(t)}\cdot\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)，
+\]
+那么
+\begin{equation}
+u_n^{(T+1)}=u_n^{(1)}\cdot\prod_{t=1}^T\exp\left(-y_n\alpha_tg_t\left(\mathbf x_n\right)\right)={1\over N}\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)。
+\label{eq:un-t-plus-1}
+\end{equation}
+AdaBoost是<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-Gx">分类器的线性组合</a>，$\sum_{t=1}^T\alpha_tg_t(\mathbf x)$是$\{g_t\}$在$\mathbf x$上的投票得分（voting score），也就是对AdaBoost，$u_n^{(T+1)}\propto \exp\left(-y_n\cdot\left(\mbox{voting score on }\mathbf x_n\right)\right)$。</p>
+
+<p id="decrease-un">线性混合（linear blending），可以看作线性模型和以假设作为特征转换的结合
+\[
+G(\mathbf x_n)=\mbox{sign}\left(\overbrace{\sum_{t=1}^T\underbrace{\alpha_t}_{w_i}\underbrace{g_t(\mathbf x_n)}_{\phi_i(\mathbf x_n)}}^{\mbox{voting score}}\right)。
+\]
+对比<a href="/2015/01/linear-svm/#mjx-eqn-eqhard-margin-svm-origin-model">hard-margin的SVM</a>的边界${y_n\cdot\left(\mathbf w^T\phi(\mathbf x_n)+b\right)\over\lVert\mathbf w\rVert}$，投票得分可视为某种空间中非规范化的边界（距离）的度量，“$y_n$(voting score)=signed &amp; unnormalized margin”。期望$y_n$(voting score)是正的，且越大越好，那么$\exp(-y_n(\mbox{voting score}))$越小越好，$u_n^{(T+1)}$越小越好。AdaBoost的$\sum_{n=1}^Nu_n^{(t)}$随着$t$的增大越来越小，在最后一轮
+\begin{equation}
+\sum_{n=1}^Nu_n^{(T+1)}={1\over N}\sum_{n=1}^N\exp\left(-y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)\right)
+\label{eq:sum-un-t-plus-1}
+\end{equation}
+达到最小，边界$y_n\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$最大化实现large margin的效果。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png"><img src="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png" alt="AdaBoost的误差界" /></a><div class="caption">图 1:  AdaBoost的误差界 [<a href="/assets/images/2015-01-29-gradient-boosted-decision-tree-error-bound.png">PNG</a>]</div></div></div>
+
+<p>令线性评分函数$s=\sum_{t=1}^T\alpha_tg_t\left(\mathbf x_n\right)$，AdaBoost的指数误差度量（exponential error measure）$\widehat{err}_{ADA}(s,y)=\exp(-ys)$是0/1误差$\widehat{err}_{0/1}(s,y)=[[ys\leq 1]]$的上界<sup id="fnref:other-error-bounds"><a href="#fn:other-error-bounds" class="footnote">1</a></sup>，如上图右所示，通过0/1误差的凸上界（convex upper bound）$\widehat{err}_{ADA}$作为算法误差度量（algorithmic error measure），通过上界误差最小化使0/1误差最小化。</p>
+
+<p>AdaBoost通过增加函数$h(\mathbf x)$的方式，使基于\eqref{eq:sum-un-t-plus-1}的误差$\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t+1)}$最小化，
+\begin{equation}
+\begin{aligned}
+\min_h\quad\widehat E_{ADA}
+&amp;\overset{[1]}{=}{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n)\right)\right)\\
+&amp;\overset{[2]}{=}\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)
+\overset{\mbox{taylor}}{\approx}\sum_{n=1}^Nu_n^{(t)}\left(1-y_n\eta h(\mathbf x_n)\right)\\
+&amp;=\sum_{n=1}^Nu_n^{(t)}+\eta\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)，
+\end{aligned}
+\label{eq:min-E-ADA}
+\end{equation}</p>
+
+<ul>
+  <li>[1]：增加函数$h(\mathbf x)$，由\eqref{eq:sum-un-t-plus-1}可得$\sum_{\tau=1}^t\alpha_\tau g_\tau\left(\mathbf x_n\right)=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)+\eta h(\mathbf x_n)$；</li>
+  <li>[2]：由\eqref{eq:un-t-plus-1}可得$u_n^{(t)}={1\over N}\exp\left(-y_n\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau\left(\mathbf x_n\right)\right)$。</li>
+</ul>
+
+<p>公式\eqref{eq:min-E-ADA}形如<a href="/2015/01/logistic-regression/#mjx-eqn-eqtaylor-expansion-Ein">梯度下降法最小化$E_{in}$</a>
+\[
+\min_{\lVert\mathbf v\rVert=1}E_{in}(\mathbf w_t+\eta\mathbf v)
+\approx \underbrace{E_{in}(\mathbf w_t)}_{\mbox{known}}
++\underbrace{\eta}_{\mbox{given positive}}\mathbf v^T\underbrace{\nabla E_{in}(\mathbf w_t)}_{\mbox{known}}，
+\]
+好的$h(\mathbf x)$能最小化$\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)$。对二分类，$y_n$和$h(\mathbf x_n)$都属于$\{-1,+1\}$，那么
+\[
+\begin{aligned}
+\sum_{n=1}^Nu_n^{(t)}\left(-y_nh(\mathbf x_n)\right)
+&amp;=\sum_{n=1}^Nu_n^{(t)}
+\left\{
+\begin{aligned}
+-1\quad\mbox{if }y_n=h(\mathbf x_n)\\
++1\quad\mbox{if }y_n\neq h(\mathbf x_n)
+\end{aligned}
+\right.\\
+&amp;=-\sum_{n=1}^Nu_n^{(t)}+\sum_{n=1}^Nu_n^{(t)}
+\left\{
+\begin{aligned}
+0\quad\mbox{if }y_n=h(\mathbf x_n)\\
+2\quad\mbox{if }y_n\neq h(\mathbf x_n)
+\end{aligned}
+\right.\\
+&amp;\overset{[1]}{=}-\sum_{n=1}^Nu_n^{(t)}+2E_{in}^{\mathbf u^{(t)}}(h)\cdot N，
+\end{aligned}
+\]</p>
+
+<ul>
+  <li>[1]：根据<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">AdaBoost的$E_{in}^\mathbf u$计算可得</a>。</li>
+</ul>
+
+<p>因此，也就是要使$E_{in}^{\mathbf u^{(t)}}(h)$变小，这就是AdaBoost中算法$\mathcal A$的任务，找出一个好的函数方向$h$。</p>
+
+<p>AdaBoost通过近似最小化$\min_h\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta h(\mathbf x_n)\right)$，公式\eqref{eq:min-E-ADA}的$[2]$等式，找到新的分类器$g_t=h$之后，还需要找到最佳的$\eta$，
+\[
+\min_\eta\widehat E_{ADA}=\sum_{n=1}^Nu_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)，
+\]
+$\eta$越大步越好。最佳的$\eta_t$会比固定的$\eta$在短期内下降更快（greedily faster），在最优化中通常称为<strong>最速（最陡）下降</strong>（steepest descent）。对于分类正确和错误两种情形，$u_n^{(t)}\exp\left(-y_n\eta g_t(\mathbf x_n)\right)$分别为$u_n^{(t)}\exp(-\eta)$和$u_n^{(t)}\exp(+\eta)$，那么有
+\[
+\widehat E_{ADA}=\left(\sum_{n=1}^Nu_n^{(t)}\right)\cdot
+\left(
+(1-\epsilon_t)\exp(-\eta)+\epsilon_t\exp(+\eta)
+\right)，
+\]
+$\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错误率</a>。
+通过${\partial\widehat E_{ADA}\over\partial\eta}=0$可得最速梯度步长$\eta_t=\ln\sqrt{1-\epsilon_t\over\epsilon_t}=\alpha_t$。当进行到$t+1$轮迭代时，误差为
+\[
+\widehat E_{ADA}^{(t+1)}=\widehat E_{ADA}^{(t)}\cdot\left(
+(1-\epsilon_t)\exp(-\eta_t)+\epsilon_t\exp(+\eta_t)
+\right)，
+\]
+将$\eta_t$和$\widehat E_{ADA}^{(1)}=\sum_{n=1}^Nu_n^{(1)}=1$带入可得
+\[
+\widehat E_{ADA}^{(t+1)}=\prod_{\tau=1}^{t}\left(2\sqrt{\epsilon_\tau(1-\epsilon_\tau)}\right)。
+\]
+由此可见，最糟糕的情况是当$\epsilon_t={1\over 2}$时（错误率$\epsilon_t$始终小于正确率$1-\epsilon_t$），$\widehat E_{ADA}^{(t+1)}$不减少，否则$\widehat E_{ADA}^{(t+1)}$随着迭代增加不断减少。</p>
+
+<p>因此，AdaBoost是近似的函数梯度（functional gradient）最速下降法。</p>
+
+<h2 id="section">任意误差函数的梯度提升</h2>
+
+<p>AdaBoost可以表示为最优化的形式
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^N\exp\left(-y_n\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n)\right)\right)，
+\end{equation}
+每一轮找到$h$作为$g_t$，并决定该$g_t$要前进的距离$\eta_t$。利用更一般的误差函数，将AdaBoost推广到GradientBoost
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^Nerr\left(\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)+
+\eta h(\mathbf x_n),y_n\right)。
+\end{equation}
+GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要采用梯度下降法，需要平滑的误差函数$err$，$h$也不限于二分类，可以推广到实数输出。通过采用不同的误差函数$err$，GradientBoost可实现回归、soft分类等功能。</p>
+
+<h2 id="section-1">梯度提升决策树</h2>
+
+<p>对于回归问题，采用误差函数$err(s,y)=(s-y)^2$，令$s_n=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)$可得
+\begin{equation}
+\min_\eta\min_h{1\over N}\sum_{n=1}^N\left(s_n+
+\eta h(\mathbf x_n)-y_n\right)^2，
+\label{eq:min-gradientboost-regression-Ein}
+\end{equation}
+内层最小化
+\[
+\begin{aligned}
+\min_h\ldots
+&amp;\overset{\mbox{taylor}}{\approx}\min_h\left({1\over N}\sum_{n=1}^N\underbrace{err(s_n,y_n)}_{\mbox{constant}}+{1\over N}\sum_{n=1}^N\eta h(\mathbf x_n)\left.{\partial err(s,y_n)\over\partial s}\right\rvert_{s=s_n}\right)\\
+&amp;\overset{\quad\quad}{=}\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N2h(\mathbf x_n)(s_n-y_n)\right)。
+\end{aligned}
+\]
+<del>如果对$h$无约束条件，那么$h(\mathbf x_n)=-\infty\cdot(s_n-y_n)$时取最小值。</del>事实上，只需要$h$的方向，$h$的大小（magnitude）通过步长$\eta$控制。利用拉格朗日乘子法的思想，避免求解复杂的约束优化问题，惩罚大的$h$
+\[
+\begin{aligned}
+&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(2h(\mathbf x_n)(s_n-y_n)+(h(\mathbf x_n))^2\right)\right)\\
+\Longleftrightarrow&amp;\min_h\left(\mbox{constants}+{\eta\over N}\sum_{n=1}^N\left(\mbox{constant}+(h(\mathbf x_n)-(y_n-s_n))^2\right)\right)。
+\end{aligned}
+\]
+去掉常数项，带惩罚的近似函数梯度是数据集$\{(\mathbf x_n,y_n-s_n)\}$上，基于平方误差的回归。$y_n-s_n$表示期望的值与目前能达到的值之间的差异，表示尚未达到的部分，称为余数（residual）。好的$h(\mathbf x_n)$需要弥补余数的差距。</p>
+
+<p>［1/2］因此，GradientBoost的回归问题就是通过余数上的回归找到$g_t=h$。</p>
+
+<p>当$g_t$确定后，继续\eqref{eq:min-gradientboost-regression-Ein}的外层最小化
+\[
+\min_\eta{1\over N}\sum_{n=1}^N(s_n+\eta g_t(\mathbf x_n)-y_n)^2\Leftrightarrow\min_\eta{1\over N}\sum_{n=1}^N((y_n-s_n)-\eta g_t(\mathbf x_n))^2，
+\]
+这是单变量的线性回归，非常容易求解，
+\begin{equation}
+\eta={\sum_{n=1}^Ng_t(\mathbf x_n)(y_n-s_n)\over\sum_{n=1}^Ng_t^2(\mathbf x_n)}。
+\label{eq:gbdt-eta}
+\end{equation}</p>
+
+<p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优作为步长$\alpha_t=\eta$。</p>
+
+<blockquote>
+  <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
+  <hr />
+  <p>初始化$s_1=s_2=\ldots=s_N=0$；</p>
+
+  <p>对于$t=1,2,\ldots,T$，循环执行：</p>
+
+  <ol>
+    <li>利用$\mathcal A(\{(\mathbf x_n,y_n-s_n)\})$得到$g_t$，其中$\mathcal A$是基于平方误差的回归算法（例如C&amp;RT）；</li>
+    <li>利用\eqref{eq:gbdt-eta}更新步长$\alpha_t=\mbox{OneVarLinearRegression}(\{(g_t(\mathbf x_n),y_n-s_n)\})$；</li>
+    <li>更新$s_n\leftarrow s_n+\alpha_tg_t(\mathbf x_n)$；</li>
+  </ol>
+
+  <p>返回$G(\mathbf x)=\sum_{t=1}^T\alpha_tg_t(\mathbf x)$。</p>
+</blockquote>
+
+<p>GBDT就是AdaBoost决策树的回归版本。</p>
+
+<h2 id="section-2">参考文献</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:other-error-bounds">
+      <p><a href="/2015/01/linear-models-for-classification/#error-bound">其它误差界</a>可参考线性分类模型的相关资料。 <a href="#fnref:other-error-bounds" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/01/three-learning-principles" class="pageNav" style="float:left"   >上一篇：机器学习三原则 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/02/summary-of-aggregation-models" class="pageNav" style="float:right"   >下一篇：分类器融合（6）：融合模型总结 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/01/gradient-boosted-decision-tree" 	data-url="http://qianjiye.de/2015/01/gradient-boosted-decision-tree" data-title="分类器融合（5）：梯度提升决策树">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/three-learning-principles'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/02/summary-of-aggregation-models'; --1> -->
+<!--         url = '/2015/02/summary-of-aggregation-models'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/gradient-boosted-decision-tree/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

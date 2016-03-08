@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>高性能计算概述</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>高性能计算概述</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-07-28">2015-07-28</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#高性能计算" title="高性能计算">高性能计算</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">基本概念</h2>
+
+<ul>
+  <li><strong>并行（parallelism）</strong>：在多处理单元系统上，将计算或数据划分为多部分，各部分在不同处理单元上执行，各处理单元相互协作，同时运行。</li>
+  <li><strong>并发（concurrency）</strong>：在一个处理单元上运行多个应用，各应用分时占用处理单元，有时称其为时间上串行、空间上并行。</li>
+  <li><strong>代码性能优化</strong>：通过调整源代码，生成更高效的机器指令（执行时间和使用存储器更少）。</li>
+</ul>
+
+<p>并行和并发都是代码性能优化的方式。通常代码性能优化特指除了并行和并发之外的优化方法。</p>
+
+<p>硬件生产商采用各种方式提高硬件计算能力，目前最流行的三种方式：</p>
+
+<ol>
+  <li><strong>指令并行</strong>：处理器一个周期执行多条相同或不同的指令，比如：Intel Haswell处理器一个周期可执行4条整数加法指令、2条浮点乘加指令，同时访存和运算指令也可同时执行。</li>
+  <li><strong>数据并行</strong>：使用<strong>向量指令</strong>，<strong>向量化</strong>是指同一条指令同时操作多个数据，主要是SIMD和VLIW技术。SIMD技术将处理器一次处理的数据位数扩大到了128或256位。</li>
+  <li><strong>多核并行</strong>：同一个芯片集成多个处理单元，根据集成方式不同，分为多核处理器或多路处理器（集成多个多核处理器称为<strong>多路</strong>）。</li>
+</ol>
+
+<p>图形处理单元（GPU）通过将几百、几千核心集成在一块硅片上以满足图形图像及视频对性能的需求，这称为<strong>众核</strong>。一方面：众核处理器集成的核心数量远远超过多核；另一方面：众核处理器将更高比例的晶体管用于计算，因此其原生性能也超过多核。</p>
+
+<p>目前绝大部分应用软件是串行的，只能在多核CPU中的一个核上运行。通过多核技术，硬件生产商成功地将提高实际计算能力的任务转嫁给软件开发人员。</p>
+
+<p>代码优化并不利用多核CPU的全部计算能力，也不要求软件开发人员掌握并行开发技术，应当优先选择串行代码优化。采用并行技术的加速比通常不超过核数。</p>
+
+<p>Intel Haswell I3-4130处理器使用256位的向量，集成了2个核心。在其上运行32位浮点计算的标量串行代码，最多能够发挥峰值性能的1/16。标量计算意味着只能发挥向量运算性能的1/8，而串行代码只能发挥2核中1核的性能。</p>
+
+<!-- ##向量化和并行的难点
+
+现在的编译器不能很好地自动向量化或并行串行软件（一些编译器能够自动向量化和并行简单程序）。20世纪80年代中期，基于依赖分析的自动向量化工具已经基本可用，可以帮助程序员将Fortran语言代码移植到向量计算机上进行并行计算。现代的GCC能够向量化和并行一些简单的代码，但对复杂的程序基本无能为力。实际上，即使是简单的代码，自动向量化或并行的性能也很难做到完美（通常性能比手工编写的差很多）。自动向量化或并行的主要难点在于编译器没有办法收集／分析向量化或并行所需的数据相关性和控制相关性等信息，需要程序员干预。现在的研究重点转向基于编程语言的策略，即从开发人员那里获得更多有关逻辑控制和数据相关性的描述，同时利用自动向量化或并行技术来减轻程序设计的负担。OpenMP、OpenACC、CUDA和OpenCL就是其中的典型代表。
+
+向量化或并行化难的主要技术原因包括：
+
+* 没有很好的设计方法学：向量化和并行的本质在某种意义上和现行的面向对象程序设计方法学冲突。
+* 遗留代码：没人愿放弃过去几十年积累下来的代码，向量化或并行它们面临挑战。
+* 可扩展性：如果代码能够发挥双核的计算能力，那么4核、8核、16核呢？
+* 可维护性：向量化或并行代码的可读性通常不如标量串行代码。
+* 任务/数据划分：并行意味着多个控制流同时执行，而向量化意味着同时操作多个数据。并行需要在各个控制流之间划分任务和数据并去除依赖，向量化则需要处理向量内要处理的数据的依赖关系。
+* 并发访问控制：如何协调多个控制流需要访问不同的或相同的资源？
+* 资源划分：资源划分方法不但关系到编程的难易，还关系到最终的性能。
+* 与硬件交互：为了最好地发挥性能，通常会利用硬件的特性。
+* 对软件开发人员的过高要求，开发工具不够智能，且市场不愿付出相应的薪水。
+
+不修改代码，也能获得多核处理器性能的几种替代方案：
+
+* 运行同一程序的多个实例；
+* 利用已有的并行库；
+* 优化串行程序。 -->
+
+<h2 id="section-1">进程与线程</h2>
+
+<p>进程的概念简化了程序设计、存储器管理等，并且提供了一种大粒度的并行方法。线程存在进程之中，进程中的所有线程共享进程的资源并独享某些资源，因此更易于通信。进程可调度到一台机器中的一个或多个处理器核心上执行，而线程会调度到一个核心上执行，向量化的代码则会映射到一个核心内的向量单元上执行。由于操作系统调度策略的不同，并不能保证进程和线程会一直在相同的核心上执行。通常基于进程的是类似MPI的分布式存储器编程模式，基于线程的是类似pthread、OpenMP等基于共享存储器的编程模式。由于分布式计算的各节点有其独立的存储器，因此基于进程的消息传递通信更适合，而多核等由于共享存储器，所以基于线程的共享存储器更易于通信。</p>
+
+<p><strong>进程</strong>是对操作系统正在运行的程序的一种抽象。系统内的多个进程通过时间片轮转并发执行，保存一个进程的状态切换到另一个进程的过程称为<strong>上下文切换</strong>。在任何一个无限精度时刻，一个处理器核心最多只能运行一个进程或一个线程，当操作系统需要在某个核心上运行另一个进程时，就会进行上下文切换。上下文切换和通信较耗时，基于进程的并发往往只适合于大粒度的任务并行。进程是资源拥有的独立单位，不同的进程拥有不同的虚拟地址空间，不能够直接访问其它进程的上下文资源。</p>
+
+<p>进程之中可以有许多<strong>线程</strong>，这些线程共享进程的上下文，如虚拟地址空间和文件，但独立执行且可通过存储器通信。当进程终止时，进程内的所有线程也同时终止。另外线程也有其私有逻辑寄存器、栈和指令指针PC。由于线程共享进程资源，因此线程的建立、销毁比进程的建立、销毁更高效。目前基于GPU的并行编程也使用基于线程的开发环境，这是一种<strong>硬件线程</strong>，其线程的创建、调度和销毁开销接近0。多线程程序在多核和单核上执行时具有明显的差别。由于在单核上多线程通过分时共享执行，这使得一些长延迟的操作如锁、IO访问不会导致核心空闲。网络服务器就是通过多线程技术来提升系统的吞吐量的。</p>
+
+<p>由于进程的存储器资源是独立的，而线程的存储器资源是共享的，因此通常基于进程的并行编程更简单，但是基于线程的并行在多核处理器上通常更高效。在节点间使用进程级并行，在节点内的多核上使用线程级并行，这称为<strong>混合或超级并行</strong>。</p>
+
+<p><strong>超线程（hyper-threading）</strong>通过双倍增加一些资源（PC和寄存器）减少线程的切换代价，但是只有一份执行单元，因此其峰值计算能力并没有提高。超线程技术将一个物理处理器核模拟成两个逻辑核，可并行执行两个线程，能够在单个时针周期内在两个线程间切换，让单核都能使用线程级并行计算，减少了CPU的闲置时间，提高CPU的运行效率。</p>
+
+<p>如果一个操作并不阻碍进程或线程，接着执行代码，称这个操作为<strong>非阻塞</strong>，反之则为<strong>阻塞</strong>。相对非阻塞来说，阻塞更为常见，因为非阻塞要求开发人员手动保证操作的完成，这可能会带来数据一致性问题。同步或异步则是针对通信的多个进程或线程，如果一个进程或线程与其他进程与线程通信时，不需要其他线程做好准备，称之为<strong>异步</strong>，反之则为<strong>同步</strong>。在某些文献中，阻塞与同步、非阻塞与异步的含义是一样的。</p>
+
+<h2 id="section-2">并行硬件平台</h2>
+
+<h3 id="section-3">机群</h3>
+
+<p>通过使用网线依据某种拓扑方式将多台微机互连以获取更大的计算能力，这种系统通常称为<strong>机群</strong>，而每台微机称为节点。目前几乎所有的超级计算机都是机群系统。显式的消息传递编程接口MPI是这类平台上的标准和首选。</p>
+
+<h3 id="x86">X86多核向量处理器</h3>
+
+<p>相比超线程，多核是真正的线程级并行设备。多核与超线程技术相结合，可进一步提高系统的吞吐量。多核的每个核心里面具有独立的一级缓存，共享的或独立的二级缓存，有些机器还有独立或共享的三级/四级缓存，所有核心共享内存DRAM。多线程/多进程程序时可利用这些每个核心独享的缓存，这是<strong>超线性加速</strong>（多核处理器上获得的性能收益超过核数）的原因之一。发挥多核处理器多个核心性能的编程方式通常是使用OpenMP和pthread等线程级并行工具，容易产生的性能问题主要是伪共享和负载均衡。</p>
+
+<p><strong>SSE</strong>是X86多核向量处理器支持的向量指令，具有16个长度为128位（16个字节）的向量寄存器，处理器能够同时操作向量寄存器中的16个字节。AVX将SSE的向量长度延长为256位（32字节），并支持浮点乘加。由于采用显式的SIMD编程模型，SSE/AVX的使用比较困难。</p>
+
+<p>为了减小使用SIMD指令的复杂度，Intel寄希望于编译器。Intel的编译器向量化能力非常不错，但通常手工编写的向量代码性能更好。在MIC（Intel 的众核架构）上编程时，软件开发人员的工作由显式使用向量指令转化为改写C代码和增加编译制导语句，让编译器产生更好的向量指令。要发挥X86向量处理器的向量计算能力，可以使用三种编程方式：</p>
+
+<ol>
+  <li>使用串行C语言，让编译器产生向量指令，或使用编译制导语句（如OpenMP 4.0）。这种方代码的可移植性通常最好，但能够发挥的性能也最差。</li>
+  <li>使用Intel规定的内置函数。</li>
+  <li>使用汇编语言。</li>
+</ol>
+
+<h3 id="cpugpu">CPU+GPU</h3>
+
+<p>由于现代GPU强大的并行处理能力和可编程流水线，可处理非图形数据。特别在面对单指令流多数据流（SIMD），且数据处理的运算量远大于数据调度和传输的需要时，GPGPU在性能上大大超越了传统的CPU应用程序。由于GPU将更大比例的晶体管用于计算，相对来说用于缓存的比例就比CPU小，因此通常局部性满足CPU要求而不满足GPU要求的应用不适合GPU。CPU+GPU异构计算需要在GPU和CPU之间传输数据，而这个带宽比内存的访问带宽还要小，因此那种需要在GPU和CPU之间进行大量、频繁数据交互的解决方案不适合在GPU上实现。</p>
+
+<h3 id="section-4">移动设备</h3>
+
+<p>而由于电池容量和功耗的原因，移动端不可能使用桌面或服务器高性能处理器，因此其对性能优化具有很高需求。ARM支持的向量指令集称为NEON，大多数移动GPU已支持使用OpenCL进行并行计算。</p>
+
+<h2 id="section-5">现代处理器</h2>
+
+<p>现代处理器利用了指令级并行技术，同一时刻存在着多条指令同时执行。处理器执行指令的顺序无须和汇编代码给出的指令顺序完全一致，编译器和处理器只需要保证最终结果一致，这类处理器称为<strong>乱序执行处理器</strong>。目前主流的CPU和GPU基本上都已经是乱序执行处理器。严格按照顺序一次执行一条指令，只有前一条执行完才开始执行后一条指令的处理器，称为<strong>按序处理器</strong>。</p>
+
+<p>现代乱序执行多核向量处理器，具有许多和代码性能优化相关的特点：</p>
+
+<ul>
+  <li>指令级并行：主要有流水线、多发射、VLIW、乱序执行、分支预测等技术；</li>
+  <li>向量化并行（矢量化）：主要有SIMT、SIMD技术；</li>
+  <li>线程级并行：多核支持的线程级并行是目前处理器性能提升的主要手段；</li>
+  <li>缓存层次结构：包括缓存组织、缓存特点以及NUMA。</li>
+</ul>
+
+<h2 id="section-6">优化方法</h2>
+
+<p>程序优化主要分两类：（串行）算法优化和硬件相关优化（向量化、并行化）。算法优化通常独立于硬件，比较复杂，常通过$\mathbf O$度量复杂度比较性能。硬件相关优化根据硬件体系结构，设计相应算法，主要考虑硬件的存储和计算特性，通常包括：</p>
+
+<ul>
+  <li>Cache优化；</li>
+  <li>流水线优化；</li>
+  <li>指令集优化；</li>
+  <li>多核并行化；</li>
+  <li>GPU优化；</li>
+  <li>多机并行化。</li>
+</ul>
+
+<p>Cache优化的目的是提高Cache命中率，通过减少数据存取时间，提升程序性能。流水线技术是为了充分利用有限的硬件资源，尽可能让所有硬件都忙起来，减少等待时间。多核优化是将任务分配给多个处理器执行。GPU的处理核通常会比CPU多得多，并且有自己的存储器。</p>
+
+<p>DSP优化主要包括Cache优化、流水线优化和指令集优化。</p>
+
+<p>算法优化通常主要考虑计算代价，这和处理器相关。对于硬件相关的优化，存储器和总线结构是不可忽视的重要因素。</p>
+
+<h2 id="section-7">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<ul class="bibliography">
+  <li>刘文志：《并行算法设计与性能优化》。</li>
+</ul>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/07/introduction-to-yushanfang" class="pageNav" style="float:left"   >上一篇：御膳房使用简介 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/08/tesseract-ocr" class="pageNav" style="float:right"   >下一篇：开源OCR引擎Tesseract </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/07/HPC-overview" 	data-url="http://qianjiye.de/2015/07/HPC-overview" data-title="高性能计算概述">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/07/introduction-to-yushanfang'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/08/tesseract-ocr'; --1> -->
+<!--         url = '/2015/08/tesseract-ocr'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/07/HPC-overview/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="Author" content="Kayo Lee" />
+        <title>清除浮动 Demo</title>
+        <style>
+        	* {margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+        	body {text-align: center; font-size: 15px; font-family: "Microsoft YaHei", Georgia, Geneva, times; padding-bottom: 40px; }
+        	h1, h2 {color: #000; padding-top: 15px; padding-bottom: 15px; }
+        	h3 {color: #000; }
+        	h1 {font-size: 21px; text-align: center; }
+        	div {color: #fff; }
+        	p { }
+        	#wrap {width: 760px; margin: 0 auto; text-align: left; }
+        	.box {border: 1px solid #9a9a9a; }
+        	.left {float: left; }
+        	.right {float: right; }
+        	.clear {clear: both; }
+        	.clearfix {/* 触发 hasLayout */ zoom: 1; }
+			.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+			.main {background: #ff9900; }
+			.aside {background: #2595e5; }
+        </style>
+	</head>
+	<body>
+		<div id="wrap">
+			<h1>Block Formatting Contexts Demo</h1>
+
+			<h2 id="bfc-1">BFC 会阻止边距折叠</h2>
+			<div class="main" style="margin-top: 20px; margin-bottom: 20px;">
+				<p style="margin-top: 20px; margin-bottom: 20px;">我是一个段落，在我以及我的父元素上同时添加了上下的外边距</p>
+			</div>
+			<div class="main" style="margin-top: 20px; margin-bottom: 20px;">
+				<p style="margin-top: 20px; margin-bottom: 20px;">我是一个段落，在我以及我的父元素上同时添加了上下的外边距</p>
+			</div>
+			<div class="main" style="margin-top: 20px; margin-bottom: 20px; overflow: hidden">
+				<p style="margin-top: 20px; margin-bottom: 20px;">我是一个段落，在我以及我的父元素上同时添加了上下的外边距</p>
+			</div>
+
+			<h2 id="bfc-2">BFC 可以包含浮动的元素</h2>
+			<div class="box">
+				<p class="main left">我设置了左浮动 float: left, 但是我的父元素没有触发 BFC</p>
+			</div>
+
+			<div class="clear"></div>
+
+			<div class="box" style="overflow: hidden; *zoom: 1;">
+				<p class="main left">我设置了左浮动 float: left, 而且我的父元素触发了 BFC</p>
+			</div>
+
+			<h2 id="bfc-3" style="margin-top: 20px;">BFC 可以阻止元素覆盖浮动元素</h2>
+
+			<h3 class="clear" style="margin-bottom: 20px;">块级元素会被它的兄弟浮动元素覆盖</h3>
+			<div class="main left" style="width: 200px;">
+				<p>我设置了 float: left; width: 200px;</p>
+			</div>
+			<div class="aside" style="width: 358px; border: 1px solid #9a9a9a;">
+				<p>我没有设置浮动，也没有触发 BFC ，width: 300px; border: 1px solid #9a9a9a;</p>
+			</div>
+
+			<h3 class="clear" style="margin-top: 20px; margin-bottom: 20px;">触发了 BFC 的元素不会被它的兄弟浮动元素覆盖</h3>
+			<div class="main left" style="width: 200px;">
+				<p>我设置了 float: left; width: 200px;</p>
+			</div>
+			<div class="aside" style="width: 358px; border: 1px solid #9a9a9a; overflow: hidden; *zoom: 1;">
+				<p>我没有设置浮动，width: 300px; border: 1px solid #9a9a9a; overflow: hidden; *zoom: 1;</p>
+			</div>
+
+			<h3 id="bfc-4" class="clear" style="margin-top: 20px; margin-bottom: 20px;">子元素宽度均小于父元素，但父元素宽度不足以容纳一行中所有子元素时，非浮动子元素会下沉</h3>
+			<div class="main left" style="width: 200px;">
+				<p>我设置了 float: left; width: 200px;</p>
+			</div>
+			<div class="aside" style="width: 600px; border: 1px solid #9a9a9a; overflow: hidden; *zoom: 1;">
+				<p>我没有设置浮动，宽度为 600px，其他 CSS 属性 border: 1px solid #9a9a9a; overflow: hidden; *zoom: 1;</p>
+			</div>
+
+		</div><!-- wrap -->
+	</body>
+</html>

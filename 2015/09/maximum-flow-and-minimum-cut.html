@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>DILinAV（3）：最大流与最小割</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>DILinAV（3）：最大流与最小割</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-09-25">2015-09-25</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文内容主要来自M. Nikos Paragios和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第3节“Maximum flow and minimum cut”。</p>
+
+<p>最大流优化问题，在组合优化中历史悠久，并且有高效算法求解特定图的最大流。最大流算法可用于求解特定MRF或CRF的能量最小化问题。</p>
+
+<h2 id="section">超额函数</h2>
+
+<p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_capacity-and-flow.png" alt="" width="128px" id="capacity-and-flow1" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">有向图：黑色的值表示容量$c$，红色的值表示流函数$f$的值（没有红色值的弧为0）。</p>
+
+<p>有向图记为$\mathbf D=(\mathbf V,\mathbf A)$，弧$a$的<strong>容量</strong>（capacity）记为$c(a)$，函数$f$就是将$\mathbf A$映射为实数的<strong>流函数</strong>（flow function）。对映射函数$f$，顶点$v$的<strong>超额函数</strong>（excess function）或<strong>超额流</strong>表示输入值之和减去输出值之和，</p>
+
+<p>\begin{equation}
+E_f(v) = \sum_{a\in \text{in-arcs}(v)}f(a) - \sum_{a\in \text{out-arcs}(v)}f(a)，
+\end{equation}</p>
+
+<p>有时也记为$E_f(v) = f(\text{in-arcs}(v)) - f(\text{out-arcs}(v))$。<a href="#capacity-and-flow1">上图</a>中，$E_f(v_1)=1-4-3=-6$，$E_f(v_2)=10+4=14$。</p>
+
+<p>顶点子集$\mathbf U$的超额函数记为</p>
+
+<p>\begin{equation}
+E_f(\mathbf U) = \sum_{a\in \text{in-arcs}(\mathbf U)}f(a) - \sum_{a\in \text{out-arcs}(\mathbf U)}f(a)，
+\end{equation}</p>
+
+<p>有时也记为$E_f(\mathbf U) = f(\text{in-arcs}(\mathbf U)) - f(\text{out-arcs}(\mathbf U))$。<a href="#capacity-and-flow1">上图</a>中，$E_f(\{v_1,v_2\})=1+10-3=8$（不计$v_1$和$v_2$之间的流量值）。事实上，子集的超额函数等于子集中顶点超额函数之和</p>
+
+<p>\begin{equation}
+E_f(\mathbf U) = \sum_{v\in \mathbf U}E_f(v)。
+\end{equation}</p>
+
+<h2 id="section-1">流与割</h2>
+
+<h3 id="s-t">s-t流</h3>
+
+<p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_s-t-flow.png" alt="" width="128px" id="s-t-flow" /></p>
+
+<p>流函数将$\mathbf A$映射为实数。有效的s-t流函数满足条件：</p>
+
+<ul>
+  <li>$0\le \text{flow}(a)\le c(a)$，弧的流非负且不大于其容量；</li>
+  <li>$\forall v\in V\backslash\{s,t\},\sum_{(u,v)\in\mathbf A}\text{flow}((u,v))=\sum_{(v,u)\in\mathbf A}\text{flow}((v,u))$，除$s$和$t$之外顶点的输入流等于输出流，也就是除$s$和$t$之外顶点的超额流都为0，$\forall v\in V\backslash\{s,t\},E_\text{flow}(v)=0$。</li>
+</ul>
+
+<p><a href="#s-t-flow">上图</a>是有效的s-t流，而<a href="#capacity-and-flow1">上上图</a>不是。s-t流的值为$s$的输出流减去其输入流：</p>
+
+<p>\begin{equation}
+-E_\text{flow}(s) = E_\text{flow}(t) = \sum_{(s,v)\in\mathbf A}\text{flow}((s,v)) - \sum_{(u,s)\in\mathbf A}\text{flow}((u,s))。
+\end{equation}</p>
+
+<p>也就是说，s-t流的值为$-E_\text{flow}(s)$或$E_\text{flow}(t)$。顶点$s$和$t$超额函数值不一定为0。顶点$s$称为<strong>源</strong>（source），$t$称为<strong>槽</strong>（sink）。$s$没有输入边，$t$没有输出边。<a href="#s-t-flow">上图</a>中$-E_\text{flow}(s) = E_\text{flow}(t) = 1$。</p>
+
+<h3 id="s-t-1">s-t割</h3>
+
+<p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_s-t-cut.jpg" alt="" height="256px" id="s-t-cut" /></p>
+
+<p>令$\mathbf U$是图$\mathbf D=(\mathbf V,\mathbf A)$中顶点$\mathbf V$的子集。图的<strong>割</strong>$\mathbf C$是满足如下条件弧的集合：</p>
+
+<p>\[
+(u,v)\in\mathbf A,\quad u\in\mathbf U,\quad v\in V\backslash\mathbf U，
+\]</p>
+
+<p>也就是$\mathbf C=\text{out-arcs}(\mathbf U)$。对于<strong>s-t割</strong>，$s$总是$\mathbf U$的子集，而$t$绝不是其子集，也就是满足</p>
+
+<p>\[
+s\in\mathbf U,\quad t\in V\backslash\mathbf U。
+\]</p>
+
+<p>割$\mathbf C$的容量记为$\sum_{a\in\mathbf C}c(a)$。<a href="#s-t-cut">上图</a>s-t割的容量为17。</p>
+
+<h3 id="flow-and-cut">流与割的关系</h3>
+
+<p>任意s-t流的值不超过任意s-t割$\mathbf C$的容量，证明如下：</p>
+
+<p>\[
+\begin{aligned}
+-E_\text{flow}(s) &amp;= -\left(E_\text{flow}(s) + \sum_{v\in\mathbf U\backslash\{s\}}E_\text{flow}(v)\right)\\
+&amp;=-E_\text{flow}(\mathbf U)\\
+&amp;=\text{flow}(\text{out-arcs}(\mathbf U)) - \text{flow}(\text{in-arcs}(\mathbf U))\\
+&amp;\le\sum_{a\in\mathbf C}c(a)\quad (\mathbf C=\mathbf U)
+\end{aligned}。
+\]</p>
+
+<p>注意，除了$s,t$外顶点的超额流都为0。等号成立的条件是</p>
+
+<p>\[
+\text{flow}(a)=
+\left\{
+\begin{aligned}
+&amp;c(a),&amp;&amp;a\in\text{out-arcs}(\mathbf U)\\
+&amp;0,&amp;&amp;a\in\text{in-arcs}(\mathbf U)
+\end{aligned}。
+\right.
+\]</p>
+
+<h2 id="section-2">最大流</h2>
+
+<h3 id="section-3">最大流问题</h3>
+
+<p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-example1.png" alt="" width="300px" id="max-flow-example1" /></p>
+
+<p>由于$s$没有输入，最大流实际上就是最大化$\sum_{(s,v)\in\mathbf A}\text{flow}((s,v))$。按照此思路，<strong>尝试</strong>直接求解最大流：</p>
+
+<ol>
+  <li>找到满足$\text{flow}(a)&lt;c(a)$弧构成的s-t路径；</li>
+  <li>沿着这些弧，通过最大可允许的流。</li>
+</ol>
+
+<p>由于存在不同的路径，这样得到的不一定是最大流。<a href="#max-flow-example1">上图</a>所示，左边的到了最大流，右边由于$\{(s,v_1),(v_2,t)\}$弧饱和了，不能再增加路径，得到的不是最大流。</p>
+
+<h3 id="Ford-Fulkerson-Algorithm">最大流算法（Ford-Fulkerson算法）</h3>
+
+<p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_graph-and-residual-graph.jpg" alt="" width="320px" id="graph-and-residual-graph" /></p>
+
+<p><strong>余图</strong>（residual graph）的顶点和原图一样，如上图右所示，它包含两类弧：（1）原图的未饱和弧；（2）原图$\text{flow}(a)&gt;0$的弧的反向弧。由于连接$s$和$t$的反向弧不可能包含在s-t路径中，不必增加到$s$和离开$t$的反向弧<sup id="fnref:17097807"><a href="#fn:17097807" class="footnote">1</a></sup>。当原图流为0时，余图和不包含权值的原图相同。</p>
+
+<div class="flexslider" style="width: 380px; margin-left: auto; margin-right: auto; ">
+  <ul class="slides">
+    <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-00.png" />
+      <p class="flex-caption">01：建立流为0的余图；</p>
+  </li>
+	<!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-01.png" />
+      <p class="flex-caption">02：</p>
+  </li>
+ -->
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-02.png" />
+      <p class="flex-caption">02：在余图中找出一条s-t路径；</p>
+  </li>
+	<!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-03.png" />
+      <p class="flex-caption">04：</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-04.png" />
+      <p class="flex-caption">05：</p>
+  </li>
+	-->
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-05.png" />
+      <p class="flex-caption">03：找出最大允许流$K=1$，加入原图；</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-06.png" />
+      <p class="flex-caption">04：更新余图；</p>
+  </li>
+ <!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-07.png" />
+      <p class="flex-caption">08：</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-08.png" />
+      <p class="flex-caption">09：</p>
+  </li>
+-->
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-09.png" />
+      <p class="flex-caption">05：在余图中找出一条s-t路径；</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-10.png" />
+      <p class="flex-caption">06：找出最大允许流$K=1$，加入原图（反向弧相减）；</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-11.png" />
+      <p class="flex-caption">07：更新余图；</p>
+  </li>
+	<!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-12.png" />
+      <p class="flex-caption">13：</p>
+  </li>
+	-->
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-13.png" />
+      <p class="flex-caption">08：在余图中找出一条s-t路径；</p>
+  </li>
+	<!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-14.png" />
+      <p class="flex-caption">15：</p>
+  </li>
+	-->
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-15.png" />
+      <p class="flex-caption">09：找出最大允许流$K=1$，加入原图；</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-16.png" />
+      <p class="flex-caption">10：更新余图，不存在s-t路径，算法结束。</p>
+  </li>
+	<!--
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-17.png" />
+      <p class="flex-caption">18：</p>
+  </li>
+  <li>
+      <img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-algorithm/max-flow-algorithm-18.png" />
+      <p class="flex-caption">19：</p>
+  </li>
+-->
+</ul>
+</div>
+
+<p>基于余图的<strong>Ford-Fulkerson算法</strong>求最大流：</p>
+
+<ol>
+  <li>建立原图流为0的余图；</li>
+  <li>在余图中找出任意的s-t路径，并按该路径找出原图允许的最大流$K$：
+    <ul>
+      <li>最大流$K$根据弧的容量减去已有的流；</li>
+      <li>对余图的正向弧，原图的流加上$K$；</li>
+      <li>对余图的反向弧，原图的流减去$K$。</li>
+    </ul>
+  </li>
+  <li>更新余图，重复上述过程，直到余图不存在s-t路径。</li>
+</ol>
+
+<h3 id="section-4">最大流最小割定理</h3>
+
+<p>在余图中，$s$可达的所有顶点构成的子集记为$\mathbf U$，显然$\mathbf U$中不包含$t$，否者还有s-t路径。对$\mathbf U$，以下关系成立：</p>
+
+<ol>
+  <li>$\forall a\in\text{out-arcs}(\mathbf U)$，必有$\text{flow}(a)=c(a)$，否则不饱和弧$a\;(0\leq\text{flow}(a) &lt; c(a))$将在余图中连接更多的顶点，违背了$\mathbf U$是“$s$可达的所有顶点”。</li>
+  <li>$\forall a\in\text{in-arcs}(\mathbf U)$，必有$\text{flow}(a)=0$，否则$0 &lt; \text{flow}(a) \leq c(a)$时存在反向弧，余图必定连接更多的顶点，违背了$\mathbf U$是“$s$可达的所有顶点”。</li>
+</ol>
+
+<p>因此，根据<a href="#flow-and-cut">流与割的关系</a>可知，任意流不大于任意割，那么等号成立表明最大流等于最小割。最大流算法不仅找到了最大流，也找到了最小割。</p>
+
+<h2 id="section-5">参考资料</h2>
+
+<ol class="bibliography"></ol>
+<div class="footnotes">
+  <ol>
+    <li id="fn:17097807">
+      <p><a href="http://blog.csdn.net/changyuanchn/article/details/17097807">有的做法</a>是选择了一条s-t路径后，再在余图中标示一个反方向的路径，包括顶点$s$和$t$。 <a href="#fnref:17097807" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/09/reparameterization-and-dp" class="pageNav" style="float:left"   >上一篇：DILinAV（2）：重参数化与动态规划 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/09/fast-ncc" class="pageNav" style="float:right"   >下一篇：快速归一化互相关 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/09/maximum-flow-and-minimum-cut" 	data-url="http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut" data-title="DILinAV（3）：最大流与最小割">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/09/reparameterization-and-dp'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/09/fast-ncc'; --1> -->
+<!--         url = '/2015/09/fast-ncc'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/09/maximum-flow-and-minimum-cut/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

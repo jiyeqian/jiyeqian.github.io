@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>正则化</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>正则化</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-01-26">2015-01-26</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+  <a href="/tags/#正则化" title="正则化">正则化</a>&nbsp;
+  
+  <a href="/tags/#Matlab" title="Matlab">Matlab</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>正则化来源于处理函数逼近（function approximation）中的病态问题（ill-posed problem）。克服过拟合的一个方法是从简单模型开始尝试；正则化是相反的思路，从复杂模型的假设集开始，通过正则化约束求解得到未过拟合的简单模型（复杂项的系数很小或接近0）。</p>
+
+<p>正则化等价于结构风险最小化（SRM，structural risk minimuzation）<a href="#lihang_sml_2012">[1, P. 9]</a>，它是结构风险最小化策略的实现，通过在经验风险上加一个正则化项或惩罚项实现<a href="#lihang_sml_2012">[1, P. 13]</a>。正则化符合奥卡姆剃刀（Occam’s rezor）原理：在所有可能选择的模型中，能够很好解释已知数据并且十分简单才是最好的模型。<a href="http://ask.julyedu.com/question/150">从贝叶斯估计的角度看，正则化项对应于模型的先验概率</a>，可以假设复杂的模型有较大的先验概率，简单的模型有较小的先验概率<a href="#lihang_sml_2012">[1, P. 14]</a>。</p>
+
+<p>本文的主要参考资料是机器学习基石<a href="#lin_ml_regularization_2014">[2]</a>。</p>
+
+<h2 id="section">带约束回归</h2>
+
+<p>对于$x\in\mathbb R$的Q阶多项式变换$\Phi_Q(x)=\left(1,x,x^2,\ldots,x^Q\right)$，为了方便用$\mathbf w$代替回归系数$\tilde{\mathbf w}$。10次和2次空间中回归问题的假设集$\mathcal H_{10}$和$\mathcal H_2$分别表示为
+\[
+\begin{aligned}
+&amp;w_0+w_1x+w_2x^2+w_3x^3+\ldots,w_{10}x^{10}\\
+&amp;w_0+w_1x+w_2x^2。
+\end{aligned}
+\]
+若$w_3=w_4=\ldots=w_{10}=0$，则$\mathcal H_2=\mathcal H_{10}$，也就是$\mathcal H_2$的回归问题可以用带约束的$\mathcal H_{10}$实现
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }w_3=w_4=\ldots=w_{10}=0。
+\]
+正则化可以看作带约束的优化$E_{in}$。</p>
+
+<p>稍微放松约束条件，任意8个系数为0，得到用带约束的$\mathcal H_{10}$表示的$\mathcal H’_2$
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }\sum_{q=0}^{10}\left[\left[w_q\neq 0\right]\right]\leq 3。
+\]
+$\mathcal H’_2$比$\mathcal H_2$宽松，但比$\mathcal H_{10}$过拟合风险低，$\mathcal H_2\subset\mathcal H’_2\subset\mathcal H_{10}$。求解稀疏形式（含8个0系数）$\mathcal H’_2$中的假设非常困难，NP-hard。</p>
+
+<p>进一步放松约束条件，得到用带约束的$\mathcal H_{10}$表示的$\mathcal H(C)$
+\[
+\min_{\mathbf w\in\mathbb R^{10+1}} E_{in}(\mathbf w)\quad\mbox{s.t. }\sum_{q=0}^{10}w_q^2\leq C。
+\]
+$\mathcal H(C)$和$\mathcal H’_2$有交集（overlap），对$C\geq 0$存在嵌套结构
+\[
+\mathcal H(0)\subset\mathcal H(1.126)\subset\ldots\subset\mathcal H(1126)\subset\ldots\subset\mathcal H(\infty)=\mathcal H(10)。
+\]
+从正则化假设集$\mathcal H(C)$的到的最优解就是正则化假设$\mathbf w_{REG}$。</p>
+
+<h2 id="section-1">拉格朗日乘子法</h2>
+
+<p>根据上述推导，正则化回归问题的向量表示形式
+\begin{equation}
+\min_{\mathbf w\in\mathbb R^{Q+1}}E_{in}(\mathbf w)=
+{1\over N}\sum_{n=1}^N\left(\mathbf w^T\mathbf z_n-y_n\right)^2\qquad\mbox{s.t. }\sum_{q=0}^Qw_q^2\leq C，
+\end{equation}
+进一步记为矩阵形式
+\begin{equation}
+\min_{\mathbf w\in\mathbb R^{Q+1}}E_{in}(\mathbf w)=
+{1\over N}(\mathbf Z\mathbf w-\mathbf y)^T(\mathbf Z\mathbf w-\mathbf y)\qquad\mbox{s.t. }\mathbf w^T\mathbf w\leq C，
+\label{eq:constrained-Ein-matrix}
+\end{equation}
+事实上$\mathbf w$位于半径为$\sqrt C$的球中。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-gradient-descent.png"><img src="/assets/images/2015-01-26-regularization-gradient-descent.png" alt="正则化约束的梯度下降法" /></a><div class="caption">图 1:  正则化约束的梯度下降法 [<a href="/assets/images/2015-01-26-regularization-gradient-descent.png">PNG</a>]</div></div></div>
+
+<p>上图展示了正则化约束的梯度下降法，蓝色的椭圆曲线表示梯度相同的等高线，红色的圆形表示约束条件。没有正则化约束时，$\mathbf w$沿着$-\nabla E_{in}(\mathbf w)$方向达到最优解$\mathbf w_{lin}$，梯度方向指出了到达最优解的方式。有正则化约束时，大部分情况，最优解都在球面$\mathbf w^T\mathbf w=C$上。$-\nabla E_{in}(\mathbf w)$可以分解为绿色和红色$\mathbf w$（球切面的法向量）两个方向，如果已经在球面上，仍然继续沿着$\mathbf w$下降，会破坏约束条件。正则化梯度下降法，可看作在绿色箭头方向作用下接近最优解。达到最优解的条件是满足约束且不能继续下降，也就是$-\nabla E_{in}(\mathbf w)$平行于$\mathbf w$，那么有$-\nabla E_{in}(\mathbf w_{REG})\propto\mathbf w_{REG}$，此时绿色方向的分量为0，不再下降，优化过程结束。</p>
+
+<p>利用拉格朗日乘子$\lambda&gt;0$，达到最优解的条件是
+\begin{equation}
+\nabla E_{in}(\mathbf w_{REG})+{2\lambda\over N}\mathbf w_{REG}=0。
+\label{eq:nabla-E-w-reg}
+\end{equation}
+因为$\nabla E_{in}(\mathbf w_{REG})={2\over N}\left(\mathbf Z^T\mathbf Z\mathbf w_{REG}-\mathbf Z^T\mathbf y\right)$，所以可得最优解<sup id="fnref:why-regularize-all"><a href="#fn:why-regularize-all" class="footnote">1</a></sup>
+\begin{equation}
+\mathbf w_{REG}\leftarrow\left(\mathbf Z^T\mathbf Z+\lambda\mathbf I\right)^{-1}\mathbf Z^T\mathbf y。
+\end{equation}
+$\mathbf Z^T\mathbf Z$是半正定的，当$\lambda&gt;0$时，上述逆矩阵总存在。正则化的线性回归在统计学中称为<strong>脊回归</strong>（ridge regression）。</p>
+
+<p>求解\eqref{eq:nabla-E-w-reg}等价于最小化增广误差（augmented error）
+\begin{equation}
+\mathbf w_{REG}\leftarrow \arg\min_{\mathbf w}E_{aug}(\mathbf w)\quad \lambda\geq 0，
+\label{eq:Eaug-minimization}
+\end{equation}
+其中增广误差
+\begin{equation}
+E_{aug}(\mathbf w)=E_{in}(\mathbf w)+{\lambda\over N}\mathbf w^T\mathbf w，
+\label{eq:E-aug}
+\end{equation}
+$\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{in}$，可通过无约束优化$E_{aug}(\mathbf w)$高效求解，每个$C$都有对应的$\lambda$，大的$\lambda$对应着小的$C$，也对应着短的$\mathbf w$。当$\lambda=1$或$C=\infty$或$C\geq\lVert\mathbf w_{LIN}\rVert^2$（相当于红色的圆已经把$\mathbf w_{LIN}$包含在内）时，相当于没有进行正则化。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-regularize-regression.png"><img src="/assets/images/2015-01-26-regularization-regularize-regression.png" alt="不同系数下正则化的效果" /></a><div class="caption">图 2:  不同系数下正则化的效果 [<a href="/assets/images/2015-01-26-regularization-regularize-regression.png">PNG</a>]</div></div></div>
+
+<p>$\lambda$相当于对过拟合的惩罚因子，上图展示了不同$\lambda$惩罚下的效果。</p>
+
+<p>${\lambda\over N}\mathbf w^T\mathbf w$称为权重衰减（weight-decay）正则化，可推广到“任意变换 ＋ 线性模型”。</p>
+
+<h2 id="section-2">勒让德多项式</h2>
+
+<p>当$x_n\in[-1,1]$和$Q$很大时，$x_n^q$会变得非常小，除精确度因素影响外，还需要很大的$w_q$才能体现$x_n^q$的影响，这就与正则化的目的有些“矛盾”，过度惩罚了高次项。对于$\mathcal Z$空间的特征
+\[
+\Phi(\mathbf x)=\left(1,x,x^2,\ldots,x^Q\right)，
+\]
+特征之间彼此非正交，对低次项容忍度较大，对高次项惩罚力度更大。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png"><img src="/assets/images/2015-01-26-regularization-legendre-polynomials.png" alt="勒让德多项式" /></a><div class="caption">图 3:  勒让德多项式 [<a href="/assets/images/2015-01-26-regularization-legendre-polynomials.png">PNG</a>]</div></div></div>
+
+<p>为改善这一问题，可以考虑在多项式空间找到一组正交的基函数（orthonormal basis function），也称为勒让德多项式（legendre polynomials），构造如上图所示的新多项式变换
+\[
+\Phi(\mathbf x)=\left(1,L_1(x),L_2(x),\ldots,L_Q(x)\right)。
+\]</p>
+
+<h2 id="vc">VC维分析</h2>
+
+<p>带约束$E_{in}$优化\eqref{eq:constrained-Ein-matrix}的VC上界
+\begin{equation}
+E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
+\label{eq:vc-bound}
+\end{equation}
+采用与$C$等价的$\lambda$时，可以用优化\eqref{eq:Eaug-minimization}实现，在没有限定$\mathcal H(C)$的情况下，通过优化$E_{aug}$间接获得了VC维的保证。对比\eqref{eq:E-aug}和\eqref{eq:vc-bound}，$\mathbf w^T\mathbf w=\Omega(\mathbf w)$衡量了单一假设的复杂度，$\Omega(\mathcal H(C))$衡量了整个假设集的复杂度。如果${\lambda\over N}\Omega(\mathbf w)$能很好的表示$\Omega(\mathcal H(C))$，衡量$E_{out}$时，$E_{aug}$是比$E_{in}$更好中介。</p>
+
+<p>对$\mathcal Z$空间的非正则化方法，$d_{VC}(\mathcal H)=\tilde d+1$。事实上，采用正则化考虑的假设集$\mathcal H(C)$要小于$\mathcal H$。采用了正则化后，有效（effective）VC维$d_{EFF}(\mathcal H,\mathcal A)\leq d_{VC}(\mathcal H)$，其中$\mathcal A$为正则化算法。因此，正则化方法具有更好的泛化性能。增大$\lambda$使$C$变小，从而使$\mathcal H(C)$变小，使得$d_{EFF}(\mathcal H,\mathcal A)$减小。</p>
+
+<h2 id="section-3">正则化的推广</h2>
+
+<p>除权重衰减（weight-decay）正则化外，还有很多其它的正则化方法。正则化的约束条件应当向着目标函数方向，选择正则化方法的思路包括：</p>
+
+<ul>
+  <li>目标相关（target-dependent）：利用目标的特性，比如已知目标函数的对称性，可采用对称正则化$\sum[[q\mbox{ is odd}]]w_q^2$；</li>
+  <li>合理性（plausible）：使结果更加光滑和简单，比如要对随机或确定性噪声鲁棒，可采用稀疏的$L_1$正则化$\sum |w_q|$；</li>
+  <li>友好（friendly）：易于优化，比如采用除权重衰减的$L_2$正则化$\sum w_q^2$。</li>
+</ul>
+
+<p>如果正则化选择不合适，还有$\lambda=0$这道防线，可以避免危害。以上正则化选择思路和<a href="/2014/12/machine-learning-noise-and-error/#error-measurement">误差度量</a>一致：用户相关（user-dependent）、合理性、友好。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png"><img src="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png" alt="［左］：L2正则化；［右］L1正则化" /></a><div class="caption">图 4:  ［左］：L2正则化；［右］L1正则化 [<a href="/assets/images/2015-01-26-regularization-L2-and-L1-regularizer.png">PNG</a>]</div></div></div>
+
+<p>$L_1$正则化在需要稀疏解时很有用。上图右是$L_1$正则化示意图，$L_1$正则化
+\begin{equation}
+\Omega(\mathbf w)=\sum_{q=0}^Q|w_q|=\lVert\mathbf w\rVert_1，
+\end{equation}
+虽然不可微分，但它是凸的，解是稀疏的（$\mathbf w$有很多0元素）。$-\nabla E_{in}$可分解到垂直于边界面的方向（边界面的法向量方向，如上图右红色箭头所示）和沿边界面的方向。当到达边界面后，如果继续沿着法向量方向下降，会破坏约束条件，沿着面的方向如果还能下降，则继续沿着面的方向下降，直到停在菱形球的顶点，或者直到$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$（沿边界面的方向分量为0）。边界面的法向量只和$\mathbf w$的符号有关，如果要$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$比较困难，通常会停在菱形球的顶点，该点在坐标轴上，必有元素为0。</p>
+
+<h2 id="lambda">最优$\lambda$</h2>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png"><img src="/assets/images/2015-01-26-regularization-noise-and-lambda.png" alt="噪声对性能的影响" /></a><div class="caption">图 5:  噪声对性能的影响 [<a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png">PNG</a>]</div></div></div>
+
+<p>上图表明，噪声等级越高，正则化的惩罚力度$\lambda$越大。实际上，噪声的等级不可预知，只有通过实验的方法选择最佳$\lambda$，也就是通过<a href="">验证</a>（validation）选择最佳$\lambda$。</p>
+
+<h2 id="section-4">正则化实例</h2>
+
+<p>本节内容源于机器学习<a href="#ng_ml_r_2014">[3]</a>网络课程，这里没有对增加的偏移项$x_0=1$的系数正则化，且$y\in\{0,1\}$。</p>
+
+<h3 id="section-5">正则化线性回归</h3>
+
+<h4 id="section-6">一、代价函数</h4>
+
+<p>\begin{equation}
+J(\boldsymbol\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
+\label{eq:cf-linear-regression-r}
+\end{equation}</p>
+
+<h4 id="section-7">二、梯度下降法估计参数</h4>
+
+<p>repeat until convergence {
+\begin{equation*}
+\begin{aligned}
+\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
+\end{aligned}
+\end{equation*}
+}</p>
+
+<p>迭代过程可以化为如下形式：
+\begin{equation*}
+\theta_j := \theta_j\left(1 - \alpha\frac{\lambda}{m} \right) - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)};~~(j = 1, 2, \ldots, n)
+\end{equation*}</p>
+
+<p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小更快。</p>
+
+<h3 id="logistic">正则化Logistic回归</h3>
+
+<h4 id="section-8">一、代价函数</h4>
+
+<p>\begin{equation}
+\begin{aligned}
+J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)+\left(1-y^{(i)}\right)\log \left(1-h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right)\right)\right) \\
+&amp; + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\end{aligned}
+\label{eq:cf-logistic-regression-r}
+\end{equation}</p>
+
+<h4 id="section-9">二、梯度下降法估计参数</h4>
+
+<p>repeat until convergence {
+\begin{equation*}
+\begin{aligned}
+\theta_0 &amp; := \theta_0 - \alpha\frac{1}{m}\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_0^{(i)} \\ <br />
+\theta_j &amp; := \theta_j - \alpha\frac{1}{m}\left(\sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)x_j^{(i)} + \lambda\theta_j\right)~~(j = 1, 2, \ldots, n)
+\end{aligned}
+\end{equation*}
+}</p>
+
+<h3 id="matlab">Matlab实现</h3>
+
+<p>第一步：实现Logistic函数</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>g <span class="p">=</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span>z<span class="p">)</span><span class="w"></span>
+<span class="n">g</span> <span class="p">=</span> <span class="mf">1.0</span> <span class="o">./</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">));</span>
+<span class="k">end</span></code></pre></div>
+
+<p>第二步：实现代价函数（包含梯度计算）</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="w"> </span>[J, grad] <span class="p">=</span><span class="w"> </span><span class="nf">costFunctionReg</span><span class="p">(</span>theta, X, y, lambda<span class="p">)</span><span class="w"></span>
+<span class="n">m</span> <span class="p">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="c">% number of training examples</span>
+
+<span class="n">h</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">theta</span><span class="p">);</span>
+<span class="n">J</span> <span class="p">=</span> <span class="o">-</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">.*</span> <span class="nb">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">+</span> <span class="c">...</span>
+    <span class="n">lambda</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">sum</span><span class="p">(</span><span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">.^</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">grad</span> <span class="p">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambda</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">;</span> <span class="n">theta</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">)])</span> <span class="o">/</span> <span class="n">m</span><span class="p">;</span>
+
+<span class="k">end</span></code></pre></div>
+
+<p>第三步：估计参数</p>
+
+<div class="highlight"><pre><code class="language-matlab"><span class="n">initial_theta</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">lambda</span> <span class="p">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">options</span> <span class="p">=</span> <span class="n">optimset</span><span class="p">(</span><span class="s">&#39;GradObj&#39;</span><span class="p">,</span> <span class="s">&#39;on&#39;</span><span class="p">,</span> <span class="s">&#39;MaxIter&#39;</span><span class="p">,</span> <span class="mi">400</span><span class="p">);</span>
+<span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
+	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
+
+<h2 id="section-10">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
+
+</li>
+<li><span id="lin_ml_regularization_2014">[2]H.-T. Lin, “Lecture 14: Regularization.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="ng_ml_r_2014">[3]A. Ng, “Regularization: The problem of overfitting.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li></ol>
+
+<h3 id="section-11">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:why-regularize-all">
+      <p>为什么正则化包括$x_0=1$的偏移项系数，两者有何区别？ <a href="#fnref:why-regularize-all" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/01/hazard-of-overfitting" class="pageNav" style="float:left"   >上一篇：过拟合的危害 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/01/validation" class="pageNav" style="float:right"   >下一篇：验证 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/01/regularization" 	data-url="http://qianjiye.de/2015/01/regularization" data-title="正则化">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/hazard-of-overfitting'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/validation'; --1> -->
+<!--         url = '/2015/01/validation'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/regularization/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

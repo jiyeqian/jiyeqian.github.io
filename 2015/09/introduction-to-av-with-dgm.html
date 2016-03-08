@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>DILinAV（1）：基于离散图模型的人工视觉简介</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>DILinAV（1）：基于离散图模型的人工视觉简介</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-09-19">2015-09-19</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文内容主要来自M. Nikos Paragios和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第1节“Introduction to artificial vision with discrete graphical models”。</p>
+
+<h2 id="section">人工视觉</h2>
+
+<p>人工视觉（AV，artificial vision）的目的和人类视觉系统非常相似。人工视觉非常复杂，尽管过去30年取得了很多进展，但发展水平仍相当于5岁的小孩。面临的困难从如下三方面来看：</p>
+
+<ul>
+  <li>输入阶段：多种多样的传感器，获得图像的形式和质量不同，有的采集深度信息，有的纪录运动信息。这些信息融合起来并不容易。</li>
+  <li>处理阶段：即使使用非常强大的电脑，也只能达到人脑的很小部分能力。</li>
+  <li>数学推理：我们并不清楚人类理解环境的方法，因此无法通过学习人类视觉系统重现这一过程。我们通过数学方法解决问题，但通常难以定义合适的模型、目标函数，也难以找到最优解。</li>
+</ul>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_av-paradigm.png" alt="Artificial Vision Paradigm" width="400px" id="fig-av-paradigm" /></p>
+
+<p>人工视觉处理问题的主要方式是逆向建模（inverse modeling）。从观察开始，也就是通过不同传感器获取图像。给定待解决的问题，将问题参数化，如果能估计参数，就能得出视觉感知任务的答案。其难点在于，问题在高维空间，通常没有直接的解析解。</p>
+
+<p>通过心脏CT扫描图，可评估心脏病发作风险。行脏的左心室将携带氧的血药泵到全身。评估心脏病发作风险的方法是测量心动周期（cardiac cycle）心脏收缩和扩张间的差异。也就是比较心室的最大体积和最小体积之差。如果差异在$20\%$，就可能不会发生问题。如果差异变得越来越小，心脏就可能出问题。内科医生希望通过人工视觉自动测量这种差异。通过在心室上选择一些控制点，可以得到心室的模型。目标函数就是优化控制点的位置。</p>
+
+<p>人工视觉面临的四大挑战：</p>
+
+<ol>
+  <li>维度问题：在模型的表现力和复杂性间折中；</li>
+  <li>非线性问题：模型参数和结果之间的非线性；</li>
+  <li>非凸问题：目标函数在高位非凸空间，存在许多局部最优解，但难以得到最优解；</li>
+  <li>非模块化问题：老方法难以直接用于新问题，以上问题会重现。</li>
+</ol>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_relationship-with-other-fields.png" alt="Relationship with other fields" width="500px" id="fig-relationship-with-other-fields" /></p>
+
+<p>人工视觉包含了计算机视觉、机器视觉和图像处理。</p>
+
+<h2 id="section-1">离散模型</h2>
+
+<p>\[
+\mathcal G = \left(\mathcal X, \mathcal E \right)，
+\]</p>
+
+<p>离散人工视觉（discrete artificial vision）采用图模型。图包含3个元素：</p>
+
+<ol>
+  <li>顶点（node）：待估计的变量，$\mathcal X$；</li>
+  <li>邻域系统（neighborhood system）：变量或参数间的关系，$\mathcal E$；</li>
+  <li>标签（label）：离散变量，待估计变量的取值，$\mathcal L$。</li>
+</ol>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_graph-model.png" alt="Graph Model" id="fig-graph-model" /></p>
+
+<p>在离散人工视觉中，每个模型都包含一个图。首先确定顶点和它们之间的连接关系，然后为模型分配数据。通过能量方程的最优化估计变量的值。这种能量通常包含两部分，</p>
+
+<p>\[
+\min_{x_p}\sum_{p\in\mathcal X}\left(\Theta_p\left(x_p\right) + \Theta_{pq}\left(x_p, x_q\right)\right)。
+\]</p>
+
+<p>第一项称为单一项（singular term），评估所有给定的变量和标签。第二项称为成对项（pairwise term），评估顶点之间的一致性（consistency）。在计算机视觉中，通常采用马尔可夫随机场（MRF，markov random field）进行最优化。</p>
+
+<p>离散人工视觉还采用另一种高阶模型</p>
+
+<p>\[
+\mathcal G = \left(\mathcal X, \mathcal C \right)，
+\]</p>
+
+<p>其中$\mathcal C$表示超边或团（hyperedege/clique），邻域推广为超团。高阶能量最小化问题表示为</p>
+
+<p>\[
+\min_{x_p}\sum_{p\in\mathcal X}\left(\Theta_p\left(x_p\right) + \Theta_{c}\left(x_p,\cdots ,x_q\right)\right)。
+\]</p>
+
+<h2 id="section-2">应用实例</h2>
+
+<p>在介绍了几本概念后，分三部分展示一些具体应用实例。</p>
+
+<h3 id="low-level-vision">低级视觉（low level vision）</h3>
+
+<p>低级视觉的主要应用包括：盲图像反卷积（blind image deconvolution）、图像修复（image inpainting）……</p>
+
+<p>图模型元素对应的内容：</p>
+
+<ul>
+  <li>变量：像素；</li>
+  <li>标签：亮度值；</li>
+  <li>图连接：成对连接。</li>
+</ul>
+
+<h4 id="section-3">一、盲图像反卷积</h4>
+
+<p>低级视觉是非常活跃的研究领域，去噪（denoising）是其中比较简单的例子。目前已经有很多高效的去噪算法，此处从人工视觉的角度，展示一个更有趣也是更具挑战性的问题。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_blurred-image-generation-process.jpg" alt="Blurred image generation process" width="500px" id="fig-blurred-image-generation-process" /></p>
+
+<p>对象或相机的运动都会导致图像的模糊。盲图像反卷积能消除运动导致的模糊。产生模糊图像，相当于清晰图像被卷积核模糊了，卷积核与相机和对象的运动有关。用数学模型表示，卷积核与噪声劣化了图像</p>
+
+<p>\[
+\mathbf I = \mathbf x \otimes \mathbf k + \mathbf n
+\]</p>
+
+<p>$\mathbf I$表示看到的模糊图像，$\mathbf k$表示模糊核，$\mathbf n$表示噪声，只有$\mathbf I$已知。盲图像反卷积是在给定$\mathbf I$时计算$\mathbf x$和$\mathbf k$。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_quantized-version-of-deblurring.jpg" alt="High-level idea: how to reduce ill-posedness?" width="400px" id="fig-uantized-version-of-deblurring" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：$\bar{\mathbf x}$表示对$\mathbf x$采用15色量化的结果，$\bar{\mathbf x}$和${\mathbf x}$得到的模糊图像差不多。</p>
+
+<p>假设图像就是图，像素对应于顶点。为每个顶点分配一个标签，标签表示重构回图像的值。由于不知道卷积核与噪声模型，问题非常复杂。通过量化降低图像质量，卷积核表现的行为也差不多，但问题复杂度降低了。卷积核与运动相关，千差万别，通常的方法是对卷积核施加限制条件。<a href="#komodakis2013mrf">[1]</a>中的方法同时得到卷积核与无噪声图像。</p>
+
+<h4 id="section-4">二、图像补全</h4>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-inpainting.jpg" alt="Image Inpainting" width="500px" id="fig-image-inpainting" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：图像修复。填充左图移除人的部分，得到完整漂亮的全图。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-completion.jpg" alt="Image Completion" width="500px" id="fig-image-completion" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：纹理合成。给定左图的一小块纹理样本，生成任意大小的纹理图。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-completion-problem.jpg" alt="Image Completion Problem" width="500px" id="fig-image-completion-problem" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：图像补全问题</p>
+
+<p>图像补全问题模型：</p>
+
+<ul>
+  <li>标签$\mathcal L$：所有从源区域$\mathcal S$来的$w\times h$块；</li>
+  <li>MRF顶点：和目标区域相交区域的点，也就是将用新值取代的像素；</li>
+  <li>$\Theta_p\left(x_p\right)$：块$x_p$和$p$附近区域的一致性；</li>
+  <li>$\Theta_{pq}\left(x_p, x_q\right)$：块$x_p$和$x_q$与它们重叠区域的相似性。</li>
+</ul>
+
+<h3 id="middle-level-vision">中级视觉（middle level vision）</h3>
+
+<p>中级视觉不仅包含了图像修复，还包含了对图片内容推断，其内容包含：目标分割（object segmentation）、光流估计（optical flow estimation）、变形融合（deformable fusion）、图匹配（graph matching）……</p>
+
+<p>图模型元素对应的内容：</p>
+
+<ul>
+  <li>变量：控制点；</li>
+  <li>标签：2D/3D位置；</li>
+  <li>图连接：成对连接／高阶项。</li>
+</ul>
+
+<h4 id="section-5">一、图像分割</h4>
+
+<p>图像分割是指从给定图像中提取特定区域。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_human-heart.jpg" alt="Human Heart" width="400px" /></p>
+
+<p>个体差异、背景复杂、低对比度、噪声等因素使心脏姿态不变性分割<a href="#xiang20123d">[2]</a>极具挑战性。人体解剖结构差异大，大小、形状都可能不同，一种简单的方法是采用高阶几何（higher-order geometry）描述。若通过点集确定表面，任何点对具有不变性。也就是即使移动，它们之间的相对关系也不变。但缩放就不能保持点对的关系。最好的方法是采用高阶几何。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_shape-representation.jpg" alt="pose-invariant-heart-model" width="356px" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：形状表达。</p>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_pose-invariant-heart-model.jpg" alt="pose-invariant-heart-model" width="356px" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：姿态不变性。</p>
+
+<p>考虑任意三点，姿态不变性是指任何应用到这三点的变换都会保持他们之间角度。对象采用三元组（triplet）建模，任何几何变换都会保留它们之间的角度，这称之为姿态不变（pose-invariant）模型。一旦从数据中学到了这种模型，就可以用它和图像中获取的新信息比较，得到最佳分割图（segmentation map）。这可用概率的方式将几何学信息和图像信息结合。代价函数将增加第三项，称其为超团项，优化点在几何形状中的位置以及点在图像中的位置。统计形状先验（statistical shape prior）的局部约束为$P_{(i,j,k)}(\alpha,\beta)$，全局形状约束为$P(X)={1\over Z}\prod_{c\in C}P_c(\alpha,\beta)$。</p>
+
+<h4 id="section-6">二、配准／光流估计</h4>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_brain-registration-example.jpg" alt="brain-registration-example" width="500px" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：大脑配准图。红色表示差异大。</p>
+
+<p>配准在生物医学图像中极其重要。在将两个部件组合在一起，以及处理组织的形变都需要用到。图像配准可定义为最优化问题</p>
+
+<p>\[
+T^\ast = \arg\min_T\phi(I, J\circ T)，
+\]</p>
+
+<p>$I$和$J$分别表示目标图像和源图像，变换$T$定义为</p>
+
+<p>\[
+T(\mathbf x) = \mathbf x + D(\mathbf x)，
+\]</p>
+
+<p>图像度量</p>
+
+<p>\[
+\phi : (I,J)\mapsto\mathbb R
+\]</p>
+
+<p>图或者网格，作为参数空间。经过网格变形，通过图像之间相似性，判断几何形变是否满足要求。这种方案在光流估计和视频分析中也常用到。用图定义该优化问题，顶点对应形变，标签表示位移量，为每个顶点分配形变。采用图模型，可以高效便捷的求解该问题。MRF模型可表示为</p>
+
+<p>\[
+E_{\mathrm{mrf}}(\mathbf l) = \sum_{p\in G}V_p(l_p)+\sum_{(p,q)\in N}V_{pq}(l_p,l_q)，
+\]</p>
+
+<p>单一项为</p>
+
+<p>\[
+V_p(l_p)=\int_\Omega\hat\eta(\mathbf x)\left(I(\mathbf x)-J\left(\mathbf x + \mathbf d^{l_p}\right)\right)^2d\mathbf x，
+\]</p>
+
+<p>成对项为</p>
+
+<p>\[
+V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
+\]</p>
+
+<h4 id="section-7">三、图匹配</h4>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_graph-matching-demo.jpg" alt="graph-matching-demo" width="500px" /></p>
+
+<p>图匹配<a href="#zeng2010dense">[3]</a>类似于配准，其目的在于确定两个表面间的对应关系。由于表面之间的形变可能非常大，该问题非常复杂。</p>
+
+<h3 id="high-level-vision">高级视觉（high level vision）</h3>
+
+<p>高级视觉可用于提取对象的几何关系，比如从3位对象的二维图像中提取深度信息。高级视觉内容包括提取视角不变的2.5维／3维（view-Point invariant 2.5D-3D）信息/ 大规模形状语法解析（large-scale parsing with shape grammars）……</p>
+
+<p>图模型元素对应的内容：</p>
+
+<ul>
+  <li>变量：控制点；</li>
+  <li>标签：2D/3D位移；</li>
+  <li>图连接：成对连接／高阶项。</li>
+</ul>
+
+<h4 id="section-8">一、提取层次信息</h4>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_2.5D-layered-modeling.jpg" alt="2.5D Layered Modeling" width="500px" /></p>
+
+<p>直接从单张图像提取3维信息太困难。2.5维信息不要求准确的深度信息，只需要对象之间的前后层次关系。</p>
+
+<p>首先建立对象的二维形状模型，比如上图中的汽车建模，使得它可以在平面内执行移动、旋转、伸缩变换。然后为其分配图像标签（基于对象的信息）。</p>
+
+<h4 id="a-hrefkoutsourakis2009single4a">二、形状语法解析<a href="#koutsourakis2009single">[4]</a></h4>
+
+<p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-based-modeling-of-architecture.png" alt="Image-based Modeling of Architecture using Shape Grammars" width="500px" /></p>
+
+<h2 id="section-9">小结</h2>
+
+<p>通过采用训练数据集，图模型效率较高。离散图模型是应对人工视觉四大挑战的理想解决方案。</p>
+
+<h2 id="section-10">参考资料</h2>
+
+<ol class="bibliography"><li><span id="komodakis2013mrf">[1]N. Komodakis and N. Paragios, “MRF-based blind image deconvolution,” in <i>Computer Vision–ACCV 2012</i>, Springer, 2013, pp. 361–374.</span>
+
+</li>
+<li><span id="xiang20123d">[2]B. Xiang, C. Wang, J.-F. Deux, A. Rahmouni, and N. Paragios, “3d cardiac segmentation with pose-invariant higher-order mrfs,” in <i>Biomedical Imaging (ISBI), 2012 9th IEEE International Symposium on</i>, 2012, pp. 1425–1428.</span>
+
+</li>
+<li><span id="zeng2010dense">[3]Y. Zeng, C. Wang, Y. Wang, X. Gu, D. Samaras, and N. Paragios, “Dense non-rigid surface registration using high-order graph matching,” in <i>Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on</i>, 2010, pp. 382–389.</span>
+
+</li>
+<li><span id="koutsourakis2009single">[4]P. Koutsourakis, L. Simon, O. Teboul, G. Tziritas, and N. Paragios, “Single view reconstruction using shape grammars for urban environments,” in <i>Computer Vision, 2009 IEEE 12th International Conference on</i>, 2009, pp. 1795–1802.</span>
+
+</li></ol>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/09/haze-removal-kaiming" class="pageNav" style="float:left"   >上一篇：去雾霾：基于单图的暗通道方法 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/09/reparameterization-and-dp" class="pageNav" style="float:right"   >下一篇：DILinAV（2）：重参数化与动态规划 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/09/introduction-to-av-with-dgm" 	data-url="http://qianjiye.de/2015/09/introduction-to-av-with-dgm" data-title="DILinAV（1）：基于离散图模型的人工视觉简介">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/09/haze-removal-kaiming'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/09/reparameterization-and-dp'; --1> -->
+<!--         url = '/2015/09/reparameterization-and-dp'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/09/introduction-to-av-with-dgm/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>TLD：跟踪－学习－检测</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>TLD：跟踪－学习－检测</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-05-10">2015-05-10</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#翻译" title="翻译">翻译</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 class="no_toc" id="section">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">摘要</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">1 引言</a></li>
+  <li><a href="#isection-2" id="markdown-toc-isection-2">2 相关工作</a>    <ul>
+      <li><a href="#isection-2-1" id="markdown-toc-isection-2-1">2.1 目标跟踪</a></li>
+      <li><a href="#isection-2-2" id="markdown-toc-isection-2-2">2.2 目标检测</a></li>
+      <li><a href="#isection-2-3" id="markdown-toc-isection-2-3">2.3 机器学习</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">2.4 最相关方法</a></li>
+    </ul>
+  </li>
+  <li><a href="#isection-3" id="markdown-toc-isection-3">3 跟踪－学习－检测</a></li>
+  <li><a href="#isection-4" id="markdown-toc-isection-4">4 P-N学习</a>    <ul>
+      <li><a href="#isection-4-1" id="markdown-toc-isection-4-1">4.1 形式化</a></li>
+      <li><a href="#isection-4-2" id="markdown-toc-isection-4-2">4.2 稳定性</a></li>
+      <li><a href="#isection-4-3" id="markdown-toc-isection-4-3">4.3 仿真专家的试验</a></li>
+      <li><a href="#isection-4-4" id="markdown-toc-isection-4-4">4.4 真实专家的设计</a></li>
+    </ul>
+  </li>
+  <li><a href="#isection-5" id="markdown-toc-isection-5">5 TLD的实现</a>    <ul>
+      <li><a href="#section-4" id="markdown-toc-section-4">5.1 预备知识</a></li>
+      <li><a href="#section-5" id="markdown-toc-section-5">5.2 目标模型</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">5.3 目标检测器</a></li>
+      <li><a href="#section-7" id="markdown-toc-section-7">5.4 跟踪器</a></li>
+      <li><a href="#section-8" id="markdown-toc-section-8">5.5 集成器</a></li>
+      <li><a href="#section-9" id="markdown-toc-section-9">5.6 学习模块</a></li>
+    </ul>
+  </li>
+  <li><a href="#isection-6" id="markdown-toc-isection-6">6 量化评估</a>    <ul>
+      <li><a href="#cogd" id="markdown-toc-cogd">6.1 对比之一：CoGD</a></li>
+      <li><a href="#prost" id="markdown-toc-prost">6.2 对比之二：Prost</a></li>
+      <li><a href="#tld" id="markdown-toc-tld">6.3 TLD数据库</a></li>
+      <li><a href="#section-10" id="markdown-toc-section-10">6.4 目标检测器的提升</a></li>
+      <li><a href="#tld-1" id="markdown-toc-tld-1">6.5 对比之三：TLD数据库</a></li>
+    </ul>
+  </li>
+  <li><a href="#isection-7" id="markdown-toc-isection-7">结论</a></li>
+  <li><a href="#section-11" id="markdown-toc-section-11">局限性与工作展望</a></li>
+  <li><a href="#section-12" id="markdown-toc-section-12">致谢</a></li>
+  <li><a href="#section-13" id="markdown-toc-section-13">参考资料</a></li>
+</ul>
+
+<p>本文根据Zdenek Kalal等人的论文“Tracking-Learning-Detection”<a href="#kalal2012tracking">[1]</a>意译而来。</p>
+
+<h3 id="section-1">摘要</h3>
+
+<p>本文研究在视频流中长效跟踪（long-term tracking）未知目标。目标通过它在单帧中的位置和大小定义。接下来每帧中的任务是确定目标的位置和大小，或者指出该目标不存在。我们提出了一种新的跟踪框架（TLD），明确的将长效跟踪任务分解为跟踪、学习和检测。跟踪器一帧接一帧地跟踪目标。检测器定位到目前为止发现的所有目标，并在必要时校正跟踪器。学习过程估计检测器的误差，并更新检测器避免将来重现误差。我们研究如何确定检测器的误差，并从误差中学习。我们开发了一种新的学习方法（P-N学习），它通过一对“专家”估计误差：（i）P专家估计漏检（missed detection），（ii）N专家估计错检（false alarm）。学习过程建模成一个离散动态系统（discrete dynamical system），并且找到了确保学习提升的条件。我们描述了TLD框架的实时实现和P-N学习过程。我们进行了一次全面的量化评估，表明了我们的方法比最先进的方法有显著的提升。</p>
+
+<h2 id="section-2">1 引言</h2>
+
+<p>考虑手持摄像机采集的视频流，各种目标在摄像机的视场中进出。当单帧中感兴趣目标由边界框（bounding box）给定时，在以后每帧，我们的任务是自动确定该目标的边界框或指出该目标消失了。视频流按帧率处理，并且处理过程将会无限长。我们称这样的任务为长效跟踪。</p>
+
+<p>为了实现长效跟踪，很多问题需要解决。关键问题是当目标在摄像机视场重现时检测到该目标。目标的外观可能发生变化，这一事实导致目标的外观和初始帧不相关，这加剧了问题的难度。其次，成功的长效跟踪需要处理尺度和光照变化、杂乱的背景、部分遮挡，以及实时处理。</p>
+
+<p>长效跟踪既可从跟踪也可从检测的角度入手。跟踪算法估计目标的运动。跟踪器只需初始化，就能快速工作并产生平滑的轨迹。另一方面，运行时它们会累积误差（漂移），当目标从摄像机视野消失时，跟踪通常会失败。研究跟踪的目的在于开发更鲁棒的跟踪器，可以跟踪得更长。失败后的（post-failure）行为没被直接处理。基于检测的算法，在每帧中独立的估计目标的位置。检测器不会漂移，如果目标从摄像机视野消失时也不会失败。然而，它们需要离线训练过程，因此无法应用于未知目标。</p>
+
+<p>我们研究的出发点基于一个被认可的事实，这就是单独的跟踪或检测都不能完成长效跟踪任务。然而，如果它们同时工作，可从对方受益。跟踪器可为检测器提供弱标记的训练数据，因此在运行时能提升检测器。检测器能重初始化跟踪器，因此能把跟踪器的失败最小化。</p>
+
+<p>本文的首要贡献是设计了一个新的框架（TLD），它将长效跟踪任务分解为3个子任务：跟踪、学习和检测。每个子任务通过单个模块完成，每个模块同时工作。跟踪器一帧接一帧的跟踪目标。检测器定位到目前为止发现的所有目标，并在必要时校正跟踪器。学习过程估计检测器的误差，并更新检测器避免将来重现误差。</p>
+
+<p>虽然存在大量的跟踪器和检测器，但我们还没发现有何学习方法能适用于TLD框架。该学习方法需满足：</p>
+
+<ol>
+  <li>处理任意复杂的视频流，其中跟踪失败频繁；</li>
+  <li>若视频不包含相关信息，也从不劣化检测器；</li>
+  <li>操作的时实性。</li>
+</ol>
+
+<p>为应对所有这些挑战，我们依靠视频中包含的各种信息源。例如，考虑单帧中表示目标位置的单个块（patch）。该块不仅表明了目标的外观，还确定了其周围的块，这些块确定了背景的形式。在跟踪该块时，可以看到同一目标的不同外观，以及背景的不同形式。这和标准的机器学习方法不同，在那里单个样本认为独立于其它样本<a href="#blum1998combining">[2]</a>。这就提出了有趣的问题——如何在学习中有效的利用视频中的信息。</p>
+
+<p>本文的第二个贡献是称为P-N学习的新学习模式。在视频的每帧中评估检测器。通过两种类型的“专家”分析它的响应：（i）P专家识别漏检，（ii）N专家识别错检。误差估计强化了检测器的训练集，检测器被重训练以避免将来重现这些误差。正如其它任何方法，P-N专家自己也要犯错。然而，如果专家出错的概率限定在某个确定的范围（可解析定量的确定），通过错误的相互弥补可实现稳定的学习。</p>
+
+<p>第三个贡献是实现。我们展示了基于TLD框架和P-N学习如何构建一个实时的长效跟踪系统。该系统实时跟踪、学习和检测视频流中的目标。</p>
+
+<p>第四个贡献是在基准数据集上全面评估最先进的方法，我们的算法在上面取得了最好的性能（saturated performance）。因此，我们收集和标注了更具挑战性的新数据集，我们的算法在上面比最先进的方法有显著的提升。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-fig-1.png" alt="Given a single bounding box defining the object location and extent in the initial frame (LEFT), our system tracks, learns and detects the object in real-time. The red dot indicates that the object is not visible." id="fig-1" /></p>
+
+<p class="mvgcv-figure-caption">图 1：初始帧给定由边界框确定的目标的位置和尺寸（左），我们的系统实时跟踪、学习和检测目标。红点表示无标不可见。</p>
+
+<p>本文其余内容组织如下：</p>
+
+<ul>
+  <li><a href="#isection-2">第2节</a>综述了长效跟踪的相关工作；</li>
+  <li><a href="#isection-3">第3节</a>介绍了TLD框架；</li>
+  <li><a href="#isection-4">第4节</a>提出了P-N学习；</li>
+  <li><a href="#isection-5">第5节</a>讨论了TLD的实现；</li>
+  <li><a href="#isection-6">第6节</a>进行了大量的对比试验；</li>
+  <li>本文以对<a href="#isection-7">未来工作的贡献（contribution）和建议</a>作为结束。</li>
+</ul>
+
+<h2 id="isection-2">2 相关工作</h2>
+
+<p>本节综述了与我们系统各模块相关的方法。<a href="#isection-2-1">第2.1节</a>综述了目标跟踪，侧重于能在线学习的鲁棒跟踪器。<a href="#isection-2-2">第2.2节</a>讨论了目标检测。最后，<a href="#isection-2-3">第2.3节</a>综述了训练目标检测器的机器学习方法。</p>
+
+<h3 id="isection-2-1">2.1 目标跟踪</h3>
+
+<p>目标跟踪的任务是估计目标的运动。跟踪器通常认为目标在整个视频序列中都存在。在实际中，有多种表示目标的方法：点<a href="#lucas1981iterative">[3]</a><a href="#shi1994good">[4]</a><a href="#sand2008particle">[5]</a>、关节模型<a href="#wang2003recent">[6]</a><a href="#ramanan2007tracking">[7]</a><a href="#buehler2008long">[8]</a>、轮廓<a href="#birchfield1998elliptical">[9]</a><a href="#isard1998condensation">[10]</a><a href="#bibby2008robust">[11]</a><a href="#bibby2010real">[12]</a>或者光流<a href="#horn1981determining">[13]</a><a href="#brox2004high">[14]</a><a href="#barron1994performance">[15]</a>。在这里，我们专注利用几何形状表示目标的方法。它们的运动通过连续帧估计，也就是帧到帧的跟踪。在这种情况下，模板跟踪是最直接的方法。目标用目标模板（图像块、彩色直方图）描述。运动定义为最小化目标模板和候选块之间误配的一种变换。模板跟踪可按固定的方式（当目标模板不发生变化时）实现<a href="#comaniciu2003kernel">[16]</a>，也可按自适应的方式（当目标模版从前一帧抽取时）实现<a href="#lucas1981iterative">[3]</a><a href="#shi1994good">[4]</a>。固定和自适应模板跟踪相结合的方法<a href="#matthews2004template">[17]</a><a href="#dowson2005simultaneous">[18]</a><a href="#rahimi2008reducing">[19]</a>以及识别模板可靠部分的方法<a href="#jepson2003robust">[20]</a><a href="#adam2006robust">[21]</a>已经被提出来了。由于模板只表示单一的外观，它们只具备有限的建模能力。为了对更多外观变化建模，提出了生成模型（generative model）。生成模型既可以离线构建<a href="#black1998eigentracking">[22]</a>，也可以在运行时建立<a href="#ross2008incremental">[23]</a><a href="#kwon2010visual">[24]</a>。生成的跟踪器只对目标的外观建模，因此在杂乱的背景中经常失败。为了缓解这一问题，最近提出的跟踪器也对目标运动的环境建模。有两种环境建模的方法经常被用到：</p>
+
+<ul>
+  <li>第一种，在环境中搜寻支持目标（supporting object），通过感兴趣的目标（object of interest）校正其运动<a href="#yang2009context">[25]</a><a href="#grabner2010tracking">[26]</a>。当感兴趣的目标从摄像机视野中消失或经历复杂的变化时，这些支持目标对跟踪有帮助。</li>
+  <li>第二种，环境被当成跟踪器应区别开的负类（negative class）。</li>
+</ul>
+
+<p>构建判别式跟踪器（discriminative tracker）的常用方法是建立二分类器，通过它表示目标和背景之间的决策边界。固定的判别式跟踪器<a href="#avidan2004support">[27]</a>在跟踪之前训练目标分类器，它的应用局限于目标已知。自适应的判别式跟踪器<a href="#collins2005online">[28]</a><a href="#avidan2007ensemble">[29]</a><a href="#grabner2006line">[30]</a><a href="#babenko2009visual">[31]</a>在跟踪过程中建立分类器，其本质阶段在于更新：当前位置邻近区域用于采样正的训练样本，远离当前位置的区域用于采样负样本，每一帧的这些样本用于更新分类器。有证据表明这种更新策略能对付外观显著变化、短时遮挡（short-term occlusion）以及杂乱背景。然而，若目标离开场景的时间比预期长，这些方法也受漂移（drift）之害并且会失败。为了解决这些问题，通过在首帧训练辅助分类器<a href="#grabner2008semi">[32]</a>或训练一对不相关的分类器<a href="#tang2007co">[33]</a><a href="#yu2008online">[34]</a>，约束跟踪分类器的更新。</p>
+
+<h3 id="isection-2-2">2.2 目标检测</h3>
+
+<p>目标检测的任务是在输入图像中定位目标。目标的定义是多样的。它可以是单个实例或一整类对象。目标检测通常基于图像局部特征<a href="#lowe2004distinctive">[35]</a>或者滑动窗口<a href="#viola2001rapid">[36]</a>。基于特征方法按如下流程：（i）特征检测；（ii）特征识别；（iii）模型拟合。面<a href="#lowe2004distinctive">[35]</a><a href="#lepetit2005randomized">[37]</a>或完整的三维模型<a href="#vacchetti2004stable">[38]</a>常被使用。这些算法达到了成熟水平，即使在低性能设备上也能实时运行<a href="#taylor2009multiple">[39]</a>，此外还能检测大量的目标<a href="#pilet2010virtually">[40]</a><a href="#obdrzalek2005sub">[41]</a>。它们主要的长处也是局限性就是检测图像的特征，并且需要事先知道目标的几何尺寸。滑动窗口方法<a href="#viola2001rapid">[36]</a>利用不同尺寸的窗口扫描图像，判断每个窗口中的块是否包含感兴趣的目标。对于QVGA格式的帧，每帧大约需要计算50000个块。为了达到实时的性能，滑动窗口检测器采用所谓的级联结构<a href="#viola2001rapid">[36]</a>。基于背景的概率比目标大得多的这一事实，分类器分为许多级，每级都能提早拒绝背景块，因此能减少平均需要计算的级数。训练这样的检测器通常需要大量的训练样本，并且在训练阶段需要大量计算以精确表示目标和背景之间的判别边界。另一种方法是将目标建模成大量的模板。在这种情况下，学习涉及的是只再增加一个模版<a href="#hinterstoisser2009real">[42]</a>。</p>
+
+<h3 id="isection-2-3">2.3 机器学习</h3>
+
+<p>目标检测器通常是在假定所有训练样本都被标注时被训练的。因为我们希望从单个标注的样本和视频流中训练检测器，这个假定对我们的情况来说太强了。这个问题可被归结为半监督学习<a href="#chapelle2006semi">[43]</a><a href="#zhu2009introduction">[44]</a>，它同时使用标注的和未标注的数据。这些方法通常假定数据是独立同分布的，具备某些特性，例如未标注的样本在特征空间形成“自然的”聚类。过去已提出了许多基于类似假设的算法，包括期望最大化（EM）、自学习（self-learning）和协同训练（co-training）。</p>
+
+<p>期望最大化是找出未标注数据模型参数估计值的常规方法。EM是迭代过程，在二分类问题中，交替估计未标注数据的软标签（soft-label）并训练分类器。EM算法成功用在了文本分类<a href="#nigam2000text">[45]</a>和目标分类的学习过程<a href="#fergus2003object">[46]</a>。EM算法基于低密度分离（low density separation）假设<a href="#chapelle2006semi">[43]</a>，也就是类别被完全分开。EM有时认为是“软”版本的自学习<a href="#zhu2009introduction">[44]</a>。</p>
+
+<p>自学习从已标注训练集中训练初始分类器开始，然后用未标注数据评估分类器。那些拥有最可信的分类器响应的样本被加入训练集，分类器被重新训练。这是一个迭代过程。自学习被用于人眼检测<a href="#rosenberg2005semi">[47]</a>。然而，观察发现，当未标注数据通过独立性度量而非分类器置信度选择时，检测器提升更大。这表明目标检测不满足低密度分离假设，其它方法可能工作得更好。</p>
+
+<p>协同训练<a href="#blum1998combining">[2]</a>是一种学习方法，它基于不相关的分类器可以相互交替训练的思想。为了创建这些不相关的分类器，协同训练认为存在两个不相关的特征空间。通过在标注数据上训练两个不同的分类器初始化学习过程。然后两个分类器都在未标注数据上进行评估。在迭代过程，从一个分类器得到的可信的标记样本用于强化第二个分类器的训练集，反之亦然。协同训练处理不相关模态的问题效果最好，比如文本分类<a href="#blum1998combining">[2]</a>（文本与超链接）或生物特征识别系统<a href="#poh2009challenges">[48]</a>（外观和声音）。在视觉目标检测中，协同训练已经成功用于监控中的车辆检测<a href="#levin2003unsupervised">[49]</a>和移动目标识别<a href="#javed2005online">[50]</a>。由于样本（图像块）从单模态中采样，我们认为协同训练是次优（suboptimal）的目标检测方法。从单模态中提取的特征可能是相关的，因此违背了协同训练的假设。</p>
+
+<h3 id="section-3">2.4 最相关方法</h3>
+
+<p>许多方法在某种程度上结合了跟踪、学习和检测。在论文<a href="#williams2005sparse">[51]</a>中，离线训练的检测器用于验证跟踪器的输出轨迹，如果轨迹是无效的，通过彻底的图像搜索寻找目标。其它方法将粒子滤波<a href="#isard1998condensation">[10]</a>框架整合到检测器。这些方法已经用于在低帧率视频中跟踪脸<a href="#li2008tracking">[52]</a>、跟踪多个曲棍球运动员<a href="#okuma2004boosted">[53]</a>和跟踪行人<a href="#leibe2007coupled">[54]</a><a href="#breitenstein2009robust">[55]</a>。与我们的方法不同，这些方法依靠离线训练好的检测器，在运行时其属性不改变。自适应判别式跟踪器<a href="#grabner2006line">[30]</a><a href="#babenko2009visual">[31]</a><a href="#grabner2008semi">[32]</a><a href="#tang2007co">[33]</a><a href="#yu2008online">[34]</a>也拥有跟踪、学习和检测的能力。这些方法利用在线学习的检测器实现跟踪，检测器将目标从背景中提取出来。也就是说，单一的过程同时实现跟踪和检测。这不同于我们的方法，其跟踪和检测是不相关的过程，它们之间通过学习交换信息。通过保持跟踪和检测分离，我们的方法不必在其模块的跟踪和检测能力上作出妥协。</p>
+
+<h2 id="isection-3">3 跟踪－学习－检测</h2>
+
+<p><img src="/assets/images/2015-05-10-tld-block-diagram-TLD-framework.png" alt="The block diagram of the TLD framework" width="300px" id="fig-2" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 2: TLD框架的框图</p>
+
+<p>TLD是一种针对视频流中长效跟踪未知目标的框架。它的框图如上图所示。该框架模块具有的特点如下：</p>
+
+<ul>
+  <li>跟踪器基于帧与帧之间的运动有限且目标可见的假设，估计连续帧之间目标的运动。如果目标跑出摄像机视野，跟踪器可能失败且不可恢复。</li>
+  <li>检测器认为每帧都是独立的，进行全图扫描，定位过去已发现过和学习过的全部目标。与其它任何检测器一样，检测器会犯两种错误：纳伪（false positive）和弃真（false negative）。</li>
+  <li>学习过程关注跟踪器和检测器的性能，估计检测器的误差，生成训练样本以避免未来犯这些错误。学习模块认为跟踪器和检测器都可能失败。凭借学习过程，检测器推广到更多的目标外观，同时区分背景。</li>
+</ul>
+
+<h2 id="isection-4">4 P-N学习</h2>
+
+<p>本节探讨TLD框架的学习模块。该模块的目标是通过在线处理视频流提高目标检测器的性能。在视频流的每帧中，我们期望评估目前的检测器，发现它的误差，更新它以避免重现误差。P-N学习的核心思想是能通过两种类型的“专家”发现检测器的误差。P专家只辨别弃真，N专家只辨别纳伪。两种类型的专家自己都要犯错误，然而，它们之间的独立性使得它们之间能相互补偿。</p>
+
+<p><a href="#isection-4-1">第4.1节</a>将P-N学习表述为半监督学习方法。<a href="#isection-4-2">第4.2节</a>将P-N学习建模为离散动态系统，找到通过学习确保提升检测器性能的条件。<a href="#isection-4-3">第4.3节</a>对合成生成的专家进行了几次试验。最后，<a href="#isection-4-4">第4.4节</a>通过P-N学习从视频中训练目标检测器，得到了能实际使用的专家。</p>
+
+<h3 id="isection-4-1">4.1 形式化</h3>
+
+<p>令$x$是特征空间$\mathcal X$中的一个样本，$y$是标签空间$\mathcal Y=\{-1, 1\}$中的一个标签。样本集$X$称为未标注集，$Y$称为标签集，$L=\{(x, y)\}$称为标注集。P-N学习过程的输入是标注集$L_l$和未标注集$X_u$，其中$l\ll u$。P-N学习的任务是从标注集$L_l$学习分类器$f: \mathcal X\to\mathcal Y$，并通过未标注集$X_u$提升（bootstrap）其性能。分类器$f$是来自$\Theta$参数化的函数系$\mathcal F$的函数。函数系$\mathcal F$受制于实现，在训练中保持不变，因此训练就是估计参数$\Theta$。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-block-diagram-PN-learning.png" alt="The block diagram of the P-N learning." width="450px" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 3: TLD框架的框图</p>
+
+<p>如上图所示，P-N学习由4部分组成：</p>
+
+<ol>
+  <li>需要学习的分类器；</li>
+  <li>训练集——标注的训练样本集合；</li>
+  <li>监督训练——从训练集训练分类器的方法；</li>
+  <li>P-N专家——在训练过程中产生正负训练样本的函数。</li>
+</ol>
+
+<p>训练过程通过向训练集插入标注集$L$进行初始化。然后，将训练集传给训练分类器的监督学习，也就是估计初始化参数$\Theta^0$。然后，学习过程通过迭代自举（iterative bootstrapping）进行处理。在第$k$轮迭代中，上轮迭代训练的分类器对整个未标注集合分类，对所有的$x_u\in X_u$有$y_u^k=f\left(x_u|\Theta^{k-1}\right)$。评估错分样本的P-N专家对分类进行分析。这些样本改变标签后加入到训练集。重新训练分类器结束迭代，也就是估计$\Theta^k$。迭代不断进行，直到收敛或者满足其它终止条件。</p>
+
+<p>P-N学习的关键部分是估计分类器误差。其核心思想是将估计纳伪和估计弃真分开。由于这个原因，未标注集通过目前分类结果被分为两部分，每部分由独立的专家分析：</p>
+
+<ul>
+  <li>P专家分析分类为负的样本，估计弃真的样本并将它们按正标签加入训练集。在第$k$轮迭代中，P专家输出$n^+(k)$个正样本。</li>
+  <li>N专家分析分类为正的样本，估计纳伪的样本并将它们按负标签加入训练集。在第$k$轮迭代中，N专家输出$n^-(k)$个负样本。</li>
+</ul>
+
+<p>P专家增强分类器的泛化力（generality）。N专家增强分类器的辨别力（discriminability）。</p>
+
+<p><strong>与监督自举法的关系</strong>  将P-N学习放到更广泛的背景中，我们假设集合$X_u$的标签已知。基于该假设，很容易识别错分的样本，将它们按正确的标签加入到训练集。该策略通常称之为（监督）自举法<a href="#sung1998example">[56]</a>。采用监督自举训练的分类器关注判别边界，效果通常优于随机采样训练集训练的分类器<a href="#sung1998example">[56]</a>。同样的，关注判别边界的思想是P-N学习的基础，不同的是集合$X_u$的标签未知。因此，P-N学习可视为标准自举法推广到未标注的情形，未知标签通过P-N专家估计。如同其它方法，P-N专家也会错误估计标签而犯错。这些误差通过训练传播，在接下来的章节中将会对其进行理论分析。</p>
+
+<h3 id="isection-4-2">4.2 稳定性</h3>
+
+<p>本节分析P-N学习在分类器性能方面的影响。我们假定一个抽象分类器（例如，最近邻），它的性能在$X_u$上度量。分类器对未标记集随机初始分类，然后纠正P-N专家返回样本的分类。为了分析的目的，我们假定$X_u$的标签已知。这将使我们能测量分类器和P-N专家的误差。该分类器的性能将通过纳伪的数量$\alpha(k)$和弃真的数量$\beta(k)$进行刻画，$k$表示训练的迭代次数。</p>
+
+<p>在第$k$次迭代中，P专家输出$n_c^+(k)$个正确的正样本（真实的正）和$n_f^+(k)$个错误的正样本（真实的负），它迫使分类器改变$n^+(k)=n_c^+(k)+n_f^+(k)$个负分类的样本为正。同样的，N专家输出$n_c^-(k)$个正确的负样本和$n_f^-(k)$个错误的负样本，它迫使分类器改变$n^-(k)=n_c^-(k)+n_f^-(k)$个正分类的样本为负。因此，在下一轮迭代中，分类器纳伪和弃真的误差为：</p>
+
+<p>\begin{align}
+\label{eq:1a} \alpha(k+1) &amp;= \alpha(k)-n_c^-(k)+n_f^+(k)\\
+\label{eq:1b} \beta(k+1) &amp;= \beta(k)-n_c^+(k)+n_f^-(k)。
+\end{align}</p>
+
+<p>公式\eqref{eq:1a}表明，当$n_c^-(k)&gt;n_f^+(k)$时纳伪的数量$\alpha(k)$将减少，也就是，重新被正确标记为负样本的数量要多于重新被错误标记为正样本的数量。同样地，当$n_c^+(k)&gt;n_f^-(k)$时弃真的数量$\beta(k)$将减少。</p>
+
+<p><strong>质量度量</strong>  为了分析P-N学习的收敛性，需要定义一个模型，建立P-N专家的质量与每轮迭代输出正负样本的绝对数量之间的关系。P-N专家的质量通过4个质量度量描述：</p>
+
+<ol>
+  <li>P精度——正标签的可靠性，也就是，正确的正样本数量除以P专家输出的所有正样本数量，$P^+=n_c^+/\left(n_c^++n_f^+\right)$。</li>
+  <li>P召回率——认定为弃真的误差所占百分比，也就是，正确的正样本数量除以分类器输出的所有弃真的样本数量，$R^+=n_c^+/\beta$。</li>
+  <li>N精度——负标签的可靠性，也就是，正确的负样本数量除以N专家输出的所有负样本数量，$P^-=n_c^-/\left(n_c^-+n_f^-\right)$。</li>
+  <li>N召回率——识别为纳伪的误差所占百分比，也就是，正确的负样本数量除以分类器输出的所有纳伪的样本数量，$R^-=n_c^-/\alpha$。</li>
+</ol>
+
+<p>当这些度量给定时，在第$k$轮迭代，P-N专家输出的正确和错误样本的数量有如下形式：</p>
+
+<p>\begin{align}
+\label{eq:2a} n_c^+ = R^+\beta(k),\quad &amp;n_f^+(k)={(1-P^+)\over P^+}R^+\beta(k) \\
+\label{eq:2b} n_c^- = R^-\alpha(k),\quad &amp;n_f^-(k)={(1-P^-)\over P^-}R^-\alpha(k)。
+\end{align}</p>
+
+<p>结合公式\eqref{eq:1a}、\eqref{eq:1b}、\eqref{eq:2a}和\eqref{eq:2b}，我们可得如下等式：</p>
+
+<p>\begin{align}
+\label{eq:3a} \alpha(k+1) &amp;= (1-R^-)\alpha(k)+{(1-P^+)\over P^+}R^+\beta(k) \\
+\label{eq:3b} \beta(k+1) &amp;= {(1-P^-)\over P^-}R^-\alpha(k)+(1-R^+)\beta(k)。
+\end{align}</p>
+
+<p>定义了状态向量$\vec{x}(k)=\left[\alpha(k)\quad\beta(k)\right]^\top$和一个$2\times 2$的矩阵$\mathbf M$</p>
+
+<p>\begin{equation}
+\begin{bmatrix}
+1-R^-\quad &amp;{(1-P^+)\over P^+}R^+ \\
+{(1-P^-)\over P^-}R^-\quad &amp;1-R^+\quad<br />
+\end{bmatrix}
+\end{equation}</p>
+
+<p>之后，等式可重写为</p>
+
+<p>\begin{equation}
+\vec{x}(k+1)=\mathbf M\vec{x}(k)。
+\end{equation}</p>
+
+<p>这是一个符合离散动态系统的递归等式。该系统展示了分类器的误差（编码为系统状态）如何从P-N学习的一次迭代传播到另一次。我们的目标是揭示在何种条件下系统误差会降低。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-evolution-errors.png" alt="Evolution of errors during P-N learning" width="450px" id="fig-4" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 4: P-N学习过程中，矩阵$\mathbf M$不同特征值时的误差评估。误差减小（左）、保持不变（中）、增加（右）。</p>
+
+<p>基于动态系统建立的良好理论<a href="#zhou1996robust">[57]</a><a href="#ogata2009modern">[58]</a>，若转移矩阵（transition matrix）$\mathbf M$的两个特征值$\lambda_1$、$\lambda_2$都小于1，状态向量$\vec{x}$将收敛到0。注意，该矩阵$\mathbf M$是度量专家质量的函数。因此，若质量度量已知，就可以确定学习的稳定性。与两个特征值都小于1的矩阵$\mathbf M$对应的专家称之为误差消除（error-canceling）。上图展示了当$\lambda_1＝0$和（i）$\lambda_2&lt;1$，（ii）$\lambda_2=1$，（iii）$\lambda_2&gt;1$时，分类器误差的演变。</p>
+
+<p>在以上分析中，假设质量度量为常数，并且类别是可分的。在实际中，不可能确定分类器的所有误差。因此，训练不会收敛到误差少的（error-less）分类器，但可能稳定在某个水平。当质量度量可变时，$\mathbf M$的特征值小于1的那些迭代会提升性能。</p>
+
+<h3 id="isection-4-3">4.3 仿真专家的试验</h3>
+
+<p>在本实验中，利用仿真P-N专家从真实视频序列训练分类器。我们的目的在于通过专家质量度量的函数分析学习性能。</p>
+
+<p>在车辆视频序列上进行分析（<a href="#fig-12">图12</a>）。在视频序列的第1帧，我们利用初始块的仿射形变（affine warp）和第1帧的背景训练随机森林分类器。接着，我们跑通1轮视频序列。在每帧中，评估分类器，仿真专家确定误差，更新分类器。每次更新后，在整个视频序列上评估分类器，利用f度量测量其性能。性能图示为已处理帧的数目和P-N专家质量的函数。</p>
+
+<p>P-N专家通过4个质量度量刻画，$P^+$、$R^+$、$P^-$和$R^-$。为了约简该四维空间，参数设置为$P^+=R^+=P^-=R^-=1-\epsilon$，其中$\epsilon$表示专家的误差。转移矩阵变为了$\mathbf M=\epsilon\mathbf 1$，其中$\mathbf 1$是所有元素为$1$的$2\times 2$矩阵。该矩阵的特征值$\lambda_1=0$、$\lambda_2=2\epsilon$。因此，当$\epsilon&lt;0.5$时，P-N学习将提升性能。误差在$\epsilon=0:0.9$范围内变动。</p>
+
+<p>专家按如下方式仿真。在第$k$帧，分类器弃真的数目为$\beta(k)$。P专家重标记其中的$n_c^+(k)=(1-\epsilon)\beta(k)$个为正，这就得到$R^+=1-\epsilon$。为了仿真要求的精度$P^+=1-\epsilon$，P专家重标注额外的$n_f^+(k)=\epsilon\beta(k)$个背景样本为正。因此，在第$k$轮迭代，重标记为正的样本数量为$n^+=n_c^+(k)+n_f^+(k)=\beta(k)$。按同样的方式产生N专家。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-detector-performance.png" alt="Performance of a detector as a function of the number of processed frames. The detectors were trained by synthetic P-N experts with certain level of error. The classifier is improved up to error 50% (BLACK), higher error degrades it (RED)." width="400px" id="fig-5" /></p>
+
+<p class="mvgcv-figure-caption">图 5: 检测器性能视为处理帧数目的函数。检测器通过某个误差水平的人工合成P-N专家训练。The classifier is improved up to error 50% (BLACK), higher error degrades it (RED).</p>
+
+<p>上图描绘了检测器的性能作为已处理帧数目的函数（某个误差等级的人工合成P-N专家训练出检测器。高达50%的误差也提高了分类器性能［黑色］，更高的误差劣化分类器［红色］）。注意，当$\epsilon&lt;0.5$时，检测器的性能随着更多的训练数据而提升。在$\epsilon=0.5$时，虽然该视频中性能有提升，但通常会得到不稳定的结果。增加噪声等级会进一步导致分类器性能骤然恶化。这些结果符合P-N学习理论。</p>
+
+<h3 id="isection-4-4">4.4 真实专家的设计</h3>
+
+<p>本节利用P-N学习，从标注的一帧和视频流训练目标检测器。检测器由一个二分类器和扫描窗口构成，训练样本就是图像块。标注的样本$X_l$从标注的帧中提取。未标注的样本$X_u$从视频流中提取。</p>
+
+<p>P-N学习通过称之为初始检测器（inital detector）的监督训练初始化。在每帧，P-N学习执行以下步骤：</p>
+
+<ol>
+  <li>在当前帧评估检测器；</li>
+  <li>通过P-N专家估计检测器误差；</li>
+  <li>通过专家输出的标注样本更新检测器。</li>
+</ol>
+
+<p>在学习结束时得到的检测器称之为最终检测器（final detector）。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-scanning-grid-and-labels.png" alt="Illustration of a scanning grid and corresponding volume of labels." width="600px" id="fig-6" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 6：扫描网格和相应的标签序列。红点对应着正标签。</p>
+
+<p>上图(a)展示了视频流中扫描网格覆盖的3帧。网格中的每个边界框确定一个图像块，它的标签由上图(b,c)中的彩色点表示（红点表示正标签）。每个基于扫描窗口的检测器都认为图像块是独立的。因此，单一帧中存在$2^N$个可能的标签组合，其中$N$是网格中边界框的数目。上图(b)展示了一种标记方式。标记表明目标在单一帧中出现在了几个位置，并且运动在时间上不连续。如此标记方式不大可能正确。另一方面，如果检测器输出结果如上图(c)所示，由于目标在每帧中出现在一个位置，并且检测到的位置按时间构成了轨迹，这种标记方式是合理的。也就是说，块的标签是相关的。我们将该属性称为结构（structure）。P-N专家的核心思想是利用数据中的结构确定检测器的误差。</p>
+
+<p><strong>P专家</strong>利用视频中的时间结构，认为目标沿轨迹运动。P专家记住了目标在前一帧的位置，利用帧到帧的跟踪器估计当前帧目标的位置。若检测器将当前位置标记为负（也就是，犯了弃真错误），P专家生产一个正样本。</p>
+
+<p><strong>N专家</strong>利用视频中的空间结构，认为目标只能出现在一个位置。N专家分析当前帧检测器的所有响应、跟踪器的响应，选出最可信的一个位置。那些与最可信块不重叠的块标记为负。最可信块重新初始化跟踪器的位置。</p>
+
+<p><img src="/assets/images/2015-05-10-tld-examples-output-of-P-N-experts.png" alt="Illustration of the examples output by the P-N experts." width="400px" id="fig-7" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 7：P-N专家的输出示例。第三行展示了误差补偿。</p>
+
+<p>上图展示了一个三帧的序列，被学习的目标是黄色边界框中的车辆。车辆一帧接一帧地被跟踪。跟踪器表示了P专家输出正的训练样本。注意，由于目标的遮挡，P专家在$t+2$时刻输出了错误的正样本。N专家确定最可信的块（图中红星标注），并将其它检测结果标注为负。注意，N专家不仅将另一车辆区分开了，此外还纠正了P专家在$t+2$时刻犯的错（第3行展示了误差补偿）。</p>
+
+<h2 id="isection-5">5 TLD的实现</h2>
+
+<h3 id="section-4">5.1 预备知识</h3>
+
+<h3 id="section-5">5.2 目标模型</h3>
+
+<h3 id="section-6">5.3 目标检测器</h3>
+
+<h3 id="section-7">5.4 跟踪器</h3>
+
+<h3 id="section-8">5.5 集成器</h3>
+
+<h3 id="section-9">5.6 学习模块</h3>
+
+<h2 id="isection-6">6 量化评估</h2>
+
+<h3 id="cogd">6.1 对比之一：CoGD</h3>
+
+<h3 id="prost">6.2 对比之二：Prost</h3>
+
+<h3 id="tld">6.3 TLD数据库</h3>
+
+<h3 id="section-10">6.4 目标检测器的提升</h3>
+
+<h3 id="tld-1">6.5 对比之三：TLD数据库</h3>
+
+<p><img src="/assets/images/2015-05-10-tld-tld-dataset.png" alt="Snapshots from the introduced TLD dataset." id="fig-12" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图 12：所介绍的TLD数据集快照</p>
+
+<h2 id="isection-7">结论</h2>
+
+<h2 id="section-11">局限性与工作展望</h2>
+
+<h2 id="section-12">致谢</h2>
+
+<h2 id="section-13">参考资料</h2>
+
+<ol class="bibliography"><li><span id="kalal2012tracking">[1]Z. Kalal, K. Mikolajczyk, and J. Matas, “Tracking-learning-detection,” <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 34, no. 7, pp. 1409–1422, 2012.</span>
+
+</li>
+<li><span id="blum1998combining">[2]A. Blum and T. Mitchell, “Combining labeled and unlabeled data with co-training,” in <i>Proceedings of the eleventh annual conference on Computational learning theory</i>, 1998, pp. 92–100.</span>
+
+</li>
+<li><span id="lucas1981iterative">[3]B. D. Lucas, T. Kanade, and others, “An iterative image registration technique with an application to stereo vision,” in <i>IJCAI</i>, 1981, vol. 81, pp. 674–679.</span>
+
+</li>
+<li><span id="shi1994good">[4]J. Shi and C. Tomasi, “Good features to track,” in <i>Computer Vision and Pattern Recognition, 1994. Proceedings CVPR’94., 1994 IEEE Computer Society Conference on</i>, 1994, pp. 593–600.</span>
+
+</li>
+<li><span id="sand2008particle">[5]P. Sand and S. Teller, “Particle video: Long-range motion estimation using point trajectories,” <i>International Journal of Computer Vision</i>, vol. 80, no. 1, pp. 72–91, 2008.</span>
+
+</li>
+<li><span id="wang2003recent">[6]L. Wang, W. Hu, and T. Tan, “Recent developments in human motion analysis,” <i>Pattern recognition</i>, vol. 36, no. 3, pp. 585–601, 2003.</span>
+
+</li>
+<li><span id="ramanan2007tracking">[7]D. Ramanan, D. A. Forsyth, and A. Zisserman, “Tracking people by learning their appearance,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 29, no. 1, pp. 65–81, 2007.</span>
+
+</li>
+<li><span id="buehler2008long">[8]P. Buehler, M. Everingham, D. P. Huttenlocher, and A. Zisserman, “Long term arm and hand tracking for continuous sign language TV broadcasts,” in <i>Proceedings of the 19th British Machine Vision Conference</i>, 2008, pp. 1105–1114.</span>
+
+</li>
+<li><span id="birchfield1998elliptical">[9]S. Birchfield, “Elliptical head tracking using intensity gradients and color histograms,” in <i>Computer Vision and Pattern Recognition, 1998. Proceedings. 1998 IEEE Computer Society Conference on</i>, 1998, pp. 232–237.</span>
+
+</li>
+<li><span id="isard1998condensation">[10]M. Isard and A. Blake, “Condensation—conditional density propagation for visual tracking,” <i>International journal of computer vision</i>, vol. 29, no. 1, pp. 5–28, 1998.</span>
+
+</li>
+<li><span id="bibby2008robust">[11]C. Bibby and I. Reid, “Robust real-time visual tracking using pixel-wise posteriors,” in <i>Computer Vision–ECCV 2008</i>, Springer, 2008, pp. 831–844.</span>
+
+</li>
+<li><span id="bibby2010real">[12]C. Bibby and I. Reid, “Real-time tracking of multiple occluding objects using level sets,” in <i>Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on</i>, 2010, pp. 1307–1314.</span>
+
+</li>
+<li><span id="horn1981determining">[13]B. K. Horn and B. G. Schunck, “Determining optical flow,” in <i>1981 Technical Symposium East</i>, 1981, pp. 319–331.</span>
+
+</li>
+<li><span id="brox2004high">[14]T. Brox, A. Bruhn, N. Papenberg, and J. Weickert, “High accuracy optical flow estimation based on a theory for warping,” in <i>Computer Vision-ECCV 2004</i>, Springer, 2004, pp. 25–36.</span>
+
+</li>
+<li><span id="barron1994performance">[15]J. L. Barron, D. J. Fleet, and S. S. Beauchemin, “Performance of optical flow techniques,” <i>International journal of computer vision</i>, vol. 12, no. 1, pp. 43–77, 1994.</span>
+
+</li>
+<li><span id="comaniciu2003kernel">[16]D. Comaniciu, V. Ramesh, and P. Meer, “Kernel-based object tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 25, no. 5, pp. 564–577, 2003.</span>
+
+</li>
+<li><span id="matthews2004template">[17]I. Matthews, T. Ishikawa, and S. Baker, “The template update problem,” <i>IEEE transactions on pattern analysis and machine intelligence</i>, vol. 26, no. 6, pp. 810–815, 2004.</span>
+
+</li>
+<li><span id="dowson2005simultaneous">[18]N. D. H. Dowson and R. Bowden, “Simultaneous modeling and tracking (smat) of feature sets,” in <i>Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on</i>, 2005, vol. 2, pp. 99–105.</span>
+
+</li>
+<li><span id="rahimi2008reducing">[19]A. Rahimi, L.-P. Morency, and T. Darrell, “Reducing drift in differential tracking,” <i>Computer Vision and Image Understanding</i>, vol. 109, no. 2, pp. 97–111, 2008.</span>
+
+</li>
+<li><span id="jepson2003robust">[20]A. D. Jepson, D. J. Fleet, and T. F. El-Maraghi, “Robust online appearance models for visual tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 25, no. 10, pp. 1296–1311, 2003.</span>
+
+</li>
+<li><span id="adam2006robust">[21]A. Adam, E. Rivlin, and I. Shimshoni, “Robust fragments-based tracking using the integral histogram,” in <i>Computer vision and pattern recognition, 2006 IEEE Computer Society Conference on</i>, 2006, vol. 1, pp. 798–805.</span>
+
+</li>
+<li><span id="black1998eigentracking">[22]M. J. Black and A. D. Jepson, “Eigentracking: Robust matching and tracking of articulated objects using a view-based representation,” <i>International Journal of Computer Vision</i>, vol. 26, no. 1, pp. 63–84, 1998.</span>
+
+</li>
+<li><span id="ross2008incremental">[23]D. A. Ross, J. Lim, R.-S. Lin, and M.-H. Yang, “Incremental learning for robust visual tracking,” <i>International Journal of Computer Vision</i>, vol. 77, no. 1-3, pp. 125–141, 2008.</span>
+
+</li>
+<li><span id="kwon2010visual">[24]J. Kwon and K. M. Lee, “Visual tracking decomposition,” in <i>Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on</i>, 2010, pp. 1269–1276.</span>
+
+</li>
+<li><span id="yang2009context">[25]M. Yang, Y. Wu, and G. Hua, “Context-aware visual tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 31, no. 7, pp. 1195–1209, 2009.</span>
+
+</li>
+<li><span id="grabner2010tracking">[26]H. Grabner, J. Matas, L. Van Gool, and P. Cattin, “Tracking the invisible: Learning where the object might be,” in <i>Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on</i>, 2010, pp. 1285–1292.</span>
+
+</li>
+<li><span id="avidan2004support">[27]S. Avidan, “Support vector tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 26, no. 8, pp. 1064–1072, 2004.</span>
+
+</li>
+<li><span id="collins2005online">[28]R. T. Collins, Y. Liu, and M. Leordeanu, “Online selection of discriminative tracking features,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 27, no. 10, pp. 1631–1643, 2005.</span>
+
+</li>
+<li><span id="avidan2007ensemble">[29]S. Avidan, “Ensemble tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 29, no. 2, pp. 261–271, 2007.</span>
+
+</li>
+<li><span id="grabner2006line">[30]H. Grabner and H. Bischof, “On-line boosting and vision,” in <i>Computer Vision and Pattern Recognition, 2006 IEEE Computer Society Conference on</i>, 2006, vol. 1, pp. 260–267.</span>
+
+</li>
+<li><span id="babenko2009visual">[31]B. Babenko, M.-H. Yang, and S. Belongie, “Visual tracking with online multiple instance learning,” in <i>Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on</i>, 2009, pp. 983–990.</span>
+
+</li>
+<li><span id="grabner2008semi">[32]H. Grabner, C. Leistner, and H. Bischof, “Semi-supervised on-line boosting for robust tracking,” in <i>Computer Vision–ECCV 2008</i>, Springer, 2008, pp. 234–247.</span>
+
+</li>
+<li><span id="tang2007co">[33]F. Tang, S. Brennan, Q. Zhao, and H. Tao, “Co-tracking using semi-supervised support vector machines,” in <i>Computer Vision, 2007. ICCV 2007. IEEE 11th International Conference on</i>, 2007, pp. 1–8.</span>
+
+</li>
+<li><span id="yu2008online">[34]Q. Yu, T. B. Dinh, and G. Medioni, “Online tracking and reacquisition using co-trained generative and discriminative trackers,” in <i>Computer Vision–ECCV 2008</i>, Springer, 2008, pp. 678–691.</span>
+
+</li>
+<li><span id="lowe2004distinctive">[35]D. G. Lowe, “Distinctive image features from scale-invariant keypoints,” <i>International journal of computer vision</i>, vol. 60, no. 2, pp. 91–110, 2004.</span>
+
+</li>
+<li><span id="viola2001rapid">[36]P. Viola and M. Jones, “Rapid object detection using a boosted cascade of simple features,” in <i>Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on</i>, 2001, vol. 1, pp. I–511.</span>
+
+</li>
+<li><span id="lepetit2005randomized">[37]V. Lepetit, P. Lagger, and P. Fua, “Randomized trees for real-time keypoint recognition,” in <i>Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on</i>, 2005, vol. 2, pp. 775–781.</span>
+
+</li>
+<li><span id="vacchetti2004stable">[38]L. Vacchetti, V. Lepetit, and P. Fua, “Stable real-time 3d tracking using online and offline information,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 26, no. 10, pp. 1385–1391, 2004.</span>
+
+</li>
+<li><span id="taylor2009multiple">[39]S. Taylor and T. Drummond, “Multiple target localisation at over 100 fps,” 2009.</span>
+
+</li>
+<li><span id="pilet2010virtually">[40]J. Pilet and H. Saito, “Virtually augmenting hundreds of real pictures: An approach based on learning, retrieval, and tracking,” in <i>Virtual Reality Conference (VR), 2010 IEEE</i>, 2010, pp. 71–78.</span>
+
+</li>
+<li><span id="obdrzalek2005sub">[41]S. Obdrzalek and J. Matas, “Sub-linear Indexing for Large Scale Object Recognition.,” in <i>BMVC</i>, 2005, pp. 1–10.</span>
+
+</li>
+<li><span id="hinterstoisser2009real">[42]S. Hinterstoisser, O. Kutter, N. Navab, P. Fua, and V. Lepetit, “Real-time learning of accurate patch rectification,” in <i>Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on</i>, 2009, pp. 2945–2952.</span>
+
+</li>
+<li><span id="chapelle2006semi">[43]O. Chapelle, B. Schölkopf, A. Zien, and others, <i>Semi-supervised learning</i>. MIT press Cambridge, 2006.</span>
+
+</li>
+<li><span id="zhu2009introduction">[44]X. Zhu and A. B. Goldberg, “Introduction to semi-supervised learning,” <i>Synthesis lectures on artificial intelligence and machine learning</i>, vol. 3, no. 1, pp. 1–130, 2009.</span>
+
+</li>
+<li><span id="nigam2000text">[45]K. Nigam, A. K. McCallum, S. Thrun, and T. Mitchell, “Text classification from labeled and unlabeled documents using EM,” <i>Machine learning</i>, vol. 39, no. 2-3, pp. 103–134, 2000.</span>
+
+</li>
+<li><span id="fergus2003object">[46]R. Fergus, P. Perona, and A. Zisserman, “Object class recognition by unsupervised scale-invariant learning,” in <i>Computer Vision and Pattern Recognition, 2003. Proceedings. 2003 IEEE Computer Society Conference on</i>, 2003, vol. 2, pp. II–264.</span>
+
+</li>
+<li><span id="rosenberg2005semi">[47]C. Rosenberg, M. Hebert, and H. Schneiderman, “Semi-supervised self-training of object detection models,” 2005.</span>
+
+</li>
+<li><span id="poh2009challenges">[48]N. Poh, R. Wong, J. Kittler, and F. Roli, “Challenges and research directions for adaptive biometric recognition systems,” in <i>Advances in Biometrics</i>, Springer, 2009, pp. 753–764.</span>
+
+</li>
+<li><span id="levin2003unsupervised">[49]A. Levin, P. Viola, and Y. Freund, “Unsupervised improvement of visual detectors using cotraining,” in <i>Computer Vision, 2003. Proceedings. Ninth IEEE International Conference on</i>, 2003, pp. 626–633.</span>
+
+</li>
+<li><span id="javed2005online">[50]O. Javed, S. Ali, and M. Shah, “Online detection and classification of moving objects using progressively improving detectors,” in <i>Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on</i>, 2005, vol. 1, pp. 696–701.</span>
+
+</li>
+<li><span id="williams2005sparse">[51]O. Williams, A. Blake, and R. Cipolla, “Sparse bayesian learning for efficient visual tracking,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 27, no. 8, pp. 1292–1304, 2005.</span>
+
+</li>
+<li><span id="li2008tracking">[52]Y. Li, H. Ai, T. Yamashita, S. Lao, and M. Kawade, “Tracking in low frame rate video: A cascade particle filter with discriminative observers of different life spans,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 30, no. 10, pp. 1728–1740, 2008.</span>
+
+</li>
+<li><span id="okuma2004boosted">[53]K. Okuma, A. Taleghani, N. De Freitas, J. J. Little, and D. G. Lowe, “A boosted particle filter: Multitarget detection and tracking,” in <i>Computer Vision-ECCV 2004</i>, Springer, 2004, pp. 28–39.</span>
+
+</li>
+<li><span id="leibe2007coupled">[54]B. Leibe, K. Schindler, and L. Van Gool, “Coupled detection and trajectory estimation for multi-object tracking,” in <i>Computer Vision, 2007. ICCV 2007. IEEE 11th International Conference on</i>, 2007, pp. 1–8.</span>
+
+</li>
+<li><span id="breitenstein2009robust">[55]M. D. Breitenstein, F. Reichlin, B. Leibe, E. Koller-Meier, and L. Van Gool, “Robust tracking-by-detection using a detector confidence particle filter,” in <i>Computer Vision, 2009 IEEE 12th International Conference on</i>, 2009, pp. 1515–1522.</span>
+
+</li>
+<li><span id="sung1998example">[56]K.-K. Sung and T. Poggio, “Example-based learning for view-based human face detection,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 20, no. 1, pp. 39–51, 1998.</span>
+
+</li>
+<li><span id="zhou1996robust">[57]K. Zhou, J. C. Doyle, K. Glover, and others, <i>Robust and optimal control</i>, vol. 40. Prentice hall New Jersey, 1996.</span>
+
+</li>
+<li><span id="ogata2009modern">[58]K. Ogata, <i>Modern control engineering</i>. Prentice-Hall Englewood Cliffs, 2009.</span>
+
+</li></ol>
+
+<h3 class="no_toc" id="section-14">脚注</h3>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/05/arules" class="pageNav" style="float:left"   >上一篇：arules：频繁项集与关联规则的挖掘 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/05/speed-up-python" class="pageNav" style="float:right"   >下一篇：高性能Python程序 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/05/TLD" 	data-url="http://qianjiye.de/2015/05/TLD" data-title="TLD：跟踪－学习－检测">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/05/arules'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/05/speed-up-python'; --1> -->
+<!--         url = '/2015/05/speed-up-python'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/05/TLD/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

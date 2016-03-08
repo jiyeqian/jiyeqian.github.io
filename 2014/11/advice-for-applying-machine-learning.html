@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习实战技能</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习实战技能</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-11-25">2014-11-25</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>对于分类器而言通常需要考虑如下问题：</p>
+
+<ul>
+  <li>如何评价分类器性能？</li>
+  <li>数据需要如何预处理？</li>
+  <li>如何设计代价函数？</li>
+  <li>代价函数是凸的么？</li>
+  <li>如何用最优化方法求解模型参数？</li>
+  <li>如何调整参数，在Bias和Variance之间寻求平衡？</li>
+  <li>如何解决多分类问题？</li>
+  <li>如何处理线性不可分问题？</li>
+</ul>
+
+<p>对于样本动态变化的情况，还需要考虑如何在线学习和动态更新模型参数；对于大规模数据集，需要考虑如何选择合适的模型，如何降低复杂度。</p>
+
+<h2 id="section">模型选择</h2>
+
+<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_aaml_2014">[1]</a>。</p>
+
+<p>模型选择主要是通过评估模型效果，评价模型Bias和Variance的状况，选择合适的模型和估计相应的参数。</p>
+
+<p>数据集一般划分为训练集、交叉验证集和测试集3部分，分别占的比例大概是60%、20%和20%<sup id="fnref:only-train-test"><a href="#fn:only-train-test" class="footnote">1</a></sup>。训练集用于估计模型参数，交叉验证集用于选择模型，测试集用于估计模型的泛化误差（generalization error）；选择在交叉验证集上误差小的模型，但是用测试集上误差作为模型的误差。测试集上的数据对参数估计和模型选择都是不可见的，因此才能“公平”的评价模型的性能。</p>
+
+<p>$J_\mbox{train}(\boldsymbol\theta)$、$J_\mbox{cv}(\boldsymbol\theta)$、$J_\mbox{test}(\boldsymbol\theta)$分别表示模型在训练集、交叉验证集和测试集上的误差</p>
+
+<p>\begin{equation}
+J_{s}(\boldsymbol\theta) = \frac{1}{2m_{s}}\sum_{i=1}^{m_s}\left(h_\boldsymbol\theta\left(\mathbf x_s^{(i)}\right)-y_s^{(i)}\right)^2~~(s = \{\mbox{train},\mbox{cv},\mbox{test}\})。
+\end{equation}</p>
+
+<h3 id="bias-vs-variance">Bias vs. Variance</h3>
+
+<p><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-bias-vs-variance.png" alt="Bias vs. Variance" width="256px" /></p>
+
+<p>简单来说，Bias和Variance评价模型的拟合程度，High Bias就是欠拟合（underfit），High Variance就是过拟合（overfit）。对于欠拟合，$J_\mbox{cv}(\boldsymbol\theta)\approx J_\mbox{train}(\boldsymbol\theta)$且都较大；对于过拟合，$J_\mbox{cv}(\boldsymbol\theta)\gg J_\mbox{train}(\boldsymbol\theta)$且$J_\mbox{train}(\boldsymbol\theta)$较小，如上图所示<a href="#domingos2012few">[2]</a>。</p>
+
+<h3 id="section-1">模型选择与正则化——以多项式回归为例</h3>
+
+<p>模型的复杂度和参数估计时采用的正则化参数$\lambda$对模型的Bias和Variance均有影响。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models.png" alt="多项式回归模型" /></a><div class="caption">图 1:  多项式回归模型 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models.png">PNG</a>]</div></div></div>
+
+<p>如果选用多项式回归模型，需要选择多项式的次数确定合适的模型。参数估计的时候，可以通过调节正则化系数，平衡Bias和Variance的关系。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-d-lambda.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-d-lambda.png" alt="多项式次数和正则化系数与误差的关系" /></a><div class="caption">图 2:  多项式次数和正则化系数与误差的关系 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-d-lambda.png">PNG</a>]</div></div></div>
+
+<p>随着多项式次数$d$的增加， 模型从High Bias变为了High Variance；随着正则化系数$\lambda$的增加， 模型从High Variance变为了High Bias。通过评估调整模型和正则化参数时的误差，确定模型的相关系数。</p>
+
+<h3 id="section-2">学习曲线</h3>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-learning-curves.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-learning-curves.png" alt="High Bias和High Variance的学习曲线" /></a><div class="caption">图 3:  High Bias和High Variance的学习曲线 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-learning-curves.png">PNG</a>]</div></div></div>
+
+<p>学习曲线描绘了训练样本数目和误差之间的关系，展示了模型可能存在的问题。通过学习曲线，判断模型是否合适；如果不合适，模型是High Bias还是High Variance，从而有针对性地解决问题。</p>
+
+<h2 id="section-3">提升系统性能</h2>
+
+<p>提升系统性能可以从三方面入手：数据量、特征维数、模型复杂度。从问题诊断的角度，先判断系统的问题是high bias还是high variance，然后寻找相应的对策：</p>
+
+<ul>
+  <li>导致high variance／overfitting的原因：（1）从可学习理论看，数据太少，没有覆盖到测试集；（2）复杂的模型过渡描述简单的数据，严重过拟合，过拟合可以通过增加数据量和降低模型复杂度解决。</li>
+  <li>导致high bias／underfitting的原因：简单的模型不足以描述复杂的数据，欠拟合可以可以通过增加模型复杂度解决，增加数据量<strong>无助于</strong>解决该问题。</li>
+</ul>
+
+<p>variance和bias之间的关系可以从模型和数据复杂度的角度理解。如果相对于数据模型太弱，也就是简单的模型无法描述复杂的数据，即使在训练集上也学不会，这就会导致high bias；如果相对于数据模型太强，也就是复杂的模型过渡描绘简单的数据，这就会导致high variance。 因此，假设数据足够，可以只从模型的角度考虑平衡variance和bias：</p>
+
+<ul>
+  <li>提升模型复杂度，解决high bias／underfitting：增加特征（包括构造多项式特征，相当于增加模型参数）、选择复杂的模型、减小$\lambda$；</li>
+  <li>降低模型复杂度，解决high variance／overfitting：加入训练样本（模型相对于数据变弱了）、抽取特征子集（相当于减少模型参数）、选择简单的模型、增大$\lambda$。</li>
+</ul>
+
+<p>在保持模型不变的情况下，增加数据量可以解决过拟合（high variance），减少数据量可以将欠拟合（high bias）变为过拟合。但是，从可学习理论角度，数据总是多多益善。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">技术手段</th>
+      <th style="text-align: left">处理问题</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">加入更多的训练样本</td>
+      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias"><a href="#fn:Not-good-if-high-bias" class="footnote">2</a></sup></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">抽取特征子集</td>
+      <td style="text-align: left">High Variance<sup id="fnref:Not-good-if-high-bias:1"><a href="#fn:Not-good-if-high-bias" class="footnote">2</a></sup></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">增加特征</td>
+      <td style="text-align: left">High Bias</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">构造多项式特征</td>
+      <td style="text-align: left">High Bias</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">增大$\lambda$</td>
+      <td style="text-align: left">High Variance</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">减小$\lambda$</td>
+      <td style="text-align: left">High Bias</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <h4 id="example">Example</h4>
+  <hr />
+  <p>Suppose you have a dataset with n = 10 features and m = 5000 examples. After training your logistic regression classifier with gradient descent, you find that it has underfit the training set and does not achieve the desired performance on the training or cross validation sets. Which of the following might be promising steps to take? Check all that apply.</p>
+
+  <ul>
+    <li>[A] Use an SVM with a Gaussian Kernel. (By using a Gaussian kernel, your model will have greater complexity and can avoid underfitting the data.)</li>
+    <li>[B] Increase the regularization parameter $\lambda$.</li>
+    <li>[C] Try using a neural network with a large number of hidden units. (A neural network with many hidden units is a more complex (higher variance) model than logistic regression, so it is less likely to underfit the data.)</li>
+    <li>[D] Reduce the number of examples in the training set. (While you can improve accuracy on the training set by removing examples, doing so results in a worse model that will not generalize as well.)</li>
+    <li>[E] Create / add new polynomial features.</li>
+  </ul>
+
+  <p>Answer: A C E</p>
+</blockquote>
+
+<h4 id="get-more-data">数据越多越好么？</h4>
+
+<p>并非总是数据越多越好。在获取更多数据之前，先判断模型是否需要更多的数据。</p>
+
+<p>针对Low Bias（或High Variance）的模型，获取更多的数据才能提高模型的性能。如果是High Bias（或Low Variance）的模型，先增加特征（神经网络增加神经元），使模型是Low Bias（或High Variance）的，然后更多的数据才有助于提升模型性能。获取更多数据的方法通常有人工合成、手动搜集标柱等<a href="#ng_ml_ocr_2014">[3]</a>。</p>
+
+<p>针对OCR，可以将计算机字库中的标准字体叠加随机背景，然后进行形变，产生更多的样本集。一般而言，通过叠加高斯噪声增大样本集对提升性能帮助不大，除非需要解决的问题的就是高斯噪声下的OCR。</p>
+
+<h2 id="performance-evaluation">性能评估</h2>
+
+<p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_mlsd_2014">[4]</a>。</p>
+
+<p>如何和里评价机器学习算法，尤其是对于有偏的类别而言，单纯的正确率（Accuracy），
+\begin{equation}
+\mbox{Accuracy} = \frac{\mbox{true positives + true negatives}}{\mbox{total examples}}，
+\end{equation}
+难以合理评价分类器性能。</p>
+
+<p>比如癌症检测，癌症的概率大概只有0.5左右，对于分类器，采用作弊的方法，即使全部输出非癌症的结果，也可以获得99.5％的正确率。因此需要合理的评估方法，通常采用的是准确率（Precision）和召回率（Recall）。</p>
+
+<h3 id="precision--recall">Precision &amp; Recall</h3>
+
+<p><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-precisionrecall.svg" alt="准确率和召回率" width="300px" /></p>
+
+<p>准确率，表示正确分类的正样本占输出正样本的比率，</p>
+
+<p>\begin{equation}
+\mbox{Precision} = \frac{\mbox{true positives}}{\mbox{true positives + false positives}}。
+\end{equation}</p>
+
+<ul>
+  <li>true positives：正确分类的正样本数；</li>
+  <li>false positives：混入输出正样本的输入负样本数。</li>
+</ul>
+
+<p>召回率，表示正确分类的正样本占输入正样本的比率，</p>
+
+<p>\begin{equation}
+\mbox{Recall} = \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}。
+\end{equation}</p>
+
+<ul>
+  <li>false negatives：混入输出负样本的输入正样本数。</li>
+</ul>
+
+<p>根据应用的具体需求，可以在准确率和召回率之间折中。若采用Logistic回归分类器，调高分类的阈值，可以提升该类别分类的准确率和降低召回率。</p>
+
+<p>正样本的召回率也可称为Sensitivity，负样本的召回率称为Specificity，</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\mbox{Sensitivity} &amp;= \frac{\mbox{true positives}}{\mbox{true positives + false negatives}}\\
+\mbox{Specificity} &amp;= \frac{\mbox{true negatives}}{\mbox{true negatives + false positives}}，
+\end{aligned}
+\end{equation}</p>
+
+<p>那么有</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\mbox{False Negative Error Rate} &amp;= 1 -  \mbox{Sensitivity}\\
+\mbox{False Positive Error Rate} &amp;= 1 -  \mbox{Specificity}。
+\end{aligned}
+\end{equation}</p>
+
+<h3 id="ff1-score">$F$/$F_1$ Score</h3>
+
+<p>采用准确率和召回率可以合理评估分类器性能，但是两个数值不如单数值的评估直接明了。$F$/$F_1$ Score是基于准确率和召回率的单数值评估指标，</p>
+
+<p>\begin{equation}
+F = 2 \times \frac{\mbox{Precision}\times\mbox{Recall}}{\mbox{Precision} + \mbox{Recall}}，
+\end{equation}</p>
+
+<p>数值越高表示效果越好。</p>
+
+<h3 id="section-4">数据为王</h3>
+
+<p><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-polynomial-models-size-accuracy.png" alt="数据集大小对准确率的影响" width="300px" /></p>
+
+<p>通常而言，增加参数数目（比如：Logistic回归增加特征数目，神经网络增加隐藏层神经元）和训练样本数目，可以提升分类器的性能。增加参数数目可以获得Low Bias（$J_\mbox{train}(\theta)$小），增加样本数目可以获得Low Variance（$J_\mbox{test}(\theta)$小）。</p>
+
+<blockquote>
+  <p>“It’s not who has the best algorithm that wins. It’s who has the most data.”<a href="#ng_ml_mlsd_2014">[4, P. 16]</a></p>
+</blockquote>
+
+<p>在大规模数据上训练模型，取得良好效果的前提条件是：</p>
+
+<ol>
+  <li>模型具备足够多的参数，能够表示复杂的函数；</li>
+  <li>特征$\mathbf x$包含了预测$y$的足够信息（例如：该领域的专家可以仅仅通过$x$的有把握地预测$y$）。</li>
+</ol>
+
+<p>Guo-Xun Yuan等撰文指出<a href="#yuan_ralll_2012">[5]</a>，对于大规模数据的应用而言，线性分类器可能获得和非线性分类器接近的性能，并且训练和测试的速度要快得多。</p>
+
+<h2 id="section-5">提升关键步骤性能</h2>
+
+<p>针对一个机器学习应用的流水线，找出影响性能的瓶颈，对症下药，才能更有效的改善性能<a href="#ng_ml_ocr_2014">[3]</a>。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png" alt="学习字符分割间隔的神奇方法" /></a><div class="caption">图 4:  学习字符分割间隔的神奇方法 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-segmentation.png">PNG</a>]</div></div></div>
+
+<p>对OCR问题而言，通常分为文字检测、字符分割、字符识别几个步骤。提升OCR性能，需要先定量分析究竟哪个步骤对性能的影响最大，然后有针对性的解决。</p>
+
+<div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png" alt="Ceiling Analysis" /></a><div class="caption">图 5:  Ceiling Analysis [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-ceiling-analysis.png">PNG</a>]</div></div></div>
+
+<p>上图给出了通过Ceiling Analysis分析出关键问题的示例，系统的总体精度是$72\%$。如果手动标注（检测定位）待识别的文字区域（也就是让文字都正确定位），那么系统的精度会提升到$89\%$；如果继续将所有的字符都正确分割出，精度会提升到$90\%$。从而可得出，字符检测可以提升$17\%$的精度，字符识别可提升$10\%$的精度，首先从这两个地方改善性能，字符分割对性能的提升只有$1\%$，可先不考虑改进。</p>
+
+<div class="image_line" id="figure-6"><div class="image_card"><a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png"><img src="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png" alt="人脸识别" /></a><div class="caption">图 6:  人脸识别 [<a href="/assets/images/2014-11-25-machine-learning-advice-for-applying-machine-learning-face-recognition.png">PNG</a>]</div></div></div>
+
+<p>上图给出了对人脸识别的Ceiling Analysis，可以看出预处理的背景移除对提升性能影响不大，仅仅为$0.1\%$，这个步骤其实可以去掉。人脸检测才是影响性能的关键。</p>
+
+<h2 id="section-6">参考资料</h2>
+
+<ol class="bibliography"><li><span id="ng_ml_aaml_2014">[1]A. Ng, “Advice for applying machine learning.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li>
+<li><span id="domingos2012few">[2]P. Domingos, “A few useful things to know about machine learning,” <i>Communications of the ACM</i>, vol. 55, no. 10, pp. 78–87, 2012.</span>
+
+</li>
+<li><span id="ng_ml_ocr_2014">[3]A. Ng, “Application example: Photo OCR.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li>
+<li><span id="ng_ml_mlsd_2014">[4]A. Ng, “Machine Learning System Design.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ml">Online</a>]
+
+</li>
+<li><span id="yuan_ralll_2012">[5]G.-X. Yuan, C.-H. Ho, and C.-J. Lin, “Recent Advances of Large-Scale Linear Classification,” <i>Proceedings of the IEEE</i>, vol. 100, no. 9, pp. 2584–2603, 2012.</span>
+
+</li></ol>
+
+<h3 id="section-7">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:only-train-test">
+      <p>对于不需要做模型选择的情况，只需要训练集和测试集，样本的比例通常是70%和30%。 <a href="#fnref:only-train-test" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:Not-good-if-high-bias">
+      <p><a href="http://www.holehouse.org/mlclass/10_Advice_for_applying_machine_learning.html">Not good if you have high bias</a> <a href="#fnref:Not-good-if-high-bias" class="reversefootnote">&#8617;</a> <a href="#fnref:Not-good-if-high-bias:1" class="reversefootnote">&#8617;<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/11/machine-learning-resources" class="pageNav" style="float:left"   >上一篇：机器学习资源 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/11/introduction-to-support-vector-machines" class="pageNav" style="float:right"   >下一篇：支持向量机简介 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/11/advice-for-applying-machine-learning" 	data-url="http://qianjiye.de/2014/11/advice-for-applying-machine-learning" data-title="机器学习实战技能">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/11/machine-learning-resources'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/11/introduction-to-support-vector-machines'; --1> -->
+<!--         url = '/2014/11/introduction-to-support-vector-machines'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/11/advice-for-applying-machine-learning/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

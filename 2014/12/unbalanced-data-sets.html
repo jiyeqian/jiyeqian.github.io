@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>不均衡数据问题</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>不均衡数据问题</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-12-23">2014-12-23</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">问题描述</h2>
+
+<p>不均衡数据是指用于分类的正负样本数量差异很大。导致不均衡样本主要有两种情况：</p>
+
+<ol>
+  <li>数据本身的内在属性，比如：信用卡欺诈、异常检测、大众中癌症病人的筛查等；</li>
+  <li>获取的数据不够，比如：车牌识别中的汉字。</li>
+</ol>
+
+<p>不均衡数据相关的另一个问题是小样本问题。</p>
+
+<h2 id="section-1">处理内在不均衡</h2>
+
+<p>内在不均衡就是指数据本身特性决定了它的不均衡性。即使获取更多的数据，仍然改变不了数据的不均衡属性。</p>
+
+<h3 id="section-2">存在的问题</h3>
+
+<p>这类问题主要考虑数据对机器学习的算法本身的影响。样本总数都是$N$，不同比率的正负样本对学习算法有何影响？对学习速度、学习效果有何影响？</p>
+
+<h3 id="section-3">解决方案</h3>
+
+<ol>
+  <li>基本的方法是必须采用科学的<a href="/2014/11/advice-for-applying-machine-learning/#performance-evaluation">性能评价指标</a>，比如<a href="http://www.bigdataexaminer.com/dealing-with-unbalanced-classes-svm-random-forests-and-decision-trees-in-python/">采用$F_1$ Scorce</a>，避免大样本类淹没了小样本类。对小样本类别的分类性能也能进行有效的评估。</li>
+  <li><a href="/2014/12/anomaly-detection">异常检测</a>也是处理这类不均衡样本的方法，只对大样本类别进行建模，小样本类当作异常数据进行检测。</li>
+  <li>对不同类别赋予不同重要程度的权值<a href="#lin_ml_ne_2014">[1, P. 24]</a>，小样本赋予更大的权值<a href="#scikit-learn-2015-svm-unbalanced">[2]</a>。</li>
+</ol>
+
+<p>以下方法可行吗？</p>
+
+<ol>
+  <li>如果$1:1０$算是均匀的话，可以将多数类分割成为$1000$份。然后将每一份跟少数类的样本组合进行训练得到分类器。而后将这$1000$个分类器用assemble的方法组合位一个分类器。</li>
+  <li>设计objective function的时候给不同misclassification的情况不同的relative weights。也就是说给从小数量的样本被分成大数量的样本更大的penalty。</li>
+</ol>
+
+<h2 id="section-4">处理外在不均衡</h2>
+
+<p>外在不均衡就是指数据本身特性并不能表明它是不均衡的，是由于数据获取手段导致数据不均衡。只要获取的数据足够多，这种不均衡就能消除。</p>
+
+<h3 id="section-5">存在的问题</h3>
+
+<p>从机器学习的理论来说，如果样本数$N$不够，$E_{out}$和$E_{in}$差异很大，无法学习成功，导致Low Bias问题。</p>
+
+<h3 id="section-6">解决方案</h3>
+
+<p>克服外在的不均衡性，需要<a href="/2014/11/advice-for-applying-machine-learning/#get-more-data">获得更多的数据</a>：</p>
+
+<ol>
+  <li>人工合成（伪造）数据；</li>
+  <li>采集更多的数据。</li>
+</ol>
+
+<p>由于条件或成本限制，无法采集到足够的数据，在这样的情况下可以考虑人工合成。人工合成数据的前提是了解数据，拥有足够的先验知识。在OCR中，比如车牌识别时，采集到的数据可能不够，特别是有时汉字样本很少。此时，可以通过字库和随机背景融合的方法（<a href="/2014/11/advice-for-applying-machine-learning/#get-more-data">通过叠加高斯噪声增大样本集对提升性能帮助不大</a>），生成大量的数据。</p>
+
+<p>更多的时候，没有足够的先验知识预知数据特性，无法合理伪造，还得采集跟多的数据。机器学习本来就是探究数据特性的过程。</p>
+
+<h2 id="section-7">不是问题的问题</h2>
+
+<p>对于内在不均衡的数据，若数据远离分类边界（比如线性可分的数据集），<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">采用hard-margin的SVM</a>和感知器，不均衡数据不影响分类结果。</p>
+
+<p>在实际应用中，有时需要制造不均衡性，对不同类别数据采用不同权重，比如：<a href="/2015/01/adaptive-boosting">AdaBoost对错分的数据赋予更大的权重</a>，<a href="/2014/12/machine-learning-noise-and-error">虚拟复制处理加权误差</a>。</p>
+
+<p>通过重采样将数据变得均衡<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">不一定能提升分类性能</a>，比如不能提升logistic回归性能，但对随机森林有效（但随机森林不适合用于不均衡数据）。</p>
+
+<h2 id="section-8">其它建议</h2>
+
+<p><a href="http://www.weibo.com/n/机器学习那些事儿">@机器学习那些事儿</a>发起过关于<a href="http://www.weibo.com/p/1001603785752793219283?sudaref=ml.memect.com">不均匀正负样本分布下的机器学习</a>的讨论，部分建议摘录如下：</p>
+
+<ol>
+  <li>上采样、下采样、代价敏感，没什么好办法。</li>
+  <li>这个之前调研过，主要分重采样和欠采样！这种不平衡是因为比率的不平衡给一些学习方法带来问题。但是在某些领域，比如反欺诈和安全，不仅是比率极不平衡，而且是正样本样本绝对数很小。需要扩散正样本方法！</li>
+  <li>Synthetic Minority Over-sampling Technique 我试过这个方法，解决部分问题，主要还是需要增加样本在特征空间的覆盖！ 工程上光靠算法也解决不了问题，有的还是需要加入下经验知识来做。</li>
+  <li>用排序思想构造所谓的序对。</li>
+  <li>如果1：1０算是均匀的话，可以将多数类分割成为1000份。然后将每一份跟少数类的样本组合进行训练得到分类器。而后将这1000个分类器用assemble的方法组合位一个分类器。记得读到的论文可行，但没有验证过。</li>
+  <li>标准解决方法：设计objective function的时候给不同misclassification的情况不同的relative weights。也就是说给从小数量的样本被分成大数量的样本更大的penalty。</li>
+  <li>训练数据与预测数据分布不一致，有专门研究的课题，sample selection bias，主要方法是各种reweighting。</li>
+  <li>这个倒是可以参考positive only learning等半监督学习中如早期的spy算法等来构造合适的负例来解决正负例不平衡的问题。</li>
+  <li>这个看起来像 one-class recommendation 问题，不知是否可以考虑转化成 learning to rank 问题，如果不是为了拟合一个分布的话。</li>
+  <li>这在机器学习里面被称类别不平衡问题，可以参考Haibo, H. and E. A. Garcia (2009). “Learning from Imbalanced Data.” Knowledge and Data Engineering, IEEE Transactions on” 的survey.已有很多方法提出。</li>
+  <li>个人觉得在类别不平衡条件下，Transductive SVM (TSVM)应该对于的active learning 来标注，可能结果更好。</li>
+  <li>learning to rank对于训练数据量的要求较高，同时要确定用于learning to rank的pair，还是需要找到负例，从而将正例和负例形成偏序配对。所以learning to rank是一种方法，但个人认为这会将简单问题复杂化，且本质还是需要去找负例。</li>
+</ol>
+
+<h2 id="section-9">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_ne_2014">[1]H.-T. Lin, “Lecture 8: Noise and Error.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li>
+<li><span id="scikit-learn-2015-svm-unbalanced">[2]F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
+
+[<a href="http://scikit-learn.org/stable/modules/svm.html#unbalanced-problems">Online</a>]
+
+</li></ol>
+
+<h3 id="section-10">脚注</h3>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/12/machine-learning-the-vc-dimension" class="pageNav" style="float:left"   >上一篇：机器学习：VC维 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:right"   >下一篇：Map-Reduce Essential </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/12/unbalanced-data-sets" 	data-url="http://qianjiye.de/2014/12/unbalanced-data-sets" data-title="不均衡数据问题">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-the-vc-dimension'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/map-reduce-essential'; --1> -->
+<!--         url = '/2014/12/map-reduce-essential'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/unbalanced-data-sets/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

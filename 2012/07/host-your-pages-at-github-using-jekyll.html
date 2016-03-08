@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>基于Jekyll的GitHub建站指南</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>基于Jekyll的GitHub建站指南</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2012-07-01">2012-07-01</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>简介：本文主要介绍利用jekyll在github上搭建站点的方法与原理。</p>
+
+<p><span id="jekyll-and-github"></span></p>
+
+<h2 id="jekyllgithub">jekyll与github的关系</h2>
+
+<p>github站点是位于username.github.com仓库中的静态页面。利用高效的工具生成高质量的静态页面是github建站的王道。<a href="http://jekyllrb.com/">jekyll</a>就是用<a href="http://www.ruby-lang.org/">ruby</a><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">制造静态站点的的ruby解析引擎</a>（构建网站时ruby不是必会的）。github除了能构建独立的站点外，还可以为每个项目建立站点。github提供了<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">自动</a>和<a href="https://help.github.com/articles/creating-project-pages-manually">手动</a>建立项目站点的方法。</p>
+
+<p>github标配有jekyll解析引擎，上传的站点可以代由github的jekyll解析为静态页面。如果<a href="https://help.github.com/articles/files-that-start-with-an-underscore-are-missing">不需要github用jekyll处理上传的站点文件</a>，可以在根目录下添加一个.nojekyll文件。</p>
+
+<p><a href="https://help.github.com/articles/using-jekyll-with-pages">github使用jekyll的_config.yml</a>和用户本地jekyll的不同，它的功能有限，github运行jekyll带有<code>--safe</code>参数。如果用户本地的jekyll使用了自定义插件，github的解析会出错，启用了本地自定义插件的用户可以上传本地解析好的静态页面到github。</p>
+
+<p>由于本地和gihub的<a href="https://help.github.com/articles/using-jekyll-with-pages">jekyll版本</a>不同，即使本地正常解析的页面也可能会在github上解析出错。下面的表格在github上<code>Jekyll 0.11.0 with Liquid 2.2.2</code>会出错：</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">   功能  <span class="p">|</span>   快捷键  <span class="p">|</span>   快捷键  <span class="p">|</span>  功能
+-------: <span class="p">|</span> -------: <span class="p">|</span> :------- <span class="p">|</span> :-------
+上一节点  <span class="p">|</span>   <span class="sb">`</span>p<span class="sb">`</span>    <span class="p">|</span>    <span class="sb">`</span>n<span class="sb">`</span>   <span class="p">|</span> 下一节点  
+<span class="o">||</span>    <span class="sb">`</span>m<span class="sb">`</span>   <span class="p">|</span> 菜单 </code></pre></figure>
+
+<h2 id="jekyll">jekyll驱动网站原理</h2>
+
+<p><a href="http://chen.yanping.me/cn/blog/2011/12/15/building-static-sites-with-jekyll/">用jekyll构建静态网站</a>很容易。模板、数据和美化是jekyll建站的三要素。jekyll自动将数据注入模板，通过美化，得到站点。这里可以看到<a href="https://github.com/mojombo/jekyll/wiki/Sites">一堆用jekyll打造的站点</a>，大部分都可以<code>git clone</code>回来学习参考。<br />
+<!--more--></p>
+
+<h3 id="jekyll-1">jekyll的模板</h3>
+
+<p>jekyll模板就是带有变量的html格式文件。jekyll的模板用<a href="http://liquidmarkup.org/">Liquid</a>语言描述，定义了页面框架。Liquid通过（Output）和标签（Tag）两种标记（markup），即可描述页面的结构，具体可参阅<a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid for Designers</a>。jekyll对Liquid的标签进行了<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">扩展</a>。Liquid模板语言对模板数据描述（当然也需要html），生成了站点页面的骨架。Liquid所需要的jekyll的<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>在这儿可以找到。除此之外，<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>定义的变量也可以作为模板数据。</p>
+
+<h3 id="jekyll-2">jekyll的数据</h3>
+
+<p>jekyll的数据是用<a href="http://daringfireball.net/projects/markdown/">markdown</a>、<a href="http://textile.sitemonks.com/">textile</a>等标记语言写的文档。这些格式的文档解析为html格式后，注入jekyll模板的<code>&#123;&#123; content &#125;&#125;</code>，就有了网站的页面。jekyll支持的markdown解析器（将markdown转换为html）有：<span id="markdown"></span><a href="https://github.com/rtomayko/rdiscount/">rdiscount</a>、<a href="http://kramdown.rubyforge.org/">kramdown</a>、<a href="https://github.com/tanoku/redcarpet/">redcarpet</a>、<a href="http://maruku.rubyforge.org/">maruku</a>（jekyll默认）、<a href="http://deveiate.org/projects/BlueCloth/">bluecloth</a>。为了方便处理<script type="math/tex">\LaTeX</script>公式，也有人hack了jekyll，<a href="http://yangzetian.github.com/2012/04/15/jekyll-pandoc/">将pandoc作为markdown的解析器</a>。一个更方便的方法是通过<a href="https://github.com/dsanson/jekyll-pandoc-plugin">jekyll-pandoc-plugin</a>插件，启用pandoc解析器。这些hack后的jekyll启用pandoc当然不会在github上生效，只能用于本机解析后，上传静态页面。</p>
+
+<h3 id="jekyll-3">jekyll的美化</h3>
+
+<p>美化就是用CSS和javascript对html描述的页面进行渲染，美化网页。<a href="http://twitter.github.com/bootstrap/">twitter bootstrap</a>是一套极易上手的页面美化工具。twitter bootstrap还提供了<a href="http://960.gs/">960网格布局</a>，只要按照它约定的方式对页面结构定义、对html标签的<code>class</code>命名，网页的布局美化可谓快又好。</p>
+
+<h2 id="jekyll-bootstrap">在jekyll-bootstrap基础上搭建网站</h2>
+
+<p>jekyll是一套根据相应规程生成网站的工具。如果按照这套法则，从头开始仍然麻烦。<a href="http://jekyllbootstrap.com/">jekyll-bootstrap</a>就是一个jekyll构建站点的demo，并提供了一些<a href="http://jekyllbootstrap.com/api/bootstrap-api.html">额外的api增强jekyll的功能</a>，在此基础上构建站点相当快捷容易。除此之外，<a href="http://octopress.org/">octopress</a>也是基于jekyll上的不错的工具套件。</p>
+
+<h3 id="section">目录结构</h3>
+
+<p>jekyll-bootstrap的<a href="https://github.com/mojombo/jekyll/wiki/usage">目录结构</a>中，只需要将markdown文档放到_posts目录下，<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令），即可在http://localhost:4000看到页面内容，见<a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">快速入门示范</a>。_posts中的数据文档，通过注入_layouts定义的模板（_layouts的模板一般指向了_includes/themes中的模板），渲染页面的CSS和JS文档在assets/themes中，一些解析markdown用到的ruby插件放在_plugins目录。通过<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令）最终生成的静态页面在_sites目录。在更新github上站点的时候，<code>git push</code>可以不必推送_sites目录，将页面的解析留给github，这样做的前提条件是本地未启用自定义插件，_config.yml设置<code>safe = true</code>进行解析。如果本地启用了自定义插件，解析任务就不能交给github做了，上传本地解析好的静态页面到github即可。</p>
+
+<p>jekyll-bootstrap的_includes/JB中有一些常用的工具，用于列表显示、评论等，可参看_includes/themes中主题的相关html文档学习。</p>
+
+<p>_includes/themes中的主题一般包含default.html、post.html和page.html三个文档。default.html定义了网站的最上层框架（模板），post.html和page.html是其子框架（模板）。<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#posts_and_pages">post和page有别</a>；<code>rake page</code>命令生成的页面按page.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: page</code>；<code>rake post</code>命令生成的页面按post.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: post</code>。生成好的html子页面通过default.html的<code>&#123;&#123; content &#125;&#125;</code>变量调用，生成整个页面。</p>
+
+<h3 id="section-1">自定义</h3>
+
+<p>站点生成需要用到_config.yml<a href="https://github.com/mojombo/jekyll/wiki/configuration">配置文件</a>，<code>markdown</code>变量定义了解析markdown用的<a href="#markdown">解析器</a>。当然也可自定义变量，比如在<code>JB:</code>下定义一个二级变量<code>RSS_path: /atom.xml</code>（注意缩进）。在html页面中，就可以用<code>&#123;&#123; site.JB.RSS_path &#125;&#125;</code>得其值。<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中也可以自定义变量，其中的<code>title</code>变量可以用<code>&#123;&#123; page.title &#125;&#125;</code>访问到。也就是说，站点的全局变量在_config.yml中定义，用<code>site.</code>访问，页面的变量在<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中定义，用<code>page.</code>访问，更多的模板变量可参考<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>。</p>
+
+<p>_includes/JB中的插件可以在_includes/custom中重新自定义，方法可仿照_includes/JB中的。如果要_includes/custom中的插件生效，需要在_config.yml中将相应的变量设为<code>custom</code>，设置线索可见_includes/JB中的插件。</p>
+
+<h3 id="section-2">小结</h3>
+
+<p><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#how_jekyll_generates_the_final_static_files">jekyll生成静态页面的过程</a>就是先搜集站点的原始数据，通过计算，生成用于页面显示的结构化数据（最终的html静态页面）。结构化数据来源有两方面：一方面是文件中的配置文件，如_config.yml和markdown的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>；另一方面通过目录结构和jekyll定义的解析法则，产生数据。站点的全局数据用<code>site.</code>访问，页面数据用<code>page.</code>访问。有了这些结构化的数据后，jekyll再按照用户定义的模板，用相应的结构化数据替换模板中的变量。用户编写的插件是为了计算出满足用户特定需求的数据，但是这些自定义插件不能不github的jekyll解析支持。</p>
+
+<h2 id="jekyll-4">jekyll的装饰部件</h2>
+
+<p>这些装饰部件中，如果本地的jekyll使用了自定义的插件，github的jeklly解析器不会支持这些自定义插件。</p>
+
+<h3 id="section-3">图片与文件</h3>
+
+<p>站点需要的图片直接存放在<code>assets/images</code>文件夹中，可以在_config.yml中定义一个形如<code>img_url: http://jiyeqian.github.com/assets/images</code>的变量，然后在markdown文件需要用到图片的地方插入类似<code>![git代码库结构](&#123;&#123; site.img_url &#125;&#125;/2012-06-27-git-transport.png)</code>的代码即可显示图像。</p>
+
+<p>如果图和文件较多，这里有一些<a href="/2011/09/web-cloud-life/">图片和文件托管的网络资源</a>供参考。</p>
+
+<h3 id="section-4">代码高亮</h3>
+
+<p>网页代码高亮的一般原理是先用JS或其它脚本语言对代码的进行解析，并提根据不同程的序语言提取关键字、变量、常量、注释，然后将代码层次结构用html标签描述，最后用CSS着色。</p>
+
+<p>代码高亮的方案有很多，比如：<a href="https://gist.github.com/1027674">转帖gist代码的插件</a>，<a href="http://google-code-prettify.googlecode.com/svn/trunk/README.html">google-code-prettify</a>，<a href="https://github.com/rsim/blog.rayapps.com/blob/master/_plugins/pygments_cache_patch.rb">利用pygments高亮代码的插件</a>，octopress的<a href="http://octopress.org/docs/plugins/backtick-codeblock/">backtick-codeblock</a>，如果需要在线展示html、js、CSS及其效果，当然还是用<a href="http://octopress.org/docs/plugins/jsfiddle-tag/">jsfiddle插件</a>。</p>
+
+<p>pygments和rouge是github可支持的代码高亮方案(不支持coderay高亮)。利用pygments，须先在_config.yml中设置<code>pygments: true</code>，并嵌入生成的相应CSS到页面的<code>&lt;head&gt;&lt;/head&gt;</code>之中。</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pygmentize -S default -f html <span class="p">|</span> sed <span class="s1">&#39;s/^/.highlight code /g&#39;</span> &gt; default.css</code></pre></figure>
+
+<p>在pygments的CSS选择器前都加上<code>.highlight code</code>，防止pygments的CSS影响<a href="#mathjax">mathjax</a>公式的CSS。<a href="http://www.stehem.net/2012/02/14/how-to-get-pygments-to-work-with-jekyll.html">pygments也可能会和bootstrap.min.css冲突</a>，需要修改css。上面的<code>pygmentize</code>命令就是pygments代码高亮的效果。代码高亮的highlight标签使用方法<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">可以参考这里</a>。</p>
+
+<p>另一个比较特殊的代码高亮插件是<a href="http://octopress.org/docs/plugins/include-code/">include-code</a>，可以直接显示目录中的代码文件，在_config.yml中设置好<code>code_dir</code>参数后，直接用<code>&#123;% include_code excerpt.rb %&#125;</code>，即可显示高亮代码（布局可自己定义，代码高亮的CSS可以用pygments的）。<a href="https://gist.github.com/2890453#working-with-code-partials">pygments也支持类似的方法</a>，但效果不太好。</p>
+
+<p><span id="mathjax"></span></p>
+
+<h3 id="latex"><script type="math/tex">\LaTeX</script>公式</h3>
+
+<p>github可支持的<script type="math/tex">\LaTeX</script>方案需要绕过自定义插件，利用类似<a href="http://www.mathjax.org/">mathjax</a>的javascript方案或采用支持<script type="math/tex">\LaTeX</script>的markdown解析器（比如<a href="http://maruku.rubyforge.org/">maruku</a>）。</p>
+
+<p><a href="http://www.mathjax.org/">mathjax</a>通过javascript的方式生成<script type="math/tex">\LaTeX</script>公式可以参考<a href="http://chen.yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用<script type="math/tex">\LaTeX</script></a>，不过，不必把markdown解析引擎设置为kramdown。当markdown解析引擎为kramdown时，只需要在页面中插入下面这段代码：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+
+<p>下面这段代码：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">$$ 
+e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
+$$</code></pre></figure>
+
+<p>显示的效果：
+<script type="math/tex">e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n</script>
+显示行内公式<script type="math/tex">\alpha + \beta</script>的代码如下：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">$$\alpha + \beta$$</code></pre></figure>
+
+<p>但是kramdown的解析引擎和转帖gist代码的插件、直接高亮文件中代码的插件include-code有冲突。</p>
+
+<p>利用<a href="https://gist.github.com/834610">mathjax插件</a>定义的新标签，也可插入<script type="math/tex">\LaTeX</script>公式。这段代码<code>&#123;% math %&#125; e&#94;x = \sum\_{n=0}&#94;\infty \frac{x&#94;n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)&#94;n &#123;% endmath %&#125;</code>也可显示和上面一样的公式，利用标签<code>&#123;% m %&#125; \alpha + \beta &#123;% em %&#125;</code>可显示行内公式<script type="math/tex">\alpha + \beta</script>。mathjax还<a href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers">支持公式编号</a>，引用公式\eqref{eq:sample}很方便。</p>
+
+<p>\begin{equation}
+  \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
+  \label{eq:sample}
+\end{equation}</p>
+
+<p>另外一些支持<script type="math/tex">\LaTeX</script>公式的方案可参考：Kramdown的<a href="http://kramdown.rubyforge.org/syntax.html#math-blocks">Math Blocks</a>、<a href="http://maruku.rubyforge.org/math.xhtml">Maruku的公式支持</a>。 其他和学术写作相关的插件有：<a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>、<a href="https://github.com/archome/jekyll-citation">jekyll-citation</a>、<a href="https://github.com/pablooliveira/bibjekyll">bibjekyll</a>。</p>
+
+<h3 id="section-5">其它</h3>
+
+<p>显示相关文件的插件用<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin">related_posts-jekyll_plugin</a>、<a href="https://github.com/sebcioz/jekyll-only_first_p">只显示第一段</a>的插件，可解析类似wordpress的<code>&lt;!--more--&gt;</code>标记的<a href="https://gist.github.com/986665">excerpt插件</a>，美化引用格式的<a href="http://octopress.org/docs/plugins/blockquote/">blockquote插件</a>。<a href="http://octopress.org/docs/plugins/">octopress的插件</a>可以直接用于jekyll中。</p>
+
+<h3 id="section-6">小结</h3>
+
+<p>要将jekyll的页面托管在github时，推荐尽量不用github之外的插件。代码高亮用pygments，markdown的解析器用kramdown更利于对公式的解析，如果还要其它一些美化，就直接插html代码吧！</p>
+
+<h2 id="jekyll-5">常用的Jekyll变量</h2>
+
+<h2 id="section-7">一些技巧</h2>
+
+<h3 id="gist">直接插入gist代码</h3>
+
+<p>因为markdown的语法可以兼容html，在情非得已的情况下，直接查html代码。如果转帖gist的代码，直接在markdown文件中插入：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+
+<p>即可得：
+<script src="https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb"></script></p>
+
+<h3 id="section-8">页内跳转</h3>
+
+<p>为了方便页内快速跳转，可建立空内容的锚点。比如
+~~~html
+<span id="jekyll-and-github"></span>
+##jekyll与github的关系
+~~~
+既可用</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></figure>
+
+<p>实现页内跳转，试试，<a href="#jekyll-and-github">回去看看</a>。如果用的是kramdown解释器，上例中空锚点行下须有一空行。</p>
+
+<h3 id="section-9">表格不断行</h3>
+
+<p>表格某一栏不断行的处理：</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;white-space:nowrap&quot;</span><span class="nt">&gt;</span>git clone username@host:/path/to/repository<span class="nt">&lt;/span&gt;</span></code></pre></figure>
+
+<!---
+点击[到这里看效果]()。
+--->
+
+<h3 id="section-10">引用本站其它网页</h3>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">{% post_url your_markdown_file_name %}</code></pre></figure>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2011/10/foreign-poems" class="pageNav" style="float:left"   >上一篇：外国诗歌赏析 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/10/multiple-classes" class="pageNav" style="float:right"   >下一篇：多分类问题 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2012/07/host-your-pages-at-github-using-jekyll" 	data-url="http://qianjiye.de/2012/07/host-your-pages-at-github-using-jekyll" data-title="基于Jekyll的GitHub建站指南">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2011/10/foreign-poems'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/10/multiple-classes'; --1> -->
+<!--         url = '/2014/10/multiple-classes'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2012/07/host-your-pages-at-github-using-jekyll/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：噪声与误差</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：噪声与误差</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-12-27">2014-12-27</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>如果数据存在噪声，对机器学习可学习理论推导有何影响？</p>
+
+<h2 id="section">噪声起源</h2>
+
+<p>对于$f:\mathcal X\rightarrow \mathcal Y$，噪声即可能来源于$\mathcal X$，也可能来源于$\mathcal Y$。以信用卡申办信息为例说明（$\mathcal X$为客户资料，$\mathcal Y$为是否办理信用卡）：</p>
+
+<ul>
+  <li>$y$的噪声：良好纪录的用户，被标记为Bad；</li>
+  <li>$y$的噪声：同样资料的用户，标记却不同（不同专家评价有差异）；</li>
+  <li>$\mathbf x$的噪声：不准确的客户资料。</li>
+</ul>
+
+<h2 id="target-distribution">目标分布<sup id="fnref:target-distribution"><a href="#fn:target-distribution" class="footnote">1</a></sup></h2>
+
+<p>由于噪声的存在，弹珠模型的弹珠不再是确定的颜色，而是会随时变色，但是通过记录抽出瞬间弹珠的颜色，仍可以对罐中弹珠颜色概率做估计。$y=f(\mathbf x) + \mbox{noise}$，$y$用<strong>目标分布</strong>表示
+\begin{equation}
+y\sim P(y|\mathbf x)。
+\end{equation}
+对于满足$(\mathbf x,y)\sim P(\mathbf x,y)$的噪声数据，VC界仍成立，通过$E_{in}$仍然可以估计$E_{out}$。
+如果$P(\circ|\mathbf x)=0.7$，$P(\times|\mathbf x)=0.3$，<strong>理想最小目标函数</strong>（ideal mini-target）为$f(\mathbf x)=\circ$，在最佳选择下噪声水平是$0.3$。对于确定的（无噪声）的目标函数$f$，也可用目标分布（target distribution）表示
+\[
+P(y|\mathbf x)=
+\left\{
+\begin{aligned}
+1&amp;\quad\mbox{for }y=f(\mathbf x)\\
+0&amp;\quad\mbox{for }y\neq f(\mathbf x)。
+\end{aligned}
+\right.
+\]</p>
+
+<p>机器学习的目标就是预测常见数据（w.r.t. $P(\mathbf x)$）的理想最小目标函数（w.r.t. $P(y|\mathbf x)$）。</p>
+
+<p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
+
+<h2 id="error-measurement">误差度量</h2>
+
+<p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
+
+<p>令$\tilde y=g(\mathbf x)，y=f(\mathbf x)$，0/1误差和<strong>平方误差</strong>分别定义为\[err(\tilde y,y)=[[\tilde y\neq y]]\qquad err(\tilde y,y)=(\tilde y- y)^2。\]</p>
+
+<p>误差是如何影响学习算法的呢？</p>
+
+<p>下面示例展示了不同度量方式下误差的差异：</p>
+
+<p><img src="/assets/images/2014-12-27-machine-learning-noise-and-error-ideal-mini-target-example.png" alt="误差度量的影响" /></p>
+
+<p>$P(y|\mathbf x)$和$err$确定了理想最小目标函数$f(\mathbf x)$。在0/1误差和平方误差度量方式下，理想最小目标函数分别为
+\[
+f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\in\mathcal Y}yP(y|\mathbf x)。
+\]
+若采用平方误差度度量方式，上例中$f(\mathbf x)=1.9$。</p>
+
+<p>根据具体应用场景，选择相应的错误（误差）衡量方法，对机器学习至关重要。</p>
+
+<p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
+
+<h2 id="section-1">误差度量范例</h2>
+
+<p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
+
+<ol>
+  <li>false reject：合法用户识别为非法；</li>
+  <li>false accept：非法用户识别为合法。</li>
+</ol>
+
+<p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
+
+<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
+<p>\[
+E_{in}^w(h)={1\over N}\sum_{n=1}^N
+\left\{
+\begin{aligned}
+&amp;1 &amp;\quad\mbox{if }y_n=+1\\
+&amp;1000 &amp;\quad\mbox{if }y_n=-1
+\end{aligned}
+\right\}
+\cdot \left[\left[y_n\neq h(\mathbf x_n)\right]\right]。
+\]
+对于线性可分数据的PLA，这种定义并无影响。对于pocket算法，假设将$-1$样本复制$1000$倍，在新的数据上仍用$E_{in}^{0/1}$度量误差，就和在原数据上用$E_{in}^{w}$度量一致。</p>
+
+<p>实际使用中，不会真的复制数据，采取虚拟复制（virtual copying）的策略。</p>
+
+<blockquote>
+  <h4 id="pocket">加权pocket算法</h4>
+  <hr />
+
+  <ol>
+    <li>以$1000$倍的概率检查$-1$样本犯的错误；</li>
+    <li>当$\mathbf w_{t+1}$犯的错误$E_{in}^w$比$\hat{\mathbf w}$小时，用$\hat{\mathbf w}$更新$\mathbf w_{t+1}$。</li>
+  </ol>
+</blockquote>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-3">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:target-distribution">
+      <p>不太明白这节的意思…… <a href="#fnref:target-distribution" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:left"   >上一篇：Map-Reduce Essential </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/01/linear-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（1）：线性支持向量机 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-noise-and-error" 	data-url="http://qianjiye.de/2014/12/machine-learning-noise-and-error" data-title="机器学习：噪声与误差">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/map-reduce-essential'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-svm'; --1> -->
+<!--         url = '/2015/01/linear-svm'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-noise-and-error/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

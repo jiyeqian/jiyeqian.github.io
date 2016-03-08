@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>高性能Python程序</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>高性能Python程序</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-05-10">2015-05-10</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#高性能计算" title="高性能计算">高性能计算</a>&nbsp;
+  
+  <a href="/tags/#Python" title="Python">Python</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 class="no_toc" id="section">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">程序性能剖析</a>    <ul>
+      <li><a href="#time" id="markdown-toc-time">利用time工具计时</a></li>
+      <li><a href="#time-1" id="markdown-toc-time-1">利用time包直接计时</a></li>
+      <li><a href="#section-2" id="markdown-toc-section-2">利用上下文管理器计时</a></li>
+      <li><a href="#profiler" id="markdown-toc-profiler">利用profiler按行计时</a></li>
+      <li><a href="#cprofile" id="markdown-toc-cprofile">利用cProfile分析程序性能</a></li>
+      <li><a href="#profile" id="markdown-toc-profile">利用profile包分析程序性能</a></li>
+      <li><a href="#memoryprofiler" id="markdown-toc-memoryprofiler">利用memory_profiler分析内存占用</a></li>
+      <li><a href="#ipython" id="markdown-toc-ipython">IPython中性能测试</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">内存泄漏检测</a></li>
+    </ul>
+  </li>
+  <li><a href="#python" id="markdown-toc-python">基于Python特性的优化</a>    <ul>
+      <li><a href="#section-5" id="markdown-toc-section-5">选择合适的数据结构</a>        <ul>
+          <li><a href="#dictionarylist" id="markdown-toc-dictionarylist">一、用字典（dictionary）代替列表（list）</a></li>
+          <li><a href="#setlist" id="markdown-toc-setlist">二、用集合（set）代替列表（list）</a></li>
+        </ul>
+      </li>
+      <li><a href="#loop-optimization" id="markdown-toc-loop-optimization">优化循环</a></li>
+      <li><a href="#lazy-if-evaluation" id="markdown-toc-lazy-if-evaluation">利用Lazy if-evaluation特性</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">字符串优化</a>        <ul>
+          <li><a href="#join" id="markdown-toc-join">一、使用<code>join()</code>代替<code>+</code></a></li>
+          <li><a href="#section-7" id="markdown-toc-section-7">二、优先使用内置函数</a></li>
+          <li><a href="#section-8" id="markdown-toc-section-8">三、优先使用格式化操作</a></li>
+        </ul>
+      </li>
+      <li><a href="#list-comprehensiongenerator-expression" id="markdown-toc-list-comprehensiongenerator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</a></li>
+      <li><a href="#section-9" id="markdown-toc-section-9">其它优化技巧</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-10" id="markdown-toc-section-10">闭包优化</a></li>
+  <li><a href="#section-11" id="markdown-toc-section-11">工具优化</a>    <ul>
+      <li><a href="#delpsycodel" id="markdown-toc-delpsycodel"><del>Psyco</del></a></li>
+      <li><a href="#pypy" id="markdown-toc-pypy">PyPy</a></li>
+      <li><a href="#numba" id="markdown-toc-numba">Numba</a></li>
+      <li><a href="#cython" id="markdown-toc-cython">Cython</a></li>
+      <li><a href="#pyparallel" id="markdown-toc-pyparallel">PyParallel</a></li>
+      <li><a href="#pyston" id="markdown-toc-pyston">Pyston</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-12" id="markdown-toc-section-12">参考资料</a></li>
+</ul>
+
+<h2 id="section-1">程序性能剖析</h2>
+
+<p>程序性能剖析的目的在于解决如下基本问题：</p>
+
+<ol>
+  <li>程序运行有多快？</li>
+  <li>影响速度的瓶颈在哪里？</li>
+  <li>使用了多少内存？</li>
+  <li>存在内存泄漏么？</li>
+</ol>
+
+<p>Python本身就内置了丰富的性能分析工具。Profiler是Python自带的一组程序，能够描述程序运行时候的性能，并提供各种统计帮助用户定位程序的性能瓶颈。Python标准模块提供三种profilers：cProfile、profile以及hotshot。</p>
+
+<h3 id="time">利用time工具计时</h3>
+
+<p>利用Linux／Unix的time工具，快速估计代码运行时间：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span><span class="nb">time </span>python yourprogram.py
+
+real    0m1.028s
+user    0m0.001s
+sys     0m0.003s</code></pre></div>
+
+<p>其中，<a href="http://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1">每项表示的含义</a>如下：</p>
+
+<ul>
+  <li>real：实际运行时间；</li>
+  <li>user：内核之外的CPU运行时间；</li>
+  <li>sys：内核特定函数的CPU运行时间。</li>
+</ul>
+
+<p>通过将sys和user时间加起来，可以估计程序的CPU运行时间。如果该时间远小于real时间，很可能是IO等待影响了程序性能。</p>
+
+<h3 id="time-1">利用time包直接计时</h3>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+<span class="c">#### some code  </span>
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<h3 id="section-2">利用上下文管理器计时</h3>
+
+<p>计时程序timer.py为：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">Timer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secs</span> <span class="o">*</span> <span class="mi">1000</span>  <span class="c"># millisecs</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;elapsed time: </span><span class="si">%f</span><span class="s"> ms&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span></code></pre></div>
+
+<p>为了使用该程序，需要用<code>with</code>包裹被计时的代码：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">timer</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span>
+<span class="n">rdb</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
+    <span class="n">rdb</span><span class="o">.</span><span class="n">lpush</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;=&gt; elasped lpush: </span><span class="si">%s</span><span class="s"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span>
+
+<span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
+    <span class="n">rdb</span><span class="o">.</span><span class="n">lpop</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;=&gt; elasped lpop: </span><span class="si">%s</span><span class="s"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span></code></pre></div>
+
+<h3 id="profiler">利用profiler按行计时</h3>
+
+<p><a href="http://packages.python.org/line_profiler/">line_profiler</a>可以估计每行运行的时间和频率。使用前需要安装：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install line_profiler</code></pre></div>
+
+<p>安装之后可以使用模块line_profiler以及可执行脚本kernprof.py。</p>
+
+<p>为了使用该计时工具，首先修改源代码，为需要计时的代码增加修饰器<code>@profile</code>。启用该修饰器不需要导入任何东西。kernprof.py脚本会自动在运行时插入相应代码。需要primes.py计时的代码如下：</p>
+
+<div class="highlight"><pre id="primes-python-code"><code class="language-python"><span class="nd">@profile</span>
+<span class="k">def</span> <span class="nf">primes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> 
+    <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">s</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">mroot</span> <span class="o">=</span> <span class="n">n</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">half</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">i</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">m</span><span class="o">=</span><span class="mi">3</span>
+    <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;=</span> <span class="n">mroot</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">j</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">while</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">half</span><span class="p">:</span>
+                <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">j</span><span class="o">+=</span><span class="n">m</span>
+        <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span> <span class="k">if</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">primes</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></code></pre></div>
+
+<p>然后测试程序运行时间：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>kernprof -l -v primes.py</code></pre></div>
+
+<blockquote>
+  <h4 class="no_toc" id="section-3">注意：目前该包按修饰器的方式不可用</h4>
+  <hr />
+  <div class="highlight"><pre><code class="language-bash">Wrote profile results to primes.py.lprof
+Timer unit: 1e-06 s
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/usr/local/bin/kernprof&quot;</span>, line 9, in &lt;module&gt;
+    load_entry_point<span class="o">(</span><span class="s1">&#39;line-profiler==1.0&#39;</span>, <span class="s1">&#39;console_scripts&#39;</span>, <span class="s1">&#39;kernprof&#39;</span><span class="o">)()</span>
+  File <span class="s2">&quot;/usr/local/lib/python2.7/site-packages/kernprof.py&quot;</span>, line 221, in main
+    execfile<span class="o">(</span>script_file, ns, ns<span class="o">)</span>
+  File <span class="s2">&quot;primes.py&quot;</span>, line 2, in &lt;module&gt;
+    @profile
+NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code></pre></div>
+</blockquote>
+
+<h3 id="cprofile">利用cProfile分析程序性能</h3>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python -m cProfile  primes.py</code></pre></div>
+
+<h3 id="profile">利用profile包分析程序性能</h3>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">profile</span> 
+
+<span class="k">def</span> <span class="nf">profileTest</span><span class="p">():</span> 
+    <span class="n">Total</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> 
+        <span class="n">Total</span><span class="o">=</span><span class="n">Total</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="k">print</span> <span class="n">Total</span> 
+    <span class="k">return</span> <span class="n">Total</span> 
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span> 
+    <span class="n">profile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;profileTest()&quot;</span><span class="p">)</span></code></pre></div>
+
+<p>上述代码的输出为：</p>
+
+<div class="highlight"><pre><code class="language-bash">1
+2
+6
+24
+120
+720
+5040
+40320
+362880
+3628800
+         <span class="m">5</span> <span class="k">function</span> calls in 0.001 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno<span class="o">(</span><span class="k">function</span><span class="o">)</span>
+        <span class="m">1</span>    0.000    0.000    0.000    0.000 :0<span class="o">(</span>range<span class="o">)</span>
+        <span class="m">1</span>    0.001    0.001    0.001    0.001 :0<span class="o">(</span>setprofile<span class="o">)</span>
+        <span class="m">1</span>    0.000    0.000    0.000    0.000 &lt;string&gt;:1<span class="o">(</span>&lt;module&gt;<span class="o">)</span>
+        <span class="m">1</span>    0.000    0.000    0.001    0.001 profile:0<span class="o">(</span>profileTest<span class="o">())</span>
+        <span class="m">0</span>    0.000             0.000          profile:0<span class="o">(</span>profiler<span class="o">)</span>
+        <span class="m">1</span>    0.000    0.000    0.000    0.000 test.py:3<span class="o">(</span>profileTest<span class="o">)</span>
+
+
+<span class="o">[</span>Finished in 0.1s<span class="o">]</span></code></pre></div>
+
+<p>其中输出每列的具体解释如下：</p>
+
+<ul>
+  <li>ncalls：表示函数调用的次数；</li>
+  <li>tottime：表示指定函数的总的运行时间，除掉函数中调用子函数的运行时间；</li>
+  <li>percall：（第一个 percall）等于 tottime/ncalls</li>
+  <li>cumtime：表示该函数及其所有子函数的调用运行的时间，即函数开始调用到返回的时间；</li>
+  <li>percall：（第二个 percall）即函数运行一次的平均时间，等于 cumtime/ncalls；</li>
+  <li>filename：lineno(function)：每个函数调用的具体信息。</li>
+</ul>
+
+<p>如果需要将输出以日志的形式保存，只需要在调用的时候加入另外一个参数。如<code>profile.run("profileTest()", "testprof")</code>。</p>
+
+<p>对于profile的剖析数据，如果以二进制文件的时候保存结果的时候，可以通过pstats模块进行文本报表分析，它支持多种形式的报表输出，是文本界面下一个较为实用的工具，使用非常简单：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">pstats</span> 
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&#39;testprof&#39;</span><span class="p">)</span> 
+<span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span></code></pre></div>
+
+<p>其中<code>sort_stats()</code>方法能够对剖分数据进行排序，可以接受多个排序字段，如<code>sort_stats('name', 'file')</code> 将首先按照函数名称进行排序，然后再按照文件名进行排序。常见的排序字段包括：<code>calls</code>（被调用的次数 ）、<code>time</code>（函数内部运行时间）、<code>cumulative</code>（运行的总时间）等。此外 pstats也提供了命令行交互工具，执行<code>python -m pstats</code>后可以通过<code>help</code>了解更多使用方式。</p>
+
+<p>对于大型应用程序，如果能够将性能分析的结果以图形的方式呈现，将会非常实用和直观，常见的可视化工具有Gprof2Dot、visualpytune、KCacheGrind 等。</p>
+
+<h3 id="memoryprofiler">利用memory_profiler分析内存占用</h3>
+
+<p>利用<a href="https://github.com/fabianp/memory_profiler">memory profiler</a>，可以测试程序占用的内存，首先安装相关的包：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install -U memory_profiler
+<span class="nv">$ </span>sudo pip install psutil</code></pre></div>
+
+<p>安装psutil可以极大提高memory_profiler的性能。</p>
+
+<p>与line_profiler类似，代码需要加入修饰器<code>@profile</code>：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="nd">@profile</span>
+<span class="k">def</span> <span class="nf">primes</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> 
+    <span class="o">...</span>
+    <span class="o">...</span></code></pre></div>
+
+<p>然后查看程序内存占用情况：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python -m memory_profiler primes.py</code></pre></div>
+
+<h3 id="ipython">IPython中性能测试</h3>
+
+<p>line_profiler和memory_profiler都有从IPython访问的快捷命令，仅需要在IPython的会话中设置：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="o">%</span><span class="n">load_ext</span> <span class="n">memory_profiler</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">line_profiler</span></code></pre></div>
+
+<p>然后就可以这样就使用命令<code>%lprun</code>和<code>%mprun</code>：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">primes</span> <span class="kn">import</span> <span class="n">primes</span>
+<span class="o">%</span><span class="n">mprun</span> <span class="o">-</span><span class="n">f</span> <span class="n">primes</span> <span class="n">primes</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="o">%</span><span class="n">lprun</span> <span class="o">-</span><span class="n">f</span> <span class="n">primes</span> <span class="n">primes</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span></code></pre></div>
+
+<p>在IPython中这样使用，不再需要<code>@profile</code>修饰器。</p>
+
+<h3 id="section-4">内存泄漏检测</h3>
+
+<p>cPython通过引用计数纪录内存使用状态，当计数为0时释放内存。当对象不再被使用时，仍然有到该对象的引用，就认为发生了内存泄漏。快速发现内存泄漏的方法是利用<a href="http://mg.pov.lt/objgraph/">objgraph包</a>，可以查看内存中对象的数目，以及到这些对象的引用。</p>
+
+<p>首先，安装objgraph包：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install objgraph</code></pre></div>
+
+<p>然后，在代码中插入调用调试器的语句：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span></code></pre></div>
+
+<p>具体用法可参考“<a href="http://www.huyng.com/posts/python-performance-analysis/#wheres-the-memory-leak">Where’s the memory leak?</a>”。</p>
+
+<h2 id="python">基于Python特性的优化</h2>
+
+<h3 id="section-5">选择合适的数据结构</h3>
+
+<h4 id="dictionarylist">一、用字典（dictionary）代替列表（list）</h4>
+
+<p>Python字典中使用了hash table，因此查找操作的复杂度为O(1)，而list实际是个数组，在list中，查找需要遍历整个list，其复杂度为O(n)，因此对成员的查找访问等操作字典要比list更快。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;python&#39;</span><span class="p">,</span><span class="s">&#39;jason&#39;</span><span class="p">,</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;hill&#39;</span><span class="p">,</span><span class="s">&#39;with&#39;</span><span class="p">,</span><span class="s">&#39;phone&#39;</span><span class="p">,</span><span class="s">&#39;test&#39;</span><span class="p">,</span> 
+<span class="s">&#39;dfdf&#39;</span><span class="p">,</span><span class="s">&#39;apple&#39;</span><span class="p">,</span><span class="s">&#39;pddf&#39;</span><span class="p">,</span><span class="s">&#39;ind&#39;</span><span class="p">,</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="s">&#39;baecr&#39;</span><span class="p">,</span><span class="s">&#39;var&#39;</span><span class="p">,</span><span class="s">&#39;bana&#39;</span><span class="p">,</span><span class="s">&#39;dd&#39;</span><span class="p">,</span><span class="s">&#39;wrd&#39;</span><span class="p">]</span> 
+<span class="c">#####list = dict.fromkeys(list,True) </span>
+<span class="k">print</span> <span class="nb">list</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="p">[]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="k">for</span> <span class="n">find</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;hat&#39;</span><span class="p">,</span><span class="s">&#39;new&#39;</span><span class="p">,</span><span class="s">&#39;list&#39;</span><span class="p">,</span><span class="s">&#39;old&#39;</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">]:</span> 
+        <span class="k">if</span> <span class="n">find</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
+            <span class="nb">filter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">find</span><span class="p">)</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述代码运行大概需要3.17秒。如果去掉行<code>list = dict.fromkeys(list,True)</code>的注释，将 list转换为字典之后再运行，时间大约为1.74秒。在需要频繁查找或访问多数据成员时，使用dict而不是list。</p>
+
+<h4 id="setlist">二、用集合（set）代替列表（list）</h4>
+
+<p>set的union，intersection、difference操作要比list的迭代要快。因此如果涉及到求list交集，并集或者差的问题可以转换为set来操作。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">lista</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">53</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span> 
+<span class="n">listb</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">23</span><span class="p">]</span> 
+<span class="n">intersection</span><span class="o">=</span><span class="p">[]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">lista</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">listb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+                <span class="n">intersection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述程序的运行时间大概为8.32秒，改为如下set操作：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">lista</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">53</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">44</span><span class="p">]</span> 
+<span class="n">listb</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">23</span><span class="p">]</span> 
+<span class="n">intersection</span><span class="o">=</span><span class="p">[]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lista</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">listb</span><span class="p">))</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>运行时间缩减为1.75秒。</p>
+
+<h3 id="loop-optimization">优化循环</h3>
+
+<p>优化循环遵循的原则是尽量减少循环过程中的计算量，有多重循环的尽量将内层的计算提到上一层。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">lista</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> 
+<span class="n">listb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.01</span><span class="p">]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>      
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lista</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">listb</span><span class="p">)):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">lista</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+</span> <span class="n">listb</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上面的代码大概的运行时间约为27.14秒。将长度计算提到循环外，<code>range</code>用<code>xrange</code>代替，同时将第三层的计算提到循环的第二层：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">lista</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> 
+<span class="n">listb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.01</span><span class="p">]</span> 
+<span class="n">len1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lista</span><span class="p">)</span> 
+<span class="n">len2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">listb</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">len1</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">lista</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">len2</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="n">listb</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述优化后的程序其运行时间缩短为23.19秒。</p>
+
+<h3 id="lazy-if-evaluation">利用Lazy if-evaluation特性</h3>
+
+<p>条件表达式是lazy evaluation的，也就是说如果存在条件表达式<code>if x and y</code>，在<code>x</code>为<code>false</code>的情况下<code>y</code>表达式的值将不再计算。因此可以利用该特性在一定程度上提高程序效率。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">abbreviations</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cf.&#39;</span><span class="p">,</span> <span class="s">&#39;e.g.&#39;</span><span class="p">,</span> <span class="s">&#39;ex.&#39;</span><span class="p">,</span> <span class="s">&#39;etc.&#39;</span><span class="p">,</span> <span class="s">&#39;fig.&#39;</span><span class="p">,</span> <span class="s">&#39;i.e.&#39;</span><span class="p">,</span> <span class="s">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s">&#39;vs.&#39;</span><span class="p">]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s">&#39;Hat&#39;</span><span class="p">,</span> <span class="s">&#39;is&#39;</span><span class="p">,</span> <span class="s">&#39;chasing&#39;</span><span class="p">,</span> <span class="s">&#39;the&#39;</span><span class="p">,</span> <span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">abbreviations</span><span class="p">:</span> 
+        <span class="c">#if w[-1] == &#39;.&#39; and w in abbreviations: </span>
+            <span class="k">pass</span>
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述代码的运行时间大概为1.78秒，如果使用注释行代替第一个<code>if</code>，运行的时间大概为1.38秒。</p>
+
+<h3 id="section-6">字符串优化</h3>
+
+<p>Python中的字符串对象是不可改变的，因此对任何字符串的操作（如拼接、修改等）都将产生一个新的字符串对象，这种持续的copy会在一定程度上影响性能。</p>
+
+<h4 id="join">一、使用<code>join()</code>代替<code>+</code></h4>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;i&#39;</span><span class="p">,</span><span class="s">&#39;j&#39;</span><span class="p">,</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="s">&#39;l&#39;</span><span class="p">,</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">10000</span><span class="p">):</span> 
+    <span class="k">for</span> <span class="n">substr</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">substr</span>     
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述代码使用<code>+</code>耗时约为0.027秒，改为如下使用<code>join</code>的代码时耗约为0.0048秒。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;i&#39;</span><span class="p">,</span><span class="s">&#39;j&#39;</span><span class="p">,</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="s">&#39;l&#39;</span><span class="p">,</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">]</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">10000</span><span class="p">)])</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<h4 id="section-7">二、优先使用内置函数</h4>
+
+<p>当对字符串可使用正则表达式或内置函数时，选择内置函数。如<code>str.isalpha()</code>、<code>str.isdigit()</code>、<code>str.startswith(('x', 'yz'))</code>、<code>str.endswith(('x', 'yz'))</code>等。</p>
+
+<h4 id="section-8">三、优先使用格式化操作</h4>
+
+<p>对字符进行格式化比直接串联读取要快，因此要使用</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;</span><span class="si">%s%s%s%s</span><span class="s">&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">prologue</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span></code></pre></div>
+
+<p>避免使用</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&quot;</span> <span class="o">+</span> <span class="n">head</span> <span class="o">+</span> <span class="n">prologue</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="n">tail</span> <span class="o">+</span> <span class="s">&quot;&lt;/html&gt;&quot;</span></code></pre></div>
+
+<h3 id="list-comprehensiongenerator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</h3>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;python&#39;</span><span class="p">,</span><span class="s">&#39;jason&#39;</span><span class="p">,</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;hill&#39;</span><span class="p">,</span><span class="s">&#39;with&#39;</span><span class="p">,</span><span class="s">&#39;phone&#39;</span><span class="p">,</span><span class="s">&#39;test&#39;</span><span class="p">,</span> 
+<span class="s">&#39;dfdf&#39;</span><span class="p">,</span><span class="s">&#39;apple&#39;</span><span class="p">,</span><span class="s">&#39;pddf&#39;</span><span class="p">,</span><span class="s">&#39;ind&#39;</span><span class="p">,</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="s">&#39;baecr&#39;</span><span class="p">,</span><span class="s">&#39;var&#39;</span><span class="p">,</span><span class="s">&#39;bana&#39;</span><span class="p">,</span><span class="s">&#39;dd&#39;</span><span class="p">,</span><span class="s">&#39;wrd&#39;</span><span class="p">]</span> 
+<span class="n">total</span><span class="o">=</span><span class="p">[]</span> 
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
+        <span class="n">total</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>上述代码耗时约为3.09秒，若循环改为如下列表解析耗时约为2.33秒。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">]</span></code></pre></div>
+
+<p>生成器表达式的优势较为明显，它不创建列表，只是返回生成器，效率较高。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">)</span></code></pre></div>
+
+<p>若进一步改为生成器耗时约为0.67秒。</p>
+
+<h3 id="section-9">其它优化技巧</h3>
+
+<ul>
+  <li>交换两个变量的值使用<code>a, b = b, a</code>而不借助中间变量；</li>
+  <li>循环时使用<code>xrange</code>而不是<code>range</code>；</li>
+  <li>使用局部变量，避免<code>global</code>关键字；</li>
+  <li>在耗时较多的循环中，把函数的调用改为内联的方式；</li>
+  <li><code>build-in</code>函数通常较快，<code>add(a, b)</code>要优于<code>a + b</code>（受特定应用影响）<sup id="fnref:bad-add-function"><a href="#fn:bad-add-function" class="footnote">1</a></sup>；</li>
+  <li><code>if done is not None</code>比<code>if done != None</code>更快；</li>
+  <li><code>while 1</code>比<code>while True</code>更快；</li>
+  <li>使用级联比较<code>x &lt; y &lt; z</code>代替<code>x &lt; y and y &lt; z</code>。</li>
+</ul>
+
+<h2 id="section-10">闭包优化</h2>
+
+<h2 id="section-11">工具优化</h2>
+
+<p>将关键Python代码部分重写成C扩展模块，或者选用在性能上更为优化的解释器等，这些统称为优化工具。Python有很多自带的优化工具，如<a href="http://psyco.sourceforge.net/">Psyco</a>、<a href="http://pypy.org">PyPy</a>、<a href="http://cython.org">Cython</a>、Pyrex等。</p>
+
+<h3 id="delpsycodel"><del>Psyco</del></h3>
+
+<p><a href="http://psyco.sourceforge.net">Psyco</a> 是一个 JIT 的编译器，它能够在不改变源代码的情况下提高一定的性能。python2.7 已经不再支持 Psyco。</p>
+
+<p>Psyco is unmaintained and dead. Please look at <a href="http://pypy.org">PyPy</a> for the state-of-the-art in JIT compilers for Python.</p>
+
+<h3 id="pypy">PyPy</h3>
+
+<p><a href="http://pypy.org">PyPy</a> 表示“用 Python 实现的 Python”，但实际上它使用一个称为 RPython 的 Python 子集实现，能够将 Python 代码转成 C、.NET、Java 等语言和平台的代码。PyPy 使用的是基于 Trace 的 JIT 技术，大幅提升了 Python 的性能。和许多编译器和解释器不同，它不关心 Python 代码的词法分析和语法树。 因为它是用 Python 语言写的，所以它直接利用 Python 语言的 Code Object。Code Object是 Python字节码的表示，也就是说 PyPy 直接分析 Python 代码所对应的字节码，这些字节码既不是以字符形式也不是以某种二进制格式保存在文件中，而在 Python 运行环境中。</p>
+
+<p>OSX 中可通过 brew 安装 PyPy：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install pypy</code></pre></div>
+
+<p>安装了之后，还可用 pip_pypy 和 easy_install_pypy 进行包管理。将<a href="#loop-optimization">循环优化</a>的代码存为 loop.py，然后使用 PyPy：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>pypy loop.py</code></pre></div>
+
+<p>运行时间从 27.14 秒减少到了 0.93 秒。</p>
+
+<h3 id="numba">Numba</h3>
+
+<p><a href="http://numba.pydata.org">Numba</a> 通过 Python 直接实现的高性能函数，提高程序性能。利用少量的标注，基于数组、数学密集型的 Python 代码能被 JIT 编译为原生机器指令，获得与 C、C++ 和 Fortran 相近的性能。</p>
+
+<p>安装 Numba，需要 llvm 的支持：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install llvm --with-rtti
+<span class="nv">$ LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm/bin/llvm-config pip install numba</code></pre></div>
+
+<p>安装 Numba 会默认安装依赖包 <a href="https://github.com/numba/llvmlite">llvmlite</a>（不再使用 <a href="http://www.llvmpy.org">llvmpy</a>）。通过添加 <code>@jit</code> 标签，很容易极大提升<a href="http://segmentfault.com/q/1010000002494151">代码</a>性能：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">sum2d</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="mi">9999999</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3333333</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sum2d</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span></code></pre></div>
+
+<h3 id="cython">Cython</h3>
+
+<p>Cython是一种编程语言，它使得给Python写C扩展就像Python自己编程一样容易。它的目标是成为Python语言的超集，具备高级层次、面向对象、函数式和动态的编程特性。在此基础上，其主要特性是将支持可选的静态类型声明作为语言的一部分。源代码被翻译为优化的C/C++代码，并被编译为Python的扩展模块。这使得程序运行不仅快，而且和外部C库集成紧密，同时保持了Python语言著称的高产特性。用它写出来的库都可以通过import来载入，性能比Python的快。Cython里可以载入Python 扩展（比如<code>import math</code>），也可以载入C的库的头文件（比如<code>cdef extern from "math.h"</code>），另外也可以用它来写 Python代码。将关键部分重写成C扩展模块。</p>
+
+<p>可通过Python的包管理器安装Cython：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install Cython</code></pre></div>
+
+<p>Cython代码与Python不同，必须先编译。</p>
+
+<p><strong>一、直接编译</strong></p>
+
+<p>编译一般经过两个阶段：</p>
+
+<ol>
+  <li>将pyx文件编译为.c文件；</li>
+  <li>将.c文件编译为动态链接库（OSX中为.dylib类型）文件。</li>
+</ol>
+
+<p>测试代码文件sum.pyx内容为：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="nb">int</span> <span class="n">a</span><span class="p">,</span> <span class="nb">int</span> <span class="n">b</span><span class="p">):</span> 
+    <span class="k">print</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span></code></pre></div>
+
+<p>首先，编译为.c文件：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>cython sum.pyx</code></pre></div>
+
+<p>然后，编译为动态链接库：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>clang -shared -O3 -Wall -lpython2.7 -o sum.dylib sum.c <span class="se">\</span>
+        -I/usr/local/Cellar/python/2.7.9/Frameworks/Python.framework/Headers</code></pre></div>
+
+<p><strong>二、使用distutils编译</strong></p>
+
+<p>首先，建立一个setup.py脚本：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span> 
+<span class="kn">from</span> <span class="nn">distutils.extension</span> <span class="kn">import</span> <span class="n">Extension</span> 
+<span class="kn">from</span> <span class="nn">Cython.Distutils</span> <span class="kn">import</span> <span class="n">build_ext</span> 
+
+<span class="n">ext_modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;sum.pyx&quot;</span><span class="p">])]</span> 
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;sum app&#39;</span><span class="p">,</span> 
+    <span class="n">cmdclass</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;build_ext&#39;</span><span class="p">:</span> <span class="n">build_ext</span><span class="p">},</span> 
+    <span class="n">ext_modules</span> <span class="o">=</span> <span class="n">ext_modules</span> 
+<span class="p">)</span></code></pre></div>
+
+<p>然后编译：</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python setup.py build_ext --inplace</code></pre></div>
+
+<p>最后，导入使用：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">sum</span>
+<span class="nb">sum</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span></code></pre></div>
+
+<p><strong>三、性能对比</strong></p>
+
+<p>ctest.pyx文件内容为：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="nb">int</span> <span class="n">n</span><span class="p">):</span> 
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cdef</span> <span class="nb">int</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">+=</span> <span class="n">i</span> 
+    <span class="k">return</span> <span class="n">a</span> 
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">test</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>采用如下方法导入，其运行时间为1.8835067749e-05秒。</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">pyximport</span><span class="p">;</span> <span class="n">pyximport</span><span class="o">.</span><span class="n">install</span><span class="p">()</span> 
+<span class="kn">import</span> <span class="nn">ctest</span></code></pre></div>
+
+<p>ctest.py文件内容为：</p>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">+=</span> <span class="n">i</span> 
+    <span class="k">return</span> <span class="n">a</span> 
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
+<span class="n">test</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span> 
+<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
+
+<p>采用如下方法，其运行时耗为0.47秒。</p>
+
+<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python ctest.py</code></pre></div>
+
+<h3 id="pyparallel">PyParallel</h3>
+
+<p><a href="http://pyparallel.org">PyParallel</a> 目前是 Python 3.3.5 的 fork，专为多核、快速固态硬盘、NUMA 体系结构和 10Gb+ 以太网络优化：</p>
+
+<ul>
+  <li>消除了全局解释器锁（GIL, Global Interpreter Lock）；</li>
+  <li>适用于多核的异步 IO；</li>
+  <li>多核和 IO 带宽线性伸缩；</li>
+  <li>NumPy、datrie、pyodbc 和 IPython 等有兼容版本；</li>
+  <li>超低的时延，高并发，最大的吞吐量。</li>
+</ul>
+
+<p>PyParallel 目前还是实验性的 alpha 版本，只提供了 Windows 7/8/10 64-bit 的下载版本。</p>
+
+<h3 id="pyston">Pyston</h3>
+
+<p><a href="https://github.com/dropbox/pyston">Pyston</a> 是一个 Dropbox 推出的新的基于 JIT 的 Python 2.7 的实现。Pyston 解析 Python 代码并转换到 LLVM 的 intermediate representation (IR)， 然后 IR 通过 LLVM 优化器处理后在 LLVM JIT 引擎上执行，其结果是机器码的执行，但目前不支持 Mac OSX 系统（Pyston does not currently work on Mac OSX, and it is not clear when it will.）。</p>
+
+<h2 id="section-12">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<ul class="bibliography">
+  <li><a href="http://www.huyng.com/posts/python-performance-analysis/">A guide to analyzing Python performance</a></li>
+  <li><a href="http://tech.magnetic.com/2015/05/optimize-python-with-closures.html">Optimize Python with Closures</a></li>
+  <li><a href="http://www.jb51.net/article/56719.htm">深入理解Python代码优化详解</a></li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:bad-add-function">
+      <p>当<code>a = b = 1</code>时，<code>numpy.add(a, b)</code>就比<code>a + b</code>慢得多。 <a href="#fnref:bad-add-function" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/05/TLD" class="pageNav" style="float:left"   >上一篇：TLD：跟踪－学习－检测 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/06/mvgcv-foreword" class="pageNav" style="float:right"   >下一篇：计算机视觉中的多视几何：序言（by Olivier Faugeras） </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/05/speed-up-python" 	data-url="http://qianjiye.de/2015/05/speed-up-python" data-title="高性能Python程序">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/05/TLD'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/06/mvgcv-foreword'; --1> -->
+<!--         url = '/2015/06/mvgcv-foreword'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/05/speed-up-python/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

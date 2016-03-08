@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>验证</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>验证</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-01-27">2015-01-27</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">模型选择问题</h2>
+
+<p>若有$M$个<a href="/assets/images/2015-01-27-validation-so-many-models.png">候选模型</a>$\mathcal H_1,\mathcal H_2,\ldots,\mathcal H_M$和相应的算法$\mathcal A_1,\mathcal A_2,\ldots,\mathcal A_M$，如何选择$\mathcal H_{m^*}$使得$g_{m^*}=\mathcal A_{m^*}(\mathcal D)$有低的$E_{out}(g_{m^*})$？</p>
+
+<p>由于$P(\mathbf x)$和$P(y|\mathbf x)$未知，那么$E_{out}$未也知……</p>
+
+<h4 id="section-1">一、利用数据可视化不可行</h4>
+
+<p>只有一些数据集……基于视觉化的选择是“<a href="/2015/01/nonlinear-transformation/#human-learning">human learning</a>”，并且高维度的数据不能视觉化。</p>
+
+<h4 id="ein">二、利用$E_{in}$很危险</h4>
+
+<p>如果利用$E_{in}$选择，高维特征变换通常犹豫低维，非正则化方法通常优于正则化方法。若$\mathcal A_1$在$\mathcal H_1$最小化$E_{in}$，$\mathcal A_2$在$\mathcal H_2$最小化$E_{in}$，二者再择优$g_{m^*}$在$\mathcal H_1\cup\mathcal H_2$中得到最小的$E_{in}$，这样增加了额外的模型复杂度，VC维$d_{VC}(\mathcal H_1\cup\mathcal H_2)$变大了，泛化能力差。</p>
+
+<h4 id="etest">三、利用$E_{test}$是作弊</h4>
+
+<p>根据finite-bin Hoeffding可得
+\[
+E_{out}(g_{m^*})\leq E_{test}(g_{m^*})+O\left(\sqrt{\log M\over N_{test}}\right)，
+\]
+看上去很美，$\mathcal D_{test}$是没用于模型训来的干净数据，可是$\mathcal D_{test}$（相当于老师的考卷）从哪里来呢？</p>
+
+<h4 id="einetesteval">四、$E_{in}$和$E_{test}$折中的合法作弊方案$E_{val}$</h4>
+
+<ul>
+  <li>$\mathcal D_{val}\subset\mathcal D$；</li>
+  <li>可以获取的；</li>
+  <li>若$\mathcal D_{val}$没用于$\mathcal A_m$，那么它是干净的，就像测试数据一样。</li>
+</ul>
+
+<h2 id="section-2">单一验证集</h2>
+
+<p>数据$\mathcal D$的划分和相应关系如下：</p>
+
+<p>\begin{align*}
+E_{in}(h)\quad&amp;\quad&amp;\quad&amp;\quad &amp;E_{val}(h)\\
+\uparrow\quad\quad&amp;\quad&amp;\quad&amp;\quad &amp;\uparrow\;\;\,\,\\
+\quad\underbrace{\mathcal D}_{\mbox{size }N}\quad\,&amp;\rightarrow&amp;\underbrace{\mathcal D_{train}}_{\mbox{size }N-K}\quad\quad\,&amp;\cup&amp;\underbrace{\mathcal D_{val}}_{\mbox{size }K}\;\\
+\downarrow\quad\quad&amp;\quad &amp;\downarrow\quad\quad\quad\;&amp;\quad&amp;\quad\\
+g_m=\mathcal A_m(\mathcal D)&amp;\quad &amp;g_m^-=\mathcal A_m(\mathcal D_{trian})&amp;\quad&amp;\quad
+\end{align*}</p>
+
+<p>$\mathcal D_{val}\subset\mathcal D$称为<strong>验证集</strong>（validation set），用于模拟测试集。$\mathcal D_{val}$是随机从$\mathcal D$中抽取的$K$个样本，那么$\mathcal D_{val}\overset{iid}{\sim} P(\mathbf x,y)$，通过数据建立了$E_{val}$与$E_{out}$的联系。确保$\mathcal D_{val}$是干净的，$\mathcal A_m$只使用了$\mathcal D_{train}$进行模型选择（也就是训练得到模型参数，从$\mathcal H$中选出$h$）。</p>
+
+<p>原来使用$\mathcal D$扮演两个角色，既要计算$E_{in}$进行模型选择，又要通过算法得到$g$，两个角色导致资料被污染。利用$D_{val}$，通过最佳$E_{val}$进行模型选择
+\[
+m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{val}(\mathcal A_m(\mathcal D_{train})))，
+\]
+可得如下误差保证
+\begin{equation}
+E_{out}(g_m^-)\leq E_{val}(g_m^-)+O\left(\sqrt{\log M\over K}\right)，
+\end{equation}
+但是只用$N-K$个训练模型out-of-sample误差会偏大（也可从学习曲线看出，理论上若要成立，还需更严格的限制条件），
+\[
+E_{out}\left(\underbrace{g_{m^*}}_{\mathcal A_m^*(\mathcal D)}\right)\leq E_{out}\left(\underbrace{g_{m^*}^-}_{\mathcal A_m^*(\mathcal D_{train})}\right)，
+\]
+因此，
+\[
+E_{out}(g_{m^*})\leq E_{out}(g_{m^*}^-)\leq E_{val}(g_{m^*}^-)+O\left(\sqrt{\log M\over K}\right)。
+\]</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-27-validation-model-selection.png"><img src="/assets/images/2015-01-27-validation-model-selection.png" alt="基于验证集的模型选择方案" /></a><div class="caption">图 1:  基于验证集的模型选择方案 [<a href="/assets/images/2015-01-27-validation-model-selection.png">PNG</a>]</div></div></div>
+
+<p>模型选择整个方案如上图所示，得到$g_{m^*}^-$之后，再回到原来整个数据集上得到$g_{m^*}$效果会更好<sup id="fnref:is-it-necessary"><a href="#fn:is-it-necessary" class="footnote">1</a></sup>。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-27-validation-vlidation-example.png"><img src="/assets/images/2015-01-27-validation-vlidation-example.png" alt="模型选择的学习曲线" /></a><div class="caption">图 2:  模型选择的学习曲线 [<a href="/assets/images/2015-01-27-validation-vlidation-example.png">PNG</a>]</div></div></div>
+
+<p>上图是在$\mathcal H_{\Phi_5}$和$\mathcal H_{\Phi_{10}}$中进行模型选择的学习曲线。$g_{m^*}$的效果要优于$g_{m^*}^-$。利用$E_{in}$总会选择到复杂的模型，利用$E_{out}$的作弊方案选择结果总最优。随着验证集不断增大，用于模型选择的训练集不断减小，所以$g_{m^*}^-$甚至会比$g_{\widehat m}$效果差，对很小的训练集，采用$E_{in}$还算不错的模型选择方案。</p>
+
+<p>对大的验证集样本数$K$，有$E_{val}(g^-)\approx E_{out}(g^-)$，但$g_{m^*}^-$通常比$g_{m^*}$糟糕；对小的$K$，有$g_m^-\approx g_m$和$E_{out}(g)\approx E_{out}(g^-)$，但$E_{val}$和$E_{out}$差异较大；
+\[
+E_{out}(g)\underset{\mbox{small }K}{\approx}E_{out}(g^-)\underset{\mbox{large }K}{\approx}E_{val}(g^-)。
+\]</p>
+
+<p>从时间上看，由于部分数据当作了验证集，在训练集上选择每个模型的时间会缩短。</p>
+
+<p>$K={N\over 5}$通常是不错的选择。</p>
+
+<h2 id="section-3">留1交叉验证</h2>
+
+<p>当在验证集的$K=1$的极端情况下，$g^-$和$g$就会非常接近，但$E_{out}$和$E_{val}$差异就很大。能否在$K=1$时找到方案，使得$E_{out}\approx E_{val}$？✅</p>
+
+<p>当$K=1$时，验证集$\mathcal D_{val}^{(n)}=\{(\mathbf x_n,y_n)\}$，误差为$E_{val}^{(n)}(g_n^-)=err(g_n^-(\mathbf x_n),y_n)=e_n$，将留1交叉验证（leave-one-out cross validation）误差
+\begin{equation}
+E_{loocv}(\mathcal H,\mathcal A)={1\over N}\sum_{n=1}^Ne_n={1\over N}\sum_{n=1}^Nerr(g_n^-(\mathbf x_n),y_n)
+\end{equation}
+作为$E_{out}(g)$的近似，$E_{loocv}(\mathcal H,\mathcal A)\approx E_{out}(g)$，然后进行模型选择，
+\begin{equation}
+m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{loocv}(\mathcal H_m,\mathcal A_m))。
+\end{equation}</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-example.png"><img src="/assets/images/2015-01-27-validation-loocv-example.png" alt="loocv选择常数模型而非线性模型" /></a><div class="caption">图 3:  loocv选择常数模型而非线性模型 [<a href="/assets/images/2015-01-27-validation-loocv-example.png">PNG</a>]</div></div></div>
+
+<p>用$\underset{\mathcal D_n}{\varepsilon}$表示在训练集上的数学期望，那么有<sup id="fnref:how-expectation-do"><a href="#fn:how-expectation-do" class="footnote">2</a></sup>
+\begin{aligned}
+\underset{\mathcal D}{\varepsilon}E_{loocv}(\mathcal H,\mathcal A) = \underset{\mathcal D}{\varepsilon}{1\over N}\sum_{n=1}^Ne_n 
+&amp;= {1\over N}\sum_{n=1}^N\underset{\mathcal D}{\varepsilon}e_n\\
+&amp;={1\over N}\sum_{n=1}^N\underset{\mathcal D_n}{\varepsilon}\underset{(\mathbf x_n,y_n)}{\varepsilon}err(g_n^-(\mathbf x_n),y_n)\\
+&amp;={1\over N}\sum_{n=1}^N\underset{\mathcal D_n}{\varepsilon}E_{out}(g_n^-)\\
+&amp;={1\over N}\sum_{n=1}^N\overline{E_{out}}(N-1)\\
+&amp;=\overline{E_{out}}(N-1)，
+\end{aligned}
+因此可得$E_{loocv}(\mathcal H,\mathcal A)$和$E_{out}(g^-)$联系紧密，通常称作$E_{out}(g)$几乎无偏的估计（almost unbiased estimate）。</p>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-27-validation-loocv-practice.jpg"><img src="/assets/images/2015-01-27-validation-loocv-practice.jpg" alt="loocv手写识别示例" /></a><div class="caption">图 4:  loocv手写识别示例 [<a href="/assets/images/2015-01-27-validation-loocv-practice.jpg">JPG</a>]</div></div></div>
+
+<p>上图手写识别例子中，通过验证确定选择多少维多项式特征。若用$E_{in}$，特征维度越多越好；利用$E_{loocv}$（图中标注为$E_{cv}$），会选到较低纬度的特征。</p>
+
+<h2 id="v-fold-cross-validation">V-fold交叉验证</h2>
+
+<p>由于loocv需要训练$N$次，时间复杂度非常大，在实际中并不总是可行的。但也有特例，线性回归的的loocv容易计算。通过单点估计误差波动较大，结果不是很稳定，曲线上有些跳动的点。如何降低loocv的计算量？</p>
+
+<p>将数据集$\mathcal D$随机分为$V$等份（loocv相当于将数据集分为$N$等份），$V-1$份用于训练模型，剩余的1份用于验证，这称为V-fold交叉验证，
+\begin{equation}
+E_{cv}(\mathcal H,\mathcal A)={1\over V}\sum_{v=1}^VE_{val}^{(v)}(g_v^-)，
+\end{equation}
+模型选择方式为
+\begin{equation}
+m^*=\underset{1\leq m\leq M}{\arg\min}(E_m=E_{cv}(\mathcal H_m,\mathcal A_m))。
+\end{equation}</p>
+
+<p>通常情况，$V=10$。</p>
+
+<p>通常，V-fold交叉验证要优于单一验证集方法，计算量也更大，5-fold或10-fold通常都会工作得很好，实际中loocv并不常用。</p>
+
+<h2 id="section-4">小结</h2>
+
+<p>各种模型选择的关系：</p>
+
+<ul>
+  <li>模型训练（初赛）：从假设集中选择；</li>
+  <li>验证方案（复赛）：从训练好的模型中选择；</li>
+  <li>测试：衡量最终的表现（测试集只在此时才能使用1次）。</li>
+</ul>
+
+<p>由于资料污染，以及付出了模型复杂度代价等因素，通常验证的结果仍然会比最终测试结果乐观。因此，提交测试结果而非验证结果更客观。</p>
+
+<h2 id="section-5">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<h3 id="section-6">脚注</h3>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:is-it-necessary">
+      <p><a href="/2015/01/image-classification-knn-based-introduction/#is-validation-set-need">并不是所有的人都这样做</a>…… <a href="#fnref:is-it-necessary" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:how-expectation-do">
+      <p>数学期望如何分离计算的？ <a href="#fnref:how-expectation-do" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/01/regularization" class="pageNav" style="float:left"   >上一篇：正则化 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/01/three-learning-principles" class="pageNav" style="float:right"   >下一篇：机器学习三原则 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/01/validation" 	data-url="http://qianjiye.de/2015/01/validation" data-title="验证">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/01/regularization'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/01/three-learning-principles'; --1> -->
+<!--         url = '/2015/01/three-learning-principles'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/01/validation/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>机器学习：训练与测试</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>机器学习：训练与测试</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2014-12-18">2014-12-18</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本节的主要内容来自Hsuan-Tien Lin的机器学习基石课程<a href="#lin_ml_tt_2014">[1]</a>。</p>
+
+<p>学习的两个核心问题：</p>
+
+<ol>
+  <li>能确保$E_{out}(g)$接近$E_{in}(g)$么？</li>
+  <li>能够使$E_{in}(g)$足够小么？</li>
+</ol>
+
+<p>$\lvert\mathcal H\rvert=M$与上述两个问题有什么关系？</p>
+
+<p>太小的$M$使坏事儿发生的概率小，$E_{out}(g)$接近$E_{in}(g)$接近的概率大，但是不一定能找到很小的$E_{in}(g)$；太大的$M$使坏事儿发生的概率增大了。</p>
+
+<h2 id="m">M的起源</h2>
+
+<p>坏事情（$\mathcal B$AD Event）$\mathcal B_m~\left(\left\lvert E_{in}(h_m) - E_{out}(h_m)\right\rvert &gt; \epsilon\right)$发生的概率为</p>
+
+<p>\begin{equation*}
+\begin{aligned}
+P(\mbox{BAD}) &amp; = P(\mathcal B_1 \mbox{ or }\mathcal B_2 \mbox{ or }\ldots\mathcal B_M) \\
+&amp;\leq P(\mathcal B_1) + P(\mathcal B_2) + \ldots + P(\mathcal B_M)\\
+&amp;\leq 2M\exp\left(-2\epsilon^2N\right)
+\end{aligned}。
+\end{equation*}</p>
+
+<p>事实上，过高的估计了坏事情发生的概率上界，因为$\mathcal B_m$之间可能有很大的相似区域重叠，比如感知器算法两次的判别界很接近。因此，可以期望得到比$M$小得多的值约束这个概率上界，也就是$\mathcal H$中的元素个数不会太多。</p>
+
+<h2 id="section">有效判别界</h2>
+
+<p>在$H$中，对相似的假设（判别函数）进行分组合并，有效减少假设的数目$M$。以下两图通过2维平面的线性判别界为例说明判别函数的类别。</p>
+
+<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png" alt="［左］：1个点的分类情况；［右］：2个点的分类情况" /></a><div class="caption">图 1:  ［左］：1个点的分类情况；［右］：2个点的分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-1-2.png">PNG</a>]</div></div></div>
+
+<p>上图左可见，对于只有1个点的数据集，只有2种分类情况，$\mathcal H$只需2种假设就够了；上图右可见，对于2个点的数据集，有4种分类情况，$\mathcal H$只需4种假设就够了。</p>
+
+<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png" alt="［左］：3个点的分类情况；［右］：4个点的部分分类情况" /></a><div class="caption">图 2:  ［左］：3个点的分类情况；［右］：4个点的部分分类情况 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-lines-3-4.png">PNG</a>]</div></div></div>
+
+<p>上图中，打叉表示线性不可分。上图左可见，对于有3个点的数据集，有6种分类情况，$\mathcal H$只需6种假设就够了；上图右可见，对于4个点的数据集，有14种分类情况（图中只画出了其中一半的情况），$\mathcal H$只需14种假设就够了。</p>
+
+<p>$N$输入数据$\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N$所需判别界的类别数目称之为判别界的有效数目（effective number of lines）。通过分析可知，$\mbox{effective}(N)\leq 2^N$，用其代替$M$可得
+\begin{equation}
+P\left[\left\lvert E_{in}(g) - E_{out}(g)\right\rvert &gt; \epsilon\right]\leq 2\cdot\mbox{effective}(N)\cdot\exp\left(-2\epsilon^2N\right)。
+\end{equation}</p>
+
+<h2 id="section-1">成长函数</h2>
+
+<p>将$h(\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N)=(h(\mathbf x_1), h(\mathbf x_2), \ldots, h(\mathbf x_N))\in\{\times, \circ\}^N$称为一个二分法（dichotomy）。这就将假设限定在了数据集$\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N$上。$\mathcal H(\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N)$表示$\mathcal H$在$\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N$上的所有二分法。</p>
+
+<p>$\lvert\mathcal H(\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N)\rvert$的大小受数据$\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N$的影响，不同的$N$个点，得到的值可能不一样。将成长函数（growth function）定义为
+\begin{equation}
+m_{\mathcal H}(N) = \max_{\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N\in\mathcal X}\lvert\mathcal H(\mathbf x_1, \mathbf x_2, \ldots, \mathbf x_N)\rvert，
+\end{equation}
+成长函数消除数据集依赖，是$N$个点数据集二分法数目的最大值，最大值为$2^N$。</p>
+
+<p>对2维平面的线性判别界，$m_{\mathcal H}(1)=2$、$m_{\mathcal H}(2)=4$、$m_{\mathcal H}(3)=8$、$m_{\mathcal H}(4)=14$。</p>
+
+<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png" alt="［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数" /></a><div class="caption">图 3:  ［左］：1维空间正射线判别函数；［右］：1维空间正区间判别函数 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-growth-function-1D-lines.png">PNG</a>]</div></div></div>
+
+<p>上图左，对1维空间的正射线判别函数，$\mathcal X = \mathbb R$，$h(x)=\mbox{sign}(x-a)$（$a$是分类阈值），$m_{\mathcal H}(N)=N+1$。</p>
+
+<p>上图右，对1维空间的正区间判别函数，$\mathcal X = \mathbb R$，
+\[
+h(x)=\left\{
+\begin{aligned}
+&amp;+1 &amp;x\in[\ell, r)\\
+&amp;-1 &amp;\mbox{otherwise}
+\end{aligned}
+\right. ，
+\]
+$m_{\mathcal H}(N)=\binom{N+1}{2}+1={1\over 2}N^2+{1\over 2}N + 1$。</p>
+
+<h2 id="section-2">断点</h2>
+
+<div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png"><img src="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png" alt="假设集打碎输入数据" /></a><div class="caption">图 4:  假设集打碎输入数据 [<a href="/assets/images/2014-12-17-machine-learning-training-versus-testing-shattered.png">PNG</a>]</div></div></div>
+
+<p>对于2维平面上的$N$个点，$\mathcal X\in \mathbb R^2$，若$\mathcal H$是凸包，那么如上图所示，$m_{\mathcal H}(N)=2^N$。</p>
+
+<p>如果某$N$个点数据集（也就是空间中存在按某种方式排列的$N$个点）的所有二分法都能被$\mathcal H$实现，就称这$N$个点被$\mathcal H$打碎（shatter）。也就是，若$m_{\mathcal H}(N)=2^N$，当且仅当某$N$个点的数据集能被打碎。</p>
+
+<p>如果不存在$k$个点的数据集能够被$\mathcal H$打碎，就称$k$是$\mathcal H$的一个断点（break point），也就是对任意$k$个点$m_{\mathcal H}(k) &lt; 2^k$<sup id="fnref:break-point-explain"><a href="#fn:break-point-explain" class="footnote">1</a></sup>。如果$k$是断点，那么$k,k+1,k+2,\ldots$都是断点，通常研究最小的断点$k$。若$k$是最小断点，那么一定存在一个$k-1$点的数据集能被$\mathcal H$打碎。</p>
+
+<h2 id="section-3">成长函数与断点</h2>
+
+<p>$m_{\mathcal H}(N)=O\left(N^{k-1}\right)$。</p>
+
+<p>正射线和正区间判别函数的最小断点分别是$2$和$3$，2维感知器的最小断点是$4$，凸包没有断点<sup id="fnref:break-point-example"><a href="#fn:break-point-example" class="footnote">2</a></sup>。</p>
+
+<h2 id="section-4">参考资料</h2>
+
+<ol class="bibliography"><li><span id="lin_ml_tt_2014">[1]H.-T. Lin, “Lecture 5: Training versus Testing.” Coursera, 2014.</span>
+
+[<a href="https://www.coursera.org/course/ntumlone">Online</a>]
+
+</li></ol>
+
+<h3 id="section-5">脚注</h3>
+<div class="footnotes">
+  <ol>
+    <li id="fn:break-point-explain">
+      <p>若数据集有$N$个点，断点是$k$（$N\geq k$），那么从$N$个点中任意抽取$k$个点，这$k$个点都不能被打碎。也就是说$N$个点的数据集中，不存在$k$个点的子集满足$m_{\mathcal H}(k)=2^k$。 <a href="#fnref:break-point-explain" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:break-point-example">
+      <p>对于正射线当$m_{\mathcal H}(N)=N+1=2^N$时，有$N=1$，故断点为$1+1=2$，其它情况计算类似…… <a href="#fnref:break-point-example" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2014/12/machine-learning-feasibility-of-learning" class="pageNav" style="float:left"   >上一篇：机器学习：学习的可行性 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2014/12/machine-learning-theory-of-generalization" class="pageNav" style="float:right"   >下一篇：机器学习：泛化理论 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-training-versus-testing" 	data-url="http://qianjiye.de/2014/12/machine-learning-training-versus-testing" data-title="机器学习：训练与测试">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2014/12/machine-learning-feasibility-of-learning'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2014/12/machine-learning-theory-of-generalization'; --1> -->
+<!--         url = '/2014/12/machine-learning-theory-of-generalization'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2014/12/machine-learning-training-versus-testing/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>摄像机标定</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>摄像机标定</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-04-18">2015-04-18</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 class="no_toc" id="section">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">基本概念</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">坐标系</a>    <ul>
+      <li><a href="#section-3" id="markdown-toc-section-3">一、像素坐标系与像平面坐标系</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">二、摄像机坐标系与世界坐标系</a></li>
+      <li><a href="#section-5" id="markdown-toc-section-5">三、摄像机坐标系与像平面坐标系（成像投影关系）</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">四、像素坐标系与世界坐标系</a></li>
+    </ul>
+  </li>
+  <li><a href="#faugeras" id="markdown-toc-faugeras">Faugeras标定法</a>    <ul>
+      <li><a href="#faugerasa-href20113-p-44a" id="markdown-toc-faugerasa-href20113-p-44a">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></a></li>
+      <li><a href="#a-href20085-p-62a" id="markdown-toc-a-href20085-p-62a">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></a></li>
+    </ul>
+  </li>
+  <li><a href="#tsai" id="markdown-toc-tsai">Tsai标定法</a></li>
+  <li><a href="#section-7" id="markdown-toc-section-7">张正友平面标定法</a></li>
+  <li><a href="#section-8" id="markdown-toc-section-8">参考资料</a></li>
+</ul>
+
+<h2 id="section-1">基本概念</h2>
+
+<p><img src="/assets/images/2015-04-18-camera-calibration-400px-Pinhole-camera.svg.png" alt="Pinhole Camera Model" width="250px" /></p>
+
+<p>通常采用如上图所示的小孔成像模型（pinhole camera model）研究摄像机标定问题。</p>
+
+<p><img src="/assets/images/2015-04-18-camera-calibration-3-coordinates.png" alt="四大坐标系" width="400px" /></p>
+
+<p>如上图所示，摄像机标定涉及的四大坐标系：</p>
+
+<ol>
+  <li>世界坐标系$({X}_w, {Y}_w, {Z}_w)$：原点为$O_w$；</li>
+  <li>摄像机坐标系$({X}_c, {Y}_c, {Z}_c)$：原点$O_c$为光学中心，通常是小孔（pinhole）的位置；</li>
+  <li>像平面坐标系／图像物理坐标系$({x}, {y})$：通过光学系统在感光芯片上成像的图像坐标系；</li>
+  <li>像素坐标系$({u}, {v})$。</li>
+</ol>
+
+<p>在三维图像处理中，标定就是确定摄像机的内外参数（intrinsic and/or extrinsic camera parameters）：</p>
+
+<ul>
+  <li>内部参数：描述摄像机的内部几何结构和光学特性；</li>
+  <li>外部参数：描述摄像机坐标系与世界坐标系的关系。</li>
+</ul>
+
+<p>为了从2张或更多的图像中重构环境的三维信息，有必要知道对象的三维环境（世界坐标系）与二维图像之间的关系：</p>
+
+<ul>
+  <li>［三维 <i class="fa fa-arrow-right"></i> 二维］透视投影（perspective projection）：已知摄像机的投影矩阵，可近似确定三维点的二维投影。</li>
+  <li>［二维 <i class="fa fa-arrow-right"></i> 三维］逆投影（backprojection）：若已知图像上的二维点，可确定三维空间中三维点所在的射线。若存在三维点两个或更多的视图（view），其坐标可通过三角测量法（triangulation）确定。</li>
+</ul>
+
+<p>透视投影可以减少场景分析（scene analysis）过程中处理的数据量，逆投影可用于从二维图像的特征中重建三维信息。</p>
+
+<p>真实的摄像机和镜头通常都有成像误差，并不满足小孔成像模型的约束条件。成像误差主要来源于几方面：</p>
+
+<ul>
+  <li>成像设备分辨率低，导致空间分辨率低；</li>
+  <li>大多数镜头不对称，并且会导致畸变；</li>
+  <li>装配精度不够（比如，图像传感器的中心不在光轴上［optical axis］，传感器与镜头不平行）；</li>
+  <li>摄像机硬件和采集硬件之间的计时误差。</li>
+</ul>
+
+<p>摄像机标定可在线或离线完成，可采用自标定（self-calibration）或机器学习的方法。通常的方法是借助标定物：（i）确定摄像机的参数；（ii）确定摄像机坐标系和世界坐标系之间的变换。</p>
+
+<p><img src="/assets/images/2015-04-18-camera-calibration-coordinate-relations.png" alt="坐标关系" width="300px" /></p>
+
+<h2 id="section-2">坐标系</h2>
+
+<h4 id="section-3">一、像素坐标系与像平面坐标系</h4>
+
+<p>假定每个像素在$u$轴和$v$轴方向的物理尺寸分别为$\mathrm{d}x$和$\mathrm{d}y$，那么就有：</p>
+
+<p>\begin{equation}
+\begin{aligned}
+u&amp;={x\over \mathrm{d}x}+u_0\\
+v&amp;={y\over \mathrm{d}y}+v_0。
+\end{aligned}
+\end{equation}</p>
+
+<p>$\mathrm{d}x$、$\mathrm{d}y$表示每个像素在感光芯片上占据的实际大小，通过它建立了像素坐标系和真实尺寸坐标系的联系，$u_0$、$v_0$是像素平面中心。上述公式可以表示为矩阵形式</p>
+
+<p>\begin{equation}
+\begin{bmatrix}u\\ v\\ 1\end{bmatrix} = 
+\begin{bmatrix}
+{1\over \mathrm{d}x} &amp; 0 &amp; u_0 \\
+0 &amp; {1\over \mathrm{d}y} &amp; v_0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}x\\ y\\ 1\end{bmatrix}，
+\label{eq:pixel-vs-image-coordination}
+\end{equation}</p>
+
+<p>或者</p>
+
+<p>\begin{equation}
+\begin{bmatrix}x\\ y\\ 1\end{bmatrix} = 
+\begin{bmatrix}
+{\mathrm{d}x} &amp; 0 &amp; -u_0\mathrm{d}x \\
+0 &amp; {\mathrm{d}y} &amp; -v_0\mathrm{d}y \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}u\\ v\\ 1\end{bmatrix}。
+\end{equation}</p>
+
+<p>该变换建立了像素与物理尺寸的对应关系。</p>
+
+<h4 id="section-4">二、摄像机坐标系与世界坐标系</h4>
+
+<p>这两个坐标系的关系可用旋转矩阵$\mathbf R$和平移矩阵$\mathbf t$表示如下：</p>
+
+<p>\begin{equation}
+\begin{bmatrix}X_c\\ Y_c\\ Z_c \\ 1\end{bmatrix} = 
+\begin{bmatrix}
+\mathbf R &amp; \mathbf t \\
+\mathbf 0^\top &amp; 1
+\end{bmatrix}
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix} = 
+\mathbf L_w
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix}。
+\end{equation}</p>
+
+<p>其中，$\mathbf R$为$3\times 3$的矩阵，$\mathbf t$为$3\times 1$的矩阵，$\mathbf 0^\top = [0\; 0\; 0]$。</p>
+
+<h4 id="section-5">三、摄像机坐标系与像平面坐标系（成像投影关系）</h4>
+
+<p>对线性摄像机模型（针孔模型），可得如下关系（$f$为焦距）</p>
+
+<p>\begin{equation}
+\frac{x}{f} = \frac{X_c}{Z_c} \\
+\frac{y}{f} = \frac{Y_c}{Z_c}，
+\end{equation}</p>
+
+<p>也就是</p>
+
+<p>\begin{equation}
+xZ_c = fX_c \\
+yZ_c = fY_c，
+\end{equation}</p>
+
+<p>同样可以表示为矩阵形式</p>
+
+<p>\begin{equation}
+Z_c
+\begin{bmatrix}x\\ y\\ 1\end{bmatrix} = 
+\begin{bmatrix}
+f &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; f &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}X_c\\ Y_c\\ Z_c\\ 1\end{bmatrix}。
+\end{equation}</p>
+
+<h4 id="section-6">四、像素坐标系与世界坐标系</h4>
+
+<p>根据上述坐标系的关系，可以推导出像素坐标系与世界坐标系的关系</p>
+
+<p>\begin{equation}
+\begin{aligned}
+Z_c
+\begin{bmatrix}u\\ v\\ 1\end{bmatrix} &amp;= 
+\begin{bmatrix}
+{1\over \mathrm{d}x} &amp; 0 &amp; u_0 \\
+0 &amp; {1\over \mathrm{d}y} &amp; v_0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+f &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; f &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf R &amp; \mathbf t \\
+\mathbf 0^\top &amp; 1
+\end{bmatrix}
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix}\\
+&amp;=\begin{bmatrix}
+a_x &amp; 0 &amp; u_0 &amp; 0 \\
+0 &amp; a_y &amp; v_0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf R &amp; \mathbf t \\
+\mathbf 0^\top &amp; 1
+\end{bmatrix}
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix}
+=\mathbf M_1\mathbf M_2\mathbf X_w=\mathbf M\mathbf X_w。
+\end{aligned}
+\label{eq:pixel-vs-world-coordination}
+\end{equation}</p>
+
+<p>$\mathbf M$是$3\times 4$的矩阵，称为<strong>投影矩阵</strong>；$\mathbf M_1$只与摄像机的内部结构有关，称为摄像机内部参数；$\mathbf M_2$（也就是$\mathbf R$和$\mathbf t$）完全由摄像机相对于世界坐标系的方位决定，称为摄像机外部参数（extrinsic parameter）。已知投影矩阵$\mathbf M$，可以根据空间点的坐标确定求出其在图像中的位置，由于$\mathbf M$不可逆，已知图像中的点，无法唯一确定其空间中的对应位置。</p>
+
+<h2 id="faugeras">Faugeras标定法</h2>
+
+<p>直接线性变换（DLT，direct linear transformation）<a href="#abdel2015direct">[1]</a>是将像素点和物体成像几何关系在齐次坐标下写成透视投影矩阵的形式，确定该矩阵的过程称为标定。利用直接线性变换的标定法不考虑相机镜头的非线性畸变。Faugeras标定法<a href="#马颂德1998计算机视觉">[2, P. 56]</a><a href="#徐德2011机器人视觉测量与控制">[3, P. 41]</a>是一种直接线性变换标定方法。</p>
+
+<p>公式\eqref{eq:pixel-vs-world-coordination}可以记为如下形式</p>
+
+<p>\begin{equation}
+Z_c
+\begin{bmatrix}u\\ v\\ 1\end{bmatrix} = 
+\mathbf M
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix} =
+\begin{bmatrix}
+m_{11} &amp; m_{12} &amp; m_{13} &amp; m_{14} \\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; m_{24} \\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; m_{34}
+\end{bmatrix}
+\begin{bmatrix}X_w\\ Y_w\\ Z_w \\ 1\end{bmatrix}，
+\end{equation}</p>
+
+<p>展开可得</p>
+
+<p>\begin{equation}
+\begin{aligned}
+u &amp;= \frac{m_{11}X_w + m_{12}Y_w + m_{13}Z_w + m_{14}}{m_{31}X_w + m_{32}Y_w + m_{33}Z_w + m_{34}} \\
+v &amp;= \frac{m_{21}X_w + m_{22}Y_w + m_{23}Z_w + m_{24}}{m_{31}X_w + m_{32}Y_w + m_{33}Z_w + m_{34}}。<br />
+\end{aligned}
+\end{equation}</p>
+
+<p>对于无畸变（distortion-free）摄像机模型，标定就是确定参数矩阵$\mathbf M$。将上式转换为线性方程组的形式</p>
+
+<p>\begin{equation}
+\begin{aligned}
+m_{11}X_w + m_{12}Y_w + m_{13}Z_w + m_{14} - m_{31}uX_w - m_{32}uY_w - m_{33}uZ_w &amp;= m_{34}u\\
+m_{21}X_w + m_{22}Y_w + m_{23}Z_w + m_{24} - m_{31}vX_w - m_{32}vY_w - m_{33}vZ_w &amp;= m_{34}v。
+\end{aligned}
+\end{equation}</p>
+
+<p>令$m_{34}=1$（相当于方程两边都除以$m_{34}$），方程组可记为等价的矩阵形式</p>
+
+<p>\begin{equation}
+\mathbf A\mathbf L=\mathbf U，
+\end{equation}</p>
+
+<p>其中，</p>
+
+<p>\[
+\begin{aligned}
+\mathbf A &amp;= 
+\begin{bmatrix}
+X_{w1} &amp; Y_{w1} &amp; Z_{w1} &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -u_1X_{w1} &amp; -u_1Y_{w1} &amp; -u_1Z_{w1} \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; X_{w1} &amp; Y_{w1} &amp; Z_{w1} &amp; 1 &amp; -v_1X_{w1} &amp; -v_1Y_{w1} &amp; -v_1Z_{w1} \\
+&amp;&amp;&amp;&amp;&amp;\ldots \\
+X_{wn} &amp; Y_{wn} &amp; Z_{wn} &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -u_nX_{wn} &amp; -u_nY_{wn} &amp; -u_nZ_{wn} \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; X_{wn} &amp; Y_{wn} &amp; Z_{wn} &amp; 1 &amp; -v_nX_{wn} &amp; -v_nY_{wn} &amp; -v_nZ_{wn}
+\end{bmatrix}\\
+\mathbf L &amp;= \left[m_{11}\;m_{12}\;m_{13}\;m_{14}\;m_{21}\;m_{22}\;m_{23}\;m_{24}\;m_{31}\;m_{32}\;m_{33}\right]^\top \\
+\mathbf U &amp;= \left[u_1\;v_1\ldots u_n\;v_n\right]^\top
+，
+\end{aligned}
+\]</p>
+
+<p>其最小二乘解为</p>
+
+<p>\begin{equation}
+\mathbf L=\left(\mathbf A^\top\mathbf A\right)^{-1}\mathbf A^\top\mathbf U。
+\label{eq:ls-solution}
+\end{equation}</p>
+
+<p>该方程组有11个未知数，意味着使用至少6组点对（$n\geq 6$）就可以求解出全部的系数。通过$\mathbf L$得到参数矩阵$\mathbf M$后，可求解摄像机的全部内外参数。</p>
+
+<p>根据\eqref{eq:pixel-vs-world-coordination}可得</p>
+
+<p>\[
+m_{34}
+\begin{bmatrix}
+\mathbf m_1^\top &amp; m_{14} \\
+\mathbf m_2^\top &amp; m_{24} \\
+\mathbf m_3^\top &amp; 1
+\end{bmatrix}
+=\begin{bmatrix}
+a_x &amp; 0 &amp; u_0 &amp; 0 \\
+0 &amp; a_y &amp; v_0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf r_1^\top &amp; t_{x} \\
+\mathbf r_2^\top &amp; t_{y} \\
+\mathbf r_3^\top &amp; t_z\\
+\mathbf 0^\top	 &amp; 1
+\end{bmatrix}，
+\]</p>
+
+<p>也就是</p>
+
+<p>\begin{equation}
+m_{34}
+\begin{bmatrix}
+\mathbf m_1^\top &amp; m_{14} \\
+\mathbf m_2^\top &amp; m_{24} \\
+\mathbf m_3^\top &amp; 1
+\end{bmatrix}
+=\begin{bmatrix}
+a_x \mathbf r_1^\top + u_0\mathbf r_3^\top &amp; a_xt_x+u_0t_z\\
+a_y \mathbf r_2^\top + v_0\mathbf r_3^\top &amp; a_yt_y+v_0t_z\\
+\mathbf r_3^\top &amp; t_z
+\end{bmatrix}。
+\end{equation}</p>
+
+<p>比较上式两端可知$m_{34}\mathbf m_3=\mathbf r_3$，由于$\mathbf r_3$是正交单位矩阵的第三行，$\|\mathbf r_3\|=1$，那么有$m_{34}=\frac{1}{\|\mathbf m_3\|}$，因此利用$\mathbf M$矩阵可得摄像机内参</p>
+
+<p>\begin{equation}
+\begin{aligned}
+u_0 &amp; = \left(a_x \mathbf r_1^\top + u_0\mathbf r_3^\top\right)\mathbf r_3  =  m_{34}^2\mathbf m_1^\top\mathbf m_3\\
+v_0 &amp; = \left(a_y \mathbf r_2^\top + v_0\mathbf r_3^\top\right)\mathbf r_3  =  m_{34}^2\mathbf m_2^\top\mathbf m_3 \\
+a_x &amp; = m_{34}^2 \left\|\mathbf m_1\times\mathbf m_3\right\|\\
+a_y &amp; = m_{34}^2 \left\|\mathbf m_2\times\mathbf m_3\right\|
+\end{aligned}，
+\end{equation}</p>
+
+<p>以及摄像机的外参</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\mathbf r_1 &amp;= \frac{m_{34}}{a_x}\left(\mathbf m_1 - u_0\mathbf m_3\right)\\
+\mathbf r_2 &amp;= \frac{m_{34}}{a_y}\left(\mathbf m_2 - v_0\mathbf m_3\right)\\
+\mathbf r_3 &amp;= m_{34}\mathbf m_3\\
+t_x &amp;= \frac{m_{34}}{a_x}\left(m_{14} - u_0\right) \\
+t_y &amp;= \frac{m_{34}}{a_y}\left(m_{24} - v_0\right) \\
+t_z &amp;= m_{34}
+\end{aligned}。
+\end{equation}</p>
+
+<p>$\mathbf M$矩阵由4个摄像机内部参数及$\mathbf R$和$\mathbf t$确定。由于$\mathbf R$是正交单位阵，$\mathbf R$和$\mathbf t$的独立变量数为6，因此$\mathbf M$由10个独立变量的矩阵确定。但是$3\times 4$的矩阵$\mathbf M$由11个参数确定，可见这11参数并非相互独立，存在约束关系。在求解的时候并未参数间的约束关系，数据有误差时计算结果有误差，且误差在各参数间的分配也没有按约束关系考虑。实验表明，用上述方法分解出的内外参数有较大的误差。Faugeras等<a href="#faugeras1986calibration">[4]</a>在用\eqref{eq:ls-solution}求解$\mathbf M$时加上了约束条件$\|\mathbf m_3\|=1$，不需要解非线性方程，而且提高了计算精度。</p>
+
+<h3 id="faugerasa-href20113-p-44a">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></h3>
+
+<h3 id="a-href20085-p-62a">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></h3>
+
+<p>由于制造工艺的限制，通常摄像机离散化后的像素不是矩形而是平行四边形，一边平行于$u$轴，另一边与$u$轴夹角为$\theta$，边长为分别为$\mathrm{d}x$和$\mathrm{d}y$，那么公式\eqref{eq:pixel-vs-image-coordination}可改写为</p>
+
+<p>\begin{equation}
+\begin{bmatrix}u\\ v\\ 1\end{bmatrix} = 
+\begin{bmatrix}
+{1\over \mathrm{d}x} &amp; -{\cot\theta\over \mathrm{d}y} &amp; u_0 \\
+0 &amp; {\sin\theta\over \mathrm{d}y} &amp; v_0 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}x\\ y\\ 1\end{bmatrix}。
+\label{eq:pixel-vs-image-coordination2}
+\end{equation}</p>
+
+<h2 id="tsai">Tsai标定法</h2>
+
+<p>实验表明，线性模型不能准确描述成像的几何关系，尤其在使用广角镜头时，远离图像中心处会有较大的畸变。描述非线性畸变可用如下公式<a href="#马颂德1998计算机视觉">[2, P. 59]</a></p>
+
+<p>\begin{equation}
+\begin{aligned}
+\bar{x} &amp;= x + \delta_x(x,y)\\
+\bar{y} &amp;= y + \delta_y(x,y)
+\end{aligned}，
+\label{eq:image-mapping-distortion}
+\end{equation}</p>
+
+<p>其中，$(\bar x, \bar y)$是小孔线性模型计算出的图像坐标理想值，$(x, y)$是实际图像坐标，$\delta_x$和$\delta_y$是非线性畸变，它与图像点在图中位置相关，可用公式表示为</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\delta_x(x, y) &amp;= k_1x\left(x^2+y^2\right)+\left(p_1\left(3x^2+y^2\right)+2p_2xy\right)+s_1\left(x^2+y^2\right)\\
+\delta_y(x, y) &amp;= k_2y\left(x^2+y^2\right)+\left(p_2\left(3x^2+y^2\right)+2p_1xy\right)+s_2\left(x^2+y^2\right)
+\end{aligned}
+\end{equation}</p>
+
+<p>上式第一项称为径向畸变，第二项称为离心畸变（decentering），第三项称为薄棱镜畸变（thin prism），$k_1,k_2,p_1,p_2,s_1,s_2$称为非线性畸变参数。通常第一项径向畸变就能足够描述非线性畸变。Tsai指出<a href="#tsai1986efficient">[6]</a>，考虑非线性畸变需要使用非线性优化算法，引入过多的非线性参数往往不能提高精度，反而引起解的不稳定性。但也有研究表明<a href="#faugeras1987camera">[7]</a><a href="#weng1990calibration">[8]</a>，引入二三项在使用广角镜头时能提高精度。若只考虑径向畸变，\eqref{eq:image-mapping-distortion}可写为</p>
+
+<p>\begin{equation}
+\begin{aligned}
+\bar{x} &amp;= x\left(1+k_1r^2\right)\\
+\bar{y} &amp;= y\left(1+k_2r^2\right)
+\end{aligned}，
+\end{equation}</p>
+
+<p>其中$r^2=x^2+y^2$，图像边缘处的畸变较大。</p>
+
+<p>Tsai提出的方法<a href="#tsai1986efficient">[6]</a><a href="#tsai1987versatile">[9]</a>很好的解决了只存在径向畸变时的标定问题。Tsai标定法是基于径向排列约束（RAC，radial alignment constraint）的两步标定法。该方法的第一步是利用最小二乘法得到外部参数；第二步求解内部参数，如果摄像机无径向畸变，可由线性方程组求解，若存在径向畸变，可结合非线性优化得到全部参数。</p>
+
+<h2 id="section-7">张正友平面标定法</h2>
+
+<h2 id="section-8">参考资料</h2>
+
+<ol class="bibliography"><li><span id="abdel2015direct">[1]Y. I. Abdel-Aziz and H. M. Karara, “Direct Linear Transformation from Comparator Coordinates into Object Space Coordinates in Close-Range Photogrammetry,” <i>Photogrammetric Engineering &amp; Remote Sensing</i>, vol. 81, no. 2, pp. 103–107, 2015.</span>
+
+</li>
+<li><span id="马颂德1998计算机视觉">[2]马颂德 and 张正友, <i>计算机视觉：计算理论与算法基础</i>. 科学出版社, 1998.</span>
+
+</li>
+<li><span id="徐德2011机器人视觉测量与控制">[3]徐德, 谭民, and 李原, <i>机器人视觉测量与控制</i>, 2nd ed. 北京: 国防工业出版社, 2011.</span>
+
+</li>
+<li><span id="faugeras1986calibration">[4]O. D. Faugeras and G. Toscani, “The calibration problem for stereo,” in <i>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</i>, 1986, vol. 86, pp. 15–20.</span>
+
+</li>
+<li><span id="吴福朝2008计算机视觉中的数学方法">[5]吴福朝, <i>计算机视觉中的数学方法</i>. 科学出版社, 2008.</span>
+
+</li>
+<li><span id="tsai1986efficient">[6]R. Y. Tsai, “An efficient and accurate camera calibration technique for 3D machine vision,” in <i>Proc. IEEE Conf. on Computer Vision and Pattern Recognition</i>, 1986.</span>
+
+</li>
+<li><span id="faugeras1987camera">[7]O. D. Faugeras and G. Toscani, “Camera calibration for 3D computer vision,” in <i>Proceedings of International Workshop on Machine Vision and Machine Intelligence, Tokyo, Japan</i>, 1987.</span>
+
+</li>
+<li><span id="weng1990calibration">[8]J. Weng, P. Cohen, and M. Herniou, “Calibration of stereo cameras using a non-linear distortion model [CCD sensory],” in <i>Pattern Recognition, 1990. Proceedings., 10th International Conference on</i>, 1990, vol. 1, pp. 246–253.</span>
+
+</li>
+<li><span id="tsai1987versatile">[9]R. Y. Tsai, “A versatile camera calibration technique for high-accuracy 3D machine vision metrology using off-the-shelf TV cameras and lenses,” <i>Robotics and Automation, IEEE Journal of</i>, vol. 3, no. 4, pp. 323–344, 1987.</span>
+
+</li></ol>
+
+<ul>
+  <li><a href="http://nlpr-web.ia.ac.cn/course/calibration.pdf">摄相机标定</a></li>
+  <li><a href="http://blog.csdn.net/b5w2p0/article/details/8804216">双目视觉算法研究（二）相机模型和直接线性法（DLT）</a></li>
+  <li><a href="https://tams.informatik.uni-hamburg.de/lectures/2014ws/vorlesung/ir/index.php?content=01-unterlagen">64-424 Intelligent Robotics</a></li>
+  <li><a href="http://www.sigvc.org/why/book/3dp/chap6.3.1.htm">《3D打印：三维智能数字化创造》之摄像机定标</a></li>
+</ul>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/04/opencv-a-python-tutorial" class="pageNav" style="float:left"   >上一篇：OpenCV（1）：基于Python的简介 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/04/postgresql-essential" class="pageNav" style="float:right"   >下一篇：PostgreSQL Essential </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/04/camera-calibration" 	data-url="http://qianjiye.de/2015/04/camera-calibration" data-title="摄像机标定">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/04/opencv-a-python-tutorial'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/04/postgresql-essential'; --1> -->
+<!--         url = '/2015/04/postgresql-essential'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/04/camera-calibration/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

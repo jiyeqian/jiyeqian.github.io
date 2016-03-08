@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>DILinAV（4）：基于最小割的推理</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>DILinAV（4）：基于最小割的推理</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-10-13">2015-10-13</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本文内容主要来自M. Nikos Paragons和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第4节“Minimum cut based inference”。</p>
+
+<h2 id="dinits">Dinits算法</h2>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Ford-Fulkerson-Algorithm.jpg" alt="" width="400px" id="Ford-Fulkerson-Algorithm" /></p>
+
+<p>当弧的权值很大时，若选择了不恰当的s-t路径，<a href="/2015/09/maximum-flow-and-minimum-cut#Ford-Fulkerson-Algorithm">Ford-Fulkerson算法</a>效率非常低，可能导致“无限迭代”，如上图右所示。如何在余图中选择合适s-t路径，使得算法高效？</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Dinits-Algorithm.png" alt="" width="180px" id="Dinits-Algorithm" /></p>
+
+<p>Dinits算法与Ford-Fulkerson算法的不同之处仅仅在于：每次从余图中找出最短s-t路径（弧的数目最少的路径），如上图所示。除了这两个算法，还有如下这些最大流算法：</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Minimum-Cut-Solvers.png" alt="" width="500px" id="Minimum-Cut-Solvers" /></p>
+
+<p>$m$表示弧数，$n$表示顶点数，$U$表示最大弧长。有的算法对多项式时间复杂度或者伪多项式时间复杂度。时间复杂度依赖于所要解决的问题。</p>
+
+<p>计算机视觉是一类特殊的问题，通常是连通度很低的稀疏图，比如网格，弧的数目和顶点数据相近。这类特殊的问题可以用Yuri Boykov和Vladimir Kolmogorov提出的算法<a href="#boykov2004experimental">[1]</a>解决。</p>
+
+<h2 id="section">双标签能量函数</h2>
+
+<p>利用最小割（最大流）算法，可以求解能量最小化问题。首先从双标签问题入手，随机变量的取值为0或1。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Interactive-Binary-Segmentation.jpg" alt="" width="400px" id="Interactive-Binary-Segmentation" /></p>
+
+<p>上图的分割任务是从图中分割出白色的牛。蓝色笔刷选取前景，其RGB直方图记为$FG$；红色笔刷选取背景，其RGB直方图记为$BG$。</p>
+
+<p>图像分割问题可以通过CRF解决。每个随机变量对应图中的一个像素。随机变量取值为0或1，标签1表示前景🐂，标签0表示背景。若图有$n$个像素，则共有$2^n$种候选标签组合，分割的任务就是从中找出最佳的标签组合。</p>
+
+<p>在能量函数中，若白色像素视为前景，其对应的一元势（惩罚力度）应当很低，若白色像素视为背景，其对应的一元势应当很高，这种一元势可表示为（$d_a$表示色彩值）：</p>
+
+<p>\begin{equation}
+\theta_p(0) \propto -\log(BG(d_a)), \quad \theta_p(1) \propto -\log(FG(d_a))。
+\end{equation}</p>
+
+<p>两个颜色相近像素的标签应当相同。若相邻两像素色彩差异很大，分配不同的标签惩罚力度小。二元势可表示为：</p>
+
+<p>\begin{equation}
+\theta_{pq}(i,k) \left\{ 
+\begin{aligned}
+&amp;\propto \exp(-(d_a-d_b)^2) &amp;&amp;\text{if  }i\neq k\\
+&amp;= 0 &amp;&amp;\text{if  }i = k
+\end{aligned}
+\right.。
+\end{equation}</p>
+
+<p>基于最小割的能量最小化图像分割算法的思路：</p>
+
+<ol>
+  <li>将能量最小化问题转换为最大流问题。能量函数$E$的每个随机变量对应一个顶点（像素），再加上s和t顶点，得到图$D$。</li>
+  <li>计算图$D$的最小割，得到两个顶点子集$U$和$V\backslash U$，$U$包含顶点s，$V\backslash U$包含顶点t。</li>
+  <li>两个顶点子集分别对应前景和背景。</li>
+</ol>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_energy2graph.jpg" alt="" width="400px" id="energy2graph" /></p>
+
+<h3 id="submodular-energy-function">次模能量函数（submodular energy function）</h3>
+
+<p>如何构造弧及其容量，使得最小割能最小化能量函数？</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Unary-Potentials-0.jpg" alt="" width="240px" id="Unary-Potentials-0" /></p>
+
+<p>上图的例子只有唯一变量，改变量取值为0或1，因此存在两个一元势。$A$和$B$分别表示$x_p$的标签为0和1时的一元势。寻找能量最小化的解可转化为求解有向图的最小割。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Unary-Potentials-1.jpg" alt="" width="480px" id="Unary-Potentials-1" /></p>
+
+<p>首先需要增加s和t顶点，如上图右两图所示，问题转化为如何构建弧及其容量，使得求解最小割等价于能量最小化。最小割又可通过最大流求解。任意弧的流量必不小于0，且不大于其容量。因此，弧的容量（长度）必不小于0，这是构造有向图的约束条件。假设$A\geq B$，如上图左所示，将上表分解为下面两个表，其中第二表是常数，无论$x_p$取何值它都对能量最小化无影响。上图中表示$v_p\in V\backslash U$，$v_p$的标签为1；上图右表示$v_p\in U$，$v_p$的标签为0。容易看出，上图中$v_p$的标签为1时，最小割对应着能量最小化，上图右非最小割。上图左表与上图右两图表所表达的一致。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Unary-Potentials-2.jpg" alt="" width="480px" id="Unary-Potentials-2" /></p>
+
+<p>上图表示$A&lt;B$时，最小割等价于能量最小化。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Pairwise-Potentials-1.jpg" alt="" width="400px" id="Pairwise-Potentials-1" /></p>
+
+<p>二元势的计算稍复杂。上图中包含两个随机变量$x_p$和$x_q$，它们互为邻居，存在4个二元势（左上表所示）。同样为这4个势构造有向图，先将左上表分解为4个表将简化构造有向图（$B&lt;A$和$D&lt;B$时也有类似做法），然后将表映射到有向图中，第二个表只和$x_q$有关，第三个表只和$x_p$有关，只有第四个表才表示二元势。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Pairwise-Potentials-2.jpg" alt="" width="200px" id="Pairwise-Potentials-2" /></p>
+
+<p>$C+B-D-A\geq 0$的假定，表示为相邻像素分配不同标签的势之和不小于分配相同标签的势之和，这称为次模式（submodular）二元势或<strong>次模式能量函数</strong>。若$C+B-D-A &lt; 0$，需要进行另外的分解吗？事实上，不存在有向图对应于非次模式能量函数<sup id="fnref:NP-hard-1"><a href="#fn:NP-hard-1" class="footnote">1</a></sup>。因此，用最小割求解能量最小化问题时，通常假定能量函数是次模式的，也就是一元势可以是任意的，但是二元势必须有约束条件（不同标签的势之和不小于相同标签的势之和）。</p>
+
+<h3 id="section-1">应用实例</h3>
+
+<p>对一元势，已知如何构建有向图，使割对应于能量。对二元势，假设它是次模态的，已知如何构建有向图，使割对应于能量。若能量函数由一元和二元势的和表示，则需要构件一组有向图对应于这些一元和二元势，并将这些图合并起来，得到一个大图，然后再求最大流。利用该算法，可进行图像分割<a href="#boykov2001interactive">[2]</a>和合成<a href="#kwatra2003graphcut">[3]</a>。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_segmentation1.jpg" alt="" width="456px" id="segmentation1" /></p>
+
+<p>上图中，需要分割出上图左中的人，白色的画笔相当于对前景采样，尽量覆盖皮肤、衣服等多种颜色，黑色画笔是对背景采样，得到的结果如山图右所示。</p>
+
+<p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_synthesis1.jpg" alt="" width="560px" id="synthesis1" /></p>
+
+<p>上图展示了两幅图像合成一幅图像，效果自然逼真。对每个像素，标签0或1表示采用图0或1的色彩值，红色线条表示产生割的地方。</p>
+
+<h2 id="section-2">多标签能量函数</h2>
+
+<p>两图图像分别来自左右两个相机。立体匹配（stereo correspondence），找出两图的像素对应关系。左图像素$(i_p,j_p)$对应与右图像素$(i_p+d_p,j_p)$。，立体匹配中的disparity map。CRF,每个随机变量表示左图的一个像素，标签$L$标示disparity。匹配好的，一元势很小，大。可定义$\theta_p(i)$正比于RGB值的差异。$\theta_{pq}(i,k)=w_{pq}d(i,k),w_{pq}\geq 0$，$d$表示距离函数。$w_{pq}$调节相似度，越相似值越大。</p>
+
+<p>求解这样的问题通常是NP难的，但我们能找到近似解。</p>
+
+<h3 id="move-making">Move-Making算法</h3>
+
+<h3 id="expansiona-hrefboykov2001fast4a">Expansion算法<a href="#boykov2001fast">[4]</a>，</h3>
+
+<h2 id="section-3">参考资料</h2>
+
+<ol class="bibliography"><li><span id="boykov2004experimental">[1]Y. Boykov and V. Kolmogorov, “An experimental comparison of min-cut/max-flow algorithms for energy minimization in vision,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 26, no. 9, pp. 1124–1137, 2004.</span>
+
+</li>
+<li><span id="boykov2001interactive">[2]Y. Y. Boykov and M.-P. Jolly, “Interactive graph cuts for optimal boundary &amp; region segmentation of objects in ND images,” in <i>Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE International Conference on</i>, 2001, vol. 1, pp. 105–112.</span>
+
+</li>
+<li><span id="kwatra2003graphcut">[3]V. Kwatra, A. Schödl, I. Essa, G. Turk, and A. Bobick, “Graphcut textures: image and video synthesis using graph cuts,” in <i>ACM Transactions on Graphics (ToG)</i>, 2003, vol. 22, no. 3, pp. 277–286.</span>
+
+</li>
+<li><span id="boykov2001fast">[4]Y. Boykov, O. Veksler, and R. Zabih, “Fast approximate energy minimization via graph cuts,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 23, no. 11, pp. 1222–1239, 2001.</span>
+
+</li></ol>
+<div class="footnotes">
+  <ol>
+    <li id="fn:NP-hard-1">
+      <p>General 2-label MAP estimation is NP-hard. <a href="#fnref:NP-hard-1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/09/fast-ncc" class="pageNav" style="float:left"   >上一篇：快速归一化互相关 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/10/minimum-cut-based-inference" 	data-url="http://qianjiye.de/2015/10/minimum-cut-based-inference" data-title="DILinAV（4）：基于最小割的推理">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/09/fast-ncc'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/10/minimum-cut-based-inference/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

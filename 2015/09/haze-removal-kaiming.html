@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>去雾霾：基于单图的暗通道方法</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>去雾霾：基于单图的暗通道方法</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-09-16">2015-09-16</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">简介</h2>
+
+<p>本文介绍2009年Kaiming He提出的<a href="http://research.microsoft.com/en-us/um/people/kahe/cvpr09/">去雾霾算法</a><a href="#he2009single">[1]</a><a href="#he2011single">[2]</a>。</p>
+
+<p>去雾霾的价值在于：</p>
+
+<ol>
+  <li>视觉更愉悦：显著提升可见度和矫正空气光导致的色彩偏移；</li>
+  <li>提升计算机视觉算法性能：有偏和低对比度会影响这些算法；</li>
+  <li>获得深度信息：雾霾或雾提供了理解场景的深度信息。</li>
+</ol>
+
+<p>在户外无雾霾图像中，多数不包含天空的局部块包含一些像素（称为暗像素），它们至少在一个彩色通道亮度非常低。雾霾图像中，暗像素的暗通道值主要是空气光（airlight）导致的。因此，可直接通过这些暗像素精确估计雾霾的传输。结合雾霾成像模型和软抠图插值算法，可以恢复出高质量的无雾霾图像。此外，还能得到高质量深度图作为去雾霾的副产品。</p>
+
+<p>该方法可以处理远距离的对象，甚至是在浓雾霾图像中。并且不依赖输入图像中传播的显著变化和表面阴影。结果包含一些人为的光晕。和其它依赖强假设的方法一样，该方法也有其自身的局限性。当在大局部块中场景对象本质上和空气光相似，并且没有阴影投射到对象上时，暗通道先验可能无效。</p>
+
+<h2 id="section-1">相关工作</h2>
+
+<p>去雾霾的挑战性在于雾霾与未知的深度信息相关。当只输入单张图片时，该问题约束条件不足（under-constrained）。因此许多去雾霾方法采用多张图像和附加信息。极化去雾霾，采用不同极化角度获取的两张以上的图像<a href="#schechner2001instant">[3]</a><a href="#shwartz2006blind">[4]</a>。在不同天气条件下，通过相同场景的不同图像，获得更多的约束条件<a href="#narasimhan2000chromatic">[5]</a><a href="#narasimhan2003contrast">[6]</a><a href="#nayar1999vision">[7]</a>。基于深度信息的方法，需要用户输入或从已知3D模型获得粗略的深度信息<a href="#kopf2008deep">[8]</a><a href="#narasimhan2003interactive">[9]</a>。</p>
+
+<p>单图去雾霾<a href="#fattal2008single">[10]</a><a href="#tan2008visibility">[11]</a>也有显著的进步。这些方法依赖于强先验或假设。Tan<a href="#tan2008visibility">[11]</a>发现无雾霾的图像必定比雾霾图像有更高的对比度，他通过最大化局部对比度去除雾霾，视觉上效果明显但可能不实用。Fattal<a href="#fattal2008single">[10]</a>基于传输和表面阴影局部不相关的假设，估计场景的反射率，然后推测介质传输。Fattal的方法效果显著。然而，该方法不能很好处理浓雾霾的图像，并且在假设失效时可能失败。</p>
+
+<h2 id="section-2">背景知识</h2>
+
+<p><img src="/assets/images/2015-09-16-single-image-haze-removal-using-dark-channel-prior_atmospheric-scattering-model.png" alt="Atmospheric Scattering Model" width="560px" id="fig-atmospheric-scattering-model" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：大气散射模型。</p>
+
+<p>在计算机视觉和计算机图形学中，广泛用于描述雾霾图像构成的模型如下（如上图所示）<a href="#fattal2008single">[10]</a><a href="#narasimhan2000chromatic">[5]</a><a href="#narasimhan2002vision">[12]</a><a href="#tan2008visibility">[11]</a></p>
+
+<p>\begin{equation}
+\mathbf I(\mathbf x) = \mathbf J(\mathbf x)t(\mathbf x)+\mathbf A(1-t(\mathbf x))，
+\label{eq:haze-image-model}
+\end{equation}</p>
+
+<p>其中$\mathbf I$是看到的雾霾图像，$\mathbf J$是场景光线，$\mathbf A$是全局大气光，$t$是介质传输率（表示没有散射并进入相机的光线比率）。去雾霾就是从$\mathbf I$中恢复$\mathbf J$、$\mathbf A$和$t$，最终得到的$\mathbf J$就是无雾霾的图像。</p>
+
+<p>假设光线传输的介质均匀，离相机越近的物体反射光线到相机越多。那么，离相机越近的物体的传输率$\mathbf t(\mathbf x)$就应该越大。</p>
+
+<p>$\mathbf J(\mathbf x)t(\mathbf x)$称为直接衰减（direct attenuation）<a href="#tan2008visibility">[11]</a>，$\mathbf A(1-t(\mathbf x))$称为空气光（airlight）<a href="#koschmieder1925theorie">[13]</a><a href="#tan2008visibility">[11]</a>。直接衰减描述了场景光线和它在介质中的衰减，同时散射光线导致的空气光引起了场景色彩偏移。当大气同质时，传输率$t$可表示为</p>
+
+<p>\begin{equation}
+t(\mathbf x)=e^{-\beta d(\mathbf x)}，
+\label{eq:2}
+\end{equation}</p>
+
+<p>其中$\beta$是大气的散射系数，它表示场景光线按景深$d$指数衰减。</p>
+
+<p><img src="/assets/images/2015-09-16-single-image-haze-removal-using-dark-channel-prior_haze-image-model-illustration.png" alt="Haze Image Model" width="456px" id="fig-2" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：（a）雾霾图像构成模型；（b）Tattal采用的恒定反射率模型<a href="#fattal2008single">[10]</a>。</p>
+
+<p>从几何上说，雾霾图像方程\eqref{eq:haze-image-model}表示在RGB色彩空间中，向量$\mathbf A$、$\mathbf I(x)$和$\mathbf J(x)$共面，并且它们的终点共线（如上图所示）。传速率$t$是两直线段的比率</p>
+
+<p>\begin{equation}
+t(\mathbf x)={\left\|\mathbf A-\mathbf I(\mathbf x)\right\|\over \left\|\mathbf A-\mathbf J(\mathbf x)\right\|} = {A^c-I^c(\mathbf x)\over A^c-J^c(\mathbf x)}，
+\end{equation}</p>
+
+<p>其中$c\in\{r,g,b\}$是彩色通道索引。</p>
+
+<p>基于该模型，Tan的方法<a href="#tan2008visibility">[11]</a>重在增强图像的能见度。对于统一传输率$t$的块，输入图像的能见度（梯度和）被雾霾降低了，由于$t&lt;1$，</p>
+
+<p>\begin{equation}
+\sum_\mathbf x\|\nabla\mathbf I(\mathbf x)\| = t\sum_\mathbf x\|\nabla\mathbf J(\mathbf x)\| &lt; \sum_\mathbf x\|\nabla\mathbf J(\mathbf x)\|。
+\end{equation}</p>
+
+<p>在约束条件$\mathbf J(\mathbf x)$小于$\mathbf A$的条件下，通过最大化块的能见度，估计传速率$t$，通过MRF模型进一步规范化结果。该方法可以从雾霾图像中极大的恢复细节和结构。但是输出图像通常过饱和，这是由于该方法完全是在增强图像的能见度，并非在于恢复真实的场景光线。并且还可能在深度不连续区域附近存在光晕效应。</p>
+
+<p>Fattal提出了基于独立成分分析（ICA，independent component analysis）的方法<a href="#fattal2008single">[10]</a>。首先假设局部块的反射率为常向量$\mathbf R$。因此，块中的所有$\mathbf J(\mathbf x)$拥有相同的方向$\mathbf R$，如<a href="#fig-2">上图</a>（b）所示。其次，假设块中的表面阴影$\|\mathbf J(\mathbf x)\|$的统计特性和传输率$t(\mathbf x)$独立，$\mathbf R$的方向可通过ICA估计。最后，输入彩色图像利用MRF模型估计全图的解。该方法能够得到自然的无雾霾图像和好的深度图。然而，该方法基于局部块的统计独立假设，它要求独立成分变化显著。任何变化不足和低信噪比会使得统计特性不可靠。由于统计特性基于彩色图像，对灰度图无效，难以处理浓雾霾的图像（非彩色、大噪声）。</p>
+
+<h2 id="section-3">暗通道先验</h2>
+
+<p>暗通道先验（dark channel prior）基于对户外无雾霾图像的如下观测：在多数非天空的块中，至少一个彩色通道在一些像素的值非常低。也就是说，那些块的最小值非常低。对图像$\mathbf J$，定义</p>
+
+<p>\begin{equation}
+J^{dark}(\mathbf x) = \min_{c\in\{r,g,b\}}\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left(J^c(\mathbf y)\right)\right)，
+\end{equation}</p>
+
+<p>其中$J^c$表示$\mathbf J$的彩色通道，$\Omega(\mathbf x)$表示以$\mathbf x$为中心的局部块。若$\mathbf J$是无雾霾图像，除了天空区域，$J^{dark}$的值很低，趋近于0。$J^{dark}$称为$\mathbf J$的<strong>暗通道</strong>（dark channel）。以上统计观测或知识称之为<strong>暗通道先验</strong>（dark channel prior）。</p>
+
+<p>暗通道的低像素值主要由如下3个因素导致：</p>
+
+<ol>
+  <li>阴影。比如：在城市图像中，车辆、建筑物和窗户内部的阴影；在风景图像中，树叶、树木和岩石的阴影。</li>
+  <li>彩色对象或表面。比如：任何缺失彩色通道的对象（绿色的草、树，红色的花或叶子，蓝色的水面）。</li>
+  <li>暗的对象或表面。比如：暗的树干和石头。</li>
+</ol>
+
+<p>由于自然的户外图像通常充满了阴影并且色彩斑斓，这些图像的暗通道真的很暗。</p>
+
+<p><img src="/assets/images/2015-09-16-haze-removal-kaiming_dark-channel-images.png" alt="Dark Channels" width="600px" id="fig-3" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：（a）无雾霾的图像；（b）（a）中对应的暗通道；（c）有雾霾的图像及其暗通道。</p>
+
+<p>上图展示了部分网络随机选取的图像，去除掉天空区域，采用$15\times 15$的块，得到的暗通道效果。由于额外的空气光，雾霾图像比无雾霾的图像要亮，它的传输率$t$较低。雾霾图像的暗通道在浓雾霾的区域拥有更大的值。形象地说，暗通道的值可作为雾霾浓度的粗略近似，可利用该特性估计传输率和空气光。值得注意，由于无雾霾图像在天空区域亮度高暗通道，因此忽略了天空区域。幸运的是，利用\eqref{eq:haze-image-model}和暗通道先验，可以优雅的处理天空区域。</p>
+
+<p>暗通道先验部分启发来自于多光谱遥感系统中广泛使用的暗对象减法技术。在文献<a href="#chavez1988improved">[14]</a>中，通过减去场景中最暗对象对应的常数值，空间同质的雾霾就被去除了。</p>
+
+<h2 id="section-4">去雾霾算法</h2>
+
+<h3 id="section-5">估计传输率</h3>
+
+<p>此处假设大气光$\mathbf A$已知，后面会介绍自动估计它的方法。进一步假设局部块$\Omega(\mathbf x)$的传输率恒定，块的传输率设为$\tilde t(\mathbf x)$。对\eqref{eq:haze-image-model}的局部块取最小值运算，</p>
+
+<p>\begin{equation}
+\min_{\mathbf y\in\Omega(\mathbf x)}\left(I^c(\mathbf y)\right)=\tilde t(\mathbf x)\min_{\mathbf y\in\Omega(\mathbf x)}\left(J^c(\mathbf y)\right)+\left(1-\tilde t(\mathbf x)\right)A^c，
+\end{equation}</p>
+
+<p>需要注意，$\min$运算在3个彩色通道上分别执行，上式等价于</p>
+
+<p>\begin{equation}
+\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)=\tilde t(\mathbf x)\min_{\mathbf y\in\Omega(\mathbf x)}\left({J^c(\mathbf y)\over A^c}\right)+\left(1-\tilde t(\mathbf x)\right)，
+\end{equation}</p>
+
+<p>然后在3个通道中再取最小值</p>
+
+<p>\begin{equation}
+\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)\right)=\tilde t(\mathbf x)\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({J^c(\mathbf y)\over A^c}\right)\right)+\left(1-\tilde t(\mathbf x)\right)。
+\label{eq:8}
+\end{equation}</p>
+
+<p>根据暗通道先验，无雾霾光线$\mathbf J$的暗通道$J^{dark}$应趋于0</p>
+
+<p>\begin{equation}
+J^{dark}(\mathbf x) = \min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left(J^c(\mathbf y)\right)\right)＝0，
+\end{equation}</p>
+
+<p>由于$A^c$总是正值，那么有</p>
+
+<p>\begin{equation}
+\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({J^c(\mathbf y)\over A^c}\right)\right)=0。
+\label{eq:10}
+\end{equation}</p>
+
+<p>\eqref{eq:10}带入\eqref{eq:8}，可以容易估计出传输率$\tilde t$</p>
+
+<p>\begin{equation}
+\tilde t(\mathbf x) = 1 - \min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)\right)。
+\label{eq:11}
+\end{equation}</p>
+
+<p>事实上，$\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)\right)$是规则化图像${I^c(\mathbf y)\over A^c}$的暗通道。</p>
+
+<p>暗通道不是天空区域合适的先验，幸运的是，在雾霾图像中，天空的色彩和大气光$\mathbf A$非常相似</p>
+
+<p>\[
+\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)\right)\rightarrow 1,\quad \tilde t(\mathbf x)\rightarrow 0。
+\]</p>
+
+<p>由于天空在无限远处且传输率趋于0，公式\eqref{eq:11}可以同时优雅的处理天空和非天空区域，不必事先分开对待。</p>
+
+<p>在实际中，即使是晴空，大气也不是绝对不受粒子影响。因此，当看远处的物体时，雾霾仍然存在。此外，雾霾提供了人们感知深度的根本线索<a href="#goldstein2013sensation">[15]</a><a href="#preetham1999practical">[16]</a>。这一现象称为<strong>大气透视</strong>（aerial perspective）。如果完全移除雾霾，图像看起来不自然并且可能丢失深度信息。因此需要对远处的对象保留少量的雾霾，在公式\eqref{eq:11}中引入常量参数$\omega(0&lt;\omega\le 1)$，</p>
+
+<p>\begin{equation}
+\tilde t(\mathbf x) = 1 - \omega\min_c\left(\min_{\mathbf y\in\Omega(\mathbf x)}\left({I^c(\mathbf y)\over A^c}\right)\right)。
+\label{eq:12}
+\end{equation}</p>
+
+<p>通过调整系数，可以对远处的对象保留跟多的雾霾，$\omega$的取值跟具体应用相关。文中将该值固定为0.95。<a href="#fig-5">下图</a>（b）是采用$15\times 15$大小的块估计到的传输率图。看上去还行，但是块现象也很明显，这是因为实际上块的传输率并非总是恒定的。</p>
+
+<p><img src="/assets/images/2015-09-16-single-image-haze-removal-using-dark-channel-prior_haze-removal-result.png" alt="Dark Channels" id="fig-5" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：去雾霾结果。（a）输入雾霾图；（b）传输率图；（c）软抠图改进的传输图；（d）最终去雾霾结果。</p>
+
+<h3 id="section-6">软抠图</h3>
+
+<p>雾霾成像方程\eqref{eq:haze-image-model}和图像抠图方程相似。传输率图就是一种alpha图。因此，可以采用软抠图算法<a href="#levin2008closed">[17]</a>改进传输率图。改进的传输率图定义为$t(\mathbf x)$。重新将$t(\mathbf x)$和$\tilde t(\mathbf x)$改写为向量形式$\mathbf t$和$\mathbf{\tilde t}$。最小化代价函数</p>
+
+<p>\begin{equation}
+E(\mathbf t)=\mathbf t^\top L\mathbf t+\lambda(\mathbf t-\tilde{\mathbf t})^\top(\mathbf t-\tilde{\mathbf t})，
+\end{equation}</p>
+
+<p>其中$L$是抠图拉普拉斯矩阵<a href="#levin2008closed">[17]</a>，$\lambda$是正则化系数。第一项是平滑项，第二项是数据项。矩阵$L$的元素$(i,j)$定义为</p>
+
+<p>\begin{equation}
+\sum_{k|(i,j)\in w_k}\left(\delta_{ij}-{1\over\left|w_k\right|}\left(1+\left(\mathbf I_i-\mu_k\right)^\top\left(\Sigma_x+{\varepsilon\over\left|w_k\right|}U_3\right)^{-1}\left(\mathbf I_j-\mu_k\right)\right)\right)，
+\end{equation}</p>
+
+<p>其中$\mathbf I_i$和$\mathbf I_j$是输入图像$\mathbf I$在像素$i$和$j$的色彩值，$\delta_{ij}$是克罗内克（Kronecker）delta，$\mu_k$和$\Sigma_k$是窗口$w_k$中色彩的均值和方差矩阵，$U_3$是$3\times 3$的单位阵，$\varepsilon$是正则化参数，$\left|w_k\right|$是窗口$w_k$中的像素数目。</p>
+
+<p>最优$\mathbf t$可通过求解如下线性方程得到</p>
+
+<p>\begin{equation}
+(L+\lambda U)\mathbf t = \lambda\tilde{\mathbf t}，
+\end{equation}</p>
+
+<p>其中$U$是和$L$大小相同的单位阵。此处，$\lambda$设为一个很小的值（文中实验用的是$10^{-4}$），因此$\mathbf t$稍稍受到$\tilde{\mathbf t}$的约束。</p>
+
+<p>Levin的软抠图也被Hsu用于处理空间变化的白平衡问题<a href="#hsu2008light">[18]</a>。在Levin和Hsu的工作中，$\tilde{\mathbf t}$只在稀疏区域已知，抠图主要用于估计未知区域的值。此处，软抠图用于改进已经充满全图的$\tilde{\mathbf t}$。<a href="#fig-5">上图</a>（c）是（b）作为数据项的软抠图结果<sup id="fnref:refined-transmission-map"><a href="#fn:refined-transmission-map" class="footnote">1</a></sup>。</p>
+
+<h3 id="section-7">恢复场景光线</h3>
+
+<p>利用传输率图，能通过\eqref{eq:haze-image-model}恢复出场景光线。但是，当传输率$t(\mathbf x)$接近0时，直接衰减项$\mathbf J(\mathbf x)t(\mathbf x)$也很接近0。直接恢复的场景光线$\mathbf J$接近噪声。因此，用下阶$t_0$限制传输率$t(\mathbf x)$，这意味着在很浓雾霾的区域保留了一定数量的雾霾。最终场景光线$\mathbf J(\mathbf x)$恢复采用</p>
+
+<p>\begin{equation}
+\mathbf J(\mathbf x)={\mathbf I(\mathbf x)-\mathbf A\over \max(t(\mathbf x), t_0)}+\mathbf A。
+\end{equation}</p>
+
+<p>典型的$t_0$取值为0.1。由于场景光线通常不如大气光明亮，去除雾霾的图像看起来较暗。因此，增加$\mathbf J(\mathbf x)$的曝光量增强图像便于显示。<a href="#fig-5">上图</a>是最终恢复的场景光线。</p>
+
+<h3 id="section-8">估计大气光</h3>
+
+<p>以前多数基于单图的方法，从最浓雾像素估计的大气光$\mathbf A$。例如，最高亮度的像素用于估计大气光<a href="#tan2008visibility">[11]</a>，并且<a href="#fattal2008single">[10]</a>做了进一步改进。但是，在实际图像中，最亮的像素可能在白色的车或者白色的建筑物上。</p>
+
+<p><img src="/assets/images/2015-09-16-single-image-haze-removal-using-dark-channel-prior_estimating-the-atmospheric-light.png" alt="Estimating the atmospheric light" width="400px" id="fig-6" /></p>
+
+<p class="mvgcv-figure-caption">图：估计大气光。（a）输入图像；（b）暗通道及最浓雾区域；（c）文中方法自动获取大气光的块；（d）和（e）包含比大气光亮像素的两个块。</p>
+
+<p>正如前文所述，雾霾图像的暗通道能作为雾霾密度的很好近似，可使用暗通道改进大气光的估计。首先从暗通道中选取前$0.1\%$的亮像素。这些像素雾霾最浓（<a href="#fig-6">上图</a>（b）中黄色线标注）。在这些像素中，将对应输入图像$\mathbf I$中最亮的作为大气光（<a href="#fig-6">上图</a>（a）中红色矩形标注）。值得注意，这些像素不一定是全图最亮的像素。</p>
+
+<h2 id="section-9">实验及结果分析</h2>
+
+<p>实验采用了Herk的快速算法<a href="#van1992fast">[19]</a>寻找局部最小值，该算法复杂度与图像大小是线性关系。对$600\times 400$的图像，块大小为$15\times 15$。在软抠图中，采用预条件共轭梯度法（PCG，preconditioned conjugate gradient）求解<sup id="fnref:dehaze-performance"><a href="#fn:dehaze-performance" class="footnote">2</a></sup>。深度图根据\eqref{eq:2}计算，并且受尺度系数$\beta$的影响<sup id="fnref:get-depth-map"><a href="#fn:get-depth-map" class="footnote">3</a></sup>。文中提出的方法甚至可用于灰度图，在计算过程中，忽略掉$\min_c$部分。详细的实验结果和对比可参考原文<a href="#he2009single">[1]</a><a href="#he2011single">[2]</a>。</p>
+
+<p><img src="/assets/images/2015-09-16-single-image-haze-removal-using-dark-channel-prior_failure-case.png" alt="Estimating the atmospheric light" width="500px" id="fig-13" /></p>
+
+<p class="mvgcv-figure-caption align-text-center">图：失败示例。左：输入图像；中：去雾霾结果；右：传输率图。低估了大理石地面的传输率。</p>
+
+<p>由于暗通道先验是一种统计特性，可能在某些特定情况失效。当场景对象本质上和大气光相似并且没有阴影投射到它们上面时，暗通道先验无效，这就不足以正确估计传输率。和其它方法一样，雾霾成像模型无效时，此处的方法当然也有局限性。更高级的模型<a href="#preetham1999practical">[16]</a>可用于描述复杂的现象，比如天空中太阳的影响，地平线附近的蓝色调。</p>
+
+<h2 id="section-10">总结与展望</h2>
+
+<p><strong>算法步骤：</strong></p>
+
+<ol>
+  <li>利用暗通道估计传输率图$\tilde{\mathbf t}(\mathbf x)$；</li>
+  <li>利用软抠图优化传输率图，得到无块状效应的传输率图$\mathbf t(\mathbf x)$；</li>
+  <li>估计大气光$\mathbf A$；</li>
+  <li>根据雾霾成像模型\eqref{eq:haze-image-model}，恢复出无雾霾图像$\mathbf J$。</li>
+</ol>
+
+<p><strong>注意事项：</strong></p>
+
+<ul>
+  <li>由于去雾霾后的图像较暗，可以增强图像便于显示；</li>
+  <li>由于雾霾包含了深度信息，保留适当的雾霾让图像看起来更自然；</li>
+  <li>由于高亮对象干扰，估计大气光$\mathbf A$时需要以传输率图为参考，选择浓雾霾区域估计；</li>
+  <li>虽然天空不具暗通道特性，但其在无限远且类似大气光，传输率趋近0，因此不影响处理。</li>
+</ul>
+
+<p><strong>进一步工作：</strong></p>
+
+<ul>
+  <li>如何提升算法效率？</li>
+  <li>参数$\omega$和$t_0$对算法效果有何影响？</li>
+  <li>如何定义新的雾霾成像模型？</li>
+  <li>能否找到新的模型，将传输率估计和软抠图优化合二为一？比如利用双目视觉，直接测量距离估计传输率。</li>
+</ul>
+
+<h2 id="section-11">算法改进</h2>
+
+<h2 id="section-12">代码实现</h2>
+
+<h2 id="section-13">参考资料</h2>
+
+<ol class="bibliography"><li><span id="he2009single">[1]K. He, J. Sun, and X. Tang, “Single image haze removal using dark channel prior,” in <i>Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on</i>, 2009, pp. 1956–1963.</span>
+
+</li>
+<li><span id="he2011single">[2]K. He, J. Sun, and X. Tang, “Single image haze removal using dark channel prior,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 33, no. 12, pp. 2341–2353, 2011.</span>
+
+</li>
+<li><span id="schechner2001instant">[3]Y. Y. Schechner, S. G. Narasimhan, and S. K. Nayar, “Instant dehazing of images using polarization,” in <i>Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on</i>, 2001, vol. 1, pp. I–325.</span>
+
+</li>
+<li><span id="shwartz2006blind">[4]S. Shwartz, E. Namer, and Y. Y. Schechner, “Blind haze separation,” in <i>Computer Vision and Pattern Recognition, 2006 IEEE Computer Society Conference on</i>, 2006, vol. 2, pp. 1984–1991.</span>
+
+</li>
+<li><span id="narasimhan2000chromatic">[5]S. G. Narasimhan and S. K. Nayar, “Chromatic framework for vision in bad weather,” in <i>Computer Vision and Pattern Recognition, 2000. Proceedings. IEEE Conference on</i>, 2000, vol. 1, pp. 598–605.</span>
+
+</li>
+<li><span id="narasimhan2003contrast">[6]S. G. Narasimhan and S. K. Nayar, “Contrast restoration of weather degraded images,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 25, no. 6, pp. 713–724, 2003.</span>
+
+</li>
+<li><span id="nayar1999vision">[7]S. K. Nayar and S. G. Narasimhan, “Vision in bad weather,” in <i>Computer Vision, 1999. The Proceedings of the Seventh IEEE International Conference on</i>, 1999, vol. 2, pp. 820–827.</span>
+
+</li>
+<li><span id="kopf2008deep">[8]J. Kopf, B. Neubert, B. Chen, M. Cohen, D. Cohen-Or, O. Deussen, M. Uyttendaele, and D. Lischinski, “Deep photo: Model-based photograph enhancement and viewing,” in <i>ACM Transactions on Graphics (TOG)</i>, 2008, vol. 27, no. 5, p. 116.</span>
+
+</li>
+<li><span id="narasimhan2003interactive">[9]S. G. Narasimhan and S. K. Nayar, “Interactive (de) weathering of an image using physical models,” in <i>IEEE Workshop on Color and Photometric Methods in Computer Vision</i>, 2003, vol. 6, no. 6.4, p. 1.</span>
+
+</li>
+<li><span id="fattal2008single">[10]R. Fattal, “Single image dehazing,” in <i>ACM Transactions on Graphics (TOG)</i>, 2008, vol. 27, no. 3, p. 72.</span>
+
+</li>
+<li><span id="tan2008visibility">[11]R. T. Tan, “Visibility in bad weather from a single image,” in <i>Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference on</i>, 2008, pp. 1–8.</span>
+
+</li>
+<li><span id="narasimhan2002vision">[12]S. G. Narasimhan and S. K. Nayar, “Vision and the atmosphere,” <i>International Journal of Computer Vision</i>, vol. 48, no. 3, pp. 233–254, 2002.</span>
+
+</li>
+<li><span id="koschmieder1925theorie">[13]H. Koschmieder, <i>Theorie der horizontalen Sichtweite: Kontrast und Sichtweite</i>. Keim &amp; Nemnich, 1925.</span>
+
+</li>
+<li><span id="chavez1988improved">[14]P. S. Chavez, “An improved dark-object subtraction technique for atmospheric scattering correction of multispectral data,” <i>Remote sensing of environment</i>, vol. 24, no. 3, pp. 459–479, 1988.</span>
+
+</li>
+<li><span id="goldstein2013sensation">[15]E. Goldstein, <i>Sensation and perception</i>. Cengage Learning, 2013.</span>
+
+</li>
+<li><span id="preetham1999practical">[16]A. J. Preetham, P. Shirley, and B. Smits, “A practical analytic model for daylight,” in <i>Proceedings of the 26th annual conference on Computer graphics and interactive techniques</i>, 1999, pp. 91–100.</span>
+
+</li>
+<li><span id="levin2008closed">[17]A. Levin, D. Lischinski, and Y. Weiss, “A closed-form solution to natural image matting,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 30, no. 2, pp. 228–242, 2008.</span>
+
+</li>
+<li><span id="hsu2008light">[18]E. Hsu, T. Mertens, S. Paris, S. Avidan, and F. Durand, “Light mixture estimation for spatially varying white balance,” in <i>ACM Transactions on Graphics (TOG)</i>, 2008, vol. 27, no. 3, p. 70.</span>
+
+</li>
+<li><span id="van1992fast">[19]M. Van Herk, “A fast algorithm for local minimum and maximum filters on rectangular and octagonal kernels,” <i>Pattern Recognition Letters</i>, vol. 13, no. 7, pp. 517–521, 1992.</span>
+
+</li></ol>
+<div class="footnotes">
+  <ol>
+    <li id="fn:refined-transmission-map">
+      <p>As we can see, the refined transmission map manages to capture the sharp edge discontinuities and outline the profile of the objects. <a href="#fnref:refined-transmission-map" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:dehaze-performance">
+      <p>It takes about 10-20 seconds to process a 600×400 pixel image on a PC with a 3.0 GHz Intel Pentium 4 Processor. <a href="#fnref:dehaze-performance" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:get-depth-map">
+      <p>The depth maps are computed using Equation \eqref{eq:2} and are up to an unknown scaling parameter $\beta$. <a href="#fnref:get-depth-map" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/08/tesseract-ocr" class="pageNav" style="float:left"   >上一篇：开源OCR引擎Tesseract </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/09/introduction-to-av-with-dgm" class="pageNav" style="float:right"   >下一篇：DILinAV（1）：基于离散图模型的人工视觉简介 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/09/haze-removal-kaiming" 	data-url="http://qianjiye.de/2015/09/haze-removal-kaiming" data-title="去雾霾：基于单图的暗通道方法">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/08/tesseract-ocr'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/09/introduction-to-av-with-dgm'; --1> -->
+<!--         url = '/2015/09/introduction-to-av-with-dgm'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/09/haze-removal-kaiming/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

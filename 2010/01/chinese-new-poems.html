@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>中国现代诗歌赏析</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>中国现代诗歌赏析</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2010-01-23">2010-01-23</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#佑启乡邦" title="佑启乡邦">佑启乡邦</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#文学艺术" title="文学艺术">文学艺术</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h4 id="section">目录：</h4>
+
+<ol>
+  <li><a href="#baidao">北岛</a>：回答</li>
+  <li><a href="#shizhi">食指</a>：相信未来</li>
+  <li><a href="#海子">海子</a>：村庄</li>
+  <li><a href="#王凯娟">王凯娟</a>：满江红•狂风沙</li>
+  <li><a href="#韩寒">韩寒</a>：亲爱的</li>
+  <li><a href="#夏宇">夏宇</a>：甜蜜的复仇</li>
+  <li><a href="#duoduo">扎西拉姆·多多</a>：少年 少年</li>
+  <li><a href="#无名氏">无名氏</a>：孩子快抓紧妈妈的手──为汶川地震死去的孩子们而作、程序员的爱情诗、C++式的告白、咬定青山不放松</li>
+</ol>
+
+<blockquote id="baidao">
+  <h4 id="section-1">回答（北岛）</h4>
+  <hr />
+  <p>卑鄙是卑鄙者的通行证，<br />
+高尚是高尚者的墓志铭， <br />
+看吧，在那镀金的天空中， <br />
+飘满了死者弯曲的倒影。</p>
+
+  <p>冰川纪过去了， <br />
+为什么到处都是冰凌？ <br />
+好望角发现了， <br />
+为什么死海里千帆相竞？</p>
+
+  <p>我来到这个世界上， <br />
+只带着纸、绳索和身影， <br />
+为了在审判之前， <br />
+宣读那些被判决的声音。</p>
+
+  <p>告诉你吧，世界  <br />
+我——不——相——信！<br />
+纵使你脚下有一千名挑战者， <br />
+那就把我算作第一千零一名。
+<!--more--></p>
+
+  <p>我不相信天是蓝的，<br />
+我不相信雷的回声，<br />
+我不相信梦是假的，<br />
+我不相信死无报应。</p>
+
+  <p>如果海洋注定要决堤，<br />
+就让所有的苦水都注入我心中，<br />
+如果陆地注定要上升，<br />
+就让人类重新选择生存的峰顶。</p>
+
+  <p>新的转机和闪闪星斗，<br />
+正在缀满没有遮拦的天空。<br />
+那是五千年的象形文字，<br />
+那是未来人们凝视的眼睛。</p>
+</blockquote>
+
+<blockquote id="shizhi">
+  <h4 id="section-2">相信未来（食指）</h4>
+  <hr />
+  <p>当蜘蛛网无情地查封了我的炉台<br />
+当灰烬的余烟叹息着贫困的悲哀<br />
+我依然固执地铺平失望的灰烬<br />
+用美丽的雪花写下：相信未来</p>
+
+  <p>当我的紫葡萄化为深秋的露水<br />
+当我的鲜花依偎在别人的情怀<br />
+我依然固执地用凝露的枯藤 <br />
+在凄凉的大地上写下：相信未来</p>
+
+  <p>我要用手指那涌向天边的排浪<br />
+我要用手掌那托住太阳的大海<br />
+摇曳着曙光那枝温暖漂亮的笔杆<br />
+用孩子的笔体写下：相信未来</p>
+
+  <p>我之所以坚定地相信未来<br />
+是我相信未来人们的眼睛<br />
+她有拨开历史风尘的睫毛<br />
+她有看透岁月篇章的瞳孔<br />
+不管人们对于我们腐烂的皮肉<br />
+那些迷途的惆怅、失败的苦痛<br />
+是寄予感动的热泪、深切的同情<br />
+还是给以轻蔑的微笑、辛辣的嘲讽</p>
+
+  <p>我坚信人们对于我们的脊骨<br />
+那无数次的探索、迷途、失败和成功<br />
+一定会给予热情、客观、公正的评定<br />
+是的，我焦急地等待着他们的评定<br />
+朋友，坚定地相信未来吧<br />
+相信不屈不挠的努力<br />
+相信战胜死亡的年轻<br />
+相信未来、热爱生命</p>
+</blockquote>
+
+<p><span id="海子"></span></p>
+
+<blockquote>
+  <h4 id="section-3">村庄（海子）</h4>
+  <hr />
+  <p>村庄中住着母亲和儿女<br />
+儿子静静地长大<br />
+母亲静静地注视</p>
+
+  <p>芦花丛中<br />
+村庄是一只白色的船<br />
+我妹妹叫芦花<br />
+我妹妹很美丽</p>
+</blockquote>
+
+<p><span id="王凯娟"></span></p>
+
+<blockquote>
+  <h4 id="section-4">满江红•狂风沙（王凯娟）</h4>
+  <hr />
+  <p>千古悠悠<br />
+有多少 冤魂嗟叹<br />
+空怅望 人寰无限<br />
+丛生哀怨<br />
+泣血蝇虫笑苍天<br />
+孤帆叠影锁白链<br />
+残月升 骤起烈烈风<br />
+尽吹散</p>
+
+  <p>滂沱雨 无底涧<br />
+涉激流 登彼岸<br />
+奋力拨云间 消得雾患<br />
+社稷安抚臣子心<br />
+长驱鬼魅不休战<br />
+看斜阳 照大地阡陌<br />
+从头转</p>
+</blockquote>
+
+<p><span id="韩寒"></span></p>
+
+<blockquote>
+  <h4 id="section-5">亲爱的（韩寒）</h4>
+  <hr />
+  <p>亲爱的<br />
+为你饮尽这杯酒<br />
+醉了之后我就不会有哀愁 <br />
+什么都可以说 <br />
+只是别说曾经拥有 <br />
+那是懦弱的人骗自己的理由</p>
+
+  <p>亲爱的 <br />
+别说我不要 <br />
+别说分手 <br />
+伸出小指我们拉勾 <br />
+不说来世爱你 <br />
+来世我遇不见你 <br />
+来世我会爱别人</p>
+</blockquote>
+
+<p><span id="夏宇"></span></p>
+
+<blockquote>
+  <h4 id="section-6">甜蜜的复仇（夏宇）</h4>
+  <hr />
+  <p>把你的影子<br />
+加点盐<br />
+腌起来<br />
+风干<br />
+老的时候<br />
+下酒</p>
+</blockquote>
+
+<blockquote id="duoduo">
+  <h4 id="section-7">少年 少年（扎西拉姆·多多）</h4>
+  <hr />
+  <p>少年<br />
+少年你仍然青涩如初吗？<br />
+在我已经很斑驳的时候</p>
+
+  <p>少年<br />
+少年你依旧純然不动吗？<br />
+在我漂泊了很久之后</p>
+
+  <p>少年<br />
+少年你还相信美好吗？<br />
+当我游走在这世道的窄口</p>
+
+  <p>少年<br />
+你不能老去<br />
+不能<br />
+你要坚强地留在岁月的岸上</p>
+
+  <p>那些沉重的、流离的和虚妄的<br />
+都让我一个人去经历吧<br />
+而你<br />
+只需要穿着你的一身白衣<br />
+让阳光照进你<br />
+你要明媚地笑着<br />
+等我满身风尘地<br />
+回来认取<br />
+<img src="/assets/images/2010-01-23-chinese-new-poems_1yuan.png" alt="1yuan" /></p>
+</blockquote>
+
+<p><span id="无名氏"></span></p>
+
+<blockquote>
+  <h4 id="section-8">孩子快抓紧妈妈的手──为汶川地震死去的孩子们而作</h4>
+  <hr />
+  <p>孩子快 <br />
+抓紧妈妈的手    <br />
+去天堂的路 <br />
+太黑了 <br />
+妈妈怕你 <br />
+碰了头 <br />
+快 <br />
+抓紧妈妈的手 <br />
+让妈妈陪你走</p>
+
+  <p>妈妈 <br />
+怕 <br />
+天堂的路 <br />
+太黑 <br />
+我看不见你的手 <br />
+自从 <br />
+倒塌的墙 <br />
+把阳光夺走 <br />
+我再也看不见 <br />
+你柔情的眸</p>
+
+  <p>孩子  <br />
+你走吧<br />
+前面的路 <br />
+再也没有忧愁 <br />
+没有读不完的课本 <br />
+和爸爸的拳头 <br />
+你要记住 <br />
+我和爸爸的摸样 <br />
+来生还要一起走</p>
+
+  <p>妈妈 <br />
+别担忧 <br />
+天堂的路有些挤 <br />
+有很多同学朋友 <br />
+我们说 <br />
+不哭 <br />
+哪一个人的妈妈都是我们的妈妈 <br />
+哪一个孩子都是妈妈的孩子 <br />
+没有我的日子 <br />
+你把爱给活的孩子吧</p>
+
+  <p>妈妈 <br />
+你别哭 <br />
+泪光照亮不了 <br />
+我们的路 <br />
+让我们自己 <br />
+慢慢的走 <br />
+妈妈 <br />
+我会记住你和爸爸的模样 <br />
+记住我们的约定 <br />
+来生一起走</p>
+</blockquote>
+
+<p><span id="xyz"></span></p>
+
+<blockquote>
+  <h4 id="section-9">程序员的爱情诗</h4>
+  <hr />
+  <p>我不是诗人，所以，只能够把爱你写进程序<br />
+当作不可解的密码，作为我一个人知道的秘密<br />
+我以为你是我的唯一，过了很久才发现，你不是我独占的服务器<br />
+我可以传递，却什么都不能够取回，大师说，此算法不可逆<br />
+我想析构我自己，却没有多少勇气，只能够注释掉关于你的记忆<br />
+想寻找你的信息，突然发现，你已经不在我的域</p>
+
+  <p>我想重载爱的定义，把你我封装在一起  <br />
+在我的名字空间里，再也找不到你<br />
+爱情的管道，已经关闭  <br />
+我有的，只剩下从爱继承的颓废<br />
+爱的模板，已经解不开我们的僵局</p>
+
+  <p>我已经成为异常的容器，无法容下与你无关的东西<br />
+我以为我们该是一个联合体，原来只是松散的内聚<br />
+直到分开很久，你才返回操作失败的信息<br />
+你告诉我，我只是你的友元类</p>
+
+  <p>独自一个人难醉，我慢慢明白，我们不是来自相同的基类<br />
+你很久前抛出的异常，我笨得不能够体会<br />
+你说我不是你的适配器，你不需要一个通用程序<br />
+我是你堆栈的顶部，你要弹出我选择原来的奇遇</p>
+
+  <p>多希望可以写出一个函数，拷贝从前的你<br />
+可是等了很久，还是没有奇迹<br />
+只能够继续开一个心的端口，监听你的信息<br />
+我的悲伤与快乐，都装进黑盒里 <br />
+不需要让你知道，我仍然爱你</p>
+</blockquote>
+
+<p><span id="xyz"></span></p>
+
+<blockquote>
+  <h4 id="c">C++式的告白</h4>
+  <hr />
+  <p>我能抽象出整个世界<br />
+但是我不能抽象出你<br />
+因为你在我心中是那么的具体<br />
+所以我的世界并不完整</p>
+
+  <p>我可以重载甚至覆盖这个世界里的任何一种方法<br />
+但是我却不能重载对你的思念<br />
+也许命中注定了你在我的世界里永远的烙上了静态的属性 <br />
+而我不慎调用了爱你这个方法<br />
+当我义无返顾的把自己作为参数传进这个方法时<br />
+我才发现爱上你是一个死循环<br />
+它不停的返回对你的思念压入我心里的堆栈</p>
+
+  <p>在这无尽的黑夜中<br />
+我的内存里已经再也装不下别人<br />
+我不停的向系统申请空间<br />
+但却捕获一个异常——我爱的人不爱我</p>
+
+  <p>为了解决这个异常<br />
+我愿意虚拟出最后一点内存<br />
+把所有我能实现的方法地址压入堆栈<br />
+并且在栈尾压入最后一个方法——将字符串＂我爱你，你爱我吗？＂传递给你<br />
+如果返回值为真——我将用尽一生去爱你<br />
+否则——我将释放掉所有系统资源</p>
+</blockquote>
+
+<p><span id="xyz"></span></p>
+
+<blockquote>
+  <h4 id="section-10">咬定青山不放松（《大宋提刑官》）</h4>
+  <hr />
+  <p>咬定青山不放松<br />
+旧符换作桃花浓<br />
+洗尽昨夜初更泪<br />
+绿草依然笑东风</p>
+</blockquote>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2008/10/key-to-success-in-modern-society" class="pageNav" style="float:left"   >上一篇：Key to Success in Modern Society </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2010/03/gpu-and-cg-programming" class="pageNav" style="float:right"   >下一篇：GPU编程与CG语言之阳春白雪下里巴人 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2010/01/chinese-new-poems" 	data-url="http://qianjiye.de/2010/01/chinese-new-poems" data-title="中国现代诗歌赏析">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2008/10/key-to-success-in-modern-society'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2010/03/gpu-and-cg-programming'; --1> -->
+<!--         url = '/2010/03/gpu-and-cg-programming'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2010/01/chinese-new-poems/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

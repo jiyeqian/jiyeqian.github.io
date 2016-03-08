@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>开源OCR引擎Tesseract</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>开源OCR引擎Tesseract</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-08-13">2015-08-13</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">简介</h2>
+
+<p>Tesseract是开源的OCR引擎。Tesseract最初设计用于英文识别，经过改进引擎和训练系统，它能够处理其它语言和UTF-8字符。Tesseract 3.0能够处理任何Unicode字符，但并非在所有语言上都工作得很好。Tesseract在庞大字符集语言（比如中文）上较慢，但是工作良好。</p>
+
+<p>Tesseract需要知道相同字符的不同形状，也就是不同字体。最多允许的字体数量在<code>intproto.h</code>中通过<code>MAX_NUM_CONFIGS</code>定义，目前支持64种。当训练字体数量超过32种时，速度显著下降。</p>
+
+<h2 id="section-1">使用入门</h2>
+
+<p>直接输入无参数命令<code>tesseract</code>可查看其<a href="https://github.com/tesseract-ocr/tesseract/blob/master/doc/tesseract.1.asc">用法</a>：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract</code></pre></div>
+
+<p>基本使用方法［终端命令］：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract images/9531.jpeg stdout -l eng -psm <span class="m">7</span> digits</code></pre></div>
+
+<ul>
+  <li><code>images/9531.jpeg</code>：<strong>输入</strong>待OCR的图片；</li>
+  <li><code>stdout</code>：<strong>输出</strong>结果到终端，也可用文件名，表示输出到文件；</li>
+  <li><code>-l eng</code>：使用英文识别库；</li>
+  <li><code>-psm 7</code>：表示分页方式，<code>7</code>表示将图片视为单行文字；</li>
+  <li><code>digits</code>：识别配置文件，这里表示只识别数字。</li>
+</ul>
+
+<p><img src="/assets/images/2015-08-13-tesseract-training_9531.jpeg" alt="9531" /></p>
+
+<p>上图的验证码9531，通过以上命令可正确识别。查看目前支持那些语言：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract --list-langs <span class="c"># chi_sim chi_tra eng osd</span></code></pre></div>
+
+<p>语言支持文件位于安装目录的<code>tessdata</code>文件夹中，其中的<code>eng.traineddata</code>文件表示支持英文的识别库。更多语言支持可在<a href="https://github.com/tesseract-ocr/tessdata">github下载</a>。</p>
+
+<p>识别配置文件位于安装目录的<code>tessdata/configs</code>文件夹中，其中的<code>digits</code>文件配置为只识别数字，相当于识别的白名单，内容为</p>
+
+<div class="highlight"><pre><code>tessedit_char_whitelist 0123456789-.
+</code></pre></div>
+
+<p>识别库对字体的识别能力影响很大，比如点阵字体：</p>
+
+<p><img src="/assets/images/2015-08-13-tesseract-training_bitmap_test.tif" alt="bitmap font" /></p>
+
+<p>识别的参数如下：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract images/bitmap_test.tif stdout -l chi_sim -psm 7</code></pre></div>
+
+<p>采用google code上老的中文识别库，结果就不太好：</p>
+
+<div class="highlight"><pre><code>项目名称 = 北京丰台 区花乡四台庄(中失村料技园丰台园东区三期)15 16一2 正地挪
+</code></pre></div>
+
+<p>换用<a href="https://github.com/tesseract-ocr/tessdata/raw/master/chi_sim.traineddata">github上的3.04版本</a>中文识别库，结果有很大提升：</p>
+
+<div class="highlight"><pre><code>项目名称 : 北京丰台 区花乡四合庄〔中夫村科技园丰台园东区三期〕1… 16一2 1地块C
+</code></pre></div>
+
+<p>通过自己训练识别库，也可得更好的识别结果：</p>
+
+<div class="highlight"><pre><code>项目名称 : 北京丰台 区花乡四合庄(中关村科技园丰台园京区2期)15 16-2 1地块C
+</code></pre></div>
+
+<h2 id="section-2">训练识别库</h2>
+
+<p>为了训练一种新语言当识别库，需要在tessdata子文件夹中创建一些数据文件，然后用<code>combine_tessdata</code>将它们合并为一个文件。命名约定（naming convention）是<code>languagecode.file_name</code>，其中<code>languagecode</code>按ISO 638-3标准，当然也可使用任何字符串。用于英文识别库（3.00）的文件包括：</p>
+
+<ul>
+  <li>tessdata/eng.config</li>
+  <li>tessdata/eng.unicharset</li>
+  <li>tessdata/eng.unicharambigs</li>
+  <li>tessdata/eng.inttemp</li>
+  <li>tessdata/eng.pffmtable</li>
+  <li>tessdata/eng.normproto</li>
+  <li>tessdata/eng.punc-dawg</li>
+  <li>tessdata/eng.word-dawg</li>
+  <li>tessdata/eng.number-dawg</li>
+  <li>tessdata/eng.freq-dawg</li>
+</ul>
+
+<p>最终合并得到的文件是tessdata/eng.traineddata，tessdata/eng.user-words文件可以单独提供。traineddata文件是输入文件的简单连接，包含已知文件类型的偏移表。通过查看<code>ccutil/tessdatamanager.h</code>可知目前可接受的文件名。</p>
+
+<p>输入文件（lang.config、lang.unicharambigs、font_properties、box文件、字典的wordlists……）需要满足如下标准：</p>
+
+<ul>
+  <li>不含<a href="http://en.wikipedia.org/wiki/Byte_order_mark">BOM</a>的ASCII或UTF-8编码；</li>
+  <li>Unix风格的行结束符（‘\n’）；</li>
+  <li>最后一个字符必须是行结束符（没有会报错<code>last_char == '\n':Error:Assert failed...</code>）。</li>
+</ul>
+
+<p>训练识别库至少需要unicharset、inttemp、normproto和pfftable这几个文件。如果只识别有限的字体（例如一种字体），那么单个训练页可能就够了。</p>
+
+<p>训练步骤如下：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>命令／工具</th>
+      <th>输入文件类型</th>
+      <th>输出文件类型</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>text2image</code></td>
+      <td>ttf</td>
+      <td>box、tif</td>
+      <td>可选步骤</td>
+    </tr>
+    <tr>
+      <td><code>tesseract</code></td>
+      <td>tif</td>
+      <td>box</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>tesseract</code></td>
+      <td>tif、box</td>
+      <td>tr</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>unicharset_extractor</code></td>
+      <td>box</td>
+      <td>unicharset</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>set_unicharset_properties</code></td>
+      <td>unicharset</td>
+      <td>unicharset</td>
+      <td>可选步骤</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>font_properties</td>
+      <td>手动步骤</td>
+    </tr>
+    <tr>
+      <td><code>shapeclustering</code></td>
+      <td>font_properties、unicharset、tr</td>
+      <td>shapetable</td>
+      <td>可选步骤</td>
+    </tr>
+    <tr>
+      <td><code>mftraining</code></td>
+      <td>font_properties、unicharset、tr</td>
+      <td>unicharset、shapetable、inttemp、pffmtable</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code>cntraining</code></td>
+      <td>tr</td>
+      <td>normproto</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>words_list</td>
+      <td>手动步骤</td>
+    </tr>
+    <tr>
+      <td><code>wordlist2dawg</code></td>
+      <td>words_list</td>
+      <td>DAWG</td>
+      <td>可选步骤</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>unicharambigs</td>
+      <td>手动步骤</td>
+    </tr>
+    <tr>
+      <td><code>combine_tessdata</code></td>
+      <td>*</td>
+      <td>traineddata</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>训练流程中有些是手动的（得到font_properties、words_list、unicharambigs文件），用到的相关工具位于training子目录。</p>
+
+<h3 id="section-3">生成训练图片</h3>
+
+<p>创建训练文件需注意的重要事项：</p>
+
+<ul>
+  <li>确保每个字符的最少样本数，10个较理想，但对稀有字符5个也可。</li>
+  <li>更频繁的字符应该有更多的样本，最少20个。</li>
+  <li>不要错误地将所有非字符组织在一起。例如：“The quick brown fox jumps over the lazy dog. 0123456789 !@#%^&amp;(),.{}&lt;&gt;/?”就很糟糕，更好的组织是“The (quick) brown {fox} jumps! over the 3,456.78 <lazy> #90 dog &amp; duck/goose, as 12.5% of E-mail from aspammer@website.com is spam?”。</lazy></li>
+</ul>
+
+<p>获得训练图片的方法主要有两类：</p>
+
+<ol>
+  <li>通过字体文件自动生成训练图片，通常可以同时得到box文件；</li>
+  <li>直接收集图片，或者利用先打印后扫描的方式。</li>
+</ol>
+
+<h4 id="section-4">自动新方法（3.03版新功能）</h4>
+
+<p>该方法通过字体文件，自动获得训练所需的tif/box文件对。</p>
+
+<p>准备一个utf-8文件（training_text.txt），包含符合上述准则的训练文本。获得期望识别字体的truetype/opentype字体文件，利用<code>text2image</code><sup id="fnref:error_text2_image"><a href="#fn:error_text2_image" class="footnote">1</a></sup>命令创建匹配的tif/box文件对：</p>
+
+<div class="highlight"><pre><code class="language-bash">text2image --text<span class="o">=</span>training_text.txt --outputbase<span class="o">=</span>chi_jyq.fangsong_gb2312.exp0 --font<span class="o">=</span><span class="s1">&#39;FangSong_GB2312&#39;</span> --fonts_dir<span class="o">=</span>./Fonts</code></pre></div>
+
+<p>这样就可以得到chi_jyq.fangsong_gb2312.exp0.tif和chi_jyq.fangsong_gb2312.exp0.box两个文件。本例采用的training_text.txt文件内容为：</p>
+
+<div class="highlight"><pre><code>项目名称：北京丰台区花乡四合庄（中关村科技园丰台园东区三期）1516-21地块C
+</code></pre></div>
+
+<p>得到的tif图如下：</p>
+
+<p><img src="/assets/images/2015-08-13-tesseract-training_font2tif.png" alt="tif文件" width="600px" /></p>
+
+<p>得到的box文件前部分片段：</p>
+
+<div class="highlight"><pre><code>项 57 4617 100 4664 0
+目 115 4619 144 4662 0
+名 156 4619 194 4667 0
+称 206 4621 251 4670 0
+： 259 4625 267 4651 0
+北 306 4624 351 4671 0
+京 358 4623 400 4673 0
+丰 409 4624 450 4674 0
+台 461 4625 497 4673 0
+区 512 4628 550 4673 0
+花 556 4627 601 4677 0
+乡 612 4628 645 4676 0
+</code></pre></div>
+
+<h4 id="section-5">辅助软件</h4>
+
+<p>text2image自动生成tif/box文件对的局限性在于：</p>
+
+<ul>
+  <li>只支持truetype/opentype这样的矢量字体，对于bitmap点阵字体无能为力；</li>
+  <li>这是3.03版本才具有的新功能，而且目前在OSX系统无法正常使用。</li>
+</ul>
+
+<p>因此，需要其它的自动化方案。借助可视化软件<a href="http://vietocr.sourceforge.net/training.html">jTessBoxEditor</a>，可以不受上述约束，利用其“TIFF/Box Generator”模块，自动生成tif/box文件对。</p>
+
+<h4 id="section-6">手动老方法</h4>
+
+<p>该方法需要首先得到字符图像（比如通过打印扫描方式），获取字符图像需注意：</p>
+
+<ul>
+  <li>打印的时候，字符要分开。若间隔不够，生成tr文件时会导致错误“FAILURE! box overlaps no blobs or blobs in multiple rows”。</li>
+  <li>训练数据应按字体组织。理想情况下，单个字体的所有样本应组成一个tiff文件。因此，单个字体的全部训练数据可有很多页，这使得能够训练大字符集（large-character-set）语言。</li>
+  <li>不必对多种尺寸训练，10号字体即可（对小字例外：若想识别窄于15像素的字体，应另外训练或识别前放大图像）。</li>
+  <li>不要在同一图像文件中混杂多种字体（单个tr文件应当精确）。混搭会使聚类时特征劣化，导致识别错误。</li>
+</ul>
+
+<p>可以使用多达64个（多页的）训练文件（图片），最好是混合字体斜体和粗体风格（在不同文件中）。64个图像文件是对字体数量的限制。每个字体应当放到单个的多页tiff文件，box文件中每个字符坐标后面的数字确定了页码。因此，对给定字体，能够创建任意大的训练数据，使得能够训练大字符集语言。另一种方法是对单个字体创建多个单页的tiff文件，然后必须对每个字体cat（Linux中的文件连接命令）合并多个tr文件为只含一个字体的单个tr文件<sup id="fnref:if_this_true_several_trs"><a href="#fn:if_this_true_several_trs" class="footnote">2</a></sup>。任何情况下，输入给mftraining的每个tr文件必须是单一字体。</p>
+
+<h3 id="box">获取Box文件</h3>
+
+<p>如果只有字符图片数据，还需要为每张图创建一个box文件。它是一个文本文件，列出了训练图像中的字符，按顺序，一个字符一行，包含字符边界框的坐标。此步骤的关键是手动调整该文件，得到字符正确的坐标。</p>
+
+<p>Tesseract根据tif图生成box文件：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract chi_jyq.fangsong_gb2312.exp0.tif chi_jyq.fangsong_gb2312.exp0 -l chi_sim batch.nochop makebox</code></pre></div>
+
+<p>得到的box存在错误，如下所示：</p>
+
+<p><img src="/assets/images/2015-08-13-tesseract-training_tesseract_box_error.png" alt="box错误" width="600px" /></p>
+
+<p>需要修改box文件，通过<a href="https://github.com/tesseract-ocr/tesseract/wiki/AddOns#Tesseract_box_editors_and_traning_tools">可视化工具</a>人工合并，可得到正确的字符框。</p>
+
+<p>紧邻字符的处理方式：</p>
+
+<ul>
+  <li>当两个字符靠得很近时，可以通过重新制作训练图片使二者分开；</li>
+  <li>如果两个相邻字符经常一起出现，那么可以直接将两个字符视为一个对象（box文件第一列为两个字符），并且边界框包含这两个字符<sup id="fnref:character-pair"><a href="#fn:character-pair" class="footnote">3</a></sup>。</li>
+</ul>
+
+<p>当训练一个新字符集时，一个好的思路是首先在某一种字体上得到box文件，然后继续完成整个训练过程。制作其它字体box文件时，可借助已训练好的识别库，比如上例采用的<code>-l chi_sim</code>参数。这样得到后续的box文件更容易，而且很有可能大部分字符能正确识别。</p>
+
+<p>但是，不存在增量训练方法。每次<code>mfTraining</code>和<code>cnTraining</code>的过程都要用tr文件从头再来，不能直接使用已有的intproto/pffmtable/normproto文件。</p>
+
+<h4 id="tifbox">优化Tif/Box文件</h4>
+
+<p>通过抽取子集或增加不同的字符或形状提升训练数据：</p>
+
+<ul>
+  <li>从box文件中过滤掉不需要的字符。</li>
+  <li>执行<code>tesseract</code>训练（得到tr文件）。</li>
+  <li>对每种字体，cat（连接）不同语言的tr文件，并加入自定义字体和字符的tr文件。</li>
+  <li>按照cat（连接）tr文件的顺序和方式，cat（连接）box文件，交付<code>unicharset_extractor</code>使用。</li>
+  <li>执行之后的训练过程。<code>cntraining</code>和<code>mftraining</code>最多只能采用64个tr文件，必须将不同语言的tr文件按字体连接在一起（每个tr文件的字体要相同）。tr文件中的字符必须和box文件中的字符顺序一致，也就是box的连接顺序要和tr相同。输入<code>cn/mftraining</code>和<code>unicharset_extractor</code>命令的tr和box文件顺序必须一致。</li>
+</ul>
+
+<h3 id="tesseract">Tesseract训练</h3>
+
+<p>对每个训练图像和box文件对，在训练模式运行Tesseract：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract chi_jyq.fangsong_gb2312.exp0.tif chi_jyq.fangsong_gb2312.exp0 box.train.stderr</code></pre></div>
+
+<p>若上述命令最后一个参数为<code>box.train</code>，出错信息会写入tesseract.log文件而非stderr。该命令输出tr文件，它包含了每个字符的特征，也会输出只包含单个新行的txt文件。</p>
+
+<p>上述命令可能会出错，得到如下输出：</p>
+
+<div class="highlight"><pre><code>FAIL!
+APPLY_BOXES: boxfile line 22/园 ((1108,4637),(1150,4686)): FAILURE! Couldn't find a matching blob
+FAIL!
+APPLY_BOXES: boxfile line 25/园 ((1258,4641),(1300,4689)): FAILURE! Couldn't find a matching blob
+APPLY_BOXES:
+   Boxes read from boxfile:      40
+   Boxes failed resegmentation:       2
+   Found 38 good blobs.
+Generated training data for 4 words
+Warning in pixReadMemTiff: tiff page 1 not found
+</code></pre></div>
+
+<p>意味着“园”字的块没找到，tr文件中就缺失了“园”字的特征。如果出现<code>FATALITIES</code>错误，必须先修正box文件修订错误才能继续。FATALITY通常意味着没有找到box文件中的任何字体。要么是坐标错误，要么是字符图像出了问题。如果字符没有可供使用的样本，它就不能被识别，那么得到的inttemp文件和unicharset文件就不匹配，Tesseract会退出。</p>
+
+<p>如果tif/box文件对是通过<a href="http://vietocr.sourceforge.net/training.html">jTessBoxEditor</a>可视化工具得到的，那么生成文件时选定“Anti-Aliasing”可消除上述错误。</p>
+
+<p>tr文件中特征含义如下：</p>
+
+<div class="highlight"><pre><code class="language-text">Every character in the box file has a corresponding set of entries in
+the .tr file (in order) like this
+UnknownFont &lt;utf8 code(s)&gt; 2
+mf &lt;number of features&gt;
+x y length dir 0 0
+... (there are a set of these determined by &lt;number of features&gt;
+above)
+cn 1
+ypos length x2ndmoment y2ndmoment
+
+The mf features are polygon segments of the outline normalized to the
+1st and 2nd moments.
+x= x position [-0.5.0.5]
+y = y position [-0.25, 0.75]
+length is the length of the polygon segment [0,1.0]
+dir is the direction of the segment [0,1.0]
+
+The cn feature is to correct for the moment normalization to
+distinguish position and size (eg c vs C and , vs &#39;)</code></pre></div>
+
+<h3 id="section-7">计算字符集</h3>
+
+<p>Tesseract需要知道能够输出的字符。利用<code>unicharset_extractor</code>工具，可以从box文件得到<a href="https://github.com/tesseract-ocr/tesseract/blob/master/doc/unicharset.5.asc">unicharset文件</a>：</p>
+
+<div class="highlight"><pre><code class="language-bash">unicharset_extractor chi_jyq.fangsong_gb2312.exp0.box chi_jyq.fangsong_gb2312.exp1.box</code></pre></div>
+
+<p>Tesseract需要知道字符的属性（property）：isalpha、isdigit、isupper还是islower？这些信息必须编码到unicharset数据文件，文件的每行对应一个字符。</p>
+
+<p>v2版的unicharset文件有4个空格分开的字段：</p>
+
+<div class="highlight"><pre><code>'character' 'properties' 'script' 'id'
+</code></pre></div>
+
+<p>形如：</p>
+
+<div class="highlight"><pre><code>; 10 Common 46
+b 3 Latin 59
+W 5 Latin 40
+7 8 Common 66
+= 0 Common 93
+</code></pre></div>
+
+<p>v3.03版的unicharset文件包含了更多的信息：</p>
+
+<div class="highlight"><pre><code>'character' 'properties' 'glyph_metrics' 'script' 'other_case' 'direction' 'mirror' 'normed_form'
+</code></pre></div>
+
+<p>形如：</p>
+
+<div class="highlight"><pre><code>110
+NULL 0 NULL 0
+N 5 59,68,216,255,87,236,0,27,104,227 Latin 11 0 1 N
+Y 5 59,68,216,255,91,205,0,47,91,223 Latin 33 0 2 Y
+1 8 59,69,203,255,45,128,0,66,74,173 Common 3 2 3 1
+9 8 18,66,203,255,89,156,0,39,104,173 Common 4 2 4 9
+a 3 58,65,186,198,85,164,0,26,97,185 Latin 56 0 5 a
+</code></pre></div>
+
+<h3 id="setunicharsetproperties">set_unicharset_properties</h3>
+
+<p>3.03版本中的新工具可以得到字符集的额外属性：</p>
+
+<div class="highlight"><pre><code class="language-bash">set_unicharset_properties -U unicharset -O output_unicharset --script_dir<span class="o">=</span>training/langdata</code></pre></div>
+
+<h3 id="fontproperties">font_properties</h3>
+
+<p>3.01版新的要求是font_properties文件。该文件的作用是当字体被识别时，提供字体风格（style）信息。font_properties文件是文本文件，通过<code>-F filename</code>参数输入给命令<code>mftraining</code>。</p>
+
+<p>font_properties文件的每行格式如下：</p>
+
+<div class="highlight"><pre><code>&lt;fontname&gt; &lt;italic&gt; &lt;bold&gt; &lt;fixed&gt; &lt;serif&gt; &lt;fraktur&gt;
+</code></pre></div>
+
+<p><code>&lt;fontname&gt;</code>表示字体名，不允许有空格，其它几个取值为0或1，表示该字体是否具有这个属性。</p>
+
+<p>当运行<code>mftraining</code>时，每个tr文件名必须匹配font_properties文件中的一条，否者<code>mftraining</code>会退出。tr文件命名应当是fontname.tr或[lang].[fontname].exp[num].tr。</p>
+
+<p>一个font_properties文件示例：</p>
+
+<div class="highlight"><pre><code>fangsong_gb2312 0 0 0 0 0
+</code></pre></div>
+
+<h3 id="section-8">聚类</h3>
+
+<p>当抽取了所有训练数据的字符特征后，需要通过聚类创建原型（prototype）。字符的形状特征可通过<code>shapeclustering</code>（3.02版的新功能）、<code>mftraining</code>和<code>cntraining</code>聚类得到。</p>
+
+<div class="highlight"><pre><code class="language-bash">shapeclustering -F font_properties -U unicharset chi_jyq.fangsong_gb2312.exp0.tr chi_jyq.fangsong_gb2312.exp1.tr</code></pre></div>
+
+<p><code>shapeclustering</code>通过形状聚类创建主形状表，并将它写入shapetable文件。除了<a href="https://groups.google.com/d/msg/tesseract-dev/Z1lTKePp-hY/kUtGy4gdNS4J">Indic语言</a>，目前不要使用<code>shapeclustering</code>。</p>
+
+<p>如果没有执行<code>shapeclustering</code>，<code>mftraining</code>会生成shapetable：</p>
+
+<div class="highlight"><pre><code class="language-bash">mftraining -F font_properties -U unicharset -O chi_jyq.unicharset chi_jyq.fangsong_gb2312.exp0.tr chi_jyq.fangsong_gb2312.exp1.tr</code></pre></div>
+
+<p><code>chi_jyq.unicharset</code>是输出的unicharset，将会用于<code>combine_tessdata</code>。<code>mftraining</code>还会输出inttemp（形状原型）和pffmtable（每个字符的期望特征数）两个文件。该程序也会输出Microfeat，但是这里不会用到。</p>
+
+<p>traineddata文件中必须包含shapetable。</p>
+
+<p><code>cntraining</code>将会得到normproto（规范化的敏感原型）文件：</p>
+
+<div class="highlight"><pre><code class="language-bash">cntraining chi_jyq.fangsong_gb2312.exp0.tr chi_jyq.fangsong_gb2312.exp1.tr</code></pre></div>
+
+<h3 id="section-9">字典数据（可选项）</h3>
+
+<p>Tesseract对每种语言使用了多达8个字典文件。这些文件都是可选项，用于辅助确定不同可能字符组合的可能性。
+其中7个文件为有向无环字图（DAWG，directed acyclic word graph）格式，另外一个是纯UTF-8文本。</p>
+
+<p>为了得到DAWG字典文件，首先需要语言的单词列表（wordlist）。可以用合适的字典文件（比如来自拼写检查器ispell、aspell和hunspell等）作为wordlist的基础。wordlist是UTF-8文本，一行一个单词。将wordlist分割成不同的集合，比如：频繁单词，以及除此之外的单词。然后使用<code>[wordlist2dawg](https://github.com/tesseract-ocr/tesseract/blob/master/doc/wordlist2dawg.1.asc)</code>得到DAWG文件：</p>
+
+<div class="highlight"><pre><code class="language-bash">wordlist2dawg frequent_words_list lang.freq-dawg chi_jyq.unicharset
+wordlist2dawg words_list lang.word-dawg chi_jyq.unicharset</code></pre></div>
+
+<p>若需要字典的wordlist示例，可以用<code>combine_tessdata</code>解开已有的traineddata文件，然后用<code>dawg2wordlist</code>提取wordlist文件：</p>
+
+<div class="highlight"><pre><code class="language-bash">combine_tessdata -u chi_sim.traineddata chi_sim
+dawg2wordlist chi_sim.unicharset chi_sim.freq-dawg wordlist</code></pre></div>
+
+<h3 id="unicharambigs">最后的unicharambigs文件</h3>
+
+<p>unicharambigs描述了字符之间存在的混淆，该文件可手动填写，一个例子如下：</p>
+
+<div class="highlight"><pre><code>v1
+2       ' '     1       "       1
+1       m       2       r n     0
+3       i i i   1       m       0
+</code></pre></div>
+
+<p>第1行表示版本，剩下的行是由tab分割的字段，遵循如下格式：</p>
+
+<div class="highlight"><pre><code>&lt;number of characters for match source&gt; &lt;tab&gt; &lt;characters for match source&gt; &lt;tab&gt; &lt;number of characters for match target&gt; &lt;tab&gt; &lt;characters for match target&gt; &lt;tab&gt; &lt;type indicator&gt;
+</code></pre></div>
+
+<p><code>&lt;type indicator&gt;</code>取值为1或0。1表示强制替换，0表示非强制替换。上例中，凡是<code>' '</code>都用<code>"</code>替换。非强制替换的含义：若用<code>target</code>替换<code>source</code>能得从非字典单词创建字典单词，则进行替换。那些利用混淆规则能转换成另一个字典单词的字典单词，不会用于训练自适应分类器。</p>
+
+<p>v2版的unicharambigs文件更为简单<sup id="fnref:downside_v2_unicharambigs"><a href="#fn:downside_v2_unicharambigs" class="footnote">4</a></sup>，字段间用空格分开：</p>
+
+<div class="highlight"><pre><code>v2
+'' " 1
+m rn 0
+iii m 0
+</code></pre></div>
+
+<p>和其它大多数文件一样，unicharambigs必须为UTF-8编码，并以换行符作为文件的结束。该文件不是必须的。</p>
+
+<h3 id="section-10">全部组合起来</h3>
+
+<p>将生成的所有文件（shapetable、normproto、inttemp、pffmtable等）加上<code>lang.</code>前缀，lang通常是<a href="http://en.wikipedia.org/wiki/List_of_ISO_639-2_codes">3个字符的语言码</a>，然后执行如下合并：</p>
+
+<div class="highlight"><pre><code class="language-bash">combine_tessdata lang.</code></pre></div>
+
+<p>可得识别库文件lang.traineddata，最后就可以进行OCR：</p>
+
+<div class="highlight"><pre><code class="language-bash">tesseract image.tif output -l lang</code></pre></div>
+
+<h2 id="python">Python接口</h2>
+
+<div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">pyocr</span> <span class="kn">import</span> <span class="n">tesseract</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">builders</span><span class="o">.</span><span class="n">TextBuilder</span><span class="p">()</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">tesseract_configs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-psm&#39;</span><span class="p">,</span> <span class="s">&#39;7&#39;</span><span class="p">,</span> <span class="s">&#39;scbid&#39;</span><span class="p">]</span> 
+<span class="n">result</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;ocr_test.png&#39;</span><span class="p">),</span> <span class="s">&#39;eng&#39;</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span></code></pre></div>
+
+<h2 id="section-11">性能提升</h2>
+
+<h3 id="traineddata">直接修改traineddata文件</h3>
+
+<p>针对具体问题，可用<code>combine_tessdata</code>解开traineddata库文件，修改DAWG和unicharambigs文件，然后再生成traineddata文件，从而提高识别率。</p>
+
+<h2 id="section-12">参考资料</h2>
+
+<ol class="bibliography"></ol>
+
+<ul class="bibliography">
+  <li><a href="https://github.com/tesseract-ocr/docs">An Overview of the Tesseract OCR Engine</a></li>
+  <li><a href="https://github.com/tesseract-ocr/tesseract">Tesseract Open Source OCR Engine (main repository)</a></li>
+  <li><a href="https://github.com/tesseract-ocr/tesseract/wiki/TrainingTesseract">TrainingTesseract</a></li>
+  <li><a href="http://www.qisanfen.com/?p=185">在ubuntu下使用 tesseract-ocr 文字识别工具（基础篇）</a></li>
+</ul>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:error_text2_image">
+      <p>OSX系统中，由于pango库的原因，<code>text2image</code>命令会导致段错误，该命令是在Linux中执行的。 <a href="#fnref:error_text2_image" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:if_this_true_several_trs">
+      <p>原文这样描述：you must cat together the tr files for each font into several single-font tr files. <a href="#fnref:if_this_true_several_trs" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:character-pair">
+      <p>As of 3.00, there is a limit of 24 bytes for the description of a “character”. This will allow you between 6 and 24 unicodes to describe the character, depending on where your codes sit in the unicode set. If anyone hits this limit, please file an issue describing your situation. <a href="#fnref:character-pair" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:downside_v2_unicharambigs">
+      <p>Note the downside of this simpler format is that Tesseract has to encode the utf-8 strings into the components of the unicharset. In complex scripts, this encoding may be ambiguous. In this case, the encoding is chosen such as to use the least utf-8 characters for each component, ie the shortest unicharset components will make up the encoding. <a href="#fnref:downside_v2_unicharambigs" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+    <li class="pageNav">2015-07-03 &raquo; <a href="/2015/07/introduction-to-yushanfang">御膳房使用简介</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/07/HPC-overview" class="pageNav" style="float:left"   >上一篇：高性能计算概述 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/09/haze-removal-kaiming" class="pageNav" style="float:right"   >下一篇：去雾霾：基于单图的暗通道方法 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/08/tesseract-ocr" 	data-url="http://qianjiye.de/2015/08/tesseract-ocr" data-title="开源OCR引擎Tesseract">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/07/HPC-overview'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/09/haze-removal-kaiming'; --1> -->
+<!--         url = '/2015/09/haze-removal-kaiming'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/08/tesseract-ocr/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

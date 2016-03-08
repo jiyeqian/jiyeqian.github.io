@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>CHANGE・業・德 - 关于</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>关于</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="post">
+<script type="text/javascript" src="http://www.douban.com/service/badge/jiyeqian/?selection=random&amp;picsize=medium&amp;show=collection&amp;n=6&amp;hidelogo=on&amp;cat=drama%7Cmovie%7Cbook%7Cmusic&amp;columns=6"></script>
+
+<p>E-mail：<a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#106;&#121;&#113;&#048;&#056;&#048;&#054;&#048;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;">&#106;&#121;&#113;&#048;&#056;&#048;&#054;&#048;&#049;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;</a>    <br />
+GitHub：<a href="http://github.com/jiyeqian">http://github.com/jiyeqian</a>       <br />
+Google Scholar：<a href="http://scholar.google.com/citations?user=vKFaAvMAAAAJ">http://scholar.google.com/citations?user=vKFaAvMAAAAJ</a>      <br />
+History：<a href="http://hi.baidu.com/jiyeqian">hi.baidu</a> &amp; <a href="http://ebkk.blog.163.com">blog.163</a></p>
+
+<h2 id="section">日志</h2>
+
+<ul>
+  <li>2015-09-27：增加了<a href="http://www.woothemes.com/flexslider/">FlexSlider</a>插件，增强图片展示效果。</li>
+  <li><del>2015-07-03：接入了<a href="http://videojj.com">video++ 云视链开放平台</a>。</del></li>
+  <li>2015-06-21：隐藏了右侧滚动条，微调了网页排版（⚠中英文占的高度不同）。</li>
+  <li>2015-05-03：增加了对R Markdown的<a href="https://github.com/yihui/recharts">rechart</a>绘图支持。</li>
+  <li>2015-04-12：参考<a href="https://tylingsoft.com/mdp">Markdown Plus</a>和<a href="https://github.com/tylerlong/mermaid-min">mermaid-min</a>，增加了JavaScript绘图插件<a href="https://github.com/jasonbellamy/jekyll-mermaid">jekyll-mermaid</a>。</li>
+  <li>2015-04-11：增加了对IPython自动生成Markdown的支持。</li>
+  <li>2015-04-10：参考<a href="http://ouzor.github.io">Juuso Parkkinen</a>的博客，增加了对R Markdown的支持。</li>
+  <li><del> 2015-04-10：增加了相关文章导航的插件<a href="https://github.com/kemayo/davidlynch.org/blob/master/_plugins/related_posts.rb">related_posts</a>。</del></li>
+  <li>2015-04-10：增加了Java绘图插件<a href="https://github.com/tmthrgd/ditaa-ditaa">ditaa-ditaa</a>。</li>
+  <li>2015-04-10：增加了插入<a href="https://github.com/Ezmyrelda/twa">Twemoji Awesome</a>图标功能及相关插件和CSS。</li>
+  <li>2015-04-08：增加了方便插入Font Awesome的插件<a href="https://gist.github.com/23maverick23/8532525">jekyll-font-awesome</a>。</li>
+  <li>2015-04-07：增加了插入<a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>图标功能。</li>
+  <li>2015-04-06：增加了通过<a href="https://qr.alipay.com">支付宝</a>和微信付款的二维码。</li>
+  <li>2015-04-06：增加了利用<a href="https://swiftype.com">Swiftype</a>的站内搜索功能。</li>
+  <li>2014-11-05：增加了<a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>插件管理参考文献。</li>
+  <li>2014-11-05：增加了<a href="/assets/images/../code/jekyll_figure.rb">修改后</a>的<a href="https://github.com/lmullen/jekyll_figure">jekyll_figure</a>插件展示图片。</li>
+  <li>2014-11-05：增加了<a href="https://github.com/mvdbos/kramdown-with-pygments">kramdown-with-pygments</a>插件，可将markdown中<code>fenced code blocks</code>转为<code>pygments</code>风格。</li>
+  <li><del>2014-11-03：vim风格按键，h上一篇，l下一篇，j页面底部，k页面顶部。</del></li>
+  <li>2014-11-02：修正了多说配置错误<del>，嵌入了百度站长工具</del>。</li>
+  <li>2014-10-24：修改了code和blockquote显示效果<del>，增加了通过div添加图片caption</del>。</li>
+  <li>2013-11-19：启用<a href="https://github.com/89ao">89ao</a>的主题。</li>
+</ul>
+
+<h2 id="section-1">致谢</h2>
+
+<p>本博客clone自<a href="https://github.com/webfrogs/webfrogs.github.com">webfrog</a>，在此非常感谢这个简洁漂亮的主题。</p>
+
+<p><strong>添加功能</strong>:</p>
+
+<p><del>‘Powered by Jekyll @ GitHub’中’Po’为post，’ed’为edit。</del> <br />
+—var <a href="http://yonsm.net/">Yonsm</a></p>
+
+<p>post右边自动生成post的大纲，浮在post页面左边。 <br />
+<del>vim风格的按键，j为上一篇，k下一篇。</del><br />
+—via <a href="http://mad4a.me/">mad4a</a></p>
+
+<h2 id="section-2">留言</h2>
+
+<p><a href="http://weibo.com/u/1651549787"><img src="http://service.t.sina.com.cn/widget/qmd/1651549787/a250b04e/1.png" alt="新浪微博" /></a></p>
+
+
+</section>
+
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread" 	data-url="http://qianjiye.de/about/" data-title="关于">
+	</div>	
+
+
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

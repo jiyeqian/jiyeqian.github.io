@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>计算机视觉中的多视几何：1. 简介——多视几何之旅</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>计算机视觉中的多视几何：1. 简介——多视几何之旅</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-06-06">2015-06-06</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+  <a href="/tags/#多视几何第二版" title="多视几何第二版">多视几何第二版</a>&nbsp;
+  
+  <a href="/tags/#翻译" title="翻译">翻译</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>本章简介本书涵盖的主要思想。它是对这些主题的非正式探讨。明确而准确的定义、严谨的代数和精雕细琢的估计算法将推迟到本书的第2章及后续章节。纵观本篇简介，我们通常不会给出到后面那些章节的明确指向。所涉及的材料可使用索引或目录找到。</p>
+
+<h2 id="section">1.1 简介——无处不在的射影几何</h2>
+
+<p>我们都熟悉射影变换。当我们看图片时，我们看到方不是方，圆不是圆。这种将平面物体映射到图片的变换，就是射影变换的一个例子。</p>
+
+<p>那么，射影变换保持了哪些几何性质？当然不是形状，因为圆可能显示为椭圆。也不是长度，因为射影变换把圆的两个垂直半径不同程度的拉伸。角度、距离、距离比——这些都没有保持。看来射影变换很少保持几何性质。然而，平直性（straightness）是被保持的一个性质。这其实是映射的最一般要求，我们可将平面的射影变换定义为平面上点的任意保直线映射。</p>
+
+<p>要弄明白为什么需要射影几何，我们从熟悉的欧氏几何入手。这是描述对象角度和形状的几何学。欧氏几何存在一个大麻烦——我们需要不断使用特例，推导该几何的某些基本概念——比如线相交。两条线（我们认为此处是二维几何）几乎总交于一点，但有些线对并非如此——我们称它们平行。用一种常见的语法糖处理该问题，称其为平行线相交于无穷远。然而，这不太具说服力，并与另一常识矛盾，无穷远并不存在，只是一个简单的假设。我们能解决该问题——通过增加平行线相交的这些无穷远点来增强欧氏平面，并将它们称为“理想点”，以解决无穷远的难题。</p>
+
+<p>通过增加这些无穷远点，熟知的欧氏空间变成了射影空间，一种新型的几何对象。由于我们熟悉欧氏空间的性质，它包括诸如距离、角度、点、线和入射角（incidence）等概念，因此这是一种很有用的思路。射影空间并非很神秘——它只是欧氏空间的一种扩展，其中两条线总交于一点，尽管有时在神秘的无穷远点。</p>
+
+<p><strong>坐标系。</strong>二维欧氏空间中的点用有序实数对$(x, y)$表示。我们可以加入一个额外的坐标到该实数对，得到三元组$(x,y,1)$，我们认为它表示相同的点。这看上去几乎无害，因为通过简单的增加或移除最后一个坐标，我们可以在点的一种表现形式和另一种之间转换。现在我们深入概念的重要环节，探求为什么最后一个坐标必须是1——其它两个坐标并无此约束。坐标三元组$(x,y,2)$呢？在此，我们限定并称$(x,y,1)$和$(2x,2y,2)$表示相同的点，并且对任意非零值$k$，$(kx,ky,k)$也表示同样的点。形式上，点用坐标三元组的<em>等价类</em>（equivalence classes）表示，当两个三元组相差一个公倍数（common multiple）时等价。这些称为点的齐次坐标（homogeneous coordinate）。给定坐标三元组$(kx,ky,k)$，我们通过除以$k$回推出原始坐标$(x,y)$。</p>
+
+<p>读者会发现，虽然$(x,y,1)$和坐标对$(x,y)$表示相同的点，但没有点对应到三元组$(x,y,0)$。如果我们试图除以最后一个坐标，会得到无穷远的点$(x/0,y/0)$。接下来是如何产生无穷远点。它们是齐次坐标表示的点，其最后一个坐标为零。</p>
+
+<p>一旦我们清楚在二维欧氏空间中如何做——通过齐次向量（homogeneous vector）表示点，将它推广到射影空间。显然我们在任何维度也能这样做。通过齐次向量表示点，欧氏空间$\mathbb{R}^n$可拓展到射影空间$\mathbb{P}^n$。事实上二维射影空间的无穷远点构成一条线，通常称为<em>无穷远线</em>（line at infinity）。它们在三维空间构成<em>无穷远平面</em>（plane at infinity）。</p>
+
+<p><strong>匀质。</strong>经典的欧氏几何中，所有点都相同，没有特殊点，整个空间是匀质的。加入坐标时，似乎选了一个点作为原点。然而，重要的是认识到选择特定的坐标系只是偶然。设定平面中不同的点为原点，我们也可得到坐标化该平面的不同方法。事实上，我们可认为是欧氏空间的坐标变换，其中坐标轴平移和旋转到了不同位置。我们可换种方式思考，这是空间自身变换和旋转到了不同位置。所得的操作称为欧氏变换。</p>
+
+<p>一种更普遍形式的变换是对$\mathbb R^n$施加线性变换，接着移动空间原点进行欧氏变换。我们可认为这是空间的移动、旋转，以及最后在不同方向可能按不同比例进行线性<em>缩放</em>。所得的变换称为<em>仿射</em>变换<sup id="fnref:affine-transformation"><a href="#fn:affine-transformation" class="footnote">1</a></sup>。</p>
+
+<p>欧氏变换和仿射变换使得无穷远点仍在无穷远。该变换以某种方式保持了这些点，至少保持了集合。在欧氏几何或<em>仿射</em>几何的场景，它们在某些方面存在不同或例外。</p>
+
+<p>在射影几何看来，无穷远点与其它点没有任何区别。正如欧氏空间是均匀的，射影空间亦如此。按齐次坐标表示，无穷远点的最后一个坐标为零，该性质无非是一种特殊的坐标系选择。类似于欧氏变换或仿射变换，我们可定义射影空间的<em>射影变换</em>（projective transformation）。矩阵乘以点的坐标，表示欧氏空间$\mathbb R^n$的线性变换。正如此，射影空间$\mathbb P^n$的射影变换是齐次坐标表示的点（$(n+1)$维向量）的映射，它采用非奇异矩阵（non-singular matrix）乘以坐标向量。在该映射下，无穷远点（最后一个坐标为零）映射到任意其它点。没有保持无穷远点。因此，射影空间$\mathbb P^n$的射影变换表示为齐次坐标的线性变换</p>
+
+<p>\[
+\mathbf X^\prime=\mathrm H_{(n+1)\times (n+1)}\mathbf X。
+\]</p>
+
+<p>在计算机视觉问题中，射影空间是用于表示真实三维世界的便利方式，通过推广它到三维射影空间。类似地，图像通常由真实世界投影为二维形式构成，图像便于推广，视它们在二维射影空间。实际上，真实世界及其图像不包含无穷远点，我们需要关注哪些是虚构的点，也就是图像中无穷远线和现实世界中无穷远平面。正因如此，虽然我们通常工作在射影空间，但我们仍意识到无穷远的线和平面有些特殊。这违背了纯粹射影几何的思想<sup id="fnref:pure-projective-geometry"><a href="#fn:pure-projective-geometry" class="footnote">2</a></sup>，但这对我们的实际问题有用。我们通常设法两全其美：同等对待射影空间中的所有点，当这适合我们时就这么做；单独处理空间中无穷远线和图像中无穷远平面，当这变得必要时就这么做。</p>
+
+<h3 id="section-1">1.1.1 仿射几何与欧氏几何</h3>
+
+<p>我们已清楚增加无穷远线（或平面），从欧氏空间可得射影空间。现在我们考虑变回去的逆过程。这里的论述主要关注二维和三维的射影空间。</p>
+
+<p><strong>仿射几何。</strong>我们将认为射影空间最初是匀质的，并非偏爱特定坐标系。因为平行线（或者三维情形的平面）会交于无穷远，这样的空间没有线平行的概念。然而，射影空间中没有哪些点在无穷远的概念——所有点生而平等。我们认为平行不是射影几何中的概念。谈论它毫无意义。</p>
+
+<p>为了让该概念行之有效，我们需要挑出有些特别的线，并确定这是无穷远线。这会导致虽在所有点生而平等的环境，但有些点比其它的更平等。因此，从一张白纸着手，设想它延伸到无穷远并构成了射影空间$\mathbb P^2$。我们看到的只是该空间的一小部分，这看起来很像一块普通的欧氏平面。现在，我们在纸上画一条直线，并声明这是无穷远线。接下来，我们画另外两条线交于该特殊线。由于它们交于无穷远线，我们将它们定义为平行。该情形与在无穷远平面看到的相似。设想在地球上非常平坦的区域照的一张相片。平面中无穷远点在图像中显示为地平线（horizon line）。像铁轨这样的线，在图像中显示为与地平线相交的线。位于图中地平线上方的点（天空的图像）显然对应不上世界平面（world plane）上的点。然而，若我们设想在摄像机后面向后延伸相应的射线，它会在摄像机后的一点与该平面相交。因此，图像中的点和世界平面中的点存在一一对应关系。世界平面中无穷远点对应着图像中真实的地平线，并且世界平面中的平行线对应于交于地平线的线。我们看来，世界平面及其图像只是以另一种方式展示射影平面的几何，附带一条特殊的线。射影平面的几何加上一条特殊的线称为<em>仿射几何</em>，将一个空间中该特殊线映射为另一空间中特殊线的任何射影变换，都称之为<em>仿射变换</em>。</p>
+
+<p>通过确定一条特殊的线为无穷远线，我们可定义平面中直线的平行。然而，一旦我们能定义平行，某些其它的概念就同样有效。例如，我们可定义平行线上两点间区间相等。例如，若令$A$、$B$、$C$和$D$表示点，且线$AB$和$CD$平行，当线$AC$和$BD$也平行时，那么我们认为两个区间$AB$和$CD$<em>长度相等</em>。类似地，同一条线上两个区间相等，若其平行线上存在另一个区间与它们都相等。</p>
+
+<p><strong>欧氏几何。</strong>通过辨别射影平面的特殊线，我们得到平行的概念，以及基于它的<em>仿射几何</em>。仿射几何视为射影几何的特例，我们从中挑出一条特殊的线（根据维度或者是平面）并称之为无穷远线。</p>
+
+<p>接下来，我们转向欧氏几何，并说明通过选取某些无穷远线或平面的特性，仿射几何变成了欧氏几何。鉴于此，我们介绍本书最重要的概念之一，<em>绝对圆锥曲线</em>（absolute conic）<sup id="fnref:conic"><a href="#fn:conic" class="footnote">3</a></sup>。</p>
+
+<p>我们从考虑二维几何入手，并从圆开始。注意，圆不是仿射几何的概念，因为平面的任意伸缩，虽保持了无穷远线，但将圆变成了椭圆。因此，仿射几何不区分圆和椭圆。</p>
+
+<p>但在欧氏几何，它们不同，并有个重要的区别。椭圆用在代数上二阶方程描述。正如期望，也是事实，最通常情况两个椭圆会交于四点。然而，几何上很显然，两个不同的圆无法交于两个以上的点。我们此处在代数上让两个二阶曲线相交，或者等价于求解两个二次方程。我们期待得到四个解。问题在于，圆有何特别，它们只交于两点。</p>
+
+<p>该问题的答案当然是存在另外两个解，这两个圆还交于另外两个<em>复数</em>（complex）点。我们不用费多大劲就能发现这两个点。</p>
+
+<p>圆方程的齐次坐标$(x,y,w)$形式形如</p>
+
+<p>\[
+(x-aw)^2+(y-bw)^2=r^2w^2。
+\]</p>
+
+<p>该方法用圆心表示圆，圆心用齐次坐标表示为$(x_0,y_0,w_0)^\top=(a,b,1)^\top$。可以很快验证点$(x,y,w)^\top=(1,\pm i,0)^\top$在这类圆上。重现这个有趣的事实，每个圆都通过点$(1,\pm i,0)^\top$，因而它们存在于任何两个圆的交点。由于它们最后的坐标是零，这两点位于无穷远线上。基于显然的原因，它们称为平面的虚圆环点（circular point）。注意，虽然两个虚圆环点是复数，但它们也满足一对实方程：$x^2+y^2=0;w=0$。</p>
+
+<p>这种视角赋予了我们可以如何定义欧氏几何的依据。通过首先选出一条无穷远线，然后是该线上的两个虚圆环点，从射影几何导出了欧氏几何。当然虚圆环点是复数点，但大多数情况我们不必对此太担心。现在，我们可以将圆定义为通过两个虚圆环点的任意圆锥曲线（二阶方程定义的曲线）。注意，在标准欧氏坐标系统，虚圆环点的坐标为$(1,\pm i,0)^\top$。通过将欧氏体系用于射影平面，那么，我们可以指定任意线和该线上的任意两（复数）点，作为无穷远线和虚圆环点。</p>
+
+<p>作为应用该观点的一个例子，我们注意到，可以发现一般圆锥曲线经过平面上的五个任意点，因为通过计算一般二次方程$ax^2+by^2+\cdots +fw^2=0$的参数个数，可以清楚这一点。另一方面，只需三点确定一个圆。换一种方式认识该问题：一条圆锥曲线通过两个特殊的点（虚圆环点）和三个其它的点，因此如同任何其它圆锥曲线，它需要由五个点唯一确定。</p>
+
+<p>不要惊奇，通过选择两个虚圆环点，得到了熟悉的全部欧氏几何。特别地，诸如角度和长度比等概念可根据虚圆环点定义。然而，这些概念最容易的是通过某个欧氏平面的坐标系统定义，这些将在接下来的章节中看到。</p>
+
+<p><strong>三维欧氏几何。</strong>通过确定无穷远线和一对虚圆环点，我们清楚了如何根据射影平面确定欧氏平面。同样的思想可用于三维几何。如同二维情况，可以仔细观察球体，考察它们如何相交。就像代数上认为的那样，也如同两个一般椭球（或其它的二次曲面）那样，两个球体交于一个圆，而非一般的四阶曲线。这一思路导致了新发现，在齐次坐标系$(\mathrm X,\mathrm Y,\mathrm Z,\mathrm T)^\top$，所有球体与无穷远平面相交的曲线满足方程：$\mathrm X^2+\mathrm Y^2+\mathrm Z^2=0; \mathrm T=0$。这是位于无穷远平面上的二阶曲线（圆锥曲线），且仅由复数点构成。它称为<em>绝对圆锥曲线</em>。尤其鉴于它和摄像机标定相关，它是本书的关键几何实体之一，正如将在后文看到的那样。</p>
+
+<p>以上方程定义的绝对圆锥曲线，只存在于欧氏坐标系统。挑选一个特殊的平面作为无穷远平面，并指定位于该平面的一条特殊的圆锥曲线作为绝对圆锥曲线，通常我们可以认为三维欧氏空间是从射影空间由此推导的。基于射影空间的坐标系统，可以对这些实体进行很普适的描述。</p>
+
+<p>我们在此不会详细深入绝对圆锥曲线如何确定整个欧氏三维几何。只会提供一个例子。空间中线的垂直，不是仿射几何中的合法概念，但这属于欧氏几何。线的垂直可根据绝对圆锥曲线定义如下。延长两条线，直到它们与平面交于无穷远，我们得到的两点称为这两条线的方向点（direction）。线的垂直通过到绝对圆锥曲线的这两个方向点间的关系确定。若这两个方向点是关于绝对圆锥曲线的共轭点（如<a href="">图3.8</a>所示），那么这两条线垂直。共轭点的几何与代数表示在<a href="">第2.8.1节</a>定义。简言之，若用$3\times 3$的对称矩阵表示绝对圆锥曲线，并且方向点是$\mathbf d_1$和$\mathbf d_2$，当$\mathbf d_1^\top\mathrm\Omega_\infty\mathbf d_2=0$时，那么它们关于$\mathrm\Omega_\infty$共轭。更一般地说，在任意坐标系统，角度可根据绝对圆锥曲线定义，如<a href="">第3.23节</a>所述。</p>
+
+<h2 id="section-2">1.2 摄像机的射影几何</h2>
+
+<p>本书的重要主题之一是成像过程，也就是三维世界的二维表示方式，以及从图像中出现的那些的三维结构中，我们可推断出些什么。</p>
+
+<p>三维世界降为二维图像是一个射影过程（projection process），我们从中损失了一个维度。该过程通用的建模方法是<em>中心射影</em>（central projection）。在该射影，空间中的引出的一条射线，来自于三维世界中的点通过空间中一个固定的点，<em>射影中心</em>（centre of projection）。射线会交于空间中设定为<em>像平面</em>（image plane）的特定平面。射线和像平面的交点表示点的图像。若三维结构落在了平面上，就没有损失维度。</p>
+
+<p>该模型符合简单的摄像机模型。从现实世界点发出的一束光线，穿过摄像机的透镜，投射到胶片或数字设备上，生成该点的图像。忽略聚焦和透镜厚度等的影响，合理的近似是所有的光线都通过单个点，透镜中心。</p>
+
+<p>为了在成像过程应用射影几何，通常将现实世界建模为三维射影空间，等价于$\mathbb R^3$附带无穷远点。图像模型是类似的二维射影平面$\mathbb P^2$。中心射影不过是$\mathbb P^3$到$\mathbb P^2$的一个映射。如果我们考虑点记为齐次坐标$(\mathrm X,\mathrm Y,\mathrm Z,\mathrm T)^\top$的形式，且射影中心是原点$(0,0,0,1)^\top$，那么我们看到，固定$\mathrm X$、$\mathrm Y$和$\mathrm Z$并改变$T$所得的全部点$(\mathrm X,\mathrm Y,\mathrm Z,\mathrm T)^\top$组成的集合，形成穿过射影中心点的一条射线，因而这些点都映射到相同的点。因此，$(\mathrm X,\mathrm Y,\mathrm Z,\mathrm T)$的最后坐标和点在哪里成像无关。像点（image point）事实上是$\mathbb P^2$中的点，齐次坐标为$(\mathrm X,\mathrm Y,\mathrm Z)$。因此，该映射可表示为三维齐次坐标的一个映射，记为$3\times 4$的矩阵$\mathrm P$，其块结构记为$\mathrm P=\left[\mathrm I_{3\times 3}\vert\mathbf 0_3\right]$，其中$\mathrm I_{3\times 3}$是$3\times 3$的单位矩阵，$\mathbf 0_3$是三维零向量。考察不同的射影中心，以及图像不同的射影坐标系，最一般的成像射影表示为任一秩3的$3\times 4$矩阵，它作用于$\mathbb P^3$中点的齐次坐标，将其映射到$\mathbb P^2$中的成像点。该矩阵$\mathrm P$称为摄像机矩阵。</p>
+
+<p>总之，射影摄像机在空间中一个点上的操作，可利用线性的齐次坐标映射表示为</p>
+
+<p>\[
+\begin{pmatrix}
+x\\
+y\\
+w
+\end{pmatrix}=\mathrm P_{3\times 4}
+\begin{pmatrix}
+\mathrm X\\
+\mathrm Y\\
+\mathrm Z\\
+\mathrm T
+\end{pmatrix}。
+\]</p>
+
+<p>而且，如果所有点都在一个平面上，那么线性映射简化为</p>
+
+<p>\[
+\begin{pmatrix}
+x\\
+y\\
+w
+\end{pmatrix}=\mathrm P_{3\times 3}
+\begin{pmatrix}
+\mathrm X\\
+\mathrm Y\\
+\mathrm Z
+\end{pmatrix}，
+\]</p>
+
+<p>它是一个射影变换。</p>
+
+<p><img src="/assets/images/2015-06-06-mvgcv-fig-1-1.png" alt="The camera centre is the essence." width="600px" id="fig-1-1" /></p>
+
+<p class="mvgcv-figure-caption"><strong>图 1.1：摄像机的中心是本质。</strong> (a)图像的构成：像点$\mathbf x_i$是由空间点$\mathbf X_i$经摄像机中心$\mathbf C$的射线与平面的交点。(b)当空间点共面时，存在一个真实世界与像平面之间的投影变换，$\mathbf x_i = \mathrm H_{3\times 3}\mathrm X_i$。(c)具有相同摄像机中心的所有图像，通过射影变换相联系，$\mathbf x_i^\prime=\mathrm H_{3\times 3}^\prime\mathbf x_i$。比较(b)和(c)——两种情况都是通过穿越中心的射线平面间相互映射。(b)中是场景和像平面间的映射，(c)中是两个像平面间的。(d)若改变摄像机中心，一般图像不再通过射影变换相关联，除非(e)所有空间点共面。</p>
+
+<p><strong>摄像机视为点。</strong>中心射影把$\mathbb P^3$的点映射为$\mathbb P^2$的点，通过射影中心的射线上的所有点，投射在图像上的同一点。为了图像射影，可将沿此射线的所有点视为等价。我们可更进一步，并考虑用通过射影中心的射线表示像点。因此，所有像点的集合，与通过摄像机中心的射线集相同。若从$(0,0,0,1)^\top$通过点$(\mathrm X,\mathrm Y, \mathrm Z, \mathrm T)^\top$的射线我们用前三个坐标$(\mathrm X,\mathrm Y, \mathrm Z)^\top$表示，那么易知对任意常数$k$，射线$k(\mathrm X,\mathrm Y,\mathrm Z)^\top$表示同一射线。因此，射线本身用齐次坐标表示。它们实际上组成了一个二维的射线空间。射线自身的集合可视为图像空间$\mathbb P^2$的一种表示。如此表示图像，摄像机中心最重要，因为它唯一确定了构成图像的射线集。源自同一射影中心的不同图像，表示为不同的摄像机矩阵，但只展示了生成图像的射线集的不同坐标系。因此，空间中相同点得到的两张图像射影等价（projectively equivalent）。只有当我们着手测量图像中的点时，才需为图像指定一个特定的坐标系统。只有这样，才有必要确定一个特定的摄像机矩阵。简言之，目前我们忽略的模视场（modulo field-of-view），通过同一摄像机中心获取的所有图像等价——在没有关于三维点或摄像机中心位置的任何信息时，它们通过射影变换可互相转换。这些观点表示在<a href="#fig-1-1">图1.1</a>中。</p>
+
+<p><strong>已标定摄像机。</strong>为了彻底弄清图像与现实世界的欧氏关系，有必要叙述它们相关的欧氏几何。如我们所见，通过设定$\mathbb P^3$中特定平面为无穷远平面，确定了三维世界的欧氏几何，并将该平面中特定的圆锥曲线$\mathrm\Omega$作为绝对圆锥曲线。对位于无穷远平面之外的摄像机，现实世界中的无穷远平面一一映射到了像平面。这就是为什么图像中任一点确定了空间中的一条射线，该射线与无穷远平面交于一点。因此，现实世界中的无穷远平面，不会告诉我们关于图像的任何新东西。绝对圆锥曲线，尽管是无穷远平面中的一条圆锥曲线，必投影为图像中的一条圆锥曲线。所得的图像曲线，称为绝对圆锥曲线的图像（Image of the Absolute Conic），或者IAC。若已知IAC在图像中的位置，那么我们称摄像机已<em>标定</em>。</p>
+
+<p>在标定的摄像机中，可以确定从图像中两点回射的两条射线间的夹角。我们已知，空间中两条线的夹角，由它们与无穷远平面相交的位置确定，与绝对圆锥曲线相关。在标定的摄像机中，无穷远平面和绝对圆锥曲线$\Omega_{\infty}$一一投影到了像平面和IAC，记为$\boldsymbol\omega$。两个像点与$\boldsymbol\omega$间的射影关系，完全等价于回射的射线和无穷远平面的交点与$\Omega_{\infty}$间的关系。那么，已知IAC，通过直接在图像中测量，可测量射线间的夹角。因此，对标定的摄像机，可以测量射线间夹角，计算图像块代表的视场，或者确定图像中的椭圆能否反向投影为圆锥（circular cone）。稍后，我们将看到它帮助我们确定重建场景的<em>欧氏结构</em>。</p>
+
+<p id="example-1-1"><strong>例 1.1：基于绘画的三维重建</strong></p>
+
+<p>利用射影几何技术，很多情况下可从单张图像重建场景。若不对成像场景做些假设，这无法实现。典型的技术涉及通过平行线和消失点等特征的分析，确定场景的仿射结构，例如这可通过确定图像中观察平面的无穷远线而确定。场景中发现的角度信息（或假设），尤其是正交的线或平面，可用于将仿射重建提升到欧氏重建。</p>
+
+<p>这些技术还不能完全自动化。尽管如此，射影几何知识仍可根植于系统，实现用户引导下的单视场景重建。</p>
+
+<p><img src="/assets/images/2015-06-06-mvgcv-fig-1-2.jpg" alt="Single view reconstruction." width="500px" id="fig-1-2" /></p>
+
+<p class="mvgcv-figure-caption"><strong>图 1.2：单视图重建。</strong>(a)原始绘画——St. Jerome在他的书房，1630年，Hendrick van Steenwijck（1580-1649），Joseph R. Ritman的私人藏品，荷兰阿姆斯特丹。(b)(c)(d)展示了从绘画创建的三维模型。感谢Antonio Criminisi供图。</p>
+
+<p>这些技术已被用于重建大师画作中的三维纹理映射的图模型（graphical model）。自文艺复兴始，就产生了具有非常精确透视法的绘画。<a href="#fig-1-2">图1.2</a>中展示了基于这样的绘画而实现的重建。</p>
+
+<h2 id="section-3">1.3 多视图重建</h2>
+
+<p>我们现在进入本书的主题之一——基于多张图像重建场景。最简单的情况是两张图，这是我们首先将要考虑的。作为数学上的抽象，我们将论述限定在只包含点的“场景”。</p>
+
+<p>本书给出的许多算法，输入一般都是对应点（point correspondence）的集合。因此，在双视情形，我们考虑两张图对应关系的一个集合$\mathbf x_i \leftrightarrow\mathbf x_i^\prime$。假设存在摄像机矩阵$\mathrm P$和$\mathrm P^\prime$，以及三维点$\mathbf X_i$，它们生成了场景的这些对应图像（image correspondence），满足$\mathrm P\mathbf X_i=\mathbf x_i$和$\mathrm P^\prime\mathbf X_i=\mathbf x_i^\prime$。因此，点$\mathbf X_i$投影到了两个给定的数据点。然而，摄像机（表示为射影矩阵$\mathrm P$和$\mathrm P^\prime$）和点$\mathbf X_i$都未知。我们的任务就是确定它们。</p>
+
+<p>从一开始就清楚，不可能唯一确定这些点的位置。尽管我们得到了许多图，甚至我们不止拥有相应点的数据，这种歧义仍普遍存在。例如，给定立方体对象的几张图，这可能表明它的绝对位置（它在亚的斯亚贝巴的夜总会（night-club）还是大英博物馆），它的朝向（它的哪面朝北），或它的尺寸。对此我们认为重建是可行的，只不过受制于现实世界的相似变换。然而，事实表明，除非两个摄像机标定的相关信息已知，重建中的这种歧义通过一种更一般的变换类描述——射影变换。</p>
+
+<p>导致这种歧义，其原因在于可对每个点$\mathbf X_i$施加射影变换（用$4\times 4$的矩阵$\mathrm H$表示），也可将该变换用于每个摄像机矩阵$\mathrm P_j$的右侧，而不改变投影的像点，因此</p>
+
+<p>\begin{equation}
+\mathrm P_j\mathbf X_i = \left(\mathrm P_j\mathrm H^{-1}\right)\left(\mathrm H\mathbf X_i\right)
+\label{eq-1-1}
+\end{equation}</p>
+
+<p>选择某个点集和摄像机矩阵而非其它的，并非理由充分。$\mathrm H$的选择非常随意，我们称重建存在射影歧义，或称之为<em>射影重建</em>（projective reconstruction）。</p>
+
+<p>然而，好消息是这是可能发生的最坏情况。从双视图重建点集，在无法避免的射影歧义下可行。那么，我们需要满足一些前提；点必须足够多，至少七个，并且它们必不在任何明确的<em>关键结构</em>（critical configuration）中。</p>
+
+<p>从双视中重建点集的基本工具是<em>基础矩阵</em>（fundamental matrix），它描述了同一三维点的像点$\mathbf x$和$\mathbf x^\prime$满足的约束。该约束源自于这两个视图的摄像机中心、像点以及空间点的共面性。令基础矩阵为$\mathrm F$，匹配的点对$\mathbf x_i\leftrightarrow \mathbf x_i^\prime$必须满足</p>
+
+<p>\[
+\mathbf x_i^{\prime\top}\mathrm F\mathbf x_i = 0，
+\]</p>
+
+<p>其中$\mathrm F$是一个秩为$2$的$3\times 3$矩阵。这些方程是线性的，系数是矩阵$\mathrm F$。这意味着若$\mathrm F$未知，那么它可由一组对应点计算。</p>
+
+<p>一对摄像机矩阵$\mathrm P$和$\mathrm P^\prime$唯一确定了一个基础矩阵$\mathrm F$，反之，该基础矩阵确定了三维射影歧义下一对摄像机矩阵。因此，基础矩阵蕴涵了这对摄像机的全部射影几何，并且不被三维射影变换所改变。</p>
+
+<p>基础矩阵法重建场景非常简便，包含以下步骤：</p>
+
+<ol>
+  <li>给定两视图间的几个对应点$\mathbf x_i\leftrightarrow\mathbf x_i^\prime$，基于共面方程$\mathbf x_i^{\prime\top}\mathrm F\mathbf x_i=0$，构造系数为$\mathrm F$的线性方程。</li>
+  <li>找出线性方程组的解$\mathrm F$。</li>
+  <li>根据<a href="">第9.5节</a>给出的简单公式，从$\mathrm F$计算一对摄像机矩阵。</li>
+  <li>给定两个摄像机$\left(\mathrm P, \mathrm P^\prime\right)$及对应像点对$\mathbf x_i\leftrightarrow\mathbf x_i^\prime$，找出投影到给定像点的三维点$\mathbf X_i$。这种求解$\mathbf X$的方法称为<em>三角测量法</em>。</li>
+</ol>
+
+<p>此处只给出了算法的梗概，本书详细探讨了其中的每部分。按照此简述不能直接实现该算法。</p>
+
+<h2 id="section-4">1.4 三视几何</h2>
+
+<p>在上一节，探讨了从点集的双视图，重建点集和摄像机的相对位置是可行的。这种重建，仅在空间射影变换以及对摄像机矩阵相应调整时，才可行。</p>
+
+<p>本节考虑三视图的情况。鉴于双视图，基本的代数实体是基础矩阵，对三视图该角色由三焦张量胜任。三焦张量是一个$3\times 3\times 3$的数字数组，其数字与三视图中相应点或线的坐标相关。正如基础矩阵由两个摄像机矩阵确定，并在射影变换意义下确定它们，三视图亦如此，三焦张量由三个摄像机矩阵确定，并且也是在射影变换的意义下依次确定他们。因此，三焦矩阵包含了三个摄像机的相对射影几何。</p>
+
+<p>通常张量的一些索引记为下标，一些记为上标，原因将在<a href="">第15章</a>说明。这些称为协变和逆变索引。三焦张量形如$\mathcal T_i^{jk}$，拥有两个上标和一个下标索引。</p>
+
+<p>三视图中图像实体间最基本的关系，涉及两条线和一点之间的对应关系。我们考虑一张图中一个点$\mathbf x$和另外两张图中两条线$\mathbf l^{\prime}$和$\mathbf l^{\prime\prime}$之间的对应关系$\mathbf x\leftrightarrow\mathbf l^\prime\leftrightarrow\mathbf l^{\prime\prime}$。该关系意味着空间中存在点$\mathbf X$，映射到第一张图的$\mathbf x$，并且映射到点$\mathbf x^\prime$和$\mathbf x^{\prime\prime}$位于另外两张图中的线$\mathbf l^{\prime}$和$\mathbf l^{\prime\prime}$上。随后，三张图的坐标通过三焦张量关系向联系：</p>
+
+<p>\begin{equation}
+\sum_{ijk}x^il_j^\prime l_k^{\prime\prime}\mathcal T_i^{jk}=0。
+\label{eq-1-2}
+\end{equation}</p>
+
+<p>该关系确定了张量元素间的单个线性关系。当拥有充足的对应关系时，可线性求解张量元素。可从点的一个对应关系$\mathbf x\leftrightarrow\mathbf x^\prime\leftrightarrow\mathbf x^{\prime\prime}$幸运地获得更多的方程。事实上，在该情形，可选择通过点$\mathbf x^\prime$和$\mathbf x^{\prime\prime}$的任意线$\mathbf l^\prime$和$\mathbf l^{\prime\prime}$，并得到形如\eqref{eq-1-2}的关系。由于可选择通过点$\mathbf x^\prime$的两条不相关线，以及另外两条通过$\mathbf x^{\prime\prime}$的线，可以依此方式得到四个不相关的方程。照这样做，总共七个对应点就够线性地计算三焦张量。利用非线性方法，最少六个对应点就能计算。</p>
+
+<p>这27个张量元素并非无关，既然这样，它们通过一组<em>内部约束</em>相联系。这些约束非常复杂，但是满足这些约束的张量可通过多种方式计算，比如采用6点非线性法。基础矩阵（它是双视图张量）也满足一个内部约束，但相对简单：元素服从$\det\mathrm F=0$。</p>
+
+<p>借助基础矩阵，一旦三焦张量已知，可从它得到三个摄像机矩阵，从而实现场景的点和线的重建。一如既往，该重建仅在三维射影变换下是唯一的；它是射影重建。</p>
+
+<p>因此，我们可以将该方法从双视图推广到三视图。采用这种三视图重建法有几个优势：</p>
+
+<ol>
+  <li>可采用相关点和相关线的混合，计算射影重建。双视图只能使用对应点。</li>
+  <li>使用三视图，重建的稳定性更好，并且避免了只使用双视图重建可能导致的不稳定结构。</li>
+</ol>
+
+<h2 id="n">1.5 四视几何与$n$视重建</h2>
+
+<p>基于张量的方法还可再深入一步，定义与四视图中可见实体关联的一个四焦张量。由于计算满足其内部约束的四焦张量相对困难，既然如此，因此该方法很少用。尽管如此，它提供了一种非迭代法计算基于四视图的射影重建。张量方法并未拓展到四个以上视图，既如此，因此从四个以上视图重建变得更困难。</p>
+
+<p>基于多视图的重建的许多方法已有了探讨，我们在本书探讨其中的几个。逐步重建场景是一种方法，它采用三视图或双视图技术。这种方法可用于任何图像序列，通过精心选择合适的三元组使用，这通常会奏效。</p>
+
+<p>存在可用于特定情况的方法。如果我们能使用称为<em>仿射摄像机</em>的更简单摄像机模型，重建任务就变得更容易了。与场景的背景和前景的距离差比起来，每当摄像机到场景的距离很大时，该摄像机模型就是透视投影（perspective projection）的一种合理的近似。如果一个点集，在仿射摄像机相关$n$视图的整个集合中均可见，那么著名的<em>因子化算法</em>（factorization algorithm），可用于同时计算场景结构和特定摄像机模型，使用奇异值分解一步完成。该算法非常可靠，并且易于实现。它的主要不同点在于使用了仿射摄像机模型而非纯粹的射影模型，并且要求全部点在所有视图中可见。</p>
+
+<p>其它$n$视重建法需要各种前提，比如现实世界的四个共面点在全部视图中可见，或者六个或七个点在序列的所有图像中都可见。采用特定运动序列的方法，比如线性运动、平面运动或单轴（转台）运动，也已有了研究。</p>
+
+<p>处理常规重建问题的主流方法是<em>光束平差法</em>。这是一种迭代方法，它试图用一个非线性模型拟合被测数据（对应点）。光束平差法的优点是它是非常普遍的方法，可适用的重建和优化问题的范围广泛。它可按此方式求解——所求解是问题的最大似然解，对非精确图像测量模型，这种解是某种意义上的最佳解。</p>
+
+<p>不走运，光束平差法是一个迭代过程，不能保证从任意起始点收敛到最优解。许多重建方法的研究，寻求容易计算的非最佳解，它能作为光束平差法的起始点。初始化步骤后接光束平差法，这通常是重建偏爱的技术。事实上，若用心实现，该方法非常有效。本书的一个长附录讲述了高效的光束平差法。</p>
+
+<p><img src="/assets/images/2015-06-06-mvgcv-fig-1-3.jpg" alt="" width="500px" id="fig-1-3" /></p>
+
+<p class="mvgcv-figure-caption"><strong>图 1.3：重建。</strong>(a)700帧视频序列中的7帧，视频通是当沿牛津街道行走时手持摄像机拍摄的。(b)(c)两个重建点云和摄像机路径（红色曲线）的视图。感谢David Capel和2d3（<a href="http://www.2d3.com">www.2d3.com</a>）供图。</p>
+
+<p>使用$n$视重建技术，可从很长的图像序列中实现自动重建。例如，<a href="#fig-1-3">图1.3</a>所示的例子展示了源自700帧的重建。</p>
+
+<h2 id="section-5">1.6 变换</h2>
+
+<p>我们已经探讨了从图像集进行三维重建。射影几何的另一个实际用途是变换：给定点在一张（或更多）图中的位置，确定它会出现在该组其它所有图像的哪些位置。为了这么做，我们必须首先用（比如）辅助点集建立摄像机间的关系。若重建可行，变换在概念上是直截了当的。例如，如果在两张视图中确定了点（$\mathbf x$和$\mathbf x^\prime$），我们希望知道它在第三视图中的位置，那么这可按如下步骤计算：</p>
+
+<ol>
+  <li>从其它对应点$\mathbf x_i\leftrightarrow\mathbf x_i^\prime\leftrightarrow \mathbf x_i^{\prime\prime}$，计算三视图的摄像机矩阵$\mathrm P$、$\mathrm P^\prime$、$\mathrm P^{\prime\prime}$。</li>
+  <li>使用$\mathrm P$和$\mathrm P^\prime$从$\mathbf x$和$\mathbf x^\prime$用三角测量法得到三维点$\mathbf X$。</li>
+  <li>三维点到第三视图的投影为$\mathbf x^{\prime\prime}=\mathrm P^{\prime\prime}\mathbf X$。</li>
+</ol>
+
+<p>该过程仅需射影信息。另一策略是采用多视图张量（基础矩阵和三焦张量）直接变换点而无需显式的三维重建。两种方法都有它们的优势。</p>
+
+<p>假定摄像机绕它的中心旋转，或者感兴趣的所有场景点共面。那么，合适的多视关系是图像间的平面射影变换。在此情况，只在一张图出现的点可被变换到其它任何图像。</p>
+
+<h2 id="section-6">1.7 欧氏重建</h2>
+
+<p>至此，对于未标定摄像机组采集的图像，我们已考虑了场景重建和变换。对这些摄像机，诸如焦距、图像的几何中心（或主点）、还可能有图像中像素长宽比等重要参数未知。如果每个摄像机的全部标定已知，那么可能消除重建场景的某些歧义。</p>
+
+<p><img src="/assets/images/2015-06-06-mvgcv-fig-1-4.png" alt="Projective ambiguity" id="fig-1-4" /></p>
+
+<p class="mvgcv-figure-caption"><strong>图 1.4：射影歧义：</strong>在Z方向，三维射影变换下杯子的重建（真实形状如中图所示）。所示杯子的五个例子，存在不同程度的射影失真。形状和原始的区别很大。</p>
+
+<p>至此，我们已经讨论了射影重建，其全部内容在于摄像机或场景标定的相关信息未知时，它是可行的。射影重建在很多场合还不足，比如，计算机图形学应用，由于它存在模型失真，对于看惯了欧氏世界的人，这有些奇怪。例如，一个简单对象中，射影变换导致的失真如<a href="#fig-1-4">图1.4</a>所示。使用射影重建技术，无法从<a href="#fig-1-4">图1.4</a>中杯子的任何可能形状中做出选择。射影重建算法产生此处所见的任何一种重建的可能性，和其余任何一种一样。射影重建可能产生更严重失真的模型。</p>
+
+<p>为了实现模型重建，其中对象拥有它们正确的（欧氏）形状，必须标定摄像机。易知这足够确定场景的欧氏结构。如我们所见，确定现实世界的欧氏结构，等价于确定无穷远平面和绝对圆锥曲线。事实上，由于绝对圆锥曲线位于一个平面，无穷远平面，这足以找出空间的绝对圆锥曲线。现在，使用已标定摄像机，假设我们已计算出了现实世界的射影重建。根据定义，这意味着每张图中的IAC已知；第$i$幅图中的用$\boldsymbol\omega_i$表示。每个$\boldsymbol\omega_i$的逆投影（back-projection）是空间中的一个圆锥，并且绝对圆锥曲线必位于所有圆锥的交。两个圆锥通常交于四阶曲线，但设定它们必交于一条圆锥曲线，该曲线必分为两条圆锥曲线。因此，基于两幅图的绝对圆锥曲线重建不唯一——相反，通常有两个可能解。然而，基于三幅及以上的图像，通常圆锥的交唯一。因此圆锥曲线是确定的，并且通过它场景的欧氏结构也亦如此。</p>
+
+<p>当然，若场景的欧氏结构已知，那么绝对圆锥曲线亦如此。在此情形，我们可将它投影回每幅图，在每幅图中得到IAC，并由此标定摄像机。因此，摄像机标定信息等价于能确定场景的欧氏结构。</p>
+
+<h2 id="section-7">1.8 自标定</h2>
+
+<p>不需要摄像机的任何标定信息，也有可能比射影重建做得更好。任意数量视图之间对应特征的集合中，没有信息能帮我们找出绝对圆锥曲线的像，或等价于摄像机的标定信息。然而，若我们恰好知道一点关于摄像机的标定信息，那么我们也许能确定绝对圆锥曲线的位置。</p>
+
+<p>对于用在从图像序列重建场景的每个摄像机，比如假定已知它们的标定相同。为此我们思路如下。每幅图中确定一个坐标系统，其中我们已测得用于射影重建的相应特征的图像坐标。假设在所有这些图像坐标系统中，IAC相同，但只是它在何处未知。从这些信息中，我们期望计算出绝对圆锥曲线的位置。</p>
+
+<h2 id="section-8">1.9 奖励一：三维图形建模</h2>
+
+<h2 id="section-9">1.10 奖励二：视频增强</h2>
+
+<h2 id="x-">1.x 知识要点</h2>
+
+<ul>
+  <li><strong>射影变换</strong>是平面上点的任意保直线映射。</li>
+  <li><strong>射影空间</strong>是欧氏空间的一种扩展，其中两条线总交于一点（有时在神秘的无穷远点）。</li>
+  <li>$(kx,ky,k),k\neq 0$称为点的<strong>齐次坐标</strong>，通过除以$k$可回推出原始坐标$(x,y)$。通过齐次向量表示点，欧氏空间可拓展到射影空间。$(x,y,0)$表示<strong>无穷远点</strong>，二维射影空间的无穷远点构成一条线，通常称为无穷远线，它们在三维空间构成无穷远平面。</li>
+  <li>欧氏变换和仿射变换使得无穷远点仍在无穷远。射影变换表示为齐次坐标的线性变换，它将无穷远点映射到任意其它点，没有保持无穷远点。</li>
+</ul>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:affine-transformation">
+      <p>仿射变换： <a href="#fnref:affine-transformation" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:pure-projective-geometry">
+      <p>纯粹射影几何： <a href="#fnref:pure-projective-geometry" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:conic">
+      <p>圆锥曲线： <a href="#fnref:conic" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/06/mvgcv-preface" class="pageNav" style="float:left"   >上一篇：计算机视觉中的多视几何：前言 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/07/introduction-to-yushanfang" class="pageNav" style="float:right"   >下一篇：御膳房使用简介 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/06/mvgcv-chapter01" 	data-url="http://qianjiye.de/2015/06/mvgcv-chapter01" data-title="计算机视觉中的多视几何：1. 简介——多视几何之旅">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/06/mvgcv-preface'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/07/introduction-to-yushanfang'; --1> -->
+<!--         url = '/2015/07/introduction-to-yushanfang'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/06/mvgcv-chapter01/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

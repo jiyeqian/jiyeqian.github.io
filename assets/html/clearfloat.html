@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="Author" content="Kayo Lee" />
+        <title>清除浮动 Demo</title>
+        <style>
+        	html, body, div, span, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, address, cite, code,del, dfn, em, img, ins, kbd, q, samp,small, strong, sub, sup, var,b, i,dl, dt, dd, ol, ul, li, fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+        	body {text-align: center; font-size: 15px; font-family: "Microsoft YaHei", Georgia, Geneva, times; }
+        	h1, h2 {color: #000; padding-top: 15px; padding-bottom: 15px; }
+        	h1 {font-size: 21px; text-align: center; }
+        	div {padding: 15px; color: #fff; }
+        	p {margin-top: 15px; margin-bottom: 15px; color: #000; font-size: 14px; }
+        	#wrap {width: 760px; margin: 0 auto; text-align: left; }
+        	.box {border: 1px solid #9a9a9a; }
+        	.left {float: left; }
+        	.right {float: right; }
+        	.clear {clear: both; }
+        	.clearfix {zoom: 1; }
+			.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+			.main {background: #ff9900; }
+			.aside {background: #2595e5; }
+        </style>
+	</head>
+	<body>
+		<div id="wrap">
+			<h1>清除浮动 Demo</h1>
+
+			<h2 id="float-1">浮动元素的块级兄弟元素</h2>
+			<div class="box">
+				<div class="left">我设置了左浮动 float: left ,但没有设置背景色。</div>
+				<div class="aside">我没有设置浮动，设置了蓝色背景色。</div>
+			</div>
+			<p class="clear">可以看出，第一个 div 并没有设置颜色，但实际却为蓝色背景，这是因为元素浮动后，它的块级元素会无视它的位置，仍然占据整一行，而 div 的内容则会自动调整，正是这样的处理，使到实际使用浮动布局时产生很多未知影响。</p>
+
+			<h2>浮动元素的内联兄弟元素与高度塌陷</h2>
+			<div class="box">
+				<div class="main left">我设置了左浮动 float: left ,并设置橙色背景色。</div>
+				<span class="aside">我是 span ，没有设置浮动，设置了蓝色背景色。</span>
+			</div>
+			<p class="clear">这里同时看出两个问题。一是内联元素会围绕在设置了浮动的元素周围，而不会像块状兄弟元素那样占据一整行。另外由于浮动的元素是脱离文档流，因此父元素只会以没有浮动的 span 的高度为基础撑开自己，这就会造成父元素“塌陷”了。</p>
+
+			<h2 id="float-2">使用 clear: both 清除浮动</h2>
+			<div class="box">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div class="aside clear">我设置了 clear: both</div>
+			</div>
+
+			<h2 id="float-3">空白 div 方法</h2>
+			<div class="box">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div class="aside">我是页脚，上面没有空 div</div>
+			</div>
+			<div class="clear"></div>
+			<div class="box">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div style="clear: both;"></div>
+				<div class="aside">我是页脚，我的上面添加了一个设置了 clear: both 的空 div</div>
+			</div>
+
+			<h2 id="float-4">overflow 方法</h2>
+			<p class="clear">我的父元素没有设置 overflow: hidden ，出现了高度塌陷</p>
+			<div class="box">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div class="aside left">我是页脚，但是我也设置了左浮动。</div>
+			</div>
+
+			<p class="clear">我的父元素设置了 overflow: hidden</p>
+			<div class="box" style="overflow: hidden; *zoom: 1;">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div class="aside left">我是页脚，但是我也设置了左浮动。</div>
+			</div>
+
+			<h2 id="float-5">:after 伪元素的方法</h2>
+			<div class="box clearfix">
+				<div class="main left">我设置了左浮动 float: left</div>
+				<div class="aside left">我是页脚，但是我也设置了左浮动。</div>
+			</div>
+		</div><!-- wrap -->
+	</body>
+</html>

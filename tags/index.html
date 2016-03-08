@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>CHANGE・業・德 - 标签</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>标签</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <section class="post">
+<div id="tag_cloud">
+
+<a href="#文学艺术" title="文学艺术" rel="9">文学艺术</a>
+
+<a href="#程序设计" title="程序设计" rel="12">程序设计</a>
+
+<a href="#机器学习应用" title="机器学习应用" rel="15">机器学习应用</a>
+
+<a href="#机器学习基础" title="机器学习基础" rel="34">机器学习基础</a>
+
+<a href="#神经网络" title="神经网络" rel="4">神经网络</a>
+
+<a href="#特征学习" title="特征学习" rel="7">特征学习</a>
+
+<a href="#回归" title="回归" rel="9">回归</a>
+
+<a href="#BP算法" title="BP算法" rel="3">BP算法</a>
+
+<a href="#Matlab" title="Matlab" rel="2">Matlab</a>
+
+<a href="#支持向量机" title="支持向量机" rel="8">支持向量机</a>
+
+<a href="#聚类" title="聚类" rel="1">聚类</a>
+
+<a href="#k均值算法" title="k均值算法" rel="2">k均值算法</a>
+
+<a href="#降维" title="降维" rel="2">降维</a>
+
+<a href="#主成分分析" title="主成分分析" rel="2">主成分分析</a>
+
+<a href="#异常检测" title="异常检测" rel="2">异常检测</a>
+
+<a href="#推荐系统" title="推荐系统" rel="2">推荐系统</a>
+
+<a href="#计算广告学" title="计算广告学" rel="1">计算广告学</a>
+
+<a href="#大数据" title="大数据" rel="2">大数据</a>
+
+<a href="#在线学习" title="在线学习" rel="2">在线学习</a>
+
+<a href="#梯度下降法" title="梯度下降法" rel="7">梯度下降法</a>
+
+<a href="#机器学习理论" title="机器学习理论" rel="5">机器学习理论</a>
+
+<a href="#最优化" title="最优化" rel="2">最优化</a>
+
+<a href="#核方法" title="核方法" rel="4">核方法</a>
+
+<a href="#分类器融合" title="分类器融合" rel="6">分类器融合</a>
+
+<a href="#特征选择" title="特征选择" rel="3">特征选择</a>
+
+<a href="#熵" title="熵" rel="3">熵</a>
+
+<a href="#CNN" title="CNN" rel="3">CNN</a>
+
+<a href="#计算机视觉" title="计算机视觉" rel="16">计算机视觉</a>
+
+<a href="#最近邻算法" title="最近邻算法" rel="2">最近邻算法</a>
+
+<a href="#Python" title="Python" rel="6">Python</a>
+
+<a href="#正则化" title="正则化" rel="6">正则化</a>
+
+<a href="#数据清洗" title="数据清洗" rel="1">数据清洗</a>
+
+<a href="#R" title="R" rel="7">R</a>
+
+<a href="#深度学习" title="深度学习" rel="1">深度学习</a>
+
+<a href="#密度估计" title="密度估计" rel="1">密度估计</a>
+
+<a href="#模式发掘" title="模式发掘" rel="3">模式发掘</a>
+
+<a href="#SQL" title="SQL" rel="3">SQL</a>
+
+<a href="#机器人" title="机器人" rel="2">机器人</a>
+
+<a href="#自然语言处理" title="自然语言处理" rel="1">自然语言处理</a>
+
+<a href="#OpenCV" title="OpenCV" rel="1">OpenCV</a>
+
+<a href="#高性能计算" title="高性能计算" rel="3">高性能计算</a>
+
+<a href="#翻译" title="翻译" rel="5">翻译</a>
+
+<a href="#多视几何第二版" title="多视几何第二版" rel="3">多视几何第二版</a>
+
+</div>
+
+<ul class="listing">
+
+  <li class="listing-seperator" id="文学艺术">文学艺术</li>
+
+  <li class="listing-item">
+  <time datetime="2011-10-08">2011-10-08</time>
+  <a href="/2011/10/foreign-poems" title="外国诗歌赏析">外国诗歌赏析</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2011-09-19">2011-09-19</time>
+  <a href="/2011/09/stories" title="故事赏析">故事赏析</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2010-12-28">2010-12-28</time>
+  <a href="/2010/12/acknowledgements-from-theses" title="那些论文，精彩的致谢">那些论文，精彩的致谢</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2010-12-28">2010-12-28</time>
+  <a href="/2010/12/doctor-oath" title="19世纪欧洲大学授予博士学位时宣誓誓词">19世纪欧洲大学授予博士学位时宣誓誓词</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2010-07-15">2010-07-15</time>
+  <a href="/2010/07/chinese-classical-poems" title="中国古代诗词赏析">中国古代诗词赏析</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2010-03-07">2010-03-07</time>
+  <a href="/2010/03/gpu-and-cg-programming" title="GPU编程与CG语言之阳春白雪下里巴人">GPU编程与CG语言之阳春白雪下里巴人</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2010-01-23">2010-01-23</time>
+  <a href="/2010/01/chinese-new-poems" title="中国现代诗歌赏析">中国现代诗歌赏析</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2008-10-27">2008-10-27</time>
+  <a href="/2008/10/key-to-success-in-modern-society" title="Key to Success in Modern Society">Key to Success in Modern Society</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2008-07-26">2008-07-26</time>
+  <a href="/2008/07/lenna-romance" title="Lenna传奇">Lenna传奇</a>
+  </li>
+
+
+  <li class="listing-seperator" id="程序设计">程序设计</li>
+
+  <li class="listing-item">
+  <time datetime="2015-08-13">2015-08-13</time>
+  <a href="/2015/08/tesseract-ocr" title="开源OCR引擎Tesseract">开源OCR引擎Tesseract</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-28">2015-07-28</time>
+  <a href="/2015/07/HPC-overview" title="高性能计算概述">高性能计算概述</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-03">2015-07-03</time>
+  <a href="/2015/07/introduction-to-yushanfang" title="御膳房使用简介">御膳房使用简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/speed-up-python" title="高性能Python程序">高性能Python程序</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-28">2015-04-28</time>
+  <a href="/2015/04/speed-up-r" title="高性能R程序">高性能R程序</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-28">2015-04-28</time>
+  <a href="/2015/04/r-packages" title="R包开发">R包开发</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-20">2015-04-20</time>
+  <a href="/2015/04/postgresql-essential" title="PostgreSQL Essential">PostgreSQL Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-10">2015-04-10</time>
+  <a href="/2015/04/python-essential" title="Python Essential">Python Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-06">2015-03-06</time>
+  <a href="/2015/03/r-essential" title="R Essential">R Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-25">2014-12-25</time>
+  <a href="/2014/12/map-reduce-essential" title="Map-Reduce Essential">Map-Reduce Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-10-25">2014-10-25</time>
+  <a href="/2014/10/css-essential" title="CSS Essential">CSS Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2012-07-01">2012-07-01</time>
+  <a href="/2012/07/host-your-pages-at-github-using-jekyll" title="基于Jekyll的GitHub建站指南">基于Jekyll的GitHub建站指南</a>
+  </li>
+
+
+  <li class="listing-seperator" id="机器学习应用">机器学习应用</li>
+
+  <li class="listing-item">
+  <time datetime="2015-08-13">2015-08-13</time>
+  <a href="/2015/08/tesseract-ocr" title="开源OCR引擎Tesseract">开源OCR引擎Tesseract</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-03">2015-07-03</time>
+  <a href="/2015/07/introduction-to-yushanfang" title="御膳房使用简介">御膳房使用简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/TLD" title="TLD：跟踪－学习－检测">TLD：跟踪－学习－检测</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-02">2015-05-02</time>
+  <a href="/2015/05/arules" title="arules：频繁项集与关联规则的挖掘">arules：频繁项集与关联规则的挖掘</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-03">2015-04-03</time>
+  <a href="/2015/04/vector-space-model" title="向量空间模型">向量空间模型</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-16">2015-03-16</time>
+  <a href="/2015/03/texture-classification-system" title="纹理分类系统">纹理分类系统</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-13">2015-03-13</time>
+  <a href="/2015/03/statistical-learning-linear-regression" title="统计学习：线性回归">统计学习：线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-19">2015-01-19</time>
+  <a href="/2015/01/image-classification-knn-based-introduction" title="CNN（2）：基于k最近邻算法的简介">CNN（2）：基于k最近邻算法的简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-23">2014-12-23</time>
+  <a href="/2014/12/unbalanced-data-sets" title="不均衡数据问题">不均衡数据问题</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-10">2014-12-10</time>
+  <a href="/2014/12/large-scale-machine-learning" title="大数据上的机器学习">大数据上的机器学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-09">2014-12-09</time>
+  <a href="/2014/12/introduction-to-recommender-systems" title="推荐系统简介">推荐系统简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-08">2014-12-08</time>
+  <a href="/2014/12/anomaly-detection" title="异常检测">异常检测</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-25">2014-11-25</time>
+  <a href="/2014/11/advice-for-applying-machine-learning" title="机器学习实战技能">机器学习实战技能</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-10-20">2014-10-20</time>
+  <a href="/2014/10/multiple-classes" title="多分类问题">多分类问题</a>
+  </li>
+
+
+  <li class="listing-seperator" id="机器学习基础">机器学习基础</li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-07">2015-03-07</time>
+  <a href="/2015/03/efficient-pattern-mining-methods" title="模式发掘（2）：高效的模式挖掘方法">模式发掘（2）：高效的模式挖掘方法</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-07">2015-03-07</time>
+  <a href="/2015/03/pattern-discovery-basic-concepts" title="模式发掘（1）：基本概念">模式发掘（1）：基本概念</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/summary-of-extraction-models" title="特征学习模型总结">特征学习模型总结</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-12">2015-02-12</time>
+  <a href="/2015/02/matrix-factorization" title="矩阵分解">矩阵分解</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/summary-of-aggregation-models" title="分类器融合（6）：融合模型总结">分类器融合（6）：融合模型总结</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-29">2015-01-29</time>
+  <a href="/2015/01/gradient-boosted-decision-tree" title="分类器融合（5）：梯度提升决策树">分类器融合（5）：梯度提升决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-28">2015-01-28</time>
+  <a href="/2015/01/three-learning-principles" title="机器学习三原则">机器学习三原则</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-27">2015-01-27</time>
+  <a href="/2015/01/validation" title="验证">验证</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/regularization" title="正则化">正则化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/hazard-of-overfitting" title="过拟合的危害">过拟合的危害</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-25">2015-01-25</time>
+  <a href="/2015/01/nonlinear-transformation" title="非线性特征变换">非线性特征变换</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-25">2015-01-25</time>
+  <a href="/2015/01/linear-models-for-classification" title="线性分类模型">线性分类模型</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-24">2015-01-24</time>
+  <a href="/2015/01/random-forest" title="分类器融合（4）：随机森林">分类器融合（4）：随机森林</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-23">2015-01-23</time>
+  <a href="/2015/01/decision-tree" title="分类器融合（3）：决策树">分类器融合（3）：决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/logistic-regression" title="logistic回归">logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/adaptive-boosting" title="分类器融合（2）：AdaBoost">分类器融合（2）：AdaBoost</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-15">2015-01-15</time>
+  <a href="/2015/01/blending-and-bagging" title="分类器融合（1）：基于混合与自助聚集的简介">分类器融合（1）：基于混合与自助聚集的简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-13">2015-01-13</time>
+  <a href="/2015/01/linear-regression" title="线性回归">线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-12">2015-01-12</time>
+  <a href="/2015/01/support-vector-regression" title="支持向量机（6）：支持向量回归">支持向量机（6）：支持向量回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-09">2015-01-09</time>
+  <a href="/2015/01/kernel-logistic-regression" title="支持向量机（5）：核logistic回归">支持向量机（5）：核logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-07">2015-01-07</time>
+  <a href="/2015/01/soft-margin-svm" title="支持向量机（4）：soft-margin支持向量机">支持向量机（4）：soft-margin支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-06">2015-01-06</time>
+  <a href="/2015/01/kernel-svm" title="支持向量机（3）：核支持向量机">支持向量机（3）：核支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-05">2015-01-05</time>
+  <a href="/2015/01/dual-svm" title="支持向量机（2）：对偶支持向量机">支持向量机（2）：对偶支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-03">2015-01-03</time>
+  <a href="/2015/01/linear-svm" title="支持向量机（1）：线性支持向量机">支持向量机（1）：线性支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-08">2014-12-08</time>
+  <a href="/2014/12/pca" title="降维：主成分分析">降维：主成分分析</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-07">2014-12-07</time>
+  <a href="/2014/12/k-means" title="聚类（1）：k均值算法">聚类（1）：k均值算法</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-27">2014-11-27</time>
+  <a href="/2014/11/introduction-to-support-vector-machines" title="支持向量机简介">支持向量机简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-22">2014-11-22</time>
+  <a href="/2014/11/machine-learning-resources" title="机器学习资源">机器学习资源</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-10-21">2014-10-21</time>
+  <a href="/2014/10/pla" title="感知器学习算法">感知器学习算法</a>
+  </li>
+
+
+  <li class="listing-seperator" id="神经网络">神经网络</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="特征学习">特征学习</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/summary-of-extraction-models" title="特征学习模型总结">特征学习模型总结</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-12">2015-02-12</time>
+  <a href="/2015/02/matrix-factorization" title="矩阵分解">矩阵分解</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-09">2014-12-09</time>
+  <a href="/2014/12/introduction-to-recommender-systems" title="推荐系统简介">推荐系统简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="回归">回归</li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-13">2015-03-13</time>
+  <a href="/2015/03/statistical-learning-linear-regression" title="统计学习：线性回归">统计学习：线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/logistic-regression" title="logistic回归">logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-13">2015-01-13</time>
+  <a href="/2015/01/linear-regression" title="线性回归">线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-12">2015-01-12</time>
+  <a href="/2015/01/support-vector-regression" title="支持向量机（6）：支持向量回归">支持向量机（6）：支持向量回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-09">2015-01-09</time>
+  <a href="/2015/01/kernel-logistic-regression" title="支持向量机（5）：核logistic回归">支持向量机（5）：核logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-27">2014-11-27</time>
+  <a href="/2014/11/introduction-to-support-vector-machines" title="支持向量机简介">支持向量机简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="BP算法">BP算法</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="Matlab">Matlab</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/regularization" title="正则化">正则化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-09">2014-11-09</time>
+  <a href="/2014/11/introducation-to-neural-networks" title="神经网络简介">神经网络简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="支持向量机">支持向量机</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-12">2015-01-12</time>
+  <a href="/2015/01/support-vector-regression" title="支持向量机（6）：支持向量回归">支持向量机（6）：支持向量回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-09">2015-01-09</time>
+  <a href="/2015/01/kernel-logistic-regression" title="支持向量机（5）：核logistic回归">支持向量机（5）：核logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-07">2015-01-07</time>
+  <a href="/2015/01/soft-margin-svm" title="支持向量机（4）：soft-margin支持向量机">支持向量机（4）：soft-margin支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-06">2015-01-06</time>
+  <a href="/2015/01/kernel-svm" title="支持向量机（3）：核支持向量机">支持向量机（3）：核支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-05">2015-01-05</time>
+  <a href="/2015/01/dual-svm" title="支持向量机（2）：对偶支持向量机">支持向量机（2）：对偶支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-03">2015-01-03</time>
+  <a href="/2015/01/linear-svm" title="支持向量机（1）：线性支持向量机">支持向量机（1）：线性支持向量机</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-11-27">2014-11-27</time>
+  <a href="/2014/11/introduction-to-support-vector-machines" title="支持向量机简介">支持向量机简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="聚类">聚类</li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-07">2014-12-07</time>
+  <a href="/2014/12/k-means" title="聚类（1）：k均值算法">聚类（1）：k均值算法</a>
+  </li>
+
+
+  <li class="listing-seperator" id="k均值算法">k均值算法</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-07">2014-12-07</time>
+  <a href="/2014/12/k-means" title="聚类（1）：k均值算法">聚类（1）：k均值算法</a>
+  </li>
+
+
+  <li class="listing-seperator" id="降维">降维</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-08">2014-12-08</time>
+  <a href="/2014/12/pca" title="降维：主成分分析">降维：主成分分析</a>
+  </li>
+
+
+  <li class="listing-seperator" id="主成分分析">主成分分析</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-08">2014-12-08</time>
+  <a href="/2014/12/pca" title="降维：主成分分析">降维：主成分分析</a>
+  </li>
+
+
+  <li class="listing-seperator" id="异常检测">异常检测</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-08">2014-12-08</time>
+  <a href="/2014/12/anomaly-detection" title="异常检测">异常检测</a>
+  </li>
+
+
+  <li class="listing-seperator" id="推荐系统">推荐系统</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-12">2015-02-12</time>
+  <a href="/2015/02/matrix-factorization" title="矩阵分解">矩阵分解</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-09">2014-12-09</time>
+  <a href="/2014/12/introduction-to-recommender-systems" title="推荐系统简介">推荐系统简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="计算广告学">计算广告学</li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-09">2014-12-09</time>
+  <a href="/2014/12/computational-advertising-foundation" title="计算广告学：广告基础">计算广告学：广告基础</a>
+  </li>
+
+
+  <li class="listing-seperator" id="大数据">大数据</li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-25">2014-12-25</time>
+  <a href="/2014/12/map-reduce-essential" title="Map-Reduce Essential">Map-Reduce Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-10">2014-12-10</time>
+  <a href="/2014/12/large-scale-machine-learning" title="大数据上的机器学习">大数据上的机器学习</a>
+  </li>
+
+
+  <li class="listing-seperator" id="在线学习">在线学习</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-25">2015-01-25</time>
+  <a href="/2015/01/linear-models-for-classification" title="线性分类模型">线性分类模型</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-10">2014-12-10</time>
+  <a href="/2014/12/large-scale-machine-learning" title="大数据上的机器学习">大数据上的机器学习</a>
+  </li>
+
+
+  <li class="listing-seperator" id="梯度下降法">梯度下降法</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-12">2015-02-12</time>
+  <a href="/2015/02/matrix-factorization" title="矩阵分解">矩阵分解</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-29">2015-01-29</time>
+  <a href="/2015/01/gradient-boosted-decision-tree" title="分类器融合（5）：梯度提升决策树">分类器融合（5）：梯度提升决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-25">2015-01-25</time>
+  <a href="/2015/01/linear-models-for-classification" title="线性分类模型">线性分类模型</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/logistic-regression" title="logistic回归">logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-13">2015-01-13</time>
+  <a href="/2015/01/linear-regression" title="线性回归">线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-10">2014-12-10</time>
+  <a href="/2014/12/large-scale-machine-learning" title="大数据上的机器学习">大数据上的机器学习</a>
+  </li>
+
+
+  <li class="listing-seperator" id="机器学习理论">机器学习理论</li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-27">2014-12-27</time>
+  <a href="/2014/12/machine-learning-noise-and-error" title="机器学习：噪声与误差">机器学习：噪声与误差</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-23">2014-12-23</time>
+  <a href="/2014/12/machine-learning-the-vc-dimension" title="机器学习：VC维">机器学习：VC维</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-20">2014-12-20</time>
+  <a href="/2014/12/machine-learning-theory-of-generalization" title="机器学习：泛化理论">机器学习：泛化理论</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-18">2014-12-18</time>
+  <a href="/2014/12/machine-learning-training-versus-testing" title="机器学习：训练与测试">机器学习：训练与测试</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2014-12-14">2014-12-14</time>
+  <a href="/2014/12/machine-learning-feasibility-of-learning" title="机器学习：学习的可行性">机器学习：学习的可行性</a>
+  </li>
+
+
+  <li class="listing-seperator" id="最优化">最优化</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-13">2015-01-13</time>
+  <a href="/2015/01/linear-regression" title="线性回归">线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-05">2015-01-05</time>
+  <a href="/2015/01/dual-svm" title="支持向量机（2）：对偶支持向量机">支持向量机（2）：对偶支持向量机</a>
+  </li>
+
+
+  <li class="listing-seperator" id="核方法">核方法</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-12">2015-01-12</time>
+  <a href="/2015/01/support-vector-regression" title="支持向量机（6）：支持向量回归">支持向量机（6）：支持向量回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-09">2015-01-09</time>
+  <a href="/2015/01/kernel-logistic-regression" title="支持向量机（5）：核logistic回归">支持向量机（5）：核logistic回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-06">2015-01-06</time>
+  <a href="/2015/01/kernel-svm" title="支持向量机（3）：核支持向量机">支持向量机（3）：核支持向量机</a>
+  </li>
+
+
+  <li class="listing-seperator" id="分类器融合">分类器融合</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/summary-of-aggregation-models" title="分类器融合（6）：融合模型总结">分类器融合（6）：融合模型总结</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-29">2015-01-29</time>
+  <a href="/2015/01/gradient-boosted-decision-tree" title="分类器融合（5）：梯度提升决策树">分类器融合（5）：梯度提升决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-24">2015-01-24</time>
+  <a href="/2015/01/random-forest" title="分类器融合（4）：随机森林">分类器融合（4）：随机森林</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-23">2015-01-23</time>
+  <a href="/2015/01/decision-tree" title="分类器融合（3）：决策树">分类器融合（3）：决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/adaptive-boosting" title="分类器融合（2）：AdaBoost">分类器融合（2）：AdaBoost</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-15">2015-01-15</time>
+  <a href="/2015/01/blending-and-bagging" title="分类器融合（1）：基于混合与自助聚集的简介">分类器融合（1）：基于混合与自助聚集的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="特征选择">特征选择</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-24">2015-01-24</time>
+  <a href="/2015/01/random-forest" title="分类器融合（4）：随机森林">分类器融合（4）：随机森林</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-23">2015-01-23</time>
+  <a href="/2015/01/decision-tree" title="分类器融合（3）：决策树">分类器融合（3）：决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/adaptive-boosting" title="分类器融合（2）：AdaBoost">分类器融合（2）：AdaBoost</a>
+  </li>
+
+
+  <li class="listing-seperator" id="熵">熵</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-23">2015-01-23</time>
+  <a href="/2015/01/decision-tree" title="分类器融合（3）：决策树">分类器融合（3）：决策树</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-17">2015-01-17</time>
+  <a href="/2015/01/logistic-regression" title="logistic回归">logistic回归</a>
+  </li>
+
+
+  <li class="listing-seperator" id="CNN">CNN</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-19">2015-01-19</time>
+  <a href="/2015/01/image-classification-knn-based-introduction" title="CNN（2）：基于k最近邻算法的简介">CNN（2）：基于k最近邻算法的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="计算机视觉">计算机视觉</li>
+
+  <li class="listing-item">
+  <time datetime="2015-10-13">2015-10-13</time>
+  <a href="/2015/10/minimum-cut-based-inference" title="DILinAV（4）：基于最小割的推理">DILinAV（4）：基于最小割的推理</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-09-26">2015-09-26</time>
+  <a href="/2015/09/fast-ncc" title="快速归一化互相关">快速归一化互相关</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-09-25">2015-09-25</time>
+  <a href="/2015/09/maximum-flow-and-minimum-cut" title="DILinAV（3）：最大流与最小割">DILinAV（3）：最大流与最小割</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-09-22">2015-09-22</time>
+  <a href="/2015/09/reparameterization-and-dp" title="DILinAV（2）：重参数化与动态规划">DILinAV（2）：重参数化与动态规划</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-09-19">2015-09-19</time>
+  <a href="/2015/09/introduction-to-av-with-dgm" title="DILinAV（1）：基于离散图模型的人工视觉简介">DILinAV（1）：基于离散图模型的人工视觉简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-09-16">2015-09-16</time>
+  <a href="/2015/09/haze-removal-kaiming" title="去雾霾：基于单图的暗通道方法">去雾霾：基于单图的暗通道方法</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-06">2015-06-06</time>
+  <a href="/2015/06/mvgcv-chapter01" title="计算机视觉中的多视几何：1. 简介——多视几何之旅">计算机视觉中的多视几何：1. 简介——多视几何之旅</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-04">2015-06-04</time>
+  <a href="/2015/06/mvgcv-preface" title="计算机视觉中的多视几何：前言">计算机视觉中的多视几何：前言</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-03">2015-06-03</time>
+  <a href="/2015/06/mvgcv-foreword" title="计算机视觉中的多视几何：序言（by Olivier Faugeras）">计算机视觉中的多视几何：序言（by Olivier Faugeras）</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/TLD" title="TLD：跟踪－学习－检测">TLD：跟踪－学习－检测</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-18">2015-04-18</time>
+  <a href="/2015/04/camera-calibration" title="摄像机标定">摄像机标定</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-11">2015-04-11</time>
+  <a href="/2015/04/opencv-a-python-tutorial" title="OpenCV（1）：基于Python的简介">OpenCV（1）：基于Python的简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-16">2015-03-16</time>
+  <a href="/2015/03/texture-classification-system" title="纹理分类系统">纹理分类系统</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-20">2015-01-20</time>
+  <a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier" title="CNN（3）：多分类支持向量机和softmax分类器">CNN（3）：多分类支持向量机和softmax分类器</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-19">2015-01-19</time>
+  <a href="/2015/01/image-classification-knn-based-introduction" title="CNN（2）：基于k最近邻算法的简介">CNN（2）：基于k最近邻算法的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="最近邻算法">最近邻算法</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-19">2015-01-19</time>
+  <a href="/2015/01/image-classification-knn-based-introduction" title="CNN（2）：基于k最近邻算法的简介">CNN（2）：基于k最近邻算法的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="Python">Python</li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/speed-up-python" title="高性能Python程序">高性能Python程序</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-11">2015-04-11</time>
+  <a href="/2015/04/opencv-a-python-tutorial" title="OpenCV（1）：基于Python的简介">OpenCV（1）：基于Python的简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-10">2015-04-10</time>
+  <a href="/2015/04/python-essential" title="Python Essential">Python Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-03">2015-04-03</time>
+  <a href="/2015/04/vector-space-model" title="向量空间模型">向量空间模型</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-13">2015-02-13</time>
+  <a href="/2015/02/image-classification-optimization" title="CNN（4）：最优化">CNN（4）：最优化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-19">2015-01-19</time>
+  <a href="/2015/01/image-classification-knn-based-introduction" title="CNN（2）：基于k最近邻算法的简介">CNN（2）：基于k最近邻算法的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="正则化">正则化</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-11">2015-02-11</time>
+  <a href="/2015/02/radial-basis-function-network" title="径向基函数网络">径向基函数网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/regularization" title="正则化">正则化</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/hazard-of-overfitting" title="过拟合的危害">过拟合的危害</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-23">2015-01-23</time>
+  <a href="/2015/01/decision-tree" title="分类器融合（3）：决策树">分类器融合（3）：决策树</a>
+  </li>
+
+
+  <li class="listing-seperator" id="数据清洗">数据清洗</li>
+
+  <li class="listing-item">
+  <time datetime="2015-01-26">2015-01-26</time>
+  <a href="/2015/01/hazard-of-overfitting" title="过拟合的危害">过拟合的危害</a>
+  </li>
+
+
+  <li class="listing-seperator" id="R">R</li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-03">2015-07-03</time>
+  <a href="/2015/07/introduction-to-yushanfang" title="御膳房使用简介">御膳房使用简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-02">2015-05-02</time>
+  <a href="/2015/05/arules" title="arules：频繁项集与关联规则的挖掘">arules：频繁项集与关联规则的挖掘</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-28">2015-04-28</time>
+  <a href="/2015/04/speed-up-r" title="高性能R程序">高性能R程序</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-28">2015-04-28</time>
+  <a href="/2015/04/r-packages" title="R包开发">R包开发</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-13">2015-03-13</time>
+  <a href="/2015/03/statistical-learning-linear-regression" title="统计学习：线性回归">统计学习：线性回归</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-06">2015-03-06</time>
+  <a href="/2015/03/r-essential" title="R Essential">R Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/neural-network" title="神经网络">神经网络</a>
+  </li>
+
+
+  <li class="listing-seperator" id="深度学习">深度学习</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+
+  <li class="listing-seperator" id="密度估计">密度估计</li>
+
+  <li class="listing-item">
+  <time datetime="2015-02-04">2015-02-04</time>
+  <a href="/2015/02/deep-learning" title="深度学习">深度学习</a>
+  </li>
+
+
+  <li class="listing-seperator" id="模式发掘">模式发掘</li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-02">2015-05-02</time>
+  <a href="/2015/05/arules" title="arules：频繁项集与关联规则的挖掘">arules：频繁项集与关联规则的挖掘</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-07">2015-03-07</time>
+  <a href="/2015/03/efficient-pattern-mining-methods" title="模式发掘（2）：高效的模式挖掘方法">模式发掘（2）：高效的模式挖掘方法</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-07">2015-03-07</time>
+  <a href="/2015/03/pattern-discovery-basic-concepts" title="模式发掘（1）：基本概念">模式发掘（1）：基本概念</a>
+  </li>
+
+
+  <li class="listing-seperator" id="SQL">SQL</li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-03">2015-07-03</time>
+  <a href="/2015/07/introduction-to-yushanfang" title="御膳房使用简介">御膳房使用简介</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-20">2015-04-20</time>
+  <a href="/2015/04/postgresql-essential" title="PostgreSQL Essential">PostgreSQL Essential</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-07">2015-03-07</time>
+  <a href="/2015/03/efficient-pattern-mining-methods" title="模式发掘（2）：高效的模式挖掘方法">模式发掘（2）：高效的模式挖掘方法</a>
+  </li>
+
+
+  <li class="listing-seperator" id="机器人">机器人</li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-25">2015-03-25</time>
+  <a href="/2015/03/industrial-robot-technique-development" title="工业机器人（2）：技术发展综述">工业机器人（2）：技术发展综述</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-03-19">2015-03-19</time>
+  <a href="/2015/03/industrial-robot-industry-development" title="工业机器人（1）：行业发展综述">工业机器人（1）：行业发展综述</a>
+  </li>
+
+
+  <li class="listing-seperator" id="自然语言处理">自然语言处理</li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-03">2015-04-03</time>
+  <a href="/2015/04/vector-space-model" title="向量空间模型">向量空间模型</a>
+  </li>
+
+
+  <li class="listing-seperator" id="OpenCV">OpenCV</li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-11">2015-04-11</time>
+  <a href="/2015/04/opencv-a-python-tutorial" title="OpenCV（1）：基于Python的简介">OpenCV（1）：基于Python的简介</a>
+  </li>
+
+
+  <li class="listing-seperator" id="高性能计算">高性能计算</li>
+
+  <li class="listing-item">
+  <time datetime="2015-07-28">2015-07-28</time>
+  <a href="/2015/07/HPC-overview" title="高性能计算概述">高性能计算概述</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/speed-up-python" title="高性能Python程序">高性能Python程序</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-04-28">2015-04-28</time>
+  <a href="/2015/04/speed-up-r" title="高性能R程序">高性能R程序</a>
+  </li>
+
+
+  <li class="listing-seperator" id="翻译">翻译</li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-06">2015-06-06</time>
+  <a href="/2015/06/mvgcv-chapter01" title="计算机视觉中的多视几何：1. 简介——多视几何之旅">计算机视觉中的多视几何：1. 简介——多视几何之旅</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-04">2015-06-04</time>
+  <a href="/2015/06/mvgcv-preface" title="计算机视觉中的多视几何：前言">计算机视觉中的多视几何：前言</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-03">2015-06-03</time>
+  <a href="/2015/06/mvgcv-foreword" title="计算机视觉中的多视几何：序言（by Olivier Faugeras）">计算机视觉中的多视几何：序言（by Olivier Faugeras）</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-10">2015-05-10</time>
+  <a href="/2015/05/TLD" title="TLD：跟踪－学习－检测">TLD：跟踪－学习－检测</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-05-02">2015-05-02</time>
+  <a href="/2015/05/arules" title="arules：频繁项集与关联规则的挖掘">arules：频繁项集与关联规则的挖掘</a>
+  </li>
+
+
+  <li class="listing-seperator" id="多视几何第二版">多视几何第二版</li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-06">2015-06-06</time>
+  <a href="/2015/06/mvgcv-chapter01" title="计算机视觉中的多视几何：1. 简介——多视几何之旅">计算机视觉中的多视几何：1. 简介——多视几何之旅</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-04">2015-06-04</time>
+  <a href="/2015/06/mvgcv-preface" title="计算机视觉中的多视几何：前言">计算机视觉中的多视几何：前言</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-06-03">2015-06-03</time>
+  <a href="/2015/06/mvgcv-foreword" title="计算机视觉中的多视几何：序言（by Olivier Faugeras）">计算机视觉中的多视几何：序言（by Olivier Faugeras）</a>
+  </li>
+
+
+</ul>
+
+<script src="/assets/js/jquery.tagcloud.js" type="text/javascript" charset="utf-8"></script>
+
+<script language="javascript">
+$.fn.tagcloud.defaults = {
+    size: {start: 1, end: 1, unit: 'em'},
+      color: {start: '#f8e0e6', end: '#ff3333'}
+};
+
+$(function () {
+    $('#tag_cloud a').tagcloud();
+});
+</script>
+
+
+</section>
+
+
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>

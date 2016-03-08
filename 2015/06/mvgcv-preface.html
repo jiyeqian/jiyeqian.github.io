@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>计算机视觉中的多视几何：前言</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>计算机视觉中的多视几何：前言</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2015-06-04">2015-06-04</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+  <a href="/tags/#多视几何第二版" title="多视几何第二版">多视几何第二版</a>&nbsp;
+  
+  <a href="/tags/#翻译" title="翻译">翻译</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>过去十年中，对计算机视觉中多视几何的认识和建模发展迅速。目前理论和实践已经成熟——对于十年前肯定未解决并通常认为无解的问题，已经卓有成效。这些任务和算法包括：</p>
+
+<ul>
+  <li>给定两幅图像，没有其它信息，计算图像之间的匹配、点和摄像机的三维位置，点产生这些匹配，摄像机获取这些图像；</li>
+  <li>给定三幅图像，没有其它信息，类似地计算点线图像之间的匹配、这些点和线与摄像机的三维位置；</li>
+  <li>不需要标定物，计算双目装置（stereo rig）的极几何（epipolar geometry）、三目装置（trinocular rig）的三视几何（trifocal geometry）；</li>
+  <li>从自然场景的图像序列中，进行摄像机内部标定计算（也就是在线标定）。</li>
+</ul>
+
+<p>未标定是这些算法的特色——不必知道或者不必首先计算摄像机的内参（比如焦距）。</p>
+
+<p>支撑这些算法的是对未标定多视几何的崭新且更完善的理论认识：关联参数数目，呈现在视图中的点线间约束；以及从对应图像重建的摄像机和三维空间点。例如，确定双目装置的极几何只需指定7个参数，不需要摄像机标定。这些参数由相应的至少7个对应的像点确定。与这种非标定路线相反，十年前的标定路线是：每个摄像机首先会通过工程上精心标定的物体的图像进行标定，这些物体的几何关系已知。这种标定需要为每个摄像机确定11个参数。然后从这两组11个参数的数据中算出极几何。</p>
+
+<p>该例子表明了未标定（射影）方法的重要性——采用恰当的几何表示，明确了每个计算阶段需要的参数，避免了计算对最终结果无用的参数，并得到了更简单的算法。此外，一个可能误解值得纠正。在未标定体系中，实体（例如三维空间点的位置）通常被恢复到准确定义的歧义中。这种歧义并不表示点被糟糕地估计。</p>
+
+<p>更现实地说，标定摄像机通常不可能一劳永逸；例如摄像机在运动（位于移动的车辆上）或者内参在变化（变焦的监控摄像机）。此外，在某些情况根本得不到标定信息。设想从视频序列中计算摄像机的运动，或者从存档的电影片段中构建虚拟现实模型，其中运动和内部标定信息都未知。</p>
+
+<p>由于我们理论认识的发展，而且还因为从图像估计数学对象的进步，在多视几何取得成就已成为可能。第一个进步是关注超定系统中应当被最小化的误差——无论它是代数的、几何的还是统计的。第二个进步是使用了鲁棒估计算法（比如RANSAC），使得估计不受数据中离群点影响。同时，这些技术已经催生了强大的搜索和匹配算法。</p>
+
+<p>目前，我们可以认为重建中的许多问题已被解决。这些问题包括：</p>
+
+<ol>
+  <li>从对应的像点（image point correspondence）估计多焦张量（multifocal tensor），特别是基础矩阵（fundamental matrix）和三焦张量（四焦张量还未引起如此多的注意）。</li>
+  <li>从这些张量中提取出摄像机矩阵，并从双视图、三视图和四视图中进行随后的射影重建。</li>
+</ol>
+
+<p>其它一些重要成就已经取得，尽管这些问题可能需要更多的探索。这些例子包括：</p>
+
+<ol>
+  <li>应用光束平差法（bundle adjustment），解决更一般的重建问题。</li>
+  <li>给定摄像机矩阵的最小假设，进行度量（欧几里德）重建。</li>
+  <li>自动检测图像序列的对应关系，并采用多焦张量关系消除离群点和误匹配。</li>
+</ol>
+
+<p><strong>路线方案。</strong>本书分为六部分，并有七个短附录。每部分介绍一种新的几何关系：背景的单映矩阵（homography），单视图的摄像机矩阵，双视图的基础矩阵，三视图的三焦张量，以及四视图的四焦张量。每种情况用一章描述该关系、它的性质和应用，并伴随一章描述从图像测量估计它的算法。估计算法包括从廉价简单的方法到最优的算法，这些最优算法目前认为是可用的最好算法。</p>
+
+<p><strong>第0部分：背景。</strong>这部分比其它部分更入门级。它介绍了二维空间和三维空间射影几何的中心思想（例如理想点和绝对圆锥曲线）；可如何表示、操作和估计该几何；以及该几何如何联系到计算机视觉中的各种目标，比如通过矫正平面图消除透视失真。</p>
+
+<p><strong>第1部分：单视几何。</strong>在此，定义了各种摄像，建立了三维空间到图像的透视射影模型，探讨了其内部结构（anatomy）。描述了采用传统标定物技术估计它们，以及通过消失点（vanishing point）和消失线标定摄像机。</p>
+
+<p><strong>第2部分：双视几何。</strong>这部分描述了双摄像机的极几何，基于对应像点的射影重建，解决射影歧义的方法，最佳三角测量，基于平面的视图间转换。</p>
+
+<p><strong>第3部分：三视几何。</strong>在此，描述了三摄像机的三焦几何，包括：从双视图的一个对应点转换到第三点，对应线的类似转换；基于相应点和线的几何计算，摄像机矩阵的重建。</p>
+
+<p><strong>第4部分：N视几何。</strong>本部分有两个目的。首先，它把三视几何推广到四视图（一个小的扩展），并描述了适用于N视图的估计方法，例如：Tomasi和Kanade的因子化算法，从多幅图像同时计算结构和运动。其次，它涵盖了前面章节已提及的主题，但通过强化它们的共性能更全面和统一的认识它们，例如：推导了对应关系（correspondence）的多线性视图约束、自标定和消歧法。</p>
+
+<p><strong>附录。</strong>这里进一步描述了背景材料：张量、统计学、参数估计、线性和矩阵代数、迭代估计、稀疏矩阵系统的解和特殊射影变换。</p>
+
+<p><strong>致谢。</strong>我们从与同事的讨论和他们的思想中受益匪浅：Paul Beardsley、Stefan Carlsson、Olivier Faugeras、Andrew Fitzgibbon、Jitendra Malik、Steve Maybank、Amnon Shashua、Phil Torr、Bill Triggs。</p>
+
+<p>若本书只有寥可胜数的错误，那么这要归功于Antonio Criminisi、David Liebowitz和Frederik Schaffalitzky，他们以极大的热情和奉献精神阅读了大部分内容，并提出了许多改进意见。同样，Peter Sturm和Bill Triggs都对很多章节提出了许多改进意见。我们感谢阅读了个别章节的其他同事：David Capel、Lourdes de Agapito Vicente、Bob Kaucic、Steve Maybank、Peter Tu。</p>
+
+<p>我们特别感谢他们贡献了多幅图：Paul Beardsley、Antonio Criminisi、Andrew Fitzgibbon、David Liebowitz和Larry Shapiro；特别感谢他们贡献了一幅图：Martin Armstrong、David Capel、Lourdes de Agapito Vicente、Eric Hayman、Phil Pritchett、Luc Robert、Cordelia Schmid和在图片标题中直接致谢过的那些人。</p>
+
+<p>我们感谢剑桥大学出版社David Tranah永不枯竭的意见和耐心，Michael Behrend出色的编辑工作。</p>
+
+<p>重印版已经纠正了一少部分小错误，我们感谢以下读者将它们指出来：Luis Baumela、Niclas Borlin、Mike Brooks、Jun ho. Choi、Wojciech Chojnacki、Carlo Colombo、Nicolas Dano、Andrew Fitzgibbon、Bogdan Georgescu、Fredrik Kahl、Bob Kaucic、Jae-Hak Kim、Hansung Lee、Dennis Maier、Karsten Muelhmann、David Nister、Andreas Olsson、Stéphane Paris、Frederik Schaffalitzky、Bill Severson、Pedro Lopez de Teruel Alcolea、Bernard Thiesse、Ken Thornton、Magdalena Urbanek、Gergely Vass、Eugene Vendrovsky、Sui Wei和Tomáš Werner。</p>
+
+<p><strong>第二版。</strong>这个新的简装版经过扩展，包含了从2000年7月原始版本之后的一些进展，例如：目前本书涵盖了在场景中平面可见的投影情形，闭式因子化的解的新发现，并将仿射因子化扩展到了非刚性场景。我们也扩展了单视几何（第8章）和三视几何（第15章）的论述，并增加了关于参数估计的附录。</p>
+
+<p>在准备第二版时，我们非常感谢那些提出改进和补充建议的同事，他们包括Marc Pollefeys、Bill Triggs，特别感谢Tomáš Werner，他贡献了出色而全面的评论。我们还要感谢Antonio Criminisi、Andrew Fitzgibbon、Rob Fergus、David Liebowitz，特别是Josef Šivic对新增材料部分的校对和极具价值的意见。一如既往，我们要感谢CUP的David Tranah。</p>
+
+<p>本书中出现的图片可从<a href="http://www.robots.ox.ac.uk/~vgg/hzbook/index.html">http://www.robots.ox.ac.uk/~vgg/hzbook/index.html</a>下载。该站点也包含了几个算法的Matlab代码，并列出了早期印刷版的勘误表。</p>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/06/mvgcv-foreword" class="pageNav" style="float:left"   >上一篇：计算机视觉中的多视几何：序言（by Olivier Faugeras） </a>
+  &nbsp;&nbsp;&nbsp;
+  <a  href="/2015/06/mvgcv-chapter01" class="pageNav" style="float:right"   >下一篇：计算机视觉中的多视几何：1. 简介——多视几何之旅 </a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2015/06/mvgcv-preface" 	data-url="http://qianjiye.de/2015/06/mvgcv-preface" data-title="计算机视觉中的多视几何：前言">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/06/mvgcv-foreword'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         <1!-- url = 'http://qianjiye.de/2015/06/mvgcv-chapter01'; --1> -->
+<!--         url = '/2015/06/mvgcv-chapter01'; -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2015/06/mvgcv-preface/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
