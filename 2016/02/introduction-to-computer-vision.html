@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>CS231n（1）：计算机视觉简介</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>CS231n（1）：计算机视觉简介</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2016-02-29">2016-02-29</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#CNN" title="CNN">CNN</a>&nbsp;
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<p>这个CNN系列，主要内容是斯坦福大学<a href="http://cs231n.stanford.edu">“CS231n: Convolutional Neural Networks for Visual Recognition”</a>课程的笔记。斯坦福大学机器视觉相关课程包括<a href="http://cs131.stanford.edu">CS131</a>、<a href="http://cs231a.stanford.edu">CS231a</a>、<a href="http://cs231n.stanford.edu">CS231n</a>、<a href="http://cs331.stanford.edu">CS331</a>和CS431。</p>
+
+<h2 id="section">机器视觉简史</h2>
+
+<p><img src="/assets/images/2016_02_29_introduction-to-computer-vision_The Summer Vision Project.png" alt="" width="600px" id="fig-1-1" /></p>
+
+<ul>
+  <li>1959年，Hubel &amp; Wiesel，<a href="#hubel1959receptive">[1]</a>；</li>
+  <li>1963年，Larry Roberts，Block world <a href="#lawrence1963machine">[2]</a>；</li>
+  <li>1966年，The Summer Vision Project；</li>
+  <li>1970s，David Marr，”Vision”，Stages of Visual Representation <a href="#marr1982vision">[3]</a>；</li>
+  <li>1973年，Fischler &amp; Elschlager，Pictorial Structure <a href="#fischler1973representation">[4]</a>；</li>
+  <li>1979年，Brooks &amp; Binford，Generalized Cylinder <a href="#brooks1979acronym">[5]</a>；</li>
+  <li>1987年，David Lowe，<a href="#lowe1987three">[6]</a>；</li>
+  <li>1997年，Shi &amp; Malik，Normalized Cut <a href="#shi2000normalized">[7]</a>；</li>
+  <li>1999年，David Lowe，SIFT &amp; Object Recognition <a href="#lowe2004distinctive">[8]</a>；</li>
+  <li>2001年，Viola &amp; Jones，Face Detection <a href="#viola2001rapid">[9]</a>；</li>
+  <li>2005年，Dalal &amp; Triggs，HOG（Histogram of Gradients） <a href="#dalal2005histograms">[10]</a>；</li>
+  <li>2005年～2012年，<a href="http://host.robots.ox.ac.uk/pascal/VOC/">PASCAL Visual Object Challenge</a> <a href="#everingham2010pascal">[11], [12]</a>；</li>
+  <li>2006年，Lazebnik, Schmid &amp; Ponce，Spatial Pyramid Matching <a href="#lazebnik2006beyond">[13]</a>；</li>
+  <li>2009年，Felzenswalb, McAllester &amp; Ramanan，Deformable Part Model <a href="#felzenszwalb2008discriminatively">[14]</a>；</li>
+  <li>2009年，<a href="http://www.image-net.org">ImageNet</a>：Large scale visual recognition challenge <a href="#deng2009imagenet">[15], [16]</a>；</li>
+</ul>
+
+<p>2006年，Fuji Film采用Viola &amp; Jones的方法<a href="#viola2001rapid">[9]</a>，第一个实现了人脸检测的数码相机。</p>
+
+<h2 id="section-1">图像分类简介</h2>
+
+<p>图像分类与一系列的视觉识别问题都相关，比如：对象识别、图像标注、行为识别。卷积神经网络（CNN，Convolutional Neural Network）是对象识别的重要工具。</p>
+
+<p><img src="/assets/images/2016_02_29_introduction-to-computer-vision_ILSVRC.png" alt="" width="600px" id="fig-2-1" /></p>
+
+<p>在<a href="http://image-net.org/challenges/LSVRC/">ILSVRC</a>比赛中，2011年采用的是经典的特征提取与线性分类器<a href="#lin2011large">[17]</a>，从2012年开始，优胜队伍均采用了深度神经网络<a href="#krizhevsky2012imagenet">[18], [19], [20], [21]</a>，2015年MSRA的深度神经网络多达151层。</p>
+
+<p><img src="/assets/images/2016_02_29_introduction-to-computer-vision_LeCun_vs_Krizhevsky.png" alt="" width="600px" id="fig-2-2" /></p>
+
+<p>2012年，Krizhevsky采用的深度神经网络，事实上对LeCun的网络<a href="#lecun1998gradient">[22]</a>改进很少，但是由于计算能力的提升，数据量的增加，赢得了ImageNET的LSVRC比赛。</p>
+
+<p>视觉智能（visual intelligence）追求的目标远远高于对象识别，不仅要识别对象，而且要理解图像表达的意思<a href="#fei2007we">[23]</a>。</p>
+
+<h2 id="section-2">参考资料</h2>
+
+<ol class="bibliography"><li><span id="hubel1959receptive">[1]D. H. Hubel and T. N. Wiesel, “Receptive fields of single neurones in the cat’s striate cortex,” <i>The Journal of physiology</i>, vol. 148, no. 3, pp. 574–591, 1959.</span>
+
+</li>
+<li><span id="lawrence1963machine">[2]L. G. Roberts, “Machine perception of three-dimensional solids,” PhD thesis, Massachusetts Institute of Technology, 1963.</span>
+
+</li>
+<li><span id="marr1982vision">[3]D. Marr, <i>Vision: A computational investigation into the human representation and processing of visual information</i>. The MIT Press, 2010.</span>
+
+[<a href="http://www.amazon.com/Vision-Computational-Investigation-Representation-Information/dp/0262514621">Online</a>]
+
+</li>
+<li><span id="fischler1973representation">[4]M. A. Fischler and R. A. Elschlager, “The representation and matching of pictorial structures,” <i>IEEE Transactions on computers</i>, no. 1, pp. 67–92, 1973.</span>
+
+</li>
+<li><span id="brooks1979acronym">[5]R. A. Brooks, R. Creiner, and T. O. Binford, “The ACRONYM model-based vision system,” in <i>Proceedings of the 6th international joint conference on Artificial intelligence</i>, 1979, pp. 105–113.</span>
+
+</li>
+<li><span id="lowe1987three">[6]D. G. Lowe, “Three-dimensional object recognition from single two-dimensional images,” <i>Artificial intelligence</i>, vol. 31, no. 3, pp. 355–395, 1987.</span>
+
+</li>
+<li><span id="shi2000normalized">[7]J. Shi and J. Malik, “Normalized cuts and image segmentation,” <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 22, no. 8, pp. 888–905, 2000.</span>
+
+</li>
+<li><span id="lowe2004distinctive">[8]D. G. Lowe, “Distinctive image features from scale-invariant keypoints,” <i>International journal of computer vision</i>, vol. 60, no. 2, pp. 91–110, 2004.</span>
+
+</li>
+<li><span id="viola2001rapid">[9]P. Viola and M. Jones, “Rapid object detection using a boosted cascade of simple features,” in <i>Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on</i>, 2001, vol. 1, pp. I–511.</span>
+
+</li>
+<li><span id="dalal2005histograms">[10]N. Dalal and B. Triggs, “Histograms of oriented gradients for human detection,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2005, vol. 1, pp. 886–893.</span>
+
+</li>
+<li><span id="everingham2010pascal">[11]M. Everingham, L. Van Gool, C. K. I. Williams, J. Winn, and A. Zisserman, “The pascal visual object classes (voc) challenge,” <i>International journal of computer vision</i>, vol. 88, no. 2, pp. 303–338, 2010.</span>
+
+</li>
+<li><span id="Everingham15">[12]M. Everingham, S. M. A. Eslami, L. Van Gool, C. K. I. Williams, J. Winn, and A. Zisserman, “The Pascal Visual Object Classes Challenge: A Retrospective,” <i>International Journal of Computer Vision</i>, vol. 111, no. 1, pp. 98–136, Jan. 2015.</span>
+
+</li>
+<li><span id="lazebnik2006beyond">[13]S. Lazebnik, C. Schmid, and J. Ponce, “Beyond bags of features: Spatial pyramid matching for recognizing natural scene categories,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2006, vol. 2, pp. 2169–2178.</span>
+
+</li>
+<li><span id="felzenszwalb2008discriminatively">[14]P. Felzenszwalb, D. McAllester, and D. Ramanan, “A discriminatively trained, multiscale, deformable part model,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2008, pp. 1–8.</span>
+
+</li>
+<li><span id="deng2009imagenet">[15]J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei, “Imagenet: A large-scale hierarchical image database,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2009, pp. 248–255.</span>
+
+</li>
+<li><span id="russakovsky2015imagenet">[16]O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, and others, “Imagenet large scale visual recognition challenge,” <i>International Journal of Computer Vision</i>, vol. 115, no. 3, pp. 211–252, 2015.</span>
+
+</li>
+<li><span id="lin2011large">[17]Y. Lin, F. Lv, S. Zhu, M. Yang, T. Cour, K. Yu, L. Cao, and T. Huang, “Large-scale image classification: fast feature extraction and svm training,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2011, pp. 1689–1696.</span>
+
+</li>
+<li><span id="krizhevsky2012imagenet">[18]A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Imagenet classification with deep convolutional neural networks,” in <i>Advances in neural information processing systems</i>, 2012, pp. 1097–1105.</span>
+
+</li>
+<li><span id="szegedy2015going">[19]C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich, “Going deeper with convolutions,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2015, pp. 1–9.</span>
+
+</li>
+<li><span id="simonyan2014very">[20]K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” <i>arXiv preprint arXiv:1409.1556</i>, 2014.</span>
+
+</li>
+<li><span id="he2015spatial">[21]K. He, X. Zhang, S. Ren, and J. Sun, “Spatial pyramid pooling in deep convolutional networks for visual recognition,” <i>IEEE Transactions on Pattern Analysis and Machine Intelligence</i>, vol. 37, no. 9, pp. 1904–1916, 2015.</span>
+
+</li>
+<li><span id="lecun1998gradient">[22]Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner, “Gradient-based learning applied to document recognition,” <i>Proceedings of the IEEE</i>, vol. 86, no. 11, pp. 2278–2324, 1998.</span>
+
+</li>
+<li><span id="fei2007we">[23]L. Fei-Fei, A. Iyer, C. Koch, and P. Perona, “What do we perceive in a glance of a real-world scene?,” <i>Journal of vision</i>, vol. 7, no. 1, pp. 10–10, 2007.</span>
+
+</li></ol>
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
+    <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
+    
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
+    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
+    
+    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
+    
+    <li class="pageNav">2015-08-13 &raquo; <a href="/2015/08/tesseract-ocr">开源OCR引擎Tesseract</a></li>
+    
+    <li class="pageNav">2015-07-28 &raquo; <a href="/2015/07/HPC-overview">高性能计算概述</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2015/10/minimum-cut-based-inference" class="pageNav" style="float:left"   >上一篇：DILinAV（4）：基于最小割的推理 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2016/02/introduction-to-computer-vision" 	data-url="http://qianjiye.de/2016/02/introduction-to-computer-vision" data-title="CS231n（1）：计算机视觉简介">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2015/10/minimum-cut-based-inference'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2016/02/introduction-to-computer-vision/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
