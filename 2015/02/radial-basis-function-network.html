@@ -216,7 +216,7 @@ h(\mathbf x)=\mbox{Output}\left(
 \begin{equation}
 g_{uniform}(\mathbf x)=\mbox{sign}\left(\sum_{m=1}^Ny_m\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_m\right\rVert^2\right)\right)，
 \end{equation}
-这就是每个数据通过相似度对新数据的投票融合。这和<a href="/2016/03/cs231n_image_classification_pipeline/#kNN">k最近邻算法</a>思想很相似。离$\mathbf x$最近的$\mathbf x_m$让$\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_m\right\rVert^2\right)$取得最大值。高斯函数衰减很快，最大的投票很可能会左右投票结果，不需要让所有数据投票，只用离$\mathbf x$最近数据投票，用选择法（selection）替代融合法（aggregation），
+这就是每个数据通过相似度对新数据的投票融合。这和<a href="/2016/03/cs231n_image-classification-pipeline/#kNN">k最近邻算法</a>思想很相似。离$\mathbf x$最近的$\mathbf x_m$让$\exp\left(-\gamma\left\lVert\mathbf x-\mathbf x_m\right\rVert^2\right)$取得最大值。高斯函数衰减很快，最大的投票很可能会左右投票结果，不需要让所有数据投票，只用离$\mathbf x$最近数据投票，用选择法（selection）替代融合法（aggregation），
 \begin{equation}
 g_{nbor}=y_m\mbox{ such that }\mathbf x\mbox{ closest to }\mathbf x_m， 
 \end{equation}
@@ -340,7 +340,13 @@ g_{RBF}(\mathbf x_n)=y_n，
 <hr>
   <ul>
     
-    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image_classification_pipeline">CS231n（2）：图像分类流程</a></li>
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
+    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    
+    <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
+    
+    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
@@ -349,12 +355,6 @@ g_{RBF}(\mathbf x_n)=y_n，
     <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
-    
-    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
-    
-    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
-    
-    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
     
   </ul>
 <p></p>

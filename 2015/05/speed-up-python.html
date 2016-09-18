@@ -200,6 +200,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
       <li><a href="#cython" id="markdown-toc-cython">Cython</a></li>
       <li><a href="#pyparallel" id="markdown-toc-pyparallel">PyParallel</a></li>
       <li><a href="#pyston" id="markdown-toc-pyston">Pyston</a></li>
+      <li><a href="#nuitka" id="markdown-toc-nuitka">Nuitka</a></li>
     </ul>
   </li>
   <li><a href="#section-12" id="markdown-toc-section-12">参考资料</a></li>
@@ -813,6 +814,10 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p><a href="https://github.com/dropbox/pyston">Pyston</a> 是一个 Dropbox 推出的新的基于 JIT 的 Python 2.7 的实现。Pyston 解析 Python 代码并转换到 LLVM 的 intermediate representation (IR)， 然后 IR 通过 LLVM 优化器处理后在 LLVM JIT 引擎上执行，其结果是机器码的执行，但目前不支持 Mac OSX 系统（Pyston does not currently work on Mac OSX, and it is not clear when it will.）。</p>
 
+<h3 id="nuitka">Nuitka</h3>
+
+<p><a href="http://www.nuitka.net">Nuitka</a> 是 Python 编译器。它是 Python 解释器的无缝替代品或扩展，能够编译 CPython 支持的所有部分。然后以非常和谐的方式执行未编译代码和编译代码。它可以自由使用所有 Python 模块和扩展模块。它将 Python 转换为 C 级程序，然后与 CPython 相同的方式使用 <code>libpython</code> 。</p>
+
 <h2 id="section-12">参考资料</h2>
 
 <ol class="bibliography"></ol>
@@ -840,7 +845,13 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <hr>
   <ul>
     
-    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image_classification_pipeline">CS231n（2）：图像分类流程</a></li>
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
+    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    
+    <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
+    
+    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
@@ -850,16 +861,10 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
     
-    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
-    
-    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
-    
-    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
-    
   </ul>
 <p></p>
 <span>
-  <a  href="/2015/05/TLD" class="pageNav" style="float:left"   >上一篇：TLD：跟踪－学习－检测 </a>
+  <a  href="/2015/05/TLD" class="pageNav" style="float:left"   >上一篇：Tracking-Learning-Detection </a>
   &nbsp;&nbsp;&nbsp;
   <a  href="/2015/06/mvgcv-foreword" class="pageNav" style="float:right"   >下一篇：计算机视觉中的多视几何：序言（by Olivier Faugeras） </a>  
 </span>

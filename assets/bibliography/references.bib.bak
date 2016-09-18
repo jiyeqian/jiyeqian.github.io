@@ -1,0 +1,2520 @@
+% Encoding: UTF-8
+---
+---
+References
+==========
+@article{scikit-learn,
+ title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+ journal={Journal of Machine Learning Research},
+ volume={12},
+ pages={2825--2830},
+ year={2011}
+}
+@article{yuan_ralll_2012,
+  title = {Recent Advances of Large-Scale Linear Classification},
+  journal = {Proceedings of the IEEE},
+  author = {Guo-Xun Yuan and Chia-Hua Ho and Chih-Jen Lin},
+  volume = {100},
+  number = {9},
+  year = {2012},
+  pages = {2584 -- 2603}
+}
+@misc{July_svm_2014,
+  title     = {支持向量机通俗导论（理解SVM的三层境界）},
+  author    = {July},
+  year      = {2014},
+  howpublished = {csdn},
+  url       = {http://blog.csdn.net/v_july_v/article/details/7624837/},
+}
+@misc{JerryLead_svm1_2011,
+  title     = {支持向量机SVM（一）},
+  author    = {JerryLead},
+  year      = {2011},
+  howpublished = {cnblogs},
+  url       = {http://www.cnblogs.com/jerrylead/archive/2011/03/13/1982639.html},
+}
+@misc{lin_ml_fl_2014,
+  title     = {Lecture 4: Feasibility of Learning},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_ne_2014,
+  title     = {Lecture 8: Noise and Error},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_tg_2014,
+  title     = {Lecture 6: Theory of Generalization},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_tt_2014,
+  title     = {Lecture 5: Training versus Testing},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_vcd_2014,
+  title     = {Lecture 7: The VC Dimension},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_logistic_regression_2014,
+  title     = {Lecture 10: Logistic Regression},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_regularization_2014,
+  title     = {Lecture 14: Regularization},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{lin_ml_dt_2015,
+  title     = {Lecture 9: Decision Tree},
+  author    = {Hsuan-Tien Lin},
+  year      = {2015},
+  howpublished = {Coursera},
+  url       = {https://class.coursera.org/ntumltwo-001/lecture},
+}
+
+@book{nielsen_nndl_2014,
+  title     = {Neural Networks and Deep Learning},
+  author    = {Michael A. Nielsen},
+  year      = {2014},
+  publisher = {Determination Press},
+  url       = {http://neuralnetworksanddeeplearning.com},
+}
+@techreport{pomerleau_alvinn_1989,
+  title     = {ALVINN, an autonomous land vehicle in a neural network},
+  author    = {Dean A. Pomerleau},
+  year      = {1989},
+  institution = {Carnegie Mellon University},
+  url       = {http://repository.cmu.edu/cgi/viewcontent.cgi?article=2874&context=compsci},
+}
+@misc{ng_ml_explanation_derivatives_bp,
+  title     = {Explanation of Derivatives Used in Backpropagation},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning},
+}
+@misc{ng_ml_lr_2014,
+  title     = {Logistic Regression},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_r_2014,
+  title     = {Regularization: The problem of overfitting},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_nnr_2014,
+  title     = {Neural Networks: Representation},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_nnl_2014,
+  title     = {Neural Networks: Learning},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_nnl_pe_2014,
+  title     = {Programming Exercise 4: Neural Networks Learning},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_rlrbv_pe_2014,
+  title     = {Programming Exercise 5: Regularized Linear Regression and Bias v.s. Variance},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_linreg_2014,
+  title     = {Linear Regression with multiple variables},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{lin_mlf_linreg_2014,
+  title     = {Lecture 9: Linear Regression},
+  author    = {Hsuan-Tien Lin},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ntumlone},
+}
+@misc{ng_ml_aaml_2014,
+  title     = {Advice for applying machine learning},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+
+@misc{ng_ml_mlsd_2014,
+  title     = {Machine Learning System Design},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+
+@misc{ng_ml_svm_2014,
+  title     = {Support Vector Machines},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_svm_ex_2014,
+  title     = {Programming Exercise 6: Support Vector Machines},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_rs_2014,
+  title     = {Recommender Systems},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_ocr_2014,
+  title     = {Application example: Photo OCR},
+  xjournal   = {Machine Learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_ad_2014,
+  title     = {Anomaly detection},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_dr_2014,
+  title     = {Dimensionality Reduction},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_c_2014,
+  title     = {Clustering},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+@misc{ng_ml_lsml_2014,
+  title     = {Large scale machine learning},
+  author    = {Andrew Ng},
+  year      = {2014},
+  howpublished = {Coursera},
+  url       = {https://www.coursera.org/course/ml},
+}
+
+@misc{liu_cad_foundations_2014,
+  title     = {广告的基本知识},
+  author    = {刘鹏},
+  year      = {2014},
+  howpublished = {云课堂},
+  url       = {http://study.163.com/c/ad},
+}
+
+@book{arens_ad_2013,
+  title     = {当代广告学},
+  author    = {威廉·阿伦斯},
+  year      = {2013},
+  publisher = {人民邮电出版社},
+}
+
+@phdthesis{wu_thesis_bju_2010,
+  title     = {Netflix Prize 中的协同过滤算法},
+  author    = {吴金龙},
+  year      = {2010},
+  school = {北京大学},
+}
+
+
+@misc{lecun_dl_vs_svm_2014,
+  title     = {深度学习与支持向量机有什么联系？},
+  author    = {Yann LeCun},
+  year      = {2014},
+  howpublished = {52cs},
+  url       = {http://www.52cs.org/?p=46},
+}
+@misc{mu_svm_myth_2014,
+  title     = {SVM神话},
+  author    = {老师木},
+  year      = {2014},
+  howpublished = {52cs},
+  url       = {http://www.52cs.org/?p=359},
+}
+
+@article{scikit-learn-2015-svm-unbalanced,
+ title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+ journal={Journal of Machine Learning Research},
+ volume={12},
+ pages={2825--2830},
+ year={2011},
+ url = {http://scikit-learn.org/stable/modules/svm.html#unbalanced-problems},
+}
+
+@misc{lifeifei_CNN_kNN_2015,
+  title     = {Image classification: data-driven approach, nearest neighbor, train/val/test splits},
+  author    = {Fei-Fei Li and Andrej Karpathy},
+  year      = {2015},
+  howpublished = {GitHub},
+  url       = {http://cs231n.github.io/classification/},
+}
+@misc{lifeifei_CNN_SVM_2015,
+  title     = {Linear classification: Support Vector Machine, Softmax},
+  author    = {Fei-Fei Li and Andrej Karpathy},
+  year      = {2015},
+  howpublished = {GitHub},
+  url       = {http://cs231n.github.io/linear-classify/},
+}
+@inproceedings{Weston99supportvector,
+    author = {J. Weston and C. Watkins},
+    title = {Support Vector Machines for Multi-Class Pattern Recognition},
+    year = {1999},
+    month = {April},
+    address = {Bruges (Belgium)},
+    pages = {219--224},
+    booktitle = {European Symposium on Artificial Neural Networks},
+    url = {https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es1999-461.pdf}
+}
+@ARTICLE{Rifkin04indefense,
+    author = {Ryan Rifkin and Aldebaro Klautau},
+    title = {In defense of one-vs-all classification},
+    journal = {Journal of Machine Learning Research},
+    year = {2004},
+    volume = {5},
+    pages = {101--141}
+}
+@inproceedings{Tsochantaridis:2004:SVM:1015330.1015341,
+ author = {Tsochantaridis, Ioannis and Hofmann, Thomas and Joachims, Thorsten and Altun, Yasemin},
+ title = {Support Vector Machine Learning for Interdependent and Structured Output Spaces},
+ booktitle = {Proceedings of the Twenty-first International Conference on Machine Learning},
+ series = {ICML '04},
+ year = {2004},
+ isbn = {1-58113-838-5},
+ location = {Banff, Alberta, Canada},
+ pages = {104--111},
+ url = {http://doi.acm.org/10.1145/1015330.1015341},
+ doi = {10.1145/1015330.1015341},
+ acmid = {1015341},
+ publisher = {ACM},
+ address = {New York},
+} 
+@book{lihang_sml_2012,
+  title     = {统计学习方法},
+  author    = {李航},
+  year      = {2012},
+  address = {北京},
+  publisher = {清华大学出版社}
+}
+@book{bishop_prml_2006,
+  title     = {Pattern Recognition and Machine Learning},
+  author    = {Christopher M. Bishop},
+  year      = {2006},
+  address = {New York},
+  publisher = {Springer-Verlag}
+}
+@book{Darrell_Huff_2002,
+  title     = {统计陷阱},
+  author    = {达莱尔·哈夫},
+  year      = {2002},
+  address = {上海},
+  publisher = {上海财经大学出版社}
+}
+@article{wires11,
+  author = {W.-Y. Loh},
+  title = {Classification and regression trees},
+  journal = {Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery},
+  year = {2011},
+  volume = {1},
+  pages = {14--23},
+  doi = {10.1002/widm.8}
+}
+@article{rokach_air_ensemble_2010,
+year={2010},
+issn={0269-2821},
+journal={Artificial Intelligence Review},
+volume={33},
+number={1-2},
+doi={10.1007/s10462-009-9124-7},
+title={Ensemble-based classifiers},
+url={http://dx.doi.org/10.1007/s10462-009-9124-7},
+publisher={Springer Netherlands},
+keywords={Ensemble of classifiers; Supervised learning; Classification; Boosting},
+author={Rokach, Lior},
+pages={1-39},
+language={English}
+}
+@article{breiman1996stacked,
+  title={Stacked regressions},
+  author={Breiman, Leo},
+  journal={Machine learning},
+  volume={24},
+  number={1},
+  pages={49--64},
+  year={1996},
+  publisher={Springer}
+}
+@article{smyth1999linearly,
+  title={Linearly combining density estimators via stacking},
+  author={Smyth, Padhraic and Wolpert, David},
+  journal={Machine Learning},
+  volume={36},
+  number={1-2},
+  pages={59--83},
+  year={1999},
+  publisher={Springer}
+}
+@article{wolpert1999efficient,
+  title={An efficient method to estimate bagging's generalization error},
+  author={Wolpert, David H and Macready, William G},
+  journal={Machine Learning},
+  volume={35},
+  number={1},
+  pages={41--55},
+  year={1999},
+  publisher={Springer}
+}
+@article{clarke2003comparing,
+  title={Comparing Bayes model averaging and stacking when model approximation error cannot be ignored},
+  author={Clarke, Bertrand},
+  journal={The Journal of Machine Learning Research},
+  volume={4},
+  pages={683--712},
+  year={2003},
+  publisher={JMLR. org}
+}
+@article{sill2009feature,
+  title={Feature-weighted linear stacking},
+  author={Sill, Joseph and Tak{\'a}cs, G{\'a}bor and Mackey, Lester and Lin, David},
+  journal={arXiv preprint arXiv:0911.0460},
+  year={2009}
+}
+@article{breiman1996bagging,
+  title={Bagging predictors},
+  author={Breiman, Leo},
+  journal={Machine learning},
+  volume={24},
+  number={2},
+  pages={123--140},
+  year={1996},
+  publisher={Springer}
+}
+@techreport{breiman1996out,
+  title={Out-of-bag estimation},
+  author={Breiman, Leo},
+  year={1996},
+  institution={Citeseer}
+}
+@misc{BreimanWebIntroRF,
+  title     = {Random Forests},
+  author    = {Leo Breiman and Adele Cutler},
+  url       = {http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm},
+}
+@article{breiman2001random,
+  title={Random forests},
+  author={Breiman, Leo},
+  journal={Machine learning},
+  volume={45},
+  number={1},
+  pages={5--32},
+  year={2001},
+  publisher={Springer}
+}
+
+@article{bylander2002estimating,
+  title={Estimating generalization error on two-class datasets using out-of-bag estimates},
+  author={Bylander, Tom},
+  journal={Machine Learning},
+  volume={48},
+  number={1-3},
+  pages={287--297},
+  year={2002},
+  publisher={Springer}
+}
+
+@article{liaw2002classification,
+  title={Classification and regression by randomForest},
+  author={Liaw, Andy and Wiener, Matthew},
+  journal={R news},
+  volume={2},
+  number={3},
+  pages={18--22},
+  year={2002}
+}
+
+@article{Agrawal:1993:MAR:170036.170072,
+ author = {Agrawal, Rakesh and Imieli\'{n}ski, Tomasz and Swami, Arun},
+ title = {Mining Association Rules Between Sets of Items in Large Databases},
+  journal = {Sigmod Record},
+ issue_date = {June 1, 1993},
+ volume = {22},
+ number = {2},
+ month = jun,
+ year = {1993},
+ issn = {0163-5808},
+ pages = {207--216},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/170036.170072},
+ doi = {10.1145/170036.170072},
+ acmid = {170072},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@article{roberto667815,
+author = {Roberto J. Bayardo},
+title = {Efficiently Mining Long Patterns from Databases},
+journal = {Sigmod Record},
+volume = {27},
+year = {1998},
+pages = {85--93},
+issue = {2},
+doi = {10.1145/276304.276313},
+masid = {667815}
+}
+
+@inproceedings{Pasquier1999discovering,
+author = {Nicolas Pasquier and Yves Bastide and Rafik Taouil and Lotfi Lakhal},
+title = {Discovering Frequent Closed Itemsets for Association Rules},
+booktitle = {International Conference on Database Theory},
+year = {1999},
+pages = {398--416},
+doi = {10.1007/3-540-49257-7_25},
+masid = {220401}
+}
+
+@article{han2007frequent,
+author = {Jiawei Han and Hong Cheng and Dong Xin and Xifeng Yan},
+title = {Frequent pattern mining: current status and future directions},
+journal = {Data Mining and Knowledge Discovery},
+volume = {15},
+year = {2007},
+pages = {55--86},
+issue = {1},
+doi = {10.1007/s10618-006-0059-1},
+masid = {4375444}
+}
+
+@book{jianggang2011industrialrobot,
+  title={工业机器人},
+  author={蒋刚 and 龚迪琛 and 蔡勇 and 刘念聪 and 张静},
+  year={2011},
+  publisher={西南交通大学出版社}
+}
+
+@misc{iso8373,
+  title={ISO 8373: Manipulating Industrial Robots--Vocabulary},
+  year={1994},
+  author={ISO},
+}
+
+@book{liuzhenghong2014robot,
+  title={输电线路巡检机器人},
+  author={刘洪正},
+  year={2014},
+  publisher={中国电力出版社}
+}
+
+@book{heqinghua2005robot,
+  title={隧道凿岩机器人},
+  author={何清华},
+  year={2005},
+  publisher={中南大学出版社}
+}
+
+@book{hanjiexiehui2014robot,
+  title={中国焊接协会会员读物之六：焊接机器人实用手册},
+  author={中国焊接协会成套设备与专业机具分会 and 中国机械工程学会焊接学会机器人与自动化专业委员会},
+  year={2014},
+  publisher={机械工业出版社}
+}
+
+@article{863plan1999robot,
+  title={“国家863计划智能机器人主题产业化基地”发牌仪式在北京举行},
+  year={1999},
+  issue = {6},
+  journal={机器人技术与应用}
+}
+
+@article{SHIII1991,
+  title={上海三号喷涂机器人通过鉴定},
+  author = {朱云龙},
+  year={1991},
+  issue = {3},
+  journal={磨床与磨削}
+}
+
+@article{SHJM1995,
+  title={我国第一台高性能精密装配机器人——“精密1号”装配机器人},
+  author = {赵锡芳},
+  year={1995},
+  issue = {1},
+  journal={机电一体化}
+}
+
+@book{SHHT1997,
+  title={上海航天志},
+  author = {陆正廷 and 王德鸿 and 陈永一 and 郭建伟 and 张蓉蓉},
+  year={1997},
+  publisher={上海社会科学院出版社}
+}
+
+
+@article{TSZ1995,
+  title={“探索者”号无缆水下机器人控制系统},
+  author = {李硕  and 郭廷志 and 封锡盛 },
+  year={1995},
+  issue = {4},
+  journal={机器人技术与应用}
+}
+
+@article{HT100A1999,
+  title={国产机器人走向实用化——HT-100A点焊机器人通过专家验收},
+  year={1999},
+  issue = {5},
+  journal={机器人技术与应用}
+}
+
+@article{W1102DZ2002,
+  title={W1102DZ型高性能无人驾驶振动压路机},
+  author={陈罗星},
+  year={2002},
+  issue = {7},
+  journal={工程机械}
+}
+
+@book{JL1987,
+  title={吉林年鉴},
+  author = { 王季平},
+  year={1987},
+  publisher={吉林省地方志编纂委员会}
+}
+
+@book{zhang1988industrial-robot,
+  title={工业机器人},
+  author = {张建民},
+  year={1988},
+  publisher={北京理工大学出版社}
+}
+
+@article{TL01-1991,
+  title={国产弧焊机器人在汽车车厢焊接生产线上的应用},
+  author={晏金华},
+  year={1991},
+  issue = {4},
+  journal={电焊机}
+}
+
+@book{martin2008handbook,
+  title={Handbook of Robotics: Industrial Robotics},
+  author={Martin Hägele and Klas Nilsson and J. Norberto Pires},
+  year={2008},
+  publisher={Springer}
+}
+
+@book{chenwenjie2014handbook,
+  title={Handbook of Manufacturing Engineering and Technology: Grippers and End-Effectors},
+  author={Wenjie Chen and Su Zhao and Siew Loong Chow},
+  year={2014},
+  publisher={Springer},
+  url = {http://link.springer.com/referenceworkentry/10.1007%2F978-1-4471-4670-4_96},
+}
+
+@article{dhillon2002robot,
+  title={Robot systems reliability and safety: A review},
+  author={Dhillon, BS and Fashandi, ARM and Liu, KL},
+  journal={Journal of quality in maintenance engineering},
+  volume={8},
+  number={3},
+  pages={170--212},
+  year={2002},
+  publisher={MCB UP Ltd}
+}
+
+@article{dieter2002man,
+  title={Man-robot cooperation in a flexible assembly cell},
+  author={Dieter Schraft, Rolf and Schmid, Stefan and Thiemermann, Stefan},
+  journal={Assembly Automation},
+  volume={22},
+  number={2},
+  pages={136--138},
+  year={2002},
+  publisher={MCB UP Ltd}
+}
+
+@article{doncieux2015evolutionary,
+  title={Evolutionary Robotics: What, Why, and Where to},
+  author={Doncieux, Stephane and Bredeche, Nicolas and Mouret, Jean-Baptiste and Eiben, Agoston E Gusz},
+  journal={Frontiers in Robotics and AI},
+  volume={2},
+  pages={4},
+  year={2015},
+  publisher={Frontiers},
+  url = {http://journal.frontiersin.org/article/10.3389/frobt.2015.00004/pdf}
+}
+
+@article{kapadia2014rethinking,
+  title={Rethinking the Machines in Which We Live},
+  author={Kapadia, Apoorva D and Walker, Ian D and Green, Keith Evan and Manganelli, Joe C and Houayek, Henrique and James, Adam M and Kanuri, Venkata and Mokhtar, Tarek and Siles, Ivan and Yanik, Paul},
+  journal={IEEE ROBOTICS \& AUTOMATION MAGAZINE},
+  year={2014},
+  url = {http://www.researchgate.net/profile/Keith_Green2/publication/265555704_Rethinking_the_Machines_in_Which_We_Live_A_Multidisciplinary_Course_in_Architectural_Robotics/links/548ae9df0cf225bf669f09c5.pdf}
+}
+
+@book{nof1999handbook,
+  title={Handbook of industrial robotics},
+  author={Nof, Shimon Y},
+  volume={1},
+  year={1999},
+  publisher={John Wiley \& Sons}
+}
+
+@techreport{scheinman1969design,
+  title={Design of a computer controlled manipulator.},
+  author={Scheinman, Victor David},
+  year={1969},
+  institution={DTIC Document}
+}
+
+@book{groover2007automation,
+  title={Automation, production systems, and computer-integrated manufacturing},
+  author={Groover, Mikell P},
+  year={2007},
+  publisher={Prentice Hall Press}
+}
+
+@misc{makino1982assembly,
+  title={Assembly robot},
+  author={Makino, H.},
+  url={https://www.google.com/patents/US4341502},
+  year={1982},
+  month=jul # "~27",
+  publisher={Google Patents},
+  note={US Patent 4,341,502}
+}
+
+@article{boothroyd1992design,
+  title={Design for assembly and disassembly},
+  author={Boothroyd, G and Alting, L},
+  journal={CIRP Annals-Manufacturing Technology},
+  volume={41},
+  number={2},
+  pages={625--636},
+  year={1992},
+  publisher={Elsevier}
+}
+
+@article{bloss2003innovation,
+  title={Innovation at IMTS},
+  author={Bloss, Richard},
+  journal={Industrial Robot: An International Journal},
+  volume={30},
+  number={2},
+  pages={159--161},
+  year={2003},
+  publisher={MCB UP Ltd}
+}
+
+@inproceedings{hirzinger2002dlr,
+  title={DLR's torque-controlled light weight robot III-are we reaching the technological limits now?},
+  author={Hirzinger, Gerd and Sporer, Norbert and Albu-Schaffer, A and Hahnle, M and Krenn, R and Pascucci, A and Schedl, Markus},
+  booktitle={Robotics and Automation, 2002. Proceedings. ICRA'02. IEEE International Conference on},
+  volume={2},
+  pages={1710--1716},
+  year={2002},
+  organization={IEEE}
+}
+
+@article{wilson2006international,
+  title={The international robot exhibition 2005 in Tokyo},
+  author={Wilson, Mike and Kusuda, Yoshihiro},
+  journal={Industrial Robot: An International Journal},
+  volume={33},
+  number={5},
+  pages={342--348},
+  year={2006},
+  publisher={Emerald Group Publishing Limited}
+}
+
+@book{siegwart2011introduction,
+  title={Introduction to autonomous mobile robots},
+  author={Siegwart, Roland and Nourbakhsh, Illah Reza and Scaramuzza, Davide},
+  year={2011},
+  publisher={MIT press}
+}
+
+@article{Salton:1975:VSM:361219.361220,
+ author={Salton, Gerard and Wong, Anita and Yang, Chung-Shu},
+ title = {A Vector Space Model for Automatic Indexing},
+ journal={Communications of the ACM},
+ issue_date = {Nov. 1975},
+ volume = {18},
+ number = {11},
+ month = nov,
+ year = {1975},
+ issn = {0001-0782},
+ pages = {613--620},
+ numpages = {8},
+ url = {http://doi.acm.org/10.1145/361219.361220},
+ doi = {10.1145/361219.361220},
+ acmid = {361220},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {automatic indexing, automatic information retrieval, content analysis, document space},
+} 
+
+@misc{Knupp2013Writing,
+  title={Writing Idiomatic Python},
+  author={Jeff Knupp},
+  year={2013},
+  url = {ftp://www.ppurl.com/u/04/4410904/4410904.6292453570.pdf}
+}
+
+@book{demaagd2012practical,
+  title={Practical Computer Vision with SimpleCV},
+  author={Demaagd, Kurt and Oliver, Anthony and Oostendorp, Nathan and Scott, Katherine},
+  year={2012},
+  publisher={O'Reilly Media, Inc.}
+}
+
+@article{domingos2012few,
+  title={A few useful things to know about machine learning},
+  author={Domingos, Pedro},
+  journal={Communications of the ACM},
+  volume={55},
+  number={10},
+  pages={78--87},
+  year={2012},
+  publisher={ACM}
+}
+
+@book{teetor2011r,
+  title={R Cookbook},
+  author={Teetor, Paul},
+  year={2011},
+  publisher={"O'Reilly Media, Inc."}
+}
+
+@article{weston2014getting,
+  title={Getting Started with doParallel and foreach},
+  author={Weston, Steve and Calaway, Rich},
+  year={2014}
+}
+
+@Article{dirk2011rcpp,
+  title = {Rcpp: Seamless R and C++ Integration},
+  author = {Dirk Eddelbuettel and Romain Fran\c{c}ois},
+  journal = {Journal of Statistical Software},
+  year = {2011},
+  volume = {40},
+  number = {8},
+  pages = {1--18},
+  url = {http://www.jstatsoft.org/v40/i08/},
+}
+
+@Manual{revolution2014doparallel,
+    title = {doParallel: Foreach parallel adaptor for the parallel package},
+    author = {Revolution Analytics and Steve Weston},
+    year = {2014},
+    note = {R package version 1.0.8},
+    url = {http://CRAN.R-project.org/package=doParallel},
+  }
+
+@Article{Michael2005arules,
+  title = {arules -- {A} Computational Environment for Mining Association Rules and Frequent Item Sets},
+  author = {Michael Hahsler and Bettina Gruen and Kurt Hornik},
+  year = {2005},
+  journal = {Journal of Statistical Software},
+  volume = {14},
+  number = {15},
+  pages = {1--25},
+  url = {http://www.jstatsoft.org/v14/i15/},
+  month = {October},
+  issn = {1548-7660},
+}
+
+@book{hastie2009elements,
+  title={The elements of statistical learning},
+  author={Hastie, Trevor and Tibshirani, Robert and Friedman, Jerome},
+  publisher={Springer}
+}
+
+@article{hipp2000algorithms,
+  title={Algorithms for association rule mining—a general survey and comparison},
+  author={Hipp, Jochen and G{\"u}ntzer, Ulrich and Nakhaeizadeh, Gholamreza},
+  journal={ACM sigkdd explorations newsletter},
+  volume={2},
+  number={1},
+  pages={58--64},
+  year={2000},
+  publisher={ACM}
+}
+
+@article{zaki2004mining,
+  title={Mining non-redundant association rules},
+  author={Zaki, Mohammed J},
+  journal={Data mining and knowledge discovery},
+  volume={9},
+  number={3},
+  pages={223--248},
+  year={2004},
+  publisher={Springer}
+}
+
+@inproceedings{brin1997dynamic,
+  title={Dynamic itemset counting and implication rules for market basket data},
+  author={Brin, Sergey and Motwani, Rajeev and Ullman, Jeffrey D and Tsur, Shalom},
+  booktitle={ACM SIGMOD Record},
+  volume={26},
+  number={2},
+  pages={255--264},
+  year={1997},
+  organization={ACM}
+}
+
+@inproceedings{govindaraju2003advances,
+  title={Advances in Frequent Itemset Mining Implementations},
+  author={Govindaraju, N and Zaki, M},
+  year={2003},
+  organization={FIMI}
+}
+
+@inproceedings{borgelt2003efficient,
+  title={Efficient implementations of apriori and eclat},
+  author={Borgelt, Christian},
+  booktitle={FIMI’03: Proceedings of the IEEE ICDM workshop on frequent itemset mining implementations},
+  year={2003}
+}
+
+@inproceedings{agrawal1994fast,
+  title={Fast algorithms for mining association rules},
+  author={Agrawal, Rakesh and Srikant, Ramakrishnan and others},
+  booktitle={Proc. 20th int. conf. very large data bases, VLDB},
+  volume={1215},
+  pages={487--499},
+  year={1994}
+}
+
+@article{zaki2000scalable,
+  title={Scalable algorithms for association mining},
+  author={Zaki, Mohammed Javeed},
+  journal={IEEE Transactions on Knowledge and Data Engineering},
+  volume={12},
+  number={3},
+  pages={372--390},
+  year={2000},
+  publisher={IEEE}
+}
+
+@article{piatetsky1991discovery,
+  title={Discovery, analysis, and presentation of strong rules},
+  author={Piatetsky-Shapiro, Gregory},
+  journal={Knowledge discovery in databases},
+  pages={229--238},
+  year={1991},
+  publisher={Menlo Park, CA: AAI/MIT}
+}
+
+@inproceedings{srikant1996mining,
+  title={Mining quantitative association rules in large relational tables},
+  author={Srikant, Ramakrishnan and Agrawal, Rakesh},
+  booktitle={ACM SIGMOD Record},
+  volume={25},
+  number={2},
+  pages={1--12},
+  year={1996},
+  organization={ACM}
+}
+
+@misc{borgelt2004finding,
+  title={Finding association rules/hyperedges with the apriori algorithm},
+  author={Borgelt, Christian},
+  year={2004},
+  publisher={Working Group Neural Networks and Fuzzy Systems, Otto-von-Guericke-University of Magdeburg, Universit{\"a}tsplatz}
+}
+
+@book{knuth1998art,
+  title={The art of computer programming: sorting and searching},
+  author={Knuth, Donald Ervin},
+  volume={3},
+  year={1998},
+  publisher={Pearson Education}
+}
+
+@inproceedings{borgelt2002induction,
+  title={Induction of association rules: Apriori implementation},
+  author={Borgelt, Christian and Kruse, Rudolf},
+  booktitle={Compstat},
+  pages={395--400},
+  year={2002},
+  organization={Springer}
+}
+
+@article{hahsler2008selective,
+  title={Selective association rule generation},
+  author={Hahsler, Michael and Buchta, Christian and Hornik, Kurt},
+  journal={Computational Statistics},
+  volume={23},
+  number={2},
+  pages={303--315},
+  year={2008},
+  publisher={Springer}
+}
+
+@inproceedings{mannila1994efficient,
+  title={Efficient algorithms for discovering association rules},
+  author={Mannila, Heikki and Toivonen, Hannu and Verkamo, A Inkeri},
+  booktitle={KDD-94: AAAI workshop on Knowledge Discovery in Databases},
+  pages={181--192},
+  year={1994}
+}
+
+@inproceedings{zaki1997evaluation,
+  title={Evaluation of sampling for data mining of association rules},
+  author={Zaki, Mohammed Javeed and Parthasarathy, Srinivasan and Li, Wei and Ogihara, Mitsunori},
+  booktitle={Research Issues in Data Engineering, 1997. Proceedings. Seventh International Workshop on},
+  pages={42--50},
+  year={1997},
+  organization={IEEE}
+}
+
+@inproceedings{parthasarathy2002efficient,
+  title={Efficient progressive sampling for association rules},
+  author={Parthasarathy, Srinivasan},
+  booktitle={Data Mining, 2002. ICDM 2003. Proceedings. 2002 IEEE International Conference on},
+  pages={354--361},
+  year={2002},
+  organization={IEEE}
+}
+
+@inproceedings{toivonen1996sampling,
+  title={Sampling large databases for association rules},
+  author={Toivonen, Hannu and others},
+  booktitle={VLDB},
+  volume={96},
+  pages={134--145},
+  year={1996}
+}
+
+@article{hahsler2005implications,
+  title={Implications of probabilistic data modeling for rule mining},
+  author={Hahsler, Michael and Hornik, Kurt and Reutterer, Thomas},
+  year={2005},
+  publisher={Institut f{\"u}r Statistik und Mathematik, WU Vienna University of Economics and Business}
+}
+
+@inproceedings{zaki1997new,
+  title={New Algorithms for Fast Discovery of Association Rules.},
+  author={Zaki, Mohammed Javeed and Parthasarathy, Srinivasan and Ogihara, Mitsunori and Li, Wei and others},
+  booktitle={KDD},
+  volume={97},
+  pages={283--286},
+  year={1997}
+}
+
+@article{omiecinski2003alternative,
+  title={Alternative interest measures for mining associations in databases},
+  author={Omiecinski, Edward R},
+  journal={Knowledge and Data Engineering, IEEE Transactions on},
+  volume={15},
+  number={1},
+  pages={57--69},
+  year={2003},
+  publisher={IEEE}
+}
+
+@inproceedings{xiong2003mining,
+  title={Mining strong affinity association patterns in data sets with skewed support distribution},
+  author={Xiong, Hui and Tan, Pang-Ning and Kumar, Vipin},
+  booktitle={Data Mining, 2003. ICDM 2003. Third IEEE International Conference on},
+  pages={387--394},
+  year={2003},
+  organization={IEEE}
+}
+
+@inproceedings{liu1999pruning,
+  title={Pruning and summarizing the discovered associations},
+  author={Liu, Bing and Hsu, Wynne and Ma, Yiming},
+  booktitle={Proceedings of the fifth ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={125--134},
+  year={1999},
+  organization={ACM}
+}
+
+@article{hofmann2001visual,
+  title={Visual comparison of association rules},
+  author={Hofmann, Heike and Wilhelm, Adalbert},
+  journal={Computational Statistics},
+  volume={16},
+  number={3},
+  pages={399--415},
+  year={2001},
+  publisher={Springer}
+}
+
+@article{hahsler2007new,
+  title={New probabilistic interest measures for association rules},
+  author={Hahsler, Michael and Hornik, Kurt},
+  journal={Intelligent Data Analysis},
+  volume={11},
+  number={5},
+  pages={437--455},
+  year={2007},
+  publisher={IOS Press}
+}
+
+@inproceedings{bayardo1999constraint,
+  title={Constraint-based rule mining in large, dense databases},
+  author={Bayardo Jr, Roberto J and Agrawal, Rakesh and Gunopulos, Dimitrios},
+  booktitle={Data Engineering, 1999. Proceedings., 15th International Conference on},
+  pages={188--197},
+  year={1999},
+  organization={IEEE}
+}
+
+@article{tan2004selecting,
+  title={Selecting the right objective measure for association analysis},
+  author={Tan, Pang-Ning and Kumar, Vipin and Srivastava, Jaideep},
+  journal={Information Systems},
+  volume={29},
+  number={4},
+  pages={293--313},
+  year={2004},
+  publisher={Elsevier}
+}
+
+@article{strehl1999distance,
+  title={Distance based clustering of association rules},
+  author={Strehl, Alexander and Gupta, Gunjan K and Ghosh, Joydeep},
+  journal={Proceedings ANNIE 1999},
+  volume={9},
+  pages={759--764},
+  year={1999},
+  publisher={Citeseer}
+}
+
+@article{aggarwal2002finding,
+  title={Finding localized associations in market basket data},
+  author={Aggarwal, Charu C and Procopiuc, Cecilia and Yu, Philip S.},
+  journal={Knowledge and Data Engineering, IEEE Transactions on},
+  volume={14},
+  number={1},
+  pages={51--62},
+  year={2002},
+  publisher={IEEE}
+}
+
+@incollection{hahsler2007building,
+  title={Building on the arules infrastructure for analyzing transaction data with R},
+  author={Hahsler, Michael and Hornik, Kurt},
+  booktitle={Advances in Data Analysis},
+  pages={449--456},
+  year={2007},
+  publisher={Springer}
+}
+
+@article{asuncionuci,
+  title={UCI repository of machine learning databases (2007)},
+  author={Asuncion, Arthur and Newman, David},
+  url = {http://www.ics.uci.edu/~mlearn/MLRepository.html}
+}
+
+@Manual{Graham2014pmml,
+  title = {pmml: Generate PMML for various models},
+  author = {Graham Williams and Tridivesh Jena and Wen Ching Lin and Michael Hahsler and Zementis Inc and Hemant Ishwaran and Udaya B. Kogalur and Rajarshi Guha},
+  year = {2014},
+  note = {R package version 1.4.2},
+  url = {http://CRAN.R-project.org/package=pmml},
+}
+
+@article{silverstein1998beyond,
+  title={Beyond market baskets: generalizing association rules to dependence rules},
+  author={Silverstein, Craig and Brin, Sergey and Motwani, Rajeev},
+  journal={Data mining and knowledge discovery},
+  volume={2},
+  number={1},
+  pages={39--68},
+  year={1998},
+  publisher={Springer}
+}
+
+@inproceedings{dumouchel2001empirical,
+  title={Empirical bayes screening for multi-item associations},
+  author={DuMouchel, William and Pregibon, Daryl},
+  booktitle={Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={67--76},
+  year={2001},
+  organization={ACM}
+}
+
+@article{strehl2003relationship,
+  title={Relationship-based clustering and visualization for high-dimensional data mining},
+  author={Strehl, Alexander and Ghosh, Joydeep},
+  journal={INFORMS Journal on Computing},
+  volume={15},
+  number={2},
+  pages={208--230},
+  year={2003},
+  publisher={INFORMS}
+}
+
+@book{berry1997data,
+  title={Data mining techniques: for marketing, sales, and customer support},
+  author={Berry, Michael J and Linoff, Gordon},
+  year={1997},
+  publisher={John Wiley \& Sons, Inc.}
+}
+
+@inproceedings{goethals2003fimi,
+  title={FIMI’03: Workshop on frequent itemset mining implementations},
+  author={Goethals, Bart and Zaki, Mohammed J},
+  booktitle={Third IEEE International Conference on Data Mining Workshop on Frequent Itemset Mining Implementations},
+  pages={1--13},
+  year={2003}
+}
+
+@article{kalal2012tracking,
+  title={Tracking-learning-detection},
+  author={Kalal, Zdenek and Mikolajczyk, Krystian and Matas, Jiri},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={34},
+  number={7},
+  pages={1409--1422},
+  year={2012},
+  publisher={IEEE}
+}
+
+@inproceedings{blum1998combining,
+  title={Combining labeled and unlabeled data with co-training},
+  author={Blum, Avrim and Mitchell, Tom},
+  booktitle={Proceedings of the eleventh annual conference on Computational learning theory},
+  pages={92--100},
+  year={1998},
+  organization={ACM}
+}
+
+@inproceedings{lucas1981iterative,
+  title={An iterative image registration technique with an application to stereo vision},
+  author={Lucas, Bruce D and Kanade, Takeo and others},
+  booktitle={IJCAI},
+  volume={81},
+  pages={674--679},
+  year={1981}
+}
+
+@inproceedings{shi1994good,
+  title={Good features to track},
+  author={Shi, Jianbo and Tomasi, Carlo},
+  booktitle={Computer Vision and Pattern Recognition, 1994. Proceedings CVPR'94., 1994 IEEE Computer Society Conference on},
+  pages={593--600},
+  year={1994},
+  organization={IEEE}
+}
+
+@article{sand2008particle,
+  title={Particle video: Long-range motion estimation using point trajectories},
+  author={Sand, Peter and Teller, Seth},
+  journal={International Journal of Computer Vision},
+  volume={80},
+  number={1},
+  pages={72--91},
+  year={2008},
+  publisher={Springer}
+}
+
+@article{wang2003recent,
+  title={Recent developments in human motion analysis},
+  author={Wang, Liang and Hu, Weiming and Tan, Tieniu},
+  journal={Pattern recognition},
+  volume={36},
+  number={3},
+  pages={585--601},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@article{ramanan2007tracking,
+  title={Tracking people by learning their appearance},
+  author={Ramanan, Deva and Forsyth, David A and Zisserman, Andrew},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={29},
+  number={1},
+  pages={65--81},
+  year={2007},
+  publisher={IEEE}
+}
+
+@inproceedings{buehler2008long,
+  title={Long term arm and hand tracking for continuous sign language TV broadcasts},
+  author={Buehler, Patrick and Everingham, Mark and Huttenlocher, Daniel P and Zisserman, Andrew},
+  booktitle={Proceedings of the 19th British Machine Vision Conference},
+  pages={1105--1114},
+  year={2008},
+  organization={BMVA Press}
+}
+
+@inproceedings{birchfield1998elliptical,
+  title={Elliptical head tracking using intensity gradients and color histograms},
+  author={Birchfield, Stan},
+  booktitle={Computer Vision and Pattern Recognition, 1998. Proceedings. 1998 IEEE Computer Society Conference on},
+  pages={232--237},
+  year={1998},
+  organization={IEEE}
+}
+
+@article{isard1998condensation,
+  title={Condensation—conditional density propagation for visual tracking},
+  author={Isard, Michael and Blake, Andrew},
+  journal={International journal of computer vision},
+  volume={29},
+  number={1},
+  pages={5--28},
+  year={1998},
+  publisher={Springer}
+}
+
+@incollection{bibby2008robust,
+  title={Robust real-time visual tracking using pixel-wise posteriors},
+  author={Bibby, Charles and Reid, Ian},
+  booktitle={Computer Vision--ECCV 2008},
+  pages={831--844},
+  year={2008},
+  publisher={Springer}
+}
+
+@inproceedings{bibby2010real,
+  title={Real-time tracking of multiple occluding objects using level sets},
+  author={Bibby, Charles and Reid, Ian},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+  pages={1307--1314},
+  year={2010},
+  organization={IEEE}
+}
+
+@inproceedings{horn1981determining,
+  title={Determining optical flow},
+  author={Horn, Berthold K and Schunck, Brian G},
+  booktitle={1981 Technical Symposium East},
+  pages={319--331},
+  year={1981},
+  organization={International Society for Optics and Photonics}
+}
+
+@incollection{brox2004high,
+  title={High accuracy optical flow estimation based on a theory for warping},
+  author={Brox, Thomas and Bruhn, Andr{\'e}s and Papenberg, Nils and Weickert, Joachim},
+  booktitle={Computer Vision-ECCV 2004},
+  pages={25--36},
+  year={2004},
+  publisher={Springer}
+}
+
+@article{barron1994performance,
+  title={Performance of optical flow techniques},
+  author={Barron, John L and Fleet, David J and Beauchemin, Steven S},
+  journal={International journal of computer vision},
+  volume={12},
+  number={1},
+  pages={43--77},
+  year={1994},
+  publisher={Springer}
+}
+
+@article{comaniciu2003kernel,
+  title={Kernel-based object tracking},
+  author={Comaniciu, Dorin and Ramesh, Visvanathan and Meer, Peter},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={25},
+  number={5},
+  pages={564--577},
+  year={2003},
+  publisher={IEEE}
+}
+
+@article{matthews2004template,
+  title={The template update problem},
+  author={Matthews, Iain and Ishikawa, Takahiro and Baker, Simon},
+  journal={IEEE transactions on pattern analysis and machine intelligence},
+  volume={26},
+  number={6},
+  pages={810--815},
+  year={2004},
+  publisher={IEEE Computer Society}
+}
+
+@inproceedings{dowson2005simultaneous,
+  title={Simultaneous modeling and tracking (smat) of feature sets},
+  author={Dowson, Nicholas DH and Bowden, Richard},
+  booktitle={Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on},
+  volume={2},
+  pages={99--105},
+  year={2005},
+  organization={IEEE}
+}
+
+@article{rahimi2008reducing,
+  title={Reducing drift in differential tracking},
+  author={Rahimi, Ali and Morency, Louis-Philippe and Darrell, Trevor},
+  journal={Computer Vision and Image Understanding},
+  volume={109},
+  number={2},
+  pages={97--111},
+  year={2008},
+  publisher={Elsevier}
+}
+
+@article{jepson2003robust,
+  title={Robust online appearance models for visual tracking},
+  author={Jepson, Allan D and Fleet, David J and El-Maraghi, Thomas F},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={25},
+  number={10},
+  pages={1296--1311},
+  year={2003},
+  publisher={IEEE}
+}
+
+@inproceedings{adam2006robust,
+  title={Robust fragments-based tracking using the integral histogram},
+  author={Adam, Amit and Rivlin, Ehud and Shimshoni, Ilan},
+  booktitle={Computer vision and pattern recognition, 2006 IEEE Computer Society Conference on},
+  volume={1},
+  pages={798--805},
+  year={2006},
+  organization={IEEE}
+}
+
+@article{black1998eigentracking,
+  title={Eigentracking: Robust matching and tracking of articulated objects using a view-based representation},
+  author={Black, Michael J and Jepson, Allan D},
+  journal={International Journal of Computer Vision},
+  volume={26},
+  number={1},
+  pages={63--84},
+  year={1998},
+  publisher={Springer}
+}
+
+@article{ross2008incremental,
+  title={Incremental learning for robust visual tracking},
+  author={Ross, David A and Lim, Jongwoo and Lin, Ruei-Sung and Yang, Ming-Hsuan},
+  journal={International Journal of Computer Vision},
+  volume={77},
+  number={1-3},
+  pages={125--141},
+  year={2008},
+  publisher={Springer}
+}
+
+@inproceedings{kwon2010visual,
+  title={Visual tracking decomposition},
+  author={Kwon, Junseok and Lee, Kyoung Mu},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+  pages={1269--1276},
+  year={2010},
+  organization={IEEE}
+}
+
+@article{yang2009context,
+  title={Context-aware visual tracking},
+  author={Yang, Ming and Wu, Ying and Hua, Gang},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={31},
+  number={7},
+  pages={1195--1209},
+  year={2009},
+  publisher={IEEE}
+}
+
+@inproceedings{grabner2010tracking,
+  title={Tracking the invisible: Learning where the object might be},
+  author={Grabner, Helmut and Matas, Jiri and Van Gool, Luc and Cattin, Philippe},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+  pages={1285--1292},
+  year={2010},
+  organization={IEEE}
+}
+
+@article{avidan2004support,
+  title={Support vector tracking},
+  author={Avidan, Shai},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={26},
+  number={8},
+  pages={1064--1072},
+  year={2004},
+  publisher={IEEE}
+}
+
+@article{collins2005online,
+  title={Online selection of discriminative tracking features},
+  author={Collins, Robert T and Liu, Yanxi and Leordeanu, Marius},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={27},
+  number={10},
+  pages={1631--1643},
+  year={2005},
+  publisher={IEEE}
+}
+
+@article{avidan2007ensemble,
+  title={Ensemble tracking},
+  author={Avidan, Shai},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={29},
+  number={2},
+  pages={261--271},
+  year={2007},
+  publisher={IEEE}
+}
+
+@inproceedings{grabner2006line,
+  title={On-line boosting and vision},
+  author={Grabner, Helmut and Bischof, Horst},
+  booktitle={Computer Vision and Pattern Recognition, 2006 IEEE Computer Society Conference on},
+  volume={1},
+  pages={260--267},
+  year={2006},
+  organization={IEEE}
+}
+
+@inproceedings{babenko2009visual,
+  title={Visual tracking with online multiple instance learning},
+  author={Babenko, Boris and Yang, Ming-Hsuan and Belongie, Serge},
+  booktitle={Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on},
+  pages={983--990},
+  year={2009},
+  organization={IEEE}
+}
+
+@incollection{grabner2008semi,
+  title={Semi-supervised on-line boosting for robust tracking},
+  author={Grabner, Helmut and Leistner, Christian and Bischof, Horst},
+  booktitle={Computer Vision--ECCV 2008},
+  pages={234--247},
+  year={2008},
+  publisher={Springer}
+}
+
+@inproceedings{tang2007co,
+  title={Co-tracking using semi-supervised support vector machines},
+  author={Tang, Feng and Brennan, Shane and Zhao, Qi and Tao, Hai},
+  booktitle={Computer Vision, 2007. ICCV 2007. IEEE 11th International Conference on},
+  pages={1--8},
+  year={2007},
+  organization={IEEE}
+}
+
+@incollection{yu2008online,
+  title={Online tracking and reacquisition using co-trained generative and discriminative trackers},
+  author={Yu, Qian and Dinh, Thang Ba and Medioni, G{\'e}rard},
+  booktitle={Computer Vision--ECCV 2008},
+  pages={678--691},
+  year={2008},
+  publisher={Springer}
+}
+
+@article{lowe2004distinctive,
+  title={Distinctive image features from scale-invariant keypoints},
+  author={Lowe, David G},
+  journal={International journal of computer vision},
+  volume={60},
+  number={2},
+  pages={91--110},
+  year={2004},
+  publisher={Springer}
+}
+
+@inproceedings{viola2001rapid,
+  title={Rapid object detection using a boosted cascade of simple features},
+  author={Viola, Paul and Jones, Michael},
+  booktitle={Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on},
+  volume={1},
+  pages={I--511},
+  year={2001},
+  organization={IEEE}
+}
+
+@inproceedings{lepetit2005randomized,
+  title={Randomized trees for real-time keypoint recognition},
+  author={Lepetit, Vincent and Lagger, Pascal and Fua, Pascal},
+  booktitle={Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on},
+  volume={2},
+  pages={775--781},
+  year={2005},
+  organization={IEEE}
+}
+
+@article{vacchetti2004stable,
+  title={Stable real-time 3d tracking using online and offline information},
+  author={Vacchetti, Luca and Lepetit, Vincent and Fua, Pascal},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={26},
+  number={10},
+  pages={1385--1391},
+  year={2004},
+  publisher={IEEE}
+}
+
+@article{taylor2009multiple,
+  title={Multiple target localisation at over 100 fps},
+  author={Taylor, Simon and Drummond, Tom},
+  year={2009}
+}
+
+@inproceedings{pilet2010virtually,
+  title={Virtually augmenting hundreds of real pictures: An approach based on learning, retrieval, and tracking},
+  author={Pilet, Julien and Saito, Hideo},
+  booktitle={Virtual Reality Conference (VR), 2010 IEEE},
+  pages={71--78},
+  year={2010},
+  organization={IEEE}
+}
+
+@inproceedings{obdrzalek2005sub,
+  title={Sub-linear Indexing for Large Scale Object Recognition.},
+  author={Obdrzalek, Stepan and Matas, Jiri},
+  booktitle={BMVC},
+  pages={1--10},
+  year={2005}
+}
+
+@inproceedings{hinterstoisser2009real,
+  title={Real-time learning of accurate patch rectification},
+  author={Hinterstoisser, Stefan and Kutter, Oliver and Navab, Nassir and Fua, Pascal and Lepetit, Vincent},
+  booktitle={Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on},
+  pages={2945--2952},
+  year={2009},
+  organization={IEEE}
+}
+
+@book{chapelle2006semi,
+  title={Semi-supervised learning},
+  author={Chapelle, Olivier and Sch{\"o}lkopf, Bernhard and Zien, Alexander and others},
+  year={2006},
+  publisher={MIT press Cambridge}
+}
+
+@article{zhu2009introduction,
+  title={Introduction to semi-supervised learning},
+  author={Zhu, Xiaojin and Goldberg, Andrew B},
+  journal={Synthesis lectures on artificial intelligence and machine learning},
+  volume={3},
+  number={1},
+  pages={1--130},
+  year={2009},
+  publisher={Morgan \& Claypool Publishers}
+}
+
+@article{nigam2000text,
+  title={Text classification from labeled and unlabeled documents using EM},
+  author={Nigam, Kamal and McCallum, Andrew Kachites and Thrun, Sebastian and Mitchell, Tom},
+  journal={Machine learning},
+  volume={39},
+  number={2-3},
+  pages={103--134},
+  year={2000},
+  publisher={Springer}
+}
+
+@inproceedings{fergus2003object,
+  title={Object class recognition by unsupervised scale-invariant learning},
+  author={Fergus, Robert and Perona, Pietro and Zisserman, Andrew},
+  booktitle={Computer Vision and Pattern Recognition, 2003. Proceedings. 2003 IEEE Computer Society Conference on},
+  volume={2},
+  pages={II--264},
+  year={2003},
+  organization={IEEE}
+}
+
+@article{rosenberg2005semi,
+  title={Semi-supervised self-training of object detection models},
+  author={Rosenberg, Chuck and Hebert, Martial and Schneiderman, Henry},
+  year={2005},
+  publisher={IEEE Press}
+}
+
+@incollection{poh2009challenges,
+  title={Challenges and research directions for adaptive biometric recognition systems},
+  author={Poh, Norman and Wong, Rita and Kittler, Josef and Roli, Fabio},
+  booktitle={Advances in Biometrics},
+  pages={753--764},
+  year={2009},
+  publisher={Springer}
+}
+
+@inproceedings{levin2003unsupervised,
+  title={Unsupervised improvement of visual detectors using cotraining},
+  author={Levin, Anat and Viola, Paul and Freund, Yoav},
+  booktitle={Computer Vision, 2003. Proceedings. Ninth IEEE International Conference on},
+  pages={626--633},
+  year={2003},
+  organization={IEEE}
+}
+
+@inproceedings{javed2005online,
+  title={Online detection and classification of moving objects using progressively improving detectors},
+  author={Javed, Omar and Ali, Saad and Shah, Mubarak},
+  booktitle={Computer Vision and Pattern Recognition, 2005. CVPR 2005. IEEE Computer Society Conference on},
+  volume={1},
+  pages={696--701},
+  year={2005},
+  organization={IEEE}
+}
+
+@article{williams2005sparse,
+  title={Sparse bayesian learning for efficient visual tracking},
+  author={Williams, Oliver and Blake, Andrew and Cipolla, Roberto},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={27},
+  number={8},
+  pages={1292--1304},
+  year={2005},
+  publisher={IEEE}
+}
+
+@article{li2008tracking,
+  title={Tracking in low frame rate video: A cascade particle filter with discriminative observers of different life spans},
+  author={Li, Yuan and Ai, Haizhou and Yamashita, Takayoshi and Lao, Shihong and Kawade, Masato},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={30},
+  number={10},
+  pages={1728--1740},
+  year={2008},
+  publisher={IEEE}
+}
+
+@incollection{okuma2004boosted,
+  title={A boosted particle filter: Multitarget detection and tracking},
+  author={Okuma, Kenji and Taleghani, Ali and De Freitas, Nando and Little, James J and Lowe, David G},
+  booktitle={Computer Vision-ECCV 2004},
+  pages={28--39},
+  year={2004},
+  publisher={Springer}
+}
+
+@inproceedings{leibe2007coupled,
+  title={Coupled detection and trajectory estimation for multi-object tracking},
+  author={Leibe, Bastian and Schindler, Konrad and Van Gool, Luc},
+  booktitle={Computer Vision, 2007. ICCV 2007. IEEE 11th International Conference on},
+  pages={1--8},
+  year={2007},
+  organization={IEEE}
+}
+
+@inproceedings{breitenstein2009robust,
+  title={Robust tracking-by-detection using a detector confidence particle filter},
+  author={Breitenstein, Michael D and Reichlin, Fabian and Leibe, Bastian and Koller-Meier, Esther and Van Gool, Luc},
+  booktitle={Computer Vision, 2009 IEEE 12th International Conference on},
+  pages={1515--1522},
+  year={2009},
+  organization={IEEE}
+}
+
+@article{sung1998example,
+  title={Example-based learning for view-based human face detection},
+  author={Sung, Kah-Kay and Poggio, Tomaso},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={20},
+  number={1},
+  pages={39--51},
+  year={1998},
+  publisher={IEEE}
+}
+
+@book{zhou1996robust,
+  title={Robust and optimal control},
+  author={Zhou, Kemin and Doyle, John Comstock and Glover, Keith and others},
+  volume={40},
+  year={1996},
+  publisher={Prentice hall New Jersey}
+}
+
+@book{ogata2009modern,
+  title={Modern control engineering},
+  author={Ogata, Katsuhiko},
+  year={2009},
+  publisher={Prentice-Hall Englewood Cliffs}
+}
+
+@article{tsai1987versatile,
+  title={A versatile camera calibration technique for high-accuracy 3D machine vision metrology using off-the-shelf TV cameras and lenses},
+  author={Tsai, Roger Y},
+  journal={Robotics and Automation, IEEE Journal of},
+  volume={3},
+  number={4},
+  pages={323--344},
+  year={1987},
+  publisher={IEEE}
+}
+
+@article{abdel2015direct,
+  title={Direct Linear Transformation from Comparator Coordinates into Object Space Coordinates in Close-Range Photogrammetry},
+  author={Abdel-Aziz, YI and Karara, HM},
+  journal={Photogrammetric Engineering \& Remote Sensing},
+  volume={81},
+  number={2},
+  pages={103--107},
+  year={2015},
+  publisher={American Society for Photogrammetry and Remote Sensing}
+}
+
+@article{yang2004two,
+  title={Two-dimensional PCA: a new approach to appearance-based face representation and recognition},
+  author={Yang, Jian and Zhang, David and Frangi, Alejandro F and Yang, Jing-yu},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={26},
+  number={1},
+  pages={131--137},
+  year={2004},
+  publisher={IEEE}
+}
+
+@article{liu1993algebraic,
+  title={Algebraic feature extraction for image recognition based on an optimal discriminant criterion},
+  author={Liu, Ke and Cheng, Yong-Qing and Yang, Jing-Yu},
+  journal={Pattern Recognition},
+  volume={26},
+  number={6},
+  pages={903--911},
+  year={1993},
+  publisher={Elsevier}
+}
+
+@article{belhumeur1997eigenfaces,
+  title={Eigenfaces vs. fisherfaces: Recognition using class specific linear projection},
+  author={Belhumeur, Peter N and Hespanha, Jo{\~a}o P and Kriegman, David J},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={19},
+  number={7},
+  pages={711--720},
+  year={1997},
+  publisher={IEEE}
+}
+
+@article{yang2002image,
+  title={From image vector to matrix: a straightforward image projection technique—IMPCA vs. PCA},
+  author={Yang, Jian and Yang, Jing-yu},
+  journal={Pattern Recognition},
+  volume={35},
+  number={9},
+  pages={1997--1999},
+  year={2002},
+  publisher={Elsevier}
+}
+
+@book{吴福朝2008计算机视觉中的数学方法,
+  title={计算机视觉中的数学方法},
+  author={吴福朝},
+  year={2008},
+  publisher={科学出版社}
+}
+
+@book{徐德2011机器人视觉测量与控制,
+  title={机器人视觉测量与控制},
+  author={徐德 and 谭民 and 李原},
+  year={2011},
+  Edition={2},
+  Address={北京},
+  publisher={国防工业出版社}
+}
+
+@book{马颂德1998计算机视觉,
+  title={计算机视觉：计算理论与算法基础},
+  author={马颂德 and 张正友},
+  year={1998},
+  publisher={科学出版社}
+}
+
+@inproceedings{faugeras1986calibration,
+  title={The calibration problem for stereo},
+  author={Faugeras, Olivier D and Toscani, Giorgio},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  volume={86},
+  pages={15--20},
+  year={1986}
+}
+
+@inproceedings{tsai1986efficient,
+  title={An efficient and accurate camera calibration technique for 3D machine vision},
+  author={Tsai, Roger Y},
+  booktitle={Proc. IEEE Conf. on Computer Vision and Pattern Recognition},
+  year={1986}
+}
+
+@inproceedings{faugeras1987camera,
+  title={Camera calibration for 3D computer vision},
+  author={Faugeras, OD and Toscani, Giorgio},
+  booktitle={Proceedings of International Workshop on Machine Vision and Machine Intelligence, Tokyo, Japan},
+  year={1987}
+}
+
+@inproceedings{weng1990calibration,
+  title={Calibration of stereo cameras using a non-linear distortion model [CCD sensory]},
+  author={Weng, Juyang and Cohen, Paul and Herniou, Marc},
+  booktitle={Pattern Recognition, 1990. Proceedings., 10th International Conference on},
+  volume={1},
+  pages={246--253},
+  year={1990},
+  organization={IEEE}
+}
+
+@inproceedings{he2009single,
+  title={Single image haze removal using dark channel prior},
+  author={He, Kaiming and Sun, Jian and Tang, Xiaoou},
+  booktitle={Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on},
+  pages={1956--1963},
+  year={2009},
+  organization={IEEE}
+}
+
+@article{he2011single,
+  title={Single image haze removal using dark channel prior},
+  author={He, Kaiming and Sun, Jian and Tang, Xiaoou},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={33},
+  number={12},
+  pages={2341--2353},
+  year={2011},
+  publisher={IEEE}
+}
+
+@inproceedings{schechner2001instant,
+  title={Instant dehazing of images using polarization},
+  author={Schechner, Yoav Y and Narasimhan, Srinivasa G and Nayar, Shree K},
+  booktitle={Computer Vision and Pattern Recognition, 2001. CVPR 2001. Proceedings of the 2001 IEEE Computer Society Conference on},
+  volume={1},
+  pages={I--325},
+  year={2001},
+  organization={IEEE}
+}
+
+@inproceedings{shwartz2006blind,
+  title={Blind haze separation},
+  author={Shwartz, Sarit and Namer, Einav and Schechner, Yoav Y},
+  booktitle={Computer Vision and Pattern Recognition, 2006 IEEE Computer Society Conference on},
+  volume={2},
+  pages={1984--1991},
+  year={2006},
+  organization={IEEE}
+}
+
+@inproceedings{narasimhan2000chromatic,
+  title={Chromatic framework for vision in bad weather},
+  author={Narasimhan, Srinivasa G and Nayar, Shree K},
+  booktitle={Computer Vision and Pattern Recognition, 2000. Proceedings. IEEE Conference on},
+  volume={1},
+  pages={598--605},
+  year={2000},
+  organization={IEEE}
+}
+
+@article{narasimhan2003contrast,
+  title={Contrast restoration of weather degraded images},
+  author={Narasimhan, Srinivasa G and Nayar, Shree K},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={25},
+  number={6},
+  pages={713--724},
+  year={2003},
+  publisher={IEEE}
+}
+
+@inproceedings{nayar1999vision,
+  title={Vision in bad weather},
+  author={Nayar, Shree K and Narasimhan, Srinivasa G},
+  booktitle={Computer Vision, 1999. The Proceedings of the Seventh IEEE International Conference on},
+  volume={2},
+  pages={820--827},
+  year={1999},
+  organization={IEEE}
+}
+
+@inproceedings{kopf2008deep,
+  title={Deep photo: Model-based photograph enhancement and viewing},
+  author={Kopf, Johannes and Neubert, Boris and Chen, Billy and Cohen, Michael and Cohen-Or, Daniel and Deussen, Oliver and Uyttendaele, Matt and Lischinski, Dani},
+  booktitle={ACM Transactions on Graphics (TOG)},
+  volume={27},
+  number={5},
+  pages={116},
+  year={2008},
+  organization={ACM}
+}
+
+@inproceedings{narasimhan2003interactive,
+  title={Interactive (de) weathering of an image using physical models},
+  author={Narasimhan, Srinivasa G and Nayar, Shree K},
+  booktitle={IEEE Workshop on Color and Photometric Methods in Computer Vision},
+  volume={6},
+  number={6.4},
+  pages={1},
+  year={2003},
+  organization={France}
+}
+
+@inproceedings{fattal2008single,
+  title={Single image dehazing},
+  author={Fattal, Raanan},
+  booktitle={ACM Transactions on Graphics (TOG)},
+  volume={27},
+  number={3},
+  pages={72},
+  year={2008},
+  organization={ACM}
+}
+
+@inproceedings{tan2008visibility,
+  title={Visibility in bad weather from a single image},
+  author={Tan, Robby T},
+  booktitle={Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference on},
+  pages={1--8},
+  year={2008},
+  organization={IEEE}
+}
+
+@article{narasimhan2002vision,
+  title={Vision and the atmosphere},
+  author={Narasimhan, Srinivasa G and Nayar, Shree K},
+  journal={International Journal of Computer Vision},
+  volume={48},
+  number={3},
+  pages={233--254},
+  year={2002},
+  publisher={Springer}
+}
+
+@book{koschmieder1925theorie,
+  title={Theorie der horizontalen Sichtweite: Kontrast und Sichtweite},
+  author={Koschmieder, Harald},
+  year={1925},
+  publisher={Keim \& Nemnich}
+}
+
+@article{chavez1988improved,
+  title={An improved dark-object subtraction technique for atmospheric scattering correction of multispectral data},
+  author={Chavez, Pat S},
+  journal={Remote sensing of environment},
+  volume={24},
+  number={3},
+  pages={459--479},
+  year={1988},
+  publisher={Elsevier}
+}
+
+@book{goldstein2013sensation,
+  title={Sensation and perception},
+  author={Goldstein, E},
+  year={2013},
+  publisher={Cengage Learning}
+}
+
+@inproceedings{preetham1999practical,
+  title={A practical analytic model for daylight},
+  author={Preetham, Arcot J and Shirley, Peter and Smits, Brian},
+  booktitle={Proceedings of the 26th annual conference on Computer graphics and interactive techniques},
+  pages={91--100},
+  year={1999},
+  organization={ACM Press/Addison-Wesley Publishing Co.}
+}
+
+@article{levin2008closed,
+  title={A closed-form solution to natural image matting},
+  author={Levin, Anat and Lischinski, Dani and Weiss, Yair},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={30},
+  number={2},
+  pages={228--242},
+  year={2008},
+  publisher={IEEE}
+}
+
+@inproceedings{hsu2008light,
+  title={Light mixture estimation for spatially varying white balance},
+  author={Hsu, Eugene and Mertens, Tom and Paris, Sylvain and Avidan, Shai and Durand, Fr{\'e}do},
+  booktitle={ACM Transactions on Graphics (TOG)},
+  volume={27},
+  number={3},
+  pages={70},
+  year={2008},
+  organization={ACM}
+}
+
+@article{van1992fast,
+  title={A fast algorithm for local minimum and maximum filters on rectangular and octagonal kernels},
+  author={Van Herk, Marcel},
+  journal={Pattern Recognition Letters},
+  volume={13},
+  number={7},
+  pages={517--521},
+  year={1992},
+  publisher={Elsevier}
+}
+
+@inproceedings{boykov2001interactive,
+  title={Interactive graph cuts for optimal boundary \& region segmentation of objects in ND images},
+  author={Boykov, Yuri Y and Jolly, Marie-Pierre},
+  booktitle={Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE International Conference on},
+  volume={1},
+  pages={105--112},
+  year={2001},
+  organization={IEEE}
+}
+
+@incollection{komodakis2013mrf,
+  title={MRF-based blind image deconvolution},
+  author={Komodakis, Nikos and Paragios, Nikos},
+  booktitle={Computer Vision--ACCV 2012},
+  pages={361--374},
+  year={2013},
+  publisher={Springer}
+}
+
+@inproceedings{xiang20123d,
+  title={3d cardiac segmentation with pose-invariant higher-order mrfs},
+  author={Xiang, Bo and Wang, Chaohui and Deux, Jean-Fran{\c{c}}ois and Rahmouni, Alain and Paragios, Nikos},
+  booktitle={Biomedical Imaging (ISBI), 2012 9th IEEE International Symposium on},
+  pages={1425--1428},
+  year={2012},
+  organization={IEEE}
+}
+
+@inproceedings{zeng2010dense,
+  title={Dense non-rigid surface registration using high-order graph matching},
+  author={Zeng, Yun and Wang, Chaohui and Wang, Yang and Gu, Xianfeng and Samaras, Dimitris and Paragios, Nikos},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+  pages={382--389},
+  year={2010},
+  organization={IEEE}
+}
+
+@inproceedings{koutsourakis2009single,
+  title={Single view reconstruction using shape grammars for urban environments},
+  author={Koutsourakis, Panagiotis and Simon, Loic and Teboul, Olivier and Tziritas, Georgios and Paragios, Nikos},
+  booktitle={Computer Vision, 2009 IEEE 12th International Conference on},
+  pages={1795--1802},
+  year={2009},
+  organization={IEEE}
+}
+
+@article{kolmogorov2006convergent,
+  title={Convergent tree-reweighted message passing for energy minimization},
+  author={Kolmogorov, Vladimir},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={28},
+  number={10},
+  pages={1568--1583},
+  year={2006},
+  publisher={IEEE}
+}
+
+@inproceedings{BingObj2014,
+  title={BING: Binarized Normed Gradients for Objectness Estimation at 300fps},
+  author={Ming-Ming Cheng and Ziming Zhang and Wen-Yan Lin and Philip H. S. Torr},
+  booktitle={IEEE CVPR},
+  year={2014},
+}
+
+@article{Kang2015Data,
+  title={Data-Driven Objectness},
+  author={Kang, H. and Hebert, M. and Efros, A. A. and Kanade, T.},
+  journal={IEEE Transactions on Pattern Analysis & Machine Intelligence},
+  volume={37},
+  number={1},
+  pages={189-195},
+  year={2015},
+}
+
+@inproceedings{lewis1995fastTM,
+  title={Fast template matching},
+  author={Lewis, John P},
+  booktitle={Vision interface},
+  volume={95},
+  number={120123},
+  pages={15--19},
+  year={1995}
+}
+
+@inproceedings{lewis1995fastNCC,
+  title={Fast normalized cross-correlation},
+  author={Lewis, JP},
+  booktitle={Vision interface},
+  volume={10},
+  number={1},
+  pages={120--123},
+  year={1995}
+}
+
+@inproceedings{zhao2006image,
+  title={Image matching by normalized cross-correlation},
+  author={Zhao, Feng and Huang, Qingming and Gao, Wen},
+  booktitle={Acoustics, Speech and Signal Processing, 2006. ICASSP 2006 Proceedings. 2006 IEEE International Conference on},
+  volume={2},
+  pages={II--II},
+  year={2006},
+  organization={IEEE}
+}
+
+@inproceedings{briechle2001template,
+  title={Template matching using fast normalized cross correlation},
+  author={Briechle, Kai and Hanebeck, Uwe D},
+  booktitle={Aerospace/Defense Sensing, Simulation, and Controls},
+  pages={95--102},
+  year={2001},
+  organization={International Society for Optics and Photonics}
+}
+
+@article{tsai2003fast,
+  title={Fast normalized cross correlation for defect detection},
+  author={Tsai, Du-Ming and Lin, Chien-Ta},
+  journal={Pattern Recognition Letters},
+  volume={24},
+  number={15},
+  pages={2625--2631},
+  year={2003},
+  publisher={Elsevier}
+}
+
+@incollection{scandaroli2012improving,
+  title={Improving ncc-based direct visual tracking},
+  author={Scandaroli, Glauco Garcia and Meilland, Maxime and Richa, Rog{\'e}rio},
+  booktitle={Computer Vision--ECCV 2012},
+  pages={442--455},
+  year={2012},
+  publisher={Springer}
+}
+
+@article{Poggio1993Face,
+  title={Face Recognition: Features Versus Templates},
+  author={Poggio, T. and Brunelli, R.},
+  journal={IEEE Transactions on Pattern Analysis & Machine Intelligence},
+  volume={15},
+  number={10},
+  pages={1042-1052},
+  year={1993},
+}
+
+@article{Barnea1972A,
+  title={A Class of Algorithms for Fast Digital Image Registration},
+  author={Barnea, Daniel I. and Silverman, Harvey F.},
+  journal={Computers IEEE Transactions on},
+  volume={c-21},
+  number={2},
+  pages={179-186},
+  year={1972},
+}
+
+@article{boykov2004experimental,
+  title={An experimental comparison of min-cut/max-flow algorithms for energy minimization in vision},
+  author={Boykov, Yuri and Kolmogorov, Vladimir},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={26},
+  number={9},
+  pages={1124--1137},
+  year={2004},
+  publisher={IEEE}
+}
+
+@inproceedings{kwatra2003graphcut,
+  title={Graphcut textures: image and video synthesis using graph cuts},
+  author={Kwatra, Vivek and Sch{\"o}dl, Arno and Essa, Irfan and Turk, Greg and Bobick, Aaron},
+  booktitle={ACM Transactions on Graphics (ToG)},
+  volume={22},
+  number={3},
+  pages={277--286},
+  year={2003},
+  organization={ACM}
+}
+
+@article{boykov2001fast,
+  title={Fast approximate energy minimization via graph cuts},
+  author={Boykov, Yuri and Veksler, Olga and Zabih, Ramin},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={23},
+  number={11},
+  pages={1222--1239},
+  year={2001},
+  publisher={IEEE}
+}
+
+@InProceedings{Boykov2001,
+  author       = {Boykov, Yuri Y and Jolly, Marie-Pierre},
+  title        = {Interactive graph cuts for optimal boundary \& region segmentation of objects in ND images},
+  booktitle    = {Computer Vision, 2001. ICCV 2001. Proceedings. Eighth IEEE International Conference on},
+  year         = {2001},
+  volume       = {1},
+  pages        = {105--112},
+  organization = {IEEE},
+}
+
+@article{hubel1959receptive,
+  title={Receptive fields of single neurones in the cat's striate cortex},
+  author={Hubel, David H and Wiesel, Torsten N},
+  journal={The Journal of physiology},
+  volume={148},
+  number={3},
+  pages={574--591},
+  year={1959},
+  publisher={Wiley Online Library}
+}
+
+@phdthesis{lawrence1963machine,
+  title={Machine perception of three-dimensional solids},
+  author={Roberts, Lawrence Gilman},
+  school={Massachusetts Institute of Technology},
+  year={1963}
+}
+
+@book{marr1982vision,
+  title={Vision: A computational investigation into the human representation and processing of visual information},
+  author={Marr, David},
+  year={2010},
+  publisher = {The MIT Press},
+  url = {http://www.amazon.com/Vision-Computational-Investigation-Representation-Information/dp/0262514621}
+}
+
+@article{fischler1973representation,
+  title={The representation and matching of pictorial structures},
+  author={Fischler, Martin A and Elschlager, Robert A},
+  journal={IEEE Transactions on computers},
+  number={1},
+  pages={67--92},
+  year={1973},
+  publisher={IEEE}
+}
+
+@inproceedings{brooks1979acronym,
+  title={The ACRONYM model-based vision system},
+  author={Brooks, Rodney A and Creiner, Russell and Binford, Thomas O},
+  booktitle={Proceedings of the 6th international joint conference on Artificial intelligence},
+  pages={105--113},
+  year={1979},
+  organization={Morgan Kaufmann Publishers Inc.}
+}
+
+@article{lowe1987three,
+  title={Three-dimensional object recognition from single two-dimensional images},
+  author={Lowe, David G},
+  journal={Artificial intelligence},
+  volume={31},
+  number={3},
+  pages={355--395},
+  year={1987},
+  publisher={Elsevier}
+}
+
+@article{shi2000normalized,
+  title={Normalized cuts and image segmentation},
+  author={Shi, Jianbo and Malik, Jitendra},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={22},
+  number={8},
+  pages={888--905},
+  year={2000},
+  publisher={IEEE}
+}
+
+@InProceedings{Viola2001,
+  author       = {Viola, Paul and Jones, Michael},
+  title        = {Rapid object detection using a boosted cascade of simple features},
+  booktitle    = {IEEE Computer Society Conference on Computer Vision and Pattern Recognition},
+  year         = {2001},
+  volume       = {1},
+  pages        = {I--511},
+  organization = {IEEE},
+}
+
+@inproceedings{lazebnik2006beyond,
+  title={Beyond bags of features: Spatial pyramid matching for recognizing natural scene categories},
+  author={Lazebnik, Svetlana and Schmid, Cordelia and Ponce, Jean},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  volume={2},
+  pages={2169--2178},
+  year={2006},
+  organization={IEEE}
+}
+
+@inproceedings{dalal2005histograms,
+  title={Histograms of oriented gradients for human detection},
+  author={Dalal, Navneet and Triggs, Bill},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  volume={1},
+  pages={886--893},
+  year={2005},
+  organization={IEEE}
+}
+
+@inproceedings{felzenszwalb2008discriminatively,
+  title={A discriminatively trained, multiscale, deformable part model},
+  author={Felzenszwalb, Pedro and McAllester, David and Ramanan, Deva},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={1--8},
+  year={2008},
+  organization={IEEE}
+}
+
+
+@article{everingham2010pascal,
+  title={The pascal visual object classes (voc) challenge},
+  author={Everingham, Mark and Van Gool, Luc and Williams, Christopher KI and Winn, John and Zisserman, Andrew},
+  journal={International journal of computer vision},
+  volume={88},
+  number={2},
+  pages={303--338},
+  year={2010},
+  publisher={Springer}
+}
+
+@inproceedings{deng2009imagenet,
+  title={Imagenet: A large-scale hierarchical image database},
+  author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={248--255},
+  year={2009},
+  organization={IEEE}
+}
+
+@article{russakovsky2015imagenet,
+  title={Imagenet large scale visual recognition challenge},
+  author={Russakovsky, Olga and Deng, Jia and Su, Hao and Krause, Jonathan and Satheesh, Sanjeev and Ma, Sean and Huang, Zhiheng and Karpathy, Andrej and Khosla, Aditya and Bernstein, Michael and others},
+  journal={International Journal of Computer Vision},
+  volume={115},
+  number={3},
+  pages={211--252},
+  year={2015},
+  publisher={Springer}
+}
+
+@inproceedings{lin2011large,
+  title={Large-scale image classification: fast feature extraction and svm training},
+  author={Lin, Yuanqing and Lv, Fengjun and Zhu, Shenghuo and Yang, Ming and Cour, Timothee and Yu, Kai and Cao, Liangliang and Huang, Thomas},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={1689--1696},
+  year={2011},
+  organization={IEEE}
+}
+
+@inproceedings{krizhevsky2012imagenet,
+  title={Imagenet classification with deep convolutional neural networks},
+  author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+  booktitle={Advances in neural information processing systems},
+  pages={1097--1105},
+  year={2012}
+}
+
+@inproceedings{szegedy2015going,
+  title={Going deeper with convolutions},
+  author={Szegedy, Christian and Liu, Wei and Jia, Yangqing and Sermanet, Pierre and Reed, Scott and Anguelov, Dragomir and Erhan, Dumitru and Vanhoucke, Vincent and Rabinovich, Andrew},
+  booktitle={IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={1--9},
+  year={2015}
+}
+
+@article{simonyan2014very,
+  title={Very deep convolutional networks for large-scale image recognition},
+  author={Simonyan, Karen and Zisserman, Andrew},
+  journal={arXiv preprint arXiv:1409.1556},
+  year={2014}
+}
+
+@article{he2015spatial,
+  title={Spatial pyramid pooling in deep convolutional networks for visual recognition},
+  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume={37},
+  number={9},
+  pages={1904--1916},
+  year={2015},
+  publisher={IEEE}
+}
+
+@article{lecun1998gradient,
+  title={Gradient-based learning applied to document recognition},
+  author={LeCun, Yann and Bottou, L{\'e}on and Bengio, Yoshua and Haffner, Patrick},
+  journal={Proceedings of the IEEE},
+  volume={86},
+  number={11},
+  pages={2278--2324},
+  year={1998},
+  publisher={IEEE}
+}
+
+@article{fei2007we,
+  title={What do we perceive in a glance of a real-world scene?},
+  author={Fei-Fei, Li and Iyer, Asha and Koch, Christof and Perona, Pietro},
+  journal={Journal of vision},
+  volume={7},
+  number={1},
+  pages={10--10},
+  year={2007},
+  publisher={The Association for Research in Vision and Ophthalmology}
+}
+
+
+@Article{Everingham15, 
+   author = "Everingham, M. and Eslami, S. M. A. and Van~Gool, L. and Williams, C. K. I. and Winn, J. and Zisserman, A.", 
+   title = "The Pascal Visual Object Classes Challenge: A Retrospective", 
+   journal = "International Journal of Computer Vision", 
+   volume = "111", 
+   year = "2015", 
+   number = "1", 
+   month = jan, 
+   pages = "98--136", 
+} 
+
+@Comment{jabref-meta: databaseType:bibtex;}

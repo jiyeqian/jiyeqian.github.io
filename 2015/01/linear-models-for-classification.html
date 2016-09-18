@@ -243,7 +243,7 @@ $y_n-\mathbf w_t^T\mathbf x_n$表示错得越多，更新力度越大。</p>
 \begin{equation}
 g(\mathbf x)=\arg\max_{k\in\mathcal Y}\theta\left(\mathbf w_{[k]}^T\mathbf x\right)=\arg\max_{k\in\mathcal Y}\mathbf w_{[k]}^T\mathbf x。
 \end{equation}
-one-vs-all方式的优点是简单易推广，并且很容易并行化训练每个分类器；它的坏处是当类别数$K$很大时，数据集$\mathcal D_{[k]}$的不平衡（unbalance）问题凸显。不平衡数据导致logistic回归通过误差最小化求解参数时，倾向于选择有利于数据量多的类别的假设。事实上，有专门的多分类logistic模型，例如<a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier/#softmax-classifier">softmax分类器</a>。</p>
+one-vs-all方式的优点是简单易推广，并且很容易并行化训练每个分类器；它的坏处是当类别数$K$很大时，数据集$\mathcal D_{[k]}$的不平衡（unbalance）问题凸显。不平衡数据导致logistic回归通过误差最小化求解参数时，倾向于选择有利于数据量多的类别的假设。事实上，有专门的多分类logistic模型，例如<a href="/2016/03/cs231n_loss-functions-and-optimization/#softmax-classifier">softmax分类器</a>。</p>
 
 <p>one-vs-one的方法有利于克服one-vs-all的数据不平衡问题，采用投票机制判断类别，类似循环赛，
 \begin{equation}
@@ -274,7 +274,13 @@ one-vs-one方式训练每个分类器数据量较少，因此比较有效率，�
 <hr>
   <ul>
     
-    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image_classification_pipeline">CS231n（2）：图像分类流程</a></li>
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
+    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    
+    <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
+    
+    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
@@ -283,12 +289,6 @@ one-vs-one方式训练每个分类器数据量较少，因此比较有效率，�
     <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
-    
-    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
-    
-    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
-    
-    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
     
   </ul>
 <p></p>

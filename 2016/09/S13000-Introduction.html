@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>机器学习：噪声与误差</title>
+    <title>鲁棒及自适应控制（1）：概论</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>机器学习：噪声与误差</h1>
+        <h1>鲁棒及自适应控制（1）：概论</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2014-12-27">2014-12-27</time>
+  <time datetime="2016-09-18">2016-09-18</time>
 </span>
 
  |
@@ -149,116 +149,193 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  <a href="/tags/#控制论" title="控制论">控制论</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<p>如果数据存在噪声，对机器学习可学习理论推导有何影响？</p>
+<p>本课程的目的：介绍控制系统的基本概念、术语、原理，以及如何阅读、书写相关论文。</p>
 
-<h2 id="section">噪声起源</h2>
-
-<p>对于$f:\mathcal X\rightarrow \mathcal Y$，噪声即可能来源于$\mathcal X$，也可能来源于$\mathcal Y$。以信用卡申办信息为例说明（$\mathcal X$为客户资料，$\mathcal Y$为是否办理信用卡）：</p>
+<h2 id="section">系统的基本概念</h2>
 
 <ul>
-  <li>$y$的噪声：良好纪录的用户，被标记为Bad；</li>
-  <li>$y$的噪声：同样资料的用户，标记却不同（不同专家评价有差异）；</li>
-  <li>$\mathbf x$的噪声：不准确的客户资料。</li>
+  <li>什么是系统？Input（输入）＋ States（状态）＋ Output（输出）</li>
+  <li>什么是控制系统？系统 ＋ Actuator（执行器）＋ Sensor（传感器）</li>
 </ul>
 
-<h2 id="target-distribution">目标分布<sup id="fnref:target-distribution"><a href="#fn:target-distribution" class="footnote">1</a></sup></h2>
+<p>控制系统，根据人类学习而来，对比：</p>
 
-<p>由于噪声的存在，弹珠模型的弹珠不再是确定的颜色，而是会随时变色，但是通过记录抽出瞬间弹珠的颜色，仍可以对罐中弹珠颜色概率做估计。$y=f(\mathbf x) + \mbox{noise}$，$y$用<strong>目标分布</strong>表示
-\begin{equation}
-y\sim P(y|\mathbf x)。
-\end{equation}
-对于满足$(\mathbf x,y)\sim P(\mathbf x,y)$的噪声数据，VC界仍成立，通过$E_{in}$仍然可以估计$E_{out}$。
-如果$P(\circ|\mathbf x)=0.7$，$P(\times|\mathbf x)=0.3$，<strong>理想最小目标函数</strong>（ideal mini-target）为$f(\mathbf x)=\circ$，在最佳选择下噪声水平是$0.3$。对于确定的（无噪声）的目标函数$f$，也可用目标分布（target distribution）表示
-\[
-P(y|\mathbf x)=
-\left\{
-\begin{aligned}
-1&amp;\quad\mbox{for }y=f(\mathbf x)\\
-0&amp;\quad\mbox{for }y\neq f(\mathbf x)。
-\end{aligned}
-\right.
-\]</p>
+<table>
+  <thead>
+    <tr>
+      <th>人类</th>
+      <th>控制系统</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>大脑（Brain）</td>
+      <td>Controller（Computer 等设备构成）</td>
+    </tr>
+    <tr>
+      <td>手</td>
+      <td>Actuator</td>
+    </tr>
+    <tr>
+      <td>眼</td>
+      <td>Sensor</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>机器学习的目标就是预测常见数据（w.r.t. $P(\mathbf x)$）的理想最小目标函数（w.r.t. $P(y|\mathbf x)$）。</p>
+<p>Controller 利用 Sensor 信息，让 Actuator 发出相应的动作。控制系统主要包括 Design &amp; Analysis，通过Analysis（分析），验证设计的系统是否可以工作。</p>
 
-<p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
+<h3 id="section-1">系统实例</h3>
 
-<h2 id="error-measurement">误差度量</h2>
+<p><strong>I. Car：</strong></p>
 
-<p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
+<ul>
+  <li>Auto-driving Car</li>
+  <li>Unmanned Ground Vehicle</li>
+</ul>
 
-<p>令$\tilde y=g(\mathbf x)，y=f(\mathbf x)$，0/1误差和<strong>平方误差</strong>分别定义为\[err(\tilde y,y)=[[\tilde y\neq y]]\qquad err(\tilde y,y)=(\tilde y- y)^2。\]</p>
+<p><strong>II. Robot：</strong></p>
 
-<p>误差是如何影响学习算法的呢？</p>
+<ul>
+  <li>Robotic Arm</li>
+  <li>Mobile Robot</li>
+</ul>
 
-<p>下面示例展示了不同度量方式下误差的差异：</p>
-
-<p><img src="/assets/images/2014-12-27-machine-learning-noise-and-error-ideal-mini-target-example.png" alt="误差度量的影响" /></p>
-
-<p>$P(y|\mathbf x)$和$err$确定了理想最小目标函数$f(\mathbf x)$。在0/1误差和平方误差度量方式下，理想最小目标函数分别为
-\[
-f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\in\mathcal Y}yP(y|\mathbf x)。
-\]
-若采用平方误差度度量方式，上例中$f(\mathbf x)=1.9$。</p>
-
-<p>根据具体应用场景，选择相应的错误（误差）衡量方法，对机器学习至关重要。</p>
-
-<p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
-
-<h2 id="section-1">误差度量范例</h2>
-
-<p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
+<p><strong>III. HST(High Speed Train)：</strong></p>
 
 <ol>
-  <li>false reject：合法用户识别为非法；</li>
-  <li>false accept：非法用户识别为合法。</li>
+  <li>Suspension Control（减震）</li>
+  <li>Traction &amp; Braking Control</li>
+  <li>Force Control: Pantograph（受电弓）</li>
 </ol>
 
-<p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
+<p><strong>IV. Wind Power System／Wind Turbine</strong></p>
 
-<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
+<h3 id="section-2">如何做研究？</h3>
+
+<p>研究集中到更一般的系统，可以推广到其它系统的控制。</p>
+
+<ul>
+  <li>物理模型 –&gt; 数学模型（系统的动力学模型）；</li>
+  <li>不同的物理模型，相同的数学模型。物理定律刻画系统的特征。</li>
+</ul>
+
+<h2 id="dynamic-system">Dynamic System（动态系统）</h2>
+
+<p>两类典型的动态系统：</p>
+
+<ol>
+  <li>Linear motion（线性）：高速列车</li>
+  <li>Rotational motion（转动）：风力发电机</li>
+</ol>
+
+<h3 id="section-3">实例一：高速列车</h3>
+
+<ul>
+  <li>$M = m_1 + m_2 + \cdots= \sum m_i $：总质量为$M$的列车；</li>
+  <li>$f_1$：受到的空气阻力；</li>
+  <li>$f_2$：受到的摩擦力；</li>
+  <li>$F$：牵引力。</li>
+</ul>
+
+<p>相关变量定义如下：</p>
+
 <p>\[
-E_{in}^w(h)={1\over N}\sum_{n=1}^N
-\left\{
-\begin{aligned}
-&amp;1 &amp;\quad\mbox{if }y_n=+1\\
-&amp;1000 &amp;\quad\mbox{if }y_n=-1
-\end{aligned}
-\right\}
-\cdot \left[\left[y_n\neq h(\mathbf x_n)\right]\right]。
-\]
-对于线性可分数据的PLA，这种定义并无影响。对于pocket算法，假设将$-1$样本复制$1000$倍，在新的数据上仍用$E_{in}^{0/1}$度量误差，就和在原数据上用$E_{in}^{w}$度量一致。</p>
+\begin{aligned} 
+x &amp;= \text{displacement(distance)} \\
+\dot{x} &amp;= v \\
+\ddot{x} &amp;= a \\
+\end{aligned} 
+\]</p>
 
-<p>实际使用中，不会真的复制数据，采取虚拟复制（virtual copying）的策略。</p>
+<p>那么，根据牛顿第二定律可得</p>
 
-<blockquote>
-  <h4 id="pocket">加权pocket算法</h4>
-  <hr />
+<p>\[
+F-f_1-f_2 = M\ddot{x}
+\]</p>
 
-  <ol>
-    <li>以$1000$倍的概率检查$-1$样本犯的错误；</li>
-    <li>当$\mathbf w_{t+1}$犯的错误$E_{in}^w$比$\hat{\mathbf w}$小时，用$\hat{\mathbf w}$更新$\mathbf w_{t+1}$。</li>
-  </ol>
-</blockquote>
+<p>其中，$f_1 = c_1 \dot{x}^2,~~  f_2 = c_2 \dot{x}^2$，反作用力与速度平方成正比，那么有</p>
 
-<h2 id="section-2">参考资料</h2>
+<p>\[
+F=f_1+f_2+M\ddot{x}=c_1\dot{x}^2+c_2 \dot{x}^2+M\ddot{x}
+\]</p>
 
-<ol class="bibliography"></ol>
+<p>控制的目的就是设计合适的$F$，使得真实的$x$能跟踪理想的$x^\star$……</p>
 
-<h3 id="section-3">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:target-distribution">
-      <p>不太明白这节的意思…… <a href="#fnref:target-distribution" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
+<p>\[
+\begin{aligned} 
+x \rightarrow &amp;x^\star = x^\star\\
+\dot{x} \rightarrow &amp;v^\star = \dot{x}^\star\\
+\ddot{x} \rightarrow &amp;a^\star = \ddot{x}^\star\\
+\end{aligned} 
+\]</p>
+
+<p>$c_1,c_2,M$称之为<strong>系统参数</strong>（system parameter），一旦系统给定不可更改。它们只随环境变化而变化，不以人的意志改变，不可控。比如：不同的路段摩擦系数不同，乘客不同使得$M$也会变。研究时不能假设这些系统参数已知恒定，否则应用会受到很大局限。控制问题的难点在于这些不知道的情况下，如何设计控制器。另一方面，<strong>控制参数</strong>（control parameter）正是我们要设计和改变的参数。</p>
+
+<h3 id="wind-turbine">实例二：风机（Wind Turbine）</h3>
+
+<ul>
+  <li>$\omega$：角速度；</li>
+  <li>$\tau$：力矩；</li>
+  <li>$J$：“质量”。</li>
+</ul>
+
+<p>转动是由正向力矩和反向力矩共同作用形成的，根据达朗贝尔定理可知</p>
+
+<p>\[ \sum \tau = J\dot{\omega} \]</p>
+
+<p>主要力矩包括几类：</p>
+
+<ul>
+  <li>$\tau_a$：风力推动；</li>
+  <li>$\tau_f$：阻力／摩擦力；</li>
+  <li>$\tau_e$：电机的反电势。</li>
+</ul>
+
+<p>那么有</p>
+
+<p>\[ \tau_a - \tau_f - \tau_e = J\dot{\omega} \]</p>
+
+<p>如何控制$\tau_a$？变浆控制，Yaw（朝向）控制。通过改变浆的角度$\beta$，实现风力控制，从而控制$\tau_a$。也就是控制$\tau(\beta)$，使得$ \omega=\omega^\star$。</p>
+
+<h2 id="section-4">三大控制问题</h2>
+
+<h3 id="stabilization">一、Stabilization（镇定）</h3>
+
+<ol>
+  <li>数学形式：$x\rightarrow 0$</li>
+  <li>图：</li>
+  <li>实例：比如照相机支架不停震动，无法拍照，需要消除这种震动。</li>
+</ol>
+
+<h3 id="regulation">二、Regulation（调节）</h3>
+
+<ol>
+  <li>数学形式：$x\rightarrow a$</li>
+  <li>图：</li>
+  <li>实例：空调调整恒定在 20 度；控制电机速度；巡航控制（恒定高度）。</li>
+</ol>
+
+<h3 id="tracking">三、Tracking（跟踪）</h3>
+
+<ol>
+  <li>数学形式：$x\rightarrow x^\star$</li>
+  <li>图：</li>
+  <li>实例：飞机按给定轨迹运行；导弹拦截；速度跟踪、位置跟踪。</li>
+</ol>
+
+<p>三大问题均可归结为跟踪问题 tracking control，前两种皆为第三种的特殊情况。三大问题可分别针对速度、位移等变量。</p>
+
+<h2 id="homework">Homework</h2>
+
+<p>Review &amp; Three Examples</p>
+
 
 </section>
 <section align="left">
@@ -268,8 +345,6 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
   <p></p>
 <hr>
   <ul>
-    
-    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
     
     <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
     
@@ -285,12 +360,14 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
     
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
   </ul>
 <p></p>
 <span>
-  <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:left"   >上一篇：Map-Reduce Essential </a>
+  <a  href="/2016/09/LeNet-5-Lecun" class="pageNav" style="float:left"   >上一篇：Gradient-Based Learning Applied to Document Recognition </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/01/linear-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（1）：线性支持向量机 </a>  
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
 </span>
 </section>
 
@@ -312,7 +389,7 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-noise-and-error" 	data-url="http://qianjiye.de/2014/12/machine-learning-noise-and-error" data-title="机器学习：噪声与误差">
+	<div class="ds-thread"  data-thread-key="/2016/09/S13000-Introduction" 	data-url="http://qianjiye.de/2016/09/S13000-Introduction" data-title="鲁棒及自适应控制（1）：概论">
 	</div>	
 
 
@@ -322,18 +399,15 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2014/12/map-reduce-essential'; -->
+<!--         url = '/2016/09/LeNet-5-Lecun'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-svm'; --1> -->
-<!--         url = '/2015/01/linear-svm'; -->
-<!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2014/12/machine-learning-noise-and-error/#timeSpan'; -->
+<!--         url = '/2016/09/S13000-Introduction/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

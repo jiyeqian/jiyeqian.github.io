@@ -2,7 +2,34 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://qianjiye.de/2016/03/cs231n_image_classification_pipeline</loc>
+    <loc>http://qianjiye.de/2016/09/S13000-Introduction</loc>
+    
+    <lastmod>2016-09-18T19:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2016/09/LeNet-5-Lecun</loc>
+    
+    <lastmod>2016-09-13T08:36:59+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2016/03/cs231n_loss-functions-and-optimization</loc>
+    
+    <lastmod>2016-03-15T12:18:40+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2016/03/cs231n_image-classification-pipeline</loc>
     
     <lastmod>2016-03-14T17:20:03+08:00</lastmod>
     
@@ -425,15 +452,6 @@
   </url>
   
   <url>
-    <loc>http://qianjiye.de/2015/01/image-classification-svm-and-softmax-based-linear-classifier</loc>
-    
-    <lastmod>2015-01-20T12:18:40+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
     <loc>http://qianjiye.de/2015/01/logistic-regression</loc>
     
     <lastmod>2015-01-17T16:28:27+08:00</lastmod>
@@ -792,8 +810,6 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  
   
   
   

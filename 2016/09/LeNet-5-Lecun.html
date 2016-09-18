@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>机器学习：噪声与误差</title>
+    <title>Gradient-Based Learning Applied to Document Recognition</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>机器学习：噪声与误差</h1>
+        <h1>Gradient-Based Learning Applied to Document Recognition</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2014-12-27">2014-12-27</time>
+  <time datetime="2016-09-13">2016-09-13</time>
 </span>
 
  |
@@ -149,116 +149,37 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  <a href="/tags/#文献阅读" title="文献阅读">文献阅读</a>&nbsp;
+  
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
+  
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#LeNet-5" title="LeNet-5">LeNet-5</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<p>如果数据存在噪声，对机器学习可学习理论推导有何影响？</p>
+<h2 class="no_toc" id="section">目录</h2>
 
-<h2 id="section">噪声起源</h2>
-
-<p>对于$f:\mathcal X\rightarrow \mathcal Y$，噪声即可能来源于$\mathcal X$，也可能来源于$\mathcal Y$。以信用卡申办信息为例说明（$\mathcal X$为客户资料，$\mathcal Y$为是否办理信用卡）：</p>
-
-<ul>
-  <li>$y$的噪声：良好纪录的用户，被标记为Bad；</li>
-  <li>$y$的噪声：同样资料的用户，标记却不同（不同专家评价有差异）；</li>
-  <li>$\mathbf x$的噪声：不准确的客户资料。</li>
+<ul id="markdown-toc">
+  <li><a href="#section-1" id="markdown-toc-section-1">摘要</a></li>
+  <li><a href="#section-2" id="markdown-toc-section-2">序言</a></li>
 </ul>
 
-<h2 id="target-distribution">目标分布<sup id="fnref:target-distribution"><a href="#fn:target-distribution" class="footnote">1</a></sup></h2>
+<h2 id="section-1">摘要</h2>
 
-<p>由于噪声的存在，弹珠模型的弹珠不再是确定的颜色，而是会随时变色，但是通过记录抽出瞬间弹珠的颜色，仍可以对罐中弹珠颜色概率做估计。$y=f(\mathbf x) + \mbox{noise}$，$y$用<strong>目标分布</strong>表示
-\begin{equation}
-y\sim P(y|\mathbf x)。
-\end{equation}
-对于满足$(\mathbf x,y)\sim P(\mathbf x,y)$的噪声数据，VC界仍成立，通过$E_{in}$仍然可以估计$E_{out}$。
-如果$P(\circ|\mathbf x)=0.7$，$P(\times|\mathbf x)=0.3$，<strong>理想最小目标函数</strong>（ideal mini-target）为$f(\mathbf x)=\circ$，在最佳选择下噪声水平是$0.3$。对于确定的（无噪声）的目标函数$f$，也可用目标分布（target distribution）表示
-\[
-P(y|\mathbf x)=
-\left\{
-\begin{aligned}
-1&amp;\quad\mbox{for }y=f(\mathbf x)\\
-0&amp;\quad\mbox{for }y\neq f(\mathbf x)。
-\end{aligned}
-\right.
-\]</p>
+<p>反向传播（back-propagation）算法训练的多层神经网络是基于梯度法学习的最好范例。给定恰当的网络结构，基于梯度的学习算法能获得复杂的判别面，只需少量预处也能对高维模式分类，比如手写字符。<strong>卷积神经网络针对处理二维形状变化而特别设计，展了优于其它所有算法的性能。</strong></p>
 
-<p>机器学习的目标就是预测常见数据（w.r.t. $P(\mathbf x)$）的理想最小目标函数（w.r.t. $P(y|\mathbf x)$）。</p>
+<p>现实中的文本识别系统由区域提取（field extraction）、分割（segmentation）、识别（recognition）和语言建模（language modeling）等多个模块组成。 利用称为GTN（graph transformer network）的学习范式，多模块系统能通过梯度法进行全局训练，从而达到全局最优。</p>
 
-<p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
+<h2 id="section-2">序言</h2>
 
-<h2 id="error-measurement">误差度量</h2>
+<p><strong>构建性能良好的识别系统，可更多的依靠自动学习机制，而少依赖手工设计的启发式方法。</strong>字符识别的案例表明：直接作用于像素的学习模型，经过精心设计，能方便地替代手动的特征抽取技术。</p>
 
-<p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
+<p><strong>早期的模式识别技术，过度依赖于特征提取。</strong>手工构建构建精确识别系统十分困难，多数识别系统由自动学习技术（分类器）和手工算法（特征提取）构成。<strong>特征提取通常将输入模式转换为低维向量</strong>，其优势在于：（1）便于比较；（2）对变换和形变具有不变性。特征提取算法<strong>与特定任务相关</strong>，识别的精度极大依赖于特征，不同任务需要设计不同的特征提取算法。从历史角度看，需要特征提取的原因在于：当时用于分类器的学习算法，通常用于易分类的低维空间。这一状况有所改变，基于三个因素：（1）低价快速的计算单元的出现，可以更多的依赖“暴力”计算，而非算法改进；（2）解决问题的市场需求和兴趣大增，有了大量可用的数据集；（3）针对大数据集，强大的机器学习算法能够处理高维输入，并得到复杂的判别函数。</p>
 
-<p>令$\tilde y=g(\mathbf x)，y=f(\mathbf x)$，0/1误差和<strong>平方误差</strong>分别定义为\[err(\tilde y,y)=[[\tilde y\neq y]]\qquad err(\tilde y,y)=(\tilde y- y)^2。\]</p>
-
-<p>误差是如何影响学习算法的呢？</p>
-
-<p>下面示例展示了不同度量方式下误差的差异：</p>
-
-<p><img src="/assets/images/2014-12-27-machine-learning-noise-and-error-ideal-mini-target-example.png" alt="误差度量的影响" /></p>
-
-<p>$P(y|\mathbf x)$和$err$确定了理想最小目标函数$f(\mathbf x)$。在0/1误差和平方误差度量方式下，理想最小目标函数分别为
-\[
-f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\in\mathcal Y}yP(y|\mathbf x)。
-\]
-若采用平方误差度度量方式，上例中$f(\mathbf x)=1.9$。</p>
-
-<p>根据具体应用场景，选择相应的错误（误差）衡量方法，对机器学习至关重要。</p>
-
-<p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
-
-<h2 id="section-1">误差度量范例</h2>
-
-<p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
-
-<ol>
-  <li>false reject：合法用户识别为非法；</li>
-  <li>false accept：非法用户识别为合法。</li>
-</ol>
-
-<p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
-
-<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
-<p>\[
-E_{in}^w(h)={1\over N}\sum_{n=1}^N
-\left\{
-\begin{aligned}
-&amp;1 &amp;\quad\mbox{if }y_n=+1\\
-&amp;1000 &amp;\quad\mbox{if }y_n=-1
-\end{aligned}
-\right\}
-\cdot \left[\left[y_n\neq h(\mathbf x_n)\right]\right]。
-\]
-对于线性可分数据的PLA，这种定义并无影响。对于pocket算法，假设将$-1$样本复制$1000$倍，在新的数据上仍用$E_{in}^{0/1}$度量误差，就和在原数据上用$E_{in}^{w}$度量一致。</p>
-
-<p>实际使用中，不会真的复制数据，采取虚拟复制（virtual copying）的策略。</p>
-
-<blockquote>
-  <h4 id="pocket">加权pocket算法</h4>
-  <hr />
-
-  <ol>
-    <li>以$1000$倍的概率检查$-1$样本犯的错误；</li>
-    <li>当$\mathbf w_{t+1}$犯的错误$E_{in}^w$比$\hat{\mathbf w}$小时，用$\hat{\mathbf w}$更新$\mathbf w_{t+1}$。</li>
-  </ol>
-</blockquote>
-
-<h2 id="section-2">参考资料</h2>
-
-<ol class="bibliography"></ol>
-
-<h3 id="section-3">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:target-distribution">
-      <p>不太明白这节的意思…… <a href="#fnref:target-distribution" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
 
 </section>
 <section align="left">
@@ -270,8 +191,6 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
   <ul>
     
     <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
-    
-    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
     
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
@@ -285,12 +204,14 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
     
+    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
+    
   </ul>
 <p></p>
 <span>
-  <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:left"   >上一篇：Map-Reduce Essential </a>
+  <a  href="/2016/03/cs231n_loss-functions-and-optimization" class="pageNav" style="float:left"   >上一篇：CS231n（3）：损失函数与最优化 </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/01/linear-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（1）：线性支持向量机 </a>  
+  <a  href="/2016/09/S13000-Introduction" class="pageNav" style="float:right"   >下一篇：鲁棒及自适应控制（1）：概论 </a>  
 </span>
 </section>
 
@@ -312,7 +233,7 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-noise-and-error" 	data-url="http://qianjiye.de/2014/12/machine-learning-noise-and-error" data-title="机器学习：噪声与误差">
+	<div class="ds-thread"  data-thread-key="/2016/09/LeNet-5-Lecun" 	data-url="http://qianjiye.de/2016/09/LeNet-5-Lecun" data-title="Gradient-Based Learning Applied to Document Recognition">
 	</div>	
 
 
@@ -322,18 +243,18 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2014/12/map-reduce-essential'; -->
+<!--         url = '/2016/03/cs231n_loss-functions-and-optimization'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-svm'; --1> -->
-<!--         url = '/2015/01/linear-svm'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2016/09/S13000-Introduction'; --1> -->
+<!--         url = '/2016/09/S13000-Introduction'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2014/12/machine-learning-noise-and-error/#timeSpan'; -->
+<!--         url = '/2016/09/LeNet-5-Lecun/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

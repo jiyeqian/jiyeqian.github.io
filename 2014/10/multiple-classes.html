@@ -169,7 +169,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-1">多分类器</h2>
 
-<p><a href="/2016/03/cs231n_image_classification_pipeline/#kNN">k最近邻分类器</a>是最简单的多分类器。<a href="/2015/01/decision-tree">决策树</a>解决多分类问题几乎和二分类问题一样容易实现。</p>
+<p><a href="/2016/03/cs231n_image-classification-pipeline/#kNN">k最近邻分类器</a>是最简单的多分类器。<a href="/2015/01/decision-tree">决策树</a>解决多分类问题几乎和二分类问题一样容易实现。</p>
 
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-nn.png"><img src="/assets/images/2014-10-20-multiple-classes-nn.png" alt="神经网络的多分类策略" /></a><div class="caption">图 1:  神经网络的多分类策略 [<a href="/assets/images/2014-10-20-multiple-classes-nn.png">PNG</a>]</div></div></div>
 
@@ -201,9 +201,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-5">二分类器扩展为多分类器</h2>
 
-<p>采用hinge损失函数，可以直接将支持向量机推广到<a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier/#multiclass-SVM">多分类支持向量机</a>，理论上该方法数据损失项可达0，常规的one-vs-all方法则不行。</p>
+<p>采用hinge损失函数，可以直接将支持向量机推广到<a href="/2016/03/cs231n_loss-functions-and-optimization/#multiclass-SVM">多分类支持向量机</a>，理论上该方法数据损失项可达0，常规的one-vs-all方法则不行。</p>
 
-<p>采用交叉熵损失和softmax函数，可以推导出用于多分类的<a href="/2015/01/image-classification-svm-and-softmax-based-linear-classifier/#softmax-classifier">softmax分类器</a>，可视为logistic回归在多分类问题上的推广。</p>
+<p>采用交叉熵损失和softmax函数，可以推导出用于多分类的<a href="/2016/03/cs231n_loss-functions-and-optimization/#softmax-classifier">softmax分类器</a>，可视为logistic回归在多分类问题上的推广。</p>
 
 <p>结构化支持向量机（structured SVM）也可以解决多分类问题<a href="#Tsochantaridis:2004:SVM:1015330.1015341">[6]</a><sup id="fnref:how-structured-svm-do"><a href="#fn:how-structured-svm-do" class="footnote">3</a></sup>。</p>
 
@@ -261,7 +261,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <hr>
   <ul>
     
-    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image_classification_pipeline">CS231n（2）：图像分类流程</a></li>
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
+    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    
+    <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
+    
+    <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
@@ -270,12 +276,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
     
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
-    
-    <li class="pageNav">2015-09-22 &raquo; <a href="/2015/09/reparameterization-and-dp">DILinAV（2）：重参数化与动态规划</a></li>
-    
-    <li class="pageNav">2015-09-19 &raquo; <a href="/2015/09/introduction-to-av-with-dgm">DILinAV（1）：基于离散图模型的人工视觉简介</a></li>
-    
-    <li class="pageNav">2015-09-16 &raquo; <a href="/2015/09/haze-removal-kaiming">去雾霾：基于单图的暗通道方法</a></li>
     
   </ul>
 <p></p>
