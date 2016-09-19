@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>快速归一化互相关</title>
+    <title>无人机电缆隧道巡检可行性调研报告</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>快速归一化互相关</h1>
+        <h1>无人机电缆隧道巡检可行性调研报告</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,14 +133,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2015-09-26">2015-09-26</time>
+  <time datetime="2016-09-19">2016-09-19</time>
 </span>
 
  |
 <span class="categories">
   <i class="fa fa-share-alt"></i>
   
-  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
   
 </span>
 
@@ -151,100 +151,54 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
   
+  <a href="/tags/#调研" title="调研">调研</a>&nbsp;
+  
 </span>
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="section">报告正文</h2>
 
-<p><a href="#lewis1995fastTM">[1]</a>
-<a href="#lewis1995fastNCC">[2]</a>
-<a href="#briechle2001template">[3]</a>
-<a href="#tsai2003fast">[4]</a>
-<a href="#zhao2006image">[5]</a>
-<a href="#scandaroli2012improving">[6]</a></p>
+<p><img src="/assets/images/2016-09-19-feasibility-about-uav-in-cable-tunnel_P01.png" alt="无人机电缆隧道巡检可行性调研报告 P01" /></p>
 
-<p>本文主要介绍J. P. Lewis的快速归一化互相关技术<a href="#lewis1995fastNCC">[2]</a>。</p>
+<p>无人机电缆隧道巡检可行性调研报告（<a href="/assets/doc/无人机隧道巡检可行性调研报告_20160915.pdf">PDF</a>）</p>
 
-<p>计算两个信号之间的相关性是特征检测的经典方法，也是其它高级技术的基础<a href="#Poggio1993Face">[7]</a>。相关性可以通过空域的卷积计算，也可通过快速傅立叶变换高效计算。虽然归一化互相关（NCC，normalized cross correlation）更利于特征匹配，但并没有高效的频域计算方法，因此，通常在空域计算。由于空域卷积复杂，<a href="#Barnea1972A">[8]</a>提出了几个非精确但快速的空域匹配方法。</p>
+<h2 id="section-1">相关视频</h2>
 
-<p>事实上，通过事先计算图像积分，非归一化互相关可以被高效地归一化。</p>
+<h3 id="section-2">球形无人机</h3>
 
-<h2 id="section-1">模版匹配</h2>
+<h4 id="gimball-">一、Gimball 球形无人机</h4>
 
-<p>采用互相关的模版匹配可从欧氏距离平方推导。以$(u,v)$为参考点，</p>
+<embed src="http://player.youku.com/player.php/sid/XOTA2MjkzNTI4/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<p>\begin{equation}
-d^2_{f,t}(u,v)=\sum_{x,y}[f(x,y)-t(x-u,y-v)]^2，
-\end{equation}</p>
+<h4 id="section-3">二、防碰撞的球形无人机</h4>
 
-<p>$f$是图像，$t$表示特征，上式展开为</p>
+<embed src="http://player.youku.com/player.php/sid/XMTczMDYyMTYyOA==/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<p>\begin{equation*}
-d^2_{f,t}(u,v)=\sum_{x,y}[f^2(x,y)-2f(x,y)t(x-u,y-v)+t^2(x-u,y-v)^2]，
-\end{equation*}</p>
+<h3 id="iarc-">2013 IARC 清华代表队第五次试飞：挑战极限</h3>
 
-<p>$\sum t^2(x-u,y-v)^2$是常数，若$\sum f^2(x,y)$也近似为常数，那么只会余下互相关项</p>
+<embed src="http://player.youku.com/player.php/sid/XNTkyNzg5MDg4/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<p>\begin{equation}
-c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
-\label{eq:cross-correlation-term}
-\end{equation}</p>
+<h3 id="section-4">大型隧道飞行无人机</h3>
 
-<p>度量图像和特征的相似性。采用\eqref{eq:cross-correlation-term}进行模版匹配有几个缺点：</p>
+<h4 id="section-5">一、穿越地铁隧道</h4>
 
-<ul>
-  <li>图像能量$\sum f^2(x,y)$随位置而变化，可能导致匹配失败，比如特征与图像块非常匹配的相关性可能小于与亮斑的相关性<sup id="fnref:example1"><a href="#fn:example1" class="footnote">1</a></sup>；</li>
-  <li>$c(u,v)$取值范围依赖于特征的大小；</li>
-  <li>不具有亮度不变性，比如光照导致的图像亮度变化。</li>
-</ul>
+<embed src="http://player.youku.com/player.php/sid/XNzczMjcyMzQ0/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<p><strong>相关系数</strong>（correlation coefficient）通过归一化图像和特征向量为单位长度，客服了这些问题，这就是余弦形式的<strong>归一化互相关性</strong></p>
+<h4 id="section-6">二、航拍西雅图在建隧道</h4>
 
-<p>\begin{equation}
-\gamma(u,v)={\sum_{x,y}[f(x,y)-\bar f_{u,v}][t(x-u,y-v)-\bar t]\over\left\{\sum_{x,y}[f(x,y)-\bar f_{u,v}]^2\sum_{x,y}[t(x-u,y-v)-\bar t]^2\right\}^{0.5}}，
-\end{equation}</p>
+<embed src="http://player.youku.com/player.php/sid/XMTU2NTA0NjY2OA==/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<p>$\bar t$和$\bar f_{u,v}$分别表示特征和图像区域的均值。</p>
+<h3 id="section-7">微型无人机</h3>
 
-<h2 id="section-2">特征追踪</h2>
+<h4 id="section-8">一、宾夕法尼亚大学微型无人机编队</h4>
 
-<p>由于NCC并不具备尺度、旋转和透视变换不变性，并非理想的特征追踪方法。但是对某些应用，NCC是一种合理的选择。</p>
+<embed src="http://player.youku.com/player.php/sid/XMzY4OTY5ODE2/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<h2 id="section-3">参考资料</h2>
+<h4 id="dragonfly-">二、DragonFly 仿生蜻蜓微型无人机</h4>
 
-<ol class="bibliography"><li><span id="lewis1995fastTM">[1]J. P. Lewis, “Fast template matching,” in <i>Vision interface</i>, 1995, vol. 95, no. 120123, pp. 15–19.</span>
+<embed src="http://player.youku.com/player.php/sid/XMTM1ODU4Mjg4OA==/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-</li>
-<li><span id="lewis1995fastNCC">[2]J. P. Lewis, “Fast normalized cross-correlation,” in <i>Vision interface</i>, 1995, vol. 10, no. 1, pp. 120–123.</span>
-
-</li>
-<li><span id="briechle2001template">[3]K. Briechle and U. D. Hanebeck, “Template matching using fast normalized cross correlation,” in <i>Aerospace/Defense Sensing, Simulation, and Controls</i>, 2001, pp. 95–102.</span>
-
-</li>
-<li><span id="tsai2003fast">[4]D.-M. Tsai and C.-T. Lin, “Fast normalized cross correlation for defect detection,” <i>Pattern Recognition Letters</i>, vol. 24, no. 15, pp. 2625–2631, 2003.</span>
-
-</li>
-<li><span id="zhao2006image">[5]F. Zhao, Q. Huang, and W. Gao, “Image matching by normalized cross-correlation,” in <i>Acoustics, Speech and Signal Processing, 2006. ICASSP 2006 Proceedings. 2006 IEEE International Conference on</i>, 2006, vol. 2, pp. II–II.</span>
-
-</li>
-<li><span id="scandaroli2012improving">[6]G. G. Scandaroli, M. Meilland, and R. Richa, “Improving ncc-based direct visual tracking,” in <i>Computer Vision–ECCV 2012</i>, Springer, 2012, pp. 442–455.</span>
-
-</li>
-<li><span id="Poggio1993Face">[7]T. Poggio and R. Brunelli, “Face Recognition: Features Versus Templates,” <i>IEEE Transactions on Pattern Analysis &amp; Machine Intelligence</i>, vol. 15, no. 10, pp. 1042–1052, 1993.</span>
-
-</li>
-<li><span id="Barnea1972A">[8]D. I. Barnea and H. F. Silverman, “A Class of Algorithms for Fast Digital Image Registration,” <i>Computers IEEE Transactions on</i>, vol. c-21, no. 2, pp. 179–186, 1972.</span>
-
-</li></ol>
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:example1">
-      <p>For example, the correlation between the feature and an exactly matching region in the image may be less than the correlation between the feature and a bright spot. <a href="#fnref:example1" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
 
 </section>
 <section align="left">
@@ -254,8 +208,6 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
   <p></p>
 <hr>
   <ul>
-    
-    <li class="pageNav">2016-09-19 &raquo; <a href="/2016/09/feasibility-about-uav-in-cable-tunnel">无人机电缆隧道巡检可行性调研报告</a></li>
     
     <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
     
@@ -269,14 +221,16 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
     
     <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
     
+    <li class="pageNav">2015-09-26 &raquo; <a href="/2015/09/fast-ncc">快速归一化互相关</a></li>
+    
     <li class="pageNav">2015-09-25 &raquo; <a href="/2015/09/maximum-flow-and-minimum-cut">DILinAV（3）：最大流与最小割</a></li>
     
   </ul>
 <p></p>
 <span>
-  <a  href="/2015/09/maximum-flow-and-minimum-cut" class="pageNav" style="float:left"   >上一篇：DILinAV（3）：最大流与最小割 </a>
+  <a  href="/2016/09/S13000-Introduction" class="pageNav" style="float:left"   >上一篇：鲁棒及自适应控制（1）：概论 </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/10/minimum-cut-based-inference" class="pageNav" style="float:right"   >下一篇：DILinAV（4）：基于最小割的推理 </a>  
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
 </span>
 </section>
 
@@ -298,7 +252,7 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/09/fast-ncc" 	data-url="http://qianjiye.de/2015/09/fast-ncc" data-title="快速归一化互相关">
+	<div class="ds-thread"  data-thread-key="/2016/09/feasibility-about-uav-in-cable-tunnel" 	data-url="http://qianjiye.de/2016/09/feasibility-about-uav-in-cable-tunnel" data-title="无人机电缆隧道巡检可行性调研报告">
 	</div>	
 
 
@@ -308,18 +262,15 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2015/09/maximum-flow-and-minimum-cut'; -->
+<!--         url = '/2016/09/S13000-Introduction'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/10/minimum-cut-based-inference'; --1> -->
-<!--         url = '/2015/10/minimum-cut-based-inference'; -->
-<!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2015/09/fast-ncc/#timeSpan'; -->
+<!--         url = '/2016/09/feasibility-about-uav-in-cable-tunnel/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->
