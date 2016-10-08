@@ -2,6 +2,24 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://qianjiye.de/2016/09/pgm_i_01_introduction_and_overview</loc>
+    
+    <lastmod>2016-09-28T01:26:51+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring</loc>
+    
+    <lastmod>2016-09-24T02:41:06+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
     <loc>http://qianjiye.de/2016/09/feasibility-about-uav-in-cable-tunnel</loc>
     
     <lastmod>2016-09-19T15:14:33+08:00</lastmod>

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>模式发掘（1）：基本概念</title>
+    <title>家用监控设备用于电网的可行性分析</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>模式发掘（1）：基本概念</h1>
+        <h1>家用监控设备用于电网的可行性分析</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,14 +133,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2015-03-07">2015-03-07</time>
+  <time datetime="2016-09-24">2016-09-24</time>
 </span>
 
  |
 <span class="categories">
   <i class="fa fa-share-alt"></i>
   
-  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
   
 </span>
 
@@ -149,95 +149,34 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#机器学习基础" title="机器学习基础">机器学习基础</a>&nbsp;
+  <a href="/tags/#计算机视觉" title="计算机视觉">计算机视觉</a>&nbsp;
   
-  <a href="/tags/#模式发掘" title="模式发掘">模式发掘</a>&nbsp;
+  <a href="/tags/#调研" title="调研">调研</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<p><strong>模式</strong>（pattern）是数据集中频繁出现或强相关的条目、子序列或子结构组成的集合，它代表了数据集的本质特征和重要属性。<strong>模式发掘</strong>（pattern discovery）就是从大规模数据集中发现模式。</p>
+<h2 id="section">报告正文</h2>
 
-<h2 id="section">模式发掘的重要性</h2>
+<p><img src="/assets/images/2016-09-24-feasibility-about-home-camera-in-power-syetem-monitoring_P01.jpg" alt="家用监控设备用于电网的可行性分析P01" /></p>
 
-<p>模式发掘的典型应用场景包括：</p>
+<p>家用监控设备用于电网的可行性分析（<a href="/assets/doc/家用监控设备用于电网的可行性分析.pdf">PDF</a>）</p>
 
-<ul>
-  <li>哪些商品常被一起购买？</li>
-  <li>买了iPad之后还会买哪些商品？</li>
-  <li>哪些代码片段可能包括复制粘贴错误（copy-and-paste bug）？</li>
-  <li>语料库中哪些词串可能构成短语？</li>
-</ul>
+<h2 id="section-1">网络资源</h2>
 
-<p>模式发掘是从数据集中发现内在规则，在数据挖掘中有广泛应用：</p>
+<p>常见的家用网络相机：“<a href="http://jia.360.cn/product.html">小水滴</a>”、“<a href="https://www.ys7.com/item/12.html">小伊娃</a>”、“<a href="http://www.iermu.com/product">爱耳目</a>”和“<a href="http://www.xiaoyi.com/yicamera1.html">小蚁</a>”。</p>
+
+<p>网络共享的的网络相机：</p>
 
 <ul>
-  <li>关联分析、相关分析以及因果分析；</li>
-  <li>挖掘序列模式、结构（例如：子图）模式；</li>
-  <li>分析时空数据、多媒体、时间序列和留数据中的模式；</li>
-  <li>基于判别模式分析的分类；</li>
-  <li>基于模式子空间的聚类。</li>
+  <li><a href="http://square.ys7.com/index">萤石直播</a></li>
+  <li><a href="http://jia.360.cn/pc/">水滴直播</a></li>
+  <li><a href="http://www.iermu.com/main">爱直播</a></li>
+  <li><a href="http://camera.baidu.com">云直播</a></li>
 </ul>
 
-<p>模式发现广泛应用于购物篮分析（market basket analysis）、交叉营销（cross-marketing）、目录设计（catalog design）、销售活动分析（sale campaign analysis）、Web日志分析（Web log analysis）和生物序列分析（biological sequence analysis）。</p>
-
-<h2 id="supp-and-conf-define">频繁模式与关联规则<a href="#Agrawal:1993:MAR:170036.170072">[1]</a><a href="#han2007frequent">[2]</a></h2>
-
-<p>一个或多个项组成的集合称为<strong>项集</strong>（itemset），$k$-项集记为$ X=\{ x_1,\ldots,x_k\}$。<strong>绝对支持度</strong>（absolute support）是指项集$  X$在事务中出现的次数，<strong>相对支持度</strong>（relative support）是指包含项集$  X$的事务所占比率。如果项集$X$的支持度大于某个$minsup$阈值$\sigma$，则称$X$是<strong>频繁模式</strong>。</p>
-
-<p><img src="/assets/images/2015-03-07-pattern-discovery-basic-concepts-itemset-table.png" alt="项集表格" /></p>
-
-<p>令$minsup=50\%$，那么：</p>
-
-<ul>
-  <li>频繁的$1$-项集包括：$Beer: 3(60\%), Nuts: 3(60\%), Diaper: 4(80\%), Eggs:3(60\%)$；</li>
-  <li>频繁的$2$-项集包括：$\{Beer, Diaper\}:3(60\%)$。</li>
-</ul>
-
-<p><strong>关联规则</strong>（association rule）记为$  X\rightarrow  Y(s,c)$，支持度$s$为包含项集$  X\cup  Y$事务出现的概率，<strong>置信度</strong>（confidence）$c$为包含项集$  X$的事务中包含项集$  X\cup  Y$的事务出现的概率，$c={\sup(  X\cup  Y)\over\sup(  X)}$，置信度可以视为条件概率$P(Y\vert X)$的估计<a href="#Michael2005arules">[3]</a><a href="#hipp2000algorithms">[4]</a>。</p>
-
-<p><strong>关联规则挖掘</strong>是找出大于最小支持度和置信度的所有关联规则$  X\rightarrow  Y$。令$minconf=50\%$，关联规则为
-\[
-Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
-\]</p>
-
-<h2 id="closed-and-max-pattern">闭模式与最大模式</h2>
-
-<p>在频繁模式和关联规则挖掘时，一个长的模式包含很多子模式。</p>
-
-<p>若模式（项集）$  X$是频繁的，并且不存在与$X$有<strong>相同支持度</strong>的超模式（super-pattern）$  Y\supset  X$，则称$  X$为<strong>闭模式</strong>（closed pattern）<a href="#Pasquier1999discovering">[5]</a>。闭模式是频繁模式的无损压缩，虽降低了模式数量，但没有损失支持度信息。<del>因此，每个支持度只对应唯一的闭模式。</del></p>
-
-<p>若模式$X$是频繁的，并且不存在频繁的超模式$Y\supset X$，则称$X$为<strong>最大模式</strong>（max-pattern）<a href="#roberto667815">[6]</a>。最大模式不关注子模式的真实支持度，它是频繁模式的有损压缩，只知道子模式是频繁的，但不知道子模式的真实支持度（知道子模式的支持度最少为多少）。</p>
-
-<p>令事务集$TDB_1$的事务为$T_1:\{a_1,\ldots,a_{50}\},T_2:\{a_1,\ldots,a_{100}\}$并且$minsup=1$，那么$TDB_1$只有两个闭模式$\{a_1,\ldots,a_{50}\}:2,\;\{a_1,\ldots,a_{100}\}:1$（支持度分别为2和1）和唯一的最大模式$\{a_1,\ldots,a_{100}\}:1$。由此可见，最大模式是闭模式的一个子集。</p>
-
-<h2 id="section-1">参考资料</h2>
-
-<ol class="bibliography"><li><span id="Agrawal:1993:MAR:170036.170072">[1]R. Agrawal, T. Imieliński, and A. Swami, “Mining Association Rules Between Sets of Items in Large Databases,” <i>Sigmod Record</i>, vol. 22, no. 2, pp. 207–216, Jun. 1993.</span>
-
-[<a href="http://doi.acm.org/10.1145/170036.170072">Online</a>]
-
-</li>
-<li><span id="han2007frequent">[2]J. Han, H. Cheng, D. Xin, and X. Yan, “Frequent pattern mining: current status and future directions,” <i>Data Mining and Knowledge Discovery</i>, vol. 15, no. 1, pp. 55–86, 2007.</span>
-
-</li>
-<li><span id="Michael2005arules">[3]M. Hahsler, B. Gruen, and K. Hornik, “arules – A Computational Environment for Mining Association Rules and Frequent Item Sets,” <i>Journal of Statistical Software</i>, vol. 14, no. 15, pp. 1–25, Oct. 2005.</span>
-
-[<a href="http://www.jstatsoft.org/v14/i15/">Online</a>]
-
-</li>
-<li><span id="hipp2000algorithms">[4]J. Hipp, U. Güntzer, and G. Nakhaeizadeh, “Algorithms for association rule mining—a general survey and comparison,” <i>ACM sigkdd explorations newsletter</i>, vol. 2, no. 1, pp. 58–64, 2000.</span>
-
-</li>
-<li><span id="Pasquier1999discovering">[5]N. Pasquier, Y. Bastide, R. Taouil, and L. Lakhal, “Discovering Frequent Closed Itemsets for Association Rules,” in <i>International Conference on Database Theory</i>, 1999, pp. 398–416.</span>
-
-</li>
-<li><span id="roberto667815">[6]R. J. Bayardo, “Efficiently Mining Long Patterns from Databases,” <i>Sigmod Record</i>, vol. 27, no. 2, pp. 85–93, 1998.</span>
-
-</li></ol>
-
-<h3 id="section-2">脚注</h3>
+<p><a href="http://square.ys7.com/play/index?videoId=10085cda23ebfd1841e1a56e10db5a55d39b"><img src="/assets/images/2016-09-24-feasibility-about-home-camera-in-power-syetem-monitoring_EZVIZ_X2.jpg" alt="X2视频教程" /></a></p>
 
 
 </section>
@@ -251,8 +190,6 @@ Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
     
     <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
     
-    <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
-    
     <li class="pageNav">2016-09-19 &raquo; <a href="/2016/09/feasibility-about-uav-in-cable-tunnel">无人机电缆隧道巡检可行性调研报告</a></li>
     
     <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
@@ -265,12 +202,14 @@ Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
+    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
+    
   </ul>
 <p></p>
 <span>
-  <a  href="/2015/03/r-essential" class="pageNav" style="float:left"   >上一篇：R Essential </a>
+  <a  href="/2016/09/feasibility-about-uav-in-cable-tunnel" class="pageNav" style="float:left"   >上一篇：无人机电缆隧道巡检可行性调研报告 </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/03/efficient-pattern-mining-methods" class="pageNav" style="float:right"   >下一篇：模式发掘（2）：高效的模式挖掘方法 </a>  
+  <a  href="/2016/09/pgm_i_01_introduction_and_overview" class="pageNav" style="float:right"   >下一篇：PGM I（01）：引言与概述 </a>  
 </span>
 </section>
 
@@ -292,7 +231,7 @@ Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/03/pattern-discovery-basic-concepts" 	data-url="http://qianjiye.de/2015/03/pattern-discovery-basic-concepts" data-title="模式发掘（1）：基本概念">
+	<div class="ds-thread"  data-thread-key="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring" 	data-url="http://qianjiye.de/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring" data-title="家用监控设备用于电网的可行性分析">
 	</div>	
 
 
@@ -302,18 +241,18 @@ Beer\rightarrow Diapper(60\%, 100\%),~Diaper\rightarrow Beer(60\%,75\%)。
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2015/03/r-essential'; -->
+<!--         url = '/2016/09/feasibility-about-uav-in-cable-tunnel'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/03/efficient-pattern-mining-methods'; --1> -->
-<!--         url = '/2015/03/efficient-pattern-mining-methods'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2016/09/pgm_i_01_introduction_and_overview'; --1> -->
+<!--         url = '/2016/09/pgm_i_01_introduction_and_overview'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2015/03/pattern-discovery-basic-concepts/#timeSpan'; -->
+<!--         url = '/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->
