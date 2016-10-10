@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>PGM I（01）：引言与概述</title>
+    <title>鲁棒及自适应控制（2）：模型</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>PGM I（01）：引言与概述</h1>
+        <h1>鲁棒及自适应控制（2）：模型</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2016-09-28">2016-09-28</time>
+  <time datetime="2016-10-09">2016-10-09</time>
 </span>
 
  |
@@ -149,27 +149,86 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  <a href="/tags/#控制论" title="控制论">控制论</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<p><strong>必要技能</strong></p>
-
 <ul>
-  <li>基本的概率论</li>
-  <li>一些编程技能</li>
-  <li>一些算法和数据结构知识</li>
+  <li>数学模型（mathematical model）</li>
+  <li>物理模型（physical model）</li>
 </ul>
 
-<p><strong>推荐技能</strong></p>
+<h2 id="section">模型的表示</h2>
+
+<h3 id="transfer-function">传递函数（transfer function）</h3>
+
+<script type="math/tex; mode=display">\frac{y(s)}{u(s)}=G(s)\text{  or  }y(s)=G(s)u(s)</script>
+
+<p>凡事能用传递函数描述的系统，皆为<strong>线性确定系统</strong>。因此，系统比较简单，实际中大多为非线性系统，目前研究中已经很少使用。</p>
+
+<h3 id="state-space-equation">状态空间方程（state space equation）</h3>
+
+<script type="math/tex; mode=display">\Big\{
+\begin{aligned}
+\mathbf{\dot{x}} = \mathbf{Ax} + \mathbf{Bu}\\
+\mathbf{y} = \mathbf{Cx} + \mathbf{Du}
+\end{aligned}
+\Big.</script>
 
 <ul>
-  <li>机器学习</li>
-  <li>简单的最优化技术</li>
-  <li>Matlab / Octave</li>
+  <li>$\mathbf{x}\in \mathbb{R}^n$，$\mathbf{y}\in \mathbb{R}^r$，$\mathbf{u}\in \mathbb{R}^m$，通常情况$n\geq m\geq r$；</li>
+  <li>矩阵$\mathbf{A}\in \mathbb{R}^{n\times n}$和$\mathbf{B}\in \mathbb{R}^{n\times m}$是系统参数；</li>
+  <li>通常 $\mathbf{D}=\mathbf{0}$；</li>
+  <li>$\mathbf{A},\mathbf{B},\mathbf{C}$可以引入时变参数，若无时变参数则为线性时不变（LTI，Linear Time-Invariant）系统。</li>
 </ul>
+
+<p>更一般的形式可表述为</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\Big\{
+\begin{aligned}
+\mathbf{\dot{x}} &= f(\mathbf{x}) + g(\mathbf{x})\mathbf{u}\\
+\mathbf{y} &= h(\mathbf{x})
+\end{aligned}
+\Big. %]]></script>
+
+<p>$f(x)$为非线性函数，例如$f(x)=\sin x+e^{x^2}+\frac{1}{1+e^x}$。</p>
+
+<h3 id="strict-feedback-form">严格反馈型（strict-feedback form）</h3>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left\{
+\begin{aligned}
+\mathbf{\dot{x}} &= f_0(\mathbf{x})+g_0(\mathbf{x})z_1  \\
+\dot{z}_1 &= f_1(\mathbf{x}, z_1)+g_1(\mathbf{x}, z_1)z_2 \\
+\dot{z}_2 &= f_2(\mathbf{x}, z_1, z_2)+g_2(\mathbf{x}, z_1, z_2)z_3 \\
+& \,\,\,\vdots  \\
+\dot{z}_i &= f_i(\mathbf{x}, z_1, z_2, \ldots, z_{i-1}, z_i)+g_i(\mathbf{x}, z_1, z_2, \ldots, z_{i-1}, z_i)z_{i+1} \\
+& \,\,\,\vdots  \\
+\dot{z}_{k-1} &= f_{k-1}(\mathbf{x}, z_1, z_2, \ldots, z_{k-1})+g_i(\mathbf{x}, z_1, z_2, \ldots, z_{k-1})z_k \\
+\dot{z}_k &= f_k(\mathbf{x}, z_1, z_2, \ldots, z_{k-1}, z_k)+g_k(\mathbf{x}, z_1, z_2, \ldots, z_{k-1}, z_k)u 
+\end{aligned}
+\right. %]]></script>
+
+<ul>
+  <li>$\mathbf{x}\in \mathbb{R}^n, n\geq 1$；</li>
+  <li>$z_1,\ldots, z_k$是标量；</li>
+  <li>$u$是系统的输入标量。</li>
+</ul>
+
+<p>这是最一般的模型。最流行的方法是利用<strong>神经网络</strong>处理非线性项。</p>
+
+<h2 id="section-1">神经网络</h2>
+
+<p>（略）</p>
+
+<p>基本要素：基函数$\psi_i$（basis function）、权值$w_i$（weight）、神经元个数$N$。</p>
+
+<p>万能逼近能力，$\left\vert f(\cdot)-f_N\right\vert\leq\epsilon$。</p>
+
+<p>研究几个基本要素变换情况时神经网络的逼近能力。</p>
 
 
 </section>
@@ -180,6 +239,8 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p></p>
 <hr>
   <ul>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -195,12 +256,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
-    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
-    
   </ul>
 <p></p>
 <span>
-  <a  href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring" class="pageNav" style="float:left"   >上一篇：家用监控设备用于电网的可行性分析 </a>
+  <a  href="/2016/10/nnml_introduction" class="pageNav" style="float:left"   >上一篇：NNML（01）：引言 </a>
   &nbsp;&nbsp;&nbsp;
   <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
 </span>
@@ -224,7 +283,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/09/pgm_i_01_introduction_and_overview" 	data-url="http://qianjiye.de/2016/09/pgm_i_01_introduction_and_overview" data-title="PGM I（01）：引言与概述">
+	<div class="ds-thread"  data-thread-key="/2016/10/s13000-model" 	data-url="http://qianjiye.de/2016/10/s13000-model" data-title="鲁棒及自适应控制（2）：模型">
 	</div>	
 
 
@@ -234,7 +293,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring'; -->
+<!--         url = '/2016/10/nnml_introduction'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
@@ -242,7 +301,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2016/09/pgm_i_01_introduction_and_overview/#timeSpan'; -->
+<!--         url = '/2016/10/s13000-model/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

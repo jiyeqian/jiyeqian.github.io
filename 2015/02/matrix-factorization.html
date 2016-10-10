@@ -293,8 +293,7 @@ E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
 </ul>
 
 <blockquote>
-  <h4 id="section-3">交替最小二乘法</h4>
-  <hr />
+  <h2 id="section-3">####交替最小二乘法</h2>
   <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$；</p>
 
   <p>交替最小化$E_{in}$直到收敛：</p>
@@ -328,8 +327,7 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 每次跟新量$\propto -(\mbox{residual})(\mbox{the other feature vector})$，余数（residual）为$r_{nm}-\mathbf w_m^T\mathbf v_n$，也就是用余数倍另一个量更新当前量。</p>
 
 <blockquote>
-  <h4 id="section-5">基于随机梯度下降法的矩阵分解</h4>
-  <hr />
+  <h2 id="section-5">####基于随机梯度下降法的矩阵分解</h2>
   <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$<sup id="fnref:all-zeros"><a href="#fn:all-zeros" class="footnote">2</a></sup>；</p>
 
   <p>对$t=0,1,\ldots,T$迭代：</p>
@@ -350,8 +348,7 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 <p>随机梯度下降法在大规模矩阵分解中很常用。</p>
 
 <blockquote>
-  <h4 id="kddcup-2011-track-1-world-champion-solution-by-ntu">KDDCup 2011 Track 1: World Champion Solution by NTU</h4>
-  <hr />
+  <h2 id="kddcup-2011-track-1-world-champion-solution-by-ntu">####KDDCup 2011 Track 1: World Champion Solution by NTU</h2>
   <p><strong>问题</strong>：训练数据时间上要早于测试数据。也就是训练和测试数据分布不同，有偏采样（sampling bias）。</p>
 
   <p><strong>对策</strong>：强化时间晚的数据。SGD在最后$T’$轮迭代只选用感兴趣的$T’$个数据。</p>
@@ -385,7 +382,9 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -398,8 +397,6 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

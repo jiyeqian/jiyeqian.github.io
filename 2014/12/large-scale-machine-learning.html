@@ -184,8 +184,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 这种方法叫做批量（batch）梯度下降法，参数更新需在整个训练集上计算一次，当$m$特别大的时候，速度就会很慢。随机梯度下降法（stochastic gradient descent）的更新方式是每次只用一个数据点更新参数。</p>
 
 <blockquote>
-  <h4 id="section-3">随机梯度下降法</h4>
-  <hr />
+  <h2 id="section-3">####随机梯度下降法</h2>
 
   <ol>
     <li>数据集随机化；</li>
@@ -263,8 +262,7 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 <p>MapReduce可将学习任务分配到多台机器上（或者一台机器的多个CPU核上），然后将这些机器的学习结果汇总得到整个学习结果。</p>
 
 <blockquote>
-  <h4 id="mapreduce-1">基于MapReduce的批量梯度学习算法</h4>
-  <hr />
+  <h2 id="mapreduce-1">####基于MapReduce的批量梯度学习算法</h2>
   <p>整个任务：$\theta_j := \theta_j - \alpha\frac{1}{400}\sum_{i=1}^{400}\left(h_\boldsymbol\theta\left(\mathbf x^{(i)}\right)-y^{(i)}\right)x_j^{(i)}$。</p>
 
   <p>分配任务：</p>
@@ -307,7 +305,9 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -320,8 +320,6 @@ Repeat <sup id="fnref:sgd-cycle-times"><a href="#fn:sgd-cycle-times" class="foot
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

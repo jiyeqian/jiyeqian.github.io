@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><span id="jekyll-and-github"></span></p>
 
-<h2 id="jekyllgithub">jekyll与github的关系</h2>
+<p>##jekyll与github的关系</p>
 
 <p>github站点是位于username.github.com仓库中的静态页面。利用高效的工具生成高质量的静态页面是github建站的王道。<a href="http://jekyllrb.com/">jekyll</a>就是用<a href="http://www.ruby-lang.org/">ruby</a><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html">制造静态站点的的ruby解析引擎</a>（构建网站时ruby不是必会的）。github除了能构建独立的站点外，还可以为每个项目建立站点。github提供了<a href="https://help.github.com/articles/creating-pages-with-the-automatic-generator">自动</a>和<a href="https://help.github.com/articles/creating-project-pages-manually">手动</a>建立项目站点的方法。</p>
 
@@ -174,28 +174,28 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 上一节点  <span class="p">|</span>   <span class="sb">`</span>p<span class="sb">`</span>    <span class="p">|</span>    <span class="sb">`</span>n<span class="sb">`</span>   <span class="p">|</span> 下一节点  
 <span class="o">||</span>    <span class="sb">`</span>m<span class="sb">`</span>   <span class="p">|</span> 菜单 </code></pre></figure>
 
-<h2 id="jekyll">jekyll驱动网站原理</h2>
+<p>##jekyll驱动网站原理</p>
 
 <p><a href="http://chen.yanping.me/cn/blog/2011/12/15/building-static-sites-with-jekyll/">用jekyll构建静态网站</a>很容易。模板、数据和美化是jekyll建站的三要素。jekyll自动将数据注入模板，通过美化，得到站点。这里可以看到<a href="https://github.com/mojombo/jekyll/wiki/Sites">一堆用jekyll打造的站点</a>，大部分都可以<code>git clone</code>回来学习参考。<br />
 <!--more--></p>
 
-<h3 id="jekyll-1">jekyll的模板</h3>
+<p>###jekyll的模板</p>
 
 <p>jekyll模板就是带有变量的html格式文件。jekyll的模板用<a href="http://liquidmarkup.org/">Liquid</a>语言描述，定义了页面框架。Liquid通过（Output）和标签（Tag）两种标记（markup），即可描述页面的结构，具体可参阅<a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid for Designers</a>。jekyll对Liquid的标签进行了<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">扩展</a>。Liquid模板语言对模板数据描述（当然也需要html），生成了站点页面的骨架。Liquid所需要的jekyll的<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>在这儿可以找到。除此之外，<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>定义的变量也可以作为模板数据。</p>
 
-<h3 id="jekyll-2">jekyll的数据</h3>
+<p>###jekyll的数据</p>
 
 <p>jekyll的数据是用<a href="http://daringfireball.net/projects/markdown/">markdown</a>、<a href="http://textile.sitemonks.com/">textile</a>等标记语言写的文档。这些格式的文档解析为html格式后，注入jekyll模板的<code>&#123;&#123; content &#125;&#125;</code>，就有了网站的页面。jekyll支持的markdown解析器（将markdown转换为html）有：<span id="markdown"></span><a href="https://github.com/rtomayko/rdiscount/">rdiscount</a>、<a href="http://kramdown.rubyforge.org/">kramdown</a>、<a href="https://github.com/tanoku/redcarpet/">redcarpet</a>、<a href="http://maruku.rubyforge.org/">maruku</a>（jekyll默认）、<a href="http://deveiate.org/projects/BlueCloth/">bluecloth</a>。为了方便处理<script type="math/tex">\LaTeX</script>公式，也有人hack了jekyll，<a href="http://yangzetian.github.com/2012/04/15/jekyll-pandoc/">将pandoc作为markdown的解析器</a>。一个更方便的方法是通过<a href="https://github.com/dsanson/jekyll-pandoc-plugin">jekyll-pandoc-plugin</a>插件，启用pandoc解析器。这些hack后的jekyll启用pandoc当然不会在github上生效，只能用于本机解析后，上传静态页面。</p>
 
-<h3 id="jekyll-3">jekyll的美化</h3>
+<p>###jekyll的美化</p>
 
 <p>美化就是用CSS和javascript对html描述的页面进行渲染，美化网页。<a href="http://twitter.github.com/bootstrap/">twitter bootstrap</a>是一套极易上手的页面美化工具。twitter bootstrap还提供了<a href="http://960.gs/">960网格布局</a>，只要按照它约定的方式对页面结构定义、对html标签的<code>class</code>命名，网页的布局美化可谓快又好。</p>
 
-<h2 id="jekyll-bootstrap">在jekyll-bootstrap基础上搭建网站</h2>
+<p>##在jekyll-bootstrap基础上搭建网站</p>
 
 <p>jekyll是一套根据相应规程生成网站的工具。如果按照这套法则，从头开始仍然麻烦。<a href="http://jekyllbootstrap.com/">jekyll-bootstrap</a>就是一个jekyll构建站点的demo，并提供了一些<a href="http://jekyllbootstrap.com/api/bootstrap-api.html">额外的api增强jekyll的功能</a>，在此基础上构建站点相当快捷容易。除此之外，<a href="http://octopress.org/">octopress</a>也是基于jekyll上的不错的工具套件。</p>
 
-<h3 id="section">目录结构</h3>
+<p>###目录结构</p>
 
 <p>jekyll-bootstrap的<a href="https://github.com/mojombo/jekyll/wiki/usage">目录结构</a>中，只需要将markdown文档放到_posts目录下，<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令），即可在http://localhost:4000看到页面内容，见<a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html">快速入门示范</a>。_posts中的数据文档，通过注入_layouts定义的模板（_layouts的模板一般指向了_includes/themes中的模板），渲染页面的CSS和JS文档在assets/themes中，一些解析markdown用到的ruby插件放在_plugins目录。通过<code>jekyll --server</code>（新版采用<code>jekyll serve</code>命令）最终生成的静态页面在_sites目录。在更新github上站点的时候，<code>git push</code>可以不必推送_sites目录，将页面的解析留给github，这样做的前提条件是本地未启用自定义插件，_config.yml设置<code>safe = true</code>进行解析。如果本地启用了自定义插件，解析任务就不能交给github做了，上传本地解析好的静态页面到github即可。</p>
 
@@ -203,27 +203,27 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>_includes/themes中的主题一般包含default.html、post.html和page.html三个文档。default.html定义了网站的最上层框架（模板），post.html和page.html是其子框架（模板）。<a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#posts_and_pages">post和page有别</a>；<code>rake page</code>命令生成的页面按page.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: page</code>；<code>rake post</code>命令生成的页面按post.html解析，markdown文件的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中<code>layout: post</code>。生成好的html子页面通过default.html的<code>&#123;&#123; content &#125;&#125;</code>变量调用，生成整个页面。</p>
 
-<h3 id="section-1">自定义</h3>
+<p>###自定义</p>
 
 <p>站点生成需要用到_config.yml<a href="https://github.com/mojombo/jekyll/wiki/configuration">配置文件</a>，<code>markdown</code>变量定义了解析markdown用的<a href="#markdown">解析器</a>。当然也可自定义变量，比如在<code>JB:</code>下定义一个二级变量<code>RSS_path: /atom.xml</code>（注意缩进）。在html页面中，就可以用<code>&#123;&#123; site.JB.RSS_path &#125;&#125;</code>得其值。<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中也可以自定义变量，其中的<code>title</code>变量可以用<code>&#123;&#123; page.title &#125;&#125;</code>访问到。也就是说，站点的全局变量在_config.yml中定义，用<code>site.</code>访问，页面的变量在<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>中定义，用<code>page.</code>访问，更多的模板变量可参考<a href="https://github.com/mojombo/jekyll/wiki/template-data">模板数据</a>。</p>
 
 <p>_includes/JB中的插件可以在_includes/custom中重新自定义，方法可仿照_includes/JB中的。如果要_includes/custom中的插件生效，需要在_config.yml中将相应的变量设为<code>custom</code>，设置线索可见_includes/JB中的插件。</p>
 
-<h3 id="section-2">小结</h3>
+<p>###小结</p>
 
 <p><a href="http://jekyllbootstrap.com/lessons/jekyll-introduction.html#how_jekyll_generates_the_final_static_files">jekyll生成静态页面的过程</a>就是先搜集站点的原始数据，通过计算，生成用于页面显示的结构化数据（最终的html静态页面）。结构化数据来源有两方面：一方面是文件中的配置文件，如_config.yml和markdown的<a href="https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter">YAML Front Matter</a>；另一方面通过目录结构和jekyll定义的解析法则，产生数据。站点的全局数据用<code>site.</code>访问，页面数据用<code>page.</code>访问。有了这些结构化的数据后，jekyll再按照用户定义的模板，用相应的结构化数据替换模板中的变量。用户编写的插件是为了计算出满足用户特定需求的数据，但是这些自定义插件不能不github的jekyll解析支持。</p>
 
-<h2 id="jekyll-4">jekyll的装饰部件</h2>
+<p>##jekyll的装饰部件</p>
 
 <p>这些装饰部件中，如果本地的jekyll使用了自定义的插件，github的jeklly解析器不会支持这些自定义插件。</p>
 
-<h3 id="section-3">图片与文件</h3>
+<p>###图片与文件</p>
 
 <p>站点需要的图片直接存放在<code>assets/images</code>文件夹中，可以在_config.yml中定义一个形如<code>img_url: http://jiyeqian.github.com/assets/images</code>的变量，然后在markdown文件需要用到图片的地方插入类似<code>![git代码库结构](&#123;&#123; site.img_url &#125;&#125;/2012-06-27-git-transport.png)</code>的代码即可显示图像。</p>
 
 <p>如果图和文件较多，这里有一些<a href="/2011/09/web-cloud-life/">图片和文件托管的网络资源</a>供参考。</p>
 
-<h3 id="section-4">代码高亮</h3>
+<p>###代码高亮</p>
 
 <p>网页代码高亮的一般原理是先用JS或其它脚本语言对代码的进行解析，并提根据不同程的序语言提取关键字、变量、常量、注释，然后将代码层次结构用html标签描述，最后用CSS着色。</p>
 
@@ -239,7 +239,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><span id="mathjax"></span></p>
 
-<h3 id="latex"><script type="math/tex">\LaTeX</script>公式</h3>
+<p>###<script type="math/tex">\LaTeX</script>公式</p>
 
 <p>github可支持的<script type="math/tex">\LaTeX</script>方案需要绕过自定义插件，利用类似<a href="http://www.mathjax.org/">mathjax</a>的javascript方案或采用支持<script type="math/tex">\LaTeX</script>的markdown解析器（比如<a href="http://maruku.rubyforge.org/">maruku</a>）。</p>
 
@@ -270,19 +270,19 @@ $$</code></pre></figure>
 
 <p>另外一些支持<script type="math/tex">\LaTeX</script>公式的方案可参考：Kramdown的<a href="http://kramdown.rubyforge.org/syntax.html#math-blocks">Math Blocks</a>、<a href="http://maruku.rubyforge.org/math.xhtml">Maruku的公式支持</a>。 其他和学术写作相关的插件有：<a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>、<a href="https://github.com/archome/jekyll-citation">jekyll-citation</a>、<a href="https://github.com/pablooliveira/bibjekyll">bibjekyll</a>。</p>
 
-<h3 id="section-5">其它</h3>
+<p>###其它</p>
 
 <p>显示相关文件的插件用<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin">related_posts-jekyll_plugin</a>、<a href="https://github.com/sebcioz/jekyll-only_first_p">只显示第一段</a>的插件，可解析类似wordpress的<code>&lt;!--more--&gt;</code>标记的<a href="https://gist.github.com/986665">excerpt插件</a>，美化引用格式的<a href="http://octopress.org/docs/plugins/blockquote/">blockquote插件</a>。<a href="http://octopress.org/docs/plugins/">octopress的插件</a>可以直接用于jekyll中。</p>
 
-<h3 id="section-6">小结</h3>
+<p>###小结</p>
 
 <p>要将jekyll的页面托管在github时，推荐尽量不用github之外的插件。代码高亮用pygments，markdown的解析器用kramdown更利于对公式的解析，如果还要其它一些美化，就直接插html代码吧！</p>
 
-<h2 id="jekyll-5">常用的Jekyll变量</h2>
+<h2 id="jekyll">常用的Jekyll变量</h2>
 
-<h2 id="section-7">一些技巧</h2>
+<p>##一些技巧</p>
 
-<h3 id="gist">直接插入gist代码</h3>
+<p>###直接插入gist代码</p>
 
 <p>因为markdown的语法可以兼容html，在情非得已的情况下，直接查html代码。如果转帖gist的代码，直接在markdown文件中插入：</p>
 
@@ -291,20 +291,18 @@ $$</code></pre></figure>
 <p>即可得：
 <script src="https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb"></script></p>
 
-<h3 id="section-8">页内跳转</h3>
+<p>###页内跳转</p>
 
-<p>为了方便页内快速跳转，可建立空内容的锚点。比如
-~~~html
-<span id="jekyll-and-github"></span>
-##jekyll与github的关系
-~~~
-既可用</p>
+<p>为了方便页内快速跳转，可建立空内容的锚点。比如</p>
+<div class="highlight"><pre><code class="language-html"><span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;jekyll-and-github&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+##jekyll与github的关系</code></pre></div>
+<p>既可用</p>
 
 <figure class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></figure>
 
 <p>实现页内跳转，试试，<a href="#jekyll-and-github">回去看看</a>。如果用的是kramdown解释器，上例中空锚点行下须有一空行。</p>
 
-<h3 id="section-9">表格不断行</h3>
+<p>###表格不断行</p>
 
 <p>表格某一栏不断行的处理：</p>
 
@@ -314,7 +312,7 @@ $$</code></pre></figure>
 点击[到这里看效果]()。
 --->
 
-<h3 id="section-10">引用本站其它网页</h3>
+<p>###引用本站其它网页</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">{% post_url your_markdown_file_name %}</code></pre></figure>
 
@@ -328,7 +326,9 @@ $$</code></pre></figure>
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -341,8 +341,6 @@ $$</code></pre></figure>
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

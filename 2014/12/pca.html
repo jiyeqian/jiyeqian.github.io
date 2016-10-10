@@ -172,8 +172,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>利用PCA将维数从$n$维约减到$k$维，需要寻找$n$维空间中的$k$个向量$\mathbf u^{(1)}, \mathbf u^{(2)},\ldots,\mathbf u^{(k)}\in\mathbb R^n$，使空间中的点到这$k$个向量确定的面的投影误差最小。事实上，$n$维空间中的这$k$个向量是样本协方差矩阵最大的$k$个特征值对应的特征向量。</p>
 
 <blockquote>
-  <h4 id="pca-1">PCA降维算法</h4>
-  <hr />
+  <h2 id="pca-1">####PCA降维算法</h2>
 
   <ol>
     <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$x_j^{(i)}:=\frac{x_j^{(i)}-\mu_j}{ \sigma_j}$（$\mu_j$表示均值，$\sigma_j$表示标准差）；</li>
@@ -215,8 +214,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>$S_{ii}$是SVD得到的特征值。</p>
 
 <blockquote>
-  <h4 id="pca-2">谨慎使用PCA</h4>
-  <hr />
+  <h2 id="pca-2">####谨慎使用PCA</h2>
 
   <ol>
     <li>PCA不是解决过拟合的好方法，正则化是更好的策略（PCA或多或少损失了有助于分类的信息）；</li>
@@ -478,7 +476,9 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -491,8 +491,6 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

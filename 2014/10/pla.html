@@ -183,10 +183,12 @@ h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sig
 <blockquote>
   <h4 id="pla">PLA</h4>
   <hr />
-  <p>repeat until a full cycle of not encountering mistakes { <br />
-1. 找到参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
-2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$。  <br />
-}</p>
+  <p>repeat until a full cycle of not encountering mistakes {</p>
+  <ol>
+    <li>找到参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；</li>
+    <li>修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$。  <br />
+}</li>
+  </ol>
 </blockquote>
 
 <div class="image_line">
@@ -196,9 +198,11 @@ h(x) = \mbox{sign}\left(\sum_{i=1}^dw_ix_i - \mbox{threshold}\right) = \mbox{sig
 </div>
 </div>
 
-<p>PLA更新模型参数解释： <br />
-1. 当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；<br />
-2. 当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。</p>
+<p>PLA更新模型参数解释：</p>
+<ol>
+  <li>当$y=+1$时，若分错，$\mathbf w^T \mathbf x &lt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太大（大于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变小；</li>
+  <li>当$y=-1$时，若分错，$\mathbf w^T \mathbf x &gt; 0$，表示$\mathbf{w}$和$\mathbf x$的夹角太小（小于90度），需要调整$\mathbf w$，使其与$\mathbf x$的夹角变大。</li>
+</ol>
 
 <p>通过参数更新规则可知  <br />
 \[
@@ -263,9 +267,11 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 <p>相关的证明如下：  <br />
 <img src="/assets/images/2014-10-21-pla_2.jpg" alt="相关的证明" /></p>
 
-<p><strong>结论：</strong>     <br />
-1. 对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛； <br />
-2. 对于未知的样本集，作用在其上的PLA算法可能长时间不收敛，导致这样的情况可能是迭代次数不够（理论上的参数$T$由于目标模型$f$未知而难以估计）或者样本集存在噪声（线性不可分）。</p>
+<p><strong>结论：</strong></p>
+<ol>
+  <li>对于线性可分的样本集合，通过PLA修正模型参数，$\mathbf w_f$和$\mathbf w_t$的内积增长快，$\mathbf w_t$的长度增长慢，$\mathbf w_t$越来越靠近$\mathbf w_f$，最终算最终收敛；</li>
+  <li>对于未知的样本集，作用在其上的PLA算法可能长时间不收敛，导致这样的情况可能是迭代次数不够（理论上的参数$T$由于目标模型$f$未知而难以估计）或者样本集存在噪声（线性不可分）。</li>
+</ol>
 
 <h2 id="pocket-pla">Pocket PLA</h2>
 
@@ -274,11 +280,13 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 <blockquote>
   <h4 id="pocket-pla-1">Pocket PLA</h4>
   <hr />
-  <p>repeat until enough iterations {<br />
-1. 随机抽取参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；     <br />
-2. 修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$；<br />
-3. 如果$\mathbf w_{t+1}$在样本集上的表现优于$\hat{\mathbf w}$，$\hat{\mathbf w}\leftarrow \mathbf w_{t+1}$。 <br />
-}</p>
+  <p>repeat until enough iterations {</p>
+  <ol>
+    <li>随机抽取参数$\mathbf w_t$时对应错分的样本点$\left(\mathbf x_{n(t)}, y_{n(t)}\right)$，$\mbox{sign}\left(\mathbf w^T \mathbf x_{n(t)}\right) \neq y_{n(t)}$；</li>
+    <li>修正参数，$\mathbf w_{t+1}\leftarrow \mathbf w_t + y_{n(t)}\mathbf x_{n(t)}$；</li>
+    <li>如果$\mathbf w_{t+1}$在样本集上的表现优于$\hat{\mathbf w}$，$\hat{\mathbf w}\leftarrow \mathbf w_{t+1}$。 <br />
+}</li>
+  </ol>
 </blockquote>
 
 <p>从第3步可知，Pocket PLA的算法时间复杂度要高于PLA，如果对于线性可分的样本集，Pocket PLA比PLA慢。</p>
@@ -310,7 +318,9 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -323,8 +333,6 @@ R^2 = \max_n \|\mathbf x_n\|^2,~~\rho=\min_n y_n\frac{\mathbf w_f^T}{\|\mathbf w
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

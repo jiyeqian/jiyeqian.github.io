@@ -795,9 +795,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="mi">1</span> <span class="n">tac</span>
 <span class="mi">2</span> <span class="n">toe</span></code></pre></div>
 
-<h2 id="section-17">从函数到包</h2>
+<p>##从函数到包</p>
 
-<h3 id="section-18">函数</h3>
+<h3 id="section-17">函数</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="err">&lt;</span><span class="nf">function_name</span><span class="o">&gt;</span> <span class="p">(</span> <span class="o">&lt;</span><span class="n">parameters_list</span><span class="o">&gt;</span> <span class="p">):</span>
     <span class="o">&lt;</span><span class="n">code</span> <span class="n">block</span><span class="o">&gt;</span></code></pre></div>
@@ -850,14 +850,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="o">&gt;&gt;&gt;</span> <span class="n">pairs</span>
 <span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;four&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">)]</span></code></pre></div>
 
-<h4 id="section-19">嵌套函数</h4>
+<h4 id="section-18">嵌套函数</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">outfun</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">innerfun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
  	    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
     <span class="k">return</span> <span class="n">innerfun</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code></pre></div>
 
-<h3 id="section-20">类</h3>
+<h3 id="section-19">类</h3>
 
 <p>Python的类机制是C++和Modula-3的混合，支持标准面向对象编程的所有特性。与C++和Modula-3不同的是，基本的内建类型也可以作为基类。类也拥有Python的动态特性，在运行时（runtime）创建，可以在创建后修改。</p>
 
@@ -933,7 +933,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">meta_func</span></code></pre></div>
 
-<h3 id="section-21">模块和包</h3>
+<h3 id="section-20">模块和包</h3>
 
 <p><strong>模块</strong>（module）就是同一个文件中函数或类的集合。<strong>包</strong>（package）就是同一个文件夹中模块的集合，该文件夹须包含__init__.py文件。</p>
 
@@ -941,7 +941,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>包中__init__.py中的变量<code>__all__</code>限定了<code>from package import *</code>可以导入的模块。</p>
 
-<h2 id="section-22">程序调试</h2>
+<h2 id="section-21">程序调试</h2>
 
 <p>Python中常用的调试工具有pdb、pudb、ipdb等，pycharm也提供了方便的图形化调试功能。</p>
 
@@ -958,7 +958,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <div class="highlight"><pre><code class="language-bash">python -m ipdb test.py</code></pre></div>
 
-<h2 id="section-23">异常处理</h2>
+<h2 id="section-22">异常处理</h2>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">sys</span>
 
@@ -974,12 +974,12 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
     <span class="k">print</span> <span class="s">&quot;Unexpected error:&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">raise</span></code></pre></div>
 
-<h4 id="section-24">同时捕获多个异常：</h4>
+<p>####同时捕获多个异常：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="o">...</span> <span class="k">except</span> <span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">NameError</span><span class="p">):</span>
 <span class="o">...</span>     <span class="k">pass</span></code></pre></div>
 
-<h4 id="tryelse"><code>try</code>没有捕获到异常时，执行<code>else</code>部分：</h4>
+<p>####<code>try</code>没有捕获到异常时，执行<code>else</code>部分：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
     <span class="k">try</span><span class="p">:</span>
@@ -990,7 +990,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
         <span class="k">print</span> <span class="n">arg</span><span class="p">,</span> <span class="s">&#39;has&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()),</span> <span class="s">&#39;lines&#39;</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></div>
 
-<h4 id="section-25">抛出异常：</h4>
+<p>####抛出异常：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
 <span class="o">...</span>    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;spam&#39;</span><span class="p">,</span> <span class="s">&#39;eggs&#39;</span><span class="p">)</span>
@@ -1008,7 +1008,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 <span class="n">x</span> <span class="o">=</span> <span class="n">spam</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">eggs</span></code></pre></div>
 
-<h4 id="section-26">检测是否遇到异常，可不处理，重新抛出异常：</h4>
+<p>####检测是否遇到异常，可不处理，重新抛出异常：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
 <span class="o">...</span>     <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s">&#39;HiThere&#39;</span><span class="p">)</span>
@@ -1021,7 +1021,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
   <span class="n">File</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">2</span><span class="p">,</span> <span class="ow">in</span> <span class="err">?</span>
 <span class="ne">NameError</span><span class="p">:</span> <span class="n">HiThere</span></code></pre></div>
 
-<h4 id="section-27">用户自定义异常：</h4>
+<p>####用户自定义异常：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">MyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="o">...</span>     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -1040,7 +1040,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
   <span class="n">File</span> <span class="s">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="err">?</span>
 <span class="n">__main__</span><span class="o">.</span><span class="n">MyError</span><span class="p">:</span> <span class="s">&#39;oops!&#39;</span></code></pre></div>
 
-<h4 id="clean-up">清理（clean-up）行为</h4>
+<p>####清理（clean-up）行为</p>
 
 <p>通过<code>finally</code>语句，定义清理行为：</p>
 
@@ -1077,7 +1077,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <h2 id="idiomatic-python">Idiomatic Python</h2>
 
-<h3 id="section-28">列表解析</h3>
+<h3 id="section-23">列表解析</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="c">##### 语法</span>
 <span class="p">[</span> <span class="o">&lt;</span><span class="n">expr1</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">L</span> <span class="k">if</span> <span class="o">&lt;</span><span class="n">expr2</span><span class="o">&gt;</span> <span class="p">]</span>
@@ -1115,7 +1115,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <p>除此之外，还有集合解析、字典解析。没有元组解析，那是构造生成器的方法。</p>
 
-<h3 id="withcontext-manager"><code>with</code>与上下文管理器（context manager）</h3>
+<p>###<code>with</code>与上下文管理器（context manager）</p>
 
 <p><a href="https://docs.python.org/2/reference/compound_stmts.html#the-with-statement"><code>with</code>语句</a>确保对象在任何情况下都被正确清理。</p>
 
@@ -1125,11 +1125,11 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <h3 id="yieldgenerator"><code>yield</code>与生成器（generator）</h3>
 
-<h3 id="decorator2295507">修饰器（decorator）<sup id="fnref:2295507"><a href="#fn:2295507" class="footnote">7</a></sup></h3>
+<p>###修饰器（decorator）<sup id="fnref:2295507"><a href="#fn:2295507" class="footnote">7</a></sup></p>
 
 <p>一个函数返回另一个函数，通常利用<code>@wrapper</code>语法实现函数变换，<code>classmethod()</code>和<code> staticmethod()</code>是典型的修饰器。</p>
 
-<h3 id="section-29">函数式编程</h3>
+<h3 id="section-24">函数式编程</h3>
 
 <p>与序列配套使用的三个有用的函数：<code>filter()</code>、<code>map()</code>和<code>reduce()</code>。</p>
 
@@ -1186,11 +1186,11 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <p>用这种方法写帮助文档，有利于程序和文档的一致性。</p>
 
-<h3 id="section-30">常用函数</h3>
+<h3 id="section-25">常用函数</h3>
 
-<h4 id="enumerate"><code>enumerate()</code>：确定序列索引</h4>
+<p>####<code>enumerate()</code>：确定序列索引</p>
 
-<h4 id="zip"><code>zip()</code>：序列合并与反合并</h4>
+<p>####<code>zip()</code>：序列合并与反合并</p>
 
 <p>等价于参数参数为<code>None</code>的<code>map()</code>函数。</p>
 
@@ -1203,7 +1203,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">y2</span><span class="p">)</span>
 <span class="bp">True</span></code></pre></div>
 
-<h4 id="dir"><code>dir()</code>：列出模块定义了的名字</h4>
+<p>####<code>dir()</code>：列出模块定义了的名字</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">__builtin__</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">__builtin__</span><span class="p">)</span></code></pre></div>
@@ -1221,7 +1221,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <p>上例中<strong>不能</strong>使用<code>if position</code>，因为<code>position</code>的取值可能是<code>0</code>。</p>
 
-<h4 id="section-31">避免使用<code>''</code>、<code>[]</code>、<code>{}</code>作为函数的默认参数</h4>
+<h4 id="section-26">避免使用<code>''</code>、<code>[]</code>、<code>{}</code>作为函数的默认参数</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="p">[]):</span>
     <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -1276,12 +1276,12 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 <div class="highlight"><pre><code class="language-python"><span class="n">result_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;True&#39;</span><span class="p">,</span> <span class="s">&#39;False&#39;</span><span class="p">,</span> <span class="s">&#39;File not found&#39;</span><span class="p">]</span>
 <span class="n">result_string</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_list</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-32">多个字符串操作链式组合</h4>
+<h4 id="section-27">多个字符串操作链式组合</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">book_info</span> <span class="o">=</span> <span class="s">&#39; The Three Musketeers: Alexandre Dumas&#39;</span>
 <span class="n">formatted_book_info</span> <span class="o">=</span> <span class="n">book_info</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">,</span> <span class="s">&#39; by&#39;</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-33">表达式求值</h4>
+<h4 id="section-28">表达式求值</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">ast</span>
 <span class="n">expr</span> <span class="o">=</span> <span class="s">&quot;[1, 2, 3]&quot;</span> 
@@ -1301,7 +1301,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <span class="c">##### Prints &#39;1, 2&#39;</span></code></pre></div>
 
-<h4 id="section-34">利用集合去除迭代容器中的重复元素</h4>
+<h4 id="section-29">利用集合去除迭代容器中的重复元素</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">unique_surnames</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">employee_surnames</span><span class="p">)</span> 
 <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s">&#39;html&#39;</span><span class="p">):</span>
@@ -1351,18 +1351,18 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
         <span class="k">if</span> <span class="n">raise_exception</span><span class="p">(</span><span class="n">line</span><span class="p">):</span> 
             <span class="k">print</span><span class="p">(</span><span class="s">&#39;No! An Exception!&#39;</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-35">利用元组解包数据</h4>
+<h4 id="section-30">利用元组解包数据</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">list_from_comma_separated_value_file</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;dog&#39;</span><span class="p">,</span> <span class="s">&#39;Fido&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 <span class="p">(</span><span class="n">animal</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_from_comma_separated_value_file</span>
 <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;{name} the {animal} is {age} years old&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">animal</span><span class="o">=</span><span class="n">animal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="n">age</span><span class="p">))</span></code></pre></div>
 
-<h4 id="section-36">利用<code>_</code>占位元组不需要的元素</h4>
+<h4 id="section-31">利用<code>_</code>占位元组不需要的元素</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">get_user_info</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">21</span><span class="p">:</span>
     <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;{name} can drink!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-37">交换元素不必使用临时变量</h4>
+<h4 id="section-32">交换元素不必使用临时变量</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">foo</span> <span class="o">=</span> <span class="s">&#39;Foo&#39;</span>
 <span class="n">bar</span> <span class="o">=</span> <span class="s">&#39;Bar&#39;</span>
@@ -1403,7 +1403,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
   <li>当前工程中的库。</li>
 </ol>
 
-<h4 id="section-38">字符集编码</h4>
+<h4 id="section-33">字符集编码</h4>
 
 <ul>
   <li>不同编码之间通过中间桥梁Unicode，利用<code>decode</code>和<code>encode</code>进行转换；
@@ -1418,11 +1418,11 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
   <li><code>str(s)</code>是<code>s.encode('ascii')</code>的简写。</li>
 </ul>
 
-<h4 id="section-39">三元运算：模拟<code>?:</code>运算</h4>
+<h4 id="section-34">三元运算：模拟<code>?:</code>运算</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">max_value</span> <span class="o">=</span> <span class="n">A</span> <span class="k">if</span> <span class="n">A</span> <span class="o">&gt;</span> <span class="n">B</span> <span class="k">else</span> <span class="n">B</span></code></pre></div>
 
-<h4 id="section-40">优美地打印</h4>
+<h4 id="section-35">优美地打印</h4>
 
 <p>可以通过以下方式对字典和数列进行优美地打印：</p>
 
@@ -1471,7 +1471,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <p>尽量避免使用缩写。</p>
 
-<h3 id="section-41">运用范例</h3>
+<h3 id="section-36">运用范例</h3>
 
 <h4 id="context-manager-timer">利用<code>with</code>的上下文管理器测试执行时间</h4>
 
@@ -1528,7 +1528,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 <span class="k">def</span> <span class="nf">tree</span><span class="p">():</span> 
     <span class="k">return</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-42">模拟枚举常量</h4>
+<h4 id="section-37">模拟枚举常量</h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">enum</span><span class="p">(</span><span class="o">**</span><span class="n">enums</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;Enum&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="n">enums</span><span class="p">)</span>
@@ -1544,7 +1544,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <h4 id="httppythonjobbolecom81260"><a href="http://python.jobbole.com/81260/">并发与并行的新手指南</a></h4>
 
-<h2 id="section-43">常用库</h2>
+<h2 id="section-38">常用库</h2>
 
 <h3 id="itertools">itertools</h3>
 
@@ -1556,13 +1556,13 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <h3 id="weakref">weakref</h3>
 
-<h2 id="section-44">行业应用</h2>
+<h2 id="section-39">行业应用</h2>
 
-<h3 id="section-45">计算机视觉</h3>
+<h3 id="section-40">计算机视觉</h3>
 
 <p>计算机视觉使用的主要Python包有<a href="http://scikit-image.org">scikit-image</a>、<a href="http://opencv.org">OpenCV</a>、<a href="http://luispedro.org/software/mahotas/">Mahotas</a>、<a href="http://simplecv.org">SimpleCV</a>、<a href="http://ilastik.org">ilastik</a>、<a href="http://www.menpo.org">Menpo</a>。</p>
 
-<h3 id="section-46">机器学习</h3>
+<h3 id="section-41">机器学习</h3>
 
 <p>机器学习使用的主要Python包有<a href="http://scikit-learn.org">scikit-learn</a>、<a href="http://luispedro.org/software/milk/">Milk</a>。</p>
 
@@ -1576,7 +1576,7 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 
 <p>利用<a href="http://python-future.org"><code>future</code>包</a>……</p>
 
-<h2 class="no_toc" id="section-47">目录</h2>
+<h2 class="no_toc" id="section-42">目录</h2>
 
 <ul id="markdown-toc">
   <li><a href="#section" id="markdown-toc-section">数据类型</a>    <ul>
@@ -1612,16 +1612,13 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
   <li><a href="#section-14" id="markdown-toc-section-14">控制流</a>    <ul>
       <li><a href="#section-15" id="markdown-toc-section-15">分支</a></li>
       <li><a href="#section-16" id="markdown-toc-section-16">循环</a></li>
-    </ul>
-  </li>
-  <li><a href="#section-17" id="markdown-toc-section-17">从函数到包</a>    <ul>
-      <li><a href="#section-18" id="markdown-toc-section-18">函数</a>        <ul>
+      <li><a href="#section-17" id="markdown-toc-section-17">函数</a>        <ul>
           <li><a href="#arg--keyword" id="markdown-toc-arg--keyword">个数可变参数：<code>*arg</code> &amp; <code>**keyword</code></a></li>
           <li><a href="#lambda" id="markdown-toc-lambda">匿名的lambda函数</a></li>
-          <li><a href="#section-19" id="markdown-toc-section-19">嵌套函数</a></li>
+          <li><a href="#section-18" id="markdown-toc-section-18">嵌套函数</a></li>
         </ul>
       </li>
-      <li><a href="#section-20" id="markdown-toc-section-20">类</a>        <ul>
+      <li><a href="#section-19" id="markdown-toc-section-19">类</a>        <ul>
           <li><a href="#newinit" id="markdown-toc-newinit"><code>__new__</code>与<code>__init__</code></a></li>
           <li><a href="#getattributegetattr" id="markdown-toc-getattributegetattr"><code>__getattribute__</code>与<code>__getattr__</code></a></li>
           <li><a href="#super" id="markdown-toc-super"><code>super</code>函数</a></li>
@@ -1630,71 +1627,56 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
           <li><a href="#metaclass" id="markdown-toc-metaclass"><code>__metaclass__</code>元类</a></li>
         </ul>
       </li>
-      <li><a href="#section-21" id="markdown-toc-section-21">模块和包</a></li>
+      <li><a href="#section-20" id="markdown-toc-section-20">模块和包</a></li>
     </ul>
   </li>
-  <li><a href="#section-22" id="markdown-toc-section-22">程序调试</a></li>
-  <li><a href="#section-23" id="markdown-toc-section-23">异常处理</a>    <ul>
-      <li><a href="#section-24" id="markdown-toc-section-24">同时捕获多个异常：</a></li>
-      <li><a href="#tryelse" id="markdown-toc-tryelse"><code>try</code>没有捕获到异常时，执行<code>else</code>部分：</a></li>
-      <li><a href="#section-25" id="markdown-toc-section-25">抛出异常：</a></li>
-      <li><a href="#section-26" id="markdown-toc-section-26">检测是否遇到异常，可不处理，重新抛出异常：</a></li>
-      <li><a href="#section-27" id="markdown-toc-section-27">用户自定义异常：</a></li>
-      <li><a href="#clean-up" id="markdown-toc-clean-up">清理（clean-up）行为</a></li>
-    </ul>
-  </li>
+  <li><a href="#section-21" id="markdown-toc-section-21">程序调试</a></li>
+  <li><a href="#section-22" id="markdown-toc-section-22">异常处理</a></li>
   <li><a href="#idiomatic-python" id="markdown-toc-idiomatic-python">Idiomatic Python</a>    <ul>
-      <li><a href="#section-28" id="markdown-toc-section-28">列表解析</a></li>
-      <li><a href="#withcontext-manager" id="markdown-toc-withcontext-manager"><code>with</code>与上下文管理器（context manager）</a></li>
+      <li><a href="#section-23" id="markdown-toc-section-23">列表解析</a></li>
       <li><a href="#yieldgenerator" id="markdown-toc-yieldgenerator"><code>yield</code>与生成器（generator）</a></li>
-      <li><a href="#decorator2295507" id="markdown-toc-decorator2295507">修饰器（decorator）</a></li>
-      <li><a href="#section-29" id="markdown-toc-section-29">函数式编程</a></li>
+      <li><a href="#section-24" id="markdown-toc-section-24">函数式编程</a></li>
       <li><a href="#docstringhttpswwwpythonorgdevpepspep-0257" id="markdown-toc-docstringhttpswwwpythonorgdevpepspep-0257"><a href="https://www.python.org/dev/peps/pep-0257/">Docstring</a></a></li>
-      <li><a href="#section-30" id="markdown-toc-section-30">常用函数</a>        <ul>
-          <li><a href="#enumerate" id="markdown-toc-enumerate"><code>enumerate()</code>：确定序列索引</a></li>
-          <li><a href="#zip" id="markdown-toc-zip"><code>zip()</code>：序列合并与反合并</a></li>
-          <li><a href="#dir" id="markdown-toc-dir"><code>dir()</code>：列出模块定义了的名字</a></li>
-        </ul>
-      </li>
+      <li><a href="#section-25" id="markdown-toc-section-25">常用函数</a></li>
       <li><a href="#a-hrefknupp2013writing1a" id="markdown-toc-a-hrefknupp2013writing1a">实用技术<a href="#Knupp2013Writing">[1]</a></a>        <ul>
           <li><a href="#truefalsenone" id="markdown-toc-truefalsenone">避免直接比较<code>True</code>、<code>False</code>、<code>None</code></a></li>
-          <li><a href="#section-31" id="markdown-toc-section-31">避免使用<code>''</code>、<code>[]</code>、<code>{}</code>作为函数的默认参数</a></li>
+          <li><a href="#section-26" id="markdown-toc-section-26">避免使用<code>''</code>、<code>[]</code>、<code>{}</code>作为函数的默认参数</a></li>
           <li><a href="#python-3" id="markdown-toc-python-3">用<code>*</code>表示列表剩下的元素［Python 3］</a></li>
           <li><a href="#defaultdictget" id="markdown-toc-defaultdictget">利用<code>default</code>参数，字典<code>dict.get</code>返回默认值</a></li>
           <li><a href="#dict-comprehension" id="markdown-toc-dict-comprehension">利用字典解析（dict comprehension）构造字典</a></li>
           <li><a href="#format" id="markdown-toc-format">利用<code>format</code>函数格式化字符串</a></li>
           <li><a href="#join" id="markdown-toc-join">用<code>''.join</code>将列表元素合并为字符串</a></li>
-          <li><a href="#section-32" id="markdown-toc-section-32">多个字符串操作链式组合</a></li>
-          <li><a href="#section-33" id="markdown-toc-section-33">表达式求值</a></li>
+          <li><a href="#section-27" id="markdown-toc-section-27">多个字符串操作链式组合</a></li>
+          <li><a href="#section-28" id="markdown-toc-section-28">表达式求值</a></li>
           <li><a href="#str" id="markdown-toc-str">为类定义<code>__str__</code>使其便于理解</a></li>
-          <li><a href="#section-34" id="markdown-toc-section-34">利用集合去除迭代容器中的重复元素</a></li>
+          <li><a href="#section-29" id="markdown-toc-section-29">利用集合去除迭代容器中的重复元素</a></li>
           <li><a href="#set-comprehension" id="markdown-toc-set-comprehension">利用集合解析（set comprehension）</a></li>
           <li><a href="#generator" id="markdown-toc-generator">利用生成器（generator）惰性加载无限序列</a></li>
           <li><a href="#generator-expression" id="markdown-toc-generator-expression">利用生成器解析（generator expression）替代列表解析</a></li>
           <li><a href="#context-managerwith" id="markdown-toc-context-managerwith">利用上下文管理器（context manager），<code>with</code>语句，正确管理资源</a></li>
-          <li><a href="#section-35" id="markdown-toc-section-35">利用元组解包数据</a></li>
-          <li><a href="#section-36" id="markdown-toc-section-36">利用<code>_</code>占位元组不需要的元素</a></li>
-          <li><a href="#section-37" id="markdown-toc-section-37">交换元素不必使用临时变量</a></li>
+          <li><a href="#section-30" id="markdown-toc-section-30">利用元组解包数据</a></li>
+          <li><a href="#section-31" id="markdown-toc-section-31">利用<code>_</code>占位元组不需要的元素</a></li>
+          <li><a href="#section-32" id="markdown-toc-section-32">交换元素不必使用临时变量</a></li>
           <li><a href="#sysexit" id="markdown-toc-sysexit">利用<code>sys.exit</code>让脚本返回错误码</a></li>
           <li><a href="#from-foo-import-" id="markdown-toc-from-foo-import-">不要使用<code>from foo import *</code></a></li>
           <li><a href="#import" id="markdown-toc-import"><code>import</code>的顺序：</a></li>
-          <li><a href="#section-38" id="markdown-toc-section-38">字符集编码</a></li>
-          <li><a href="#section-39" id="markdown-toc-section-39">三元运算：模拟<code>?:</code>运算</a></li>
-          <li><a href="#section-40" id="markdown-toc-section-40">优美地打印</a></li>
+          <li><a href="#section-33" id="markdown-toc-section-33">字符集编码</a></li>
+          <li><a href="#section-34" id="markdown-toc-section-34">三元运算：模拟<code>?:</code>运算</a></li>
+          <li><a href="#section-35" id="markdown-toc-section-35">优美地打印</a></li>
           <li><a href="#pep8httplegacypythonorgdevpepspep-0008" id="markdown-toc-pep8httplegacypythonorgdevpepspep-0008">编程风格：按<a href="http://legacy.python.org/dev/peps/pep-0008/">PEP8</a>格式化代码</a></li>
         </ul>
       </li>
-      <li><a href="#section-41" id="markdown-toc-section-41">运用范例</a>        <ul>
+      <li><a href="#section-36" id="markdown-toc-section-36">运用范例</a>        <ul>
           <li><a href="#context-manager-timer" id="markdown-toc-context-manager-timer">利用<code>with</code>的上下文管理器测试执行时间</a></li>
           <li><a href="#yield" id="markdown-toc-yield">利用递归和<code>yield</code>打印嵌套结构的字典</a></li>
           <li><a href="#defaultdicthttpsgistgithubcomupsuper2517847" id="markdown-toc-defaultdicthttpsgistgithubcomupsuper2517847">利用<code>defaultdict</code><a href="https://gist.github.com/upsuper/2517847">一行实现树</a></a></li>
-          <li><a href="#section-42" id="markdown-toc-section-42">模拟枚举常量</a></li>
+          <li><a href="#section-37" id="markdown-toc-section-37">模拟枚举常量</a></li>
           <li><a href="#httppythonjobbolecom81260" id="markdown-toc-httppythonjobbolecom81260"><a href="http://python.jobbole.com/81260/">并发与并行的新手指南</a></a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#section-43" id="markdown-toc-section-43">常用库</a>    <ul>
+  <li><a href="#section-38" id="markdown-toc-section-38">常用库</a>    <ul>
       <li><a href="#itertools" id="markdown-toc-itertools">itertools</a></li>
       <li><a href="#collections" id="markdown-toc-collections">collections</a></li>
       <li><a href="#functools" id="markdown-toc-functools">functools</a></li>
@@ -1702,17 +1684,17 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
       <li><a href="#weakref" id="markdown-toc-weakref">weakref</a></li>
     </ul>
   </li>
-  <li><a href="#section-44" id="markdown-toc-section-44">行业应用</a>    <ul>
-      <li><a href="#section-45" id="markdown-toc-section-45">计算机视觉</a></li>
-      <li><a href="#section-46" id="markdown-toc-section-46">机器学习</a></li>
+  <li><a href="#section-39" id="markdown-toc-section-39">行业应用</a>    <ul>
+      <li><a href="#section-40" id="markdown-toc-section-40">计算机视觉</a></li>
+      <li><a href="#section-41" id="markdown-toc-section-41">机器学习</a></li>
     </ul>
   </li>
   <li><a href="#python-3-1" id="markdown-toc-python-3-1">Python 3</a></li>
   <li><a href="#python-2-" id="markdown-toc-python-2-">与 Python 2 的兼容性</a></li>
-  <li><a href="#section-48" id="markdown-toc-section-48">参考资料</a></li>
+  <li><a href="#section-43" id="markdown-toc-section-43">参考资料</a></li>
 </ul>
 
-<h2 id="section-48">参考资料</h2>
+<h2 id="section-43">参考资料</h2>
 
 <ol class="bibliography"><li><span id="Knupp2013Writing">[1]J. Knupp, “Writing Idiomatic Python.” 2013.</span>
 
@@ -1765,7 +1747,9 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -1778,8 +1762,6 @@ python -m pudb.run test.py <span class="c"># method 2</span></code></pre></div>
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

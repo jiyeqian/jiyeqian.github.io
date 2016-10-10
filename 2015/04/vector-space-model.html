@@ -163,7 +163,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><strong>向量空间模型</strong>（VSM，vector space model）是用向量表示文本的代数模型，它将文本转换为向量，也称为<strong>词语向量模型</strong>（term vector model）<a href="#Salton:1975:VSM:361219.361220">[1]</a><sup id="fnref:tfidf"><a href="#fn:tfidf" class="footnote">1</a></sup>。最容易想到的方法就是利用词频（TF，term frequency）。</p>
 
-<h3 id="section-1">词频</h3>
+<p>###词频</p>
 
 <p><strong>词频</strong>就是统计词语在文本中出现的次数。</p>
 
@@ -270,7 +270,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>通过$L_2$规范化，向量元素的取值范围变为了$[0, 1]$。如果要提升某篇文本和主题的相关性，可以一遍遍重复单词，这种方法可以压低这样的频率提升。</p>
 
-<h3 id="section-2">逆文档频率</h3>
+<p>###逆文档频率</p>
 
 <p>词频只考虑了词语在某个特定文档中出现的频率，并未考虑词语在所有文档中的价值。如果某个词比较少见，但是它在这篇文章中多次出现，那么它很可能就反映了这篇文章的特性，正是我们所需要的关键词。<a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html">例如</a>：一篇文本中“中国”、“蜜蜂”、“养殖”这三个词的出现次数一样多。这是不是意味着，作为关键词，它们的重要性是一样的？显然不是这样。因为“中国”是很常见的词，相对而言，“蜜蜂”和“养殖”不那么常见。如果这三个词在一篇文章的出现次数一样多，有理由认为，“蜜蜂”和“养殖”的重要程度要大于“中国”，也就是说，在关键词排序上面，“蜜蜂”和“养殖”应该排在“中国”的前面。</p>
 
@@ -304,7 +304,7 @@ IDF(\mbox{word}) = \log\left(\mbox{num of documents}\over\mbox{num of documents 
 
 <p>如果一个词越常见，那么分母就越大，逆文档频率就越小越接近0。分母之所以要加1，是为了避免分母为0（即所有文档都不包含该词）。</p>
 
-<h3 id="tf-idf">TF-IDF</h3>
+<p>###TF-IDF</p>
 
 <p>\begin{equation}
 TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
@@ -359,11 +359,11 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 <span class="c">#  [ 0.48359121  0.48359121  0.48359121  0.          0.          0.36778358</span>
 <span class="c">#    0.          0.          0.          0.28561676  0.28561676]]</span></code></pre></div>
 
-<h2 id="section-3">应用示例</h2>
+<h2 id="section-1">应用示例</h2>
 
 <p>向量空间模型的TF-IDF可用于<a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html">自动提取关键词</a>、<a href="http://www.ruanyifeng.com/blog/2013/03/cosine_similarity.html">找出相似文章</a>和<a href="http://www.ruanyifeng.com/blog/2013/03/automatic_summarization.html">自动摘要</a>等。</p>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="section-2">参考资料</h2>
 
 <ol class="bibliography"><li><span id="Salton:1975:VSM:361219.361220">[1]G. Salton, A. Wong, and C.-S. Yang, “A Vector Space Model for Automatic Indexing,” <i>Communications of the ACM</i>, vol. 18, no. 11, pp. 613–620, Nov. 1975.</span>
 
@@ -371,7 +371,7 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
 </li></ol>
 
-<h3 id="section-5">脚注</h3>
+<h3 id="section-3">脚注</h3>
 
 <div class="footnotes">
   <ol>
@@ -393,7 +393,9 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -406,8 +408,6 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

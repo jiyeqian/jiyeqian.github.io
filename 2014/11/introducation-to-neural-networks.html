@@ -247,9 +247,11 @@ D_{ij}^{(l)} = \frac{\partial J(\boldsymbol\Theta)}{\partial\Theta_{ij}^{(l)}}.
   <hr />
   <p>训练集：$\left\{\left(\mathbf x^{(1)}, \mathbf y^{(1)}\right),\ldots,\left(\mathbf x^{(m)}, \mathbf y^{(m)}\right)\right\}$。</p>
 
-  <p>初始化： <br />
-1. $\Delta_{ij}^{(l)} = 0$； <br />
-2. 随机数初始化$\Theta_{ij}^{(l)}$为$[-\epsilon, \epsilon]$的值，$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}$由神经元数目确定，其中，$L_{in} = s_l$，$L_{out}=s_{l+1}$。<sup id="fnref:initial_theta"><a href="#fn:initial_theta" class="footnote">4</a></sup></p>
+  <p>初始化：</p>
+  <ol>
+    <li>$\Delta_{ij}^{(l)} = 0$；</li>
+    <li>随机数初始化$\Theta_{ij}^{(l)}$为$[-\epsilon, \epsilon]$的值，$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}$由神经元数目确定，其中，$L_{in} = s_l$，$L_{out}=s_{l+1}$。<sup id="fnref:initial_theta"><a href="#fn:initial_theta" class="footnote">4</a></sup></li>
+  </ol>
 
   <p>for $k=1$ to $m$ {</p>
 
@@ -455,7 +457,9 @@ D_{ij}^{(l)} := \left\{
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -468,8 +472,6 @@ D_{ij}^{(l)} := \left\{
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

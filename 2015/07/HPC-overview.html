@@ -221,11 +221,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <h2 id="section-2">并行硬件平台</h2>
 
-<h3 id="section-3">机群</h3>
+<p>###机群</p>
 
 <p>通过使用网线依据某种拓扑方式将多台微机互连以获取更大的计算能力，这种系统通常称为<strong>机群</strong>，而每台微机称为节点。目前几乎所有的超级计算机都是机群系统。显式的消息传递编程接口MPI是这类平台上的标准和首选。</p>
 
-<h3 id="x86">X86多核向量处理器</h3>
+<p>###X86多核向量处理器</p>
 
 <p>相比超线程，多核是真正的线程级并行设备。多核与超线程技术相结合，可进一步提高系统的吞吐量。多核的每个核心里面具有独立的一级缓存，共享的或独立的二级缓存，有些机器还有独立或共享的三级/四级缓存，所有核心共享内存DRAM。多线程/多进程程序时可利用这些每个核心独享的缓存，这是<strong>超线性加速</strong>（多核处理器上获得的性能收益超过核数）的原因之一。发挥多核处理器多个核心性能的编程方式通常是使用OpenMP和pthread等线程级并行工具，容易产生的性能问题主要是伪共享和负载均衡。</p>
 
@@ -239,15 +239,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>使用汇编语言。</li>
 </ol>
 
-<h3 id="cpugpu">CPU+GPU</h3>
+<p>###CPU+GPU</p>
 
 <p>由于现代GPU强大的并行处理能力和可编程流水线，可处理非图形数据。特别在面对单指令流多数据流（SIMD），且数据处理的运算量远大于数据调度和传输的需要时，GPGPU在性能上大大超越了传统的CPU应用程序。由于GPU将更大比例的晶体管用于计算，相对来说用于缓存的比例就比CPU小，因此通常局部性满足CPU要求而不满足GPU要求的应用不适合GPU。CPU+GPU异构计算需要在GPU和CPU之间传输数据，而这个带宽比内存的访问带宽还要小，因此那种需要在GPU和CPU之间进行大量、频繁数据交互的解决方案不适合在GPU上实现。</p>
 
-<h3 id="section-4">移动设备</h3>
+<p>###移动设备</p>
 
 <p>而由于电池容量和功耗的原因，移动端不可能使用桌面或服务器高性能处理器，因此其对性能优化具有很高需求。ARM支持的向量指令集称为NEON，大多数移动GPU已支持使用OpenCL进行并行计算。</p>
 
-<h2 id="section-5">现代处理器</h2>
+<h2 id="section-3">现代处理器</h2>
 
 <p>现代处理器利用了指令级并行技术，同一时刻存在着多条指令同时执行。处理器执行指令的顺序无须和汇编代码给出的指令顺序完全一致，编译器和处理器只需要保证最终结果一致，这类处理器称为<strong>乱序执行处理器</strong>。目前主流的CPU和GPU基本上都已经是乱序执行处理器。严格按照顺序一次执行一条指令，只有前一条执行完才开始执行后一条指令的处理器，称为<strong>按序处理器</strong>。</p>
 
@@ -260,7 +260,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>缓存层次结构：包括缓存组织、缓存特点以及NUMA。</li>
 </ul>
 
-<h2 id="section-6">优化方法</h2>
+<p>##优化方法</p>
 
 <p>程序优化主要分两类：（串行）算法优化和硬件相关优化（向量化、并行化）。算法优化通常独立于硬件，比较复杂，常通过$\mathbf O$度量复杂度比较性能。硬件相关优化根据硬件体系结构，设计相应算法，主要考虑硬件的存储和计算特性，通常包括：</p>
 
@@ -279,7 +279,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>算法优化通常主要考虑计算代价，这和处理器相关。对于硬件相关的优化，存储器和总线结构是不可忽视的重要因素。</p>
 
-<h2 id="section-7">参考资料</h2>
+<h2 id="section-4">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
@@ -297,7 +297,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -310,8 +312,6 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
-    
-    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
     
   </ul>
 <p></p>

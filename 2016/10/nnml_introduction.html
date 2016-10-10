@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>机器学习：噪声与误差</title>
+    <title>NNML（01）：引言</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>机器学习：噪声与误差</h1>
+        <h1>NNML（01）：引言</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2014-12-27">2014-12-27</time>
+  <time datetime="2016-10-09">2016-10-09</time>
 </span>
 
  |
@@ -155,109 +155,173 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<p>如果数据存在噪声，对机器学习可学习理论推导有何影响？</p>
+<h2 id="section">为什么需要机器学习</h2>
 
-<h2 id="section">噪声起源</h2>
-
-<p>对于$f:\mathcal X\rightarrow \mathcal Y$，噪声即可能来源于$\mathcal X$，也可能来源于$\mathcal Y$。以信用卡申办信息为例说明（$\mathcal X$为客户资料，$\mathcal Y$为是否办理信用卡）：</p>
+<p><strong>问题1：复杂场景中的三维目标识别——难以编程实现</strong></p>
 
 <ul>
-  <li>$y$的噪声：良好纪录的用户，被标记为Bad；</li>
-  <li>$y$的噪声：同样资料的用户，标记却不同（不同专家评价有差异）；</li>
-  <li>$\mathbf x$的噪声：不准确的客户资料。</li>
+  <li>由于不清楚大脑工作原理，不知如何编写程序。</li>
+  <li>即使有了如何做的好主意，程序可能极其复杂。</li>
 </ul>
 
-<h2 id="target-distribution">目标分布<sup id="fnref:target-distribution"><a href="#fn:target-distribution" class="footnote">1</a></sup></h2>
+<p><strong>问题2：信用卡交易欺诈的概率计算——难以编程实现</strong></p>
 
-<p>由于噪声的存在，弹珠模型的弹珠不再是确定的颜色，而是会随时变色，但是通过记录抽出瞬间弹珠的颜色，仍可以对罐中弹珠颜色概率做估计。$y=f(\mathbf x) + \mbox{noise}$，$y$用<strong>目标分布</strong>表示
-\begin{equation}
-y\sim P(y|\mathbf x)。
-\end{equation}
-对于满足$(\mathbf x,y)\sim P(\mathbf x,y)$的噪声数据，VC界仍成立，通过$E_{in}$仍然可以估计$E_{out}$。
-如果$P(\circ|\mathbf x)=0.7$，$P(\times|\mathbf x)=0.3$，<strong>理想最小目标函数</strong>（ideal mini-target）为$f(\mathbf x)=\circ$，在最佳选择下噪声水平是$0.3$。对于确定的（无噪声）的目标函数$f$，也可用目标分布（target distribution）表示
-\[
-P(y|\mathbf x)=
-\left\{
-\begin{aligned}
-1&amp;\quad\mbox{for }y=f(\mathbf x)\\
-0&amp;\quad\mbox{for }y\neq f(\mathbf x)。
-\end{aligned}
-\right.
-\]</p>
+<ul>
+  <li>没有简单可靠的判定准则，需要组合大量的弱规则。</li>
+  <li>欺诈方法在变，规则也会随时间而改变，程序要适应这种改变。</li>
+</ul>
 
-<p>机器学习的目标就是预测常见数据（w.r.t. $P(\mathbf x)$）的理想最小目标函数（w.r.t. $P(y|\mathbf x)$）。</p>
+<p><strong>机器学习方法如何应对这些问题？</strong>不会针对每个特定任务写程序，而是搜集给定输出与正确输出的大量范例。机器学习方法利用这些范例，并用程序来做这些事儿。</p>
 
-<p>由于噪声的存在，并且$\mathcal D$也是通过采样得到的，从数据$\mathcal D$无法得出目标函数$f$是线性还是非线性等特征。</p>
+<ul>
+  <li>机器学习算法的程序不同于经典的程序，包含大量的参数。</li>
+  <li>在新数据上效果和训练数据上一样好。</li>
+  <li>通过在新的数据上训练，程序随数据而改变。</li>
+</ul>
 
-<h2 id="error-measurement">误差度量</h2>
+<p>大规模计算比付钱写特定任务的程序更廉价。</p>
 
-<p>回顾out-of-sample误差度量\[E_{out} = \varepsilon_{\mathbf x\sim P}[[g(\mathbf x)\neq f(\mathbf x)]]，\]它是基于每个点的误差度量（pointwise error measure），$[[\mbox{prediction}\neq\mbox{targe}]]$度量的分类错误称为<strong>0/1错误</strong>。基于每个点的in-sample误差度量为\[E_{in} = {1\over N}\sum_{n=1}^Nerr\left(g\left(\mathbf x_n\right),f\left(\mathbf x_n\right)\right)。\]</p>
-
-<p>令$\tilde y=g(\mathbf x)，y=f(\mathbf x)$，0/1误差和<strong>平方误差</strong>分别定义为\[err(\tilde y,y)=[[\tilde y\neq y]]\qquad err(\tilde y,y)=(\tilde y- y)^2。\]</p>
-
-<p>误差是如何影响学习算法的呢？</p>
-
-<p>下面示例展示了不同度量方式下误差的差异：</p>
-
-<p><img src="/assets/images/2014-12-27-machine-learning-noise-and-error-ideal-mini-target-example.png" alt="误差度量的影响" /></p>
-
-<p>$P(y|\mathbf x)$和$err$确定了理想最小目标函数$f(\mathbf x)$。在0/1误差和平方误差度量方式下，理想最小目标函数分别为
-\[
-f(\mathbf x)=\arg\max_{y\in\mathcal Y}P(y|\mathbf x)\qquad f(\mathbf x)=\sum_{y\in\mathcal Y}yP(y|\mathbf x)。
-\]
-若采用平方误差度度量方式，上例中$f(\mathbf x)=1.9$。</p>
-
-<p>根据具体应用场景，选择相应的错误（误差）衡量方法，对机器学习至关重要。</p>
-
-<p>VC理论的推导不一定依赖于目标函数$f(\mathbf x)$，只需目标分布。VC理论对很多假设集$\mathcal H$和误差衡量$err$都有效，比如将定义稍作修改可将VC理论推广到回归分析可得到类似的结果。</p>
-
-<h2 id="section-1">误差度量范例</h2>
-
-<p>以指纹识别为例，介绍误差度量。$+1$表示合法用户，$-1$表示入侵者。指纹识别犯的两种错误：</p>
+<p><strong>通过机器学习提供最佳解决方法的例子：</strong></p>
 
 <ol>
-  <li>false reject：合法用户识别为非法；</li>
-  <li>false accept：非法用户识别为合法。</li>
+  <li>模式识别：真实场景中的目标识别、人面辨识或表情识别、语音识别；</li>
+  <li>异常检测：信用卡交易中的异常序列、核电站传感器读数中的异常模式</li>
+  <li>预测：未来的股价、电影的喜好。</li>
 </ol>
 
-<p>在不同的应用场景下，两种错误导致的损失不一样。在设计算法的时候，须考虑将误差的度量方式。设计算法的时候，不仅要考虑误差定义的合理性，还要考虑算法$\mathcal A$是否容易优化（比如：闭式解或者凸目标函数）。误差的度量是算法的关键。</p>
+<p><strong>机器学习的标准范例——基于 MNIST 数据库的手写字符识别</strong></p>
 
-<p id="class-weighted-error">对于错分的不同损失，可根据犯错误所属的不同类别定义如下的加权误差度量方式</p>
-<p>\[
-E_{in}^w(h)={1\over N}\sum_{n=1}^N
-\left\{
+<ol>
+  <li>可公开获取，并且利用中等规模的神经网络能快速的学习。</li>
+  <li>已知很多机器学习方法在 MNIST 上的性能。</li>
+</ol>
+
+<p><strong>超越 MNIST —— ImageNet</strong></p>
+
+<ol>
+  <li>1000 类不同的对象，1.3M 来源于网络的高分辨率训练图像。</li>
+  <li>深度神经网络是否能很好的用于目标识别，这是一个很好的测试。</li>
+</ol>
+
+<p><strong>语音识别</strong></p>
+
+<p><img src="/assets/images/2016-10-09-nnml_01_introduction_error_rate_acoustic_recognition.jpg" alt="" width="500px" /></p>
+
+<ol>
+  <li>预处理：将声波转换成声学系数，大约每 10ms 提取一个新向量。</li>
+  <li>声学模型：利用声音系数的相邻向量，放置 bet 到音位。</li>
+  <li>解码：找出能最佳拟合声音数据和模型的 bet 序列。</li>
+</ol>
+
+<p>由 George Dahl 和 Abdel-rahman Mohamed 领导的深度神经网络正在取代以前的机器学习声学模型。</p>
+
+<h2 id="section-1">什么是神经网络</h2>
+
+<p><strong>为什么要学习神经计算？</strong></p>
+
+<ol>
+  <li>理解大脑实际上是如何工作的。</li>
+  <li>理解受神经元及其自适应连接启发的一种并行计算。</li>
+  <li>利用受大脑启发的新学习算法解决实际问题——本课程内容。</li>
+</ol>
+
+<p>大脑大约有 $10^{11}$ 个神经元，每个神经元有大约 $10^4$ 个权值。</p>
+
+<h2 id="section-2">一些简单的神经元模型</h2>
+
+<p>理想化的神经元：</p>
+
+<ul>
+  <li>去除对理解主要原理无关紧要的复杂细节。</li>
+  <li>可以利用数学工具，并可类比其它相似的系统。</li>
+  <li>若理解基本原理，易于复杂化使模型更真实。</li>
+</ul>
+
+<p><strong>线性神经元：</strong></p>
+
+<script type="math/tex; mode=display">y=b+\sum_ix_iw_i</script>
+
+<ul>
+  <li>$y$：输出；</li>
+  <li>$b$：偏置；</li>
+  <li>$x_i$：第$i$个输入；</li>
+  <li>$w_i$：第$i$个权值。</li>
+</ul>
+
+<p><strong>二值神经元：</strong></p>
+
+<p>首先计算输入的加权和；若和超过阈值则输出固定的尖峰信号（spike），可表示为</p>
+
+<p><script type="math/tex">% <![CDATA[
+y=\Big\{ 
 \begin{aligned}
-&amp;1 &amp;\quad\mbox{if }y_n=+1\\
-&amp;1000 &amp;\quad\mbox{if }y_n=-1
+&1 &\text{if } z > \theta\\
+&0 &\text{otherwise}
 \end{aligned}
-\right\}
-\cdot \left[\left[y_n\neq h(\mathbf x_n)\right]\right]。
-\]
-对于线性可分数据的PLA，这种定义并无影响。对于pocket算法，假设将$-1$样本复制$1000$倍，在新的数据上仍用$E_{in}^{0/1}$度量误差，就和在原数据上用$E_{in}^{w}$度量一致。</p>
+ \Big. %]]></script>，
+其中 <script type="math/tex">z=\sum_ix_iw_i</script>，</p>
 
-<p>实际使用中，不会真的复制数据，采取虚拟复制（virtual copying）的策略。</p>
+<p>或者</p>
 
-<blockquote>
-  <h2 id="pocket">####加权pocket算法</h2>
+<p><script type="math/tex">% <![CDATA[
+y=\Big\{ 
+\begin{aligned}
+&1 &\text{if } z > 0\\
+&0 &\text{otherwise}
+\end{aligned}
+ \Big. %]]></script>，
+其中 <script type="math/tex">z=b+\sum_ix_iw_i</script>，易知 $b=-\theta$。</p>
 
-  <ol>
-    <li>以$1000$倍的概率检查$-1$样本犯的错误；</li>
-    <li>当$\mathbf w_{t+1}$犯的错误$E_{in}^w$比$\hat{\mathbf w}$小时，用$\hat{\mathbf w}$更新$\mathbf w_{t+1}$。</li>
-  </ol>
-</blockquote>
+<p><strong>Rectified 线性神经元／线性阈值神经元：</strong></p>
 
-<h2 id="section-2">参考资料</h2>
+<p>计算输入的线性加权和，输出是输入的非线性函数，可表示为</p>
 
-<ol class="bibliography"></ol>
+<p><script type="math/tex">% <![CDATA[
+y=\Big\{ 
+\begin{aligned}
+&z &\text{if } z > 0\\
+&0 &\text{otherwise}
+\end{aligned}
+ \Big. %]]></script>，
+其中 <script type="math/tex">z=b+\sum_ix_iw_i</script>。</p>
 
-<h3 id="section-3">脚注</h3>
-<div class="footnotes">
-  <ol>
-    <li id="fn:target-distribution">
-      <p>不太明白这节的意思…… <a href="#fnref:target-distribution" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
+<p><strong>Sigmoid 神经元：</strong></p>
+
+<p>这是最常用的神经元，输出是输入和的有界平滑函数，通常使用 logistic 函数表示为</p>
+
+<p><script type="math/tex">y=\frac{1}{1+e^{-z}}</script>，
+其中 <script type="math/tex">z=b+\sum_ix_iw_i</script>。</p>
+
+<p>这拥有漂亮的导数形式，利于学习算法。</p>
+
+<p><strong>随机二值神经元：</strong></p>
+
+<p>拥有与 logistic 单元相同的形式</p>
+
+<p><script type="math/tex">p(s=1)=\frac{1}{1+e^{-z}}</script>，
+其中 <script type="math/tex">z=b+\sum_ix_iw_i</script>。</p>
+
+<p>但是，在一个较短的时间窗口内将 logistic 函数的输出作为产生 spike 的概率。We can do a similar trick for rectified linear units: The output is treated as the Poisson rate for spikes.</p>
+
+<h2 id="section-3">一个简单的学习示例</h2>
+
+<p><img src="/assets/images/2016-10-09-nnml_introduction_votes_wins.png" alt="" width="250px" /></p>
+
+<p>手写字符识别神经网络，由两层神经元构成。输入神经元表示像素值，输出神经元的激活表示类别。如上图所示，每个像素（红色标注）可以对所属的类别（数字）投票，识别结果就是得票多的数字。</p>
+
+<h2 id="section-4">三类机器学习</h2>
+
+<ol>
+  <li>监督学习：给定输入，预测输出。
+    <ul>
+      <li>回归</li>
+      <li>分类</li>
+    </ul>
+  </li>
+  <li>增强学习：采取适当行为以获取最大回报。</li>
+  <li>非监督学习：发现输入好的内在表达。</li>
+</ol>
+
 
 </section>
 <section align="left">
@@ -269,8 +333,6 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
   <ul>
     
     <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
-    
-    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -284,12 +346,14 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
     
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
+    <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
+    
   </ul>
 <p></p>
 <span>
-  <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:left"   >上一篇：Map-Reduce Essential </a>
+  <a  href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring" class="pageNav" style="float:left"   >上一篇：家用监控设备用于电网的可行性分析 </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2015/01/linear-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（1）：线性支持向量机 </a>  
+  <a  href="/2016/10/s13000-model" class="pageNav" style="float:right"   >下一篇：鲁棒及自适应控制（2）：模型 </a>  
 </span>
 </section>
 
@@ -311,7 +375,7 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-noise-and-error" 	data-url="http://qianjiye.de/2014/12/machine-learning-noise-and-error" data-title="机器学习：噪声与误差">
+	<div class="ds-thread"  data-thread-key="/2016/10/nnml_introduction" 	data-url="http://qianjiye.de/2016/10/nnml_introduction" data-title="NNML（01）：引言">
 	</div>	
 
 
@@ -321,18 +385,18 @@ E_{in}^w(h)={1\over N}\sum_{n=1}^N
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2014/12/map-reduce-essential'; -->
+<!--         url = '/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-svm'; --1> -->
-<!--         url = '/2015/01/linear-svm'; -->
+<!--         <1!-- url = 'http://qianjiye.de/2016/10/s13000-model'; --1> -->
+<!--         url = '/2016/10/s13000-model'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2014/12/machine-learning-noise-and-error/#timeSpan'; -->
+<!--         url = '/2016/10/nnml_introduction/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

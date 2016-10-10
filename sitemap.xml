@@ -2,9 +2,18 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://qianjiye.de/2016/09/pgm_i_01_introduction_and_overview</loc>
+    <loc>http://qianjiye.de/2016/10/s13000-model</loc>
     
-    <lastmod>2016-09-28T01:26:51+08:00</lastmod>
+    <lastmod>2016-10-09T19:00:00+08:00</lastmod>
+    
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://qianjiye.de/2016/10/nnml_introduction</loc>
+    
+    <lastmod>2016-10-09T04:31:20+08:00</lastmod>
     
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>

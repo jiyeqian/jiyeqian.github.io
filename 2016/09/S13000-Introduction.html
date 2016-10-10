@@ -266,13 +266,13 @@ F-f_1-f_2 = M\ddot{x}
 F=f_1+f_2+M\ddot{x}=c_1\dot{x}^2+c_2 \dot{x}^2+M\ddot{x}
 \]</p>
 
-<p>控制的目的就是设计合适的$F$，使得真实的$x$能跟踪理想的$x^\star$……</p>
+<p>控制的目的就是设计合适的$F$，使得真实的$x$能跟踪理想的$x^\ast$……</p>
 
 <p>\[
 \begin{aligned} 
-x \rightarrow &amp;x^\star = x^\star\\
-\dot{x} \rightarrow &amp;v^\star = \dot{x}^\star\\
-\ddot{x} \rightarrow &amp;a^\star = \ddot{x}^\star\\
+x \rightarrow &amp;x^\ast = x^\ast\\
+\dot{x} \rightarrow &amp;v^\ast = \dot{x}^\ast\\
+\ddot{x} \rightarrow &amp;a^\ast = \ddot{x}^\ast\\
 \end{aligned} 
 \]</p>
 
@@ -302,7 +302,7 @@ x \rightarrow &amp;x^\star = x^\star\\
 
 <p>\[ \tau_a - \tau_f - \tau_e = J\dot{\omega} \]</p>
 
-<p>如何控制$\tau_a$？变浆控制，Yaw（朝向）控制。通过改变浆的角度$\beta$，实现风力控制，从而控制$\tau_a$。也就是控制$\tau(\beta)$，使得$ \omega=\omega^\star$。</p>
+<p>如何控制$\tau_a$？变浆控制，Yaw（朝向）控制。通过改变浆的角度$\beta$，实现风力控制，从而控制$\tau_a$。也就是控制$\tau(\beta)$，使得$ \omega=\omega^\ast$。</p>
 
 <h2 id="section-4">三大控制问题</h2>
 
@@ -325,7 +325,7 @@ x \rightarrow &amp;x^\star = x^\star\\
 <h3 id="tracking">三、Tracking（跟踪）</h3>
 
 <ol>
-  <li>数学形式：$x\rightarrow x^\star$</li>
+  <li>数学形式：$x\rightarrow x^\ast$</li>
   <li>图：</li>
   <li>实例：飞机按给定轨迹运行；导弹拦截；速度跟踪、位置跟踪。</li>
 </ol>
@@ -346,7 +346,9 @@ x \rightarrow &amp;x^\star = x^\star\\
 <hr>
   <ul>
     
-    <li class="pageNav">2016-09-28 &raquo; <a href="/2016/09/pgm_i_01_introduction_and_overview">PGM I（01）：引言与概述</a></li>
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
     
     <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
     
@@ -359,8 +361,6 @@ x \rightarrow &amp;x^\star = x^\star\\
     <li class="pageNav">2016-03-14 &raquo; <a href="/2016/03/cs231n_image-classification-pipeline">CS231n（2）：图像分类流程</a></li>
     
     <li class="pageNav">2016-02-29 &raquo; <a href="/2016/02/cs231n_introduction-to-computer-vision">CS231n（1）：计算机视觉简介</a></li>
-    
-    <li class="pageNav">2015-10-13 &raquo; <a href="/2015/10/minimum-cut-based-inference">DILinAV（4）：基于最小割的推理</a></li>
     
   </ul>
 <p></p>
