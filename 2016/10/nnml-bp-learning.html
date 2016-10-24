@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Jiye Qian" />
+    <title>NNML（03）：BP 学习</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default.css" />
+    <link rel="stylesheet" href="/assets/css/pygments/default_inline.css" />
+    <link rel="stylesheet" href="/assets/css/coderay.css" />
+    <link rel="stylesheet" href="/assets/css/twemoji-awesome.css" />  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="/assets/css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <link href="/assets/css/ggvis.css" rel="stylesheet" />
+    <link href="/assets/css/mermaid.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/markdown-plus.css"/> 
+    <link rel="stylesheet" href="/assets/css/flexslider.css" type="text/css" media="screen" />
+      <style type="text/css">
+        .flex-caption {
+          width: 96%;
+          padding: 2%;
+          left: 0;
+          bottom: 0;
+          background: rgba(0,0,0,.5);
+          color: #fff;
+          text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+          font-size: 14px;
+          line-height: 18px;
+        }
+        li.css a {
+          border-radius: 0;
+        }
+      </style>
+
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script type="text/javascript" src="/assets/js/d3.min.js"></script>
+    <script type="text/javascript" src="/assets/js/vega.min.js"></script>
+    <script type="text/javascript" src="/assets/js/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <script type="text/javascript" src="/assets/js/ggvis.js"></script>
+    <script type="text/javascript" src="/assets/js/htmlwidgets.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts-all.js"></script>
+    <script type="text/javascript" src="/assets/js/echarts.js"></script>
+    <script defer src="/assets/js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript">
+      // $(function(){
+      //   SyntaxHighlighter.all();
+      // });
+      $(window).load(function(){
+        $('.flexslider').flexslider({
+          animation: "slide",
+          start: function(slider){
+            $('body').removeClass('loading');
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      function setTimeSpan(){
+        var date = new Date();
+        timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+      }
+
+      Date.prototype.format = function(format)
+      {
+        var o =
+        {
+          "M+" : this.getMonth()+1, //month
+          "d+" : this.getDate(),    //day
+          "h+" : this.getHours(),   //hour
+          "m+" : this.getMinutes(), //minute
+          "s+" : this.getSeconds(), //second
+          "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+          "S" : this.getMilliseconds() //millisecond
+        }
+        if(/(y+)/.test(format))
+          format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+          if(new RegExp("("+ k +")").test(format))
+            format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+          return format;
+        }
+      </script>
+
+    <!-- MathJax for LaTeX -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        "HTML-CSS": { extensions: ["handle-floats.js"] },
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+        tex2jax: {
+            inlineMath: [['$$$', '$$$'], ['$', '$'], ['\\(', '\\)']],
+            processEscapes: true
+        }
+    });
+    </script>
+    <!-- <script type="text/javascript" src="/assets/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <!-- <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0b514f17fd99b9fb4be74c94bdd2b7db' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ -->
+  </head>
+<!--  <body>
+-->
+
+  <body onLoad="setInterval(setTimeSpan,1000);">
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>NNML（03）：BP 学习</h1>
+        </header>
+        <nav id="real_nav">
+        
+          <span><a title="Home" href="/">Home</a></span>
+        
+          <span><a title="Categories" href="/categories/">Categories</a></span>
+        
+          <span><a title="Tags" href="/tags/">Tags</a></span>
+        
+          <span><a title="About" href="/about/">About</a></span>
+        
+          <span><a title="Search" href="/search/">Search</a></span>
+        
+        </nav>
+        <article class="content">
+        <script type="text/javascript" src="/assets/js/outliner.js"></script>
+
+<section class="meta">
+<span class="time">
+  <time datetime="2016-10-24">2016-10-24</time>
+</span>
+
+ |
+<span class="categories">
+  <i class="fa fa-share-alt"></i>
+  
+  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  <i class="fa fa-tags"></i>
+  
+  <a href="/tags/#机器学习理论" title="机器学习理论">机器学习理论</a>&nbsp;
+  
+  <a href="/tags/#过拟合" title="过拟合">过拟合</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="section">线性神经元权值学习</h2>
+
+<p>本节介绍线性神经元的学习算法，与感知器不同：</p>
+
+<ul>
+  <li>感知器学习是使权值更接近好的权值集；</li>
+  <li>线性神经元的学习是使输出更接近目标输出。</li>
+</ul>
+
+<p>通过权值不断接近可行的权值集合，感知器算法收敛。该方法不能确保在更复杂的网络有效，两个好的解的均值可能是一个糟糕的解。因此，感知器学习算法不会用于多层神经网络的学习。多层网络的学习，通过实际输出逼近目标输出实现。即使对非凸函数，这也同样有效。非凸函数的两个好的解并不能确定另一个好的解。</p>
+
+<p>线性神经元也称为线性滤波器，实际输出是输入的加权和。学习算法的目标是最小化所有训练数据的误差和。此处不采用解析方法求解的原因在于：</p>
+
+<ul>
+  <li>期望采用一种真实神经元使用的方法；</li>
+  <li>所用方法能推广到多层非线性神经元。</li>
+</ul>
+
+<p>解析方法适用于线性形式，并且采用平方误差度量。迭代方法通常效率较低，但更易于推广。</p>
+
+<p>定义训练集所有数据的残差平方和为</p>
+
+<p>\[
+E = {1\over 2}\sum_{n\in\text{training}}\left(t^n - y ^ n\right)^2 
+\]</p>
+
+<p>其中$t$为真实值，$y$为神经元的输出。对误差求偏导</p>
+
+<p>\[
+{\partial E\over\partial w_i}={1\over 2}\sum_{n}{\partial y^n\over \partial w_i}{\partial E^n\over \partial y^n}=-\sum_n x_i^n\left(t^n - y ^ n\right)。
+\]</p>
+
+<p>权值的修正可用误差的偏导数确定</p>
+
+<p>\[
+\Delta w_i = -\varepsilon{\partial E\over\partial w_i}=\sum_n \varepsilon x_i^n\left(t^n - y ^ n\right)，
+\]</p>
+
+<p>其中$\varepsilon$称为学习率。可能不存在最佳解，但让学习率足够小可以非常接近最佳解。若两个输入维度高度相关，权值收敛非常缓慢。</p>
+
+<p><strong>在感知器学习算法中，通过输入向量修正权值；此处用经误差和学习率修正过的输入修正权值。</strong></p>
+
+<h2 id="section-1">线性神经元的误差面</h2>
+
+<p><img src="/assets/images/2016-10-24-nnml-bp-learning_error_surface.png" alt="" width="150px" /></p>
+
+<p>对于平方误差度量的线性神经元，误差面的垂直和水平剖面如上图所示。</p>
+
+<p><img src="/assets/images/2016-10-24-nnml-bp-learning_online_versus_batch.png" alt="" width="400px" /></p>
+
+<p>在线学习每次用一个训练数据更新，批量学习每次用全部训练数据更新。批量学习是最速梯度下降法（下降方向垂直于等高线），如上图左所示；在线学习是围绕最速梯度方向的zig-zag梯度下降，如上图右所示。</p>
+
+<p>当权值的剖面等高线椭圆非常细长时，若最速梯度下降的方向几乎正交于通向最小值的方向，学习算法就会很慢。</p>
+
+<h2 id="logistic-">学习 logistic 输出神经元的权值</h2>
+
+<p>将学习算法拓展到非线性神经元的多层网络，对于 logistic 神经元</p>
+
+<p>\[
+y = {1\over 1 + e^{-z}}，
+\]</p>
+
+<p>其中$z=b + \mathbf{w}^\mathsf{T}\mathbf{x}$，那么有</p>
+
+<p>\[
+{\mathrm{d}y\over\mathrm{d}z}=y(1-y),\;{\mathrm{d}z\over\mathrm{d}w_i}=x_i,\;{\mathrm{d}z\over\mathrm{d}x_i}=w_i。
+\]</p>
+
+<p>根据链式法则有</p>
+
+<p>\[
+{\partial E\over\partial w_i}={1\over 2}\sum_{n}{\partial y^n\over \partial w_i}{\partial E^n\over \partial y^n}={1\over 2}\sum_{n}{\partial z^n\over \partial w_i}{\partial y^n\over \partial z^n}{\partial E^n\over \partial y^n}=-\sum_nx_i^ny^n\left(1-y^n\right)\left(t^n-y^n\right)。
+\]</p>
+
+<h2 id="bp-">BP 算法</h2>
+
+<p>没有隐层的神经网络建模能力受限。加入手工编码的特征让神经网络变得强大，但是难处在于设计好的特征。</p>
+
+<p>直观的方法是先随机扰动权值，再验证性能是否提升，若性能提升，则保存这些改变。这是强化学习的一种形式，但是效率非常低。通常权值大的扰动会让结果变得更糟。可以通过并行扰动所有权值（加噪声），将性能提升和权值改变关联起来。这也不会更好，因为每个训练数据需要许多实验判断当一个权值改变而其它权值施加噪声时的性能。另一个好点的想法：随机扰动隐层单元的激活性。一旦知道如何控制激活性，就能计算如何改变权值。</p>
+
+<p>我们不清楚隐层单元的行为，但是我们知道当但改变隐层单元的活性时，误差变换有多快。并非采用激活性训练隐层单元，而是采用误差关于应层的导数。我们能够同时高效的计算所有隐藏单元误差的导数。</p>
+
+<p><strong>BP（backpropagation）算法概述：</strong></p>
+
+<p>首先，将每个输出于目标值的差异转换成误差导数的形式</p>
+
+<p>\[
+{\partial E\over\partial y_j}=-\left(t_j-y_j\right)
+\]</p>
+
+<p>其中$E={1\over 2}\sum_{j\in\text{output}}\left(t_j-y_j\right)^2$。</p>
+
+<p>然后：</p>
+
+<p><img src="/assets/images/2016-10-24-nnml-bp-learning_backpropagating2.png" alt="" width="600px" /></p>
+
+<h2 id="bp--1">利用 BP 算法的导数</h2>
+
+<p>利用误差导数的价值在于：</p>
+
+<ul>
+  <li>从优化的角度：如何利用每个数据的误差的导数发现好的权值；</li>
+  <li>从泛化的角度：如果用训练好的权值在训练阶段为见过的数据上取得好的效果。</li>
+</ul>
+
+<p>更新权值的频率：</p>
+
+<ul>
+  <li>Online</li>
+  <li>Full batch</li>
+  <li>Mini-batch</li>
+</ul>
+
+<p>更新权值的强度：</p>
+
+<ul>
+  <li>固定的学习率；</li>
+  <li>调整全局学习率；</li>
+  <li>根据每个连接调整学习率；</li>
+  <li>不使用最速下降；</li>
+  <li>……</li>
+</ul>
+
+<p>过拟合——强大模型的负面效应。训练数据包含了从输入到出映射规则的信息，同时也包含了两类噪声：</p>
+
+<ol>
+  <li>目标输出值可能不可靠（通常可能性较小）；</li>
+  <li>抽样误差：选取了特殊的不恰当样本。</li>
+</ol>
+
+<p>在进行模型拟合时，若模型够强大，也能对噪声“建模”，这就是过拟合。消除过拟合的方法：</p>
+
+<ul>
+  <li>Weight-decay：权值取值很小或为0，简化模型；</li>
+  <li>Weight-sharing：许多权值取值相同，简化模型；</li>
+  <li>Early stopping：构造一个假的测试集，一旦性能在假测试集上劣化时停止迭代；</li>
+  <li>Model averaging：多个神经网络组合平均；</li>
+  <li>Bayesian fitting of neural nets：model averaging 的 fancy form；</li>
+  <li>Dropout：训练时随机丢弃隐层神经元；</li>
+  <li>Generative pre-training：……</li>
+</ul>
+
+
+</section>
+<section align="left">
+<p></p>
+<hr>
+  <p><img/ src="/assets/images/alipay2me.png" alt="打赏作者" style="height: 160px"></p>
+  <p></p>
+<hr>
+  <ul>
+    
+    <li class="pageNav">2016-10-16 &raquo; <a href="/2016/10/nnml-perceptron-learning">NNML（02）：感知器学习</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/s13000-model">鲁棒及自适应控制（2）：模型</a></li>
+    
+    <li class="pageNav">2016-10-09 &raquo; <a href="/2016/10/nnml_introduction">NNML（01）：引言</a></li>
+    
+    <li class="pageNav">2016-09-24 &raquo; <a href="/2016/09/feasibility-about-home-camera-in-power-syetem-monitoring">家用监控设备用于电网的可行性分析</a></li>
+    
+    <li class="pageNav">2016-09-19 &raquo; <a href="/2016/09/feasibility-about-uav-in-cable-tunnel">无人机电缆隧道巡检可行性调研报告</a></li>
+    
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
+    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    
+    <li class="pageNav">2016-03-15 &raquo; <a href="/2016/03/cs231n_loss-functions-and-optimization">CS231n（3）：损失函数与最优化</a></li>
+    
+  </ul>
+<p></p>
+<span>
+  <a  href="/2016/10/nnml-perceptron-learning" class="pageNav" style="float:left"   >上一篇：NNML（02）：感知器学习 </a>
+  &nbsp;&nbsp;&nbsp;
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
+</span>
+</section>
+
+	<script type="text/javascript">
+	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
+	if (first_image != undefined) {
+	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
+	}
+	</script>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jiyeqian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<ul class="ds-recent-visitors" data-num-items="16"></ul>
+	<div class="ds-thread"  data-thread-key="/2016/10/nnml-bp-learning" 	data-url="http://qianjiye.de/2016/10/nnml-bp-learning" data-title="NNML（03）：BP 学习">
+	</div>	
+
+
+<!-- <script type="text/javascript"> -->
+<!-- $(function(){ -->
+<!--   $(document).keydown(function(e) { -->
+<!--     var url = false; -->
+<!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
+<!--          -->
+<!--         url = '/2016/10/nnml-perceptron-learning'; -->
+<!--          -->
+<!--         } -->
+<!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
+<!--          -->
+<!--         } else if (e.which == 75) {  // K -->
+<!--           url = '#'; -->
+<!--         } else if (e.which == 74) { // J -->
+<!--         url = '/2016/10/nnml-bp-learning/#timeSpan'; -->
+<!--         } -->
+<!--         if (url) { -->
+<!--             window.location = url; -->
+<!--         } -->
+<!--   }); -->
+<!-- }) -->
+<!-- </script> -->
+
+        </article>
+      </div>
+
+    <footer>
+        <p><small>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+    </footer>
+
+    </div>
+  </body>
+</html>
