@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>鲁棒及自适应控制（1）：概论</title>
+    <title>CCF 国家电网大数据竞赛</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>鲁棒及自适应控制（1）：概论</h1>
+        <h1>CCF 国家电网大数据竞赛</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,14 +133,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2016-09-18">2016-09-18</time>
+  <time datetime="2016-11-19">2016-11-19</time>
 </span>
 
  |
 <span class="categories">
   <i class="fa fa-share-alt"></i>
   
-  <a href="/categories/#研究学术" title="研究学术">研究学术</a>&nbsp;
+  <a href="/categories/#振导社会" title="振导社会">振导社会</a>&nbsp;
   
 </span>
 
@@ -149,192 +149,58 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#控制论" title="控制论">控制论</a>&nbsp;
+  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
+  
+  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
+  
+  <a href="/tags/#Matlab" title="Matlab">Matlab</a>&nbsp;
+  
+  <a href="/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="/tags/#SQL" title="SQL">SQL</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<p>本课程的目的：介绍控制系统的基本概念、术语、原理，以及如何阅读、书写相关论文。</p>
+<h2 id="section">简介</h2>
 
-<h2 id="section">系统的基本概念</h2>
+<h3 id="httpwwwdatafountaincndatascienceplayercompetitiondetaildescription241"><a href="http://www.datafountain.cn/data/science/player/competition/detail/description/241">客户用电异常行为分析</a></h3>
 
-<ul>
-  <li>什么是系统？Input（输入）＋ States（状态）＋ Output（输出）</li>
-  <li>什么是控制系统？系统 ＋ Actuator（执行器）＋ Sensor（传感器）</li>
-</ul>
+<p>社会经济的发展使得社会用电量逐年增加，受利益驱使，窃电现象也日益严重。窃电行为不仅给供电企业造成了重大经济损失，也严重影响了正常的供用电秩序。根据国家电网公司统计，近年因窃电导致的损失达……</p>
 
-<p>控制系统，根据人类学习而来，对比：</p>
+<h3 id="httpwwwdatafountaincndatascienceplayercompetitiondetaildescription242"><a href="http://www.datafountain.cn/data/science/player/competition/detail/description/242">客户画像</a></h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>人类</th>
-      <th>控制系统</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>大脑（Brain）</td>
-      <td>Controller（Computer 等设备构成）</td>
-    </tr>
-    <tr>
-      <td>手</td>
-      <td>Actuator</td>
-    </tr>
-    <tr>
-      <td>眼</td>
-      <td>Sensor</td>
-    </tr>
-  </tbody>
-</table>
+<p>随着电力体制改革向纵深推进，售电侧逐步向社会资本放开，当下的粗放式经营和统一式客户服务内容及模式，难以应对日益增长的个性化、精准化客户服务体验要求。如何充分利用现有数据资源，深入挖掘客户潜在需求，改善供电服务质量，增强客户黏性，对公司未来……</p>
 
-<p>Controller 利用 Sensor 信息，让 Actuator 发出相应的动作。控制系统主要包括 Design &amp; Analysis，通过Analysis（分析），验证设计的系统是否可以工作。</p>
+<h2 id="section-1">数据预处理</h2>
 
-<h3 id="section-1">系统实例</h3>
+<h3 id="section-2">客户用电异常行为分析</h3>
 
-<p><strong>I. Car：</strong></p>
+<h4 id="section-3">数据预处理</h4>
 
-<ul>
-  <li>Auto-driving Car</li>
-  <li>Unmanned Ground Vehicle</li>
-</ul>
+<p>首先，用 SQL 创建表，导入数据。all_user_yongdian_data 中共有数据 70867182 条，每个用户有一千多条。</p>
 
-<p><strong>II. Robot：</strong></p>
+<div class="highlight"><pre><code class="language-SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;train&quot;</span>
+<span class="p">(</span>
+	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="n">chk_state</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">);</span>
 
-<ul>
-  <li>Robotic Arm</li>
-  <li>Mobile Robot</li>
-</ul>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;test&quot;</span>
+<span class="p">(</span>
+	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span>
+<span class="p">);</span>
 
-<p><strong>III. HST(High Speed Train)：</strong></p>
 
-<ol>
-  <li>Suspension Control（减震）</li>
-  <li>Traction &amp; Braking Control</li>
-  <li>Force Control: Pantograph（受电弓）</li>
-</ol>
-
-<p><strong>IV. Wind Power System／Wind Turbine</strong></p>
-
-<h3 id="section-2">如何做研究？</h3>
-
-<p>研究集中到更一般的系统，可以推广到其它系统的控制。</p>
-
-<ul>
-  <li>物理模型 –&gt; 数学模型（系统的动力学模型）；</li>
-  <li>不同的物理模型，相同的数学模型。物理定律刻画系统的特征。</li>
-</ul>
-
-<h2 id="dynamic-system">Dynamic System（动态系统）</h2>
-
-<p>两类典型的动态系统：</p>
-
-<ol>
-  <li>Linear motion（线性）：高速列车</li>
-  <li>Rotational motion（转动）：风力发电机</li>
-</ol>
-
-<h3 id="section-3">实例一：高速列车</h3>
-
-<ul>
-  <li>$M = m_1 + m_2 + \cdots= \sum m_i $：总质量为$M$的列车；</li>
-  <li>$f_1$：受到的空气阻力；</li>
-  <li>$f_2$：受到的摩擦力；</li>
-  <li>$F$：牵引力。</li>
-</ul>
-
-<p>相关变量定义如下：</p>
-
-<p>\[
-\begin{aligned} 
-x &amp;= \text{displacement(distance)} \\
-\dot{x} &amp;= v \\
-\ddot{x} &amp;= a \\
-\end{aligned} 
-\]</p>
-
-<p>那么，根据牛顿第二定律可得</p>
-
-<p>\[
-F-f_1-f_2 = M\ddot{x}
-\]</p>
-
-<p>其中，$f_1 = c_1 \dot{x}^2,~~  f_2 = c_2 \dot{x}^2$，反作用力与速度平方成正比，那么有</p>
-
-<p>\[
-F=f_1+f_2+M\ddot{x}=c_1\dot{x}^2+c_2 \dot{x}^2+M\ddot{x}
-\]</p>
-
-<p>控制的目的就是设计合适的$F$，使得真实的$x$能跟踪理想的$x^\ast$……</p>
-
-<p>\[
-\begin{aligned} 
-x \rightarrow &amp;x^\ast = x^\ast\\
-\dot{x} \rightarrow &amp;v^\ast = \dot{x}^\ast\\
-\ddot{x} \rightarrow &amp;a^\ast = \ddot{x}^\ast\\
-\end{aligned} 
-\]</p>
-
-<p>$c_1,c_2,M$称之为<strong>系统参数</strong>（system parameter），一旦系统给定不可更改。它们只随环境变化而变化，不以人的意志改变，不可控。比如：不同的路段摩擦系数不同，乘客不同使得$M$也会变。研究时不能假设这些系统参数已知恒定，否则应用会受到很大局限。控制问题的难点在于这些不知道的情况下，如何设计控制器。另一方面，<strong>控制参数</strong>（control parameter）正是我们要设计和改变的参数。</p>
-
-<h3 id="wind-turbine">实例二：风机（Wind Turbine）</h3>
-
-<ul>
-  <li>$\omega$：角速度；</li>
-  <li>$\tau$：力矩；</li>
-  <li>$J$：“质量”。</li>
-</ul>
-
-<p>转动是由正向力矩和反向力矩共同作用形成的，根据达朗贝尔定理可知</p>
-
-<p>\[ \sum \tau = J\dot{\omega} \]</p>
-
-<p>主要力矩包括几类：</p>
-
-<ul>
-  <li>$\tau_a$：风力推动；</li>
-  <li>$\tau_f$：阻力／摩擦力；</li>
-  <li>$\tau_e$：电机的反电势。</li>
-</ul>
-
-<p>那么有</p>
-
-<p>\[ \tau_a - \tau_f - \tau_e = J\dot{\omega} \]</p>
-
-<p>如何控制$\tau_a$？变浆控制，Yaw（朝向）控制。通过改变浆的角度$\beta$，实现风力控制，从而控制$\tau_a$。也就是控制$\tau(\beta)$，使得$ \omega=\omega^\ast$。</p>
-
-<h2 id="section-4">三大控制问题</h2>
-
-<h3 id="stabilization">一、Stabilization（镇定）</h3>
-
-<ol>
-  <li>数学形式：$x\rightarrow 0$</li>
-  <li>图：</li>
-  <li>实例：比如照相机支架不停震动，无法拍照，需要消除这种震动。</li>
-</ol>
-
-<h3 id="regulation">二、Regulation（调节）</h3>
-
-<ol>
-  <li>数学形式：$x\rightarrow a$</li>
-  <li>图：</li>
-  <li>实例：空调调整恒定在 20 度；控制电机速度；巡航控制（恒定高度）。</li>
-</ol>
-
-<h3 id="tracking">三、Tracking（跟踪）</h3>
-
-<ol>
-  <li>数学形式：$x\rightarrow x^\ast$</li>
-  <li>图：</li>
-  <li>实例：飞机按给定轨迹运行；导弹拦截；速度跟踪、位置跟踪。</li>
-</ol>
-
-<p>三大问题均可归结为跟踪问题 tracking control，前两种皆为第三种的特殊情况。三大问题可分别针对速度、位移等变量。</p>
-
-<h2 id="homework">Homework</h2>
-
-<p>Review &amp; Three Examples</p>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;all_user_yongdian_data&quot;</span>
+<span class="p">(</span>
+	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+	<span class="n">data_date</span> <span class="nb">DATE</span><span class="p">,</span>
+	<span class="n">kwh_reading</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+	<span class="n">kwh_reading1</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+	<span class="n">kwh</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
 
 
 </section>
@@ -345,8 +211,6 @@ x \rightarrow &amp;x^\ast = x^\ast\\
   <p></p>
 <hr>
   <ul>
-    
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -360,14 +224,16 @@ x \rightarrow &amp;x^\ast = x^\ast\\
     
     <li class="pageNav">2016-09-19 &raquo; <a href="/2016/09/feasibility-about-uav-in-cable-tunnel">无人机电缆隧道巡检可行性调研报告</a></li>
     
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/s13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
+    
     <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
     
   </ul>
 <p></p>
 <span>
-  <a  href="/2016/09/LeNet-5-Lecun" class="pageNav" style="float:left"   >上一篇：Gradient-Based Learning Applied to Document Recognition </a>
+  <a  href="/2016/10/nnml-bp-learning" class="pageNav" style="float:left"   >上一篇：NNML（03）：BP 学习 </a>
   &nbsp;&nbsp;&nbsp;
-  <a  href="/2016/09/feasibility-about-uav-in-cable-tunnel" class="pageNav" style="float:right"   >下一篇：无人机电缆隧道巡检可行性调研报告 </a>  
+  <a   class="pageNavInvalid" style="float:right"  >下一篇</a>  
 </span>
 </section>
 
@@ -389,7 +255,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/09/s13000-Introduction" 	data-url="http://qianjiye.de/2016/09/s13000-Introduction" data-title="鲁棒及自适应控制（1）：概论">
+	<div class="ds-thread"  data-thread-key="/2016/11/ccf-bigdata-competition-about-state-grid" 	data-url="http://qianjiye.de/2016/11/ccf-bigdata-competition-about-state-grid" data-title="CCF 国家电网大数据竞赛">
 	</div>	
 
 
@@ -399,18 +265,15 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 <!--     var url = false; -->
 <!--         if (e.which == 37 || e.which == 72) {  // Left arrow and H -->
 <!--          -->
-<!--         url = '/2016/09/LeNet-5-Lecun'; -->
+<!--         url = '/2016/10/nnml-bp-learning'; -->
 <!--          -->
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/09/feasibility-about-uav-in-cable-tunnel'; --1> -->
-<!--         url = '/2016/09/feasibility-about-uav-in-cable-tunnel'; -->
-<!--          -->
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2016/09/s13000-Introduction/#timeSpan'; -->
+<!--         url = '/2016/11/ccf-bigdata-competition-about-state-grid/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->

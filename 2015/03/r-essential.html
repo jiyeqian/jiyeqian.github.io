@@ -229,13 +229,21 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <div class="highlight"><pre><code class="language-r"><span class="m">.</span>libPaths<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">.</span>libPaths<span class="p">(),</span> <span class="s">&quot;/abspath/R/3.1/library&quot;</span><span class="p">))</span></code></pre></div>
 
-<p>R控制台安装源代码：</p>
+<p>R 控制台安装源代码包：</p>
 
 <div class="highlight"><pre><code class="language-r">install.packages<span class="p">(</span><span class="s">&#39;~/Downloads/RGtk2_2.20.31.tar.gz&#39;</span><span class="p">,</span> repos <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> type<span class="o">=</span><span class="s">&quot;source&quot;</span><span class="p">)</span></code></pre></div>
 
 <p>或者在Shell命令行：</p>
 
 <div class="highlight"><pre><code class="language-bash">r CMD INSTALL RGtk2_2.20.31.tar.gz</code></pre></div>
+
+<p>从源代码安装包时，编译器的配置文件位于</p>
+
+<div class="highlight"><pre><code class="language-bash">/Library/Frameworks/R.framework/Resources/etc/Makeconf</code></pre></div>
+
+<p>也可在如下用户配置文件修改</p>
+
+<div class="highlight"><pre><code class="language-bash">~/.R/Makevars</code></pre></div>
 
 <p>解决<code>ld: library not found for -lintl</code>：</p>
 
@@ -959,6 +967,8 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
 <hr>
   <ul>
     
+    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
     <li class="pageNav">2016-10-16 &raquo; <a href="/2016/10/nnml-perceptron-learning">NNML（02）：感知器学习</a></li>
@@ -971,9 +981,7 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
     
     <li class="pageNav">2016-09-19 &raquo; <a href="/2016/09/feasibility-about-uav-in-cable-tunnel">无人机电缆隧道巡检可行性调研报告</a></li>
     
-    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/S13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
-    
-    <li class="pageNav">2016-09-13 &raquo; <a href="/2016/09/LeNet-5-Lecun">Gradient-Based Learning Applied to Document Recognition</a></li>
+    <li class="pageNav">2016-09-18 &raquo; <a href="/2016/09/s13000-Introduction">鲁棒及自适应控制（1）：概论</a></li>
     
   </ul>
 <p></p>
