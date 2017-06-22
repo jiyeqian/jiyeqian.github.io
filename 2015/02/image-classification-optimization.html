@@ -216,14 +216,14 @@ L &amp;= {1\over 3}\left(L_0+L_1+L_2\right)，
 
 <p>比较糟糕的优化策略是随机搜索（random search）。由于验证参数$\mathbf W$比较简单，随机搜索通过尝试不同的随机权值$\mathbf W$，从中选择最优的。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;inf&quot;</span><span class="p">)</span> <span class="c"># Python assigns the highest possible float value</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span> <span class="c1"># Python assigns the highest possible float value</span>
 <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-  <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="c"># generate random parameters</span>
-  <span class="n">loss</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c"># get the loss over the entire training set</span>
-  <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span> <span class="c"># keep track of the best solution</span>
+  <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="c1"># generate random parameters</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c1"># get the loss over the entire training set</span>
+  <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span> <span class="c1"># keep track of the best solution</span>
     <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span>
     <span class="n">bestW</span> <span class="o">=</span> <span class="n">W</span>
-  <span class="k">print</span> <span class="s">&#39;in attempt </span><span class="si">%d</span><span class="s"> the loss was </span><span class="si">%f</span><span class="s">, best </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span></code></pre></div>
+  <span class="k">print</span> <span class="s1">&#39;in attempt </span><span class="si">%d</span><span class="s1"> the loss was </span><span class="si">%f</span><span class="s1">, best </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span></code></pre></div>
 
 <p>在CIFAR-10数据集上，经过1000次尝试，随机搜索可以做到约15.5%的精度，优于随机猜想的10%。找到最优的$\mathbf W$很困难甚至不可行，但是找到更好一些的$\mathbf W$就不难么困难了。基于这个思路，优化算法可以从随机的$\mathbf W$开始，不断更新权值，使得每次更新都提升一点性能。随机搜索如同徒步者带上眼罩向山脚走。针对CIFAR-10数据集，这山有30730维，山上的每一点都相当于特定的损失值。</p>
 
@@ -231,8 +231,8 @@ L &amp;= {1\over 3}\left(L_0+L_1+L_2\right)，
 
 <p>从随机初始化的$\mathbf W$开始，若增加扰动$\delta\mathbf W$，损失在$\mathbf W+\delta\mathbf W$比在$\mathbf W$时更低，那么更新$\mathbf W\leftarrow\mathbf W+\delta\mathbf W$。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c"># generate random starting W</span>
-<span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&quot;inf&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c1"># generate random starting W</span>
+<span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
   <span class="n">step_size</span> <span class="o">=</span> <span class="mf">0.0001</span>
   <span class="n">Wtry</span> <span class="o">=</span> <span class="n">W</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="n">step_size</span>
@@ -240,7 +240,7 @@ L &amp;= {1\over 3}\left(L_0+L_1+L_2\right)，
   <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">Wtry</span>
     <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span>
-  <span class="k">print</span> <span class="s">&#39;iter </span><span class="si">%d</span><span class="s"> loss is </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span></code></pre></div>
+  <span class="k">print</span> <span class="s1">&#39;iter </span><span class="si">%d</span><span class="s1"> loss is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span></code></pre></div>
 
 <p>在CIFAR-10数据集上，经过1000次尝试，精度提高到了21.4%。但这仍然是低效耗时的算法。</p>
 
@@ -270,24 +270,24 @@ L &amp;= {1\over 3}\left(L_0+L_1+L_2\right)，
 <span class="sd">  - x is the point (numpy array) to evaluate the gradient at</span>
 <span class="sd">  &quot;&quot;&quot;</span> 
 
-  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c"># evaluate function value at original point</span>
+  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># evaluate function value at original point</span>
   <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
   <span class="n">h</span> <span class="o">=</span> <span class="mf">0.00001</span>
 
-  <span class="c"># iterate over all indexes in x</span>
-  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;multi_index&#39;</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;readwrite&#39;</span><span class="p">])</span>
+  <span class="c1"># iterate over all indexes in x</span>
+  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;multi_index&#39;</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readwrite&#39;</span><span class="p">])</span>
   <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
 
-    <span class="c"># evaluate function at x+h</span>
+    <span class="c1"># evaluate function at x+h</span>
     <span class="n">ix</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
     <span class="n">old_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
-    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="o">+</span> <span class="n">h</span> <span class="c"># increment by h</span>
-    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c"># evalute f(x + h)</span>
-    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="c"># restore to previous value (very important!)</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="o">+</span> <span class="n">h</span> <span class="c1"># increment by h</span>
+    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># evalute f(x + h)</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="c1"># restore to previous value (very important!)</span>
 
-    <span class="c"># compute the partial derivative</span>
-    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c"># the slope</span>
-    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span> <span class="c"># step to next dimension</span>
+    <span class="c1"># compute the partial derivative</span>
+    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c1"># the slope</span>
+    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span> <span class="c1"># step to next dimension</span>
 
   <span class="k">return</span> <span class="n">grad</span></code></pre></div>
 <p>上述代码计算损失函数在$\mathbf x$每个维度的偏导数。在实际应用中通常使用中心差分公式（centered difference formula）
@@ -297,36 +297,36 @@ L &amp;= {1\over 3}\left(L_0+L_1+L_2\right)，
 
 <p>梯度只表明了最快增长的方向，还需要在这个方向前进的步长（也就是学习率）。步长是神经网络需要设定的重要超参数。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="c"># to use the generic code above we want a function that takes a single argument</span>
-<span class="c"># (the weights in our case) so we close over X_train and Y_train</span>
+<div class="highlight"><pre><code class="language-python"><span class="c1"># to use the generic code above we want a function that takes a single argument</span>
+<span class="c1"># (the weights in our case) so we close over X_train and Y_train</span>
 <span class="k">def</span> <span class="nf">CIFAR10_loss_fun</span><span class="p">(</span><span class="n">W</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">L</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
 
-<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c"># random weight vector</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">eval_numerical_gradient</span><span class="p">(</span><span class="n">CIFAR10_loss_fun</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c"># get the gradient</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c1"># random weight vector</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">eval_numerical_gradient</span><span class="p">(</span><span class="n">CIFAR10_loss_fun</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c1"># get the gradient</span>
 
-<span class="n">loss_original</span> <span class="o">=</span> <span class="n">CIFAR10_loss_fun</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="c"># the original loss</span>
-<span class="k">print</span> <span class="s">&#39;original loss: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_original</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">loss_original</span> <span class="o">=</span> <span class="n">CIFAR10_loss_fun</span><span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="c1"># the original loss</span>
+<span class="k">print</span> <span class="s1">&#39;original loss: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">loss_original</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="c"># lets see the effect of multiple step sizes</span>
+<span class="c1"># lets see the effect of multiple step sizes</span>
 <span class="k">for</span> <span class="n">step_size_log</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
   <span class="n">step_size</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">step_size_log</span>
-  <span class="n">W_new</span> <span class="o">=</span> <span class="n">W</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">df</span> <span class="c"># new position in the weight space</span>
+  <span class="n">W_new</span> <span class="o">=</span> <span class="n">W</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">df</span> <span class="c1"># new position in the weight space</span>
   <span class="n">loss_new</span> <span class="o">=</span> <span class="n">CIFAR10_loss_fun</span><span class="p">(</span><span class="n">W_new</span><span class="p">)</span>
-  <span class="k">print</span> <span class="s">&#39;for step size </span><span class="si">%f</span><span class="s"> new loss: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="n">loss_new</span><span class="p">)</span>
+  <span class="k">print</span> <span class="s1">&#39;for step size </span><span class="si">%f</span><span class="s1"> new loss: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">step_size</span><span class="p">,</span> <span class="n">loss_new</span><span class="p">)</span>
 
-<span class="c"># prints:</span>
-<span class="c"># original loss: 2.200718</span>
-<span class="c"># for step size 1.000000e-10 new loss: 2.200652</span>
-<span class="c"># for step size 1.000000e-09 new loss: 2.200057</span>
-<span class="c"># for step size 1.000000e-08 new loss: 2.194116</span>
-<span class="c"># for step size 1.000000e-07 new loss: 2.135493</span>
-<span class="c"># for step size 1.000000e-06 new loss: 1.647802</span>
-<span class="c"># for step size 1.000000e-05 new loss: 2.844355</span>
-<span class="c"># for step size 1.000000e-04 new loss: 25.558142</span>
-<span class="c"># for step size 1.000000e-03 new loss: 254.086573</span>
-<span class="c"># for step size 1.000000e-02 new loss: 2539.370888</span>
-<span class="c"># for step size 1.000000e-01 new loss: 25392.214036</span></code></pre></div>
+<span class="c1"># prints:</span>
+<span class="c1"># original loss: 2.200718</span>
+<span class="c1"># for step size 1.000000e-10 new loss: 2.200652</span>
+<span class="c1"># for step size 1.000000e-09 new loss: 2.200057</span>
+<span class="c1"># for step size 1.000000e-08 new loss: 2.194116</span>
+<span class="c1"># for step size 1.000000e-07 new loss: 2.135493</span>
+<span class="c1"># for step size 1.000000e-06 new loss: 1.647802</span>
+<span class="c1"># for step size 1.000000e-05 new loss: 2.844355</span>
+<span class="c1"># for step size 1.000000e-04 new loss: 25.558142</span>
+<span class="c1"># for step size 1.000000e-03 new loss: 254.086573</span>
+<span class="c1"># for step size 1.000000e-02 new loss: 2539.370888</span>
+<span class="c1"># for step size 1.000000e-01 new loss: 25392.214036</span></code></pre></div>
 <p>上述代码中，<code>step_size</code>表示步长（学习率），步长小损失函数减小慢，但步长太大损失函数不降反增。当损失函数有30730个参数时，每次更新参数需要计算30731次损失函数，计算复杂度非常高。</p>
 
 <h3 id="section-6">解析梯度</h3>
@@ -359,22 +359,22 @@ L_i=\sum_{j\neq y_i}\max\left(
 
 <p>利用梯度更新参数的方法称为<strong>梯度下降法</strong>（gradient descent），通常的形式：</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="c"># Vanilla Gradient Descent</span>
+<div class="highlight"><pre><code class="language-python"><span class="c1"># Vanilla Gradient Descent</span>
 
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
   <span class="n">weights_grad</span> <span class="o">=</span> <span class="n">evaluate_gradient</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
-  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span> <span class="c"># perform parameter update</span></code></pre></div>
+  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span> <span class="c1"># perform parameter update</span></code></pre></div>
 
 <p>梯度下降法是到目前为止最常用的优化神经网络损失函数的方法。</p>
 
 <p>对大数据集上的应用，在整个数据集上计算损失函数的梯度非常耗时，通常从中抽取从中抽取一部分数据计算梯度，这称为mini-batch梯度下降法，例如采用256个样本计算梯度：</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="c"># Vanilla Minibatch Gradient Descent</span>
+<div class="highlight"><pre><code class="language-python"><span class="c1"># Vanilla Minibatch Gradient Descent</span>
 
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-  <span class="n">data_batch</span> <span class="o">=</span> <span class="n">sample_training_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="c"># sample 256 examples</span>
+  <span class="n">data_batch</span> <span class="o">=</span> <span class="n">sample_training_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="c1"># sample 256 examples</span>
   <span class="n">weights_grad</span> <span class="o">=</span> <span class="n">evaluate_gradient</span><span class="p">(</span><span class="n">loss_fun</span><span class="p">,</span> <span class="n">data_batch</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
-  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span> <span class="c"># perform parameter update</span></code></pre></div>
+  <span class="n">weights</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">weights_grad</span> <span class="c1"># perform parameter update</span></code></pre></div>
 
 <p>在实际中，采用mini-batch的方法能提高参数更新频率，更快收敛。若mini-batch梯度下降法只采用一个样本，称为随机梯度下降法（SGD，stochastic gradient descent）或在线（on-line）梯度下降法。但这不太常用，在实际中由于向量化代码的优化，计算100个样本的梯度比1个样本的梯度计算100次高效。虽然人们使用SGD这个称谓，实际通常指的是mini-batch的梯度下降法（MGD／BGD，minbatch/batch gradient descent）。min-batch的样本数量虽是超参数，但很少采用验证法确定，通常根据内存大小来决定，或者直接设定为100左右的值。</p>
 
@@ -392,18 +392,18 @@ f(\mathbf w,\mathbf x)={1\over 1 + e^{-\left(w_0x_0+w_1x_1+w_2\right)}}
 $
 时，链式计算如上如所示。链式法则的依据是复合函数的求导法则。门可以是任何可导函数（differentiable function），通常选择导数容易计算的函数作为门，如sigmoid函数$\sigma(x)={1\over 1 + e^{-x}}$。将${df\over dx}$简记为<code>dx</code>，${d\sigma(x)\over dx}=(1-\sigma(x))\sigma(x)$，上图的计算过程简化如下：</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="c"># assume some random weights and data</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="c1"># assume some random weights and data</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 
-<span class="c"># forward pass</span>
+<span class="c1"># forward pass</span>
 <span class="n">dot</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dot</span><span class="p">))</span> <span class="c"># sigmoid function</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dot</span><span class="p">))</span> <span class="c1"># sigmoid function</span>
 
-<span class="c"># backward pass through the neuron (backpropagation)</span>
-<span class="n">ddot</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="n">f</span> <span class="c"># gradient on dot variable, using the sigmoid gradient derivation</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c"># backprop into x</span>
-<span class="n">dw</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c"># backprop into w</span>
-<span class="c"># we&#39;re done! we have the gradients on the inputs to the circuit</span></code></pre></div>
+<span class="c1"># backward pass through the neuron (backpropagation)</span>
+<span class="n">ddot</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f</span><span class="p">)</span> <span class="o">*</span> <span class="n">f</span> <span class="c1"># gradient on dot variable, using the sigmoid gradient derivation</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c1"># backprop into x</span>
+<span class="n">dw</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">ddot</span><span class="p">]</span> <span class="c1"># backprop into w</span>
+<span class="c1"># we&#39;re done! we have the gradients on the inputs to the circuit</span></code></pre></div>
 
 <p>对于复杂的函数，一次求导很复杂，如果采用链式法则，可以降低计算复杂度。对函数
 \[
@@ -411,42 +411,42 @@ f(x,y)={x+\sigma(y)\over\sigma(x)+(x+y)^2}，
 \]
 前向计算如下：</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span> <span class="c"># example values</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># example values</span>
 <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
 
-<span class="c"># forward pass</span>
-<span class="n">sigy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">))</span> <span class="c"># sigmoid in numerator   #(1)</span>
-<span class="n">num</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">sigy</span> <span class="c"># numerator                               #(2)</span>
-<span class="n">sigx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span> <span class="c"># sigmoid in denominator #(3)</span>
-<span class="n">xpy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>                                              <span class="c">#(4)</span>
-<span class="n">xpysqr</span> <span class="o">=</span> <span class="n">xpy</span><span class="o">**</span><span class="mi">2</span>                                          <span class="c">#(5)</span>
-<span class="n">den</span> <span class="o">=</span> <span class="n">sigx</span> <span class="o">+</span> <span class="n">xpysqr</span> <span class="c"># denominator                        #(6)</span>
-<span class="n">invden</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">den</span>                                       <span class="c">#(7)</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="n">invden</span> <span class="c"># done!                                 #(8)</span></code></pre></div>
+<span class="c1"># forward pass</span>
+<span class="n">sigy</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">))</span> <span class="c1"># sigmoid in numerator   #(1)</span>
+<span class="n">num</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">sigy</span> <span class="c1"># numerator                               #(2)</span>
+<span class="n">sigx</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span> <span class="c1"># sigmoid in denominator #(3)</span>
+<span class="n">xpy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>                                              <span class="c1">#(4)</span>
+<span class="n">xpysqr</span> <span class="o">=</span> <span class="n">xpy</span><span class="o">**</span><span class="mi">2</span>                                          <span class="c1">#(5)</span>
+<span class="n">den</span> <span class="o">=</span> <span class="n">sigx</span> <span class="o">+</span> <span class="n">xpysqr</span> <span class="c1"># denominator                        #(6)</span>
+<span class="n">invden</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">den</span>                                       <span class="c1">#(7)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="n">invden</span> <span class="c1"># done!                                 #(8)</span></code></pre></div>
 
 <p>反向梯度计算如下：</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="c"># backprop f = num * invden</span>
-<span class="n">dnum</span> <span class="o">=</span> <span class="n">invden</span> <span class="c"># gradient on numerator                             #(8)</span>
-<span class="n">dinvden</span> <span class="o">=</span> <span class="n">num</span>                                                     <span class="c">#(8)</span>
-<span class="c"># backprop invden = 1.0 / den </span>
-<span class="n">dden</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">den</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">dinvden</span>                                <span class="c">#(7)</span>
-<span class="c"># backprop den = sigx + xpysqr</span>
-<span class="n">dsigx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                                <span class="c">#(6)</span>
-<span class="n">dxpysqr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                              <span class="c">#(6)</span>
-<span class="c"># backprop xpysqr = xpy**2</span>
-<span class="n">dxpy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">xpy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpysqr</span>                                        <span class="c">#(5)</span>
-<span class="c"># backprop xpy = x + y</span>
-<span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c">#(4)</span>
-<span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c">#(4)</span>
-<span class="c"># backprop sigx = 1.0 / (1 + math.exp(-x))</span>
-<span class="n">dx</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigx</span> <span class="c"># Notice += !! See notes below  #(3)</span>
-<span class="c"># backprop num = x + sigy</span>
-<span class="n">dx</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                  <span class="c">#(2)</span>
-<span class="n">dsigy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                <span class="c">#(2)</span>
-<span class="c"># backprop sigy = 1.0 / (1 + math.exp(-y))</span>
-<span class="n">dy</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigy</span>                                 <span class="c">#(1)</span>
-<span class="c"># done! phew</span></code></pre></div>
+<div class="highlight"><pre><code class="language-python"><span class="c1"># backprop f = num * invden</span>
+<span class="n">dnum</span> <span class="o">=</span> <span class="n">invden</span> <span class="c1"># gradient on numerator                             #(8)</span>
+<span class="n">dinvden</span> <span class="o">=</span> <span class="n">num</span>                                                     <span class="c1">#(8)</span>
+<span class="c1"># backprop invden = 1.0 / den </span>
+<span class="n">dden</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">den</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">dinvden</span>                                <span class="c1">#(7)</span>
+<span class="c1"># backprop den = sigx + xpysqr</span>
+<span class="n">dsigx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                                <span class="c1">#(6)</span>
+<span class="n">dxpysqr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dden</span>                                              <span class="c1">#(6)</span>
+<span class="c1"># backprop xpysqr = xpy**2</span>
+<span class="n">dxpy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">xpy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpysqr</span>                                        <span class="c1">#(5)</span>
+<span class="c1"># backprop xpy = x + y</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c1">#(4)</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dxpy</span>                                                   <span class="c1">#(4)</span>
+<span class="c1"># backprop sigx = 1.0 / (1 + math.exp(-x))</span>
+<span class="n">dx</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigx</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigx</span> <span class="c1"># Notice += !! See notes below  #(3)</span>
+<span class="c1"># backprop num = x + sigy</span>
+<span class="n">dx</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                  <span class="c1">#(2)</span>
+<span class="n">dsigy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dnum</span>                                                <span class="c1">#(2)</span>
+<span class="c1"># backprop sigy = 1.0 / (1 + math.exp(-y))</span>
+<span class="n">dy</span> <span class="o">+=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigy</span><span class="p">)</span> <span class="o">*</span> <span class="n">dsigy</span>                                 <span class="c1">#(1)</span>
+<span class="c1"># done! phew</span></code></pre></div>
 
 <h4 id="section-7">注意事项：</h4>
 
@@ -470,7 +470,7 @@ f(x,y)={x+\sigma(y)\over\sigma(x)+(x+y)^2}，
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -548,7 +548,7 @@ f(x,y)={x+\sigma(y)\over\sigma(x)+(x+y)^2}，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

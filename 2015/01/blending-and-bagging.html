@@ -153,11 +153,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#分类器融合" title="分类器融合">分类器融合</a>&nbsp;
   
+  <a href="/tags/#bootstrap" title="bootstrap">bootstrap</a>&nbsp;
+  
+  <a href="/tags/#bagging" title="bagging">bagging</a>&nbsp;
+  
 </span>
 
 </section>
 <section class="post">
-<p><strong>混合</strong>（blending）是将已学到的不同假设以均匀、线性或非线性的方式融合起来；若先从boostrapped数据集学到各种不同的假设，然后再混合，就称为<strong>自助聚集</strong>（bagging, bootstrap aggregating）。</p>
+<p><strong>混合</strong>（blending）是将已学到的不同假设以均匀、线性或非线性的方式融合起来。若先从 boostrapped 数据集学到各种不同的假设，然后再混合，就称为<strong>自助聚集</strong>（bagging, bootstrap aggregating）。</p>
 
 <p>混合在实际中很有用，但也增加了计算复杂度。</p>
 
@@ -190,11 +194,13 @@ G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\ri
 当$q_t(\mathbf x)=\alpha_t$时，与方法3一样，也就是包含了前面所有情况。</li>
 </ol>
 
-<p>上述1的验证法，若用$E_{in}(g_t)$代替$E_{val}(g_t)$选择模型，可能会付出<a href="/2015/01/three-learning-principles/#no-snooping">很大VC维的代价</a>。这种方法需要一个强大优秀的$g_t^-$，否则也只是差中择优。上述的2～4称为<strong>融合模型</strong>（aggregation model），其目的在于综合多个假设（可能是比较弱的）让效果更好。</p>
+<p>上述1的验证法，若用$E_{in}(g_t)$代替$E_{val}(g_t)$选择模型，可能会付出<a href="/2015/01/three-learning-principles/#no-snooping">很大VC维的代价</a>。这种方法需要一个强大优秀的$g_t^-$，否则也只是差中择优。上述的 2～4 称为<strong>融合模型</strong>（aggregation model），其目的在于综合多个假设（可能是比较弱的）让效果更好。</p>
 
-<div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png"><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="［左］：水平垂直线投票；［右］PLA投票" /></a><div class="caption">图 1:  ［左］：水平垂直线投票；［右］PLA投票 [<a href="/assets/images/2015-01-15-blending-and-bagging-vote-method.png">PNG</a>]</div></div></div>
+<p><img src="/assets/images/2015-01-15-blending-and-bagging-vote-method.png" alt="" width="444px" id="fig-1-1" /></p>
 
-<p>上图展示的投票法中，灰色的判别界表示参与投票的分类器，合理的融合方法能提升分类性能。上图左，水平和垂直线将平面分割成6块区域，可得绿色标注的投票结果，相当于组合成了黑色的判别界。上图左的投票方法，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">特征变换</a>的效果；上图右的感知器投票，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">正则化</a>的效果。</p>
+<p class="mvgcv-figure-caption align-text-center"><strong>图：［左］：水平垂直线投票［右］PLA投票</strong></p>
+
+<p>上图展示的投票法中，灰色的判别界表示参与投票的分类器，合理的融合方法能提升分类性能。上图左，水平和垂直线将平面分割成 6 块区域，可得绿色标注的投票结果，相当于组合成了黑色的判别界。上图左的投票方法，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">特征变换</a>的效果；上图右的感知器投票，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">正则化</a>的效果。</p>
 
 <h2 id="section-1">均匀混合</h2>
 
@@ -270,10 +276,11 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 \]
 正负对分类器本质上没有差别，实际上有“线性混合＝线性模型＋假设（hypothesis）视为变换”，不需要$\alpha_t$的约束条件。</p>
 
-<p>在实际中，$g_t$通常是用$E_{in}$从各模型中选的最优，$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\dots,g_T\in\mathcal H_T$。如果在这些$g_t$中用$E_{in}$再选最优的，就是best of best，将付出高复杂度$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。如果在这些$g_t$中用$E_{in}$再采用线性混合，就是aggregation of best，将付出<strong>高于</strong>$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。实际上通常采用$E_{val}$替代$E_{in}$，通过最小化$E_{train}$（也就是$E_{in}$）得到$g_t^-$。</p>
+<p>在实际中，$g_t$通常是用$E_{in}$从各模型中选的最优，$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\dots,g_T\in\mathcal H_T$。如果在这些$g_t$中用$E_{in}$再选最优的，就是 best of best，将付出高复杂度$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。如果在这些$g_t$中用$E_{in}$再采用线性混合，就是 aggregation of best，将付出<strong>高于</strong>$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。实际上通常采用$E_{val}$替代$E_{in}$，通过最小化$E_{train}$（也就是$E_{in}$）得到$g_t^-$。</p>
 
 <blockquote>
-  <h2 id="section-3">####线性混合算法</h2>
+  <h4 id="section-3">线性混合算法</h4>
+  <hr />
 
   <ol>
     <li>在$\mathcal D_{train}$上选出$g_1^-,g_2^-,\ldots,g_T^-$；</li>
@@ -289,14 +296,16 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
     <li>返回$G_{ANYB}(\mathbf x)=\tilde g(\phi(\mathbf x))$。</li>
   </ul>
 
-  <p>这就是any blending（stacking）的方法。any blending方法强大，可以实现conditional blending，但是也存在过拟合的风险。</p>
+  <p>这就是 any blending（stacking）的方法。any blending 方法强大，可以实现 conditional blending，但是也存在过拟合的风险。</p>
 </blockquote>
 
-<p>stacking（any blending）也称为stacked generalization，在有监督学习（比如回归<a href="#breiman1996stacked">[1]</a>）和无监督学习（比如密度估计<a href="#smyth1999linearly">[2]</a>）中都有成功应用，也可用于估计自助聚集的错误率<a href="#rokach_air_ensemble_2010">[3]</a><a href="#wolpert1999efficient">[4]</a>。它的性能优于贝叶斯模型平均法<a href="#clarke2003comparing">[5]</a>。在Netflix的竞赛中，有两只优胜队伍采用了stacking技术<a href="#sill2009feature">[6]</a>。</p>
+<p>stacking（any blending）也称为 stacked generalization，在有监督学习（比如回归<a href="#breiman1996stacked">[1]</a>）和无监督学习（比如密度估计<a href="#smyth1999linearly">[2]</a>）中都有成功应用，也可用于估计自助聚集的错误率<a href="#rokach_air_ensemble_2010">[3]</a><a href="#wolpert1999efficient">[4]</a>。它的性能优于贝叶斯模型平均法<a href="#clarke2003comparing">[5]</a>。在 Netflix 的竞赛中，有两只优胜队伍采用了 stacking 技术<a href="#sill2009feature">[6]</a>。</p>
 
-<div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png"><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="混合方法使用实例" /></a><div class="caption">图 2:  混合方法使用实例 [<a href="/assets/images/2015-01-15-blending-and-bagging-blending-example.png">PNG</a>]</div></div></div>
+<p><img src="/assets/images/2015-01-15-blending-and-bagging-blending-example.png" alt="" width="444px" id="fig-1-2" /></p>
 
-<p>上图的流程中，Val.-Set Blending就是any blending的方法，使得$E_{test}$降低到$456.24$。将上百个$g_t$用近似的$\tilde E_{test}$（若$\tilde E_{test}$好，真正的$E_{test}$也会好）进行线性混合得到$G$。</p>
+<p class="mvgcv-figure-caption align-text-center"><strong>图：混合方法使用实例</strong></p>
+
+<p>上图的流程中，Val.-Set Blending 就是 any blending 的方法，使得$E_{test}$降低到$456.24$。将上百个$g_t$用近似的$\tilde E_{test}$（若$\tilde E_{test}$好，真正的$E_{test}$也会好）进行线性混合得到$G$。</p>
 
 <h2 id="section-4">自助聚集</h2>
 
@@ -305,16 +314,17 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <ul>
   <li>从不同假设集获取模型：$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\ldots,g_T\in\mathcal H_T$；</li>
   <li>采用不同的参数：例如梯度下降法采用$\eta=0.001,0.01,\ldots,10$；</li>
-  <li>利用算法的随机性：例如用不同的初始化进行PLA；</li>
+  <li>利用算法的随机性：例如用不同的初始化进行 PLA；</li>
   <li>利用数据的随机性：交叉验证采用不同验证集。</li>
 </ul>
 
-<p>回顾\eqref{eq:bias-variance-decomposition}，算法的性能被拆分为bias和variance两部分进行评估。当采用不同$g_t$融合时，共识（融合）的结果比$\mathcal A(\mathcal D)$的单一$g_t$效果好。能否通过有限的$T$和单一数据集$\mathcal D$得到不同$g_t$和近似的$\bar g$？✅</p>
+<p>回顾\eqref{eq:bias-variance-decomposition}，算法的性能被拆分为 bias 和 variance 两部分进行评估。当采用不同$g_t$融合时，共识（融合）的结果比$\mathcal A(\mathcal D)$的单一$g_t$效果好。能否通过有限的$T$和单一数据集$\mathcal D$得到不同$g_t$和近似的$\bar g$？✅</p>
 
-<p><strong>bootstrapping</strong>是一种通过重采样（re-sample）$\mathcal D$模拟$\mathcal D_t$的统计学工具。bootstrap得到$\tilde{\mathcal D}_t$的方法：从$\mathcal D$中随机抽取一个点，纪录该点后然后放回，重复该过程直到抽取到$N’$个数据。利用bootstrap的不同$\tilde{\mathcal D}_t$可以得到不同的$g_t$。</p>
+<p><strong>bootstrapping</strong> 是一种通过重采样（re-sample）$\mathcal D$模拟$\mathcal D_t$的统计学工具。bootstrap 得到$\tilde{\mathcal D}_t$的方法：从$\mathcal D$中随机抽取一个点，纪录该点后然后放回，重复该过程直到抽取到$N’$个数据。利用 bootstrap 的不同$\tilde{\mathcal D}_t$可以得到不同的$g_t$。</p>
 
 <blockquote>
-  <h2 id="bootstrap-aggregating">####自助聚集（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）</h2>
+  <h4 id="bootstrap-aggregating">自助聚集（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）</h4>
+  <hr />
 
   <ol>
     <li>利用bootstrapping技术得到$N’$点的数据集$\tilde{\mathcal D}_t$；</li>
@@ -325,11 +335,13 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p>像自助聚集这种，建立在其它基础算法（base algorithm）$\mathcal A$之上的算法称为元算法（meta algorithm）。</p>
 
-<div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png"><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="bagging pocket方法" /></a><div class="caption">图 3:  bagging pocket方法 [<a href="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png">PNG</a>]</div></div></div>
+<p><img src="/assets/images/2015-01-15-blending-and-bagging-pla-bagging.png" alt="" width="222px" id="fig-1-3" /></p>
 
-<p>上图是bagging pocket方法的效果，通过bagging得到各不相同的$g_t$，然后通过融合得到合适的非线性分类器。</p>
+<p class="mvgcv-figure-caption align-text-center"><strong>bagging pocket 方法</strong></p>
 
-<p>如果基础算法（base algorithm）对数据的随机性很敏感，或者说基础算法不稳定（instability），那么训练数据的扰动或参数的微调能使分类结果发生明显变化，通过bagging就能提升分类精度<a href="#breiman1996bagging">[7]</a>。<a href="/2016/03/cs231n_image-classification-pipeline">k最近邻算法</a>是稳定的，不适合作为bagging的基础算法<a href="#breiman1996out">[8]</a>。</p>
+<p>上图是 bagging pocket 方法的效果，通过 bagging 得到各不相同的$g_t$，然后通过融合得到合适的非线性分类器。</p>
+
+<p>如果基础算法（base algorithm）对数据的随机性很敏感，或者说基础算法不稳定（instability），那么训练数据的扰动或参数的微调能使分类结果发生明显变化，通过 bagging 就能提升分类精度<a href="#breiman1996bagging">[7]</a>。<a href="/2016/03/cs231n_image-classification-pipeline">k最近邻算法</a>是稳定的，不适合作为 bagging 的基础算法<a href="#breiman1996out">[8]</a>。</p>
 
 <h2 id="section-5">参考资料</h2>
 
@@ -372,7 +384,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -450,7 +462,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

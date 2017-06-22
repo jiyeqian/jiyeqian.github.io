@@ -168,31 +168,31 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
-<span class="c"># To enable the inline backend for usage with the IPython Notebook</span>
+<span class="c1"># To enable the inline backend for usage with the IPython Notebook</span>
 <span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span></code></pre></div>
 
 <h4 id="section-1">图像文件读写</h4>
 
 <p>OpenCV按照BGR通道顺序读写和显示彩色图像，<code class="highlight language-python"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span></code>等程序按照RGB通道操作。因此，若要让<code class="highlight language-python"><span class="n">plt</span></code>正确显示图像，需将通道顺序从BGR转为RGB。读入时指定参数<code class="highlight language-python"><span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span></code>可以将彩色图转为灰度图。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">im</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">&#39;../../temp/cat.jpg&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">im</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../../temp/cat.jpg&#39;</span><span class="p">)</span>
 <span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">im</span><span class="p">),</span> <span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">im</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">im</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
-<span class="n">im_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../../temp/cat.jpg&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
+<span class="n">im_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;../../temp/cat.jpg&quot;</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span><span class="p">)</span>
 <span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">im_gray</span><span class="p">),</span> <span class="n">im_gray</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">im_gray</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">im_gray</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">im_gray</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">)</span> <span class="c">#BGR</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c">#RGB</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im_gray</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span> <span class="c"># GRAYSCALE</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">)</span> <span class="c1">#BGR</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#RGB</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im_gray</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span> <span class="c1"># GRAYSCALE</span>
 
-<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s">&quot;../../temp/cat_1.jpg&quot;</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span> <span class="c"># BGR is OK!</span>
-<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s">&quot;../../temp/cat_2.jpg&quot;</span><span class="p">,</span> <span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c"># RGB</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s2">&quot;../../temp/cat_1.jpg&quot;</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span> <span class="c1"># BGR is OK!</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="s2">&quot;../../temp/cat_2.jpg&quot;</span><span class="p">,</span> <span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># RGB</span>
 
-<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;numpy.ndarray&#39;</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">612</span><span class="p">,</span> <span class="mi">950</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="n">uint8</span> <span class="mi">15</span> <span class="mi">255</span>
-<span class="o">&lt;</span><span class="nb">type</span> <span class="s">&#39;numpy.ndarray&#39;</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">612</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span> <span class="n">uint8</span> <span class="mi">18</span> <span class="mi">255</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;numpy.ndarray&#39;</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">612</span><span class="p">,</span> <span class="mi">950</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="n">uint8</span> <span class="mi">15</span> <span class="mi">255</span>
+<span class="o">&lt;</span><span class="nb">type</span> <span class="s1">&#39;numpy.ndarray&#39;</span><span class="o">&gt;</span> <span class="p">(</span><span class="mi">612</span><span class="p">,</span> <span class="mi">950</span><span class="p">)</span> <span class="n">uint8</span> <span class="mi">18</span> <span class="mi">255</span>
 
 
 
@@ -208,10 +208,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <div class="highlight"><pre><code class="language-python"><span class="n">capture</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">()</span>
 <span class="n">capture</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="c"># capture.open(&quot;../../temp/cat.jpg&quot;) # It&#39;s OK!</span>
+<span class="c1"># capture.open(&quot;../../temp/cat.jpg&quot;) # It&#39;s OK!</span>
 
 <span class="n">grabbed</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">capture</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&#39;Frame grabbed: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grabbed</span><span class="p">)),</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Frame grabbed: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grabbed</span><span class="p">)),</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
 
 <span class="n">capture</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
@@ -224,13 +224,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>图像以矩阵（数组）的形式存储，可以按<code class="highlight language-python"><span class="n">numpy</span></code>操作数组的方式操作图像数据。Python的中变量的赋值相当于绑定，不会分配新的空间，为了避免相互影响，需要拷贝图像数据。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># BGR --&gt;RGB</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="p">[:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># BGR --&gt;RGB</span>
 
 <span class="n">imm1</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">imm1</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">255</span>
 
 <span class="n">imm2</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">imm2</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># red up-left corner</span>
+<span class="n">imm2</span><span class="p">[:</span><span class="mi">200</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># red up-left corner</span>
 
 <span class="n">imm3</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">imm3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">imm3</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">imm3</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">thickness</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> 
@@ -279,7 +279,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -357,7 +357,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

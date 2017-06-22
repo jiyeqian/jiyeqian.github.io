@@ -214,28 +214,28 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>进行PostgreSQL的任何操作前，须在磁盘上初始化数据库存储空间，这称为数据库簇（database cluster）：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>initdb -D /usr/local/var/postgres/data</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ initdb -D /usr/local/var/postgres/data</code></pre></div>
 
 <p>PostgreSQL采用客户端／服务器的工作模式，如果要管理数据库，需要先启动服务进程：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>pg_ctl start -D /usr/local/var/postgres/data</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ pg_ctl start -D /usr/local/var/postgres/data</code></pre></div>
 
 <p>可以在环境变量中设置代替命令中的<code>-D</code>参数：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nb">export </span><span class="nv">PGDATA</span><span class="o">=</span>/usr/local/var/postgres/data</code></pre></div>
+<div class="highlight"><pre><code class="language-bash"><span class="nb">export</span> <span class="nv">PGDATA</span><span class="o">=</span>/usr/local/var/postgres/data</code></pre></div>
 
 <p>通过管理工具PostgreSQL可以操控数据库，流行的三大管理工具是命令行的psql、图形界面的<a href="http://www.pgadmin.org">pgAdmin</a>、网页版的<a href="http://phppgadmin.sourceforge.net">PHPPgAdmin</a>，管理工具以客户端的形式接入。psql的接入方式：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>psql -U user -d exampledb -h 127.0.0.1 -p 5432
-<span class="nv">$ </span>psql -l <span class="c">#列出所有数据库</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ psql -U user -d exampledb -h <span class="m">127</span>.0.0.1 -p <span class="m">5432</span>
+$ psql -l <span class="c1">#列出所有数据库</span></code></pre></div>
 
 <p>创建数据库：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>createdb 数据库名</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ createdb 数据库名</code></pre></div>
 
 <p>删除数据库：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>dropdb 数据库名</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ dropdb 数据库名</code></pre></div>
 
 <p>psql的基本管理命令如下：</p>
 
@@ -528,7 +528,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>重新加载不会影响到活动连接：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>pg_ctl reload -D your_data_directory_here</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ pg_ctl reload -D your_data_directory_here</code></pre></div>
 
 <h2 id="section-14">高级应用</h2>
 
@@ -720,7 +720,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>PL/Python过程语言使得可以用Python语言写PostgreSQL函数。OSX用brew默认安装的PostgreSQL不支持Python，安装时需要参数<code>--with-python</code>：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install  postgresql --with-python</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ brew install  postgresql --with-python</code></pre></div>
 
 <p>使用之前，需要先安装PL/Python插件。如果已经连接了某个数据库，直接创建插件：</p>
 
@@ -728,7 +728,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>或者从shell命令行为特定的数据库安装插件：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>createlang plpythonu dbname</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ createlang plpythonu dbname</code></pre></div>
 
 <p>PL/Python函数的基本语法：</p>
 
@@ -743,7 +743,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <div class="highlight"><pre><code class="language-sql"><span class="k">CREATE</span> <span class="k">FUNCTION</span> <span class="n">pymax</span> <span class="p">(</span><span class="n">a</span> <span class="nb">integer</span><span class="p">,</span> <span class="n">b</span> <span class="nb">integer</span><span class="p">)</span>
   <span class="k">RETURNS</span> <span class="nb">integer</span>
 <span class="k">AS</span> <span class="err">$$</span>
-  <span class="n">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">a</span>
   <span class="k">return</span> <span class="n">b</span>
 <span class="err">$$</span> <span class="k">LANGUAGE</span> <span class="n">plpythonu</span><span class="p">;</span>
@@ -812,7 +812,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -890,7 +890,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

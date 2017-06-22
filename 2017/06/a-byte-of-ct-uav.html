@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Jiye Qian" />
-    <title>CCF 国家电网大数据竞赛</title>
+    <title>A Byte of CT-UAV</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link href="/feed/" rel="alternate" title="Jiye Qian" type="application/atom+xml" />
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -113,7 +113,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>CCF 国家电网大数据竞赛</h1>
+        <h1>A Byte of CT-UAV</h1>
         </header>
         <nav id="real_nav">
         
@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2016-11-19">2016-11-19</time>
+  <time datetime="2017-06-22">2017-06-22</time>
 </span>
 
  |
@@ -149,58 +149,34 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="tags">
   <i class="fa fa-tags"></i>
   
-  <a href="/tags/#机器学习应用" title="机器学习应用">机器学习应用</a>&nbsp;
-  
-  <a href="/tags/#程序设计" title="程序设计">程序设计</a>&nbsp;
-  
-  <a href="/tags/#Matlab" title="Matlab">Matlab</a>&nbsp;
-  
-  <a href="/tags/#R" title="R">R</a>&nbsp;
-  
-  <a href="/tags/#SQL" title="SQL">SQL</a>&nbsp;
+  <a href="/tags/#无人机" title="无人机">无人机</a>&nbsp;
   
 </span>
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<p>CT-UAV：Cable Tunnel Unmanned Aerial Vehicle（电缆隧道无人机）</p>
 
-<h3 id="httpwwwdatafountaincndatascienceplayercompetitiondetaildescription241"><a href="http://www.datafountain.cn/data/science/player/competition/detail/description/241">客户用电异常行为分析</a></h3>
+<h2 id="section">室内模拟</h2>
 
-<p>社会经济的发展使得社会用电量逐年增加，受利益驱使，窃电现象也日益严重。窃电行为不仅给供电企业造成了重大经济损失，也严重影响了正常的供用电秩序。根据国家电网公司统计，近年因窃电导致的损失达……</p>
+<embed src="http://player.youku.com/player.php/sid/XMjg0MjMzNDc4NA==/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<h3 id="httpwwwdatafountaincndatascienceplayercompetitiondetaildescription242"><a href="http://www.datafountain.cn/data/science/player/competition/detail/description/242">客户画像</a></h3>
+<h2 id="section-1">隧道实测</h2>
 
-<p>随着电力体制改革向纵深推进，售电侧逐步向社会资本放开，当下的粗放式经营和统一式客户服务内容及模式，难以应对日益增长的个性化、精准化客户服务体验要求。如何充分利用现有数据资源，深入挖掘客户潜在需求，改善供电服务质量，增强客户黏性，对公司未来……</p>
+<h2 id="section-2">2017年第二十届中国（重庆）国际投资暨全球采购会（简称“渝洽会”）展示</h2>
 
-<h2 id="section-1">数据预处理</h2>
+<embed src="http://player.youku.com/player.php/sid/XMjg0MjQ2NTIxNg==/v.swf" allowfullscreen="true" quality="high" width="480" height="400" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" />
 
-<h3 id="section-2">客户用电异常行为分析</h3>
+<h2 id="section-3">致谢</h2>
 
-<h4 id="section-3">数据预处理</h4>
-
-<p>首先，用 SQL 创建表，导入数据。all_user_yongdian_data 中共有数据 70867182 条，每个用户有一千多条。</p>
-
-<div class="highlight"><pre><code class="language-SQL"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;train&quot;</span>
-<span class="p">(</span>
-	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="n">chk_state</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">);</span>
-
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;test&quot;</span>
-<span class="p">(</span>
-	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span>
-<span class="p">);</span>
-
-
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">&quot;all_user_yongdian_data&quot;</span>
-<span class="p">(</span>
-	<span class="n">cons_no</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-	<span class="n">data_date</span> <span class="nb">DATE</span><span class="p">,</span>
-	<span class="n">kwh_reading</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-	<span class="n">kwh_reading1</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-	<span class="n">kwh</span> <span class="nb">NUMERIC</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="p">);</span></code></pre></div>
+<ul>
+  <li>重庆大学</li>
+  <li>星际（重庆）智能装备技术研究院</li>
+  <li>电子科技大学</li>
+  <li>重庆华科尔无人机技术有限公司</li>
+  <li>中煤科工集团重庆研究院</li>
+  <li>……</li>
+</ul>
 
 
 </section>
@@ -255,7 +231,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 	})();
 	</script>
 	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/11/ccf-bigdata-competition-about-state-grid" 	data-url="http://qianjiye.de/2016/11/ccf-bigdata-competition-about-state-grid" data-title="CCF 国家电网大数据竞赛">
+	<div class="ds-thread"  data-thread-key="/2017/06/a-byte-of-ct-uav" 	data-url="http://qianjiye.de/2017/06/a-byte-of-ct-uav" data-title="A Byte of CT-UAV">
 	</div>	
 
 
@@ -273,7 +249,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } else if (e.which == 75) {  // K -->
 <!--           url = '#'; -->
 <!--         } else if (e.which == 74) { // J -->
-<!--         url = '/2016/11/ccf-bigdata-competition-about-state-grid/#timeSpan'; -->
+<!--         url = '/2017/06/a-byte-of-ct-uav/#timeSpan'; -->
 <!--         } -->
 <!--         if (url) { -->
 <!--             window.location = url; -->
@@ -287,7 +263,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -185,7 +185,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>上图的验证码9531，通过以上命令可正确识别。查看目前支持那些语言：</p>
 
-<div class="highlight"><pre><code class="language-bash">tesseract --list-langs <span class="c"># chi_sim chi_tra eng osd</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash">tesseract --list-langs <span class="c1"># chi_sim chi_tra eng osd</span></code></pre></div>
 
 <p>语言支持文件位于安装目录的<code>tessdata</code>文件夹中，其中的<code>eng.traineddata</code>文件表示支持英文的识别库。更多语言支持可在<a href="https://github.com/tesseract-ocr/tessdata">github下载</a>。</p>
 
@@ -200,7 +200,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>识别的参数如下：</p>
 
-<div class="highlight"><pre><code class="language-bash">tesseract images/bitmap_test.tif stdout -l chi_sim -psm 7</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">tesseract images/bitmap_test.tif stdout -l chi_sim -psm <span class="m">7</span></code></pre></div>
 
 <p>采用google code上老的中文识别库，结果就不太好：</p>
 
@@ -639,8 +639,8 @@ iii m 0
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">pyocr</span> <span class="kn">import</span> <span class="n">tesseract</span>
 
 <span class="n">builder</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">builders</span><span class="o">.</span><span class="n">TextBuilder</span><span class="p">()</span>
-<span class="n">builder</span><span class="o">.</span><span class="n">tesseract_configs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-psm&#39;</span><span class="p">,</span> <span class="s">&#39;7&#39;</span><span class="p">,</span> <span class="s">&#39;scbid&#39;</span><span class="p">]</span> 
-<span class="n">result</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;ocr_test.png&#39;</span><span class="p">),</span> <span class="s">&#39;eng&#39;</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span></code></pre></div>
+<span class="n">builder</span><span class="o">.</span><span class="n">tesseract_configs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-psm&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;scbid&#39;</span><span class="p">]</span> 
+<span class="n">result</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ocr_test.png&#39;</span><span class="p">),</span> <span class="s1">&#39;eng&#39;</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span></code></pre></div>
 
 <h2 id="section-11">性能提升</h2>
 
@@ -685,7 +685,7 @@ iii m 0
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -763,7 +763,7 @@ iii m 0
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -1,8 +1,0 @@
-# gem 'jekyll-scholar', :git => 'https://github.com/jiyeqian/jekyll-scholar.git'
-gem 'jekyll-scholar'
-gem 'kramdown'
-gem 'pygments.rb'
-gem 'jekyll_figure', '0.0.3'
-gem 'jekyll-mermaid'
-gem 'jekyll-paginate'
-gem 'jekyll-watch'

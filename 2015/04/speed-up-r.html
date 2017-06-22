@@ -181,19 +181,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>直接通过<code>brew</code>安装支持OpenBLAS的r：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install openblas --build-from-source
-<span class="nv">$ </span>brew install r --with-openblas
+<div class="highlight"><pre><code class="language-bash">$ brew install openblas --build-from-source
+$ brew install r --with-openblas
 
-<span class="c"># 安装可能遇到的问题：</span>
-<span class="c"># curl: (7) Failed to connect to rcompletion.googlecode.com port 443: Operation timed out</span>
-<span class="c"># Error: Failed to download resource &quot;r--completion&quot;</span>
-<span class="c"># Download failed: https://rcompletion.googlecode.com/svn-history/r31/trunk/bash_completion/R</span></code></pre></div>
+<span class="c1"># 安装可能遇到的问题：</span>
+<span class="c1"># curl: (7) Failed to connect to rcompletion.googlecode.com port 443: Operation timed out</span>
+<span class="c1"># Error: Failed to download resource &quot;r--completion&quot;</span>
+<span class="c1"># Download failed: https://rcompletion.googlecode.com/svn-history/r31/trunk/bash_completion/R</span></code></pre></div>
 
 <p>也可以直接下载<a href="https://mran.revolutionanalytics.com/download/">Revolution R Open (RRO)</a>，默认就支持OpenBLAS。</p>
 
 <p>如果程序已经是多线程，可能会和OpenBLAS发生冲突，可以在环境变量中设置OpenBLAS为单线程：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nb">export </span><span class="nv">OPENBLAS_NUM_THREADS</span><span class="o">=</span>1</code></pre></div>
+<div class="highlight"><pre><code class="language-bash"><span class="nb">export</span> <span class="nv">OPENBLAS_NUM_THREADS</span><span class="o">=</span><span class="m">1</span></code></pre></div>
 
 <p>OpenBLAS提升效果：</p>
 
@@ -381,7 +381,7 @@ fib_r <span class="o">&lt;-</span> <span class="kr">function</span><span class="
 
 <p>以下代码是采用Rcpp计算卷积：</p>
 
-<div class="highlight"><pre><code class="language-cpp"><span class="cp">#include &lt;Rcpp.h&gt;</span>
+<div class="highlight"><pre><code class="language-cpp"><span class="cp">#include</span> <span class="cpf">&lt;Rcpp.h&gt;</span><span class="cp"></span>
 
 <span class="n">RcppExport</span> <span class="n">SEXP</span> <span class="nf">convolve3cpp</span><span class="p">(</span><span class="n">SEXP</span> <span class="n">a</span><span class="p">,</span> <span class="n">SEXP</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Rcpp</span><span class="o">::</span><span class="n">NumericVector</span> <span class="n">xa</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
@@ -486,7 +486,7 @@ fib_r <span class="o">&lt;-</span> <span class="kr">function</span><span class="
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -564,7 +564,7 @@ fib_r <span class="o">&lt;-</span> <span class="kr">function</span><span class="
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

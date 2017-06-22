@@ -197,7 +197,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>同一图像分类问题还可能面临多重挑战，好的图像分类模型应当能应对这些挑战。图像分类器形如：</p>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
-    <span class="c"># ???</span>
+    <span class="c1"># ???</span>
     <span class="k">return</span> <span class="n">class_label</span></code></pre></div>
 
 <p>图像分类算法与传统的计算机算法（比如排序）开发不同。首先需要搜集图像<a href="http://cs231n.github.io/assets/trainset.jpg">训练集</a>；然后开发学习算法从样本集中学习；最后通过预测结果评估算法性能。这种依赖已标注样本集的方法称为<strong>数据驱动的方法</strong>（data-driven approach）：</p>
@@ -209,11 +209,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </ol>
 
 <div class="highlight"><pre><code class="language-python"><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">train_image</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
-    <span class="c"># build a model for images -&gt; labels ...</span>
+    <span class="c1"># build a model for images -&gt; labels ...</span>
     <span class="k">return</span> <span class="n">model</span>
 
 <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_images</span><span class="p">):</span>
-    <span class="c"># predict test_labels using the model ...</span>
+    <span class="c1"># predict test_labels using the model ...</span>
     <span class="k">return</span> <span class="n">test_labels</span></code></pre></div>
 
 <h2 id="section-1">最近邻分类器</h2>
@@ -315,14 +315,14 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
 
 <p>下文中代码所需要的函数和数据<a href="http://vision.stanford.edu/teaching/cs231n/assignment1.zip">在这里获取</a>。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;jiyeqian&#39;</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;jiyeqian&#39;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">cs231n.data_utils</span> <span class="kn">import</span> <span class="n">load_CIFAR10</span>
 
-<span class="c"># a magic function we provide</span>
-<span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="s">&#39;cs231n/datasets/cifar-10-batches-py&#39;</span><span class="p">)</span>
-<span class="c"># Subsample the data for more efficient code execution</span>
+<span class="c1"># a magic function we provide</span>
+<span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="s1">&#39;cs231n/datasets/cifar-10-batches-py&#39;</span><span class="p">)</span>
+<span class="c1"># Subsample the data for more efficient code execution</span>
 <span class="n">num_training</span> <span class="o">=</span> <span class="mi">5000</span>
 <span class="n">mask</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_training</span><span class="p">)</span>
 <span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span> <span class="o">=</span> <span class="n">Xtr</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">Ytr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
@@ -330,34 +330,34 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
 <span class="n">mask</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">)</span>
 <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">Xte</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">Yte</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
 
-<span class="c"># flatten out all images to be one-dimensional</span>
-<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xtr_rows becomes 5000 x 3072</span>
-<span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xte_rows becomes 500 x 3072</span>
+<span class="c1"># flatten out all images to be one-dimensional</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Xtr_rows becomes 5000 x 3072</span>
+<span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Xte_rows becomes 500 x 3072</span>
 
 <span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example. Y is 1-dimension of size N &quot;&quot;&quot;</span>
-        <span class="c"># the nearest neighbor classifier simply remembers all the training data</span>
+        <span class="c1"># the nearest neighbor classifier simply remembers all the training data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example we wish to predict label for &quot;&quot;&quot;</span>
         <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="c"># lets make sure that the output type matches the input type</span>
+        <span class="c1"># lets make sure that the output type matches the input type</span>
         <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-        <span class="c"># loop over all test rows</span>
+        <span class="c1"># loop over all test rows</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-            <span class="c"># find the nearest training image to the i&#39;th test image</span>
-            <span class="c"># using the L1 distance (sum of absolute value differences)</span>
+            <span class="c1"># find the nearest training image to the i&#39;th test image</span>
+            <span class="c1"># using the L1 distance (sum of absolute value differences)</span>
             <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="c"># L2 distance</span>
-            <span class="c"># distances = np.linalg.norm(self.Xtr - X[i,:], axis = 1)</span>
-            <span class="c"># min_index = np.argmin(distances) # get the index with smallest distance</span>
-            <span class="c"># Ypred[i] = self.ytr[min_index] # predict the label of the nearest example</span>
+            <span class="c1"># L2 distance</span>
+            <span class="c1"># distances = np.linalg.norm(self.Xtr - X[i,:], axis = 1)</span>
+            <span class="c1"># min_index = np.argmin(distances) # get the index with smallest distance</span>
+            <span class="c1"># Ypred[i] = self.ytr[min_index] # predict the label of the nearest example</span>
             <span class="n">fre_idx</span><span class="p">,</span> <span class="n">fre_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">distances</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">]],</span> \
                                          <span class="n">return_counts</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fre_idx</span><span class="p">[</span><span class="n">fre_num</span> <span class="o">==</span> <span class="n">fre_num</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
@@ -365,36 +365,36 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
         <span class="k">return</span> <span class="n">Ypred</span>
 
 
-<span class="c"># Part 1: kNN prediction</span>
+<span class="c1"># Part 1: kNN prediction</span>
 
-<span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span> <span class="c"># create a Nearest Neighbor classifier class</span>
-<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span> <span class="c"># train the classifier on the training images and labels</span>
-<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># predict labels on the test images</span>
-<span class="c"># and now print the classification accuracy, which is the average number</span>
-<span class="c"># of examples that are correctly predicted (i.e. label matches)</span>
-<span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span> <span class="c1"># create a Nearest Neighbor classifier class</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span> <span class="c1"># train the classifier on the training images and labels</span>
+<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># predict labels on the test images</span>
+<span class="c1"># and now print the classification accuracy, which is the average number</span>
+<span class="c1"># of examples that are correctly predicted (i.e. label matches)</span>
+<span class="k">print</span> <span class="s1">&#39;accuracy: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span> <span class="p">)</span>
 
 
-<span class="c"># Part 2: validation for choosing k</span>
+<span class="c1"># Part 2: validation for choosing k</span>
 
-<span class="c"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
-<span class="c"># recall Xtr_rows is 5,000 x 3072 matrix</span>
-<span class="n">Xval_rows</span><span class="p">,</span> <span class="n">Yval</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span><span class="c"># take first 1000 for validation</span>
-<span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span> <span class="c"># keep last 4,000 for train</span>
+<span class="c1"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span class="c1"># recall Xtr_rows is 5,000 x 3072 matrix</span>
+<span class="n">Xval_rows</span><span class="p">,</span> <span class="n">Yval</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span><span class="c1"># take first 1000 for validation</span>
+<span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span> <span class="c1"># keep last 4,000 for train</span>
 
-<span class="c"># find hyperparameters that work best on the validation set</span>
+<span class="c1"># find hyperparameters that work best on the validation set</span>
 <span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span>
 
-    <span class="c"># use a particular value of k and evaluation on validation data</span>
+    <span class="c1"># use a particular value of k and evaluation on validation data</span>
     <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
     <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
-    <span class="c"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+    <span class="c1"># here we assume a modified NearestNeighbor class that can take a k as input</span>
     <span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
     <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,)</span>
+    <span class="k">print</span> <span class="s1">&#39;accuracy: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,)</span>
 
-    <span class="c"># keep track of what works on the validation set</span>
+    <span class="c1"># keep track of what works on the validation set</span>
     <span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span></code></pre></div>
 
 <p>k最近邻算法预测阶段计算复杂度非常高，为了加快计算速度，上述代码只抽取了10%的数据，得到的结果如下：</p>
@@ -459,7 +459,7 @@ accuracy: 0.283000
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -537,7 +537,7 @@ accuracy: 0.283000
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

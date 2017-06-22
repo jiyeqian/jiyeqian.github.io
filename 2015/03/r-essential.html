@@ -133,7 +133,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <section class="meta">
 <span class="time">
-  <time datetime="2015-03-06">2015-03-06</time>
+  <time datetime="2015-03-05">2015-03-05</time>
 </span>
 
  |
@@ -213,17 +213,17 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>OSX删除R：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="c"># 查看安装了那些pkg</span>
-<span class="nv">$ </span>pkgutil --pkgs <span class="p">|</span> grep r-project
+<div class="highlight"><pre><code class="language-bash"><span class="c1"># 查看安装了那些pkg</span>
+$ pkgutil --pkgs <span class="p">|</span> grep r-project
 
-<span class="c"># 删除</span>
-<span class="nv">$ </span>rm -rf /Library/Frameworks/R.framework /Applications/R.app <span class="se">\</span>
+<span class="c1"># 删除</span>
+$ rm -rf /Library/Frameworks/R.framework /Applications/R.app <span class="se">\</span>
    /usr/bin/R /usr/bin/Rscript</code></pre></div>
 
 <p>在.bash_profile文件中添加包安装路径：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nb">export </span><span class="nv">R_LIBS</span><span class="o">=</span><span class="s2">&quot;~/Library/R/3.1/library&quot;</span>:<span class="nv">$R_LIBS</span>
-<span class="nb">export </span><span class="nv">R_LIBS</span><span class="o">=</span><span class="s2">&quot;~/Library/R/3.2/library&quot;</span>:<span class="nv">$R_LIBS</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash"><span class="nb">export</span> <span class="nv">R_LIBS</span><span class="o">=</span><span class="s2">&quot;~/Library/R/3.1/library&quot;</span>:<span class="nv">$R_LIBS</span>
+<span class="nb">export</span> <span class="nv">R_LIBS</span><span class="o">=</span><span class="s2">&quot;~/Library/R/3.2/library&quot;</span>:<span class="nv">$R_LIBS</span></code></pre></div>
 
 <p>添加包的多个路径时，RStudio中在~/.Rprofile文件中设置才有效：</p>
 
@@ -247,9 +247,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>解决<code>ld: library not found for -lintl</code>：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="c"># 1. 安装 gettext：</span>
-<span class="nv">$ </span>brew install gettext
-<span class="c"># 2. 在 ~/.R/Makevars 文件中添加库路径：</span>
+<div class="highlight"><pre><code class="language-bash"><span class="c1"># 1. 安装 gettext：</span>
+$ brew install gettext
+<span class="c1"># 2. 在 ~/.R/Makevars 文件中添加库路径：</span>
 <span class="nv">PKG_LIBS</span><span class="o">=</span>-L/usr/local/opt/gettext/lib</code></pre></div>
 
 <p>查看数据内部存储：</p>
@@ -967,7 +967,7 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -1045,7 +1045,7 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -201,7 +201,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </ul>
 
 <div class="highlight"><pre><code class="language-SQL"><span class="c1">--日申购赎回汇总表</span>
-<span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_user_balance_table_sum_baseline</span><span class="p">(</span>
+<span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_user_balance_table_sum_baseline</span><span class="p">(</span>
     <span class="n">report_date</span> <span class="n">string</span> <span class="k">comment</span> <span class="s1">&#39;日期&#39;</span><span class="p">,</span>
     <span class="n">total_purchase_amt</span> <span class="nb">bigint</span> <span class="k">comment</span> <span class="s1">&#39;日申购总额&#39;</span><span class="p">,</span>
     <span class="n">total_redeem_amt</span> <span class="nb">bigint</span> <span class="k">comment</span> <span class="s1">&#39;日赎回总额&#39;</span>
@@ -222,7 +222,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="k">where</span> <span class="n">ds</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span> <span class="k">and</span> <span class="n">report_date</span> <span class="o">&gt;=</span><span class="s1">&#39;20140401&#39;</span> <span class="k">and</span> <span class="n">report_date</span> <span class="o">&lt;</span> <span class="s1">&#39;20140901&#39;</span><span class="p">;</span>
 
 <span class="c1">--构建训练集基础特征：</span>
-<span class="k">create</span> <span class="k">table</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_basic_feature4to8_baseline</span> <span class="k">as</span> 
+<span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">lt_basic_feature4to8_baseline</span> <span class="k">as</span> 
 <span class="k">select</span>
     <span class="n">t1</span><span class="p">.</span><span class="n">report_date</span><span class="p">,</span>
     <span class="k">case</span> <span class="k">when</span> <span class="n">t1</span><span class="p">.</span><span class="n">dayOfWeek</span><span class="o">=</span><span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">end</span> <span class="k">as</span> <span class="n">monday</span><span class="p">,</span>
@@ -416,7 +416,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 <p>原来的<code>IN</code>查询：</p>
 
 <div class="highlight"><pre><code class="language-SQL"><span class="k">CREATE</span> <span class="k">TABLE</span>
-<span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">vip_balance_table</span> <span class="k">AS</span> <span class="k">SELECT</span>
+<span class="k">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">vip_balance_table</span> <span class="k">AS</span> <span class="k">SELECT</span>
   <span class="o">*</span>
 <span class="k">FROM</span>
   <span class="n">user_balance_table</span>
@@ -486,7 +486,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -564,7 +564,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

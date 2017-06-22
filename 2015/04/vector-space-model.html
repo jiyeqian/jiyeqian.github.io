@@ -167,11 +167,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><strong>词频</strong>就是统计词语在文本中出现的次数。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">mydoclist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Julie loves me more than Linda loves me&#39;</span><span class="p">,</span>
-<span class="s">&#39;Jane likes me more than Julie loves me&#39;</span><span class="p">,</span>
-<span class="s">&#39;He likes basketball more than baseball&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><code class="language-python"><span class="n">mydoclist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Julie loves me more than Linda loves me&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Jane likes me more than Julie loves me&#39;</span><span class="p">,</span>
+<span class="s1">&#39;He likes basketball more than baseball&#39;</span><span class="p">]</span>
 
-<span class="c">#mydoclist = [&#39;sun sky bright&#39;, &#39;sun sun bright&#39;]</span>
+<span class="c1">#mydoclist = [&#39;sun sky bright&#39;, &#39;sun sun bright&#39;]</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
@@ -181,14 +181,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
         <span class="n">tf</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span><span class="mi">1</span>
     <span class="k">print</span> <span class="n">tf</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
     
-<span class="c"># Output:</span>
-<span class="c"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;loves&#39;, 2), (&#39;Linda&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
-<span class="c"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;likes&#39;, 1), (&#39;loves&#39;, 1), (&#39;Jane&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
-<span class="c"># [(&#39;basketball&#39;, 1), (&#39;baseball&#39;, 1), (&#39;likes&#39;, 1), (&#39;He&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span></code></pre></div>
+<span class="c1"># Output:</span>
+<span class="c1"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;loves&#39;, 2), (&#39;Linda&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
+<span class="c1"># [(&#39;me&#39;, 2), (&#39;Julie&#39;, 1), (&#39;likes&#39;, 1), (&#39;loves&#39;, 1), (&#39;Jane&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span>
+<span class="c1"># [(&#39;basketball&#39;, 1), (&#39;baseball&#39;, 1), (&#39;likes&#39;, 1), (&#39;He&#39;, 1), (&#39;than&#39;, 1), (&#39;more&#39;, 1)]</span></code></pre></div>
 
 <p>以上代码统计了每个文本中词语出现的频率。虽然将文本量化，但是由于生成每个文本的字典不同，文本之间无法比较。因此，需要将每个文本表示成长度相同的向量，这个长度是由全体词语构成的<strong>语料库</strong>（corpus）决定的。</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">string</span> <span class="c">#allows for format()</span>
+<div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">string</span> <span class="c1">#allows for format()</span>
     
 <span class="k">def</span> <span class="nf">build_lexicon</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
     <span class="n">lexicon</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -205,30 +205,30 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="n">vocabulary</span> <span class="o">=</span> <span class="n">build_lexicon</span><span class="p">(</span><span class="n">mydoclist</span><span class="p">)</span>
 
 <span class="n">doc_term_matrix</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">print</span> <span class="s">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
+<span class="k">print</span> <span class="s1">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span>
 <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">mydoclist</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;The doc is &quot;&#39;</span> <span class="o">+</span> <span class="n">doc</span> <span class="o">+</span> <span class="s">&#39;&quot;&#39;</span>
+    <span class="k">print</span> <span class="s1">&#39;The doc is &quot;&#39;</span> <span class="o">+</span> <span class="n">doc</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
     <span class="n">tf_vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">]</span>
-    <span class="n">tf_vector_string</span> <span class="o">=</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">tf_vector</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&#39;The tf vector for Document </span><span class="si">%d</span><span class="s"> is [</span><span class="si">%s</span><span class="s">]&#39;</span> <span class="o">%</span> <span class="p">((</span><span class="n">mydoclist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf_vector_string</span><span class="p">)</span>
+    <span class="n">tf_vector_string</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">tf_vector</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s1">&#39;The tf vector for Document </span><span class="si">%d</span><span class="s1"> is [</span><span class="si">%s</span><span class="s1">]&#39;</span> <span class="o">%</span> <span class="p">((</span><span class="n">mydoclist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf_vector_string</span><span class="p">)</span>
     <span class="n">doc_term_matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">)</span>
     
-    <span class="c"># here&#39;s a test: why did I wrap mydoclist.index(doc)+1 in parens?  it returns an int...</span>
-    <span class="c"># try it!  type(mydoclist.index(doc) + 1)</span>
+    <span class="c1"># here&#39;s a test: why did I wrap mydoclist.index(doc)+1 in parens?  it returns an int...</span>
+    <span class="c1"># try it!  type(mydoclist.index(doc) + 1)</span>
 
-<span class="k">print</span> <span class="s">&#39;All combined, here is our master document term matrix: &#39;</span>
+<span class="k">print</span> <span class="s1">&#39;All combined, here is our master document term matrix: &#39;</span>
 <span class="k">print</span> <span class="n">doc_term_matrix</span>
 
-<span class="c"># Output:</span>
-<span class="c"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
-<span class="c"># The doc is &quot;Julie loves me more than Linda loves me&quot;</span>
-<span class="c"># The tf vector for Document 1 is [2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1]</span>
-<span class="c"># The doc is &quot;Jane likes me more than Julie loves me&quot;</span>
-<span class="c"># The tf vector for Document 2 is [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1]</span>
-<span class="c"># The doc is &quot;He likes basketball more than baseball&quot;</span>
-<span class="c"># The tf vector for Document 3 is [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]</span>
-<span class="c"># All combined, here is our master document term matrix: </span>
-<span class="c"># [[2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]]</span></code></pre></div>
+<span class="c1"># Output:</span>
+<span class="c1"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
+<span class="c1"># The doc is &quot;Julie loves me more than Linda loves me&quot;</span>
+<span class="c1"># The tf vector for Document 1 is [2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1]</span>
+<span class="c1"># The doc is &quot;Jane likes me more than Julie loves me&quot;</span>
+<span class="c1"># The tf vector for Document 2 is [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1]</span>
+<span class="c1"># The doc is &quot;He likes basketball more than baseball&quot;</span>
+<span class="c1"># The tf vector for Document 3 is [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]</span>
+<span class="c1"># All combined, here is our master document term matrix: </span>
+<span class="c1"># [[2, 0, 1, 0, 0, 2, 0, 1, 0, 1, 1], [2, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1]]</span></code></pre></div>
 
 <p>通过这一过程，将文本转换到了向量空间。如果有一篇文本单词频率出现过高，会破坏分析，需将向量规范化，比如$L_2$规范化，使得向量元素的平方和为$1$。</p>
 
@@ -243,30 +243,30 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">doc_term_matrix</span><span class="p">:</span>
     <span class="n">doc_term_matrix_l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2_normalizer</span><span class="p">(</span><span class="n">vec</span><span class="p">))</span>
 
-<span class="k">print</span> <span class="s">&#39;A regular old document term matrix: &#39;</span> 
+<span class="k">print</span> <span class="s1">&#39;A regular old document term matrix: &#39;</span> 
 <span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">A document term matrix with row-wise L2 norms of 1:&#39;</span>
+<span class="k">print</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">A document term matrix with row-wise L2 norms of 1:&#39;</span>
 <span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix_l2</span><span class="p">)</span>
 
-<span class="c"># if you want to check this math, perform the following:</span>
-<span class="c"># from numpy import linalg as la</span>
-<span class="c"># la.norm(doc_term_matrix[0])</span>
-<span class="c"># la.norm(doc_term_matrix_l2[0])</span>
+<span class="c1"># if you want to check this math, perform the following:</span>
+<span class="c1"># from numpy import linalg as la</span>
+<span class="c1"># la.norm(doc_term_matrix[0])</span>
+<span class="c1"># la.norm(doc_term_matrix_l2[0])</span>
 
-<span class="c"># Output:</span>
+<span class="c1"># Output:</span>
 
-<span class="c"># A regular old document term matrix: </span>
-<span class="c"># [[2 0 1 0 0 2 0 1 0 1 1]</span>
-<span class="c">#  [2 0 1 0 1 1 1 0 0 1 1]</span>
-<span class="c">#  [0 1 0 1 1 0 0 0 1 1 1]]</span>
+<span class="c1"># A regular old document term matrix: </span>
+<span class="c1"># [[2 0 1 0 0 2 0 1 0 1 1]</span>
+<span class="c1">#  [2 0 1 0 1 1 1 0 0 1 1]</span>
+<span class="c1">#  [0 1 0 1 1 0 0 0 1 1 1]]</span>
 
-<span class="c"># A document term matrix with row-wise L2 norms of 1:</span>
-<span class="c"># [[ 0.57735027  0.          0.28867513  0.          0.          0.57735027</span>
-<span class="c">#    0.          0.28867513  0.          0.28867513  0.28867513]</span>
-<span class="c">#  [ 0.63245553  0.          0.31622777  0.          0.31622777  0.31622777</span>
-<span class="c">#    0.31622777  0.          0.          0.31622777  0.31622777]</span>
-<span class="c">#  [ 0.          0.40824829  0.          0.40824829  0.40824829  0.          0.</span>
-<span class="c">#    0.          0.40824829  0.40824829  0.40824829]]</span></code></pre></div>
+<span class="c1"># A document term matrix with row-wise L2 norms of 1:</span>
+<span class="c1"># [[ 0.57735027  0.          0.28867513  0.          0.          0.57735027</span>
+<span class="c1">#    0.          0.28867513  0.          0.28867513  0.28867513]</span>
+<span class="c1">#  [ 0.63245553  0.          0.31622777  0.          0.31622777  0.31622777</span>
+<span class="c1">#    0.31622777  0.          0.          0.31622777  0.31622777]</span>
+<span class="c1">#  [ 0.          0.40824829  0.          0.40824829  0.40824829  0.          0.</span>
+<span class="c1">#    0.          0.40824829  0.40824829  0.40824829]]</span></code></pre></div>
 
 <p>通过$L_2$规范化，向量元素的取值范围变为了$[0, 1]$。如果要提升某篇文本和主题的相关性，可以一遍遍重复单词，这种方法可以压低这样的频率提升。</p>
 
@@ -294,13 +294,13 @@ IDF(\mbox{word}) = \log\left(\mbox{num of documents}\over\mbox{num of documents 
 
 <span class="n">my_idf_vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">idf</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">mydoclist</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">]</span>
 
-<span class="k">print</span> <span class="s">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
-<span class="k">print</span> <span class="s">&#39;The inverse document frequency vector is [&#39;</span> <span class="o">+</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s">&#39;f&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">my_idf_vector</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span>
+<span class="k">print</span> <span class="s1">&#39;Our vocabulary vector is [&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span>
+<span class="k">print</span> <span class="s1">&#39;The inverse document frequency vector is [&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">my_idf_vector</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]&#39;</span>
 
-<span class="c"># Output:</span>
+<span class="c1"># Output:</span>
 
-<span class="c"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
-<span class="c"># The inverse document frequency vector is [0.000000, 0.405465, 0.000000, 0.405465, 0.000000, 0.000000, 0.405465, 0.405465, 0.405465, -0.287682, -0.287682]</span></code></pre></div>
+<span class="c1"># Our vocabulary vector is [me, basketball, Julie, baseball, likes, loves, Jane, Linda, He, than, more]</span>
+<span class="c1"># The inverse document frequency vector is [0.000000, 0.405465, 0.000000, 0.405465, 0.000000, 0.000000, 0.405465, 0.405465, 0.405465, -0.287682, -0.287682]</span></code></pre></div>
 
 <p>如果一个词越常见，那么分母就越大，逆文档频率就越小越接近0。分母之所以要加1，是为了避免分母为0（即所有文档都不包含该词）。</p>
 
@@ -312,27 +312,27 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
 <div class="highlight"><pre><code class="language-python"><span class="n">doc_term_matrix_tfidf</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c">#performing tf-idf matrix multiplication</span>
+<span class="c1">#performing tf-idf matrix multiplication</span>
 <span class="k">for</span> <span class="n">tf_vector</span> <span class="ow">in</span> <span class="n">doc_term_matrix</span><span class="p">:</span>
     <span class="n">doc_term_matrix_tfidf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">,</span> <span class="n">my_idf_vector</span><span class="p">))</span>
 
-<span class="c">#normalizing</span>
+<span class="c1">#normalizing</span>
 <span class="n">doc_term_matrix_tfidf_l2</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">tf_vector</span> <span class="ow">in</span> <span class="n">doc_term_matrix_tfidf</span><span class="p">:</span>
     <span class="n">doc_term_matrix_tfidf_l2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l2_normalizer</span><span class="p">(</span><span class="n">tf_vector</span><span class="p">))</span>
                                     
 <span class="k">print</span> <span class="n">vocabulary</span>
-<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix_tfidf_l2</span><span class="p">)</span> <span class="c"># np.matrix() just to make it easier to look at</span>
+<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">doc_term_matrix_tfidf_l2</span><span class="p">)</span> <span class="c1"># np.matrix() just to make it easier to look at</span>
 
-<span class="c"># Output:</span>
-<span class="c"># </span>
-<span class="c"># set([&#39;me&#39;, &#39;basketball&#39;, &#39;Julie&#39;, &#39;baseball&#39;, &#39;likes&#39;, &#39;loves&#39;, &#39;Jane&#39;, &#39;Linda&#39;, &#39;He&#39;, &#39;than&#39;, &#39;more&#39;])</span>
-<span class="c"># [[ 0.          0.          0.          0.          0.          0.          0.</span>
-<span class="c">#    0.70590555  0.         -0.50084796 -0.50084796]</span>
-<span class="c">#  [ 0.          0.          0.          0.          0.          0.</span>
-<span class="c">#    0.70590555  0.          0.         -0.50084796 -0.50084796]</span>
-<span class="c">#  [ 0.          0.49957476  0.          0.49957476  0.          0.          0.</span>
-<span class="c">#    0.          0.49957476 -0.35445393 -0.35445393]]</span></code></pre></div>
+<span class="c1"># Output:</span>
+<span class="c1"># </span>
+<span class="c1"># set([&#39;me&#39;, &#39;basketball&#39;, &#39;Julie&#39;, &#39;baseball&#39;, &#39;likes&#39;, &#39;loves&#39;, &#39;Jane&#39;, &#39;Linda&#39;, &#39;He&#39;, &#39;than&#39;, &#39;more&#39;])</span>
+<span class="c1"># [[ 0.          0.          0.          0.          0.          0.          0.</span>
+<span class="c1">#    0.70590555  0.         -0.50084796 -0.50084796]</span>
+<span class="c1">#  [ 0.          0.          0.          0.          0.          0.</span>
+<span class="c1">#    0.70590555  0.          0.         -0.50084796 -0.50084796]</span>
+<span class="c1">#  [ 0.          0.49957476  0.          0.49957476  0.          0.          0.</span>
+<span class="c1">#    0.          0.49957476 -0.35445393 -0.35445393]]</span></code></pre></div>
 
 <p>事实上，scikits-learn包含了计算TF-IDF的算法，但由于处理除以0的问题，<code>TfidfVectorizer/TfidfTransformer</code>得到的<a href="http://stackoverflow.com/questions/18687879/error-in-computing-text-similarity-using-scikit-learn/18692538#18692538">结果与以上计算过程不同</a>。</p>
 
@@ -340,24 +340,24 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
 <span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">min_df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">term_freq_matrix</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">mydoclist</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;Vocabulary:&quot;</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">vocabulary_</span>
+<span class="k">print</span> <span class="s2">&quot;Vocabulary:&quot;</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">vocabulary_</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
 
-<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="s">&quot;l2&quot;</span><span class="p">)</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">)</span>
 <span class="n">tfidf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">term_freq_matrix</span><span class="p">)</span>
 
 <span class="n">tf_idf_matrix</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">term_freq_matrix</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">tf_idf_matrix</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
 
-<span class="c"># Output:</span>
-<span class="c"># Vocabulary: {u&#39;me&#39;: 8, u&#39;basketball&#39;: 1, u&#39;julie&#39;: 4, u&#39;baseball&#39;: 0, u&#39;likes&#39;: 5, u&#39;loves&#39;: 7, u&#39;jane&#39;: 3, u&#39;linda&#39;: 6, u&#39;more&#39;: 9, u&#39;than&#39;: 10, u&#39;he&#39;: 2}</span>
-<span class="c"># [[ 0.          0.          0.          0.          0.28945906  0.</span>
-<span class="c">#    0.38060387  0.57891811  0.57891811  0.22479078  0.22479078]</span>
-<span class="c">#  [ 0.          0.          0.          0.41715759  0.3172591   0.3172591</span>
-<span class="c">#    0.          0.3172591   0.6345182   0.24637999  0.24637999]</span>
-<span class="c">#  [ 0.48359121  0.48359121  0.48359121  0.          0.          0.36778358</span>
-<span class="c">#    0.          0.          0.          0.28561676  0.28561676]]</span></code></pre></div>
+<span class="c1"># Output:</span>
+<span class="c1"># Vocabulary: {u&#39;me&#39;: 8, u&#39;basketball&#39;: 1, u&#39;julie&#39;: 4, u&#39;baseball&#39;: 0, u&#39;likes&#39;: 5, u&#39;loves&#39;: 7, u&#39;jane&#39;: 3, u&#39;linda&#39;: 6, u&#39;more&#39;: 9, u&#39;than&#39;: 10, u&#39;he&#39;: 2}</span>
+<span class="c1"># [[ 0.          0.          0.          0.          0.28945906  0.</span>
+<span class="c1">#    0.38060387  0.57891811  0.57891811  0.22479078  0.22479078]</span>
+<span class="c1">#  [ 0.          0.          0.          0.41715759  0.3172591   0.3172591</span>
+<span class="c1">#    0.          0.3172591   0.6345182   0.24637999  0.24637999]</span>
+<span class="c1">#  [ 0.48359121  0.48359121  0.48359121  0.          0.          0.36778358</span>
+<span class="c1">#    0.          0.          0.          0.28561676  0.28561676]]</span></code></pre></div>
 
 <h2 id="section-1">应用示例</h2>
 
@@ -393,7 +393,7 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -471,7 +471,7 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

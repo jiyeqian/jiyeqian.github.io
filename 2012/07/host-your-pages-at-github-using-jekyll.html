@@ -169,7 +169,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>由于本地和gihub的<a href="https://help.github.com/articles/using-jekyll-with-pages">jekyll版本</a>不同，即使本地正常解析的页面也可能会在github上解析出错。下面的表格在github上<code>Jekyll 0.11.0 with Liquid 2.2.2</code>会出错：</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">   功能  <span class="p">|</span>   快捷键  <span class="p">|</span>   快捷键  <span class="p">|</span>  功能
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>   功能  <span class="p">|</span>   快捷键  <span class="p">|</span>   快捷键  <span class="p">|</span>  功能
 -------: <span class="p">|</span> -------: <span class="p">|</span> :------- <span class="p">|</span> :-------
 上一节点  <span class="p">|</span>   <span class="sb">`</span>p<span class="sb">`</span>    <span class="p">|</span>    <span class="sb">`</span>n<span class="sb">`</span>   <span class="p">|</span> 下一节点  
 <span class="o">||</span>    <span class="sb">`</span>m<span class="sb">`</span>   <span class="p">|</span> 菜单 </code></pre></figure>
@@ -231,7 +231,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>pygments和rouge是github可支持的代码高亮方案(不支持coderay高亮)。利用pygments，须先在_config.yml中设置<code>pygments: true</code>，并嵌入生成的相应CSS到页面的<code>&lt;head&gt;&lt;/head&gt;</code>之中。</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>pygmentize -S default -f html <span class="p">|</span> sed <span class="s1">&#39;s/^/.highlight code /g&#39;</span> &gt; default.css</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>$ pygmentize -S default -f html <span class="p">|</span> sed <span class="s1">&#39;s/^/.highlight code /g&#39;</span> &gt; default.css</code></pre></figure>
 
 <p>在pygments的CSS选择器前都加上<code>.highlight code</code>，防止pygments的CSS影响<a href="#mathjax">mathjax</a>公式的CSS。<a href="http://www.stehem.net/2012/02/14/how-to-get-pygments-to-work-with-jekyll.html">pygments也可能会和bootstrap.min.css冲突</a>，需要修改css。上面的<code>pygmentize</code>命令就是pygments代码高亮的效果。代码高亮的highlight标签使用方法<a href="https://github.com/mojombo/jekyll/wiki/Liquid-Extensions">可以参考这里</a>。</p>
 
@@ -245,11 +245,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><a href="http://www.mathjax.org/">mathjax</a>通过javascript的方式生成<script type="math/tex">\LaTeX</script>公式可以参考<a href="http://chen.yanping.me/cn/blog/2012/03/10/octopress-with-latex/">在Octopress中使用<script type="math/tex">\LaTeX</script></a>，不过，不必把markdown解析引擎设置为kramdown。当markdown解析引擎为kramdown时，只需要在页面中插入下面这段代码：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
 
 <p>下面这段代码：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">$$ 
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span>$$ 
 e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n 
 $$</code></pre></figure>
 
@@ -257,7 +257,7 @@ $$</code></pre></figure>
 <script type="math/tex">e^x = \sum\_{n=0}^\infty \frac{x^n}{n!} = \lim\_{n\rightarrow\infty} (1+x/n)^n</script>
 显示行内公式<script type="math/tex">\alpha + \beta</script>的代码如下：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">$$\alpha + \beta$$</code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span>$$\alpha + \beta$$</code></pre></figure>
 
 <p>但是kramdown的解析引擎和转帖gist代码的插件、直接高亮文件中代码的插件include-code有冲突。</p>
 
@@ -286,7 +286,7 @@ $$</code></pre></figure>
 
 <p>因为markdown的语法可以兼容html，在情非得已的情况下，直接查html代码。如果转帖gist的代码，直接在markdown文件中插入：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></figure>
 
 <p>即可得：
 <script src="https://gist.github.com/834610.js?file=Jekyll nd Octopress Liquid tag for MathJax.rb"></script></p>
@@ -294,11 +294,11 @@ $$</code></pre></figure>
 <p>###页内跳转</p>
 
 <p>为了方便页内快速跳转，可建立空内容的锚点。比如</p>
-<div class="highlight"><pre><code class="language-html"><span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;jekyll-and-github&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+<div class="highlight"><pre><code class="language-html"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;jekyll-and-github&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 ##jekyll与github的关系</code></pre></div>
 <p>既可用</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html">[回去看看](#jekyll-and-github)</code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span>[回去看看](#jekyll-and-github)</code></pre></figure>
 
 <p>实现页内跳转，试试，<a href="#jekyll-and-github">回去看看</a>。如果用的是kramdown解释器，上例中空锚点行下须有一空行。</p>
 
@@ -306,7 +306,7 @@ $$</code></pre></figure>
 
 <p>表格某一栏不断行的处理：</p>
 
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">&quot;white-space:nowrap&quot;</span><span class="nt">&gt;</span>git clone username@host:/path/to/repository<span class="nt">&lt;/span&gt;</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;white-space:nowrap&quot;</span><span class="p">&gt;</span>git clone username@host:/path/to/repository<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code></pre></figure>
 
 <!---
 点击[到这里看效果]()。
@@ -314,7 +314,7 @@ $$</code></pre></figure>
 
 <p>###引用本站其它网页</p>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">{% post_url your_markdown_file_name %}</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>{% post_url your_markdown_file_name %}</code></pre></figure>
 
 
 </section>
@@ -326,7 +326,7 @@ $$</code></pre></figure>
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -404,7 +404,7 @@ $$</code></pre></figure>
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

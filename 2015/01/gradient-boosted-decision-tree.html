@@ -155,14 +155,19 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   
   <a href="/tags/#梯度下降法" title="梯度下降法">梯度下降法</a>&nbsp;
   
+  <a href="/tags/#GBDT" title="GBDT">GBDT</a>&nbsp;
+  
+  <a href="/tags/#决策树" title="决策树">决策树</a>&nbsp;
+  
 </span>
 
 </section>
 <section class="post">
-<h2 id="adaboost">AdaBoost决策树</h2>
+<h2 id="adaboost-">AdaBoost 决策树</h2>
 
 <blockquote>
-  <h2 id="adaboost-dtreemathcal-d">####AdaBoost-DTree($\mathcal D$)</h2>
+  <h4 id="adaboost-dtreemathcal-d">AdaBoost-DTree($\mathcal D$)</h4>
+  <hr />
   <p>对于$t=1,2,\ldots,T$，循环执行：</p>
 
   <ol>
@@ -174,7 +179,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <p>返回$G=\mbox{LinearHypo}(\{\left(g_t,\alpha_t\right)\})$。</p>
 </blockquote>
 
-<p>由此可见，AdaBoost决策树需要加权决策树算法。对于有权重的算法，需要根据权重最小化$E_{in}$，通常有两种方法：</p>
+<p>由此可见，AdaBoost 决策树需要加权决策树算法。对于有权重的算法，需要根据权重最小化$E_{in}$，通常有两种方法：</p>
 
 <ul>
   <li>一种方法是通过算法加权，在计算$E_{in}$的地方嵌入权重计算，比如AdaBoost采用的最小化<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqweighted-Ein">加权误差</a>；</li>
@@ -183,11 +188,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>AdaBoost决策树通常采用后一种方法，AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
 
-<p>AdaBoost的<a href="/2015/01/adaptive-boosting/#AdaBoost-algorithm">$\alpha_t$通过错误率确定</a>。对于所有$\mathbf x_n$不同的完全成长决策树，$E_{in}(g_t)=0$，那么$E_{in}^{\mathbf u}(g_t)=0$，因此$\epsilon_t=0$并且$\alpha_t=\infty$。合适的方法是让决策树弱些，在部分数据集上训练剪枝的决策树。即使在$\tilde{\mathcal D}_t$上得到错误率为0的决策树$g_t$，回到$\mathcal D$上$\alpha_t$可能是大于、等于或小于0。剪枝可采用常规方法或只限制决策树高度，在数据重采样阶段已经包含了只抽取部分数据的功能。因此，AdaBoost决策树＝AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋剪枝的$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
+<p>AdaBoost 的<a href="/2015/01/adaptive-boosting/#AdaBoost-algorithm">$\alpha_t$通过错误率确定</a>。对于所有$\mathbf x_n$不同的完全成长决策树，$E_{in}(g_t)=0$，那么$E_{in}^{\mathbf u}(g_t)=0$，因此$\epsilon_t=0$并且$\alpha_t=\infty$。合适的方法是让决策树弱些，在部分数据集上训练剪枝的决策树。即使在$\tilde{\mathcal D}_t$上得到错误率为0的决策树$g_t$，回到$\mathcal D$上$\alpha_t$可能是大于、等于或小于0。剪枝可采用常规方法或只限制决策树高度，在数据重采样阶段已经包含了只抽取部分数据的功能。因此，AdaBoost决策树＝AdaBoost＋sampling $\propto \mathbf u^{(t)}$＋剪枝的$\mbox{DTree}(\tilde{\mathcal D}_t)$。</p>
 
 <p>如果C&amp;RT的高度限制为不超过1，当用二分类的误差作为<a href="/2015/01/decision-tree/#mjx-eqn-eqdtree-decision-stump">不纯度</a>时，AdaBoost决策树就是<a href="/2015/01/adaptive-boosting/#AdaBoost-Stump">AdaBoost-Stump</a>，此时通常有$\epsilon_t\neq 0$，一般不再需要sampling。</p>
 
-<h2 id="functional-gradient-steepest-descent">AdaBoost理论分析：最速函数梯度下降法</h2>
+<h2 id="functional-gradient-steepest-descent">AdaBoost 理论分析：最速函数梯度下降法</h2>
 
 <p>AdaBoost的<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqadaboost-update-u">权重更新</a>可以合并为
 \[
@@ -351,7 +356,8 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 <p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优作为步长$\alpha_t=\eta$。</p>
 
 <blockquote>
-  <h2 id="gbdtgradient-boosted-decision-tree">####梯度提升决策树（GBDT，gradient boosted decision tree）</h2>
+  <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
+  <hr />
   <p>初始化$s_1=s_2=\ldots=s_N=0$；</p>
 
   <p>对于$t=1,2,\ldots,T$，循环执行：</p>
@@ -390,7 +396,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -468,7 +474,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

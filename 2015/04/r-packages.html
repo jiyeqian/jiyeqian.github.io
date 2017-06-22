@@ -275,12 +275,12 @@ devtools<span class="o">::</span>has_devel<span class="p">()</span></code></pre>
 
 <p>source包中.Rbuildignore文件中标明的文件被排除在bundled包外，.Rbuildignore的每一行是Perl兼容的正则表达式，大小写不敏感，即可匹配目录也可匹配文件。</p>
 
-<div class="highlight"><pre><code class="language-bash">^.*<span class="se">\.</span>Rproj<span class="nv">$ </span>        <span class="c"># Automatically added by RStudio,</span>
-^<span class="se">\.</span>Rproj<span class="se">\.</span>user<span class="nv">$ </span>    <span class="c"># used for temporary files. </span>
-^README<span class="se">\.</span>Rmd<span class="nv">$ </span>      <span class="c"># An Rmarkdown file used to generate README.md</span>
-^cran-comments<span class="se">\.</span>md<span class="nv">$ </span><span class="c"># Comments for CRAN submission</span>
-^NEWS<span class="se">\.</span>md<span class="nv">$ </span>         <span class="c"># A news file written in Markdown</span>
-^<span class="se">\.</span>travis<span class="se">\.</span>yml<span class="nv">$ </span>    <span class="c"># Used for continuous integration testing with travis</span></code></pre></div>
+<div class="highlight"><pre><code class="language-bash">^.*<span class="se">\.</span>Rproj$         <span class="c1"># Automatically added by RStudio,</span>
+^<span class="se">\.</span>Rproj<span class="se">\.</span>user$     <span class="c1"># used for temporary files. </span>
+^README<span class="se">\.</span>Rmd$       <span class="c1"># An Rmarkdown file used to generate README.md</span>
+^cran-comments<span class="se">\.</span>md$ <span class="c1"># Comments for CRAN submission</span>
+^NEWS<span class="se">\.</span>md$          <span class="c1"># A news file written in Markdown</span>
+^<span class="se">\.</span>travis<span class="se">\.</span>yml$     <span class="c1"># Used for continuous integration testing with travis</span></code></pre></div>
 
 <p>正则表达式<code>^notes$</code>匹配包含notes的任意文件，比如：R/notes.R、man/important-notes.R、data/endnotes.Rdata等。比较保险的做法是采用<code>devtools::use_build_ignore("notes")</code>，自动添加了转意字符处理，将<code>.</code>变为<code>\.</code>并且添加了<code>^</code>和<code>$</code>。</p>
 
@@ -635,7 +635,7 @@ y <span class="o">&lt;-</span> <span class="s">&quot;This is a bullet \u2022&quo
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -713,7 +713,7 @@ y <span class="o">&lt;-</span> <span class="s">&quot;This is a bullet \u2022&quo
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

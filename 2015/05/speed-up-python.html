@@ -223,7 +223,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>利用Linux／Unix的time工具，快速估计代码运行时间：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span><span class="nb">time </span>python yourprogram.py
+<div class="highlight"><pre><code class="language-bash">$ <span class="nb">time</span> python yourprogram.py
 
 real    0m1.028s
 user    0m0.001s
@@ -242,8 +242,8 @@ sys     0m0.003s</code></pre></div>
 <h3 id="time-1">利用time包直接计时</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
-<span class="c">#### some code  </span>
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="c1">#### some code  </span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <h3 id="section-2">利用上下文管理器计时</h3>
@@ -253,19 +253,19 @@ sys     0m0.003s</code></pre></div>
 <div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">class</span> <span class="nc">Timer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
 
-    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secs</span> <span class="o">*</span> <span class="mi">1000</span>  <span class="c"># millisecs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">secs</span> <span class="o">*</span> <span class="mi">1000</span>  <span class="c1"># millisecs</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&#39;elapsed time: </span><span class="si">%f</span><span class="s"> ms&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span></code></pre></div>
+            <span class="k">print</span> <span class="s1">&#39;elapsed time: </span><span class="si">%f</span><span class="s1"> ms&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">msecs</span></code></pre></div>
 
 <p>为了使用该程序，需要用<code>with</code>包裹被计时的代码：</p>
 
@@ -274,18 +274,18 @@ sys     0m0.003s</code></pre></div>
 <span class="n">rdb</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">()</span>
 
 <span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
-    <span class="n">rdb</span><span class="o">.</span><span class="n">lpush</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;=&gt; elasped lpush: </span><span class="si">%s</span><span class="s"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span>
+    <span class="n">rdb</span><span class="o">.</span><span class="n">lpush</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;=&gt; elasped lpush: </span><span class="si">%s</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span>
 
 <span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
-    <span class="n">rdb</span><span class="o">.</span><span class="n">lpop</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&quot;=&gt; elasped lpop: </span><span class="si">%s</span><span class="s"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span></code></pre></div>
+    <span class="n">rdb</span><span class="o">.</span><span class="n">lpop</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;=&gt; elasped lpop: </span><span class="si">%s</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span></code></pre></div>
 
 <h3 id="profiler">利用profiler按行计时</h3>
 
 <p><a href="http://packages.python.org/line_profiler/">line_profiler</a>可以估计每行运行的时间和频率。使用前需要安装：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install line_profiler</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ sudo pip install line_profiler</code></pre></div>
 
 <p>安装之后可以使用模块line_profiler以及可执行脚本kernprof.py。</p>
 
@@ -316,7 +316,7 @@ sys     0m0.003s</code></pre></div>
 
 <p>然后测试程序运行时间：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>kernprof -l -v primes.py</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ kernprof -l -v primes.py</code></pre></div>
 
 <blockquote>
   <h4 class="no_toc" id="section-3">注意：目前该包按修饰器的方式不可用</h4>
@@ -324,18 +324,18 @@ sys     0m0.003s</code></pre></div>
   <div class="highlight"><pre><code class="language-bash">Wrote profile results to primes.py.lprof
 Timer unit: 1e-06 s
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-  File <span class="s2">&quot;/usr/local/bin/kernprof&quot;</span>, line 9, in &lt;module&gt;
+  File <span class="s2">&quot;/usr/local/bin/kernprof&quot;</span>, line <span class="m">9</span>, in &lt;module&gt;
     load_entry_point<span class="o">(</span><span class="s1">&#39;line-profiler==1.0&#39;</span>, <span class="s1">&#39;console_scripts&#39;</span>, <span class="s1">&#39;kernprof&#39;</span><span class="o">)()</span>
-  File <span class="s2">&quot;/usr/local/lib/python2.7/site-packages/kernprof.py&quot;</span>, line 221, in main
+  File <span class="s2">&quot;/usr/local/lib/python2.7/site-packages/kernprof.py&quot;</span>, line <span class="m">221</span>, in main
     execfile<span class="o">(</span>script_file, ns, ns<span class="o">)</span>
-  File <span class="s2">&quot;primes.py&quot;</span>, line 2, in &lt;module&gt;
+  File <span class="s2">&quot;primes.py&quot;</span>, line <span class="m">2</span>, in &lt;module&gt;
     @profile
 NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code></pre></div>
 </blockquote>
 
 <h3 id="cprofile">利用cProfile分析程序性能</h3>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python -m cProfile  primes.py</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ python -m cProfile  primes.py</code></pre></div>
 
 <h3 id="profile">利用profile包分析程序性能</h3>
 
@@ -348,35 +348,35 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
         <span class="k">print</span> <span class="n">Total</span> 
     <span class="k">return</span> <span class="n">Total</span> 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span> 
-    <span class="n">profile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&quot;profileTest()&quot;</span><span class="p">)</span></code></pre></div>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> 
+    <span class="n">profile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;profileTest()&quot;</span><span class="p">)</span></code></pre></div>
 
 <p>上述代码的输出为：</p>
 
-<div class="highlight"><pre><code class="language-bash">1
-2
-6
-24
-120
-720
-5040
-40320
-362880
-3628800
-         <span class="m">5</span> <span class="k">function</span> calls in 0.001 seconds
+<div class="highlight"><pre><code class="language-bash"><span class="m">1</span>
+<span class="m">2</span>
+<span class="m">6</span>
+<span class="m">24</span>
+<span class="m">120</span>
+<span class="m">720</span>
+<span class="m">5040</span>
+<span class="m">40320</span>
+<span class="m">362880</span>
+<span class="m">3628800</span>
+         <span class="m">5</span> <span class="k">function</span> calls in <span class="m">0</span>.001 seconds
 
    Ordered by: standard name
 
    ncalls  tottime  percall  cumtime  percall filename:lineno<span class="o">(</span><span class="k">function</span><span class="o">)</span>
-        <span class="m">1</span>    0.000    0.000    0.000    0.000 :0<span class="o">(</span>range<span class="o">)</span>
-        <span class="m">1</span>    0.001    0.001    0.001    0.001 :0<span class="o">(</span>setprofile<span class="o">)</span>
-        <span class="m">1</span>    0.000    0.000    0.000    0.000 &lt;string&gt;:1<span class="o">(</span>&lt;module&gt;<span class="o">)</span>
-        <span class="m">1</span>    0.000    0.000    0.001    0.001 profile:0<span class="o">(</span>profileTest<span class="o">())</span>
-        <span class="m">0</span>    0.000             0.000          profile:0<span class="o">(</span>profiler<span class="o">)</span>
-        <span class="m">1</span>    0.000    0.000    0.000    0.000 test.py:3<span class="o">(</span>profileTest<span class="o">)</span>
+        <span class="m">1</span>    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000 :0<span class="o">(</span>range<span class="o">)</span>
+        <span class="m">1</span>    <span class="m">0</span>.001    <span class="m">0</span>.001    <span class="m">0</span>.001    <span class="m">0</span>.001 :0<span class="o">(</span>setprofile<span class="o">)</span>
+        <span class="m">1</span>    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000 &lt;string&gt;:1<span class="o">(</span>&lt;module&gt;<span class="o">)</span>
+        <span class="m">1</span>    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.001    <span class="m">0</span>.001 profile:0<span class="o">(</span>profileTest<span class="o">())</span>
+        <span class="m">0</span>    <span class="m">0</span>.000             <span class="m">0</span>.000          profile:0<span class="o">(</span>profiler<span class="o">)</span>
+        <span class="m">1</span>    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000    <span class="m">0</span>.000 test.py:3<span class="o">(</span>profileTest<span class="o">)</span>
 
 
-<span class="o">[</span>Finished in 0.1s<span class="o">]</span></code></pre></div>
+<span class="o">[</span>Finished in <span class="m">0</span>.1s<span class="o">]</span></code></pre></div>
 
 <p>其中输出每列的具体解释如下：</p>
 
@@ -395,8 +395,8 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">pstats</span> 
 
-<span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s">&#39;testprof&#39;</span><span class="p">)</span> 
-<span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span></code></pre></div>
+<span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s1">&#39;testprof&#39;</span><span class="p">)</span> 
+<span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span></code></pre></div>
 
 <p>其中<code>sort_stats()</code>方法能够对剖分数据进行排序，可以接受多个排序字段，如<code>sort_stats('name', 'file')</code> 将首先按照函数名称进行排序，然后再按照文件名进行排序。常见的排序字段包括：<code>calls</code>（被调用的次数 ）、<code>time</code>（函数内部运行时间）、<code>cumulative</code>（运行的总时间）等。此外 pstats也提供了命令行交互工具，执行<code>python -m pstats</code>后可以通过<code>help</code>了解更多使用方式。</p>
 
@@ -406,8 +406,8 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>利用<a href="https://github.com/fabianp/memory_profiler">memory profiler</a>，可以测试程序占用的内存，首先安装相关的包：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install -U memory_profiler
-<span class="nv">$ </span>sudo pip install psutil</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ sudo pip install -U memory_profiler
+$ sudo pip install psutil</code></pre></div>
 
 <p>安装psutil可以极大提高memory_profiler的性能。</p>
 
@@ -420,7 +420,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>然后查看程序内存占用情况：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python -m memory_profiler primes.py</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ python -m memory_profiler primes.py</code></pre></div>
 
 <h3 id="ipython">IPython中性能测试</h3>
 
@@ -443,7 +443,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>首先，安装objgraph包：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install objgraph</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ sudo pip install objgraph</code></pre></div>
 
 <p>然后，在代码中插入调用调试器的语句：</p>
 
@@ -462,16 +462,16 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
-<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;python&#39;</span><span class="p">,</span><span class="s">&#39;jason&#39;</span><span class="p">,</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;hill&#39;</span><span class="p">,</span><span class="s">&#39;with&#39;</span><span class="p">,</span><span class="s">&#39;phone&#39;</span><span class="p">,</span><span class="s">&#39;test&#39;</span><span class="p">,</span> 
-<span class="s">&#39;dfdf&#39;</span><span class="p">,</span><span class="s">&#39;apple&#39;</span><span class="p">,</span><span class="s">&#39;pddf&#39;</span><span class="p">,</span><span class="s">&#39;ind&#39;</span><span class="p">,</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="s">&#39;baecr&#39;</span><span class="p">,</span><span class="s">&#39;var&#39;</span><span class="p">,</span><span class="s">&#39;bana&#39;</span><span class="p">,</span><span class="s">&#39;dd&#39;</span><span class="p">,</span><span class="s">&#39;wrd&#39;</span><span class="p">]</span> 
-<span class="c">#####list = dict.fromkeys(list,True) </span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;is&#39;</span><span class="p">,</span><span class="s1">&#39;python&#39;</span><span class="p">,</span><span class="s1">&#39;jason&#39;</span><span class="p">,</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span><span class="s1">&#39;hill&#39;</span><span class="p">,</span><span class="s1">&#39;with&#39;</span><span class="p">,</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;dfdf&#39;</span><span class="p">,</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span><span class="s1">&#39;pddf&#39;</span><span class="p">,</span><span class="s1">&#39;ind&#39;</span><span class="p">,</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="s1">&#39;baecr&#39;</span><span class="p">,</span><span class="s1">&#39;var&#39;</span><span class="p">,</span><span class="s1">&#39;bana&#39;</span><span class="p">,</span><span class="s1">&#39;dd&#39;</span><span class="p">,</span><span class="s1">&#39;wrd&#39;</span><span class="p">]</span> 
+<span class="c1">#####list = dict.fromkeys(list,True) </span>
 <span class="k">print</span> <span class="nb">list</span>
 <span class="nb">filter</span> <span class="o">=</span> <span class="p">[]</span> 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
-    <span class="k">for</span> <span class="n">find</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;hat&#39;</span><span class="p">,</span><span class="s">&#39;new&#39;</span><span class="p">,</span><span class="s">&#39;list&#39;</span><span class="p">,</span><span class="s">&#39;old&#39;</span><span class="p">,</span><span class="s">&#39;.&#39;</span><span class="p">]:</span> 
+    <span class="k">for</span> <span class="n">find</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;is&#39;</span><span class="p">,</span><span class="s1">&#39;hat&#39;</span><span class="p">,</span><span class="s1">&#39;new&#39;</span><span class="p">,</span><span class="s1">&#39;list&#39;</span><span class="p">,</span><span class="s1">&#39;old&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">]:</span> 
         <span class="k">if</span> <span class="n">find</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
             <span class="nb">filter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">find</span><span class="p">)</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述代码运行大概需要3.17秒。如果去掉行<code>list = dict.fromkeys(list,True)</code>的注释，将 list转换为字典之后再运行，时间大约为1.74秒。在需要频繁查找或访问多数据成员时，使用dict而不是list。</p>
@@ -491,7 +491,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
         <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">listb</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
                 <span class="n">intersection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述程序的运行时间大概为8.32秒，改为如下set操作：</p>
@@ -504,7 +504,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <span class="n">intersection</span><span class="o">=</span><span class="p">[]</span> 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
     <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lista</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">listb</span><span class="p">))</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>运行时间缩减为1.75秒。</p>
@@ -522,7 +522,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lista</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">listb</span><span class="p">)):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">lista</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+</span> <span class="n">listb</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上面的代码大概的运行时间约为27.14秒。将长度计算提到循环外，<code>range</code>用<code>xrange</code>代替，同时将第三层的计算提到循环的第二层：</p>
@@ -539,7 +539,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
         <span class="n">temp</span> <span class="o">=</span> <span class="n">lista</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">len2</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="n">listb</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述优化后的程序其运行时间缩短为23.19秒。</p>
@@ -551,13 +551,13 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
-<span class="n">abbreviations</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cf.&#39;</span><span class="p">,</span> <span class="s">&#39;e.g.&#39;</span><span class="p">,</span> <span class="s">&#39;ex.&#39;</span><span class="p">,</span> <span class="s">&#39;etc.&#39;</span><span class="p">,</span> <span class="s">&#39;fig.&#39;</span><span class="p">,</span> <span class="s">&#39;i.e.&#39;</span><span class="p">,</span> <span class="s">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s">&#39;vs.&#39;</span><span class="p">]</span> 
+<span class="n">abbreviations</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cf.&#39;</span><span class="p">,</span> <span class="s1">&#39;e.g.&#39;</span><span class="p">,</span> <span class="s1">&#39;ex.&#39;</span><span class="p">,</span> <span class="s1">&#39;etc.&#39;</span><span class="p">,</span> <span class="s1">&#39;fig.&#39;</span><span class="p">,</span> <span class="s1">&#39;i.e.&#39;</span><span class="p">,</span> <span class="s1">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s1">&#39;vs.&#39;</span><span class="p">]</span> 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
-    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s">&#39;Hat&#39;</span><span class="p">,</span> <span class="s">&#39;is&#39;</span><span class="p">,</span> <span class="s">&#39;chasing&#39;</span><span class="p">,</span> <span class="s">&#39;the&#39;</span><span class="p">,</span> <span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;Mr.&#39;</span><span class="p">,</span> <span class="s1">&#39;Hat&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;chasing&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">abbreviations</span><span class="p">:</span> 
-        <span class="c">#if w[-1] == &#39;.&#39; and w in abbreviations: </span>
+        <span class="c1">#if w[-1] == &#39;.&#39; and w in abbreviations: </span>
             <span class="k">pass</span>
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述代码的运行时间大概为1.78秒，如果使用注释行代替第一个<code>if</code>，运行的时间大概为1.38秒。</p>
@@ -571,12 +571,12 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
-<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;i&#39;</span><span class="p">,</span><span class="s">&#39;j&#39;</span><span class="p">,</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="s">&#39;l&#39;</span><span class="p">,</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">]</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;i&#39;</span><span class="p">,</span><span class="s1">&#39;j&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">10000</span><span class="p">):</span> 
     <span class="k">for</span> <span class="n">substr</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
         <span class="n">s</span> <span class="o">+=</span> <span class="n">substr</span>     
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述代码使用<code>+</code>耗时约为0.027秒，改为如下使用<code>join</code>的代码时耗约为0.0048秒。</p>
@@ -584,10 +584,10 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
-<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;i&#39;</span><span class="p">,</span><span class="s">&#39;j&#39;</span><span class="p">,</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="s">&#39;l&#39;</span><span class="p">,</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">]</span> 
-<span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">10000</span><span class="p">)])</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;i&#39;</span><span class="p">,</span><span class="s1">&#39;j&#39;</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;m&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">10000</span><span class="p">)])</span> 
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <h4 id="section-7">二、优先使用内置函数</h4>
@@ -598,24 +598,24 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>对字符进行格式化比直接串联读取要快，因此要使用</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;</span><span class="si">%s%s%s%s</span><span class="s">&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">prologue</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;</span><span class="si">%s%s%s%s</span><span class="s2">&lt;/html&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">prologue</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">tail</span><span class="p">)</span></code></pre></div>
 
 <p>避免使用</p>
 
-<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s">&quot;&lt;html&gt;&quot;</span> <span class="o">+</span> <span class="n">head</span> <span class="o">+</span> <span class="n">prologue</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="n">tail</span> <span class="o">+</span> <span class="s">&quot;&lt;/html&gt;&quot;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&quot;</span> <span class="o">+</span> <span class="n">head</span> <span class="o">+</span> <span class="n">prologue</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="n">tail</span> <span class="o">+</span> <span class="s2">&quot;&lt;/html&gt;&quot;</span></code></pre></div>
 
 <h3 id="list-comprehensiongenerator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
-<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;is&#39;</span><span class="p">,</span><span class="s">&#39;python&#39;</span><span class="p">,</span><span class="s">&#39;jason&#39;</span><span class="p">,</span><span class="s">&#39;hello&#39;</span><span class="p">,</span><span class="s">&#39;hill&#39;</span><span class="p">,</span><span class="s">&#39;with&#39;</span><span class="p">,</span><span class="s">&#39;phone&#39;</span><span class="p">,</span><span class="s">&#39;test&#39;</span><span class="p">,</span> 
-<span class="s">&#39;dfdf&#39;</span><span class="p">,</span><span class="s">&#39;apple&#39;</span><span class="p">,</span><span class="s">&#39;pddf&#39;</span><span class="p">,</span><span class="s">&#39;ind&#39;</span><span class="p">,</span><span class="s">&#39;basic&#39;</span><span class="p">,</span><span class="s">&#39;none&#39;</span><span class="p">,</span><span class="s">&#39;baecr&#39;</span><span class="p">,</span><span class="s">&#39;var&#39;</span><span class="p">,</span><span class="s">&#39;bana&#39;</span><span class="p">,</span><span class="s">&#39;dd&#39;</span><span class="p">,</span><span class="s">&#39;wrd&#39;</span><span class="p">]</span> 
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;is&#39;</span><span class="p">,</span><span class="s1">&#39;python&#39;</span><span class="p">,</span><span class="s1">&#39;jason&#39;</span><span class="p">,</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span><span class="s1">&#39;hill&#39;</span><span class="p">,</span><span class="s1">&#39;with&#39;</span><span class="p">,</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;dfdf&#39;</span><span class="p">,</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span><span class="s1">&#39;pddf&#39;</span><span class="p">,</span><span class="s1">&#39;ind&#39;</span><span class="p">,</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="s1">&#39;baecr&#39;</span><span class="p">,</span><span class="s1">&#39;var&#39;</span><span class="p">,</span><span class="s1">&#39;bana&#39;</span><span class="p">,</span><span class="s1">&#39;dd&#39;</span><span class="p">,</span><span class="s1">&#39;wrd&#39;</span><span class="p">]</span> 
 <span class="n">total</span><span class="o">=</span><span class="p">[]</span> 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">):</span> 
     <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span> 
         <span class="n">total</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>上述代码耗时约为3.09秒，若循环改为如下列表解析耗时约为2.33秒。</p>
@@ -661,11 +661,11 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>OSX 中可通过 brew 安装 PyPy：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install pypy</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ brew install pypy</code></pre></div>
 
 <p>安装了之后，还可用 pip_pypy 和 easy_install_pypy 进行包管理。将<a href="#loop-optimization">循环优化</a>的代码存为 loop.py，然后使用 PyPy：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>pypy loop.py</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ pypy loop.py</code></pre></div>
 
 <p>运行时间从 27.14 秒减少到了 0.93 秒。</p>
 
@@ -675,8 +675,8 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>安装 Numba，需要 llvm 的支持：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>brew install llvm --with-rtti
-<span class="nv">$ LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm/bin/llvm-config pip install numba</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ brew install llvm --with-rtti
+$ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm/bin/llvm-config pip install numba</code></pre></div>
 
 <p>安装 Numba 会默认安装依赖包 <a href="https://github.com/numba/llvmlite">llvmlite</a>（不再使用 <a href="http://www.llvmpy.org">llvmpy</a>）。通过添加 <code>@jit</code> 标签，很容易极大提升<a href="http://segmentfault.com/q/1010000002494151">代码</a>性能：</p>
 
@@ -705,7 +705,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>可通过Python的包管理器安装Cython：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>sudo pip install Cython</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ sudo pip install Cython</code></pre></div>
 
 <p>Cython代码与Python不同，必须先编译。</p>
 
@@ -725,11 +725,11 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>首先，编译为.c文件：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>cython sum.pyx</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ cython sum.pyx</code></pre></div>
 
 <p>然后，编译为动态链接库：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>clang -shared -O3 -Wall -lpython2.7 -o sum.dylib sum.c <span class="se">\</span>
+<div class="highlight"><pre><code class="language-bash">$ clang -shared -O3 -Wall -lpython2.7 -o sum.dylib sum.c <span class="se">\</span>
         -I/usr/local/Cellar/python/2.7.9/Frameworks/Python.framework/Headers</code></pre></div>
 
 <p><strong>二、使用distutils编译</strong></p>
@@ -740,16 +740,16 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <span class="kn">from</span> <span class="nn">distutils.extension</span> <span class="kn">import</span> <span class="n">Extension</span> 
 <span class="kn">from</span> <span class="nn">Cython.Distutils</span> <span class="kn">import</span> <span class="n">build_ext</span> 
 
-<span class="n">ext_modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s">&quot;sum&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;sum.pyx&quot;</span><span class="p">])]</span> 
+<span class="n">ext_modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;sum.pyx&quot;</span><span class="p">])]</span> 
 <span class="n">setup</span><span class="p">(</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;sum app&#39;</span><span class="p">,</span> 
-    <span class="n">cmdclass</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;build_ext&#39;</span><span class="p">:</span> <span class="n">build_ext</span><span class="p">},</span> 
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;sum app&#39;</span><span class="p">,</span> 
+    <span class="n">cmdclass</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;build_ext&#39;</span><span class="p">:</span> <span class="n">build_ext</span><span class="p">},</span> 
     <span class="n">ext_modules</span> <span class="o">=</span> <span class="n">ext_modules</span> 
 <span class="p">)</span></code></pre></div>
 
 <p>然后编译：</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python setup.py build_ext --inplace</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ python setup.py build_ext --inplace</code></pre></div>
 
 <p>最后，导入使用：</p>
 
@@ -770,7 +770,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
     <span class="k">return</span> <span class="n">a</span> 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
 <span class="n">test</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>采用如下方法导入，其运行时间为1.8835067749e-05秒。</p>
@@ -789,12 +789,12 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
     <span class="k">return</span> <span class="n">a</span> 
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> 
 <span class="n">test</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span> 
-<span class="k">print</span> <span class="s">&quot;total run time:&quot;</span>
+<span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
 <p>采用如下方法，其运行时耗为0.47秒。</p>
 
-<div class="highlight"><pre><code class="language-bash"><span class="nv">$ </span>python ctest.py</code></pre></div>
+<div class="highlight"><pre><code class="language-bash">$ python ctest.py</code></pre></div>
 
 <h3 id="pyparallel">PyParallel</h3>
 
@@ -845,7 +845,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -923,7 +923,7 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

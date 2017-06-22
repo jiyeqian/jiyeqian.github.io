@@ -543,9 +543,9 @@ n={-2\ln(c)\over \tau\epsilon^2}。
 
 <p>首先，我们加载arules包和数据集：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span><span class="s">&quot;arules&quot;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span><span class="s">&quot;arules&quot;</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## Loading required package: Matrix
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## Loading required package: Matrix
 ## Loading required package: methods
 ## 
 ## Attaching package: &#39;arules&#39;
@@ -554,18 +554,18 @@ n={-2\ln(c)\over \tau\epsilon^2}。
 ## 
 ##     %in%, write</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Epub&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data<span class="p">(</span><span class="s">&quot;Epub&quot;</span><span class="p">)</span>
 Epub</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## transactions in sparse format with
 ##  15729 transactions (rows) and
 ##  936 items (columns)</code></pre></figure>
 
 <p>我们看到该数据集由15729条事务构成，它用15729个行和936个表示项的列的稀疏矩阵表示。接下来，我们利用<code>summary()</code>获得关于数据集的更多信息：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>Epub<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">summary</span><span class="p">(</span>Epub<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions as itemMatrix in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## transactions as itemMatrix in sparse format with
 ##  15729 rows (elements/itemsets/transactions) and
 ##  936 columns (items) and a density of 0.001758755 
 ## 
@@ -599,37 +599,37 @@ Epub</code></pre></figure>
 
 <p><code>summary()</code>展示了数据集中最频繁的项、事务长度分布信息，以及数据集中包含的一些扩展的事务信息。我们看到数据集包含事务ID以及附带的时间戳（采用<code>POSIXct</code>类的格式），这些额外的信息可用于分析数据集：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">year <span class="o">&lt;-</span> <span class="kp">strftime</span><span class="p">(</span><span class="kp">as.POSIXlt</span><span class="p">(</span>transactionInfo<span class="p">(</span>Epub<span class="p">)[[</span><span class="s">&quot;TimeStamp&quot;</span><span class="p">]]),</span> <span class="s">&quot;%Y&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>year <span class="o">&lt;-</span> <span class="kp">strftime</span><span class="p">(</span><span class="kp">as.POSIXlt</span><span class="p">(</span>transactionInfo<span class="p">(</span>Epub<span class="p">)[[</span><span class="s">&quot;TimeStamp&quot;</span><span class="p">]]),</span> <span class="s">&quot;%Y&quot;</span><span class="p">)</span>
 <span class="kp">table</span><span class="p">(</span>year<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## year
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## year
 ## 2003 2004 2005 2006 2007 2008 2009 
 ##  986 1376 1610 3010 4052 4692    3</code></pre></figure>
 
 <p>对2003年，数据集中的第一年，我们拥有986条事务。我们能够选择相应的事务，并且通过等级图探查其结构：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">Epub2003 <span class="o">&lt;-</span> Epub<span class="p">[</span>year <span class="o">==</span> <span class="s">&quot;2003&quot;</span><span class="p">]</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>Epub2003 <span class="o">&lt;-</span> Epub<span class="p">[</span>year <span class="o">==</span> <span class="s">&quot;2003&quot;</span><span class="p">]</span>
 <span class="kp">length</span><span class="p">(</span>Epub2003<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 986</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## [1] 986</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">image<span class="p">(</span>Epub2003<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>image<span class="p">(</span>Epub2003<span class="p">)</span></code></pre></figure>
 
 <p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-4-1.png" title="testing" alt="testing" width="400" /></p>
 
 <p>该图是二值索引矩阵的直接可视化，其中黑点表示矩阵中的1。从图中我们可看出数据集中的项不是均匀分布的。实际上，靠近右边的大部分白色区域表示在2003年初只有很少的项可用（不足50）；然后这一年中，加入了更多的项，直到项的数目接近300。从图还我们还可知数据集中有些事务包含非常多的项（更稠密的水平线）。这些事务需要进一步考察，因为它们可能源于数据收集的问题（比如，网络爬虫从出版网站下载了很多文档）。我们可以利用<code>size()</code>查找出很长的事务，并筛选出很长的事务（包含20个以上的项）：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">transactionInfo<span class="p">(</span>Epub2003<span class="p">[</span>size<span class="p">(</span>Epub2003<span class="p">)</span> <span class="o">&gt;</span> <span class="m">20</span><span class="p">])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>transactionInfo<span class="p">(</span>Epub2003<span class="p">[</span>size<span class="p">(</span>Epub2003<span class="p">)</span> <span class="o">&gt;</span> <span class="m">20</span><span class="p">])</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##       transactionID           TimeStamp
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##       transactionID           TimeStamp
 ## 11092  session_56e2 2003-04-30 01:30:38
 ## 11371  session_6308 2003-08-18 06:16:12</code></pre></figure>
 
 <p>我们发现了3条很长的事务，并打印了相应的事务信息。当然，按相似的方式，<code>size()</code>可用于移除长的或短的事务。<code>inspect()</code>可用于检测事务。因为上面确定的事务会导致打印结果很长，我们可以检测2003年子集的前5条事务：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>inspect<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">])</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##   items     transactionID           TimeStamp
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##   items     transactionID           TimeStamp
 ## 1 {doc_154}  session_4795 2003-01-02 09:59:00
 ## 2 {doc_3d6}  session_4797 2003-01-02 20:46:01
 ## 3 {doc_16f}  session_479a 2003-01-02 23:50:38
@@ -640,9 +640,9 @@ Epub</code></pre></figure>
 
 <p>多数事务包含一项。仅有第4条事务包含3项。为了进一步探测，事务可转换为列表：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">as<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>as<span class="p">(</span>Epub2003<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## $session_4795
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## $session_4795
 ## [1] &quot;doc_154&quot;
 ## 
 ## $session_4797
@@ -659,18 +659,18 @@ Epub</code></pre></figure>
 
 <p>最后，按水平布局的事务数据，能被转换为垂直布局的事务ID列表：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">EpubTidLists <span class="o">&lt;-</span> as<span class="p">(</span>Epub<span class="p">,</span> <span class="s">&quot;tidLists&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>EpubTidLists <span class="o">&lt;-</span> as<span class="p">(</span>Epub<span class="p">,</span> <span class="s">&quot;tidLists&quot;</span><span class="p">)</span>
 EpubTidLists</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## tidLists in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## tidLists in sparse format with
 ##  936 items/itemsets (rows) and
 ##  15729 transactions (columns)</code></pre></figure>
 
 <p>由于性能的原因，事务ID列表也存储在稀疏矩阵中。为了获得列表，可采用到列表的类型转换：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">as<span class="p">(</span>EpubTidLists<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>as<span class="p">(</span>EpubTidLists<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">],</span> <span class="s">&quot;list&quot;</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## $doc_11d
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## $doc_11d
 ##   [1] &quot;session_47b7&quot;    &quot;session_47c2&quot;    &quot;session_47d8&quot;   
 ##   [4] &quot;session_4855&quot;    &quot;session_488d&quot;    &quot;session_4898&quot;   
 ##   [7] &quot;session_489b&quot;    &quot;session_489c&quot;    &quot;session_48a1&quot;   
@@ -817,14 +817,14 @@ EpubTidLists</code></pre></figure>
 
 <p>作为第二个例子，我们准备和挖掘调查问卷数据。我们采用源自UCI机器学习源的Adult数据集<a href="#asuncionuci">[36]</a>，它由arules包提供。这个数据集，类似于Hastie等人在关联规则挖掘章节使用的市场数据集<a href="#hastie2009elements">[4]</a>。该数据来源于美国人口普查局数据库，它包含48842个例子，并拥有年龄、工作类别、受教育程度等14个属性。数据最早用于通过这些属性预测个人的收入水平。我们加入了<code>income</code>属性，它具有等级<code>small</code>和<code>large</code>，分别表示收入不高于5万美元和高于5万美元。该数据作为数据集<code>AdultUCI</code>包含在arules包中：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;AdultUCI&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data<span class="p">(</span><span class="s">&quot;AdultUCI&quot;</span><span class="p">)</span>
 <span class="kp">dim</span><span class="p">(</span>AdultUCI<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 48842    15</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## [1] 48842    15</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,]</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>AdultUCI<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">,]</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##   age        workclass fnlwgt education education-num     marital-status
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##   age        workclass fnlwgt education education-num     marital-status
 ## 1  39        State-gov  77516 Bachelors            13      Never-married
 ## 2  50 Self-emp-not-inc  83311 Bachelors            13 Married-civ-spouse
 ##        occupation  relationship  race  sex capital-gain capital-loss
@@ -836,14 +836,14 @@ EpubTidLists</code></pre></figure>
 
 <p><code>AdultUCI</code>混合了类别属性和量化属性，在它能转换成适合关联规则挖掘的事务数据前，需要一些预处理。首先，我们移除<code>fnlwgt</code>和<code>education-num</code>两个属性：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[[</span><span class="s">&quot;fnlwgt&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>AdultUCI<span class="p">[[</span><span class="s">&quot;fnlwgt&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
 AdultUCI<span class="p">[[</span><span class="s">&quot;education-num&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span></code></pre></figure>
 
 <p>第一个属性是权重数据，它是数据集的创建者通过美国人口普查局人口司提供的控制数据计算而得。第二个移除的属性只是属性<code>education</code>的数值表示，该属性也是数据集的一部分。</p>
 
 <p>接下来，我们需要将4个余下的量化数据（<code>age</code>、<code>hour-per-week</code>、<code>capitcal-gain</code>和<code>capital-loss</code>），通过建立合适的类别映射为有序属性。我们借助关于典型的年龄组和工作小时数的知识，将属性<code>age</code>和<code>hour-per-week</code>分为合适的类别。对于资本相关的两个属性，我们为没有收益（损失）的情况创建称为<code>None</code>的类别。然后，我们按它们的中位数，进一步将收入（损失）组分为<code>Low</code>和<code>High</code>两个类别：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultUCI<span class="p">[[</span><span class="s">&quot;age&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>AdultUCI<span class="p">[[</span><span class="s">&quot;age&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> 
   <span class="kp">ordered</span><span class="p">(</span><span class="kp">cut</span><span class="p">(</span>AdultUCI<span class="p">[[</span><span class="s">&quot;age&quot;</span><span class="p">]],</span> 
               <span class="kt">c</span><span class="p">(</span><span class="m">15</span><span class="p">,</span><span class="m">25</span><span class="p">,</span><span class="m">45</span><span class="p">,</span><span class="m">65</span><span class="p">,</span><span class="m">100</span><span class="p">)),</span>
           labels<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Yong&quot;</span><span class="p">,</span> <span class="s">&quot;Middle-aged&quot;</span><span class="p">,</span> <span class="s">&quot;Senior&quot;</span><span class="p">,</span> <span class="s">&quot;Old&quot;</span><span class="p">))</span>
@@ -862,18 +862,18 @@ AdultUCI<span class="p">[[</span><span class="s">&quot;capital-loss&quot;</span>
 
 <p>现在，通过数据集到<code>transactions</code>的类型转换，数据能被自动重编码为二值索引矩阵。</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">Adult <span class="o">&lt;-</span> as<span class="p">(</span>AdultUCI<span class="p">,</span> <span class="s">&quot;transactions&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>Adult <span class="o">&lt;-</span> as<span class="p">(</span>AdultUCI<span class="p">,</span> <span class="s">&quot;transactions&quot;</span><span class="p">)</span>
 Adult</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## transactions in sparse format with
 ##  48842 transactions (rows) and
 ##  115 items (columns)</code></pre></figure>
 
 <p>剩下的115个类别属性，被自动重编码为115个二值项。在编码过程中，项标签按<code>&lt;variable name&gt;=&lt;category label&gt;</code>的形式生成。注意，对于有缺失值的情况，有缺失值的属性对应的所有项被设为0。</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>Adult<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">summary</span><span class="p">(</span>Adult<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions as itemMatrix in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## transactions as itemMatrix in sparse format with
 ##  48842 rows (elements/itemsets/transactions) and
 ##  115 columns (items) and a density of 0.1089939 
 ## 
@@ -909,16 +909,16 @@ Adult</code></pre></figure>
 
 <p>为了看到哪些项在数据集中重要，我们可以使用<code>itemFrequencyPlot()</code>。为了减少项的数目，我们只绘出支持度大于$10\%$（利用参数<code>support</code>）的那些项的项频率。为了标签更好的可读性，我们通过参数<code>cex.names</code>减小了标签大小：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>Adult<span class="p">,</span> support <span class="o">=</span> <span class="m">0.1</span><span class="p">,</span> cex.names<span class="o">=</span><span class="m">0.8</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemFrequencyPlot<span class="p">(</span>Adult<span class="p">,</span> support <span class="o">=</span> <span class="m">0.1</span><span class="p">,</span> cex.names<span class="o">=</span><span class="m">0.8</span><span class="p">)</span></code></pre></figure>
 
 <p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-15-1.png" alt="testing" /></p>
 
 <p>接下来，我们按最小支持度$1\%$、置信度$0.6$，调用<code>apriori()</code>函数找出所有的规则（<code>apriori()</code>默认的关联信息类型）：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">rules <span class="o">&lt;-</span> apriori<span class="p">(</span>Adult<span class="p">,</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>rules <span class="o">&lt;-</span> apriori<span class="p">(</span>Adult<span class="p">,</span>
                  parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> <span class="m">0.01</span><span class="p">,</span> confidence <span class="o">=</span> <span class="m">0.6</span><span class="p">))</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## 
 ## Parameter specification:
 ##  confidence minval smax arem  aval originalSupport support minlen maxlen
 ##         0.6    0.1    1 none FALSE            TRUE    0.01      1     10
@@ -939,17 +939,17 @@ Adult</code></pre></figure>
 ## writing ... [276443 rule(s)] done [0.04s].
 ## creating S4 object  ... done [0.23s].</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">rules</code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>rules</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 276443 rules</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## set of 276443 rules</code></pre></figure>
 
 <p>首先，函数打印出采用的参数。除了设定最小支持度和最小置信度外，所有参数都使用默认值。值得一提的是参数<code>maxlen</code>，挖掘出频繁项集的大小，默认被限定为5。若将<code>maxlen</code>设为更大的值，更长的关联规则才能被挖掘。设定了参数之后，C实现的算法的输出和时间信息会被显示。</p>
 
 <p>挖掘算法的结果是276443条规则构成的集合。<code>summary()</code>可用于显示挖掘到的规则的摘要信息：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>rules<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">summary</span><span class="p">(</span>rules<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 276443 rules
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## set of 276443 rules
 ## 
 ## rule length distribution (lhs + rhs):sizes
 ##     1     2     3     4     5     6     7     8     9    10 
@@ -975,14 +975,14 @@ Adult</code></pre></figure>
 
 <p>作为典型的关联规则挖掘，找到的规则数量大。为了分析这些规则，比如，<code>subset()</code>可为每个项产生独立的规则子集，其项从规则的RHS的<code>income</code>变量而来，同时我们要求提升度的度量超过1.2：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">rulesIncomeSmall <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>rules<span class="p">,</span> subset <span class="o">=</span> rhs <span class="o">%in%</span> <span class="s">&quot;income=small&quot;</span> <span class="o">&amp;</span> lift <span class="o">&gt;</span> <span class="m">1.2</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>rulesIncomeSmall <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>rules<span class="p">,</span> subset <span class="o">=</span> rhs <span class="o">%in%</span> <span class="s">&quot;income=small&quot;</span> <span class="o">&amp;</span> lift <span class="o">&gt;</span> <span class="m">1.2</span><span class="p">)</span>
 rulesIncomeLarge <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>rules<span class="p">,</span> subset <span class="o">=</span> rhs <span class="o">%in%</span> <span class="s">&quot;income=large&quot;</span> <span class="o">&amp;</span> lift <span class="o">&gt;</span> <span class="m">1.2</span><span class="p">)</span></code></pre></figure>
 
 <p>我们现在分别得到了低收入和高收入人群的规则集。为了比较，我们考察两个集合置信度最高的3条规则：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##   lhs                               rhs               support confidence     lift
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##   lhs                               rhs               support confidence     lift
 ## 1 {workclass=Private,                                                            
 ##    marital-status=Never-married,                                                 
 ##    relationship=Own-child,                                                       
@@ -1002,9 +1002,9 @@ rulesIncomeLarge <span class="o">&lt;-</span> <span class="kp">subset</span><spa
 ##    hours-per-week=Part-time,                                                     
 ##    native-country=United-States} =&gt; {income=small} 0.01046231  0.7097222 1.402276</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeLarge<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>inspect<span class="p">(</span><span class="kp">head</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span>rulesIncomeLarge<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;confidence&quot;</span><span class="p">),</span> n <span class="o">=</span> <span class="m">3</span><span class="p">))</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##   lhs                                    rhs               support confidence     lift
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##   lhs                                    rhs               support confidence     lift
 ## 1 {marital-status=Married-civ-spouse,                                                 
 ##    capital-gain=High,                                                                 
 ##    native-country=United-States}      =&gt; {income=large} 0.01562180  0.6849192 4.266398
@@ -1021,13 +1021,13 @@ rulesIncomeLarge <span class="o">&lt;-</span> <span class="kp">subset</span><spa
 
 <p>最后，找出的规则可被写入磁盘与其它应用共享。<code>write()</code>函数可将规则保存为纯文本格式。如下命令，按逗号分隔值（CSV）格式，将规则集合存为名为“data.csv”的文件：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">write</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.csv&quot;</span><span class="p">,</span> sep <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> col.names <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">write</span><span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.csv&quot;</span><span class="p">,</span> sep <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> col.names <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span></code></pre></figure>
 
 <p>另外，利用pmml包，规则还能存为PMML（predictive modelling markup language）格式<a href="#Graham2014pmml">[37]</a>：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">write.PMML<span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.xml&quot;</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>write.PMML<span class="p">(</span>rulesIncomeSmall<span class="p">,</span> file <span class="o">=</span> <span class="s">&quot;data.xml&quot;</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] &quot;data.xml&quot;</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## [1] &quot;data.xml&quot;</code></pre></figure>
 
 <p>这是一种基于XML的标准化表示方式，被许多数据挖掘工具采用。注意，pmml需要XML包，该包可能不是在所有操作系统中都可用。</p>
 
@@ -1044,30 +1044,30 @@ all\mbox{-}confidence(X) = {supp(X)\over \max_{I\subset X}supp(I)}。
 
 <p>该度量拥有这样的特性：对所有$I\subset X$，都有$conf(I \to X\not I) \geq all\mbox{-}confidence(X)$。这意味着从项集$X$产生的所有可能规则，必须至少拥有一个置信度，该置信度由项集的全置信度给定。Omiecinski指出公式\eqref{eq:all-confidence}分母的支持度一定来自于单个的项，因此能简化为$\max_{i\subset X}supp(\{i\})$。为了获得计算全支持度的项集，我们使用Eclat算法，从先前用过的Adult数据挖掘频繁项集：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
 fsets <span class="o">&lt;-</span> eclat<span class="p">(</span>Adult<span class="p">,</span> parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> <span class="m">0.05</span><span class="p">),</span>
                control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose<span class="o">=</span><span class="kc">FALSE</span><span class="p">))</span></code></pre></figure>
 
 <p>为了得到全置信度的分母，我们需要找出全部挖掘到的单个项集，以及它们对应的置信度值。我们创建一个以项的列号命名的向量，并将项的支持度作为向量的元素：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">singleItems <span class="o">&lt;-</span> fsets<span class="p">[</span>size<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">))</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>singleItems <span class="o">&lt;-</span> fsets<span class="p">[</span>size<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">))</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span>
 <span class="c1">## Get the col numbers we have support for</span>
 singleSupport <span class="o">&lt;-</span> quality<span class="p">(</span>singleItems<span class="p">)</span><span class="o">$</span>support
 <span class="kp">names</span><span class="p">(</span>singleSupport<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">unlist</span><span class="p">(</span>LIST<span class="p">(</span>items<span class="p">(</span>singleItems<span class="p">),</span> decode <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
 <span class="kp">head</span><span class="p">(</span>singleSupport<span class="p">,</span> n <span class="o">=</span> <span class="m">5</span><span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##        66        63       111        60         8 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##        66        63       111        60         8 
 ## 0.9532779 0.9173867 0.8974243 0.8550428 0.6941976</code></pre></figure>
 
 <p>接下来，我们可用公式\eqref{eq:all-confidence}计算所有项集的全支持度。作为分母的单个项的支持度从带命名的向量<code>singleSupport</code>中查找，最终得到的度量加入到（衡量）集合质量的数据框：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsetList <span class="o">&lt;-</span> LIST<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">),</span> decode <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemsetList <span class="o">&lt;-</span> LIST<span class="p">(</span>items<span class="p">(</span>fsets<span class="p">),</span> decode <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 allConfidence <span class="o">&lt;-</span> quality<span class="p">(</span>fsets<span class="p">)</span><span class="o">$</span>support <span class="o">/</span> 
   <span class="kp">sapply</span><span class="p">(</span>itemsetList<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="kp">max</span><span class="p">(</span>singleSupport<span class="p">[</span><span class="kp">as.character</span><span class="p">(</span>x<span class="p">)]))</span>
 quality<span class="p">(</span>fsets<span class="p">)</span> <span class="o">&lt;-</span> <span class="kp">cbind</span><span class="p">(</span>quality<span class="p">(</span>fsets<span class="p">),</span> allConfidence<span class="p">)</span>
 <span class="kp">summary</span><span class="p">(</span>fsets<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8496 itemsets
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## set of 8496 itemsets
 ## 
 ## most frequent items:
 ##            capital-loss=None native-country=United-States 
@@ -1103,11 +1103,11 @@ quality<span class="p">(</span>fsets<span class="p">)</span> <span class="o">&lt
 
 <p>该度量可用于操作集合。例如，我们可以查找哪些包含一个与受教育程度相关的项的项集（采用部分匹配<code>%pin%</code>），并且将它们按全支持度排序（我们首先过滤掉长度为1的项集，因为它们的的全支持度为1）：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">fsetsEducation <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>fsets<span class="p">,</span> subset <span class="o">=</span> items <span class="o">%pin%</span> <span class="s">&quot;education&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>fsetsEducation <span class="o">&lt;-</span> <span class="kp">subset</span><span class="p">(</span>fsets<span class="p">,</span> subset <span class="o">=</span> items <span class="o">%pin%</span> <span class="s">&quot;education&quot;</span><span class="p">)</span>
 inspect<span class="p">(</span><span class="kp">sort</span><span class="p">(</span>fsetsEducation<span class="p">[</span>size<span class="p">(</span>fsetsEducation<span class="p">)</span><span class="o">&gt;</span><span class="m">1</span><span class="p">],</span> 
              by <span class="o">=</span> <span class="s">&quot;allConfidence&quot;</span><span class="p">)[</span><span class="m">1</span> <span class="o">:</span> <span class="m">3</span><span class="p">])</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##   items                        support allConfidence
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##   items                        support allConfidence
 ## 1 {education=HS-grad,                               
 ##    hours-per-week=Full-time} 0.2090209     0.3572453
 ## 2 {education=HS-grad,                               
@@ -1121,30 +1121,30 @@ inspect<span class="p">(</span><span class="kp">sort</span><span class="p">(</sp
 
 <p>通过本例，我们展示抽样如何被用于arules。我们仍采用Adult数据集：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data<span class="p">(</span><span class="s">&quot;Adult&quot;</span><span class="p">)</span>
 Adult </code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## transactions in sparse format with
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## transactions in sparse format with
 ##  48842 transactions (rows) and
 ##  115 items (columns)</code></pre></figure>
 
 <p>我们采用公式\eqref{eq:sample-sizez-evaluation}计算可行的样本集大小$n$。我们将最小支持度设为$5\%$。我们将可接受的支持度的错误率$\epsilon$设为$10\%$，作为置信水平（$1-c$）我们设为$90\%$）：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">supp <span class="o">&lt;-</span> <span class="m">0.05</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>supp <span class="o">&lt;-</span> <span class="m">0.05</span>
 epsilon <span class="o">&lt;-</span> <span class="m">0.1</span>
 <span class="kt">c</span> <span class="o">&lt;-</span> <span class="m">0.1</span>
 n <span class="o">&lt;-</span> <span class="m">-2</span> <span class="o">*</span> <span class="kp">log</span><span class="p">(</span><span class="kt">c</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>supp <span class="o">*</span> epsilon<span class="o">^</span><span class="m">2</span><span class="p">)</span> 
 n</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 9210.34</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## [1] 9210.34</code></pre></figure>
 
 <p>结果的抽样数据集的大小比原始数据库小得多。我们使用<code>sample()</code>对原始数据库进行放回抽样，生成大小为$n$的抽样数据集：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">AdultSample <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>Adult<span class="p">,</span> n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>AdultSample <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>Adult<span class="p">,</span> n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
 
 <p>使用项的频率图，可以对样本集和数据库（总体）进行对比：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span> support <span class="o">=</span> supp<span class="p">,</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span> support <span class="o">=</span> supp<span class="p">,</span>
                   cex.names <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span></code></pre></figure>
 
 <p><img src="/assets/images/2015-05-02-arules/unnamed-chunk-29-1.png" alt="testing" /></p>
@@ -1153,7 +1153,7 @@ n</code></pre></figure>
 
 <p>另外，样本可以通过提升率（lift ratio）将样本集与population进行比较：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemFrequencyPlot<span class="p">(</span>AdultSample<span class="p">,</span> population <span class="o">=</span> Adult<span class="p">,</span>
                   support <span class="o">=</span> supp<span class="p">,</span> lift <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
                   cex.names <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span></code></pre></figure>
 
@@ -1163,67 +1163,67 @@ n</code></pre></figure>
 
 <p>为了比较通过采样获得的性能提升，我们采用Eclat算法在数据库和样本集上挖掘频繁项集，并且对比挖掘耗费的系统时间（以秒计）：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">time <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsets <span class="o">&lt;-</span> eclat<span class="p">(</span>Adult<span class="p">,</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>time <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsets <span class="o">&lt;-</span> eclat<span class="p">(</span>Adult<span class="p">,</span>
                     parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> supp<span class="p">),</span> control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)))</span>
 time</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##    user  system elapsed 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##    user  system elapsed 
 ##   0.190   0.002   0.193</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">timeSample <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsetsSample <span class="o">&lt;-</span> eclat<span class="p">(</span>AdultSample<span class="p">,</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>timeSample <span class="o">&lt;-</span> <span class="kp">system.time</span><span class="p">(</span>itemsetsSample <span class="o">&lt;-</span> eclat<span class="p">(</span>AdultSample<span class="p">,</span>
                           parameter <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>support <span class="o">=</span> supp<span class="p">),</span> control <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>verbose <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)))</span>
 timeSample</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##    user  system elapsed 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##    user  system elapsed 
 ##   0.043   0.001   0.046</code></pre></figure>
 
 <p><code>system.time()</code>返回向量的第1个元素，给出了用于执行其参数中语句的（用户）CPU时间。因此，在抽样数据集而非全部数据库上挖掘获得的提速因子为：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">time<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">/</span> timeSample<span class="p">[</span><span class="m">1</span><span class="p">]</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>time<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">/</span> timeSample<span class="p">[</span><span class="m">1</span><span class="p">]</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## user.self 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## user.self 
 ##  4.418605</code></pre></figure>
 
 <p>为了评估在样本集上项集挖掘的精度，我们分析在两个集合上（表现）的差异：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsets</code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemsets</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8496 itemsets</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## set of 8496 itemsets</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">itemsetsSample</code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>itemsetsSample</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## set of 8585 itemsets</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## set of 8585 itemsets</code></pre></figure>
 
 <p>以上两个集合大小差不多。为了检查集合是否包含相似的项集，我们匹配集合，并且查看在数据库中出现的频繁项集也在样本集中出现的比率：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">match <span class="o">&lt;-</span> <span class="kp">match</span><span class="p">(</span>itemsets<span class="p">,</span> itemsetsSample<span class="p">,</span> nomatch <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>match <span class="o">&lt;-</span> <span class="kp">match</span><span class="p">(</span>itemsets<span class="p">,</span> itemsetsSample<span class="p">,</span> nomatch <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
 <span class="c1">## remove no matches</span>
 <span class="kp">sum</span><span class="p">(</span><span class="kp">match</span><span class="o">&gt;</span><span class="m">0</span><span class="p">)</span> <span class="o">/</span> <span class="kp">length</span><span class="p">(</span>itemsets<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 0.9679849</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## [1] 0.9679849</code></pre></figure>
 
 <p>使用样本集，几乎所有的频繁项集都找到了。如下展示了那些没有在样本集中找到的频繁项集的支持度摘要信息，以及在样本中频繁但在数据库中非频繁的项集的支持度摘要信息：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span><span class="o">!</span><span class="kp">match</span><span class="p">)])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span><span class="o">!</span><span class="kp">match</span><span class="p">)])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ## 0.05002 0.05051 0.05104 0.05162 0.05223 0.05823</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsetsSample<span class="p">[</span><span class="o">-</span><span class="kp">match</span><span class="p">])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kp">summary</span><span class="p">(</span>quality<span class="p">(</span>itemsetsSample<span class="p">[</span><span class="o">-</span><span class="kp">match</span><span class="p">])</span><span class="o">$</span>support<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ## 0.05005 0.05071 0.05136 0.05170 0.05244 0.05755</code></pre></figure>
 
 <p>以上信息表明只有那些支持度非常接近最小支持度的项集，错误的缺失或错误的找到了。</p>
 
 <p>通过从数据库和样本找到的频繁项集，我们可以通过错误率计算精度：</p>
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">supportItemsets <span class="o">&lt;-</span> quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span>match <span class="o">&gt;</span> <span class="m">0</span><span class="p">)])</span><span class="o">$</span>support
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span></span>supportItemsets <span class="o">&lt;-</span> quality<span class="p">(</span>itemsets<span class="p">[</span><span class="kp">which</span><span class="p">(</span>match <span class="o">&gt;</span> <span class="m">0</span><span class="p">)])</span><span class="o">$</span>support
 supportSample <span class="o">&lt;-</span> quality<span class="p">(</span>itemsetsSample<span class="p">[</span><span class="kp">match</span><span class="p">])</span><span class="o">$</span>support
 accuracy <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">-</span> <span class="kp">abs</span><span class="p">(</span>supportSample <span class="o">-</span> supportItemsets<span class="p">)</span> <span class="o">/</span> supportItemsets
 <span class="kp">summary</span><span class="p">(</span>accuracy<span class="p">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+<figure class="highlight"><pre><code class="language-text" data-lang="text"><span></span>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.8398  0.9478  0.9697  0.9643  0.9861  1.0000</code></pre></figure>
 
 <p>以上摘要信息表明抽样可获得项集高精度的支持度。 这个简单的例子表明对于很大的数据库或看重挖掘时间的应用，抽样可作为一种强大技术。</p>
@@ -1410,7 +1410,7 @@ accuracy <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">-
 <hr>
   <ul>
     
-    <li class="pageNav">2016-11-19 &raquo; <a href="/2016/11/ccf-bigdata-competition-about-state-grid">CCF 国家电网大数据竞赛</a></li>
+    <li class="pageNav">2017-06-22 &raquo; <a href="/2017/06/a-byte-of-ct-uav">A Byte of CT UAV</a></li>
     
     <li class="pageNav">2016-10-24 &raquo; <a href="/2016/10/nnml-bp-learning">NNML（03）：BP 学习</a></li>
     
@@ -1488,7 +1488,7 @@ accuracy <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">-
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2016 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>
