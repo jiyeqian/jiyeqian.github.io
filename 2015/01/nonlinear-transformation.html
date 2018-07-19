@@ -155,7 +155,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">非线性变换</h2>
+<h2 id="非线性变换">非线性变换</h2>
 
 <p>线性假设集（分类器）的类别之间的判别界是线性的，低VC维可使$E_{in}$和$E_{out}$接近，但无法分类线性不可分数据。线性分类器应用于线性不可分数据，会导致很大的$E_{in}$，$E_{out}$也会很大。如何突破线性分类器的局限，对线性不可分数据分类？</p>
 
@@ -187,7 +187,7 @@ g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
 
 <p>非线性变换$\Phi$和$\mathcal Z$空间的线性模型算法$\mathcal A$，不仅可以用于分类，而且可用于回归。</p>
 
-<h2 id="section-1">复杂度与性能分析</h2>
+<h2 id="复杂度与性能分析">复杂度与性能分析</h2>
 
 <p>若原始特征是$d$维，$Q$次多项式特征变换$\Phi_{Q}(\mathbf x)$后的特征空间维度$\tilde d+1$为$\binom{Q+d}{Q}$，空间复杂度为$O\left(Q^d\right)$。当$Q$很大时，新空间中的计算和存储代价都极大。新空间中$d_{VC}\left(\mathcal H_{\Phi_Q}\right)\leq \tilde d+1$，当$Q$很大时$d_{VC}$也会很大。当$d_{VC}$增加时，用于训练的数据量也要增加，需要考虑训练集的数据量是否足够。</p>
 
@@ -205,14 +205,14 @@ g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
 \]
 那么$d_{VC}$按上述次序递增（$\leq$），$E_{in}$按上述次序递减（$\geq$）。高次变换能得到$E_{in}$非常小的结果，然而$E_{in}$仅仅是中间产物，并<a href="/2014/12/machine-learning-the-vc-dimension/#vc-and-errors">不能说明$E_{out}$会很小</a>。合理的方法是从$H_{\Phi_1}$开始尝试，线性模型是首选，如果效果不达标再考虑高次的特征变换。</p>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
 <div class="footnotes">
   <ol>
     <li id="fn:human-limitation">
-      <p>human的能力并非是绝对的强大，只是在人类的时空中如此。当数据维度很高时，机器学习远胜人类。 <a href="#fnref:human-limitation" class="reversefootnote">&#8617;</a></p>
+      <p>human的能力并非是绝对的强大，只是在人类的时空中如此。当数据维度很高时，机器学习远胜人类。 <a href="#fnref:human-limitation" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -250,28 +250,26 @@ g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
   <a  href="/2015/01/hazard-of-overfitting" class="pageNav" style="float:right"   >下一篇：过拟合的危害 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/nonlinear-transformation" 	data-url="http://qianjiye.de/2015/01/nonlinear-transformation" data-title="非线性特征变换">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/nonlinear-transformation';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/nonlinear-transformation'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -284,7 +282,7 @@ g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/hazard-of-overfitting'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/hazard-of-overfitting'; --1> -->
 <!--         url = '/2015/01/hazard-of-overfitting'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -304,7 +302,7 @@ g(\mathbf x)=\mbox{sign}\left(\tilde{\mathbf w}^T\Phi(\mathbf x)\right)，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -155,28 +155,28 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 class="no_toc" id="section">目录</h2>
+<h2 class="no_toc" id="目录">目录</h2>
 
 <ul id="markdown-toc">
-  <li><a href="#section-1" id="markdown-toc-section-1">基本概念</a></li>
-  <li><a href="#section-2" id="markdown-toc-section-2">坐标系</a>    <ul>
-      <li><a href="#section-3" id="markdown-toc-section-3">一、像素坐标系与像平面坐标系</a></li>
-      <li><a href="#section-4" id="markdown-toc-section-4">二、摄像机坐标系与世界坐标系</a></li>
-      <li><a href="#section-5" id="markdown-toc-section-5">三、摄像机坐标系与像平面坐标系（成像投影关系）</a></li>
-      <li><a href="#section-6" id="markdown-toc-section-6">四、像素坐标系与世界坐标系</a></li>
+  <li><a href="#基本概念" id="markdown-toc-基本概念">基本概念</a></li>
+  <li><a href="#坐标系" id="markdown-toc-坐标系">坐标系</a>    <ul>
+      <li><a href="#一像素坐标系与像平面坐标系" id="markdown-toc-一像素坐标系与像平面坐标系">一、像素坐标系与像平面坐标系</a></li>
+      <li><a href="#二摄像机坐标系与世界坐标系" id="markdown-toc-二摄像机坐标系与世界坐标系">二、摄像机坐标系与世界坐标系</a></li>
+      <li><a href="#三摄像机坐标系与像平面坐标系成像投影关系" id="markdown-toc-三摄像机坐标系与像平面坐标系成像投影关系">三、摄像机坐标系与像平面坐标系（成像投影关系）</a></li>
+      <li><a href="#四像素坐标系与世界坐标系" id="markdown-toc-四像素坐标系与世界坐标系">四、像素坐标系与世界坐标系</a></li>
     </ul>
   </li>
-  <li><a href="#faugeras" id="markdown-toc-faugeras">Faugeras标定法</a>    <ul>
-      <li><a href="#faugerasa-href20113-p-44a" id="markdown-toc-faugerasa-href20113-p-44a">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></a></li>
-      <li><a href="#a-href20085-p-62a" id="markdown-toc-a-href20085-p-62a">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></a></li>
+  <li><a href="#faugeras标定法" id="markdown-toc-faugeras标定法">Faugeras标定法</a>    <ul>
+      <li><a href="#改进的faugeras标定法3-p-44" id="markdown-toc-改进的faugeras标定法3-p-44">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></a></li>
+      <li><a href="#像素畸变问题5-p-62" id="markdown-toc-像素畸变问题5-p-62">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></a></li>
     </ul>
   </li>
-  <li><a href="#tsai" id="markdown-toc-tsai">Tsai标定法</a></li>
-  <li><a href="#section-7" id="markdown-toc-section-7">张正友平面标定法</a></li>
-  <li><a href="#section-8" id="markdown-toc-section-8">参考资料</a></li>
+  <li><a href="#tsai标定法" id="markdown-toc-tsai标定法">Tsai标定法</a></li>
+  <li><a href="#张正友平面标定法" id="markdown-toc-张正友平面标定法">张正友平面标定法</a></li>
+  <li><a href="#参考资料" id="markdown-toc-参考资料">参考资料</a></li>
 </ul>
 
-<h2 id="section-1">基本概念</h2>
+<h2 id="基本概念">基本概念</h2>
 
 <p><img src="/assets/images/2015-04-18-camera-calibration-400px-Pinhole-camera.svg.png" alt="Pinhole Camera Model" width="250px" /></p>
 
@@ -222,9 +222,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-04-18-camera-calibration-coordinate-relations.png" alt="坐标关系" width="300px" /></p>
 
-<h2 id="section-2">坐标系</h2>
+<h2 id="坐标系">坐标系</h2>
 
-<h4 id="section-3">一、像素坐标系与像平面坐标系</h4>
+<h4 id="一像素坐标系与像平面坐标系">一、像素坐标系与像平面坐标系</h4>
 
 <p>假定每个像素在$u$轴和$v$轴方向的物理尺寸分别为$\mathrm{d}x$和$\mathrm{d}y$，那么就有：</p>
 
@@ -262,7 +262,7 @@ v&amp;={y\over \mathrm{d}y}+v_0。
 
 <p>该变换建立了像素与物理尺寸的对应关系。</p>
 
-<h4 id="section-4">二、摄像机坐标系与世界坐标系</h4>
+<h4 id="二摄像机坐标系与世界坐标系">二、摄像机坐标系与世界坐标系</h4>
 
 <p>这两个坐标系的关系可用旋转矩阵$\mathbf R$和平移矩阵$\mathbf t$表示如下：</p>
 
@@ -279,7 +279,7 @@ v&amp;={y\over \mathrm{d}y}+v_0。
 
 <p>其中，$\mathbf R$为$3\times 3$的矩阵，$\mathbf t$为$3\times 1$的矩阵，$\mathbf 0^\top = [0\; 0\; 0]$。</p>
 
-<h4 id="section-5">三、摄像机坐标系与像平面坐标系（成像投影关系）</h4>
+<h4 id="三摄像机坐标系与像平面坐标系成像投影关系">三、摄像机坐标系与像平面坐标系（成像投影关系）</h4>
 
 <p>对线性摄像机模型（针孔模型），可得如下关系（$f$为焦距）</p>
 
@@ -308,7 +308,7 @@ f &amp; 0 &amp; 0 &amp; 0 \\
 \begin{bmatrix}X_c\\ Y_c\\ Z_c\\ 1\end{bmatrix}。
 \end{equation}</p>
 
-<h4 id="section-6">四、像素坐标系与世界坐标系</h4>
+<h4 id="四像素坐标系与世界坐标系">四、像素坐标系与世界坐标系</h4>
 
 <p>根据上述坐标系的关系，可以推导出像素坐标系与世界坐标系的关系</p>
 
@@ -348,7 +348,7 @@ a_x &amp; 0 &amp; u_0 &amp; 0 \\
 
 <p>$\mathbf M$是$3\times 4$的矩阵，称为<strong>投影矩阵</strong>；$\mathbf M_1$只与摄像机的内部结构有关，称为摄像机内部参数；$\mathbf M_2$（也就是$\mathbf R$和$\mathbf t$）完全由摄像机相对于世界坐标系的方位决定，称为摄像机外部参数（extrinsic parameter）。已知投影矩阵$\mathbf M$，可以根据空间点的坐标确定求出其在图像中的位置，由于$\mathbf M$不可逆，已知图像中的点，无法唯一确定其空间中的对应位置。</p>
 
-<h2 id="faugeras">Faugeras标定法</h2>
+<h2 id="faugeras标定法">Faugeras标定法</h2>
 
 <p>直接线性变换（DLT，direct linear transformation）<a href="#abdel2015direct">[1]</a>是将像素点和物体成像几何关系在齐次坐标下写成透视投影矩阵的形式，确定该矩阵的过程称为标定。利用直接线性变换的标定法不考虑相机镜头的非线性畸变。Faugeras标定法<a href="#马颂德1998计算机视觉">[2, P. 56]</a><a href="#徐德2011机器人视觉测量与控制">[3, P. 41]</a>是一种直接线性变换标定方法。</p>
 
@@ -482,9 +482,9 @@ t_z &amp;= m_{34}
 
 <p>$\mathbf M$矩阵由4个摄像机内部参数及$\mathbf R$和$\mathbf t$确定。由于$\mathbf R$是正交单位阵，$\mathbf R$和$\mathbf t$的独立变量数为6，因此$\mathbf M$由10个独立变量的矩阵确定。但是$3\times 4$的矩阵$\mathbf M$由11个参数确定，可见这11参数并非相互独立，存在约束关系。在求解的时候并未参数间的约束关系，数据有误差时计算结果有误差，且误差在各参数间的分配也没有按约束关系考虑。实验表明，用上述方法分解出的内外参数有较大的误差。Faugeras等<a href="#faugeras1986calibration">[4]</a>在用\eqref{eq:ls-solution}求解$\mathbf M$时加上了约束条件$\|\mathbf m_3\|=1$，不需要解非线性方程，而且提高了计算精度。</p>
 
-<h3 id="faugerasa-href20113-p-44a">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></h3>
+<h3 id="改进的faugeras标定法3-p-44">改进的Faugeras标定法<a href="#徐德2011机器人视觉测量与控制">[3, P. 44]</a></h3>
 
-<h3 id="a-href20085-p-62a">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></h3>
+<h3 id="像素畸变问题5-p-62">像素畸变问题<a href="#吴福朝2008计算机视觉中的数学方法">[5, P. 62]</a></h3>
 
 <p>由于制造工艺的限制，通常摄像机离散化后的像素不是矩形而是平行四边形，一边平行于$u$轴，另一边与$u$轴夹角为$\theta$，边长为分别为$\mathrm{d}x$和$\mathrm{d}y$，那么公式\eqref{eq:pixel-vs-image-coordination}可改写为</p>
 
@@ -499,7 +499,7 @@ t_z &amp;= m_{34}
 \label{eq:pixel-vs-image-coordination2}
 \end{equation}</p>
 
-<h2 id="tsai">Tsai标定法</h2>
+<h2 id="tsai标定法">Tsai标定法</h2>
 
 <p>实验表明，线性模型不能准确描述成像的几何关系，尤其在使用广角镜头时，远离图像中心处会有较大的畸变。描述非线性畸变可用如下公式<a href="#马颂德1998计算机视觉">[2, P. 59]</a></p>
 
@@ -533,9 +533,9 @@ t_z &amp;= m_{34}
 
 <p>Tsai提出的方法<a href="#tsai1986efficient">[6]</a><a href="#tsai1987versatile">[9]</a>很好的解决了只存在径向畸变时的标定问题。Tsai标定法是基于径向排列约束（RAC，radial alignment constraint）的两步标定法。该方法的第一步是利用最小二乘法得到外部参数；第二步求解内部参数，如果摄像机无径向畸变，可由线性方程组求解，若存在径向畸变，可结合非线性优化得到全部参数。</p>
 
-<h2 id="section-7">张正友平面标定法</h2>
+<h2 id="张正友平面标定法">张正友平面标定法</h2>
 
-<h2 id="section-8">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="abdel2015direct">[1]Y. I. Abdel-Aziz and H. M. Karara, “Direct Linear Transformation from Comparator Coordinates into Object Space Coordinates in Close-Range Photogrammetry,” <i>Photogrammetric Engineering &amp; Remote Sensing</i>, vol. 81, no. 2, pp. 103–107, 2015.</span>
 
@@ -606,28 +606,26 @@ t_z &amp;= m_{34}
   <a  href="/2015/04/postgresql-essential" class="pageNav" style="float:right"   >下一篇：PostgreSQL Essential </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/04/camera-calibration" 	data-url="http://qianjiye.de/2015/04/camera-calibration" data-title="摄像机标定">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/04/camera-calibration';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/04/camera-calibration'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -640,7 +638,7 @@ t_z &amp;= m_{34}
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/04/postgresql-essential'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/04/postgresql-essential'; --1> -->
 <!--         url = '/2015/04/postgresql-essential'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -660,7 +658,7 @@ t_z &amp;= m_{34}
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

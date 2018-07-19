@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">应用场景</h2>
+<h2 id="应用场景">应用场景</h2>
 
 <p>线性回归是研究其它一些统计学习方法的起点，其它方法可看作线性回归的扩展。</p>
 
@@ -175,7 +175,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>广告媒体之间有<strong>协同效应</strong>（synergy effect）吗？协同效应在统计学中称为<strong>相关性</strong>（interaction effect）。例如：在电视和广播分别投放\$50000的广告和将这\$100000投放到其中一种媒体，效果一样吗？</li>
 </ol>
 
-<h2 id="section-1">单变量回归分析</h2>
+<h2 id="单变量回归分析">单变量回归分析</h2>
 
 <p>数学上，回归问题可表示为
 \begin{equation}
@@ -314,7 +314,7 @@ r=Cor(X,Y)={
 \end{equation}
 也是衡量$X$与$Y$线性相关的统计量。事实上，$R^2=r^2$。</p>
 
-<h2 id="section-2">多变量回归分析</h2>
+<h2 id="多变量回归分析">多变量回归分析</h2>
 
 <p>$p$个不同预测变量（predictor）的多变量回归模型为</p>
 
@@ -413,9 +413,9 @@ Sales     <span class="m">0.78222442</span> <span class="m">0.57622257</span> <s
 
 <p>好的回归模型要求$F$较大，$R^2$较大，在这种情况下，小的$p$值表明变量与响应相关。</p>
 
-<h2 id="section-3">编程实例</h2>
+<h2 id="编程实例">编程实例</h2>
 
-<h3 id="r">R处理因子类型变量</h3>
+<h3 id="r处理因子类型变量">R处理因子类型变量</h3>
 
 <p>数据集中<a href="https://courses.edx.org/c4x/MITx/15.071x_2/asset/pisa2009test.csv">pisa2009test.csv</a>和<a href="https://courses.edx.org/c4x/MITx/15.071x_2/asset/pisa2009train.csv">pisa2009train.csv</a>中，<code>raceeth</code>的数据类型是因子，线性模型不能直接使用该数据。<code>raceeth</code>有7种取值<code>White</code>、<code>American Indian/Alaska Native</code>、<code>Asian</code>、<code>Black</code>、<code>Hispanic</code>、<code>More than one race</code>、<code>Native Hawaiian/Other Pacific Islander</code>。R会选择出现频率最高的作为参考，本例中为<code>White</code>，自动将<code>raceeth</code>用6个变量替代，形如<code>raceethAmerican Indian/Alaska Native</code>。如果<code>raceeth</code>原来取值为<code>White</code>，那么新的6个变量取值均为<code>0</code>；如果原来取值为<code>American Indian/Alaska Native</code>，那么新变量<code>raceethAmerican Indian/Alaska Native</code>取值为<code>1</code>，其余5个取值为<code>0</code>。这也是一种<strong>特征变换</strong>策略。</p>
 
@@ -433,38 +433,38 @@ pisaTest<span class="o">$</span>raceeth <span class="o">=</span> relevel<span cl
 <span class="c1"># 带因子（factor）变量的线性回归</span>
 lmScore <span class="o">&lt;-</span> lm<span class="p">(</span>readingScore <span class="o">~</span> <span class="m">.</span><span class="p">,</span> data <span class="o">=</span> pisaTrain<span class="p">)</span></code></pre></div>
 
-<h3 id="step"><code>step</code>逐步回归</h3>
+<h3 id="step逐步回归"><code>step</code>逐步回归</h3>
 
 <p>R中的<code>step</code>是<code>MASS</code>包中<code>stepAIC</code>函数的简版，它通过AIC准则进行模型选择，可以得到减缓的模型。</p>
 
 <div class="highlight"><pre><code class="language-R"><span class="c1"># 接上例</span>
 lmScoreSimple <span class="o">&lt;-</span> step<span class="p">(</span>lmScore<span class="p">)</span></code></pre></div>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-5">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:confidence-interval">
-      <p>Approximately for several reasons. Equation relies on the assumption that the errors are Gaussian. Also, the factor of $2$ in front of the $SE\left(\hat\beta_1\right)$ term will vary slightly depending on the number of observations $n$ in the linear regression. To be precise, rather than the number $2$, Equation should contain the $97.5\%$ quantile of a $t$-distribution with $n−2$ degrees of freedom. <a href="#fnref:confidence-interval" class="reversefootnote">&#8617;</a></p>
+      <p>Approximately for several reasons. Equation relies on the assumption that the errors are Gaussian. Also, the factor of $2$ in front of the $SE\left(\hat\beta_1\right)$ term will vary slightly depending on the number of observations $n$ in the linear regression. To be precise, rather than the number $2$, Equation should contain the $97.5\%$ quantile of a $t$-distribution with $n−2$ degrees of freedom. <a href="#fnref:confidence-interval" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:t-and-p-means">
-      <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
+      <p>如何理解$t$分布、$p$值？ <a href="#fnref:t-and-p-means" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:tss-computation">
-      <p>在测试集上计算TSS时，$\bar y$是在训练集上计算的。 <a href="#fnref:tss-computation" class="reversefootnote">&#8617;</a></p>
+      <p>在测试集上计算TSS时，$\bar y$是在训练集上计算的。 <a href="#fnref:tss-computation" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:R2-increase">
-      <p>The model’s $R^2$ value can never decrease from adding new variables to the model. This is due to the fact that it is always possible to set the coefficient for the new variable to zero in the new model. However, this would be the same as the old model. So the only reason to make the coefficient non-zero is if it improves the $R^2$ value of the model, since linear regression picks the coefficients to minimize the error terms, which is the same as maximizing the $R^2$. <a href="#fnref:R2-increase" class="reversefootnote">&#8617;</a></p>
+      <p>The model’s $R^2$ value can never decrease from adding new variables to the model. This is due to the fact that it is always possible to set the coefficient for the new variable to zero in the new model. However, this would be the same as the old model. So the only reason to make the coefficient non-zero is if it improves the $R^2$ value of the model, since linear regression picks the coefficients to minimize the error terms, which is the same as maximizing the $R^2$. <a href="#fnref:R2-increase" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:absurd-example">
-      <p>This slightly counterintuitive result is very common in many real life situations. Consider an absurd example to illustrate the point. Running a regression of shark attacks versus ice cream sales for data collected at a given beach community over a period of time would show a positive relationship, similar to that seen between sales and newspaper. Of course no one (yet) has suggested that ice creams should be banned at beaches to reduce shark attacks. In reality, higher temperatures cause more people to visit the beach, which in turn results in more ice cream sales and more shark attacks. A multiple regression of attacks versus ice cream sales and temperature reveals that, as intuition implies, the former predictor is no longer significant after adjusting for temperature. <a href="#fnref:absurd-example" class="reversefootnote">&#8617;</a></p>
+      <p>This slightly counterintuitive result is very common in many real life situations. Consider an absurd example to illustrate the point. Running a regression of shark attacks versus ice cream sales for data collected at a given beach community over a period of time would show a positive relationship, similar to that seen between sales and newspaper. Of course no one (yet) has suggested that ice creams should be banned at beaches to reduce shark attacks. In reality, higher temperatures cause more people to visit the beach, which in turn results in more ice cream sales and more shark attacks. A multiple regression of attacks versus ice cream sales and temperature reveals that, as intuition implies, the former predictor is no longer significant after adjusting for temperature. <a href="#fnref:absurd-example" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:partial-effect">
-      <p>偏效应：回归模型中的其他因素保持不变时，某个解释变量对因变量的影响。 <a href="#fnref:partial-effect" class="reversefootnote">&#8617;</a></p>
+      <p>偏效应：回归模型中的其他因素保持不变时，某个解释变量对因变量的影响。 <a href="#fnref:partial-effect" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -502,28 +502,26 @@ lmScoreSimple <span class="o">&lt;-</span> step<span class="p">(</span>lmScore<s
   <a  href="/2015/03/texture-classification-system" class="pageNav" style="float:right"   >下一篇：纹理分类系统 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/03/statistical-learning-linear-regression" 	data-url="http://qianjiye.de/2015/03/statistical-learning-linear-regression" data-title="统计学习：线性回归">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/03/statistical-learning-linear-regression';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/03/statistical-learning-linear-regression'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -536,7 +534,7 @@ lmScoreSimple <span class="o">&lt;-</span> step<span class="p">(</span>lmScore<s
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/03/texture-classification-system'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/03/texture-classification-system'; --1> -->
 <!--         url = '/2015/03/texture-classification-system'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -556,7 +554,7 @@ lmScoreSimple <span class="o">&lt;-</span> step<span class="p">(</span>lmScore<s
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

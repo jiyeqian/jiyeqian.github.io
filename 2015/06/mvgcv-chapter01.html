@@ -161,7 +161,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本章简介本书涵盖的主要思想。它是对这些主题的非正式探讨。明确而准确的定义、严谨的代数和精雕细琢的估计算法将推迟到本书的第2章及后续章节。纵观本篇简介，我们通常不会给出到后面那些章节的明确指向。所涉及的材料可使用索引或目录找到。</p>
 
-<h2 id="section">1.1 简介——无处不在的射影几何</h2>
+<h2 id="11-简介无处不在的射影几何">1.1 简介——无处不在的射影几何</h2>
 
 <p>我们都熟悉射影变换。当我们看图片时，我们看到方不是方，圆不是圆。这种将平面物体映射到图片的变换，就是射影变换的一个例子。</p>
 
@@ -191,7 +191,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>在计算机视觉问题中，射影空间是用于表示真实三维世界的便利方式，通过推广它到三维射影空间。类似地，图像通常由真实世界投影为二维形式构成，图像便于推广，视它们在二维射影空间。实际上，真实世界及其图像不包含无穷远点，我们需要关注哪些是虚构的点，也就是图像中无穷远线和现实世界中无穷远平面。正因如此，虽然我们通常工作在射影空间，但我们仍意识到无穷远的线和平面有些特殊。这违背了纯粹射影几何的思想<sup id="fnref:pure-projective-geometry"><a href="#fn:pure-projective-geometry" class="footnote">2</a></sup>，但这对我们的实际问题有用。我们通常设法两全其美：同等对待射影空间中的所有点，当这适合我们时就这么做；单独处理空间中无穷远线和图像中无穷远平面，当这变得必要时就这么做。</p>
 
-<h3 id="section-1">1.1.1 仿射几何与欧氏几何</h3>
+<h3 id="111-仿射几何与欧氏几何">1.1.1 仿射几何与欧氏几何</h3>
 
 <p>我们已清楚增加无穷远线（或平面），从欧氏空间可得射影空间。现在我们考虑变回去的逆过程。这里的论述主要关注二维和三维的射影空间。</p>
 
@@ -231,7 +231,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>我们在此不会详细深入绝对圆锥曲线如何确定整个欧氏三维几何。只会提供一个例子。空间中线的垂直，不是仿射几何中的合法概念，但这属于欧氏几何。线的垂直可根据绝对圆锥曲线定义如下。延长两条线，直到它们与平面交于无穷远，我们得到的两点称为这两条线的方向点（direction）。线的垂直通过到绝对圆锥曲线的这两个方向点间的关系确定。若这两个方向点是关于绝对圆锥曲线的共轭点（如<a href="">图3.8</a>所示），那么这两条线垂直。共轭点的几何与代数表示在<a href="">第2.8.1节</a>定义。简言之，若用$3\times 3$的对称矩阵表示绝对圆锥曲线，并且方向点是$\mathbf d_1$和$\mathbf d_2$，当$\mathbf d_1^\top\mathrm\Omega_\infty\mathbf d_2=0$时，那么它们关于$\mathrm\Omega_\infty$共轭。更一般地说，在任意坐标系统，角度可根据绝对圆锥曲线定义，如<a href="">第3.23节</a>所述。</p>
 
-<h2 id="section-2">1.2 摄像机的射影几何</h2>
+<h2 id="12-摄像机的射影几何">1.2 摄像机的射影几何</h2>
 
 <p>本书的重要主题之一是成像过程，也就是三维世界的二维表示方式，以及从图像中出现的那些的三维结构中，我们可推断出些什么。</p>
 
@@ -296,7 +296,7 @@ w
 
 <p>这些技术已被用于重建大师画作中的三维纹理映射的图模型（graphical model）。自文艺复兴始，就产生了具有非常精确透视法的绘画。<a href="#fig-1-2">图1.2</a>中展示了基于这样的绘画而实现的重建。</p>
 
-<h2 id="section-3">1.3 多视图重建</h2>
+<h2 id="13-多视图重建">1.3 多视图重建</h2>
 
 <p>我们现在进入本书的主题之一——基于多张图像重建场景。最简单的情况是两张图，这是我们首先将要考虑的。作为数学上的抽象，我们将论述限定在只包含点的“场景”。</p>
 
@@ -336,7 +336,7 @@ w
 
 <p>此处只给出了算法的梗概，本书详细探讨了其中的每部分。按照此简述不能直接实现该算法。</p>
 
-<h2 id="section-4">1.4 三视几何</h2>
+<h2 id="14-三视几何">1.4 三视几何</h2>
 
 <p>在上一节，探讨了从点集的双视图，重建点集和摄像机的相对位置是可行的。这种重建，仅在空间射影变换以及对摄像机矩阵相应调整时，才可行。</p>
 
@@ -364,7 +364,7 @@ w
   <li>使用三视图，重建的稳定性更好，并且避免了只使用双视图重建可能导致的不稳定结构。</li>
 </ol>
 
-<h2 id="n">1.5 四视几何与$n$视重建</h2>
+<h2 id="15-四视几何与n视重建">1.5 四视几何与$n$视重建</h2>
 
 <p>基于张量的方法还可再深入一步，定义与四视图中可见实体关联的一个四焦张量。由于计算满足其内部约束的四焦张量相对困难，既然如此，因此该方法很少用。尽管如此，它提供了一种非迭代法计算基于四视图的射影重建。张量方法并未拓展到四个以上视图，既如此，因此从四个以上视图重建变得更困难。</p>
 
@@ -384,7 +384,7 @@ w
 
 <p>使用$n$视重建技术，可从很长的图像序列中实现自动重建。例如，<a href="#fig-1-3">图1.3</a>所示的例子展示了源自700帧的重建。</p>
 
-<h2 id="section-5">1.6 变换</h2>
+<h2 id="16-变换">1.6 变换</h2>
 
 <p>我们已经探讨了从图像集进行三维重建。射影几何的另一个实际用途是变换：给定点在一张（或更多）图中的位置，确定它会出现在该组其它所有图像的哪些位置。为了这么做，我们必须首先用（比如）辅助点集建立摄像机间的关系。若重建可行，变换在概念上是直截了当的。例如，如果在两张视图中确定了点（$\mathbf x$和$\mathbf x^\prime$），我们希望知道它在第三视图中的位置，那么这可按如下步骤计算：</p>
 
@@ -398,7 +398,7 @@ w
 
 <p>假定摄像机绕它的中心旋转，或者感兴趣的所有场景点共面。那么，合适的多视关系是图像间的平面射影变换。在此情况，只在一张图出现的点可被变换到其它任何图像。</p>
 
-<h2 id="section-6">1.7 欧氏重建</h2>
+<h2 id="17-欧氏重建">1.7 欧氏重建</h2>
 
 <p>至此，对于未标定摄像机组采集的图像，我们已考虑了场景重建和变换。对这些摄像机，诸如焦距、图像的几何中心（或主点）、还可能有图像中像素长宽比等重要参数未知。如果每个摄像机的全部标定已知，那么可能消除重建场景的某些歧义。</p>
 
@@ -412,17 +412,17 @@ w
 
 <p>当然，若场景的欧氏结构已知，那么绝对圆锥曲线亦如此。在此情形，我们可将它投影回每幅图，在每幅图中得到IAC，并由此标定摄像机。因此，摄像机标定信息等价于能确定场景的欧氏结构。</p>
 
-<h2 id="section-7">1.8 自标定</h2>
+<h2 id="18-自标定">1.8 自标定</h2>
 
 <p>不需要摄像机的任何标定信息，也有可能比射影重建做得更好。任意数量视图之间对应特征的集合中，没有信息能帮我们找出绝对圆锥曲线的像，或等价于摄像机的标定信息。然而，若我们恰好知道一点关于摄像机的标定信息，那么我们也许能确定绝对圆锥曲线的位置。</p>
 
 <p>对于用在从图像序列重建场景的每个摄像机，比如假定已知它们的标定相同。为此我们思路如下。每幅图中确定一个坐标系统，其中我们已测得用于射影重建的相应特征的图像坐标。假设在所有这些图像坐标系统中，IAC相同，但只是它在何处未知。从这些信息中，我们期望计算出绝对圆锥曲线的位置。</p>
 
-<h2 id="section-8">1.9 奖励一：三维图形建模</h2>
+<h2 id="19-奖励一三维图形建模">1.9 奖励一：三维图形建模</h2>
 
-<h2 id="section-9">1.10 奖励二：视频增强</h2>
+<h2 id="110-奖励二视频增强">1.10 奖励二：视频增强</h2>
 
-<h2 id="x-">1.x 知识要点</h2>
+<h2 id="1x-知识要点">1.x 知识要点</h2>
 
 <ul>
   <li><strong>射影变换</strong>是平面上点的任意保直线映射。</li>
@@ -436,13 +436,13 @@ w
 <div class="footnotes">
   <ol>
     <li id="fn:affine-transformation">
-      <p>仿射变换： <a href="#fnref:affine-transformation" class="reversefootnote">&#8617;</a></p>
+      <p>仿射变换： <a href="#fnref:affine-transformation" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:pure-projective-geometry">
-      <p>纯粹射影几何： <a href="#fnref:pure-projective-geometry" class="reversefootnote">&#8617;</a></p>
+      <p>纯粹射影几何： <a href="#fnref:pure-projective-geometry" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:conic">
-      <p>圆锥曲线： <a href="#fnref:conic" class="reversefootnote">&#8617;</a></p>
+      <p>圆锥曲线： <a href="#fnref:conic" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -480,28 +480,26 @@ w
   <a  href="/2015/07/introduction-to-yushanfang" class="pageNav" style="float:right"   >下一篇：御膳房使用简介 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/06/mvgcv-chapter01" 	data-url="http://qianjiye.de/2015/06/mvgcv-chapter01" data-title="计算机视觉中的多视几何：1. 简介——多视几何之旅">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/06/mvgcv-chapter01';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/06/mvgcv-chapter01'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -514,7 +512,7 @@ w
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/07/introduction-to-yushanfang'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/07/introduction-to-yushanfang'; --1> -->
 <!--         url = '/2015/07/introduction-to-yushanfang'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -534,7 +532,7 @@ w
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

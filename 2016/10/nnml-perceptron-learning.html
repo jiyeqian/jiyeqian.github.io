@@ -155,11 +155,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">神经网络结构</h2>
+<h2 id="神经网络结构">神经网络结构</h2>
 
 <p>神经网络的结构就是神经元连接的方式。</p>
 
-<h3 id="section-1">前馈神经网络</h3>
+<h3 id="前馈神经网络">前馈神经网络</h3>
 
 <p><img src="/assets/images/2016-10-16-nnml-perceptron-learning_forward_nn.png" alt="" width="300px" /></p>
 
@@ -168,7 +168,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>多于一个隐层的网络可称为深度神经网络。</li>
 </ul>
 
-<h3 id="section-2">递归／循环神经网络</h3>
+<h3 id="递归循环神经网络">递归／循环神经网络</h3>
 
 <p><img src="/assets/images/2016-10-16-nnml-perceptron-learning_recurrent_nn.png" alt="" width="200px" /></p>
 
@@ -183,7 +183,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li><del>与前馈神经网络不同，每个时间步采用相同的权值。</del></li>
 </ul>
 
-<h3 id="section-3">对称连接网络</h3>
+<h3 id="对称连接网络">对称连接网络</h3>
 
 <ul>
   <li>类似递归神经网络，但是神经元之间的连接对称；</li>
@@ -191,7 +191,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>拥有隐藏单元的对称连接网络称为”Boltzmann machines”——拥有简单美妙的学习算法，比Hopfield nets强大，但不如递归网络。</li>
 </ul>
 
-<h2 id="section-4">第一代神经网络——感知器</h2>
+<h2 id="第一代神经网络感知器">第一代神经网络——感知器</h2>
 
 <p><img src="/assets/images/2016-10-16-nnml-perceptron-learning_perceptron_architecture.png" alt="" width="200px" /></p>
 
@@ -225,7 +225,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>若针对训练集存在这样的权值集，该方法可以确保找到正确的权值。</p>
 
-<h2 id="section-5">从几何角度理解感知器</h2>
+<h2 id="从几何角度理解感知器">从几何角度理解感知器</h2>
 
 <p><strong>权值空间：</strong></p>
 
@@ -245,7 +245,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>对所有输入都适用的权值向量，位于上图右所示的超锥体内。</li>
 </ul>
 
-<h2 id="section-6">为什么学习算法有效</h2>
+<h2 id="为什么学习算法有效">为什么学习算法有效</h2>
 
 <p><img src="/assets/images/2016-10-16-nnml-perceptron-learning_learning_procedure_1.png" alt="" width="400px" /></p>
 
@@ -255,7 +255,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>定义如上图所示权值可行区域，经过有限步迭代，权值始终位于该区域内。</p>
 
-<h2 id="section-7">感知器的不足</h2>
+<h2 id="感知器的不足">感知器的不足</h2>
 
 <p>感知器的局限性源于特征。采用恰当的特征，几乎可以胜任一切任务；如果特征使用不当，会受到很大的局限性。</p>
 
@@ -335,28 +335,26 @@ w_1 &lt; \theta;\quad &amp; w_2 &lt; \theta
   <a  href="/2016/10/nnml-bp-learning" class="pageNav" style="float:right"   >下一篇：NNML（03）：BP 学习 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/10/nnml-perceptron-learning" 	data-url="http://qianjiye.de/2016/10/nnml-perceptron-learning" data-title="NNML（02）：感知器学习">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/10/nnml-perceptron-learning';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/10/nnml-perceptron-learning'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -369,7 +367,7 @@ w_1 &lt; \theta;\quad &amp; w_2 &lt; \theta
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/10/nnml-bp-learning'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/10/nnml-bp-learning'; --1> -->
 <!--         url = '/2016/10/nnml-bp-learning'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -389,7 +387,7 @@ w_1 &lt; \theta;\quad &amp; w_2 &lt; \theta
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

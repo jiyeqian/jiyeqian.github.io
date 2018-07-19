@@ -161,7 +161,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">脊回归</h2>
+<h2 id="脊回归">脊回归</h2>
 
 <p>有正则化项的回归称为<strong>脊回归</strong>（ridge regression）。脊回归的核模型有解析解么？</p>
 
@@ -232,7 +232,7 @@ g(\mathbf x)=\sum_{n=1}^N\beta_nK\left(\mathbf x_n, \mathbf x\right)。
 
 <p>LSSVM和logistic回归的核模型得到的参数$\boldsymbol\beta$是稠密的，标准支持向量机的参数$\boldsymbol\alpha$是稀疏的。能否得到像标准支持向量机一样稀疏的$\boldsymbol\beta$呢？</p>
 
-<h2 id="section-1">支持向量回归</h2>
+<h2 id="支持向量回归">支持向量回归</h2>
 
 <p>定义tube回归的误差为
 \begin{equation}
@@ -274,7 +274,7 @@ err(y, s) = \max(0, \lvert s-y\rvert-\epsilon)，
 
 <p>将支持向量回归的原问题转成对偶问题，可移除对$\tilde d$的依赖。</p>
 
-<h2 id="section-2">支持向量回归的对偶模型</h2>
+<h2 id="支持向量回归的对偶模型">支持向量回归的对偶模型</h2>
 
 <p>通过拉格朗日乘子法的KKT条件${\partial\mathcal L\over\partial\mathbf w}=0$可得
 \begin{equation}
@@ -355,28 +355,26 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
   <a  href="/2015/01/linear-regression" class="pageNav" style="float:right"   >下一篇：线性回归 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/support-vector-regression" 	data-url="http://qianjiye.de/2015/01/support-vector-regression" data-title="支持向量机（6）：支持向量回归">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/support-vector-regression';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/support-vector-regression'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -389,7 +387,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-regression'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/linear-regression'; --1> -->
 <!--         url = '/2015/01/linear-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -409,7 +407,7 @@ y_n-\mathbf w^T\mathbf z_n+\epsilon&amp;\quad(0&lt;\alpha_n^\vee&lt;C)。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

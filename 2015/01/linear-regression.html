@@ -165,7 +165,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>本节的主要参考资料是机器学习基石<a href="#lin_mlf_linreg_2014">[1]</a>和机器学习<a href="#ng_ml_linreg_2014">[2]</a>网络课程。</p>
 
-<h2 id="section">线性回归模型</h2>
+<h2 id="线性回归模型">线性回归模型</h2>
 
 <p>线性回归的假设集（hypothesis）为
 \begin{equation}
@@ -185,7 +185,7 @@ $N$是样本数。通过机器学习算法求得线性回归的参数
 \end{equation}
 通常方法有正规方程（normal equation）的解析方法和梯度下降法（gradient descent）。</p>
 
-<h2 id="section-1">解析方法</h2>
+<h2 id="解析方法">解析方法</h2>
 
 <p>解析方法得到的最优解也称为<strong>线性回归的最小二乘解</strong>。</p>
 
@@ -214,7 +214,7 @@ $\mathbf X^\dagger$称为<strong>伪逆</strong>（pseudo-inverse）。通常情
 
 <p>Matlab的<code>pinv</code>函数可以处理$\mathbf X^T\mathbf X$不可逆的情况<sup id="fnref:pinv-vs-inv"><a href="#fn:pinv-vs-inv" class="footnote">2</a></sup>。</p>
 
-<h3 id="mathbf-wlin">解析方法求解$\mathbf w_{LIN}$是机器学习算法吗？</h3>
+<h3 id="解析方法求解mathbf-w_lin是机器学习算法吗">解析方法求解$\mathbf w_{LIN}$是机器学习算法吗？</h3>
 
 <p>✅通过VC维的角度分析，能得到小的$E_{out}\left(\mathbf w_{\small{LIN}}\right)$，就是学习……</p>
 
@@ -285,7 +285,7 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
 \]
 这样有助于提高梯度下降法的速度，如上图左2所示。但是，归一化改变了特征的物理意义，有时并非好事儿。</p>
 
-<h4 id="alpha">学习率$\alpha$的注意事项：</h4>
+<h4 id="学习率alpha的注意事项">学习率$\alpha$的注意事项：</h4>
 <ol>
   <li>在迭代过程中不需调节$\alpha$大小，由于梯度会不断减小，<a href="/2015/01/logistic-regression/#why-fixed-eta">在固定$\alpha$的情况下梯度下降步长也会自动减小</a>，如上图右所示；</li>
   <li>$\alpha$太小收敛慢，太大可能错过极值点而不收敛，甚至可能导致$E_{in}(\mathbf w)$不降反升。</li>
@@ -293,7 +293,7 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
 
 <p>线性回归的代价函数$E_{in}(\mathbf w)$不存在局部极值（local optima），极小值就是全局极值<sup id="fnref:no-local-optima"><a href="#fn:no-local-optima" class="footnote">6</a></sup>。</p>
 
-<h2 id="section-2">两种方法对比</h2>
+<h2 id="两种方法对比">两种方法对比</h2>
 
 <table>
   <thead>
@@ -322,7 +322,7 @@ w_i := w_i-\alpha{\partial E_{in}(\mathbf w)\over\partial w_i}\quad(i=0,1,\ldots
   </tbody>
 </table>
 
-<h2 id="section-3">分类问题</h2>
+<h2 id="分类问题">分类问题</h2>
 
 <p>线性分类器和线性回归的对比如下表：</p>
 
@@ -374,13 +374,13 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 <p>在很多时候，用线性回归解决分类问题效果尚可。如果要让效果更好，可将$\mathbf w_{LIN}$当做PLA或pocket算法的初始值$\mathbf w_0$，加速PLA或pocket算法。</p>
 
-<h2 id="section-4">多项式回归</h2>
+<h2 id="多项式回归">多项式回归</h2>
 
 <p>构造多项式特征，利用线性回归模型解决非线性问题，称为<strong>多项式回归</strong>（polynomial regression）。例如利用$x_1 = x, x_2 = x^2, x_3 = x^3, \ldots $，<a href="/2015/01/nonlinear-transformation">构造新的特征向量</a>$\mathbf x$，带入线性回归模型\eqref{eq:linear-regression-model}求解。从另一个角度看，当特征是多项式时，可直接利用线性模型求解。</p>
 
 <p>当对特征进行高次多项式变换后，取值范围可能急剧变化，需要对多项式特征进行尺度归一化处理<a href="#ng_ml_rlrbv_pe_2014">[3, P. 8]</a>。</p>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lin_mlf_linreg_2014">[1]H.-T. Lin, “Lecture 9: Linear Regression.” Coursera, 2014.</span>
 
@@ -398,30 +398,30 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
 </li></ol>
 
-<h3 id="section-6">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:how-to-regularize">
-      <p>如何进行正则化？ <a href="#fnref:how-to-regularize" class="reversefootnote">&#8617;</a></p>
+      <p>如何进行正则化？ <a href="#fnref:how-to-regularize" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:pinv-vs-inv">
-      <p>Matlab的<code>pinv</code>和<code>inv</code>有何区别？ <a href="#fnref:pinv-vs-inv" class="reversefootnote">&#8617;</a></p>
+      <p>Matlab的<code>pinv</code>和<code>inv</code>有何区别？ <a href="#fnref:pinv-vs-inv" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:some-E-in">
-      <p>为什么VC维考察的是个别的$E_{in}$？ <a href="#fnref:some-E-in" class="reversefootnote">&#8617;</a></p>
+      <p>为什么VC维考察的是个别的$E_{in}$？ <a href="#fnref:some-E-in" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:hat-matrix-properties">
-      <p>帽矩阵的性质（可从文中图示的角度理解）：（1）$\mathbf H$是对称的；（2）$\mathbf H^2=\mathbf H$；（3）$(\mathbf I-\mathbf H)^2=\mathbf I-\mathbf H$。 <a href="#fnref:hat-matrix-properties" class="reversefootnote">&#8617;</a></p>
+      <p>帽矩阵的性质（可从文中图示的角度理解）：（1）$\mathbf H$是对称的；（2）$\mathbf H^2=\mathbf H$；（3）$(\mathbf I-\mathbf H)^2=\mathbf I-\mathbf H$。 <a href="#fnref:hat-matrix-properties" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:andrew-simultaneous-update">
-      <p>事实上，不同时更新的情况很少发生，因为在更新每个$w_i$前，已经用$\mathbf w$计算过了$E_{in}(\mathbf w)$，更新过程中，不再需要重复计算$E_{in}(\mathbf w)$。 <a href="#fnref:andrew-simultaneous-update" class="reversefootnote">&#8617;</a></p>
+      <p>事实上，不同时更新的情况很少发生，因为在更新每个$w_i$前，已经用$\mathbf w$计算过了$E_{in}(\mathbf w)$，更新过程中，不再需要重复计算$E_{in}(\mathbf w)$。 <a href="#fnref:andrew-simultaneous-update" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:no-local-optima">
-      <p>这是真的吗？ <a href="#fnref:no-local-optima" class="reversefootnote">&#8617;</a></p>
+      <p>这是真的吗？ <a href="#fnref:no-local-optima" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:why-not-scale">
-      <p>为什么解析方法不需要规范化特征？ <a href="#fnref:why-not-scale" class="reversefootnote">&#8617;</a></p>
+      <p>为什么解析方法不需要规范化特征？ <a href="#fnref:why-not-scale" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -459,28 +459,26 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
   <a  href="/2015/01/blending-and-bagging" class="pageNav" style="float:right"   >下一篇：分类器融合（1）：基于混合与自助聚集的简介 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/linear-regression" 	data-url="http://qianjiye.de/2015/01/linear-regression" data-title="线性回归">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/linear-regression';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/linear-regression'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -493,7 +491,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/blending-and-bagging'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/blending-and-bagging'; --1> -->
 <!--         url = '/2015/01/blending-and-bagging'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -513,7 +511,7 @@ in-sample回归误差也是out-sample分类误差的上限，做好in-sample回�
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

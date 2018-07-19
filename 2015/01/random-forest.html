@@ -159,14 +159,14 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">随机森林</h2>
+<h2 id="随机森林">随机森林</h2>
 
 <p>bagging 通过投票或平均的方法，可以减少 variance；决策树功能强大， 但是有很大的 variance。能否将二者融合起来，优势互补？  <br />
 ［1/3］random forest（RF） = bagging + fully-grown C&amp;RT tree。  <br />
 random 描述了 bagging 中 bootstrapping 过程的随机性；forest 表示很多树的组合。</p>
 
 <blockquote>
-  <h4 id="section-1">随机森林算法</h4>
+  <h4 id="随机森林算法">随机森林算法</h4>
   <hr />
   <p>对于$t=1,2,\ldots,T$，循环执行：</p>
 
@@ -205,7 +205,7 @@ random 描述了 bagging 中 bootstrapping 过程的随机性；forest 表示很
 
 <p>特征抽取数量 $d’$ 是随机森林敏感的唯一可调节参数（另一个参数是森林中树的数量），可通过后文的 $E_{oob}$ 确定。减小 $d’$，能够降低树之间的相关性，同时也削弱了树的能力。</p>
 
-<h2 id="oob-">基于 OOB 数据集的验证</h2>
+<h2 id="基于-oob-数据集的验证">基于 OOB 数据集的验证</h2>
 
 <p><img src="/assets/images/2015-01-24-random-forest-out-of-bag-examples.png" alt="" width="444px" id="fig-4-1" /></p>
 
@@ -225,7 +225,7 @@ E_{oob}(G)={1\over N}\sum_{n=1}^Nerr\left(y_n,G_n^-(\mathbf x_n)\right)，
 
 <p>上图是基于 $E_{val}$ 和基于 $E_{oob}$ 的验证方法对比，当森林中有足够多的树时，$E_{oob}$ 通常能更准确的衡量 $G$ 的性能<a href="#bylander2002estimating">[3]</a>。利用 $E_{oob}$ 进行 $d’’$ 等参数选择，不需要像交叉验证一样针对每份验证集重新训练分类器，也没有选择了 $g_{m^*}^-$ 再回到整个训练集得到的 $g_{m^*}$ 的步骤。利用 $E_{oob}(G)$，bagging 和 RF 实现了自验证（self-validation）。</p>
 
-<h2 id="section-2">特征选择</h2>
+<h2 id="特征选择">特征选择</h2>
 
 <p>特征选择就是移除冗余（redundant）和不相关（irrelevant）的特征。特征选择的主要优点包括：</p>
 
@@ -268,10 +268,10 @@ $\mathcal D^{(p)}$ 表示 $\mathcal D$ 的第 $i$ 维特征 $\{x_{n,i}\}$ 经过
 
 <p>在实际中，利用 RF 通过 “permutation + OOB” 进行特征选择，通常高效可行，可作为处理其它非线性问题的特征选择工具。</p>
 
-<h2 id="section-3">随机森林的特性</h2>
+<h2 id="随机森林的特性">随机森林的特性</h2>
 
 <blockquote>
-  <h4 id="leo-breiman--adele-cutler-a-hrefbreimanwebintrorf4a">Leo Breiman 和 Adele Cutler 这样说<a href="#BreimanWebIntroRF">[4]</a></h4>
+  <h4 id="leo-breiman-和-adele-cutler-这样说4">Leo Breiman 和 Adele Cutler 这样说<a href="#BreimanWebIntroRF">[4]</a></h4>
   <hr />
 
   <ul>
@@ -303,7 +303,7 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
 
 <p>台湾大学在 KDDCup 2013 中发现，随机森林的$E_{val}$表现依赖初始的种子点，最终通过将树增加到 12000 课，固定种子为1，夺得了冠军🏆。</p>
 
-<h4 id="section-4">以下图片展示了随机森林的优点：</h4>
+<h4 id="以下图片展示了随机森林的优点">以下图片展示了随机森林的优点：</h4>
 
 <p><img src="/assets/images/2015-01-24-random-forest-large-margin.png" alt="" width="444px" id="fig-4-3" /></p>
 
@@ -317,11 +317,11 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
 
 <p class="mvgcv-figure-caption align-text-center"><strong>通过投票机制消除噪声的干扰</strong></p>
 
-<h2 id="section-5">随机森林的应用</h2>
+<h2 id="随机森林的应用">随机森林的应用</h2>
 
 <p>基于R语言的randomForest应用范例<a href="#liaw2002classification">[1]</a>。</p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="liaw2002classification">[1]A. Liaw and M. Wiener, “Classification and regression by randomForest,” <i>R news</i>, vol. 2, no. 3, pp. 18–22, 2002.</span>
 
@@ -338,15 +338,15 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:small-subspace">
-      <p>这种方法也可以用于其它机器学习模型。 <a href="#fnref:small-subspace" class="reversefootnote">&#8617;</a></p>
+      <p>这种方法也可以用于其它机器学习模型。 <a href="#fnref:small-subspace" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:OOB-observer">
-      <p>Not reliable enough to use as an estimate for error on a separate test set (will typically under-estimate error), but still very useful to observe after adding each tree to verify that your forest is still learning. If it stops decreasing for a few iterations stop adding trees. <a href="http://www.quora.com/How-reliable-are-Random-Forest-OOB-error-estimates">Qoura</a> <a href="#fnref:OOB-observer" class="reversefootnote">&#8617;</a></p>
+      <p>Not reliable enough to use as an estimate for error on a separate test set (will typically under-estimate error), but still very useful to observe after adding each tree to verify that your forest is still learning. If it stops decreasing for a few iterations stop adding trees. <a href="http://www.quora.com/How-reliable-are-Random-Forest-OOB-error-estimates">Qoura</a> <a href="#fnref:OOB-observer" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -384,28 +384,26 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
   <a  href="/2015/01/linear-models-for-classification" class="pageNav" style="float:right"   >下一篇：线性分类模型 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/random-forest" 	data-url="http://qianjiye.de/2015/01/random-forest" data-title="分类器融合（4）：随机森林">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/random-forest';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/random-forest'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -418,7 +416,7 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/linear-models-for-classification'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/linear-models-for-classification'; --1> -->
 <!--         url = '/2015/01/linear-models-for-classification'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -438,7 +436,7 @@ E_{out}(G)\leq {2\over K+1}\sum_{k=1}^KE_{out}(g_k)。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

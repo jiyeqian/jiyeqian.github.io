@@ -163,7 +163,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本文主要通过视频演示如何在<a href="http://yushanfang.com">御膳房</a>平台进行第二赛季的<a href="http://tianchi.aliyun.com/competition/introduction.htm?spm=5176.100066.333.2.QlL5cn&amp;raceId=3">资金流入流出预测</a>，主要参考了<a href="http://bbs.aliyun.com/read/249347.html">[资金流入流出预测]第二赛季参赛(平台使用)攻略之混沌队</a>的使用说明。</p>
 
-<h2 id="section">视频演示</h2>
+<h2 id="视频演示">视频演示</h2>
 
 <!-- <div id="playerCnt"></div>
 <style type="text/css">
@@ -189,9 +189,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>在“算法平台”，使用R中的线性回归预测9月的购买赎回情况表<code>tc_comp_predict_table</code>，系统自动根据此表评分。</li>
 </ol>
 
-<h2 id="section-1">相关代码</h2>
+<h2 id="相关代码">相关代码</h2>
 
-<h3 id="democreatetable">创建表［demo_create_table］</h3>
+<h3 id="创建表demo_create_table">创建表［demo_create_table］</h3>
 
 <p><strong>注意事项</strong>：</p>
 
@@ -244,7 +244,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <span class="k">where</span> <span class="n">ds</span> <span class="o">=</span> <span class="s1">&#39;45678month&#39;</span> 
 <span class="p">)</span> <span class="n">t1</span><span class="p">;</span></code></pre></div>
 
-<h3 id="demoproducefeatures">生成9月特征［demo_produce_features］</h3>
+<h3 id="生成9月特征demo_produce_features">生成9月特征［demo_produce_features］</h3>
 
 <p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-demo_produce_features.png" alt="" width="256px" /></p>
 
@@ -296,7 +296,7 @@ september_features <span class="o">&lt;-</span> <span class="kt">data.frame</spa
 <span class="c1"># dataname务必修改成自己的变量名称</span>
 pai.outputPort<span class="p">(</span><span class="m">1</span><span class="p">,</span> september_features<span class="p">)</span></code></pre></div>
 
-<h3 id="demopredict">回归预测［demo_predict］</h3>
+<h3 id="回归预测demo_predict">回归预测［demo_predict］</h3>
 
 <p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-demo_predict.png" alt="" width="512px" /></p>
 
@@ -343,9 +343,9 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 <span class="c1"># dataname务必修改成自己的变量名称</span>
 pai.outputPort<span class="p">(</span><span class="m">1</span><span class="p">,</span> result<span class="p">)</span></code></pre></div>
 
-<h2 id="section-2">实用技能</h2>
+<h2 id="实用技能">实用技能</h2>
 
-<h3 id="r">查看平台的R版本</h3>
+<h3 id="查看平台的r版本">查看平台的R版本</h3>
 
 <p><img src="/assets/images/2015-07-03-introduction-to-yushanfang-get-R-version.png" alt="" width="480px" /></p>
 
@@ -359,7 +359,7 @@ pai.outputPort<span class="p">(</span><span class="m">1</span><span class="p">,<
 R_version<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="kp">as.character</span><span class="p">(</span>R_version<span class="p">[[</span><span class="m">1</span><span class="p">]])</span>
 <span class="kp">colnames</span><span class="p">(</span>R_version<span class="p">)[</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s">&#39;value&#39;</span></code></pre></div>
 
-<h3 id="section-3">硬写入数据到评分表</h3>
+<h3 id="硬写入数据到评分表">硬写入数据到评分表</h3>
 
 <p>本机离线得到的预测结果，直接利用“算法平台”的R代码，写入评分表。</p>
 
@@ -404,7 +404,7 @@ result<span class="o">$</span>report_date <span class="o">&lt;-</span> <span cla
 result<span class="o">$</span>purchase <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span>result<span class="o">$</span>purchase<span class="p">)</span>
 result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="kp">as.integer</span><span class="p">(</span>result<span class="o">$</span>redeem<span class="p">)</span></code></pre></div>
 
-<h2 id="section-4">问题处理</h2>
+<h2 id="问题处理">问题处理</h2>
 
 <p><strong>子查询记录超过1000</strong></p>
 
@@ -465,7 +465,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
   <span class="k">AND</span> <span class="n">max_redeem</span> <span class="o">&gt;=</span> <span class="mi">2000000</span>
 <span class="p">)</span> <span class="n">vip_user_id</span> <span class="k">ON</span> <span class="p">(</span><span class="n">user_balance_table</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">vip_user_id</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span></code></pre></div>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ul class="bibliography">
   <li><a href="http://docs.aliyun.com/#/pub/odps">开放数据处理服务ODPS</a></li>
@@ -510,28 +510,26 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
   <a  href="/2015/07/HPC-overview" class="pageNav" style="float:right"   >下一篇：高性能计算概述 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/07/introduction-to-yushanfang" 	data-url="http://qianjiye.de/2015/07/introduction-to-yushanfang" data-title="御膳房使用简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/07/introduction-to-yushanfang';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/07/introduction-to-yushanfang'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -544,7 +542,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/07/HPC-overview'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/07/HPC-overview'; --1> -->
 <!--         url = '/2015/07/HPC-overview'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -564,7 +562,7 @@ result<span class="o">$</span>redeem <span class="o">&lt;-</span> <span class="k
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

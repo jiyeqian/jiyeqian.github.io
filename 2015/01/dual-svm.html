@@ -159,13 +159,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">对偶支持向量机的价值</h2>
+<h2 id="对偶支持向量机的价值">对偶支持向量机的价值</h2>
 
 <p>对于求解非线性支持向量机系数的QP，有$\tilde d+1$个变量和$N$个约束条件，对于经过非线性特征变换后$Z$空间的特征维数$\tilde d$一般很大。当$\tilde d$很大时，求解比较具有挑战性。</p>
 
 <p>对偶支持向量机是支持向量机的另一种形式，它不依赖$\tilde d$，有$N$个变量和$N+1$个约束条件。</p>
 
-<h2 id="section-1">拉格朗日乘子法</h2>
+<h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>
 
 <p>正则化采用带约束的最小化方法
 \[
@@ -213,7 +213,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>对于支持向量机，“$=$”成立，求解右边的问题即可。</p>
 
-<h2 id="section-2">化简拉格朗日对偶问题</h2>
+<h2 id="化简拉格朗日对偶问题">化简拉格朗日对偶问题</h2>
 
 <p>对于对偶问题，内层无约束优化取得最小值的条件是
 \[
@@ -265,7 +265,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \mathbf I_N\boldsymbol\alpha \geq \mathbf 0_N。
 \end{equation}</p>
 
-<h2 id="kkt">KKT条件</h2>
+<h2 id="kkt条件">KKT条件</h2>
 
 <p>原问题和对偶问题都是最佳解需要$b,\mathbf w,\boldsymbol\alpha$之间满足如下条件：</p>
 
@@ -303,7 +303,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \end{equation}
 利用不同$\alpha_n&gt;0$时的数据，理论上求解到的$b$应该是一样的，可以计算多个$b$然后平均得到更稳定的解。</p>
 
-<h2 id="section-3">支持向量</h2>
+<h2 id="支持向量">支持向量</h2>
 
 <p>$\alpha_n&gt;0$对应的点一定在边界上，这些点称为<strong>支持向量</strong>。也有些在边界上的点，对应的$\alpha_n$不一定大于$0$。容易发现，计算$b$和$\mathbf w$只需要支持向量就够了。</p>
 
@@ -314,7 +314,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 \end{equation*}
 其中$\beta_n$表示犯错误的次数。</p>
 
-<h2 id="section-4">两种形式的支持向量机</h2>
+<h2 id="两种形式的支持向量机">两种形式的支持向量机</h2>
 
 <p>原始支持向量机适合特征维数$\tilde d$较少的情形，对偶形式的支持向量机适合数据点$N$较少的情形，两者都是通过最优化找到最大边界的判别界。</p>
 
@@ -354,28 +354,26 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
   <a  href="/2015/01/kernel-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（3）：核支持向量机 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/dual-svm" 	data-url="http://qianjiye.de/2015/01/dual-svm" data-title="支持向量机（2）：对偶支持向量机">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/dual-svm';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/dual-svm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -388,7 +386,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/kernel-svm'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/kernel-svm'; --1> -->
 <!--         url = '/2015/01/kernel-svm'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -408,7 +406,7 @@ b=&amp;y_n-\mathbf w^T\mathbf z_n \quad\mbox{if }\alpha_n\neq 0；\\
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

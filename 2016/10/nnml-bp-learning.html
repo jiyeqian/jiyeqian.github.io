@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">线性神经元权值学习</h2>
+<h2 id="线性神经元权值学习">线性神经元权值学习</h2>
 
 <p>本节介绍线性神经元的学习算法，与感知器不同：</p>
 
@@ -199,7 +199,7 @@ E = {1\over 2}\sum_{n\in\text{training}}\left(t^n - y ^ n\right)^2
 
 <p><strong>在感知器学习算法中，通过输入向量修正权值；此处用经误差和学习率修正过的输入修正权值。</strong></p>
 
-<h2 id="section-1">线性神经元的误差面</h2>
+<h2 id="线性神经元的误差面">线性神经元的误差面</h2>
 
 <p><img src="/assets/images/2016-10-24-nnml-bp-learning_error_surface.png" alt="" width="150px" /></p>
 
@@ -211,7 +211,7 @@ E = {1\over 2}\sum_{n\in\text{training}}\left(t^n - y ^ n\right)^2
 
 <p>当权值的剖面等高线椭圆非常细长时，若最速梯度下降的方向几乎正交于通向最小值的方向，学习算法就会很慢。</p>
 
-<h2 id="logistic-">学习 logistic 输出神经元的权值</h2>
+<h2 id="学习-logistic-输出神经元的权值">学习 logistic 输出神经元的权值</h2>
 
 <p>将学习算法拓展到非线性神经元的多层网络，对于 logistic 神经元</p>
 
@@ -231,7 +231,7 @@ y = {1\over 1 + e^{-z}}，
 {\partial E\over\partial w_i}={1\over 2}\sum_{n}{\partial y^n\over \partial w_i}{\partial E^n\over \partial y^n}={1\over 2}\sum_{n}{\partial z^n\over \partial w_i}{\partial y^n\over \partial z^n}{\partial E^n\over \partial y^n}=-\sum_nx_i^ny^n\left(1-y^n\right)\left(t^n-y^n\right)。
 \]</p>
 
-<h2 id="bp-">BP 算法</h2>
+<h2 id="bp-算法">BP 算法</h2>
 
 <p>没有隐层的神经网络建模能力受限。加入手工编码的特征让神经网络变得强大，但是难处在于设计好的特征。</p>
 
@@ -253,7 +253,7 @@ y = {1\over 1 + e^{-z}}，
 
 <p><img src="/assets/images/2016-10-24-nnml-bp-learning_backpropagating2.png" alt="" width="600px" /></p>
 
-<h2 id="bp--1">利用 BP 算法的导数</h2>
+<h2 id="利用-bp-算法的导数">利用 BP 算法的导数</h2>
 
 <p>利用误差导数的价值在于：</p>
 
@@ -333,28 +333,26 @@ y = {1\over 1 + e^{-z}}，
   <a  href="/2017/06/a-byte-of-ct-uav" class="pageNav" style="float:right"   >下一篇：A Bite of CT-UAV </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/10/nnml-bp-learning" 	data-url="http://qianjiye.de/2016/10/nnml-bp-learning" data-title="NNML（03）：BP 学习">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/10/nnml-bp-learning';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/10/nnml-bp-learning'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -367,7 +365,7 @@ y = {1\over 1 + e^{-z}}，
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2017/06/a-byte-of-ct-uav'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2017/06/a-byte-of-ct-uav'; --1> -->
 <!--         url = '/2017/06/a-byte-of-ct-uav'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -387,7 +385,7 @@ y = {1\over 1 + e^{-z}}，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本文内容主要来自M. Nikos Paragios和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第1节“Introduction to artificial vision with discrete graphical models”。</p>
 
-<h2 id="section">人工视觉</h2>
+<h2 id="人工视觉">人工视觉</h2>
 
 <p>人工视觉（AV，artificial vision）的目的和人类视觉系统非常相似。人工视觉非常复杂，尽管过去30年取得了很多进展，但发展水平仍相当于5岁的小孩。面临的困难从如下三方面来看：</p>
 
@@ -186,7 +186,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>人工视觉包含了计算机视觉、机器视觉和图像处理。</p>
 
-<h2 id="section-1">离散模型</h2>
+<h2 id="离散模型">离散模型</h2>
 
 <p>\[
 \mathcal G = \left(\mathcal X, \mathcal E \right)，
@@ -222,11 +222,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \min_{x_p}\sum_{p\in\mathcal X}\left(\Theta_p\left(x_p\right) + \Theta_{c}\left(x_p,\cdots ,x_q\right)\right)。
 \]</p>
 
-<h2 id="section-2">应用实例</h2>
+<h2 id="应用实例">应用实例</h2>
 
 <p>在介绍了几本概念后，分三部分展示一些具体应用实例。</p>
 
-<h3 id="low-level-vision">低级视觉（low level vision）</h3>
+<h3 id="低级视觉low-level-vision">低级视觉（low level vision）</h3>
 
 <p>低级视觉的主要应用包括：盲图像反卷积（blind image deconvolution）、图像修复（image inpainting）……</p>
 
@@ -238,7 +238,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>图连接：成对连接。</li>
 </ul>
 
-<h4 id="section-3">一、盲图像反卷积</h4>
+<h4 id="一盲图像反卷积">一、盲图像反卷积</h4>
 
 <p>低级视觉是非常活跃的研究领域，去噪（denoising）是其中比较简单的例子。目前已经有很多高效的去噪算法，此处从人工视觉的角度，展示一个更有趣也是更具挑战性的问题。</p>
 
@@ -258,7 +258,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>假设图像就是图，像素对应于顶点。为每个顶点分配一个标签，标签表示重构回图像的值。由于不知道卷积核与噪声模型，问题非常复杂。通过量化降低图像质量，卷积核表现的行为也差不多，但问题复杂度降低了。卷积核与运动相关，千差万别，通常的方法是对卷积核施加限制条件。<a href="#komodakis2013mrf">[1]</a>中的方法同时得到卷积核与无噪声图像。</p>
 
-<h4 id="section-4">二、图像补全</h4>
+<h4 id="二图像补全">二、图像补全</h4>
 
 <p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-inpainting.jpg" alt="Image Inpainting" width="500px" id="fig-image-inpainting" /></p>
 
@@ -281,7 +281,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>$\Theta_{pq}\left(x_p, x_q\right)$：块$x_p$和$x_q$与它们重叠区域的相似性。</li>
 </ul>
 
-<h3 id="middle-level-vision">中级视觉（middle level vision）</h3>
+<h3 id="中级视觉middle-level-vision">中级视觉（middle level vision）</h3>
 
 <p>中级视觉不仅包含了图像修复，还包含了对图片内容推断，其内容包含：目标分割（object segmentation）、光流估计（optical flow estimation）、变形融合（deformable fusion）、图匹配（graph matching）……</p>
 
@@ -293,7 +293,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>图连接：成对连接／高阶项。</li>
 </ul>
 
-<h4 id="section-5">一、图像分割</h4>
+<h4 id="一图像分割">一、图像分割</h4>
 
 <p>图像分割是指从给定图像中提取特定区域。</p>
 
@@ -311,7 +311,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>考虑任意三点，姿态不变性是指任何应用到这三点的变换都会保持他们之间角度。对象采用三元组（triplet）建模，任何几何变换都会保留它们之间的角度，这称之为姿态不变（pose-invariant）模型。一旦从数据中学到了这种模型，就可以用它和图像中获取的新信息比较，得到最佳分割图（segmentation map）。这可用概率的方式将几何学信息和图像信息结合。代价函数将增加第三项，称其为超团项，优化点在几何形状中的位置以及点在图像中的位置。统计形状先验（statistical shape prior）的局部约束为$P_{(i,j,k)}(\alpha,\beta)$，全局形状约束为$P(X)={1\over Z}\prod_{c\in C}P_c(\alpha,\beta)$。</p>
 
-<h4 id="section-6">二、配准／光流估计</h4>
+<h4 id="二配准光流估计">二、配准／光流估计</h4>
 
 <p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_brain-registration-example.jpg" alt="brain-registration-example" width="500px" /></p>
 
@@ -353,13 +353,13 @@ V_p(l_p)=\int_\Omega\hat\eta(\mathbf x)\left(I(\mathbf x)-J\left(\mathbf x + \ma
 V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
 \]</p>
 
-<h4 id="section-7">三、图匹配</h4>
+<h4 id="三图匹配">三、图匹配</h4>
 
 <p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_graph-matching-demo.jpg" alt="graph-matching-demo" width="500px" /></p>
 
 <p>图匹配<a href="#zeng2010dense">[3]</a>类似于配准，其目的在于确定两个表面间的对应关系。由于表面之间的形变可能非常大，该问题非常复杂。</p>
 
-<h3 id="high-level-vision">高级视觉（high level vision）</h3>
+<h3 id="高级视觉high-level-vision">高级视觉（high level vision）</h3>
 
 <p>高级视觉可用于提取对象的几何关系，比如从3位对象的二维图像中提取深度信息。高级视觉内容包括提取视角不变的2.5维／3维（view-Point invariant 2.5D-3D）信息/ 大规模形状语法解析（large-scale parsing with shape grammars）……</p>
 
@@ -371,7 +371,7 @@ V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
   <li>图连接：成对连接／高阶项。</li>
 </ul>
 
-<h4 id="section-8">一、提取层次信息</h4>
+<h4 id="一提取层次信息">一、提取层次信息</h4>
 
 <p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_2.5D-layered-modeling.jpg" alt="2.5D Layered Modeling" width="500px" /></p>
 
@@ -379,15 +379,15 @@ V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
 
 <p>首先建立对象的二维形状模型，比如上图中的汽车建模，使得它可以在平面内执行移动、旋转、伸缩变换。然后为其分配图像标签（基于对象的信息）。</p>
 
-<h4 id="a-hrefkoutsourakis2009single4a">二、形状语法解析<a href="#koutsourakis2009single">[4]</a></h4>
+<h4 id="二形状语法解析4">二、形状语法解析<a href="#koutsourakis2009single">[4]</a></h4>
 
 <p><img src="/assets/images/2015-09-19-introduction-to-av-with-dgm_image-based-modeling-of-architecture.png" alt="Image-based Modeling of Architecture using Shape Grammars" width="500px" /></p>
 
-<h2 id="section-9">小结</h2>
+<h2 id="小结">小结</h2>
 
 <p>通过采用训练数据集，图模型效率较高。离散图模型是应对人工视觉四大挑战的理想解决方案。</p>
 
-<h2 id="section-10">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="komodakis2013mrf">[1]N. Komodakis and N. Paragios, “MRF-based blind image deconvolution,” in <i>Computer Vision–ACCV 2012</i>, Springer, 2013, pp. 361–374.</span>
 
@@ -435,28 +435,26 @@ V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
   <a  href="/2015/09/reparameterization-and-dp" class="pageNav" style="float:right"   >下一篇：DILinAV（2）：重参数化与动态规划 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/09/introduction-to-av-with-dgm" 	data-url="http://qianjiye.de/2015/09/introduction-to-av-with-dgm" data-title="DILinAV（1）：基于离散图模型的人工视觉简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/09/introduction-to-av-with-dgm';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/09/introduction-to-av-with-dgm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -469,7 +467,7 @@ V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/09/reparameterization-and-dp'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/09/reparameterization-and-dp'; --1> -->
 <!--         url = '/2015/09/reparameterization-and-dp'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -489,7 +487,7 @@ V_{pq}(l_p,l_q)=\lambda\left\|\mathbf d^{l_p}-\mathbf d^{l_q}\right\|。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

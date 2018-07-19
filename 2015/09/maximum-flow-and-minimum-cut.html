@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>最大流优化问题，在组合优化中历史悠久，并且有高效算法求解特定图的最大流。最大流算法可用于求解特定MRF或CRF的能量最小化问题。</p>
 
-<h2 id="section">超额函数</h2>
+<h2 id="超额函数">超额函数</h2>
 
 <p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_capacity-and-flow.png" alt="" width="128px" id="capacity-and-flow1" /></p>
 
@@ -185,9 +185,9 @@ E_f(\mathbf U) = \sum_{a\in \text{in-arcs}(\mathbf U)}f(a) - \sum_{a\in \text{ou
 E_f(\mathbf U) = \sum_{v\in \mathbf U}E_f(v)。
 \end{equation}</p>
 
-<h2 id="section-1">流与割</h2>
+<h2 id="流与割">流与割</h2>
 
-<h3 id="s-t">s-t流</h3>
+<h3 id="s-t流">s-t流</h3>
 
 <p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_s-t-flow.png" alt="" width="128px" id="s-t-flow" /></p>
 
@@ -206,7 +206,7 @@ E_f(\mathbf U) = \sum_{v\in \mathbf U}E_f(v)。
 
 <p>也就是说，s-t流的值为$-E_\text{flow}(s)$或$E_\text{flow}(t)$。顶点$s$和$t$超额函数值不一定为0。顶点$s$称为<strong>源</strong>（source），$t$称为<strong>槽</strong>（sink）。$s$没有输入边，$t$没有输出边。<a href="#s-t-flow">上图</a>中$-E_\text{flow}(s) = E_\text{flow}(t) = 1$。</p>
 
-<h3 id="s-t-1">s-t割</h3>
+<h3 id="s-t割">s-t割</h3>
 
 <p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_s-t-cut.jpg" alt="" height="256px" id="s-t-cut" /></p>
 
@@ -249,9 +249,9 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
 \right.
 \]</p>
 
-<h2 id="section-2">最大流</h2>
+<h2 id="最大流">最大流</h2>
 
-<h3 id="section-3">最大流问题</h3>
+<h3 id="最大流问题">最大流问题</h3>
 
 <p><img src="/assets/images/2015-09-24-maximum-flow-and-minimum-cut_max-flow-example1.png" alt="" width="300px" id="max-flow-example1" /></p>
 
@@ -377,7 +377,7 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
   <li>更新余图，重复上述过程，直到余图不存在s-t路径。</li>
 </ol>
 
-<h3 id="section-4">最大流最小割定理</h3>
+<h3 id="最大流最小割定理">最大流最小割定理</h3>
 
 <p>在余图中，$s$可达的所有顶点构成的子集记为$\mathbf U$，显然$\mathbf U$中不包含$t$，否者还有s-t路径。对$\mathbf U$，以下关系成立：</p>
 
@@ -388,13 +388,13 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
 
 <p>因此，根据<a href="#flow-and-cut">流与割的关系</a>可知，任意流不大于任意割，那么等号成立表明最大流等于最小割。最大流算法不仅找到了最大流，也找到了最小割。</p>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 <div class="footnotes">
   <ol>
     <li id="fn:17097807">
-      <p><a href="http://blog.csdn.net/changyuanchn/article/details/17097807">有的做法</a>是选择了一条s-t路径后，再在余图中标示一个反方向的路径，包括顶点$s$和$t$。 <a href="#fnref:17097807" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://blog.csdn.net/changyuanchn/article/details/17097807">有的做法</a>是选择了一条s-t路径后，再在余图中标示一个反方向的路径，包括顶点$s$和$t$。 <a href="#fnref:17097807" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -432,28 +432,26 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
   <a  href="/2015/09/fast-ncc" class="pageNav" style="float:right"   >下一篇：快速归一化互相关 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/09/maximum-flow-and-minimum-cut" 	data-url="http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut" data-title="DILinAV（3）：最大流与最小割">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -466,7 +464,7 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/09/fast-ncc'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/09/fast-ncc'; --1> -->
 <!--         url = '/2015/09/fast-ncc'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -486,7 +484,7 @@ s\in\mathbf U,\quad t\in V\backslash\mathbf U。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

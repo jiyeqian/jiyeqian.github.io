@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>Learning happens, if finite $d_{VC}$, large $N$, and low $E_{in}$.</p>
 
-<h2 id="section">学习的可行性</h2>
+<h2 id="学习的可行性">学习的可行性</h2>
 
 <p>当$N\geq 2,k\geq 3$时，成长函数满足约束条件
 \begin{equation}
@@ -186,7 +186,7 @@ P_{\mathcal D}\left[\lvert E_{in}(g)-E_{out}(g)\rvert&gt;\epsilon\right] \leq &a
 
 <p>其中，前两个条件可能得到$E_{out}\approx E_{in}$。</p>
 
-<h2 id="vc">VC维</h2>
+<h2 id="vc维">VC维</h2>
 
 <p>$\mathcal H$的VC维$d_{VC}$是指满足$m_{\mathcal H}(N)=2^N$的最大$N$，VC维也满足：</p>
 
@@ -205,7 +205,7 @@ m_{\mathcal H}(N)\leq N^{d_{VC}}。
 <p>有限$d_{VC}$的$\mathcal H$就是好的假设集。若$d_{VC}$有限，存在$g$使得$E_{out}(g)\approx E_{in}(g)$，并且不需要受学习算法$\mathcal A$、输入数据分布$P$和目标函数$f$的制约。</p>
 
 <blockquote>
-  <h2 id="section-1">####练习题</h2>
+  <h2 id="练习题">####练习题</h2>
   <p>若存在$N$个点的数据集不能被$\mathcal H$打碎，仅仅根据这条信息，可以得到关于$d_{VC}(H)$的什么结论？</p>
 
   <p>［A］$d_{VC}(\mathcal H)&gt;N$；［B］$d_{VC}(\mathcal H)=N$；［C］$d_{VC}(\mathcal H)&lt;N$；［D］无法得出以上任何结论。</p>
@@ -213,12 +213,12 @@ m_{\mathcal H}(N)\leq N^{d_{VC}}。
   <p>答案：［D］。</p>
 </blockquote>
 
-<h2 id="vc-1">感知器的VC维</h2>
+<h2 id="感知器的vc维">感知器的VC维</h2>
 
 <p>如何证明$d$维空间感知器的VC维$d_{VC}=d+1$？若能证明$d_{VC}\geq d+1$且$d_{VC}\leq d+1$，那么就可以得到$d_{VC}=d+1$。</p>
 
 <blockquote>
-  <h2 id="dvcgeq-d1">####练习题：以下哪个表明$d_{VC}\geq d+1$？</h2>
+  <h2 id="练习题以下哪个表明d_vcgeq-d1">####练习题：以下哪个表明$d_{VC}\geq d+1$？</h2>
 
   <p>［A］存在$d+1$个输入能被打碎； <br />
 ［B］任何$d+1$个输入都能被打碎； <br />
@@ -237,7 +237,7 @@ m_{\mathcal H}(N)\leq N^{d_{VC}}。
 <p>易知，$\mathbf X$是$(d+1)\times (d+1)$的方正，且所有列线性无关（秩为$d+1$）。因此，$\mathbf X$可逆，且是$d+1$维线性空间的基。若$\mathbf y$表示任意一种二分类结果（$\mathbf X$可被打碎），那么这样的二分类方式$\mathbf w=\mathbf X^{-1}\mathbf y$总存在，因此$d_{VC}\geq d+1$。</p>
 
 <blockquote>
-  <h2 id="dvcleq-d1">####练习题：以下哪个表明$d_{VC}\leq d+1$？</h2>
+  <h2 id="练习题以下哪个表明d_vcleq-d1">####练习题：以下哪个表明$d_{VC}\leq d+1$？</h2>
 
   <p>［A］存在$d+1$个输入能被打碎； <br />
 ［B］任何$d+1$个输入都能被打碎； <br />
@@ -263,7 +263,7 @@ m_{\mathcal H}(N)\leq N^{d_{VC}}。
 
 <p>假设这$d+2$个点能被打碎，一定存在一种分类情况使得$\mathbf w^T\mathbf x_i(i=1,2,\dots,d+1)$的符号与$a_i(i=1,2,\dots,d+1)$的符号相同，那么$a_i\mathbf w^T\mathbf x_i(i=1,2,\dots,d+1)&gt;0$，这样$\mathbf w^T\mathbf x_{d+2}$就只能取正。那么，这$d+2$个点不能被打碎，与假设矛盾。因此，$d$维空间中，任意$d+2$个点都存在不可能二分类的情况，也就是$d$维空间中的任何$d+2$个输入都不能被打碎，那么$d_{VC}\leq d+1$。</p>
 
-<h2 id="vc-2">理解VC维</h2>
+<h2 id="理解vc维">理解VC维</h2>
 
 <p>VC维可以理解为假设集$\mathcal H$的自由度，它衡量了$\mathcal H$的分类能力。$d_{VC}$可以直观的认为是$\mathcal H$可调节参数的个数（但不总是这样）。</p>
 
@@ -275,7 +275,7 @@ m_{\mathcal H}(N)\leq N^{d_{VC}}。
 
 <p>对于机器学习是否可行，有两个判断指标：（1）$E_{out}(g)\approx E_{in}(g)$？（2）$E_{in}(g)$是否足够小。$d_{VC}$（或$M$）可以作为这两个条件的评价指标。若$d_{VC}$较小，更大概率保证$E_{out}(g)\approx E_{in}(g)$，但$\mathcal H$的能力较弱，可选择的假设较少，难以使$E_{in}(g)$较小；若$d_{VC}$较大，$\mathcal H$的能力较强，可选择的假设较多，更容易使$E_{in}(g)$较小，但$E_{out}(g)\approx E_{in}(g)$的概率偏低。</p>
 
-<h2 id="vc-3">应用VC维</h2>
+<h2 id="应用vc维">应用VC维</h2>
 
 <p>对于$\forall g=\mathcal A(\mathcal D)\in \mathcal H$和大的数据集$\mathcal D$，当$d_{VC}\geq 2$时，坏事儿发生概率的$VC$界为
 \begin{equation}
@@ -298,9 +298,9 @@ E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\r
 
 <p>$d_{VC}$虽是一个宽松的值，但可认为对所有模型都<strong>同样一致</strong>宽松，因此在模型之间比较时，仍有重要作用。</p>
 
-<h2 id="dvc">$d_{VC}$容易计算吗？</h2>
+<h2 id="d_vc容易计算吗">$d_{VC}$容易计算吗？</h2>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lin_ml_vcd_2014">[1]H.-T. Lin, “Lecture 7: The VC Dimension.” Coursera, 2014.</span>
 
@@ -308,7 +308,7 @@ E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\r
 
 </li></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 </section>
 <section align="left">
@@ -343,28 +343,26 @@ E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\r
   <a  href="/2014/12/unbalanced-data-sets" class="pageNav" style="float:right"   >下一篇：不均衡数据问题 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/machine-learning-the-vc-dimension" 	data-url="http://qianjiye.de/2014/12/machine-learning-the-vc-dimension" data-title="机器学习：VC维">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/12/machine-learning-the-vc-dimension';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/12/machine-learning-the-vc-dimension'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -377,7 +375,7 @@ E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\r
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/12/unbalanced-data-sets'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/12/unbalanced-data-sets'; --1> -->
 <!--         url = '/2014/12/unbalanced-data-sets'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -397,7 +395,7 @@ E_{out}(g)\leq E_{in}(g)+\sqrt{\frac{8}{N}\ln\left({4(2N)^{d_{VC}}\over\delta}\r
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

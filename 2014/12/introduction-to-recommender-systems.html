@@ -173,7 +173,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>$m^{(j)}$：用户$j$评价过的电影数目。</li>
 </ul>
 
-<h2 id="section">基于内容的过滤</h2>
+<h2 id="基于内容的过滤">基于内容的过滤</h2>
 
 <p>基于内容的过滤（CBF）方法根据抽取出的用户和产品特征获得推荐。这类方法利用用户和产品的特征计算他们之间的匹配度，最终把匹配得最好的数个产品推荐给相应的用户。</p>
 
@@ -212,7 +212,7 @@ J\left(\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}\right) = &amp;{1\
   <li>CBF推荐给某个用户的产品往往和此用户已经消费过的产品很相似，它们无法发现用户并不熟悉但具有潜在兴趣的产品种类。</li>
 </ol>
 
-<h2 id="section-1">协同过滤</h2>
+<h2 id="协同过滤">协同过滤</h2>
 
 <p>协同过滤（CF）方法不需要事先获得产品或用户的特征，它们只依赖于用户过去的行为（如对产品的浏览、评价或购买等）。 通过用户过去的行为企业可以收集用户对产品的显式评分（如Netflix）或隐式评分（如Google新闻）。通常 CF方法首先分析已经收集到的用户-产品评分对中所呈现的用户与产品的相互作用，然后它们使用这些相互作用为用户产生个性化产品推荐。</p>
 
@@ -248,7 +248,7 @@ x_k^{(i)}&amp;:=x_k^{(i)}-\alpha\left(\sum_{j:r(i,j)=1}\left(\left(\boldsymbol\t
 由于电影的特征$\mathbf x$也通过学习得到，不再需要额外增加$x_0^{(i)}=1$的项。</p>
 
 <blockquote>
-  <h2 id="section-2">####协同过滤算法</h2>
+  <h2 id="协同过滤算法">####协同过滤算法</h2>
 
   <ol>
     <li>用小的随机变量初始化$\mathbf x^{(1)},\ldots,\mathbf x^{(n_m)},\boldsymbol\theta^{(1)},\dots,\boldsymbol\theta^{(n_u)}$<sup id="fnref:how-item-feature-demension"><a href="#fn:how-item-feature-demension" class="footnote">1</a></sup>；</li>
@@ -268,7 +268,7 @@ x_k^{(i)}&amp;:=x_k^{(i)}-\alpha\left(\sum_{j:r(i,j)=1}\left(\left(\boldsymbol\t
   <li>可扩展性：CF方法中可能涉及到数以百万计的用户为成千上万种产品提供的评分。传统的CF推荐算法通常需要计算每对用户或产品之间的相似度，然后把这些相似度存放至电脑的主存中以便高效地产生推荐。当用户或产品的数量较大时，计算复杂度很高。</li>
 </ol>
 
-<h3 id="section-3">均值规范化</h3>
+<h3 id="均值规范化">均值规范化</h3>
 
 <p>针对新用户的冷启动，该用户$j$从未对任何电影做出评价，协同过滤算法会得到用户的参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，如果估计该用户对电影的评分，也将全为$0$，这显然不符合逻辑。因此，需要对数据进行适当的处理，避免这样的情况发生。</p>
 
@@ -284,7 +284,7 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
 \end{equation}
 即使参数向量$\boldsymbol\theta^{(j)}=\mathbf 0$，估计新用户对电影的评分将是所有用户的平均分，合情合理。</p>
 
-<h3 id="section-4">思考问题</h3>
+<h3 id="思考问题">思考问题</h3>
 
 <ul>
   <li>如果系统已经有了部分标注的特征$\mathbf x$，如何融入到协同过滤算法中？</li>
@@ -294,7 +294,7 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
   <li>协同过滤的特征学习可以解决盲源信号分离么？</li>
 </ul>
 
-<h2 id="section-5">混合过滤</h2>
+<h2 id="混合过滤">混合过滤</h2>
 
 <p>混合过滤(HF)组合CBF和CF，以期在克服它们各自缺点的同时，融合它们特有的优势。通常组合的方式包括以下三种：</p>
 
@@ -304,7 +304,7 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
   <li>序贯（sequential）组合：当可用评分较少时使用CBF方法获得用户的特征并进行推荐；而当可用评分积聚到一定程度时，使用CF方法代替原来的CBF方法获得最终的推荐列表。</li>
 </ol>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="wu_thesis_bju_2010">[1]吴金龙, “Netflix Prize 中的协同过滤算法,” PhD thesis, 北京大学, 2010.</span>
 
@@ -315,11 +315,11 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="脚注">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:how-item-feature-demension">
-      <p>如何确定电影的特征多少维合适呢？ <a href="#fnref:how-item-feature-demension" class="reversefootnote">&#8617;</a></p>
+      <p>如何确定电影的特征多少维合适呢？ <a href="#fnref:how-item-feature-demension" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -357,28 +357,26 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
   <a  href="/2014/12/computational-advertising-foundation" class="pageNav" style="float:right"   >下一篇：计算广告学：广告基础 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/introduction-to-recommender-systems" 	data-url="http://qianjiye.de/2014/12/introduction-to-recommender-systems" data-title="推荐系统简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/12/introduction-to-recommender-systems';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/12/introduction-to-recommender-systems'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -391,7 +389,7 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/12/computational-advertising-foundation'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/12/computational-advertising-foundation'; --1> -->
 <!--         url = '/2014/12/computational-advertising-foundation'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -411,7 +409,7 @@ y^{(i, j)} = \left(\boldsymbol\theta^{(j)}\right)^T\mathbf x^{(i)}+\mu_i，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -160,7 +160,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 </section>
 <section class="post">
 
-<h2 id="section">基本操作</h2>
+<h2 id="基本操作">基本操作</h2>
 
 <p>首先加载相应的包：<code class="highlight language-python"><span class="n">cv2</span></code>是OpenCV的包，<code class="highlight language-python"><span class="n">numpy</span></code>用于数组操作，<code class="highlight language-python"><span class="n">matplotlib</span></code>用于显示。</p>
 
@@ -171,7 +171,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <span class="c1"># To enable the inline backend for usage with the IPython Notebook</span>
 <span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span></code></pre></div>
 
-<h4 id="section-1">图像文件读写</h4>
+<h4 id="图像文件读写">图像文件读写</h4>
 
 <p>OpenCV按照BGR通道顺序读写和显示彩色图像，<code class="highlight language-python"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span></code>等程序按照RGB通道操作。因此，若要让<code class="highlight language-python"><span class="n">plt</span></code>正确显示图像，需将通道顺序从BGR转为RGB。读入时指定参数<code class="highlight language-python"><span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_GRAYSCALE</span></code>可以将彩色图转为灰度图。</p>
 
@@ -202,7 +202,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-04-11-opencv-a-python-tutorial/2015-04-11-opencv-a-python-tutorial_4_2.png" alt="png" /></p>
 
-<h4 id="section-2">摄像头读取图像<sup id="fnref:7101844"><a href="#fn:7101844" class="footnote">1</a></sup></h4>
+<h4 id="摄像头读取图像">摄像头读取图像<sup id="fnref:7101844"><a href="#fn:7101844" class="footnote">1</a></sup></h4>
 
 <p>通过<code class="highlight language-python"><span class="n">VideoCapture</span></code>读取摄像头，流程为：打开（<code class="highlight language-python"><span class="nb">open</span></code>） –&gt; 采集（<code class="highlight language-python"><span class="n">read</span></code>） –&gt; 关闭（<code class="highlight language-python"><span class="n">release</span></code>）。<code class="highlight language-python"><span class="nb">open</span></code>也可以操作图像和视频文件。</p>
 
@@ -220,7 +220,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-04-11-opencv-a-python-tutorial/2015-04-11-opencv-a-python-tutorial_6_1.png" alt="png" /></p>
 
-<h4 id="section-3">处理图像数据</h4>
+<h4 id="处理图像数据">处理图像数据</h4>
 
 <p>图像以矩阵（数组）的形式存储，可以按<code class="highlight language-python"><span class="n">numpy</span></code>操作数组的方式操作图像数据。Python的中变量的赋值相当于绑定，不会分配新的空间，为了避免相互影响，需要拷贝图像数据。</p>
 
@@ -251,7 +251,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-04-11-opencv-a-python-tutorial/2015-04-11-opencv-a-python-tutorial_8_1.png" alt="png" /></p>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
@@ -260,12 +260,12 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li><a href="http://nbviewer.ipython.org/github/dolaameng/tutorials/blob/master/opencv-practice/.ipynb_checkpoints/practical%20python%20&amp;%20opencv%20chapter%201%20-%206-checkpoint.ipynb">Pratical Python and Opencv Chapter 1 - 6</a></li>
 </ul>
 
-<h3 id="section-5">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:7101844">
-      <p><a href="http://nbviewer.ipython.org/gist/anonymous/7101844">Capturing Camera Images with OpenCV</a> <a href="#fnref:7101844" class="reversefootnote">&#8617;</a></p>
+      <p><a href="http://nbviewer.ipython.org/gist/anonymous/7101844">Capturing Camera Images with OpenCV</a> <a href="#fnref:7101844" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -303,28 +303,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2015/04/camera-calibration" class="pageNav" style="float:right"   >下一篇：摄像机标定 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/04/opencv-a-python-tutorial" 	data-url="http://qianjiye.de/2015/04/opencv-a-python-tutorial" data-title="OpenCV（1）：基于Python的简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/04/opencv-a-python-tutorial';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/04/opencv-a-python-tutorial'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -337,7 +335,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/04/camera-calibration'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/04/camera-calibration'; --1> -->
 <!--         url = '/2015/04/camera-calibration'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -357,7 +355,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

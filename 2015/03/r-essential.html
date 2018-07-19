@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">入门</h2>
+<h2 id="入门">入门</h2>
 
 <table>
   <thead>
@@ -263,13 +263,13 @@ $ brew install gettext
 <div class="highlight"><pre><code class="language-r"><span class="kn">source</span><span class="p">(</span><span class="s">&quot;http://bioconductor.org/biocLite.R&quot;</span><span class="p">)</span>
 biocLite<span class="p">(</span><span class="s">&quot;RBGL&quot;</span><span class="p">)</span></code></pre></div>
 
-<h2 id="section-1">基本类型</h2>
+<h2 id="基本类型">基本类型</h2>
 
 <p>R不能直接存取内存，通过称之为<strong>对象</strong>（object）的特殊数据结构存取内存。这些对象通过符号（symbol）或变量（variable）访问，符号本身也是对象。R的<code>typeof</code>函数返回对象的类型<sup id="fnref:R-type"><a href="#fn:R-type" class="footnote">1</a></sup>。<a href="http://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects">R的对象类型</a>包括<code>NULL</code>、<code>closure</code>、<code>integer</code>、<code>complex</code>等。</p>
 
 <p><code>mode</code>函数返回对象的模式（mode），主要是为了和S语言的其它实现兼容。<code>storage.mode</code>函数返回参数的存储模式（storage mode），通常用于调用C或FORTRAN时，确定数据类型。在S语言中，整数和实数向量都是<code>numeric</code>模式，但存储模式不同。</p>
 
-<h3 id="section-2">基本类型</h3>
+<h3 id="基本类型-1">基本类型</h3>
 
 <p><strong>向量</strong>（vector）是最基本数据结构，R包含6种基本的原子向量（atomic vector）：</p>
 
@@ -327,19 +327,19 @@ biocLite<span class="p">(</span><span class="s">&quot;RBGL&quot;</span><span cla
 
 <p>NULL是特殊的对象，与长度为0的向量不同，R中只有唯一的NULL对象。</p>
 
-<h3 id="section-3">对象属性</h3>
+<h3 id="对象属性">对象属性</h3>
 
 <p>除NULL外的所有对象都可包含一个或多个属性。属性以成对列表（pairlist）方式存储，所有元素都有名字。通过<code>attributes</code>查看属性列表，通过<code>attr</code>获取单个属性。一些特殊的属性有特定的存取函数，例如因子的<code>levels</code>函数，数组的<code>dim</code>和<code>dimnames</code>函数。属性被用于实现R的类结构。If an object has a class attribute then that attribute will be examined during evaluation.</p>
 
-<h2 id="section-4">数据结构</h2>
+<h2 id="数据结构">数据结构</h2>
 
 <p>R的数据结构包括数组（array）和列表（list）。数组的所有元素类型必须一致，列表元素的类型可以不同。向量（vector）是一维数组，矩阵（matrix）是二维数组。数据框（data frame）是特殊的列表。</p>
 
 <p>因子（factor）是特殊属性的向量，因子中每个元素唯一，每个元素称为因子的一个水平（level）。</p>
 
-<h3 id="section-5">创建及操作数据结构</h3>
+<h3 id="创建及操作数据结构">创建及操作数据结构</h3>
 
-<h4 id="section-6">向量</h4>
+<h4 id="向量">向量</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="c1"># 创建</span>
 <span class="o">&gt;</span> v <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
@@ -367,7 +367,7 @@ Larry
 
 <p>实验表明，通过<code>append</code>函数增加元素要比向量构造和赋值方法慢很多<a href="#teetor2011r">[1, P. 102]</a>。</p>
 
-<h4 id="section-7">矩阵</h4>
+<h4 id="矩阵">矩阵</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="o">&gt;</span> A <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">6</span>
 <span class="o">&gt;</span> <span class="kp">dim</span><span class="p">(</span>A<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">)</span> 
@@ -388,7 +388,7 @@ Larry
 <div class="highlight"><pre><code class="language-r"><span class="o">&gt;</span> <span class="kp">rownames</span><span class="p">(</span>mat<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;rowname1&quot;</span><span class="p">,</span> <span class="s">&quot;rowname2&quot;</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="s">&quot;rownamem&quot;</span><span class="p">)</span> 
 <span class="o">&gt;</span> <span class="kp">colnames</span><span class="p">(</span>mat<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;colname1&quot;</span><span class="p">,</span> <span class="s">&quot;colname2&quot;</span><span class="p">,</span> <span class="kc">...</span><span class="p">,</span> <span class="s">&quot;colnamen&quot;</span><span class="p">)</span></code></pre></div>
 
-<h4 id="section-8">因子</h4>
+<h4 id="因子">因子</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="o">&gt;</span> f <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>v<span class="p">)</span> <span class="c1"># v is a vector of strings or integers</span>
 <span class="o">&gt;</span> f <span class="o">&lt;-</span> <span class="kp">factor</span><span class="p">(</span>v<span class="p">,</span> <span class="kp">levels</span><span class="p">)</span> <span class="c1"># If your vector contains only a subset of possible values ...</span>
@@ -398,7 +398,7 @@ Larry
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> Win Win Lose Tie Win Lose
 Levels<span class="o">:</span> Lose Tie Win</code></pre></div>
 
-<h4 id="section-9">列表</h4>
+<h4 id="列表">列表</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="c1"># 1</span>
 <span class="o">&gt;</span> lst <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="m">3.14</span><span class="p">,</span> <span class="s">&quot;Moe&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span> <span class="kp">mean</span><span class="p">)</span> 
@@ -436,7 +436,7 @@ Levels<span class="o">:</span> Lose Tie Win</code></pre></div>
 <span class="o">$</span>far.right 
 <span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.977</span></code></pre></div>
 
-<h4 id="section-10">数据框</h4>
+<h4 id="数据框">数据框</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="c1"># 1</span>
 <span class="o">&gt;</span> dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>v1<span class="p">,</span> v2<span class="p">,</span> v3<span class="p">,</span> f1<span class="p">,</span> f2<span class="p">)</span>
@@ -463,7 +463,7 @@ Levels<span class="o">:</span> Lose Tie Win</code></pre></div>
 <div class="highlight"><pre><code class="language-r"><span class="o">&gt;</span> N <span class="o">&lt;-</span> <span class="m">100</span>
 <span class="o">&gt;</span> dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>dosage<span class="o">=</span><span class="kt">numeric</span><span class="p">(</span>N<span class="p">),</span> lab<span class="o">=</span><span class="kt">character</span><span class="p">(</span>N<span class="p">),</span> stringsAsFactors<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span></code></pre></div>
 
-<h3 id="section-11">索引方法</h3>
+<h3 id="索引方法">索引方法</h3>
 
 <p>数据的索引（indexing）有<code>[]</code>、<code>[[]]</code>和<code>$</code>三种方法，形如<code>x[i]</code>、<code>x[i, j]</code>、<code>x[[i]]</code>、<code>x[[i, j]]</code>、<code>x$a</code>和<code>x$”a”</code>。<strong>数据的索引从1开始，索引前加负号<code>-</code>表示删除这些索引的元素。</strong></p>
 
@@ -525,13 +525,13 @@ vct<span class="p">[</span><span class="s">&#39;abc&#39;</span><span class="p">]
 lst <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">()</span>
 lst<span class="p">[[</span><span class="s">&quot;abc&quot;</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">:</span> <span class="m">3</span></code></pre></div>
 
-<h3 id="section-12">删除元素的方法</h3>
+<h3 id="删除元素的方法">删除元素的方法</h3>
 
-<h4 id="section-13">通过负索引删除</h4>
+<h4 id="通过负索引删除">通过负索引删除</h4>
 
 <div class="highlight"><pre><code class="language-r">vl <span class="o">=</span> vl<span class="p">[</span><span class="m">-3</span><span class="p">]</span></code></pre></div>
 
-<h4 id="section-14">从列表中删除</h4>
+<h4 id="从列表中删除">从列表中删除</h4>
 
 <div class="highlight"><pre><code class="language-r"><span class="o">&gt;</span> years<span class="p">[</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Carter&quot;</span><span class="p">,</span><span class="s">&quot;Clinton&quot;</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
 
@@ -541,7 +541,7 @@ lst<span class="p">[[</span><span class="s">&quot;abc&quot;</span><span class="p
 <span class="c1"># 删除满足条件的元素</span>
 <span class="o">&gt;</span> lst<span class="p">[</span>lst <span class="o">&lt;</span> <span class="m">0</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="kc">NULL</span></code></pre></div>
 
-<h3 id="section-15">数据分割与合并</h3>
+<h3 id="数据分割与合并">数据分割与合并</h3>
 
 <table>
   <thead>
@@ -599,7 +599,7 @@ Top5<span class="o">$</span>LocationDescription <span class="o">=</span> <span c
 
 CPS <span class="o">=</span> <span class="kp">merge</span><span class="p">(</span>CPS<span class="p">,</span> MetroAreaMap<span class="p">,</span> by.x<span class="o">=</span><span class="s">&quot;MetroAreaCode&quot;</span><span class="p">,</span> by.y<span class="o">=</span><span class="s">&quot;Code&quot;</span><span class="p">,</span> all.x<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span></code></pre></div>
 
-<h2 id="section-16">运算符和优先级</h2>
+<h2 id="运算符和优先级">运算符和优先级</h2>
 
 <table>
   <thead>
@@ -716,23 +716,23 @@ x <span class="c1">#Error: object &#39;x&#39; not found</span>
 dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>colx <span class="o">=</span> <span class="m">1</span> <span class="o">:</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># 列名为colx</span>
 dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>colx <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span> <span class="m">10</span><span class="p">)</span> <span class="c1"># 列名为colx....1.10</span></code></pre></div>
 
-<h2 id="section-17">控制流</h2>
+<h2 id="控制流">控制流</h2>
 
-<h2 id="section-18">函数</h2>
+<h2 id="函数">函数</h2>
 
-<h3 id="section-19">常用函数</h3>
+<h3 id="常用函数">常用函数</h3>
 
-<h4 id="viewspreadsheet"><code>View</code>：以spreadsheet风格展示数据</h4>
+<h4 id="view以spreadsheet风格展示数据"><code>View</code>：以spreadsheet风格展示数据</h4>
 
-<h4 id="str"><code>str</code>：查看对象结构</h4>
+<h4 id="str查看对象结构"><code>str</code>：查看对象结构</h4>
 
 <p>显示对象各属性。</p>
 
-<h4 id="summary"><code>summary</code>：查看对象统计特性</h4>
+<h4 id="summary查看对象统计特性"><code>summary</code>：查看对象统计特性</h4>
 
 <p>显示最小值、分位数、最大值等数据，可以通过<code>boxplot</code>直观的显示。</p>
 
-<h4 id="tablefactor"><code>table</code>：按factor类型统计</h4>
+<h4 id="table按factor类型统计"><code>table</code>：按factor类型统计</h4>
 
 <div class="highlight"><pre><code class="language-R"><span class="c1">#将Ozone（行）和Month（列）作为factor类型，统计同时满足两个条件样本的个数，以表格的形式显示。</span>
 <span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span> <span class="kp">table</span><span class="p">(</span>Ozone<span class="p">,</span> Month<span class="p">))</span> 
@@ -744,11 +744,11 @@ dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class=
 <span class="kp">with</span><span class="p">(</span>airquality<span class="p">,</span>
    <span class="kp">table</span><span class="p">(</span>OzHi <span class="o">=</span> Ozone <span class="o">&gt;</span> <span class="m">80</span><span class="p">,</span> <span class="kp">addNA</span><span class="p">(</span>Month<span class="p">)))</span>           <span class="c1">#增加一列NA</span></code></pre></div>
 
-<h4 id="hist"><code>hist</code>：直方图</h4>
+<h4 id="hist直方图"><code>hist</code>：直方图</h4>
 
 <div class="highlight"><pre><code class="language-R">hist<span class="p">(</span><span class="kp">sqrt</span><span class="p">(</span>islands<span class="p">),</span> breaks <span class="o">=</span> <span class="m">12</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&quot;lightblue&quot;</span><span class="p">,</span> border <span class="o">=</span> <span class="s">&quot;pink&quot;</span><span class="p">)</span></code></pre></div>
 
-<h4 id="boxplotbox-and-whisker"><code>boxplot</code>：盒须图（box-and-whisker）</h4>
+<h4 id="boxplot盒须图box-and-whisker"><code>boxplot</code>：盒须图（box-and-whisker）</h4>
 
 <div class="highlight"><pre><code class="language-R">boxplot<span class="p">(</span>count <span class="o">~</span> spray<span class="p">,</span> data <span class="o">=</span> InsectSprays<span class="p">)</span> <span class="c1"># 横轴为spray，纵轴为count</span></code></pre></div>
 
@@ -765,7 +765,7 @@ dfrm <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class=
 
 <p>令$STEP = range\times IQR$（$range$可通过<code>boxplot</code>设置），区间$[first\; quartile - STEP, third\; quartile + STEP]$之外的是离群点，大于$first\; quartile - STEP$的最小值为图中的最小值（minimum），小于$third\; quartile + STEP$的最大值为图中的最大值（maximum），当<code>boxplot</code>的参数<code>range=0</code>时，不探测离群点，显示实际的最大和最小值。</p>
 
-<h4 id="citationr"><code>citation</code>：在文献中引用R的包</h4>
+<h4 id="citation在文献中引用r的包"><code>citation</code>：在文献中引用R的包</h4>
 
 <div class="highlight"><pre><code class="language-r">citation<span class="p">(</span><span class="s">&quot;Rcpp&quot;</span><span class="p">)</span>
 toBibtex<span class="p">(</span>citation<span class="p">(</span><span class="s">&quot;Rcpp&quot;</span><span class="p">))</span>
@@ -783,7 +783,7 @@ toBibtex<span class="p">(</span>citation<span class="p">(</span><span class="s">
 
 <h2 id="idiomatic-r">Idiomatic R</h2>
 
-<h3 id="recycling-rule">循环法则（recycling rule）</h3>
+<h3 id="循环法则recycling-rule">循环法则（recycling rule）</h3>
 
 <p>当两个向量长度不一致时，通过循环补齐法则，解决对应元素之间（element-by-element）的运算，循环补齐方式如下：</p>
 
@@ -812,7 +812,7 @@ Warning <span class="kp">message</span><span class="o">:</span>
 In <span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span> <span class="o">:</span>
     longer object length is not a multiple of shorter object <span class="kp">length</span></code></pre></div>
 
-<h3 id="section-20">批处理函数</h3>
+<h3 id="批处理函数">批处理函数</h3>
 
 <p>####<code>tapply</code>：应用函数操作分组数据</p>
 
@@ -824,9 +824,9 @@ In <span class="p">(</span><span class="m">1</span><span class="o">:</span><span
 <span class="c1"># ……</span>
 <span class="kp">tapply</span><span class="p">(</span>warpbreaks<span class="o">$</span>breaks<span class="p">,</span> warpbreaks<span class="p">[,</span><span class="m">-1</span><span class="p">],</span> <span class="kp">sum</span><span class="p">)</span></code></pre></div>
 
-<h3 id="section-21">实用技术</h3>
+<h3 id="实用技术">实用技术</h3>
 
-<h4 id="readcsvhttpstackoverflowcomquestions13022299specify-date-format-for-colclasses-argument-in-read-table-read-csv"><code>read.csv</code>按<a href="http://stackoverflow.com/questions/13022299/specify-date-format-for-colclasses-argument-in-read-table-read-csv">自定义格式</a>读入数据</h4>
+<h4 id="readcsv按自定义格式读入数据"><code>read.csv</code>按<a href="http://stackoverflow.com/questions/13022299/specify-date-format-for-colclasses-argument-in-read-table-read-csv">自定义格式</a>读入数据</h4>
 
 <div class="highlight"><pre><code class="language-r">setAs<span class="p">(</span><span class="s">&quot;character&quot;</span><span class="p">,</span><span class="s">&quot;myDate&quot;</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span>from<span class="p">)</span> <span class="kp">as.Date</span><span class="p">(</span>from<span class="p">,</span> format<span class="o">=</span><span class="s">&quot;%d/%m/%Y&quot;</span><span class="p">)</span> <span class="p">)</span>
 
@@ -836,20 +836,20 @@ con <span class="o">&lt;-</span> <span class="kp">textConnection</span><span cla
 tmp2 <span class="o">&lt;-</span> read.csv<span class="p">(</span>con<span class="p">,</span> colClasses<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;numeric&#39;</span><span class="p">,</span><span class="s">&#39;myDate&#39;</span><span class="p">),</span> header<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 str<span class="p">(</span>tmp2<span class="p">)</span></code></pre></div>
 
-<h3 id="section-22">其它</h3>
+<h3 id="其它">其它</h3>
 
 <div class="highlight"><pre><code class="language-R"><span class="c1"># 日期转换</span>
 DateConvert <span class="o">=</span> <span class="kp">as.Date</span><span class="p">(</span><span class="kp">strptime</span><span class="p">(</span>mvt<span class="o">$</span>Date<span class="p">,</span> <span class="s">&quot;%m/%d/%y %H:%M&quot;</span><span class="p">))</span> <span class="c1">#日期转换</span>
 mvt<span class="o">$</span>Month <span class="o">=</span> <span class="kp">months</span><span class="p">(</span>DateConvert<span class="p">)</span>
 mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">weekdays</span><span class="p">(</span>DateConvert<span class="p">)</span></code></pre></div>
 
-<h2 id="section-23">行业应用</h2>
+<h2 id="行业应用">行业应用</h2>
 
-<h3 id="section-24">机器学习</h3>
+<h3 id="机器学习">机器学习</h3>
 
-<h4 id="rattle">rattle包</h4>
+<h4 id="rattle包">rattle包</h4>
 
-<h4 id="section-25">数据集处理</h4>
+<h4 id="数据集处理">数据集处理</h4>
 
 <ul>
   <li><code>sample.split</code>：［caTools］将数据分为训练集合测试集；</li>
@@ -857,88 +857,88 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
   <li>[CROC]：ROC曲线。</li>
 </ul>
 
-<h4 id="section-26">回归分析</h4>
+<h4 id="回归分析">回归分析</h4>
 
 <ul>
   <li><code>lm</code>：线性回归；</li>
   <li><code>glm</code>：logistic回归。</li>
 </ul>
 
-<h4 id="section-27">模型优化</h4>
+<h4 id="模型优化">模型优化</h4>
 
 <ul>
   <li><code>step</code>：基于AIC的模型选择。</li>
 </ul>
 
-<h2 class="no_toc" id="section-28">目录</h2>
+<h2 class="no_toc" id="目录">目录</h2>
 
 <ul id="markdown-toc">
-  <li><a href="#section" id="markdown-toc-section">入门</a></li>
-  <li><a href="#section-1" id="markdown-toc-section-1">基本类型</a>    <ul>
-      <li><a href="#section-2" id="markdown-toc-section-2">基本类型</a></li>
-      <li><a href="#section-3" id="markdown-toc-section-3">对象属性</a></li>
+  <li><a href="#入门" id="markdown-toc-入门">入门</a></li>
+  <li><a href="#基本类型" id="markdown-toc-基本类型">基本类型</a>    <ul>
+      <li><a href="#基本类型-1" id="markdown-toc-基本类型-1">基本类型</a></li>
+      <li><a href="#对象属性" id="markdown-toc-对象属性">对象属性</a></li>
     </ul>
   </li>
-  <li><a href="#section-4" id="markdown-toc-section-4">数据结构</a>    <ul>
-      <li><a href="#section-5" id="markdown-toc-section-5">创建及操作数据结构</a>        <ul>
-          <li><a href="#section-6" id="markdown-toc-section-6">向量</a></li>
-          <li><a href="#section-7" id="markdown-toc-section-7">矩阵</a></li>
-          <li><a href="#section-8" id="markdown-toc-section-8">因子</a></li>
-          <li><a href="#section-9" id="markdown-toc-section-9">列表</a></li>
-          <li><a href="#section-10" id="markdown-toc-section-10">数据框</a></li>
+  <li><a href="#数据结构" id="markdown-toc-数据结构">数据结构</a>    <ul>
+      <li><a href="#创建及操作数据结构" id="markdown-toc-创建及操作数据结构">创建及操作数据结构</a>        <ul>
+          <li><a href="#向量" id="markdown-toc-向量">向量</a></li>
+          <li><a href="#矩阵" id="markdown-toc-矩阵">矩阵</a></li>
+          <li><a href="#因子" id="markdown-toc-因子">因子</a></li>
+          <li><a href="#列表" id="markdown-toc-列表">列表</a></li>
+          <li><a href="#数据框" id="markdown-toc-数据框">数据框</a></li>
         </ul>
       </li>
-      <li><a href="#section-11" id="markdown-toc-section-11">索引方法</a></li>
-      <li><a href="#section-12" id="markdown-toc-section-12">删除元素的方法</a>        <ul>
-          <li><a href="#section-13" id="markdown-toc-section-13">通过负索引删除</a></li>
-          <li><a href="#section-14" id="markdown-toc-section-14">从列表中删除</a></li>
+      <li><a href="#索引方法" id="markdown-toc-索引方法">索引方法</a></li>
+      <li><a href="#删除元素的方法" id="markdown-toc-删除元素的方法">删除元素的方法</a>        <ul>
+          <li><a href="#通过负索引删除" id="markdown-toc-通过负索引删除">通过负索引删除</a></li>
+          <li><a href="#从列表中删除" id="markdown-toc-从列表中删除">从列表中删除</a></li>
         </ul>
       </li>
-      <li><a href="#section-15" id="markdown-toc-section-15">数据分割与合并</a></li>
+      <li><a href="#数据分割与合并" id="markdown-toc-数据分割与合并">数据分割与合并</a></li>
     </ul>
   </li>
-  <li><a href="#section-16" id="markdown-toc-section-16">运算符和优先级</a></li>
-  <li><a href="#section-17" id="markdown-toc-section-17">控制流</a></li>
-  <li><a href="#section-18" id="markdown-toc-section-18">函数</a>    <ul>
-      <li><a href="#section-19" id="markdown-toc-section-19">常用函数</a>        <ul>
-          <li><a href="#viewspreadsheet" id="markdown-toc-viewspreadsheet"><code>View</code>：以spreadsheet风格展示数据</a></li>
-          <li><a href="#str" id="markdown-toc-str"><code>str</code>：查看对象结构</a></li>
-          <li><a href="#summary" id="markdown-toc-summary"><code>summary</code>：查看对象统计特性</a></li>
-          <li><a href="#tablefactor" id="markdown-toc-tablefactor"><code>table</code>：按factor类型统计</a></li>
-          <li><a href="#hist" id="markdown-toc-hist"><code>hist</code>：直方图</a></li>
-          <li><a href="#boxplotbox-and-whisker" id="markdown-toc-boxplotbox-and-whisker"><code>boxplot</code>：盒须图（box-and-whisker）</a></li>
-          <li><a href="#citationr" id="markdown-toc-citationr"><code>citation</code>：在文献中引用R的包</a></li>
+  <li><a href="#运算符和优先级" id="markdown-toc-运算符和优先级">运算符和优先级</a></li>
+  <li><a href="#控制流" id="markdown-toc-控制流">控制流</a></li>
+  <li><a href="#函数" id="markdown-toc-函数">函数</a>    <ul>
+      <li><a href="#常用函数" id="markdown-toc-常用函数">常用函数</a>        <ul>
+          <li><a href="#view以spreadsheet风格展示数据" id="markdown-toc-view以spreadsheet风格展示数据"><code>View</code>：以spreadsheet风格展示数据</a></li>
+          <li><a href="#str查看对象结构" id="markdown-toc-str查看对象结构"><code>str</code>：查看对象结构</a></li>
+          <li><a href="#summary查看对象统计特性" id="markdown-toc-summary查看对象统计特性"><code>summary</code>：查看对象统计特性</a></li>
+          <li><a href="#table按factor类型统计" id="markdown-toc-table按factor类型统计"><code>table</code>：按factor类型统计</a></li>
+          <li><a href="#hist直方图" id="markdown-toc-hist直方图"><code>hist</code>：直方图</a></li>
+          <li><a href="#boxplot盒须图box-and-whisker" id="markdown-toc-boxplot盒须图box-and-whisker"><code>boxplot</code>：盒须图（box-and-whisker）</a></li>
+          <li><a href="#citation在文献中引用r的包" id="markdown-toc-citation在文献中引用r的包"><code>citation</code>：在文献中引用R的包</a></li>
         </ul>
       </li>
     </ul>
   </li>
   <li><a href="#idiomatic-r" id="markdown-toc-idiomatic-r">Idiomatic R</a>    <ul>
-      <li><a href="#recycling-rule" id="markdown-toc-recycling-rule">循环法则（recycling rule）</a></li>
-      <li><a href="#section-20" id="markdown-toc-section-20">批处理函数</a></li>
-      <li><a href="#section-21" id="markdown-toc-section-21">实用技术</a>        <ul>
-          <li><a href="#readcsvhttpstackoverflowcomquestions13022299specify-date-format-for-colclasses-argument-in-read-table-read-csv" id="markdown-toc-readcsvhttpstackoverflowcomquestions13022299specify-date-format-for-colclasses-argument-in-read-table-read-csv"><code>read.csv</code>按<a href="http://stackoverflow.com/questions/13022299/specify-date-format-for-colclasses-argument-in-read-table-read-csv">自定义格式</a>读入数据</a></li>
+      <li><a href="#循环法则recycling-rule" id="markdown-toc-循环法则recycling-rule">循环法则（recycling rule）</a></li>
+      <li><a href="#批处理函数" id="markdown-toc-批处理函数">批处理函数</a></li>
+      <li><a href="#实用技术" id="markdown-toc-实用技术">实用技术</a>        <ul>
+          <li><a href="#readcsv按自定义格式读入数据" id="markdown-toc-readcsv按自定义格式读入数据"><code>read.csv</code>按自定义格式读入数据</a></li>
         </ul>
       </li>
-      <li><a href="#section-22" id="markdown-toc-section-22">其它</a></li>
+      <li><a href="#其它" id="markdown-toc-其它">其它</a></li>
     </ul>
   </li>
-  <li><a href="#section-23" id="markdown-toc-section-23">行业应用</a>    <ul>
-      <li><a href="#section-24" id="markdown-toc-section-24">机器学习</a>        <ul>
-          <li><a href="#rattle" id="markdown-toc-rattle">rattle包</a></li>
-          <li><a href="#section-25" id="markdown-toc-section-25">数据集处理</a></li>
-          <li><a href="#section-26" id="markdown-toc-section-26">回归分析</a></li>
-          <li><a href="#section-27" id="markdown-toc-section-27">模型优化</a></li>
+  <li><a href="#行业应用" id="markdown-toc-行业应用">行业应用</a>    <ul>
+      <li><a href="#机器学习" id="markdown-toc-机器学习">机器学习</a>        <ul>
+          <li><a href="#rattle包" id="markdown-toc-rattle包">rattle包</a></li>
+          <li><a href="#数据集处理" id="markdown-toc-数据集处理">数据集处理</a></li>
+          <li><a href="#回归分析" id="markdown-toc-回归分析">回归分析</a></li>
+          <li><a href="#模型优化" id="markdown-toc-模型优化">模型优化</a></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><a href="#section-29" id="markdown-toc-section-29">参考资料</a>    <ul>
-      <li><a href="#section-30" id="markdown-toc-section-30">脚注</a></li>
+  <li><a href="#参考资料" id="markdown-toc-参考资料">参考资料</a>    <ul>
+      <li><a href="#脚注" id="markdown-toc-脚注">脚注</a></li>
     </ul>
   </li>
 </ul>
 
-<h2 id="section-29">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="teetor2011r">[1]P. Teetor, <i>R Cookbook</i>. "O’Reilly Media, Inc.", 2011.</span>
 
@@ -948,12 +948,12 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
   <li><a href="http://adv-r.had.co.nz">Advanced R</a></li>
 </ul>
 
-<h3 id="section-30">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:R-type">
-      <p>Note that in the C code underlying R, all objects are pointers to a structure with typedef <code>SEXPREC</code>; the different R data types are represented in C by <code>SEXPTYPE</code>, which determines how the information in the various parts of the structure is used. <a href="#fnref:R-type" class="reversefootnote">&#8617;</a></p>
+      <p>Note that in the C code underlying R, all objects are pointers to a structure with typedef <code>SEXPREC</code>; the different R data types are represented in C by <code>SEXPTYPE</code>, which determines how the information in the various parts of the structure is used. <a href="#fnref:R-type" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -991,28 +991,26 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
   <a  href="/2015/03/pattern-discovery-basic-concepts" class="pageNav" style="float:right"   >下一篇：模式发掘（1）：基本概念 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/03/r-essential" 	data-url="http://qianjiye.de/2015/03/r-essential" data-title="R Essential">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/03/r-essential';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/03/r-essential'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -1025,7 +1023,7 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/03/pattern-discovery-basic-concepts'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/03/pattern-discovery-basic-concepts'; --1> -->
 <!--         url = '/2015/03/pattern-discovery-basic-concepts'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -1045,7 +1043,7 @@ mvt<span class="o">$</span>Weekday <span class="o">=</span> <span class="kp">wee
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

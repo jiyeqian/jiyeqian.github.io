@@ -160,15 +160,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>物理模型（physical model）</li>
 </ul>
 
-<h2 id="section">模型的表示</h2>
+<h2 id="模型的表示">模型的表示</h2>
 
-<h3 id="transfer-function">传递函数（transfer function）</h3>
+<h3 id="传递函数transfer-function">传递函数（transfer function）</h3>
 
 <script type="math/tex; mode=display">\frac{y(s)}{u(s)}=G(s)\text{  or  }y(s)=G(s)u(s)</script>
 
 <p>凡事能用传递函数描述的系统，皆为<strong>线性确定系统</strong>。因此，系统比较简单，实际中大多为非线性系统，目前研究中已经很少使用。</p>
 
-<h3 id="state-space-equation">状态空间方程（state space equation）</h3>
+<h3 id="状态空间方程state-space-equation">状态空间方程（state space equation）</h3>
 
 <script type="math/tex; mode=display">\Big\{
 \begin{aligned}
@@ -178,7 +178,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \Big.</script>
 
 <ul>
-  <li>$\mathbf{x}\in \mathbb{R}^n$，$\mathbf{y}\in \mathbb{R}^r$，$\mathbf{u}\in \mathbb{R}^m$，通常情况$n\geq m\geq r$；</li>
+  <li>$\mathbf{x}\in \mathbb{R}^n$表示系统状态，$\mathbf{y}\in \mathbb{R}^r$，$\mathbf{u}\in \mathbb{R}^m$表示系统输入，通常情况$n\geq m\geq r$；</li>
   <li>矩阵$\mathbf{A}\in \mathbb{R}^{n\times n}$和$\mathbf{B}\in \mathbb{R}^{n\times m}$是系统参数；</li>
   <li>通常 $\mathbf{D}=\mathbf{0}$；</li>
   <li>$\mathbf{A},\mathbf{B},\mathbf{C}$可以引入时变参数，若无时变参数则为线性时不变（LTI，Linear Time-Invariant）系统。</li>
@@ -194,9 +194,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 \end{aligned}
 \Big. %]]></script>
 
-<p>$f(x)$为非线性函数，例如$f(x)=\sin x+e^{x^2}+\frac{1}{1+e^x}$。</p>
+<p>$f(x)$为非线性函数，例如$f(x)=\sin x+e^{x^2}+\frac{1}{1+e^x}$。$g(\mathbf{x})$表示控制增益，通常$\forall \mathbf{x},g(\mathbf{x})\neq 0$。</p>
 
-<h3 id="strict-feedback-form">严格反馈型（strict-feedback form）</h3>
+<h3 id="严格反馈型strict-feedback-form">严格反馈型（strict-feedback form）</h3>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \left\{
@@ -220,7 +220,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>这是最一般的模型。最流行的方法是利用<strong>神经网络</strong>处理非线性项。</p>
 
-<h2 id="section-1">神经网络</h2>
+<h2 id="神经网络">神经网络</h2>
 
 <p>（略）</p>
 
@@ -264,28 +264,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2016/10/nnml-perceptron-learning" class="pageNav" style="float:right"   >下一篇：NNML（02）：感知器学习 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/10/s13000-model" 	data-url="http://qianjiye.de/2016/10/s13000-model" data-title="鲁棒及自适应控制（2）：模型">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/10/s13000-model';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/10/s13000-model'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -298,7 +296,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/10/nnml-perceptron-learning'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/10/nnml-perceptron-learning'; --1> -->
 <!--         url = '/2016/10/nnml-perceptron-learning'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -318,7 +316,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

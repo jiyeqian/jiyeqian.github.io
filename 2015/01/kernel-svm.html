@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">回顾对偶支持向量机</h2>
+<h2 id="回顾对偶支持向量机">回顾对偶支持向量机</h2>
 
 <p>当特征空间维数$\tilde d$很大时，计算$q_{n,m}=y_ny_m\mathbf z_n^T\mathbf z_m$是对偶支持向量机的求解瓶颈。</p>
 
@@ -204,7 +204,7 @@ g_{SVM}(\mathbf x)
 \end{equation}
 从上面的公式可以看出，计算不再依赖变换后的空间，只依赖原空间，$b$和判别函数只依赖原空间的支持向量，大大简化了计算。</p>
 
-<h2 id="section-1">多项式核</h2>
+<h2 id="多项式核">多项式核</h2>
 
 <p>仿照2阶多项式核的定义，可以推导高阶多项式核的定义为
 \begin{equation}
@@ -218,7 +218,7 @@ K_Q(\mathbf x,\mathbf x’)=\left(\zeta + \gamma\mathbf x^T\mathbf x’\right)^Q
 
 <p>当$\zeta=0,\gamma=1$时，多项式核就变为了线性核。线性核利用原始支持向量机就比较高效。因此，应当首先尝试线性核，当线性核不能满足要求时再尝试其它高阶核。</p>
 
-<h2 id="section-2">高斯核</h2>
+<h2 id="高斯核">高斯核</h2>
 
 <p>对于1维数据的高斯核，利用Taylor展式可得
 \begin{equation*}
@@ -248,7 +248,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 
 <p>上图是不同系数的高斯核支持向量机的效果，$\gamma$越大，高斯函数越尖，越容易过拟合。当$\gamma\rightarrow\infty$时，$K_{lim}\left(\mathbf x,\mathbf x’\right)=[[\mathbf x＝\mathbf x’]]$，相当于严格判断是否与支持向量一致。</p>
 
-<h2 id="section-3">小结</h2>
+<h2 id="小结">小结</h2>
 
 <p>各种核函数的比较如下表：</p>
 
@@ -339,28 +339,26 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
   <a  href="/2015/01/soft-margin-svm" class="pageNav" style="float:right"   >下一篇：支持向量机（4）：soft-margin支持向量机 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/kernel-svm" 	data-url="http://qianjiye.de/2015/01/kernel-svm" data-title="支持向量机（3）：核支持向量机">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/kernel-svm';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/kernel-svm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -373,7 +371,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/soft-margin-svm'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/soft-margin-svm'; --1> -->
 <!--         url = '/2015/01/soft-margin-svm'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -393,7 +391,7 @@ g_{SVM}(\mathbf x)=\mbox{sign}\left(\sum_{SV}\alpha_ny_n\exp\left(-\gamma\left\l
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="soft-margin">soft-margin支持向量机</h2>
+<h2 id="soft-margin支持向量机">soft-margin支持向量机</h2>
 
 <p>在求解支持向量机参数的二次规划中，约束条件要求所有点被正确分类的叫<strong>hard-margin支持向量机</strong>。这类支持向量机过拟合原因：（1）特征转换功能太强；（2）坚持所有点都被正确分类。</p>
 
@@ -196,7 +196,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 
 <p>$C$是调节最大边界和边界容忍度的参数，$\xi_n$是容忍误差的大小，如上图所示。$C$越小，对最大边界要求越高；$C$越大，能容忍的边界误差越小。</p>
 
-<h2 id="soft-margin-1">对偶soft-margin支持向量机</h2>
+<h2 id="对偶soft-margin支持向量机">对偶soft-margin支持向量机</h2>
 
 <p>soft-margin支持向量机的拉格朗日函数为
 \[
@@ -222,7 +222,7 @@ $C$是调节最大边界和噪声容忍度的参数。但是，上述模型不�
 \mathbf 0_N\leq \mathbf I_N\boldsymbol\alpha \leq C\cdot \mathbf 1_N。
 \end{equation}</p>
 
-<h2 id="soft-margin-2">核soft-margin支持向量机</h2>
+<h2 id="核soft-margin支持向量机">核soft-margin支持向量机</h2>
 
 <p>soft-margin是实际中广泛应用的支持向量机。</p>
 
@@ -246,7 +246,7 @@ b=y_s-\sum\limits_{SV}\alpha_ny_nK\left(\mathbf x_n, \mathbf x_s\right)。
 
 <p>上图展示了soft-margin高斯核支持向量机的效果，灰色的区域表示最大分类间隔。从图中可以看出，$C$越大，对误差的容忍越弱，越容易导致过拟合。</p>
 
-<h2 id="alphan">$\alpha_n$的物理含义</h2>
+<h2 id="alpha_n的物理含义">$\alpha_n$的物理含义</h2>
 
 <div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png" alt="不同类型的数据点" /></a><div class="caption">图 3:  不同类型的数据点 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-alpha-n.png">PNG</a>]</div></div></div>
 
@@ -258,7 +258,7 @@ b=y_s-\sum\limits_{SV}\alpha_ny_nK\left(\mathbf x_n, \mathbf x_s\right)。
   <li>当$\alpha_n=C$时，有界（bounded）支持向量$\triangle$，$\xi_n=1-y_n\left(\mathbf w^T\mathbf z_n+b\right)$，落在边界内，可能正确分类也可能分错，极少数可能在边界上。</li>
 </ol>
 
-<h2 id="section">模型选择</h2>
+<h2 id="模型选择">模型选择</h2>
 
 <div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png"><img src="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png" alt="［中］：交叉验证误差；［右］：支持向量个数" /></a><div class="caption">图 4:  ［中］：交叉验证误差；［右］：支持向量个数 [<a href="/assets/images/2015-01-07-svm-soft-margin-svm-model-select.png">PNG</a>]</div></div></div>
 
@@ -307,28 +307,26 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
   <a  href="/2015/01/kernel-logistic-regression" class="pageNav" style="float:right"   >下一篇：支持向量机（5）：核logistic回归 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/soft-margin-svm" 	data-url="http://qianjiye.de/2015/01/soft-margin-svm" data-title="支持向量机（4）：soft-margin支持向量机">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/soft-margin-svm';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/soft-margin-svm'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -341,7 +339,7 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/kernel-logistic-regression'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/kernel-logistic-regression'; --1> -->
 <!--         url = '/2015/01/kernel-logistic-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -361,7 +359,7 @@ $\#SV$表示支持向量的个数。可以通过支持向量的个数进行模�
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

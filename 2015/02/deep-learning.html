@@ -171,7 +171,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">深度神经网络</h2>
+<h2 id="深度神经网络">深度神经网络</h2>
 
 <p>确定神经网络的结构是非常核心也是非常困难的问题。</p>
 
@@ -210,7 +210,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>若只有一层，它需要完成的任务就很复杂。层数增多，每层或层与层之间功能简单，如上图所示，只需从输入中提取简单的笔画，若还有下一层，继续从简单笔画中找出更复杂的笔画。层与层之间，实现从简单到复杂的特征转换。若原始特征是raw feature（每个特征物理意义有限，比如图像的每个像素），最终需要完成复杂的分类动作，深度学习处理这样的问题更自然。</p>
 
-<h4 id="section-1">一、深度学习的挑战与关键技术</h4>
+<h4 id="一深度学习的挑战与关键技术">一、深度学习的挑战与关键技术</h4>
 
 <ul>
   <li>决定网络结构很困难。
@@ -240,7 +240,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>其中，正则化和初始化是尤为关键的两项技术。</p>
 
 <blockquote>
-  <h2 id="section-2">####二、深度学习两步走策略</h2>
+  <h2 id="二深度学习两步走策略">####二、深度学习两步走策略</h2>
 
   <ol>
     <li>预训练：对$\ell=1,\dots,L$，假设$\mathbf w_*^{(1)},\ldots\mathbf w_*^{(\ell-1)}$已知，逐层训练权值$\left\{w_{ij}^{(\ell)}\right\}$。</li>
@@ -248,7 +248,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   </ol>
 </blockquote>
 
-<h2 id="section-3">非线性自编码器：神经网络</h2>
+<h2 id="非线性自编码器神经网络">非线性自编码器：神经网络</h2>
 
 <p>权值的作用是进行特征转换，将数据换成另一种表现形式，也就是编码（encoding）。在预训练深度神经网络时，并不清楚当前层的权重对以后层有何影响。因此，好的权值需要能保持信息（information-preserving），不同层的权值以不同的形式表示信息。保持信息的意思是数据经过编码之后能重建或精确解码（decode accurately）出原来的信息。预训练权值就是保持信息的编码。</p>
 
@@ -275,7 +275,7 @@ $
 
 <p>许多成功的预训练技术，利用不同的网络结构或正则化机制等方法，实现了更精妙的自编码器。</p>
 
-<h2 id="section-4">去噪自编码器：正则化</h2>
+<h2 id="去噪自编码器正则化">去噪自编码器：正则化</h2>
 
 <p>复杂的神经网络模型复杂度高，需要利用正则化避免过拟合。通常采用的正则化技术包括：</p>
 
@@ -397,7 +397,7 @@ h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
 <p>线性编码器的目标是最大化$\sum(\mbox{maginitude after projection})^2$；主成分分析（PCA，principal component analysis）的目标是最大化$\sum(\mbox{variance after projection})$，变化量$\mbox{variance}$是相对于平均数差距的平方。线性编码器和主成分分析都是线性降维方法，主成分分析＝数据0均值化 ＋ 线性自编码器，在降维中应用更普遍。</p>
 
 <blockquote>
-  <h2 id="section-5">####线性编码器／主成分分析</h2>
+  <h2 id="线性编码器主成分分析">####线性编码器／主成分分析</h2>
 
   <ol>
     <li>令$\bar{\mathbf x}={1\over N}\sum_{n=1}^N\mathbf x_n$，$\mathbf x_n\leftarrow\mathbf x_n-\bar{\mathbf x}$<sup id="fnref:zero-mean-vector"><a href="#fn:zero-mean-vector" class="footnote">4</a></sup>；</li>
@@ -406,25 +406,25 @@ h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
   </ol>
 </blockquote>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:why-density-estimate">
-      <p>为啥稠密区域效果好？ <a href="#fnref:why-density-estimate" class="reversefootnote">&#8617;</a></p>
+      <p>为啥稠密区域效果好？ <a href="#fnref:why-density-estimate" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:data-hinting">
-      <p>可视为<a href="/2015/02/neural-network/#data-hinting">data hinting</a>的正则化技术。 <a href="#fnref:data-hinting" class="reversefootnote">&#8617;</a></p>
+      <p>可视为<a href="/2015/02/neural-network/#data-hinting">data hinting</a>的正则化技术。 <a href="#fnref:data-hinting" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:get-optimal-v">
-      <p>利用拉格朗日乘子法求导可得。 <a href="#fnref:get-optimal-v" class="reversefootnote">&#8617;</a></p>
+      <p>利用拉格朗日乘子法求导可得。 <a href="#fnref:get-optimal-v" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:zero-mean-vector">
-      <p>在0均值数据集基础上进行线性编码，自然实现了投影方向上变化最大。 <a href="#fnref:zero-mean-vector" class="reversefootnote">&#8617;</a></p>
+      <p>在0均值数据集基础上进行线性编码，自然实现了投影方向上变化最大。 <a href="#fnref:zero-mean-vector" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -462,28 +462,26 @@ h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
   <a  href="/2015/02/radial-basis-function-network" class="pageNav" style="float:right"   >下一篇：径向基函数网络 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/02/deep-learning" 	data-url="http://qianjiye.de/2015/02/deep-learning" data-title="深度学习">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/02/deep-learning';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/02/deep-learning'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -496,7 +494,7 @@ h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/02/radial-basis-function-network'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/02/radial-basis-function-network'; --1> -->
 <!--         url = '/2015/02/radial-basis-function-network'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -516,7 +514,7 @@ h(\mathbf x)=\mathbf W\mathbf W^\top\mathbf x。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

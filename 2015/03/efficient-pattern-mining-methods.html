@@ -159,13 +159,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">基本原理</h2>
+<h2 id="基本原理">基本原理</h2>
 
 <p><strong>向下闭包</strong>（downward closure）特性是指频繁项集的所有非空子集也必须是频繁的，这也称为<strong>Apriori性质</strong>。若$\{beer, diaper, nuts\}$是频繁的，那么$\{beer, diaper\}$也是，每个包含$\{beer, diaper, nuts\}$的事务必包含$\{beer, diaper\}$。</p>
 
 <p>如果项集$S$的存在非频繁的子集，那么$S$必不是频繁的。如果项集是非频繁的，它的超集（superset）必是非频繁的，这称为<strong>Apriori剪枝原理</strong>（Apriori pruning principle）。基于这个原理，主要有三种可扩展的（scalable）频繁模式挖掘方法：Apriori<a href="#agrawal1994fast">[1]</a>、Eclat<a href="#zaki2000scalable">[2]</a>和FPgrowth。</p>
 
-<h2 id="apriori">Apriori算法</h2>
+<h2 id="apriori算法">Apriori算法</h2>
 
 <p>Apriori算法是第一个基于候选集生成与测试的频繁集挖掘方法：</p>
 
@@ -186,9 +186,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-03-07-efficient-pattern-mining-methods-apriori-SQL.png" alt="SQL implementation" width="600px" /></p>
 
-<h2 id="eclat">Eclat算法</h2>
+<h2 id="eclat算法">Eclat算法</h2>
 
-<h2 id="section-1">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="agrawal1994fast">[1]R. Agrawal, R. Srikant, and others, “Fast algorithms for mining association rules,” in <i>Proc. 20th int. conf. very large data bases, VLDB</i>, 1994, vol. 1215, pp. 487–499.</span>
 
@@ -197,7 +197,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </li></ol>
 
-<h3 id="section-2">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 
 </section>
@@ -233,28 +233,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2015/03/statistical-learning-linear-regression" class="pageNav" style="float:right"   >下一篇：统计学习：线性回归 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/03/efficient-pattern-mining-methods" 	data-url="http://qianjiye.de/2015/03/efficient-pattern-mining-methods" data-title="模式发掘（2）：高效的模式挖掘方法">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/03/efficient-pattern-mining-methods';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/03/efficient-pattern-mining-methods'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -267,7 +265,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/03/statistical-learning-linear-regression'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/03/statistical-learning-linear-regression'; --1> -->
 <!--         url = '/2015/03/statistical-learning-linear-regression'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -287,7 +285,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

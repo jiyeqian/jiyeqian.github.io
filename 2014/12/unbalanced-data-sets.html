@@ -155,7 +155,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">问题描述</h2>
+<h2 id="问题描述">问题描述</h2>
 
 <p>不均衡数据是指用于分类的正负样本数量差异很大。导致不均衡样本主要有两种情况：</p>
 
@@ -166,15 +166,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>不均衡数据相关的另一个问题是小样本问题。</p>
 
-<h2 id="section-1">处理内在不均衡</h2>
+<h2 id="处理内在不均衡">处理内在不均衡</h2>
 
 <p>内在不均衡就是指数据本身特性决定了它的不均衡性。即使获取更多的数据，仍然改变不了数据的不均衡属性。</p>
 
-<h3 id="section-2">存在的问题</h3>
+<h3 id="存在的问题">存在的问题</h3>
 
 <p>这类问题主要考虑数据对机器学习的算法本身的影响。样本总数都是$N$，不同比率的正负样本对学习算法有何影响？对学习速度、学习效果有何影响？</p>
 
-<h3 id="section-3">解决方案</h3>
+<h3 id="解决方案">解决方案</h3>
 
 <ol>
   <li>基本的方法是必须采用科学的<a href="/2014/11/advice-for-applying-machine-learning/#performance-evaluation">性能评价指标</a>，比如<a href="http://www.bigdataexaminer.com/dealing-with-unbalanced-classes-svm-random-forests-and-decision-trees-in-python/">采用$F_1$ Scorce</a>，避免大样本类淹没了小样本类。对小样本类别的分类性能也能进行有效的评估。</li>
@@ -189,15 +189,15 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>设计objective function的时候给不同misclassification的情况不同的relative weights。也就是说给从小数量的样本被分成大数量的样本更大的penalty。</li>
 </ol>
 
-<h2 id="section-4">处理外在不均衡</h2>
+<h2 id="处理外在不均衡">处理外在不均衡</h2>
 
 <p>外在不均衡就是指数据本身特性并不能表明它是不均衡的，是由于数据获取手段导致数据不均衡。只要获取的数据足够多，这种不均衡就能消除。</p>
 
-<h3 id="section-5">存在的问题</h3>
+<h3 id="存在的问题-1">存在的问题</h3>
 
 <p>从机器学习的理论来说，如果样本数$N$不够，$E_{out}$和$E_{in}$差异很大，无法学习成功，导致Low Bias问题。</p>
 
-<h3 id="section-6">解决方案</h3>
+<h3 id="解决方案-1">解决方案</h3>
 
 <p>克服外在的不均衡性，需要<a href="/2014/11/advice-for-applying-machine-learning/#get-more-data">获得更多的数据</a>：</p>
 
@@ -210,7 +210,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>更多的时候，没有足够的先验知识预知数据特性，无法合理伪造，还得采集跟多的数据。机器学习本来就是探究数据特性的过程。</p>
 
-<h2 id="section-7">不是问题的问题</h2>
+<h2 id="不是问题的问题">不是问题的问题</h2>
 
 <p>对于内在不均衡的数据，若数据远离分类边界（比如线性可分的数据集），<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">采用hard-margin的SVM</a>和感知器，不均衡数据不影响分类结果。</p>
 
@@ -218,7 +218,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>通过重采样将数据变得均衡<a href="http://www.win-vector.com/blog/2015/02/does-balancing-classes-improve-classifier-performance/">不一定能提升分类性能</a>，比如不能提升logistic回归性能，但对随机森林有效（但随机森林不适合用于不均衡数据）。</p>
 
-<h2 id="section-8">其它建议</h2>
+<h2 id="其它建议">其它建议</h2>
 
 <p><a href="http://www.weibo.com/n/机器学习那些事儿">@机器学习那些事儿</a>发起过关于<a href="http://www.weibo.com/p/1001603785752793219283?sudaref=ml.memect.com">不均匀正负样本分布下的机器学习</a>的讨论，部分建议摘录如下：</p>
 
@@ -237,20 +237,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>learning to rank对于训练数据量的要求较高，同时要确定用于learning to rank的pair，还是需要找到负例，从而将正例和负例形成偏序配对。所以learning to rank是一种方法，但个人认为这会将简单问题复杂化，且本质还是需要去找负例。</li>
 </ol>
 
-<h2 id="section-9">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lin_ml_ne_2014">[1]H.-T. Lin, “Lecture 8: Noise and Error.” Coursera, 2014.</span>
 
 [<a href="https://www.coursera.org/course/ntumlone">Online</a>]
 
 </li>
-<li><span id="scikit-learn-2015-svm-unbalanced">[2]F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot, and E. Duchesnay, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
+<li><span id="scikit-learn-2015-svm-unbalanced">[2]F. Pedregosa <i>et al.</i>, “Scikit-learn: Machine Learning in Python,” <i>Journal of Machine Learning Research</i>, vol. 12, pp. 2825–2830, 2011.</span>
 
 [<a href="http://scikit-learn.org/stable/modules/svm.html#unbalanced-problems">Online</a>]
 
 </li></ol>
 
-<h3 id="section-10">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 
 </section>
@@ -286,28 +286,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2014/12/map-reduce-essential" class="pageNav" style="float:right"   >下一篇：Map-Reduce Essential </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/unbalanced-data-sets" 	data-url="http://qianjiye.de/2014/12/unbalanced-data-sets" data-title="不均衡数据问题">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/12/unbalanced-data-sets';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/12/unbalanced-data-sets'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -320,7 +318,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/12/map-reduce-essential'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/12/map-reduce-essential'; --1> -->
 <!--         url = '/2014/12/map-reduce-essential'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -340,7 +338,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

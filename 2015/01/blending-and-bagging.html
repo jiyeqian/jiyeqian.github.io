@@ -165,7 +165,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>混合在实际中很有用，但也增加了计算复杂度。</p>
 
-<h2 id="section">融合简介</h2>
+<h2 id="融合简介">融合简介</h2>
 
 <p>假设$T$个👬朋友$g_1,\ldots,g_T$给出参考意见$g_t(\mathbf x)$预测股票是否会涨，如何决策呢？</p>
 
@@ -202,7 +202,7 @@ G(\mathbf x)=\mbox{sign}\left(\sum_{t=1}^T q_t(\mathbf x)\cdot g_t(\mathbf x)\ri
 
 <p>上图展示的投票法中，灰色的判别界表示参与投票的分类器，合理的融合方法能提升分类性能。上图左，水平和垂直线将平面分割成 6 块区域，可得绿色标注的投票结果，相当于组合成了黑色的判别界。上图左的投票方法，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">特征变换</a>的效果；上图右的感知器投票，具有<a href="/2015/02/summary-of-aggregation-models/#aggregation-performance">正则化</a>的效果。</p>
 
-<h2 id="section-1">均匀混合</h2>
+<h2 id="均匀混合">均匀混合</h2>
 
 <p>均匀混合（uniform blending）也就是投票法\eqref{eq:uniform-blending-hypothesis}。对于多个不同的假设，简单的混合法则也可得到比单一假设更好的结果。如果所有$g_t$都一样，等价于采用任一$g_t$；如果$g_t$千差万别，就是少数服从多数。该方法可以直接推广到多类的情况，
 \[
@@ -254,7 +254,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p>通过bias和variance，将演算法的表现拆分为两部分。均匀混合通过减小variance获得更稳定的性能。</p>
 
-<h2 id="section-2">线性混合</h2>
+<h2 id="线性混合">线性混合</h2>
 
 <p>通过\eqref{eq:linear-blending-hypothesis}，赋予不同假设不同的权重就是<strong>线性混合</strong>（linear blending）。线性回归的线性混合目标为
 \[
@@ -279,7 +279,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <p>在实际中，$g_t$通常是用$E_{in}$从各模型中选的最优，$g_1\in\mathcal H_1,g_2\in\mathcal H_2,\dots,g_T\in\mathcal H_T$。如果在这些$g_t$中用$E_{in}$再选最优的，就是 best of best，将付出高复杂度$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。如果在这些$g_t$中用$E_{in}$再采用线性混合，就是 aggregation of best，将付出<strong>高于</strong>$d_{VC}=\left(\bigcup\limits_{t=1}^T\mathcal H_t\right)$的代价。实际上通常采用$E_{val}$替代$E_{in}$，通过最小化$E_{train}$（也就是$E_{in}$）得到$g_t^-$。</p>
 
 <blockquote>
-  <h4 id="section-3">线性混合算法</h4>
+  <h4 id="线性混合算法">线性混合算法</h4>
   <hr />
 
   <ol>
@@ -307,7 +307,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p>上图的流程中，Val.-Set Blending 就是 any blending 的方法，使得$E_{test}$降低到$456.24$。将上百个$g_t$用近似的$\tilde E_{test}$（若$\tilde E_{test}$好，真正的$E_{test}$也会好）进行线性混合得到$G$。</p>
 
-<h2 id="section-4">自助聚集</h2>
+<h2 id="自助聚集">自助聚集</h2>
 
 <p>对于均匀融合（其它融合方法也如此），<strong>不同模型（假设）</strong>参与融合是关键，获取不同模型的方法包括：</p>
 
@@ -323,7 +323,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <p><strong>bootstrapping</strong> 是一种通过重采样（re-sample）$\mathcal D$模拟$\mathcal D_t$的统计学工具。bootstrap 得到$\tilde{\mathcal D}_t$的方法：从$\mathcal D$中随机抽取一个点，纪录该点后然后放回，重复该过程直到抽取到$N’$个数据。利用 bootstrap 的不同$\tilde{\mathcal D}_t$可以得到不同的$g_t$。</p>
 
 <blockquote>
-  <h4 id="bootstrap-aggregating">自助聚集（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）</h4>
+  <h4 id="自助聚集bootstrap-aggregating">自助聚集（<strong>b</strong>ootstrap <strong>agg</strong>regat<strong>ing</strong>）</h4>
   <hr />
 
   <ol>
@@ -343,7 +343,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 <p>如果基础算法（base algorithm）对数据的随机性很敏感，或者说基础算法不稳定（instability），那么训练数据的扰动或参数的微调能使分类结果发生明显变化，通过 bagging 就能提升分类精度<a href="#breiman1996bagging">[7]</a>。<a href="/2016/03/cs231n_image-classification-pipeline">k最近邻算法</a>是稳定的，不适合作为 bagging 的基础算法<a href="#breiman1996out">[8]</a>。</p>
 
-<h2 id="section-5">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="breiman1996stacked">[1]L. Breiman, “Stacked regressions,” <i>Machine learning</i>, vol. 24, no. 1, pp. 49–64, 1996.</span>
 
@@ -372,7 +372,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
 </li></ol>
 
-<h3 id="section-6">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 
 </section>
@@ -408,28 +408,26 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
   <a  href="/2015/01/adaptive-boosting" class="pageNav" style="float:right"   >下一篇：分类器融合（2）：AdaBoost </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/blending-and-bagging" 	data-url="http://qianjiye.de/2015/01/blending-and-bagging" data-title="分类器融合（1）：基于混合与自助聚集的简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/blending-and-bagging';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/blending-and-bagging'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -442,7 +440,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/adaptive-boosting'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/adaptive-boosting'; --1> -->
 <!--         url = '/2015/01/adaptive-boosting'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -462,7 +460,7 @@ avg(E_{out}(g_t))=avg(\varepsilon(g_t-\bar g)^2)+E_{out}(\bar g)。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

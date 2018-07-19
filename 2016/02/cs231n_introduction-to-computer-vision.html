@@ -161,7 +161,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>这个CNN系列，主要内容是斯坦福大学<a href="http://cs231n.stanford.edu">“CS231n: Convolutional Neural Networks for Visual Recognition”</a>课程的笔记。斯坦福大学机器视觉相关课程包括<a href="http://cs131.stanford.edu">CS131</a>、<a href="http://cs231a.stanford.edu">CS231a</a>、<a href="http://cs231n.stanford.edu">CS231n</a>、<a href="http://cs331.stanford.edu">CS331</a>和CS431。</p>
 
-<h2 id="section">机器视觉简史</h2>
+<h2 id="机器视觉简史">机器视觉简史</h2>
 
 <p><img src="/assets/images/2016_02_29_introduction-to-computer-vision_The Summer Vision Project.png" alt="" width="600px" id="fig-1-1" /></p>
 
@@ -185,7 +185,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>2006年，Fuji Film采用Viola &amp; Jones的方法<a href="#viola2001rapid">[9]</a>，第一个实现了人脸检测的数码相机。</p>
 
-<h2 id="section-1">图像分类简介</h2>
+<h2 id="图像分类简介">图像分类简介</h2>
 
 <p>图像分类与一系列的视觉识别问题都相关，比如：对象识别、图像标注、行为识别。卷积神经网络（CNN，Convolutional Neural Network）是对象识别的重要工具。</p>
 
@@ -199,7 +199,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>视觉智能（visual intelligence）追求的目标远远高于对象识别，不仅要识别对象，而且要理解图像表达的意思<a href="#fei2007we">[23]</a>。</p>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="hubel1959receptive">[1]D. H. Hubel and T. N. Wiesel, “Receptive fields of single neurones in the cat’s striate cortex,” <i>The Journal of physiology</i>, vol. 148, no. 3, pp. 574–591, 1959.</span>
 
@@ -248,16 +248,16 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <li><span id="deng2009imagenet">[15]J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei, “Imagenet: A large-scale hierarchical image database,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2009, pp. 248–255.</span>
 
 </li>
-<li><span id="russakovsky2015imagenet">[16]O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla, M. Bernstein, and others, “Imagenet large scale visual recognition challenge,” <i>International Journal of Computer Vision</i>, vol. 115, no. 3, pp. 211–252, 2015.</span>
+<li><span id="russakovsky2015imagenet">[16]O. Russakovsky <i>et al.</i>, “Imagenet large scale visual recognition challenge,” <i>International Journal of Computer Vision</i>, vol. 115, no. 3, pp. 211–252, 2015.</span>
 
 </li>
-<li><span id="lin2011large">[17]Y. Lin, F. Lv, S. Zhu, M. Yang, T. Cour, K. Yu, L. Cao, and T. Huang, “Large-scale image classification: fast feature extraction and svm training,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2011, pp. 1689–1696.</span>
+<li><span id="lin2011large">[17]Y. Lin <i>et al.</i>, “Large-scale image classification: fast feature extraction and svm training,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2011, pp. 1689–1696.</span>
 
 </li>
 <li><span id="krizhevsky2012imagenet">[18]A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Imagenet classification with deep convolutional neural networks,” in <i>Advances in neural information processing systems</i>, 2012, pp. 1097–1105.</span>
 
 </li>
-<li><span id="szegedy2015going">[19]C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, and A. Rabinovich, “Going deeper with convolutions,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2015, pp. 1–9.</span>
+<li><span id="szegedy2015going">[19]C. Szegedy <i>et al.</i>, “Going deeper with convolutions,” in <i>IEEE Conference on Computer Vision and Pattern Recognition</i>, 2015, pp. 1–9.</span>
 
 </li>
 <li><span id="simonyan2014very">[20]K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” <i>arXiv preprint arXiv:1409.1556</i>, 2014.</span>
@@ -306,28 +306,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2016/03/cs231n_image-classification-pipeline" class="pageNav" style="float:right"   >下一篇：CS231n（2）：图像分类流程 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/02/cs231n_introduction-to-computer-vision" 	data-url="http://qianjiye.de/2016/02/cs231n_introduction-to-computer-vision" data-title="CS231n（1）：计算机视觉简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/02/cs231n_introduction-to-computer-vision';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/02/cs231n_introduction-to-computer-vision'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -340,7 +338,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/03/cs231n_image-classification-pipeline'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/03/cs231n_image-classification-pipeline'; --1> -->
 <!--         url = '/2016/03/cs231n_image-classification-pipeline'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -360,7 +358,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

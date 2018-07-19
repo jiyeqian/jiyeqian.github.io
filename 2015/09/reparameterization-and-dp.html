@@ -157,11 +157,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本文内容主要来自M. Nikos Paragios和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第2节“Reparameterization and dynamic programming”。</p>
 
-<h2 id="section">基本模型</h2>
+<h2 id="基本模型">基本模型</h2>
 
 <p><img src="/assets/images/2015-09-22-reparameterization-and-dp_CRF-graph.jpg" alt="" width="200px" /></p>
 
-<h4 id="section-1">一、马尔可夫随机场</h4>
+<h4 id="一马尔可夫随机场">一、马尔可夫随机场</h4>
 
 <p>图$\mathbf G$由顶点集$\mathbf V$以及连接顶点的边集$\mathbf E$构成。计算机视觉中最流行的模型之一是<strong>马尔可夫随机场</strong>（MRF，markov random field）。在MRF中，图的顶点用随机变量$\mathbf X$代替，边表示随机变量间的关系。</p>
 
@@ -177,7 +177,7 @@ P(\mathbf x,\mathbf d)={\prod_p\Psi_p(x_p,d_q)\prod_{(p,q)}\Psi_{pq}(x_p,x_q)\ov
 
 <p>$Z$是归一化常数，称为<strong>划分函数</strong>（partition function），使得概率和为1。上式既包含一元势（unary potential），也包含二元势（pairwise potential）。复杂的连接对应着更复杂的势。</p>
 
-<h4 id="section-2">二、条件随机场</h4>
+<h4 id="二条件随机场">二、条件随机场</h4>
 
 <p><strong>条件随机场</strong>（CRF，conditional random field）假设$P(\mathbf x|\mathbf d)$具有马尔可夫属性。根据Hammersley-Clifford定理，概率$P(\mathbf x|\mathbf d)$为</p>
 
@@ -194,7 +194,7 @@ P(\mathbf x)={\prod_p\Psi_p(x_p)\prod_{(p,q)}\Psi_{pq}(x_p,x_q)\over Z}，
 
 <p>MRF和CRF都依赖于一元和二元的势。</p>
 
-<h4 id="section-3">三、指数族</h4>
+<h4 id="三指数族">三、指数族</h4>
 
 <p>$P(\mathbf x)$来自于<strong>指数族</strong>（exponential family），\eqref{eq:p-x-1}改写为如下形式</p>
 
@@ -210,13 +210,13 @@ E(\mathbf x)=\sum_p\theta_p(x_p)+\sum_{(p,q)}\theta_{pq}(x_p,x_q)，
 
 <p>$\theta_p(x_p)＝-\log(\Psi_p(x_p))$，$\theta_{pq}(x_p,x_q)＝-\log(\Psi_{pq}(x_p,x_q))$。 低能量对应于高概率，能量最小化就是概率最大化。</p>
 
-<h2 id="section-4">问题描述</h2>
+<h2 id="问题描述">问题描述</h2>
 
 <p><img src="/assets/images/2015-09-22-reparameterization-and-dp_two-label-problem.png" alt="" width="500px" id="fig-two-label-problem" /></p>
 
 <p class="mvgcv-figure-caption">图：两标签模型，4个随机变量$X_p,X_q,X_r,X_s$，2个标签$1_0,1_1$。红色标记随机变量的一组取值$\mathbf x$。节点处的值表示一元势，节点间连线上的值表示二元势。$X_p$取$l_1$和$X_q$取$l_0$时，$X_p,X_q$之间的二元势为1；$X_p$和$X_q$都取$l_1$时，$X_p,X_q$之间的二元势为0。</p>
 
-<h4 id="section-5">一、能量最小化</h4>
+<h4 id="一能量最小化">一、能量最小化</h4>
 
 <p>模型如<a href="#fig-two-label-problem">上图</a>，能量函数记为</p>
 
@@ -232,7 +232,7 @@ E(\mathbf x;\mathrm{\boldsymbol\theta})=\sum_p\theta_p(x_p)+\sum_{(p,q)}\theta_{
 
 <p>能量的最小值为$e^\ast = \min_\mathbf x E(\mathbf x;\boldsymbol\theta)=E(\mathbf x^\ast;\boldsymbol\theta)$，<a href="#fig-two-label-problem">上图</a>中，$\mathbf x^\ast=\{1,0,0,1\}$，$e^\ast=13$。</p>
 
-<h4 id="section-6">二、最小边界</h4>
+<h4 id="二最小边界">二、最小边界</h4>
 
 <p><a href="#fig-two-label-problem">上图</a>中，最小边界$e_p(i)$就是固定$x_p$取值（其它可以任意取值）的最小能量</p>
 
@@ -244,7 +244,7 @@ E(\mathbf x;\mathrm{\boldsymbol\theta})=\sum_p\theta_p(x_p)+\sum_{(p,q)}\theta_{
 
 <p>任意随机变量最小边界的最小值就是最小能量。</p>
 
-<h2 id="section-7">重参数化</h2>
+<h2 id="重参数化">重参数化</h2>
 
 <p>$\boldsymbol\theta’$是$\boldsymbol\theta$的<strong>重参数化</strong>（reparameterizaiton），有时记为$\boldsymbol\theta’\equiv\boldsymbol\theta$，当且仅当</p>
 
@@ -276,13 +276,13 @@ E(\mathbf x;\boldsymbol\theta’) = E(\mathbf x;\boldsymbol\theta)\text{ for all
 
 <p class="mvgcv-figure-caption align-text-center">重参数化三：三标签重参数化。</p>
 
-<h2 id="section-8">动态规划</h2>
+<h2 id="动态规划">动态规划</h2>
 
 <p>对任意给定的图和标签，能量最小化问题非常困难。对某些特定的情况，可以高效的解决，比如动态规划可以找到链的最优能量标签，树也同样可以。</p>
 
 <p>动态规划就是进行明智的重参数化，关键在于找到重参数化常量，使得$\theta_q’(k)=e_q(k)$。</p>
 
-<h4 id="section-9">一、两变量</h4>
+<h4 id="一两变量">一、两变量</h4>
 
 <p><img src="/assets/images/2015-09-22-reparameterization-and-dp_two-variables-model.png" alt="" width="400px" /></p>
 
@@ -302,7 +302,7 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
 
 <p>对$h$个标签，需要计算$h$个不同的重参数化常量。每个常量的计算复杂度为$O(h)$。因此，全部计算的复杂度为$O(h^2)$，和暴力穷举的复杂度一样。</p>
 
-<h4 id="section-10">二、三变量</h4>
+<h4 id="二三变量">二、三变量</h4>
 
 <p><img src="/assets/images/2015-09-22-reparameterization-and-dp_three-variables-model.png" alt="" width="400px" /></p>
 
@@ -318,7 +318,7 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
 
 <p>对$h$个标签，需要计算$2h$个不同的重参数化常量。每个常量的计算复杂度为$O(h)$。因此，全部计算的复杂度为$O(2h^2)$，也就是$O(h^2)$，低于暴力穷举的复杂度$O(h^3)$。</p>
 
-<h4 id="section-11">三、链与树</h4>
+<h4 id="三链与树">三、链与树</h4>
 
 <p><img src="/assets/images/2015-09-22-reparameterization-and-dp_chain-model.png" alt="" width="400px" /></p>
 
@@ -328,7 +328,7 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
 
 <p>对于树模型，从叶子出发向树根优化，回溯得到最佳标签集$\mathbf x$。事实上，链是特殊的树，$n$个随机变量的树也是$n-1$条边，计算复杂度仍为$O(nh^2)$。</p>
 
-<h2 id="section-12">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="kolmogorov2006convergent">[1]V. Kolmogorov, “Convergent tree-reweighted message passing for energy minimization,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 28, no. 10, pp. 1568–1583, 2006.</span>
 
@@ -367,28 +367,26 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
   <a  href="/2015/09/maximum-flow-and-minimum-cut" class="pageNav" style="float:right"   >下一篇：DILinAV（3）：最大流与最小割 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/09/reparameterization-and-dp" 	data-url="http://qianjiye.de/2015/09/reparameterization-and-dp" data-title="DILinAV（2）：重参数化与动态规划">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/09/reparameterization-and-dp';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/09/reparameterization-and-dp'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -401,7 +399,7 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/09/maximum-flow-and-minimum-cut'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/09/maximum-flow-and-minimum-cut'; --1> -->
 <!--         url = '/2015/09/maximum-flow-and-minimum-cut'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -421,7 +419,7 @@ M_{pq}(0) = \min\{\theta_p(0) + \theta_{pq}(0,0),\theta_q(1) + \theta_{pq}(1,0)\
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

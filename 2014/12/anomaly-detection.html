@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <p>异常检测的基本思想：若发生了小概率事件，就认为出现了异常。</p>
 
@@ -167,13 +167,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>异常检测还可以用于数据<a href="/2015/01/hazard-of-overfitting/#data-cleaning">清洗或剪枝</a>，减少过拟合提升性能。</p>
 
-<h2 id="section-1">基于高斯（正态）分布的异常检测</h2>
+<h2 id="基于高斯正态分布的异常检测">基于高斯（正态）分布的异常检测</h2>
 
 <p>本节的主要内容来自Andrew NG的机器学习课程<a href="#ng_ml_ad_2014">[1]</a>。</p>
 
 <p>根据异常检测的思想，若$\mathbf x$出现的概率$p(\mathbf x) &lt; \varepsilon$，则认为$\mathbf x$是异常点。因此，异常检测的重要内容是估计概率密度函数。</p>
 
-<h3 id="section-2">一元高斯分布</h3>
+<h3 id="一元高斯分布">一元高斯分布</h3>
 
 <p>基于一元高斯分布的异常检测的前提条件是假设特征之间相互独立。</p>
 
@@ -196,10 +196,10 @@ p(x;\mu,\sigma^2)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma
 
 <p>得到了概率密度函数，就容易利用概率判断异常。</p>
 
-<h4 id="section-3">一、异常检测</h4>
+<h4 id="一异常检测">一、异常检测</h4>
 
 <blockquote>
-  <h2 id="section-4">####异常检测算法</h2>
+  <h2 id="异常检测算法">####异常检测算法</h2>
 
   <ol>
     <li>选择能指示异常的特征$\mathbf x_j$；</li>
@@ -312,7 +312,7 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 
 <p>具有相关性的特征数据，经过基于PCA的坐标变换（参考维数约减部分关于PCA的内容）消除相关性，也可以用一元高斯分布的方法处理。</p>
 
-<h2 id="section-5">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_ad_2014">[1]A. Ng, “Anomaly detection.” Coursera, 2014.</span>
 
@@ -320,14 +320,14 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 
 </li></ol>
 
-<h3 id="section-6">脚注</h3>
+<h3 id="脚注">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:why-create-new-feature">
-      <p>如何判断构造的新特征有价值？哪些特征加入会有助于提高性能？ <a href="#fnref:why-create-new-feature" class="reversefootnote">&#8617;</a></p>
+      <p>如何判断构造的新特征有价值？哪些特征加入会有助于提高性能？ <a href="#fnref:why-create-new-feature" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:multi-gaussian-feature-transform">
-      <p>利用多元高斯分布也要将每维特征变换为高斯分布么？ <a href="#fnref:multi-gaussian-feature-transform" class="reversefootnote">&#8617;</a></p>
+      <p>利用多元高斯分布也要将每维特征变换为高斯分布么？ <a href="#fnref:multi-gaussian-feature-transform" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -365,28 +365,26 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
   <a  href="/2014/12/introduction-to-recommender-systems" class="pageNav" style="float:right"   >下一篇：推荐系统简介 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/anomaly-detection" 	data-url="http://qianjiye.de/2014/12/anomaly-detection" data-title="异常检测">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/12/anomaly-detection';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/12/anomaly-detection'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -399,7 +397,7 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/12/introduction-to-recommender-systems'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/12/introduction-to-recommender-systems'; --1> -->
 <!--         url = '/2014/12/introduction-to-recommender-systems'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -419,7 +417,7 @@ p(\mathbf x; \boldsymbol\mu, \Sigma)=\frac{1}{(2\pi)^{n\over 2}\lvert\Sigma\rver
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

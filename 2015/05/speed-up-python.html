@@ -159,42 +159,44 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 class="no_toc" id="section">目录</h2>
+<h2 class="no_toc" id="目录">目录</h2>
 
 <ul id="markdown-toc">
-  <li><a href="#section-1" id="markdown-toc-section-1">程序性能剖析</a>    <ul>
-      <li><a href="#time" id="markdown-toc-time">利用time工具计时</a></li>
-      <li><a href="#time-1" id="markdown-toc-time-1">利用time包直接计时</a></li>
-      <li><a href="#section-2" id="markdown-toc-section-2">利用上下文管理器计时</a></li>
-      <li><a href="#profiler" id="markdown-toc-profiler">利用profiler按行计时</a></li>
-      <li><a href="#cprofile" id="markdown-toc-cprofile">利用cProfile分析程序性能</a></li>
-      <li><a href="#profile" id="markdown-toc-profile">利用profile包分析程序性能</a></li>
-      <li><a href="#memoryprofiler" id="markdown-toc-memoryprofiler">利用memory_profiler分析内存占用</a></li>
-      <li><a href="#ipython" id="markdown-toc-ipython">IPython中性能测试</a></li>
-      <li><a href="#section-4" id="markdown-toc-section-4">内存泄漏检测</a></li>
+  <li><a href="#程序性能剖析" id="markdown-toc-程序性能剖析">程序性能剖析</a>    <ul>
+      <li><a href="#利用time工具计时" id="markdown-toc-利用time工具计时">利用time工具计时</a></li>
+      <li><a href="#利用time包直接计时" id="markdown-toc-利用time包直接计时">利用time包直接计时</a></li>
+      <li><a href="#利用上下文管理器计时" id="markdown-toc-利用上下文管理器计时">利用上下文管理器计时</a></li>
+      <li><a href="#利用profiler按行计时" id="markdown-toc-利用profiler按行计时">利用profiler按行计时</a></li>
+      <li><a href="#利用cprofile分析程序性能" id="markdown-toc-利用cprofile分析程序性能">利用cProfile分析程序性能</a></li>
+      <li><a href="#利用profile包分析程序性能" id="markdown-toc-利用profile包分析程序性能">利用profile包分析程序性能</a></li>
+      <li><a href="#利用profiling分析程序性能" id="markdown-toc-利用profiling分析程序性能">利用profiling分析程序性能</a></li>
+      <li><a href="#利用profilehooks分析程序性能" id="markdown-toc-利用profilehooks分析程序性能">利用profilehooks分析程序性能</a></li>
+      <li><a href="#可视化分析程序性能" id="markdown-toc-可视化分析程序性能">可视化分析程序性能</a></li>
+      <li><a href="#利用memory_profiler分析内存占用" id="markdown-toc-利用memory_profiler分析内存占用">利用memory_profiler分析内存占用</a></li>
+      <li><a href="#ipython中性能测试" id="markdown-toc-ipython中性能测试">IPython中性能测试</a></li>
+      <li><a href="#内存泄漏检测" id="markdown-toc-内存泄漏检测">内存泄漏检测</a></li>
     </ul>
   </li>
-  <li><a href="#python" id="markdown-toc-python">基于Python特性的优化</a>    <ul>
-      <li><a href="#section-5" id="markdown-toc-section-5">选择合适的数据结构</a>        <ul>
-          <li><a href="#dictionarylist" id="markdown-toc-dictionarylist">一、用字典（dictionary）代替列表（list）</a></li>
-          <li><a href="#setlist" id="markdown-toc-setlist">二、用集合（set）代替列表（list）</a></li>
+  <li><a href="#基于python特性的优化" id="markdown-toc-基于python特性的优化">基于Python特性的优化</a>    <ul>
+      <li><a href="#选择合适的数据结构" id="markdown-toc-选择合适的数据结构">选择合适的数据结构</a>        <ul>
+          <li><a href="#一用字典dictionary代替列表list" id="markdown-toc-一用字典dictionary代替列表list">一、用字典（dictionary）代替列表（list）</a></li>
+          <li><a href="#二用集合set代替列表list" id="markdown-toc-二用集合set代替列表list">二、用集合（set）代替列表（list）</a></li>
         </ul>
       </li>
       <li><a href="#loop-optimization" id="markdown-toc-loop-optimization">优化循环</a></li>
-      <li><a href="#lazy-if-evaluation" id="markdown-toc-lazy-if-evaluation">利用Lazy if-evaluation特性</a></li>
-      <li><a href="#section-6" id="markdown-toc-section-6">字符串优化</a>        <ul>
-          <li><a href="#join" id="markdown-toc-join">一、使用<code>join()</code>代替<code>+</code></a></li>
-          <li><a href="#section-7" id="markdown-toc-section-7">二、优先使用内置函数</a></li>
-          <li><a href="#section-8" id="markdown-toc-section-8">三、优先使用格式化操作</a></li>
+      <li><a href="#利用lazy-if-evaluation特性" id="markdown-toc-利用lazy-if-evaluation特性">利用Lazy if-evaluation特性</a></li>
+      <li><a href="#字符串优化" id="markdown-toc-字符串优化">字符串优化</a>        <ul>
+          <li><a href="#一使用join代替" id="markdown-toc-一使用join代替">一、使用<code>join()</code>代替<code>+</code></a></li>
+          <li><a href="#二优先使用内置函数" id="markdown-toc-二优先使用内置函数">二、优先使用内置函数</a></li>
+          <li><a href="#三优先使用格式化操作" id="markdown-toc-三优先使用格式化操作">三、优先使用格式化操作</a></li>
         </ul>
       </li>
-      <li><a href="#list-comprehensiongenerator-expression" id="markdown-toc-list-comprehensiongenerator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</a></li>
-      <li><a href="#section-9" id="markdown-toc-section-9">其它优化技巧</a></li>
+      <li><a href="#使用列表解析list-comprehension和生成器表达式generator-expression" id="markdown-toc-使用列表解析list-comprehension和生成器表达式generator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</a></li>
+      <li><a href="#其它优化技巧" id="markdown-toc-其它优化技巧">其它优化技巧</a></li>
     </ul>
   </li>
-  <li><a href="#section-10" id="markdown-toc-section-10">闭包优化</a></li>
-  <li><a href="#section-11" id="markdown-toc-section-11">工具优化</a>    <ul>
-      <li><a href="#delpsycodel" id="markdown-toc-delpsycodel"><del>Psyco</del></a></li>
+  <li><a href="#闭包优化" id="markdown-toc-闭包优化">闭包优化</a></li>
+  <li><a href="#工具优化" id="markdown-toc-工具优化">工具优化</a>    <ul>
       <li><a href="#pypy" id="markdown-toc-pypy">PyPy</a></li>
       <li><a href="#numba" id="markdown-toc-numba">Numba</a></li>
       <li><a href="#cython" id="markdown-toc-cython">Cython</a></li>
@@ -203,10 +205,10 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
       <li><a href="#nuitka" id="markdown-toc-nuitka">Nuitka</a></li>
     </ul>
   </li>
-  <li><a href="#section-12" id="markdown-toc-section-12">参考资料</a></li>
+  <li><a href="#参考资料" id="markdown-toc-参考资料">参考资料</a></li>
 </ul>
 
-<h2 id="section-1">程序性能剖析</h2>
+<h2 id="程序性能剖析">程序性能剖析</h2>
 
 <p>程序性能剖析的目的在于解决如下基本问题：</p>
 
@@ -219,7 +221,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>Python本身就内置了丰富的性能分析工具。Profiler是Python自带的一组程序，能够描述程序运行时候的性能，并提供各种统计帮助用户定位程序的性能瓶颈。Python标准模块提供三种profilers：cProfile、profile以及hotshot。</p>
 
-<h3 id="time">利用time工具计时</h3>
+<h3 id="利用time工具计时">利用time工具计时</h3>
 
 <p>利用Linux／Unix的time工具，快速估计代码运行时间：</p>
 
@@ -239,14 +241,14 @@ sys     0m0.003s</code></pre></div>
 
 <p>通过将sys和user时间加起来，可以估计程序的CPU运行时间。如果该时间远小于real时间，很可能是IO等待影响了程序性能。</p>
 
-<h3 id="time-1">利用time包直接计时</h3>
+<h3 id="利用time包直接计时">利用time包直接计时</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 <span class="c1">#### some code  </span>
 <span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
-<h3 id="section-2">利用上下文管理器计时</h3>
+<h3 id="利用上下文管理器计时">利用上下文管理器计时</h3>
 
 <p>计时程序timer.py为：</p>
 
@@ -281,7 +283,7 @@ sys     0m0.003s</code></pre></div>
     <span class="n">rdb</span><span class="o">.</span><span class="n">lpop</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 <span class="k">print</span> <span class="s2">&quot;=&gt; elasped lpop: </span><span class="si">%s</span><span class="s2"> s&quot;</span> <span class="o">%</span> <span class="n">t</span><span class="o">.</span><span class="n">secs</span></code></pre></div>
 
-<h3 id="profiler">利用profiler按行计时</h3>
+<h3 id="利用profiler按行计时">利用profiler按行计时</h3>
 
 <p><a href="http://packages.python.org/line_profiler/">line_profiler</a>可以估计每行运行的时间和频率。使用前需要安装：</p>
 
@@ -319,7 +321,7 @@ sys     0m0.003s</code></pre></div>
 <div class="highlight"><pre><code class="language-bash">$ kernprof -l -v primes.py</code></pre></div>
 
 <blockquote>
-  <h4 class="no_toc" id="section-3">注意：目前该包按修饰器的方式不可用</h4>
+  <h4 class="no_toc" id="注意目前该包按修饰器的方式不可用">注意：目前该包按修饰器的方式不可用</h4>
   <hr />
   <div class="highlight"><pre><code class="language-bash">Wrote profile results to primes.py.lprof
 Timer unit: 1e-06 s
@@ -333,11 +335,11 @@ Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
 NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code></pre></div>
 </blockquote>
 
-<h3 id="cprofile">利用cProfile分析程序性能</h3>
+<h3 id="利用cprofile分析程序性能">利用cProfile分析程序性能</h3>
 
 <div class="highlight"><pre><code class="language-bash">$ python -m cProfile  primes.py</code></pre></div>
 
-<h3 id="profile">利用profile包分析程序性能</h3>
+<h3 id="利用profile包分析程序性能">利用profile包分析程序性能</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">import</span> <span class="nn">profile</span> 
 
@@ -402,7 +404,23 @@ NameError: name <span class="s1">&#39;profile&#39;</span> is not defined</code><
 
 <p>对于大型应用程序，如果能够将性能分析的结果以图形的方式呈现，将会非常实用和直观，常见的可视化工具有Gprof2Dot、visualpytune、KCacheGrind 等。</p>
 
-<h3 id="memoryprofiler">利用memory_profiler分析内存占用</h3>
+<h3 id="利用profiling分析程序性能">利用profiling分析程序性能</h3>
+
+<p><a href="https://github.com/what-studio/profiling">profiling</a></p>
+
+<h3 id="利用profilehooks分析程序性能">利用profilehooks分析程序性能</h3>
+
+<p><a href="http://mg.pov.lt/profilehooks/">profilehooks</a></p>
+
+<h3 id="可视化分析程序性能">可视化分析程序性能</h3>
+
+<p><a href="https://github.com/xoviat/profile-viewer">profile-viewer（RunSnakeRun）</a></p>
+
+<p><a href="https://github.com/jiffyclub/snakeviz">snakeviz</a></p>
+
+<p><a href="https://github.com/jrfonseca/gprof2dot">gprof2dot</a></p>
+
+<h3 id="利用memory_profiler分析内存占用">利用memory_profiler分析内存占用</h3>
 
 <p>利用<a href="https://github.com/fabianp/memory_profiler">memory profiler</a>，可以测试程序占用的内存，首先安装相关的包：</p>
 
@@ -422,7 +440,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <div class="highlight"><pre><code class="language-bash">$ python -m memory_profiler primes.py</code></pre></div>
 
-<h3 id="ipython">IPython中性能测试</h3>
+<h3 id="ipython中性能测试">IPython中性能测试</h3>
 
 <p>line_profiler和memory_profiler都有从IPython访问的快捷命令，仅需要在IPython的会话中设置：</p>
 
@@ -437,7 +455,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>在IPython中这样使用，不再需要<code>@profile</code>修饰器。</p>
 
-<h3 id="section-4">内存泄漏检测</h3>
+<h3 id="内存泄漏检测">内存泄漏检测</h3>
 
 <p>cPython通过引用计数纪录内存使用状态，当计数为0时释放内存。当对象不再被使用时，仍然有到该对象的引用，就认为发生了内存泄漏。快速发现内存泄漏的方法是利用<a href="http://mg.pov.lt/objgraph/">objgraph包</a>，可以查看内存中对象的数目，以及到这些对象的引用。</p>
 
@@ -451,11 +469,11 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>具体用法可参考“<a href="http://www.huyng.com/posts/python-performance-analysis/#wheres-the-memory-leak">Where’s the memory leak?</a>”。</p>
 
-<h2 id="python">基于Python特性的优化</h2>
+<h2 id="基于python特性的优化">基于Python特性的优化</h2>
 
-<h3 id="section-5">选择合适的数据结构</h3>
+<h3 id="选择合适的数据结构">选择合适的数据结构</h3>
 
-<h4 id="dictionarylist">一、用字典（dictionary）代替列表（list）</h4>
+<h4 id="一用字典dictionary代替列表list">一、用字典（dictionary）代替列表（list）</h4>
 
 <p>Python字典中使用了hash table，因此查找操作的复杂度为O(1)，而list实际是个数组，在list中，查找需要遍历整个list，其复杂度为O(n)，因此对成员的查找访问等操作字典要比list更快。</p>
 
@@ -476,7 +494,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>上述代码运行大概需要3.17秒。如果去掉行<code>list = dict.fromkeys(list,True)</code>的注释，将 list转换为字典之后再运行，时间大约为1.74秒。在需要频繁查找或访问多数据成员时，使用dict而不是list。</p>
 
-<h4 id="setlist">二、用集合（set）代替列表（list）</h4>
+<h4 id="二用集合set代替列表list">二、用集合（set）代替列表（list）</h4>
 
 <p>set的union，intersection、difference操作要比list的迭代要快。因此如果涉及到求list交集，并集或者差的问题可以转换为set来操作。</p>
 
@@ -544,7 +562,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>上述优化后的程序其运行时间缩短为23.19秒。</p>
 
-<h3 id="lazy-if-evaluation">利用Lazy if-evaluation特性</h3>
+<h3 id="利用lazy-if-evaluation特性">利用Lazy if-evaluation特性</h3>
 
 <p>条件表达式是lazy evaluation的，也就是说如果存在条件表达式<code>if x and y</code>，在<code>x</code>为<code>false</code>的情况下<code>y</code>表达式的值将不再计算。因此可以利用该特性在一定程度上提高程序效率。</p>
 
@@ -562,11 +580,11 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>上述代码的运行时间大概为1.78秒，如果使用注释行代替第一个<code>if</code>，运行的时间大概为1.38秒。</p>
 
-<h3 id="section-6">字符串优化</h3>
+<h3 id="字符串优化">字符串优化</h3>
 
 <p>Python中的字符串对象是不可改变的，因此对任何字符串的操作（如拼接、修改等）都将产生一个新的字符串对象，这种持续的copy会在一定程度上影响性能。</p>
 
-<h4 id="join">一、使用<code>join()</code>代替<code>+</code></h4>
+<h4 id="一使用join代替">一、使用<code>join()</code>代替<code>+</code></h4>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
@@ -590,11 +608,11 @@ $ sudo pip install psutil</code></pre></div>
 <span class="k">print</span> <span class="s2">&quot;total run time:&quot;</span>
 <span class="k">print</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span></code></pre></div>
 
-<h4 id="section-7">二、优先使用内置函数</h4>
+<h4 id="二优先使用内置函数">二、优先使用内置函数</h4>
 
 <p>当对字符串可使用正则表达式或内置函数时，选择内置函数。如<code>str.isalpha()</code>、<code>str.isdigit()</code>、<code>str.startswith(('x', 'yz'))</code>、<code>str.endswith(('x', 'yz'))</code>等。</p>
 
-<h4 id="section-8">三、优先使用格式化操作</h4>
+<h4 id="三优先使用格式化操作">三、优先使用格式化操作</h4>
 
 <p>对字符进行格式化比直接串联读取要快，因此要使用</p>
 
@@ -604,7 +622,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <div class="highlight"><pre><code class="language-python"><span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&lt;html&gt;&quot;</span> <span class="o">+</span> <span class="n">head</span> <span class="o">+</span> <span class="n">prologue</span> <span class="o">+</span> <span class="n">query</span> <span class="o">+</span> <span class="n">tail</span> <span class="o">+</span> <span class="s2">&quot;&lt;/html&gt;&quot;</span></code></pre></div>
 
-<h3 id="list-comprehensiongenerator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</h3>
+<h3 id="使用列表解析list-comprehension和生成器表达式generator-expression">使用列表解析（list comprehension）和生成器表达式（generator expression）</h3>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span> 
 
@@ -630,7 +648,7 @@ $ sudo pip install psutil</code></pre></div>
 
 <p>若进一步改为生成器耗时约为0.67秒。</p>
 
-<h3 id="section-9">其它优化技巧</h3>
+<h3 id="其它优化技巧">其它优化技巧</h3>
 
 <ul>
   <li>交换两个变量的值使用<code>a, b = b, a</code>而不借助中间变量；</li>
@@ -643,17 +661,11 @@ $ sudo pip install psutil</code></pre></div>
   <li>使用级联比较<code>x &lt; y &lt; z</code>代替<code>x &lt; y and y &lt; z</code>。</li>
 </ul>
 
-<h2 id="section-10">闭包优化</h2>
+<h2 id="闭包优化">闭包优化</h2>
 
-<h2 id="section-11">工具优化</h2>
+<h2 id="工具优化">工具优化</h2>
 
-<p>将关键Python代码部分重写成C扩展模块，或者选用在性能上更为优化的解释器等，这些统称为优化工具。Python有很多自带的优化工具，如<a href="http://psyco.sourceforge.net/">Psyco</a>、<a href="http://pypy.org">PyPy</a>、<a href="http://cython.org">Cython</a>、Pyrex等。</p>
-
-<h3 id="delpsycodel"><del>Psyco</del></h3>
-
-<p><a href="http://psyco.sourceforge.net">Psyco</a> 是一个 JIT 的编译器，它能够在不改变源代码的情况下提高一定的性能。python2.7 已经不再支持 Psyco。</p>
-
-<p>Psyco is unmaintained and dead. Please look at <a href="http://pypy.org">PyPy</a> for the state-of-the-art in JIT compilers for Python.</p>
+<p>将关键Python代码部分重写成C扩展模块，或者选用在性能上更为优化的解释器等，这些统称为优化工具。Python有很多自带的优化工具，如<a href="http://pypy.org">PyPy</a>、<a href="http://cython.org">Cython</a>、<a href="http://cffi.readthedocs.io/en/latest/">CFFI</a>、Pyrex等。</p>
 
 <h3 id="pypy">PyPy</h3>
 
@@ -818,7 +830,7 @@ $ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm
 
 <p><a href="http://www.nuitka.net">Nuitka</a> 是 Python 编译器。它是 Python 解释器的无缝替代品或扩展，能够编译 CPython 支持的所有部分。然后以非常和谐的方式执行未编译代码和编译代码。它可以自由使用所有 Python 模块和扩展模块。它将 Python 转换为 C 级程序，然后与 CPython 相同的方式使用 <code>libpython</code> 。</p>
 
-<h2 id="section-12">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
@@ -826,12 +838,13 @@ $ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm
   <li><a href="http://www.huyng.com/posts/python-performance-analysis/">A guide to analyzing Python performance</a></li>
   <li><a href="http://tech.magnetic.com/2015/05/optimize-python-with-closures.html">Optimize Python with Closures</a></li>
   <li><a href="http://www.jb51.net/article/56719.htm">深入理解Python代码优化详解</a></li>
+  <li><a href="http://pytlab.org/2016/12/20/Python优化第一步-性能分析实践/">Python优化第一步: 性能分析实践</a></li>
 </ul>
 
 <div class="footnotes">
   <ol>
     <li id="fn:bad-add-function">
-      <p>当<code>a = b = 1</code>时，<code>numpy.add(a, b)</code>就比<code>a + b</code>慢得多。 <a href="#fnref:bad-add-function" class="reversefootnote">&#8617;</a></p>
+      <p>当<code>a = b = 1</code>时，<code>numpy.add(a, b)</code>就比<code>a + b</code>慢得多。 <a href="#fnref:bad-add-function" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -869,28 +882,26 @@ $ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm
   <a  href="/2015/06/mvgcv-foreword" class="pageNav" style="float:right"   >下一篇：计算机视觉中的多视几何：序言（by Olivier Faugeras） </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/05/speed-up-python" 	data-url="http://qianjiye.de/2015/05/speed-up-python" data-title="高性能Python程序">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/05/speed-up-python';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/05/speed-up-python'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -903,7 +914,7 @@ $ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/06/mvgcv-foreword'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/06/mvgcv-foreword'; --1> -->
 <!--         url = '/2015/06/mvgcv-foreword'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -923,7 +934,7 @@ $ <span class="nv">LLVM_CONFIG</span><span class="o">=</span>/usr/local/opt/llvm
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <p>降维的作用通常是为了数据压缩和可视化。数据压缩不仅可以节省存储空间，而且可以加速机器学习算法。高维数据需要约减到3维或2维空间，以便观测其特性。</p>
 
@@ -172,7 +172,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>利用PCA将维数从$n$维约减到$k$维，需要寻找$n$维空间中的$k$个向量$\mathbf u^{(1)}, \mathbf u^{(2)},\ldots,\mathbf u^{(k)}\in\mathbb R^n$，使空间中的点到这$k$个向量确定的面的投影误差最小。事实上，$n$维空间中的这$k$个向量是样本协方差矩阵最大的$k$个特征值对应的特征向量。</p>
 
 <blockquote>
-  <h2 id="pca-1">####PCA降维算法</h2>
+  <h2 id="pca降维算法">####PCA降维算法</h2>
 
   <ol>
     <li>数据作均值为$0$的规范化（mean normalization），确保每维均值为$0$，若取值范围差异过大，还需尺度规范化（feature scaling）：$x_j^{(i)}:=\frac{x_j^{(i)}-\mu_j}{ \sigma_j}$（$\mu_j$表示均值，$\sigma_j$表示标准差）；</li>
@@ -214,7 +214,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <p>$S_{ii}$是SVD得到的特征值。</p>
 
 <blockquote>
-  <h2 id="pca-2">####谨慎使用PCA</h2>
+  <h2 id="谨慎使用pca">####谨慎使用PCA</h2>
 
   <ol>
     <li>PCA不是解决过拟合的好方法，正则化是更好的策略（PCA或多或少损失了有助于分类的信息）；</li>
@@ -223,7 +223,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </blockquote>
 
-<h3 id="pca-3">理解PCA</h3>
+<h3 id="理解pca">理解PCA</h3>
 
 <p><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg" alt="" id="fig-01" /></p>
 
@@ -231,7 +231,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- <div class='image_line' id='figure-1'><div class='image_card'><a  href='/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg'><img src='/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg' alt='［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维'></a><div class='caption'>图 1:  ［左］规范化的数据；［中］PCA坐标变换；［右］PCA降维 [<a  href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-mapping.svg">SVG</a>]</div></div></div> -->
 
-<h4 id="pca-4">一、PCA是一种坐标变换方法</h4>
+<h4 id="一pca是一种坐标变换方法">一、PCA是一种坐标变换方法</h4>
 
 <p>如果PCA变换之后的维数$k = n$，也就是没有降维，没有任何信息损失，这相当于坐标变换。上图左，经过规范化处理后的数据；上图中，利用公式\eqref{eq:pca-mapping}的PCA坐标变换，$k=n$，大概相当于左边的数据顺时针旋转$45$度再绕$Y$轴镜像；上图右，红色的点是经过$k=1$的降维处理后，再利用公式\eqref{eq:pca-reconstruction}重构回的数据。</p>
 
@@ -239,7 +239,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>经过基于PCA的坐标变换之后，消除了特征之间的相关性，协方差矩阵是对角阵。如果对于<a href="/2014/12/anomaly-detection/#multi-gaussian-anormaly-detection">基于多元高斯分布的异常检测</a>，经过基于PCA的坐标变换之后，用一维高斯分布的方法就可处理。</p>
 
-<h4 id="pca-5">二、PCA是一种特征提取方法</h4>
+<h4 id="二pca是一种特征提取方法">二、PCA是一种特征提取方法</h4>
 
 <p><img src="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-eigen-faces.png" alt="" width="360px" id="fig-02" /></p>
 
@@ -259,7 +259,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- <div class='image_line' id='figure-3'><div class='image_card'><a  href='/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png'><img src='/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png' alt='［左］原图；［右］PCA降维后重构的人脸'></a><div class='caption'>图 3:  ［左］原图；［右］PCA降维后重构的人脸 [<a  href="/assets/images/2014-12-07-machine-learning-dimensionality-reduction-pca-reconstruct-faces.png">PNG</a>]</div></div></div> -->
 
-<h4 id="pca-6">三、其它角度理解PCA</h4>
+<h4 id="三其它角度理解pca">三、其它角度理解PCA</h4>
 
 <ul>
   <li>傅立叶变换、小波变换、PCA特征向量空间的变换、稀疏表示……</li>
@@ -276,9 +276,9 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><a href="http://zhanxw.com/blog/2011/02/kernel-pca-原理和演示/">Kernel PCA 原理和演示</a></p>
 
-<h2 id="dpcaa-hrefyang2004two2a">2DPCA<a href="#yang2004two">[2]</a></h2>
+<h2 id="2dpca2">2DPCA<a href="#yang2004two">[2]</a></h2>
 
-<h3 id="section-1">简介</h3>
+<h3 id="简介-1">简介</h3>
 
 <p>令$\mathbf X$是$n$维的单列向量，$m\times n$的图像$\mathbf A$投影到$\mathbf X$上<a href="#liu1993algebraic">[3]</a><a href="#belhumeur1997eigenfaces">[4]</a></p>
 
@@ -337,9 +337,9 @@ J(\mathbf X)=\mathbf X^\top\mathbf G_t\mathbf X。
 
 <p>实际上，最佳投影轴$\mathbf X_1,\ldots,\mathbf X_d$是$\mathbf G_t$最大$d$个特征值对应的特征向量。</p>
 
-<h3 id="section-2">应用</h3>
+<h3 id="应用">应用</h3>
 
-<h4 id="section-3">一、特征提取</h4>
+<h4 id="一特征提取">一、特征提取</h4>
 
 <p>给定图像$\mathbf A$，令</p>
 
@@ -351,7 +351,7 @@ J(\mathbf X)=\mathbf X^\top\mathbf G_t\mathbf X。
 
 <p>主成分向量构成$m\times d$矩阵$\mathbf B=\left[\mathbf Y_1,\ldots,\mathbf Y_d\right]$，称之为图像$\mathbf A$的特征矩阵（feature matrix）或特征图像（feature image）。</p>
 
-<h4 id="section-4">二、分类</h4>
+<h4 id="二分类">二、分类</h4>
 
 <p>经过2DPCA，每幅图得到一个特征矩阵，然后可用最近邻分类器分类。令$\mathbf B_i=\left[\mathbf Y_1^{(i)},\mathbf Y_2^{(i)},\ldots,\mathbf Y_d^{(i)}\right]$和$\mathbf B_j=\left[\mathbf Y_1^{(j)},\mathbf Y_2^{(j)},\ldots,\mathbf Y_d^{(j)}\right]$，两个任意特征矩阵间的距离为</p>
 
@@ -361,7 +361,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
 <p>其中，$\left\Vert\mathbf Y_k^{(i)}-\mathbf Y_k^{(j)}\right\Vert_2$表示两个主成分向量间的欧氏距离。</p>
 
-<h4 id="section-5">三、图像重建</h4>
+<h4 id="三图像重建">三、图像重建</h4>
 
 <p>令$\mathbf V=\left[\mathbf Y_1,\ldots,\mathbf Y_d\right]$、$\mathbf U=\left[\mathbf X_1,\ldots,\mathbf X_d\right]$，那么</p>
 
@@ -377,7 +377,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
 <p>令$\tilde{\mathbf A}_k=\mathbf Y_k\mathbf X_k^\top\;(k=1,2,\ldots,d)$，其尺寸与图像$\mathbf A$相同，表示重建$\mathbf A$的子图。也就是，图像$\mathbf A$能通过累加前$d$幅子图重建。特别地，当$d=n$时（$n$是$\mathbf G_t$全部特征向量的个数），可得$\tilde{\mathbf A}={\mathbf A}$，也就是图像能无损的完全重建。</p>
 
-<h3 id="dpca">理解2DPCA</h3>
+<h3 id="理解2dpca">理解2DPCA</h3>
 
 <p>2DPCA分可分为两部分：第一部分是寻找坐标变换的基$\mathbf U$（新的空间）；第二部分是将原图像在新空间投影，计算坐标。</p>
 
@@ -398,9 +398,9 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
 <p>2DPCA的$\mathbf U$来自于无监督学习。通过构造监督学习的框架，可以学到更利于分类的基（特征描述矩阵）$\mathbf U$。</p>
 
-<h2 id="xpca">xPCA沉思录</h2>
+<h2 id="xpca沉思录">xPCA沉思录</h2>
 
-<h3 id="xpca-1">xPCA能提高分类性能吗？</h3>
+<h3 id="xpca能提高分类性能吗">xPCA能提高分类性能吗？</h3>
 
 <p>xPCA本质上是一种坐标变换，或者重构算法，并没有以提高分类性能作为约束条件，因此无法直接提高分类性能。xPCA是重构约束下的最佳坐标变换（维度约减）。</p>
 
@@ -408,7 +408,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
 <p>实际上，我们并不容易知道分类器是否受限。这需要用到validation技术。</p>
 
-<h2 id="reduction-techniques">其它降维技术<sup id="fnref:7-Reduction-Techniques"><a href="#fn:7-Reduction-Techniques" class="footnote">2</a></sup></h2>
+<h2 id="其它降维技术">其它降维技术<sup id="fnref:7-Reduction-Techniques"><a href="#fn:7-Reduction-Techniques" class="footnote">2</a></sup></h2>
 
 <ol>
   <li>缺失值比率（missing values ratio）：若数据列太多值缺失，则认为不太可能包含很多有用信息。缺失值比率大于设定阈值列的可被移除。</li>
@@ -432,7 +432,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
 <p><img src="/assets/images/2014-12-07-2f38fb2e80c06ce8.jpg" alt="" width="500px" id="fig-04" /></p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_dr_2014">[1]A. Ng, “Dimensionality Reduction.” Coursera, 2014.</span>
 
@@ -459,10 +459,10 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 <div class="footnotes">
   <ol>
     <li id="fn:thinking-pca-for-classfication">
-      <p>对于识别（分类）问题，采用主要特征（大特征值对应特征向量的投影）好呢还是次要特征？对于类间识别，比如人脸和猫脸分类，采用主要特征；对于同类的子类识别，比如区别张山李仕，更多靠的是细节信息，采用次要特征可能跟好。 <a href="#fnref:thinking-pca-for-classfication" class="reversefootnote">&#8617;</a></p>
+      <p>对于识别（分类）问题，采用主要特征（大特征值对应特征向量的投影）好呢还是次要特征？对于类间识别，比如人脸和猫脸分类，采用主要特征；对于同类的子类识别，比如区别张山李仕，更多靠的是细节信息，采用次要特征可能跟好。 <a href="#fnref:thinking-pca-for-classfication" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:7-Reduction-Techniques">
-      <p><a href="https://www.knime.org/blog/seven-techniques-for-data-dimensionality-reduction">Seven Techniques for Data Dimensionality Reduction</a> <a href="#fnref:7-Reduction-Techniques" class="reversefootnote">&#8617;</a></p>
+      <p><a href="https://www.knime.org/blog/seven-techniques-for-data-dimensionality-reduction">Seven Techniques for Data Dimensionality Reduction</a> <a href="#fnref:7-Reduction-Techniques" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -500,28 +500,26 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
   <a  href="/2014/12/anomaly-detection" class="pageNav" style="float:right"   >下一篇：异常检测 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/12/pca" 	data-url="http://qianjiye.de/2014/12/pca" data-title="降维：主成分分析">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/12/pca';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/12/pca'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -534,7 +532,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/12/anomaly-detection'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/12/anomaly-detection'; --1> -->
 <!--         url = '/2014/12/anomaly-detection'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -554,7 +552,7 @@ d\left(\mathbf B_i,\mathbf B_j\right)=\sum_{k=1}^d\left\Vert\mathbf Y_k^{(i)}-\m
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

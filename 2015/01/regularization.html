@@ -165,7 +165,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>本文的主要参考资料是机器学习基石<a href="#lin_ml_regularization_2014">[2]</a>。</p>
 
-<h2 id="section">带约束回归</h2>
+<h2 id="带约束回归">带约束回归</h2>
 
 <p>对于$x\in\mathbb R$的Q阶多项式变换$\Phi_Q(x)=\left(1,x,x^2,\ldots,x^Q\right)$，为了方便用$\mathbf w$代替回归系数$\tilde{\mathbf w}$。10次和2次空间中回归问题的假设集$\mathcal H_{10}$和$\mathcal H_2$分别表示为
 \[
@@ -196,7 +196,7 @@ $\mathcal H(C)$和$\mathcal H’_2$有交集（overlap），对$C\geq 0$存在�
 \]
 从正则化假设集$\mathcal H(C)$的到的最优解就是正则化假设$\mathbf w_{REG}$。</p>
 
-<h2 id="section-1">拉格朗日乘子法</h2>
+<h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>
 
 <p>根据上述推导，正则化回归问题的向量表示形式
 \begin{equation}
@@ -244,7 +244,7 @@ $\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{i
 
 <p>${\lambda\over N}\mathbf w^T\mathbf w$称为权重衰减（weight-decay）正则化，可推广到“任意变换 ＋ 线性模型”。</p>
 
-<h2 id="section-2">勒让德多项式</h2>
+<h2 id="勒让德多项式">勒让德多项式</h2>
 
 <p>当$x_n\in[-1,1]$和$Q$很大时，$x_n^q$会变得非常小，除精确度因素影响外，还需要很大的$w_q$才能体现$x_n^q$的影响，这就与正则化的目的有些“矛盾”，过度惩罚了高次项。对于$\mathcal Z$空间的特征
 \[
@@ -259,7 +259,7 @@ $\mathbf w^T\mathbf w$称为正则化项（regularizer）。带约束优化$E_{i
 \Phi(\mathbf x)=\left(1,L_1(x),L_2(x),\ldots,L_Q(x)\right)。
 \]</p>
 
-<h2 id="vc">VC维分析</h2>
+<h2 id="vc维分析">VC维分析</h2>
 
 <p>带约束$E_{in}$优化\eqref{eq:constrained-Ein-matrix}的VC上界
 \begin{equation}
@@ -270,7 +270,7 @@ E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
 
 <p>对$\mathcal Z$空间的非正则化方法，$d_{VC}(\mathcal H)=\tilde d+1$。事实上，采用正则化考虑的假设集$\mathcal H(C)$要小于$\mathcal H$。采用了正则化后，有效（effective）VC维$d_{EFF}(\mathcal H,\mathcal A)\leq d_{VC}(\mathcal H)$，其中$\mathcal A$为正则化算法。因此，正则化方法具有更好的泛化性能。增大$\lambda$使$C$变小，从而使$\mathcal H(C)$变小，使得$d_{EFF}(\mathcal H,\mathcal A)$减小。</p>
 
-<h2 id="section-3">正则化的推广</h2>
+<h2 id="正则化的推广">正则化的推广</h2>
 
 <p>除权重衰减（weight-decay）正则化外，还有很多其它的正则化方法。正则化的约束条件应当向着目标函数方向，选择正则化方法的思路包括：</p>
 
@@ -290,26 +290,26 @@ E_{out}(\mathbf w)\leq E_{in}(\mathbf w)+\Omega(\mathcal H(C))，
 \end{equation}
 虽然不可微分，但它是凸的，解是稀疏的（$\mathbf w$有很多0元素）。$-\nabla E_{in}$可分解到垂直于边界面的方向（边界面的法向量方向，如上图右红色箭头所示）和沿边界面的方向。当到达边界面后，如果继续沿着法向量方向下降，会破坏约束条件，沿着面的方向如果还能下降，则继续沿着面的方向下降，直到停在菱形球的顶点，或者直到$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$（沿边界面的方向分量为0）。边界面的法向量只和$\mathbf w$的符号有关，如果要$-\nabla E_{in}(\mathbf w)$平行$\mathbf w$比较困难，通常会停在菱形球的顶点，该点在坐标轴上，必有元素为0。</p>
 
-<h2 id="lambda">最优$\lambda$</h2>
+<h2 id="最优lambda">最优$\lambda$</h2>
 
 <div class="image_line" id="figure-5"><div class="image_card"><a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png"><img src="/assets/images/2015-01-26-regularization-noise-and-lambda.png" alt="噪声对性能的影响" /></a><div class="caption">图 5:  噪声对性能的影响 [<a href="/assets/images/2015-01-26-regularization-noise-and-lambda.png">PNG</a>]</div></div></div>
 
 <p>上图表明，噪声等级越高，正则化的惩罚力度$\lambda$越大。实际上，噪声的等级不可预知，只有通过实验的方法选择最佳$\lambda$，也就是通过<a href="">验证</a>（validation）选择最佳$\lambda$。</p>
 
-<h2 id="section-4">正则化实例</h2>
+<h2 id="正则化实例">正则化实例</h2>
 
 <p>本节内容源于机器学习<a href="#ng_ml_r_2014">[3]</a>网络课程，这里没有对增加的偏移项$x_0=1$的系数正则化，且$y\in\{0,1\}$。</p>
 
-<h3 id="section-5">正则化线性回归</h3>
+<h3 id="正则化线性回归">正则化线性回归</h3>
 
-<h4 id="section-6">一、代价函数</h4>
+<h4 id="一代价函数">一、代价函数</h4>
 
 <p>\begin{equation}
 J(\boldsymbol\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_{\boldsymbol\theta}\left(\mathbf x^{(i)}\right) - y^{(i)} \right)^2 + \lambda\sum_{j=1}^n\theta_j^2 \right)
 \label{eq:cf-linear-regression-r}
 \end{equation}</p>
 
-<h4 id="section-7">二、梯度下降法估计参数</h4>
+<h4 id="二梯度下降法估计参数">二、梯度下降法估计参数</h4>
 
 <p>repeat until convergence {
 \begin{equation*}
@@ -327,9 +327,9 @@ J(\boldsymbol\theta) = \frac{1}{2m}\left( \sum_{i=1}^m\left( h_{\boldsymbol\thet
 
 <p>通常$1 - \alpha\frac{\lambda}{m} &lt; 1$，与非正则化的梯度下降法比较，$\theta_j$减小更快。</p>
 
-<h3 id="logistic">正则化Logistic回归</h3>
+<h3 id="正则化logistic回归">正则化Logistic回归</h3>
 
-<h4 id="section-8">一、代价函数</h4>
+<h4 id="一代价函数-1">一、代价函数</h4>
 
 <p>\begin{equation}
 \begin{aligned}
@@ -339,7 +339,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 \label{eq:cf-logistic-regression-r}
 \end{equation}</p>
 
-<h4 id="section-9">二、梯度下降法估计参数</h4>
+<h4 id="二梯度下降法估计参数-1">二、梯度下降法估计参数</h4>
 
 <p>repeat until convergence {
 \begin{equation*}
@@ -350,7 +350,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 \end{equation*}
 }</p>
 
-<h3 id="matlab">Matlab实现</h3>
+<h3 id="matlab实现">Matlab实现</h3>
 
 <p>第一步：实现Logistic函数</p>
 
@@ -378,7 +378,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 <span class="p">[</span><span class="n">theta</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">exit_flag</span><span class="p">]</span> <span class="p">=</span> <span class="c">...</span>
 	<span class="n">fminunc</span><span class="p">(@(</span><span class="n">t</span><span class="p">)(</span><span class="n">costFunctionReg</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lambda</span><span class="p">)),</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">options</span><span class="p">);</span></code></pre></div>
 
-<h2 id="section-10">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -394,12 +394,12 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 
 </li></ol>
 
-<h3 id="section-11">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:why-regularize-all">
-      <p>为什么正则化包括$x_0=1$的偏移项系数，两者有何区别？ <a href="#fnref:why-regularize-all" class="reversefootnote">&#8617;</a></p>
+      <p>为什么正则化包括$x_0=1$的偏移项系数，两者有何区别？ <a href="#fnref:why-regularize-all" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -437,28 +437,26 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
   <a  href="/2015/01/validation" class="pageNav" style="float:right"   >下一篇：验证 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/regularization" 	data-url="http://qianjiye.de/2015/01/regularization" data-title="正则化">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/regularization';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/regularization'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -471,7 +469,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/validation'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/validation'; --1> -->
 <!--         url = '/2015/01/validation'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -491,7 +489,7 @@ J(\boldsymbol\theta)  = &amp;-\frac{1}{m}\sum_{i=1}^{m}\left(y^{(i)}\log h_{\bol
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

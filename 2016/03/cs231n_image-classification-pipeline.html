@@ -165,7 +165,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>课程作业除了在自己电脑上，也可在 <a href="http://terminal.com">terminal.com</a> 网站上完成。Python 入门可参考 Justin Johnson 的 <a href="http://cs231n.github.io/python-numpy-tutorial/">Python Numpy Tutorial</a>。</p>
 
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <p>图像分类是计算机视觉的核心任务，它根据已知的确定标签集，为输入图像分配一个标签（标签就是所谓的类别）。其它一些计算机视觉问题，比如目标提取、分割等，都可以被归结到图像分类。</p>
 
@@ -216,7 +216,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
     <span class="c1"># predict test_labels using the model ...</span>
     <span class="k">return</span> <span class="n">test_labels</span></code></pre></div>
 
-<h2 id="section-1">最近邻分类器</h2>
+<h2 id="最近邻分类器">最近邻分类器</h2>
 
 <p>最近邻分类器（NNC，Nearest Neighbor Classifier）容易实现，本文通过它介绍图像分类的基本方法流程，但是在实际应用中很少使用该方法。对NNC，<code>train</code>训练阶段就是记住所有的图像及其标签，<code>predict</code>预测阶段就是输出最相似图像的标签。</p>
 
@@ -248,7 +248,7 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
 
 <p>上图的k最近邻分类器采用的是$L_2$距离。上图中可以看到，蓝色区域中的小块绿色孤岛是由于噪声点干扰导致的，这将导致预测错误；上图右的5-NN不受这些异常值的干扰，能在测试集上取得跟好的泛化（generalization）效果。上图右的灰色表示有争议的区域，在这些区域至少2个类别标签都得到了最高票。</p>
 
-<h2 id="section-2">交叉验证</h2>
+<h2 id="交叉验证">交叉验证</h2>
 
 <p>在实际应用中，如何选择kNN的参数k呢？除k之外，还有度量距离的$L_1$和$L_2$等其它参数需要调节。这些候选参数称为<strong>超参数</strong>（hyperparameters）。在基于数据驱动的机器学习算法中，参数选择非常普遍。</p>
 
@@ -276,7 +276,7 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
 
 <p id="is-validation-set-need">另一个需要考虑的问题是，在通过验证集确定了最佳参数后，是否需要利用整个训练集和最佳参数重新学习。由于放回了验证集，整个训练集上的表现必然有所不同。实际上，最终发布的分类器不需要验证集的参与。</p>
 
-<h2 id="section-3">最近邻算法探讨</h2>
+<h2 id="最近邻算法探讨">最近邻算法探讨</h2>
 
 <p>k最近邻算法的主要优点是容易理解和实现，并且训练不时耗；主要缺点是测试（预测）时耗高。在实际应用中，主要关注的是测试（预测）时耗。深度神经网络（DNN，Deep Neural Networks）相反，训练耗时但预测高效，在实际中更适用。</p>
 
@@ -311,7 +311,7 @@ d_1(\mathbf I_1,\mathbf I_2)=\sum_p\left\lvert\mathbf I_1^p-\mathbf I_2^p\right\
   <li>如果算法太耗时，尝试采用ANN加速。</li>
 </ol>
 
-<h3 id="section-4">示例代码</h3>
+<h3 id="示例代码">示例代码</h3>
 
 <p>下文中代码所需要的函数和数据<a href="http://vision.stanford.edu/teaching/cs231n/assignment1.zip">在这里获取</a>。</p>
 
@@ -411,7 +411,7 @@ accuracy: 0.285000
 accuracy: 0.283000
 </code></pre></div>
 
-<h2 id="section-5">线性分类器</h2>
+<h2 id="线性分类器">线性分类器</h2>
 
 <p><img src="/assets/images/2016-03-14-cs231n_image_classification_pipeline_image-caption-model.jpg" alt="" id="fig-10" /></p>
 
@@ -429,23 +429,23 @@ accuracy: 0.283000
 
 <p>输入图像属于得分最高的类别，从上图可以看出，🐱的得分为负，显然会被错分类，分类器的参数并不合适<sup id="fnref:unbalanced-data-lc"><a href="#fn:unbalanced-data-lc" class="footnote">4</a></sup>。</p>
 
-<h2 id="section-6">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ol class="bibliography"></ol>
 
 <div class="footnotes">
   <ol>
     <li id="fn:what-is-kaggle-score">
-      <p>kaggle排名的得分（score）是如何计算的？ <a href="#fnref:what-is-kaggle-score" class="reversefootnote">&#8617;</a></p>
+      <p>kaggle排名的得分（score）是如何计算的？ <a href="#fnref:what-is-kaggle-score" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:think1">
-      <p>NN 和 kNN （采用$L_1$或$L_2$距离）在<strong>训练集</strong>上测试的精度是多少呢？ <a href="#fnref:think1" class="reversefootnote">&#8617;</a></p>
+      <p>NN 和 kNN （采用$L_1$或$L_2$距离）在<strong>训练集</strong>上测试的精度是多少呢？ <a href="#fnref:think1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:why-not-here">
-      <p>We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization. <a href="#fnref:why-not-here" class="reversefootnote">&#8617;</a></p>
+      <p>We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization. <a href="#fnref:why-not-here" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:unbalanced-data-lc">
-      <p>不平衡数据集对线性分类器的性能有何影响？ <a href="#fnref:unbalanced-data-lc" class="reversefootnote">&#8617;</a></p>
+      <p>不平衡数据集对线性分类器的性能有何影响？ <a href="#fnref:unbalanced-data-lc" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -483,28 +483,26 @@ accuracy: 0.283000
   <a  href="/2016/03/cs231n_loss-functions-and-optimization" class="pageNav" style="float:right"   >下一篇：CS231n（3）：损失函数与最优化 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/03/cs231n_image-classification-pipeline" 	data-url="http://qianjiye.de/2016/03/cs231n_image-classification-pipeline" data-title="CS231n（2）：图像分类流程">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/03/cs231n_image-classification-pipeline';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/03/cs231n_image-classification-pipeline'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -517,7 +515,7 @@ accuracy: 0.283000
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/03/cs231n_loss-functions-and-optimization'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/03/cs231n_loss-functions-and-optimization'; --1> -->
 <!--         url = '/2016/03/cs231n_loss-functions-and-optimization'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -537,7 +535,7 @@ accuracy: 0.283000
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

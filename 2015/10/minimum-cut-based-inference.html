@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本文内容主要来自M. Nikos Paragons和M. Pawan Kumar的课程《Discrete Inference &amp; Learning in Artificial Vision》的第4节“Minimum cut based inference”。</p>
 
-<h2 id="dinits">Dinits算法</h2>
+<h2 id="dinits算法">Dinits算法</h2>
 
 <p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_Ford-Fulkerson-Algorithm.jpg" alt="" width="400px" id="Ford-Fulkerson-Algorithm" /></p>
 
@@ -173,7 +173,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>计算机视觉是一类特殊的问题，通常是连通度很低的稀疏图，比如网格，弧的数目和顶点数据相近。这类特殊的问题可以用Yuri Boykov和Vladimir Kolmogorov提出的算法<a href="#boykov2004experimental">[1]</a>解决。</p>
 
-<h2 id="section">双标签能量函数</h2>
+<h2 id="双标签能量函数">双标签能量函数</h2>
 
 <p>利用最小割（最大流）算法，可以求解能量最小化问题。首先从双标签问题入手，随机变量的取值为0或1。</p>
 
@@ -210,7 +210,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><img src="/assets/images/2015-10-13-minimum-cut-based-inference_energy2graph.jpg" alt="" width="400px" id="energy2graph" /></p>
 
-<h3 id="submodular-energy-function">次模能量函数（submodular energy function）</h3>
+<h3 id="次模能量函数submodular-energy-function">次模能量函数（submodular energy function）</h3>
 
 <p>如何构造弧及其容量，使得最小割能最小化能量函数？</p>
 
@@ -234,7 +234,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>$C+B-D-A\geq 0$的假定，表示为相邻像素分配不同标签的势之和不小于分配相同标签的势之和，这称为次模式（submodular）二元势或<strong>次模式能量函数</strong>。若$C+B-D-A &lt; 0$，需要进行另外的分解吗？事实上，不存在有向图对应于非次模式能量函数<sup id="fnref:NP-hard-1"><a href="#fn:NP-hard-1" class="footnote">1</a></sup>。因此，用最小割求解能量最小化问题时，通常假定能量函数是次模式的，也就是一元势可以是任意的，但是二元势必须有约束条件（不同标签的势之和不小于相同标签的势之和）。</p>
 
-<h3 id="section-1">应用实例</h3>
+<h3 id="应用实例">应用实例</h3>
 
 <p>对一元势，已知如何构建有向图，使割对应于能量。对二元势，假设它是次模态的，已知如何构建有向图，使割对应于能量。若能量函数由一元和二元势的和表示，则需要构件一组有向图对应于这些一元和二元势，并将这些图合并起来，得到一个大图，然后再求最大流。利用该算法，可进行图像分割<a href="#boykov2001interactive">[2]</a>和合成<a href="#kwatra2003graphcut">[3]</a>。</p>
 
@@ -246,17 +246,17 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>上图展示了两幅图像合成一幅图像，效果自然逼真。对每个像素，标签0或1表示采用图0或1的色彩值，红色线条表示产生割的地方。</p>
 
-<h2 id="section-2">多标签能量函数</h2>
+<h2 id="多标签能量函数">多标签能量函数</h2>
 
 <p>两图图像分别来自左右两个相机。立体匹配（stereo correspondence），找出两图的像素对应关系。左图像素$(i_p,j_p)$对应与右图像素$(i_p+d_p,j_p)$。，立体匹配中的disparity map。CRF,每个随机变量表示左图的一个像素，标签$L$标示disparity。匹配好的，一元势很小，大。可定义$\theta_p(i)$正比于RGB值的差异。$\theta_{pq}(i,k)=w_{pq}d(i,k),w_{pq}\geq 0$，$d$表示距离函数。$w_{pq}$调节相似度，越相似值越大。</p>
 
 <p>求解这样的问题通常是NP难的，但我们能找到近似解。</p>
 
-<h3 id="move-making">Move-Making算法</h3>
+<h3 id="move-making算法">Move-Making算法</h3>
 
-<h3 id="expansiona-hrefboykov2001fast4a">Expansion算法<a href="#boykov2001fast">[4]</a>，</h3>
+<h3 id="expansion算法4">Expansion算法<a href="#boykov2001fast">[4]</a>，</h3>
 
-<h2 id="section-3">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="boykov2004experimental">[1]Y. Boykov and V. Kolmogorov, “An experimental comparison of min-cut/max-flow algorithms for energy minimization in vision,” <i>Pattern Analysis and Machine Intelligence, IEEE Transactions on</i>, vol. 26, no. 9, pp. 1124–1137, 2004.</span>
 
@@ -273,7 +273,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <div class="footnotes">
   <ol>
     <li id="fn:NP-hard-1">
-      <p>General 2-label MAP estimation is NP-hard. <a href="#fnref:NP-hard-1" class="reversefootnote">&#8617;</a></p>
+      <p>General 2-label MAP estimation is NP-hard. <a href="#fnref:NP-hard-1" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -311,28 +311,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2016/02/cs231n_introduction-to-computer-vision" class="pageNav" style="float:right"   >下一篇：CS231n（1）：计算机视觉简介 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/10/minimum-cut-based-inference" 	data-url="http://qianjiye.de/2015/10/minimum-cut-based-inference" data-title="DILinAV（4）：基于最小割的推理">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/10/minimum-cut-based-inference';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/10/minimum-cut-based-inference'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -345,7 +343,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/02/cs231n_introduction-to-computer-vision'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/02/cs231n_introduction-to-computer-vision'; --1> -->
 <!--         url = '/2016/02/cs231n_introduction-to-computer-vision'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -365,7 +363,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

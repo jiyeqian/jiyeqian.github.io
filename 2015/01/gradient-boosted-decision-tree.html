@@ -163,7 +163,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="adaboost-">AdaBoost 决策树</h2>
+<h2 id="adaboost-决策树">AdaBoost 决策树</h2>
 
 <blockquote>
   <h4 id="adaboost-dtreemathcal-d">AdaBoost-DTree($\mathcal D$)</h4>
@@ -302,7 +302,7 @@ $\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错�
 
 <p>因此，AdaBoost是近似的函数梯度（functional gradient）最速下降法。</p>
 
-<h2 id="section">任意误差函数的梯度提升</h2>
+<h2 id="任意误差函数的梯度提升">任意误差函数的梯度提升</h2>
 
 <p>AdaBoost可以表示为最优化的形式
 \begin{equation}
@@ -316,7 +316,7 @@ $\epsilon_t$表示<a href="/2015/01/adaptive-boosting/#mjx-eqn-eqepsilon-t">错�
 \end{equation}
 GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要采用梯度下降法，需要平滑的误差函数$err$，$h$也不限于二分类，可以推广到实数输出。通过采用不同的误差函数$err$，GradientBoost可实现回归、soft分类等功能。</p>
 
-<h2 id="section-1">梯度提升决策树</h2>
+<h2 id="梯度提升决策树">梯度提升决策树</h2>
 
 <p>对于回归问题，采用误差函数$err(s,y)=(s-y)^2$，令$s_n=\sum_{\tau=1}^{t-1}\alpha_\tau g_\tau(\mathbf x_n)$可得
 \begin{equation}
@@ -356,7 +356,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 <p>［2/2］因此，GradientBoost的回归问题通过单变量回归求解最优作为步长$\alpha_t=\eta$。</p>
 
 <blockquote>
-  <h4 id="gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
+  <h4 id="梯度提升决策树gbdtgradient-boosted-decision-tree">梯度提升决策树（GBDT，gradient boosted decision tree）</h4>
   <hr />
   <p>初始化$s_1=s_2=\ldots=s_N=0$；</p>
 
@@ -373,16 +373,16 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 
 <p>GBDT就是AdaBoost决策树的回归版本。</p>
 
-<h2 id="section-2">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:other-error-bounds">
-      <p><a href="/2015/01/linear-models-for-classification/#error-bound">其它误差界</a>可参考线性分类模型的相关资料。 <a href="#fnref:other-error-bounds" class="reversefootnote">&#8617;</a></p>
+      <p><a href="/2015/01/linear-models-for-classification/#error-bound">其它误差界</a>可参考线性分类模型的相关资料。 <a href="#fnref:other-error-bounds" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -420,28 +420,26 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
   <a  href="/2015/02/summary-of-aggregation-models" class="pageNav" style="float:right"   >下一篇：分类器融合（6）：融合模型总结 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/gradient-boosted-decision-tree" 	data-url="http://qianjiye.de/2015/01/gradient-boosted-decision-tree" data-title="分类器融合（5）：梯度提升决策树">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/gradient-boosted-decision-tree';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/gradient-boosted-decision-tree'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -454,7 +452,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/02/summary-of-aggregation-models'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/02/summary-of-aggregation-models'; --1> -->
 <!--         url = '/2015/02/summary-of-aggregation-models'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -474,7 +472,7 @@ GradientBoost分为两步：（1）确定$h$；（2）确定$\eta$。由于要�
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -165,7 +165,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <div class="image_line" id="figure-1"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_1.png"><img src="/assets/images/2014-10-21-neural-networks_1.png" alt="神经网络结构" /></a><div class="caption">图 1:  神经网络结构 [<a href="/assets/images/2014-10-21-neural-networks_1.png">PNG</a>]</div></div></div>
 
@@ -177,7 +177,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>神经网络通过前向传播计算给定输入对应的输出，通过误差反向传播估计权值矩阵。</p>
 
-<h2 id="section-1">前向传播计算</h2>
+<h2 id="前向传播计算">前向传播计算</h2>
 
 <div class="image_line" id="figure-2"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_2.png"><img src="/assets/images/2014-10-21-neural-networks_2.png" alt="神经网络前向传播计算" /></a><div class="caption">图 2:  神经网络前向传播计算 [<a href="/assets/images/2014-10-21-neural-networks_2.png">PNG</a>]</div></div></div>
 
@@ -194,11 +194,11 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>如果神经网络只有输入层和含一个神经元的输出层（<a href="#figure-2">上图</a>去掉隐藏层只有输入和输出层），就相当于一个Logistic回归模型。</p>
 
-<h2 id="section-2">反向参数估计</h2>
+<h2 id="反向参数估计">反向参数估计</h2>
 
 <p>神经网络通过反向传播估计权值矩阵$\boldsymbol\Theta$，参数估计仍然是最小化代价函数。通过BP算法（BackPropagation algorithm），输出层的误差向输入层逐层反向传播，利用梯度下降法，估计权值矩阵。</p>
 
-<h3 id="section-3">代价函数</h3>
+<h3 id="代价函数">代价函数</h3>
 
 <p>神经网络的神经元是Logistic模型，存在和Logistic模型类似的代价函数</p>
 
@@ -216,7 +216,7 @@ J(\boldsymbol\Theta) = &amp;-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}\left(y_k^{(
 
 <p>对比<a href="/2015/01/regularization/#mjx-eqn-eqcf-logistic-regression-r">正则化Logistic回归的代价函数</a>，由于神经网络有$K$个输出，前半部分相当于$K$个Logistic回归的代价函数之和，后半部分是非bias神经元洗漱组成的正则化项，$a_0^{(l)} = 1$对应的系数$\Theta_{j0}^{(l)}$和Logistic回归一样，不包含在正则化系数中。</p>
 
-<h3 id="section-4">参数估计</h3>
+<h3 id="参数估计">参数估计</h3>
 
 <p>通过最小化代价函数$\min_{\boldsymbol\Theta} J(\boldsymbol\Theta)$估计模型的所有参数矩阵$\boldsymbol\Theta^{(l)}$，采用梯度下降法时需计算代价函数$J(\boldsymbol\Theta)$及其梯度$D_{ij}^{(l)}$，
 \begin{equation*}
@@ -243,7 +243,7 @@ D_{ij}^{(l)} = \frac{\partial J(\boldsymbol\Theta)}{\partial\Theta_{ij}^{(l)}}.
 <p>Coursera的<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>和Michael Nielsen<a href="#nielsen_nndl_2014">[3]</a>的第二章给出了BP算法的推导过程<sup id="fnref:parameter_estimation"><a href="#fn:parameter_estimation" class="footnote">3</a></sup>。</p>
 
 <blockquote>
-  <h4 id="bp">BP算法之梯度计算</h4>
+  <h4 id="bp算法之梯度计算">BP算法之梯度计算</h4>
   <hr />
   <p>训练集：$\left\{\left(\mathbf x^{(1)}, \mathbf y^{(1)}\right),\ldots,\left(\mathbf x^{(m)}, \mathbf y^{(m)}\right)\right\}$。</p>
 
@@ -273,7 +273,7 @@ D_{ij}^{(l)} := \left\{
   </ol>
 </blockquote>
 
-<h3 id="section-5">实现细节</h3>
+<h3 id="实现细节">实现细节</h3>
 
 <p><strong>矩阵展成（unroll）向量：</strong></p>
 
@@ -311,7 +311,7 @@ D_{ij}^{(l)} := \left\{
 
 <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$，若初始化为$0$，每层的所有神经元都是一样的。随机数初始化$-\epsilon\leq\Theta_{ij}^{(l)}\leq\epsilon$，选择$\epsilon$的有效策略是根据每层神经元的数目取$\epsilon=\frac{\sqrt{6}}{\sqrt{L_{in} + L_{out}}}~(L_{in} = s_l,L_{out}=s_{l+1})$。</p>
 
-<h3 id="section-6">代价函数及其梯度计算</h3>
+<h3 id="代价函数及其梯度计算">代价函数及其梯度计算</h3>
 
 <div class="highlight"><pre><code class="language-matlab"><span class="k">function</span><span class="err"> [</span><span class="nf">J</span><span class="p">,</span> <span class="n">grad</span><span class="p">]</span> <span class="p">=</span> <span class="n">nnCostFunction</span><span class="p">(</span><span class="n">nn_params</span><span class="p">,</span> <span class="c">...</span>
                                    <span class="n">input_layer_size</span><span class="p">,</span> <span class="c">...</span>
@@ -387,7 +387,7 @@ D_{ij}^{(l)} := \left\{
 
 <span class="k">end</span></code></pre></div>
 
-<h2 id="section-7">神经网络学到了什么？</h2>
+<h2 id="神经网络学到了什么">神经网络学到了什么？</h2>
 
 <div class="image_line" id="figure-3"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_4.png"><img src="/assets/images/2014-10-21-neural-networks_4.png" alt="待识别字符" /></a><div class="caption">图 3:  待识别字符 [<a href="/assets/images/2014-10-21-neural-networks_4.png">PNG</a>]</div></div></div>
 
@@ -395,11 +395,11 @@ D_{ij}^{(l)} := \left\{
 
 <div class="image_line" id="figure-4"><div class="image_card"><a href="/assets/images/2014-10-21-neural-networks_3.png"><img src="/assets/images/2014-10-21-neural-networks_3.png" alt="参数可视化" /></a><div class="caption">图 4:  参数可视化 [<a href="/assets/images/2014-10-21-neural-networks_3.png">PNG</a>]</div></div></div>
 
-<h2 id="section-8">应用</h2>
+<h2 id="应用">应用</h2>
 
 <p>卡内基梅隆大学基于神经网络的自动驾驶系统<a href="#pomerleau_alvinn_1989">[5]</a>，一些Matlab代码和数据还可以从<a href="http://www.cs.cmu.edu/afs/cs/academic/class/15782-f06/matlab/alvinn/">这里</a>找到。</p>
 
-<h2 id="section-9">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_nnr_2014">[1]A. Ng, “Neural Networks: Representation.” Coursera, 2014.</span>
 
@@ -427,23 +427,23 @@ D_{ij}^{(l)} := \left\{
 
 </li></ol>
 
-<h3 id="section-10">脚注</h3>
+<h3 id="脚注">脚注</h3>
 <div class="footnotes">
   <ol>
     <li id="fn:if_no_global_minimum">
-      <p>如果非凸函数，梯度下降法不能确定取得的是全局还是局部极值，可通过<a href="https://class.coursera.org/ml-007/forum/thread?thread_id=1089#comment-3416">取不同初始值多次求解增强鲁棒性</a>。 <a href="#fnref:if_no_global_minimum" class="reversefootnote">&#8617;</a></p>
+      <p>如果非凸函数，梯度下降法不能确定取得的是全局还是局部极值，可通过<a href="https://class.coursera.org/ml-007/forum/thread?thread_id=1089#comment-3416">取不同初始值多次求解增强鲁棒性</a>。 <a href="#fnref:if_no_global_minimum" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:d-sigmoid-f">
-      <p><a href="/2015/01/logistic-regression/#fn:logistic-function-properties">Sigmoid函数导数</a>为$g(z)=g(z)(1-g(z))$。 <a href="#fnref:d-sigmoid-f" class="reversefootnote">&#8617;</a></p>
+      <p><a href="/2015/01/logistic-regression/#fn:logistic-function-properties">Sigmoid函数导数</a>为$g(z)=g(z)(1-g(z))$。 <a href="#fnref:d-sigmoid-f" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:parameter_estimation">
-      <p>这两篇博客（<a href="http://blog.csdn.net/abcjennifer/article/details/7758797">1</a>、<a href="http://blog.csdn.net/sheng_ai/article/details/19931347">2</a>）也给出了BP算法的推导过程，但是采用了形如<a href="/2015/01/linear-regression/#mjx-eqn-eqcost-function-linear-regression">线性回归的代价函数</a>。 <a href="#fnref:parameter_estimation" class="reversefootnote">&#8617;</a></p>
+      <p>这两篇博客（<a href="http://blog.csdn.net/abcjennifer/article/details/7758797">1</a>、<a href="http://blog.csdn.net/sheng_ai/article/details/19931347">2</a>）也给出了BP算法的推导过程，但是采用了形如<a href="/2015/01/linear-regression/#mjx-eqn-eqcost-function-linear-regression">线性回归的代价函数</a>。 <a href="#fnref:parameter_estimation" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:initial_theta">
-      <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$。若初始化为$0$，每层的所有神经元都一样<a href="#ng_ml_nnl_2014">[2, Pp. 25-26]</a>，每层只能学习到一种特征。$\epsilon$的取值方案参考课程习题脚注<a href="#ng_ml_nnl_pe_2014">[4, P. 7]</a>或<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>。 <a href="#fnref:initial_theta" class="reversefootnote">&#8617;</a></p>
+      <p>不可将$\Theta_{ij}^{(l)}$初始化为$0$。若初始化为$0$，每层的所有神经元都一样<a href="#ng_ml_nnl_2014">[2, Pp. 25-26]</a>，每层只能学习到一种特征。$\epsilon$的取值方案参考课程习题脚注<a href="#ng_ml_nnl_pe_2014">[4, P. 7]</a>或<a href="https://share.coursera.org/wiki/index.php/ML:Neural_Networks:_Learning">课程Wiki</a>。 <a href="#fnref:initial_theta" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:vector_update_Delta">
-      <p>更新的向量形式$\boldsymbol\Delta^{(l)} := \boldsymbol\Delta^{(l)} + \boldsymbol\delta^{(l+1)}\left(\mathbf a^{(l)}\right)^T$。这一步是怎么来的？有何意义？ <a href="#fnref:vector_update_Delta" class="reversefootnote">&#8617;</a></p>
+      <p>更新的向量形式$\boldsymbol\Delta^{(l)} := \boldsymbol\Delta^{(l)} + \boldsymbol\delta^{(l+1)}\left(\mathbf a^{(l)}\right)^T$。这一步是怎么来的？有何意义？ <a href="#fnref:vector_update_Delta" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -481,28 +481,26 @@ D_{ij}^{(l)} := \left\{
   <a  href="/2014/11/machine-learning-resources" class="pageNav" style="float:right"   >下一篇：机器学习资源 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/11/introducation-to-neural-networks" 	data-url="http://qianjiye.de/2014/11/introducation-to-neural-networks" data-title="神经网络简介">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/11/introducation-to-neural-networks';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/11/introducation-to-neural-networks'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -515,7 +513,7 @@ D_{ij}^{(l)} := \left\{
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/11/machine-learning-resources'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/11/machine-learning-resources'; --1> -->
 <!--         url = '/2014/11/machine-learning-resources'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -535,7 +533,7 @@ D_{ij}^{(l)} := \left\{
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

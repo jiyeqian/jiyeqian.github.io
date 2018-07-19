@@ -167,7 +167,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本文主要参考<em>Convolutional Neural Networks for Visual Recognition</em><a href="#lifeifei_CNN_SVM_2015">[1]</a>课程笔记。</p>
 
-<h2 id="section">预备知识</h2>
+<h2 id="预备知识">预备知识</h2>
 
 <p>k-NN在训练时只是记住了所有的样本，占用空间大，在识别时需和训练集的所有图片比较，耗费时间长。因此，需要开发新的方法克服kNN存在的问题，新方法包含两个关键部分：</p>
 
@@ -180,7 +180,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>训练集图像$\mathbf x_i\in\mathbb R^D(i=1,2,\ldots,N)$对应的标签$y_i\in 1,2,\ldots,K$，表示训练集有$N$张图像，每个图像表示为一个$D$维向量，图像可分为$K$个类别。对于CIFAR-10数据集，$N=50000,D=32\times 32\times 3,K=10$。评分函数$f:\mathbb R^D\mapsto \mathbb R^K$将图像数据映射为所属类别的评分。</p>
 
-<h2 id="section-1">线性分类器</h2>
+<h2 id="线性分类器">线性分类器</h2>
 
 <p>线性分类器（linear classifier）就是一个评分函数，它是一个线性映射
 \begin{equation}
@@ -321,7 +321,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
 <p>多分类支持向量机和softmax分类器，在性能表现上通常很相近。假设$\mathbf x_i$属于第1类，对于$[10, -100, -100]$和$[10, 9, 9]$，多分类支持向量机都不再增加损失函数的值；但对于softmax分类器，$[10, 9, 9]$会比$[10, -100, -100]$让损失函数增加更大的值。softmax分类器永不满足，总是试图让正确的分类概率更大，损失函数的值更小；然而，只要多分类支持向量机满足边界条件，不论评分高低，不再调整评分，这可以看作是多分类支持向量机的一个特性，比如对于一个车辆分类器，它应该关注如何分类轿车和卡车等困难问题，而不应受已经评分很低🐸🐱🐶等的影响。</p>
 
-<h2 id="section-2">参考文献</h2>
+<h2 id="参考文献">参考文献</h2>
 
 <ol class="bibliography"><li><span id="lifeifei_CNN_SVM_2015">[1]F.-F. Li and A. Karpathy, “Linear classification: Support Vector Machine, Softmax.” GitHub, 2015.</span>
 
@@ -340,18 +340,18 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
 </li></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:CNN-f-mapping">
-      <p>CNN也会将数据像素映射为得分，只是映射$f$会更复杂，参数更多。 <a href="#fnref:CNN-f-mapping" class="reversefootnote">&#8617;</a></p>
+      <p>CNN也会将数据像素映射为得分，只是映射$f$会更复杂，参数更多。 <a href="#fnref:CNN-f-mapping" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:inner-product-similarity">
-      <p>内积就是余弦相似度？ <a href="#fnref:inner-product-similarity" class="reversefootnote">&#8617;</a></p>
+      <p>内积就是余弦相似度？ <a href="#fnref:inner-product-similarity" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:the-golden-mean">
-      <p>多么美妙的中庸之道！ <a href="#fnref:the-golden-mean" class="reversefootnote">&#8617;</a></p>
+      <p>多么美妙的中庸之道！ <a href="#fnref:the-golden-mean" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -389,28 +389,26 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
   <a  href="/2016/09/LeNet-5-Lecun" class="pageNav" style="float:right"   >下一篇：Gradient-Based Learning Applied to Document Recognition </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/03/cs231n_loss-functions-and-optimization" 	data-url="http://qianjiye.de/2016/03/cs231n_loss-functions-and-optimization" data-title="CS231n（3）：损失函数与最优化">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/03/cs231n_loss-functions-and-optimization';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/03/cs231n_loss-functions-and-optimization'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -423,7 +421,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/09/LeNet-5-Lecun'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/09/LeNet-5-Lecun'; --1> -->
 <!--         url = '/2016/09/LeNet-5-Lecun'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -443,7 +441,7 @@ P(y_i|\mathbf x_i;\mathbf W)={e^{f_{y_i}}\over\sum_j e^{f_j}}，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

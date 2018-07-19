@@ -155,7 +155,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">问题描述</h2>
+<h2 id="问题描述">问题描述</h2>
 
 <p>大多数分类器主要是解决二分类问题，对只有两个类别标签的数据集分类，比如logistic回归和支持向量机。多分类是对两个以上类别标签的数据集分类。</p>
 
@@ -167,7 +167,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>扩展二分类器，使其成为能够解决多分类问题多分类器。</li>
 </ol>
 
-<h2 id="section-1">多分类器</h2>
+<h2 id="多分类器">多分类器</h2>
 
 <p><a href="/2016/03/cs231n_image-classification-pipeline/#kNN">k最近邻分类器</a>是最简单的多分类器。<a href="/2015/01/decision-tree">决策树</a>解决多分类问题几乎和二分类问题一样容易实现。</p>
 
@@ -175,13 +175,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>神经网络是天生的多分类器，上图展示了神经网络的多分类策略，其中的输出是0和1组成的向量，<strong>而非</strong>类别标签。类别数$K(K \geq 3)$时，输出层需$K$个神经元；$K＝2$时，输出层只需一个神经元<a href="#ng_ml_nnl_2014">[1, P. 2]</a>。预测时，输入样本属于输出“概率”最大的类别。</p>
 
-<h2 id="section-2">二分类器解决多分类问题</h2>
+<h2 id="二分类器解决多分类问题">二分类器解决多分类问题</h2>
 
 <p>二分类器解决多分类问题，基本思想是将数据集分割为多个二分类数据集，组合应用二分类器，典型的方法有：一对多（OVA，one-vs-all）、一对一（OVO，one-vs-one）和多对多（AVA，all-to-all）。</p>
 
 <p>Ryan Rifkin等人指出，如果基本的二分类器调整和正则化做得好，简单的one-vs-all策略也可和其它方法一样好<a href="#Rifkin04indefense">[2]</a><sup id="fnref:unbalance-data-problem"><a href="#fn:unbalance-data-problem" class="footnote">1</a></sup>。</p>
 
-<h3 id="section-3">基本方法</h3>
+<h3 id="基本方法">基本方法</h3>
 
 <p>一对多的方法是针对每一类训练一个二分类器，将它与其余所有数据进行二分类，若有$K(K &gt; 2)$个类别，就需要训练$K$个分类器，这种方法也叫one-vs-rest。</p>
 
@@ -191,7 +191,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>支持向量机将$\mathbf x^T\boldsymbol\theta^{(i)}$值最大的作为输入样本的类别$i$<a href="#ng_ml_svm_2014">[4, P. 30]</a>。</p>
 
-<h3 id="section-4">实现技术</h3>
+<h3 id="实现技术">实现技术</h3>
 
 <div class="image_line" id="anbiguous-regions"><div class="image_card"><a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png"><img src="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png" alt="多分类器的争议区域（左：one-vs-all，右：one-vs-one）" /></a><div class="caption">图 2:  多分类器的争议区域（左：one-vs-all，右：one-vs-one） [<a href="/assets/images/2014-10-20-multiple-classes-anbiguous-regions.png">PNG</a>]</div></div></div>
 
@@ -199,7 +199,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>对于one-vs-all的$K$个线性分类器，输入对象属于输出值最大分类器对应的类别，在这种情况下类别所属的区域是单联通的凸区域（singly connected and convex）<sup id="fnref:why-singly-connected-and-convex"><a href="#fn:why-singly-connected-and-convex" class="footnote">2</a></sup>。</p>
 
-<h2 id="section-5">二分类器扩展为多分类器</h2>
+<h2 id="二分类器扩展为多分类器">二分类器扩展为多分类器</h2>
 
 <p>采用hinge损失函数，可以直接将支持向量机推广到<a href="/2016/03/cs231n_loss-functions-and-optimization/#multiclass-SVM">多分类支持向量机</a>，理论上该方法数据损失项可达0，常规的one-vs-all方法则不行。</p>
 
@@ -207,7 +207,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>结构化支持向量机（structured SVM）也可以解决多分类问题<a href="#Tsochantaridis:2004:SVM:1015330.1015341">[6]</a><sup id="fnref:how-structured-svm-do"><a href="#fn:how-structured-svm-do" class="footnote">3</a></sup>。</p>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="ng_ml_nnl_2014">[1]A. Ng, “Neural Networks: Learning.” Coursera, 2014.</span>
 
@@ -236,18 +236,18 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </li></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:unbalance-data-problem">
-      <p>one-vs-all可能导致数据不均衡吗（其中一类的数据很少，其余的数据很多）？ <a href="#fnref:unbalance-data-problem" class="reversefootnote">&#8617;</a></p>
+      <p>one-vs-all可能导致数据不均衡吗（其中一类的数据很少，其余的数据很多）？ <a href="#fnref:unbalance-data-problem" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:why-singly-connected-and-convex">
-      <p>什么是单联通的凸区域？这样的区域有什么价值？ <a href="#fnref:why-singly-connected-and-convex" class="reversefootnote">&#8617;</a></p>
+      <p>什么是单联通的凸区域？这样的区域有什么价值？ <a href="#fnref:why-singly-connected-and-convex" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:how-structured-svm-do">
-      <p>结构化支持向量机如何工作？ <a href="#fnref:how-structured-svm-do" class="reversefootnote">&#8617;</a></p>
+      <p>结构化支持向量机如何工作？ <a href="#fnref:how-structured-svm-do" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -285,28 +285,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2014/10/pla" class="pageNav" style="float:right"   >下一篇：感知器学习算法 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2014/10/multiple-classes" 	data-url="http://qianjiye.de/2014/10/multiple-classes" data-title="多分类问题">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2014/10/multiple-classes';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2014/10/multiple-classes'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -319,7 +317,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2014/10/pla'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2014/10/pla'; --1> -->
 <!--         url = '/2014/10/pla'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -339,7 +337,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

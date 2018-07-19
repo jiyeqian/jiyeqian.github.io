@@ -159,7 +159,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">基本概念</h2>
+<h2 id="基本概念">基本概念</h2>
 
 <p><strong>向量空间模型</strong>（VSM，vector space model）是用向量表示文本的代数模型，它将文本转换为向量，也称为<strong>词语向量模型</strong>（term vector model）<a href="#Salton:1975:VSM:361219.361220">[1]</a><sup id="fnref:tfidf"><a href="#fn:tfidf" class="footnote">1</a></sup>。最容易想到的方法就是利用词频（TF，term frequency）。</p>
 
@@ -359,11 +359,11 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 <span class="c1">#  [ 0.48359121  0.48359121  0.48359121  0.          0.          0.36778358</span>
 <span class="c1">#    0.          0.          0.          0.28561676  0.28561676]]</span></code></pre></div>
 
-<h2 id="section-1">应用示例</h2>
+<h2 id="应用示例">应用示例</h2>
 
 <p>向量空间模型的TF-IDF可用于<a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html">自动提取关键词</a>、<a href="http://www.ruanyifeng.com/blog/2013/03/cosine_similarity.html">找出相似文章</a>和<a href="http://www.ruanyifeng.com/blog/2013/03/automatic_summarization.html">自动摘要</a>等。</p>
 
-<h2 id="section-2">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="Salton:1975:VSM:361219.361220">[1]G. Salton, A. Wong, and C.-S. Yang, “A Vector Space Model for Automatic Indexing,” <i>Communications of the ACM</i>, vol. 18, no. 11, pp. 613–620, Nov. 1975.</span>
 
@@ -371,15 +371,15 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
 </li></ol>
 
-<h3 id="section-3">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:tfidf">
-      <p>代码主要参考了<a href="http://stanford.edu/~rjweiss/public_html/IRiSS2013/text2/notebooks/tfidf.html">“The Vector Space Model of text”</a>，但文中计算有错误。 <a href="#fnref:tfidf" class="reversefootnote">&#8617;</a></p>
+      <p>代码主要参考了<a href="http://stanford.edu/~rjweiss/public_html/IRiSS2013/text2/notebooks/tfidf.html">“The Vector Space Model of text”</a>，但文中计算有错误。 <a href="#fnref:tfidf" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:log-base">
-      <p>$\log$的底是多少？ <a href="#fnref:log-base" class="reversefootnote">&#8617;</a></p>
+      <p>$\log$的底是多少？ <a href="#fnref:log-base" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -417,28 +417,26 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
   <a  href="/2015/04/python-essential" class="pageNav" style="float:right"   >下一篇：Python Essential </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/04/vector-space-model" 	data-url="http://qianjiye.de/2015/04/vector-space-model" data-title="向量空间模型">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/04/vector-space-model';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/04/vector-space-model'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -451,7 +449,7 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/04/python-essential'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/04/python-essential'; --1> -->
 <!--         url = '/2015/04/python-essential'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -471,7 +469,7 @@ TF-IDF(\mbox{word})=TF(\mbox{word})\times IDF(\mbox{word})。
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

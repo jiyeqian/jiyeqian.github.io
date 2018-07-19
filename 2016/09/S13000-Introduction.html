@@ -157,11 +157,31 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <section class="post">
 <p>本课程的目的：介绍控制系统的基本概念、术语、原理，以及如何阅读、书写相关论文。</p>
 
-<h2 id="section">系统的基本概念</h2>
+<h2 id="系统的基本概念">系统的基本概念</h2>
 
 <ul>
   <li>什么是系统？Input（输入）＋ States（状态）＋ Output（输出）</li>
-  <li>什么是控制系统？系统 ＋ Actuator（执行器）＋ Sensor（传感器）</li>
+  <li>
+    <p>什么是控制系统？系统 ＋ Actuator（执行器）＋ Sensor（传感器）</p>
+  </li>
+  <li>参数分类:
+    <ol>
+      <li>control parameter：控制器设计者可改变</li>
+      <li>system parameter：系统给定后不可调整</li>
+      <li>virtual parameter：</li>
+    </ol>
+  </li>
+  <li>modern control 分类：
+    <ol>
+      <li>robust control</li>
+      <li>adaptive control</li>
+      <li>variable structure control</li>
+      <li>sliding mode control</li>
+      <li>neural network control</li>
+      <li>fuzzy control</li>
+      <li>intelligent  control</li>
+    </ol>
+  </li>
 </ul>
 
 <p>控制系统，根据人类学习而来，对比：</p>
@@ -191,7 +211,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>Controller 利用 Sensor 信息，让 Actuator 发出相应的动作。控制系统主要包括 Design &amp; Analysis，通过Analysis（分析），验证设计的系统是否可以工作。</p>
 
-<h3 id="section-1">系统实例</h3>
+<h3 id="系统实例">系统实例</h3>
 
 <p><strong>I. Car：</strong></p>
 
@@ -217,7 +237,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p><strong>IV. Wind Power System／Wind Turbine</strong></p>
 
-<h3 id="section-2">如何做研究？</h3>
+<h3 id="如何做研究">如何做研究？</h3>
 
 <p>研究集中到更一般的系统，可以推广到其它系统的控制。</p>
 
@@ -226,7 +246,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>不同的物理模型，相同的数学模型。物理定律刻画系统的特征。</li>
 </ul>
 
-<h2 id="dynamic-system">Dynamic System（动态系统）</h2>
+<h2 id="dynamic-system动态系统">Dynamic System（动态系统）</h2>
 
 <p>两类典型的动态系统：</p>
 
@@ -235,7 +255,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>Rotational motion（转动）：风力发电机</li>
 </ol>
 
-<h3 id="section-3">实例一：高速列车</h3>
+<h3 id="实例一高速列车">实例一：高速列车</h3>
 
 <ul>
   <li>$M = m_1 + m_2 + \cdots= \sum m_i $：总质量为$M$的列车；</li>
@@ -278,7 +298,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 
 <p>$c_1,c_2,M$称之为<strong>系统参数</strong>（system parameter），一旦系统给定不可更改。它们只随环境变化而变化，不以人的意志改变，不可控。比如：不同的路段摩擦系数不同，乘客不同使得$M$也会变。研究时不能假设这些系统参数已知恒定，否则应用会受到很大局限。控制问题的难点在于这些不知道的情况下，如何设计控制器。另一方面，<strong>控制参数</strong>（control parameter）正是我们要设计和改变的参数。</p>
 
-<h3 id="wind-turbine">实例二：风机（Wind Turbine）</h3>
+<h3 id="实例二风机wind-turbine">实例二：风机（Wind Turbine）</h3>
 
 <ul>
   <li>$\omega$：角速度；</li>
@@ -304,9 +324,9 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 
 <p>如何控制$\tau_a$？变浆控制，Yaw（朝向）控制。通过改变浆的角度$\beta$，实现风力控制，从而控制$\tau_a$。也就是控制$\tau(\beta)$，使得$ \omega=\omega^\ast$。</p>
 
-<h2 id="section-4">三大控制问题</h2>
+<h2 id="三大控制问题">三大控制问题</h2>
 
-<h3 id="stabilization">一、Stabilization（镇定）</h3>
+<h3 id="一stabilization镇定">一、Stabilization（镇定）</h3>
 
 <ol>
   <li>数学形式：$x\rightarrow 0$</li>
@@ -314,7 +334,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
   <li>实例：比如照相机支架不停震动，无法拍照，需要消除这种震动。</li>
 </ol>
 
-<h3 id="regulation">二、Regulation（调节）</h3>
+<h3 id="二regulation调节">二、Regulation（调节）</h3>
 
 <ol>
   <li>数学形式：$x\rightarrow a$</li>
@@ -322,7 +342,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
   <li>实例：空调调整恒定在 20 度；控制电机速度；巡航控制（恒定高度）。</li>
 </ol>
 
-<h3 id="tracking">三、Tracking（跟踪）</h3>
+<h3 id="三tracking跟踪">三、Tracking（跟踪）</h3>
 
 <ol>
   <li>数学形式：$x\rightarrow x^\ast$</li>
@@ -370,28 +390,26 @@ x \rightarrow &amp;x^\ast = x^\ast\\
   <a  href="/2016/09/feasibility-about-uav-in-cable-tunnel" class="pageNav" style="float:right"   >下一篇：无人机电缆隧道巡检可行性调研报告 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/09/s13000-Introduction" 	data-url="http://qianjiye.de/2016/09/s13000-Introduction" data-title="鲁棒及自适应控制（1）：概论">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/09/s13000-Introduction';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/09/s13000-Introduction'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -404,7 +422,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/09/feasibility-about-uav-in-cable-tunnel'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/09/feasibility-about-uav-in-cable-tunnel'; --1> -->
 <!--         url = '/2016/09/feasibility-about-uav-in-cable-tunnel'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -424,7 +442,7 @@ x \rightarrow &amp;x^\ast = x^\ast\\
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

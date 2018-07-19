@@ -161,7 +161,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">线性网络</h2>
+<h2 id="线性网络">线性网络</h2>
 
 <p>对于推荐系统（recommender system）数据集，用户对第$m$部电影的评分表示为
 \[
@@ -219,7 +219,7 @@ $\mathbf v_n$表示$\mathbf V$的第$n$列，相当于对第$n$个用户进行�
 
 <p>对于推荐系统，线性网络学习$\mathbf V$和$\mathbf W$。</p>
 
-<h2 id="section-1">矩阵分解</h2>
+<h2 id="矩阵分解">矩阵分解</h2>
 
 <p>令$\Phi(\mathbf x)=\mathbf V\mathbf x$，第$m$部电影的评分只是线性模型$h_m(\mathbf x)=\mathbf w_m^\top\Phi(\mathbf x)$。对于$\mathcal D_m$，期望有
 \[
@@ -275,7 +275,7 @@ E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
   </tbody>
 </table>
 
-<h2 id="section-2">交替最小二乘法</h2>
+<h2 id="交替最小二乘法">交替最小二乘法</h2>
 
 <p>通过最优化
 \[
@@ -293,7 +293,7 @@ E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
 </ul>
 
 <blockquote>
-  <h2 id="section-3">####交替最小二乘法</h2>
+  <h2 id="交替最小二乘法-1">####交替最小二乘法</h2>
   <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$；</p>
 
   <p>交替最小化$E_{in}$直到收敛：</p>
@@ -306,7 +306,7 @@ E_{in}\left(\left\{\mathbf w_m\right\},\left\{\mathbf v_n\right\}\right)
 
 <p>每次交替最小化都会使$E_{in}$减小，收敛是有保障的。采用交替最小二乘法，类似于用户和电影之间的“探戈”（tango）。</p>
 
-<h2 id="section-4">随机梯度下降法</h2>
+<h2 id="随机梯度下降法">随机梯度下降法</h2>
 
 <p>随机梯度下降法（SGD，stochastic gradient descent）容易实现，每轮迭代高效，容易扩展到平方误差之外的其它误差度量方式。</p>
 
@@ -327,7 +327,7 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 每次跟新量$\propto -(\mbox{residual})(\mbox{the other feature vector})$，余数（residual）为$r_{nm}-\mathbf w_m^T\mathbf v_n$，也就是用余数倍另一个量更新当前量。</p>
 
 <blockquote>
-  <h2 id="section-5">####基于随机梯度下降法的矩阵分解</h2>
+  <h2 id="基于随机梯度下降法的矩阵分解">####基于随机梯度下降法的矩阵分解</h2>
   <p>随机初始化$\tilde d$维向量$\{\mathbf w_m\}，\{\mathbf v_n\}$<sup id="fnref:all-zeros"><a href="#fn:all-zeros" class="footnote">2</a></sup>；</p>
 
   <p>对$t=0,1,\ldots,T$迭代：</p>
@@ -356,19 +356,19 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
   <p><strong>结果</strong>：consistent improvements of test performance。</p>
 </blockquote>
 
-<h2 id="section-6">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
-<h3 id="section-7">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:why-no-1-neuron">
-      <p>让网络看上去简单些而已，加入$x_0^{(\ell)}$可以得到一个稍微有些不同的模型。 <a href="#fnref:why-no-1-neuron" class="reversefootnote">&#8617;</a></p>
+      <p>让网络看上去简单些而已，加入$x_0^{(\ell)}$可以得到一个稍微有些不同的模型。 <a href="#fnref:why-no-1-neuron" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:all-zeros">
-      <p>若都初始化为0，$\{\mathbf w_m\}$和$\{\mathbf v_n\}$始终为0，$E_{in}$永远也不会减少。 <a href="#fnref:all-zeros" class="reversefootnote">&#8617;</a></p>
+      <p>若都初始化为0，$\{\mathbf w_m\}$和$\{\mathbf v_n\}$始终为0，$E_{in}$永远也不会减少。 <a href="#fnref:all-zeros" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -406,28 +406,26 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
   <a  href="/2015/02/summary-of-extraction-models" class="pageNav" style="float:right"   >下一篇：特征学习模型总结 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/02/matrix-factorization" 	data-url="http://qianjiye.de/2015/02/matrix-factorization" data-title="矩阵分解">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/02/matrix-factorization';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/02/matrix-factorization'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -440,7 +438,7 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/02/summary-of-extraction-models'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/02/summary-of-extraction-models'; --1> -->
 <!--         url = '/2015/02/summary-of-extraction-models'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -460,7 +458,7 @@ err(\mbox{user }n, \mbox{movie }m, \mbox{rating }r_{nm})
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

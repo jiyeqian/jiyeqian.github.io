@@ -167,7 +167,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">决策树简介</h2>
+<h2 id="决策树简介">决策树简介</h2>
 
 <p>决策树是一种对实例分类的树形结构，由节点（node）和有向边（directed edge）组成，内部节点（internal node）表示特征或属性，叶节点（leaf node）表示类<a href="#lihang_sml_2012">[1, P. 55]</a>。决策树既可以看成if-then规则的集合，也可表示给定特征条件下类别的概率密度分布<a href="#lihang_sml_2012">[1, P. 56]</a>。从分类器融合的角度，决策树是一种<a href="/2015/01/blending-and-bagging/#mjx-eqn-eqconditional-blending-hypothesis">有条件分类器融合</a>的学习模型<a href="#lin_ml_dt_2015">[2]</a>。常用的决策树学习算法有 ID3、C4.5 和 C&amp;RT（也记为 CART）。</p>
 
@@ -192,7 +192,7 @@ $b(\mathbf x)$表示分支条件，$G_c(\mathbf x)$表示第$c$个分支的子�
 
 <p>上图右展示了递归方式定义的决策树算法，从中可以看出，有4个方面需要决定：分支数目、分支条件、终止条件、基本假设。</p>
 
-<h2 id="section-1">特征选择</h2>
+<h2 id="特征选择">特征选择</h2>
 
 <p>如果特征数目过多，计算复杂度过大，可以在决策树学习之前进行特征选择，只选择对训练数据有足够分类能力的特征。如果利用一个特征进行分类的结果与随机分类结果没有很大差别，则这个特征没有分类能力。通常特征选择的准则是信息增益或信息增益比<a href="#lihang_sml_2012">[1, Pp. 58-63]</a>。</p>
 
@@ -242,7 +242,7 @@ g(\mathcal D,有工作)=0.324，\quad g(\mathcal D,有自己的房子)=0.420，\
 \]
 信息增益最大的特征“有自己的房子”是最优特征。</p>
 
-<h2 id="section-2">分类回归树</h2>
+<h2 id="分类回归树">分类回归树</h2>
 
 <p>分类回归树（C&amp;RT，classification and regression tree）既可用于分类又可用于回归。它是二叉树，<strong>分支数目</strong>$C=2$，<strong>基本假设</strong>$g_t(\mathbf x)$返回$E_{in}$最优时的常数。C&amp;RT 的$g_t(\mathbf x)$比较简单：</p>
 
@@ -285,7 +285,7 @@ $\mathcal D$中的类越分散不纯度越高，类似于熵；$\mathcal D$中�
 
 <p>C&amp;RT = 完全成长树 ＋ 常数叶子🍃 ＋ 二元分支 ＋ 纯化。</p>
 
-<h2 id="section-3">决策树剪枝</h2>
+<h2 id="决策树剪枝">决策树剪枝</h2>
 
 <p>如果所有的$\mathbf x_n$都不同，完全成长的决策树使得$E_{in}(G)=0$，这会导致过拟合（$E_{out}$很大），因为底层的树建立在很小的数据集$\mathcal D_c$上。也就是说，决策树的variance较大，数据很小的改变就可能得到很不一样的决策树。</p>
 
@@ -300,15 +300,15 @@ $\mathcal D$中的类越分散不纯度越高，类似于熵；$\mathcal D$中�
   <li>$G^{(i)}=\arg\min_GE_{in}(G)$，$G$表示从$G^{(i-1)}$中移除一片叶子（实际是合并叶子，将叶节点的父节点作为新的叶节点）。</li>
 </ul>
 
-<h2 id="section-4">决策树优势</h2>
+<h2 id="决策树优势">决策树优势</h2>
 
 <p>几乎没有哪种其它的机器学习算法拥有如此多优良特性，除非其它决策树。</p>
 
-<h4 id="section-5">一、可解释性好</h4>
+<h4 id="一可解释性好">一、可解释性好</h4>
 
-<h4 id="section-6">二、容易处理多分类问题</h4>
+<h4 id="二容易处理多分类问题">二、容易处理多分类问题</h4>
 
-<h4 id="section-7">三、容易处理类别特征</h4>
+<h4 id="三容易处理类别特征">三、容易处理类别特征</h4>
 
 <p>决策树通过decision stump
 \begin{equation}
@@ -320,7 +320,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 \end{equation}
 决策树也很容易进行基于类别特征的分类<sup id="fnref:categorical-feature"><a href="#fn:categorical-feature" class="footnote">1</a></sup>。</p>
 
-<h4 id="section-8">四、容易处理遗失特征</h4>
+<h4 id="四容易处理遗失特征">四、容易处理遗失特征</h4>
 
 <p>假设数据集中遗失了体重特征，人处理这类问题的方法有：</p>
 
@@ -331,13 +331,13 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 <p>决策树利用类似的代替思想，采用替代分支（surrogate branch）。在训练的时候训练可用的替代分支，利用替代分支可以得到和原来差不多的效果。当使用时遇到特征遗失，利用替代分支解决。</p>
 
-<h4 id="section-9">五、高效的训练非线性模型</h4>
+<h4 id="五高效的训练非线性模型">五、高效的训练非线性模型</h4>
 
 <p><img src="/assets/images/2015-01-23-decision-tree-C&amp;RT-vs-AdaBoost.png" alt="" width="444px" id="fig-3-3" /></p>
 
 <p class="mvgcv-figure-caption align-text-center"><strong>C&amp;RT vs. AdaBoost</strong></p>
 
-<h2 id="section-10">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lihang_sml_2012">[1]李航, <i>统计学习方法</i>. 北京: 清华大学出版社, 2012.</span>
 
@@ -351,12 +351,12 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
 </li></ol>
 
-<h3 id="section-11">脚注</h3>
+<h3 id="脚注">脚注</h3>
 
 <div class="footnotes">
   <ol>
     <li id="fn:categorical-feature">
-      <p>例如医生诊断时会给出症状相关的类别特征｛fever, pain, tired, sweaty｝。 <a href="#fnref:categorical-feature" class="reversefootnote">&#8617;</a></p>
+      <p>例如医生诊断时会给出症状相关的类别特征｛fever, pain, tired, sweaty｝。 <a href="#fnref:categorical-feature" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -394,28 +394,26 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
   <a  href="/2015/01/random-forest" class="pageNav" style="float:right"   >下一篇：分类器融合（4）：随机森林 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/01/decision-tree" 	data-url="http://qianjiye.de/2015/01/decision-tree" data-title="分类器融合（3）：决策树">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/01/decision-tree';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/01/decision-tree'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -428,7 +426,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/01/random-forest'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/01/random-forest'; --1> -->
 <!--         url = '/2015/01/random-forest'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -448,7 +446,7 @@ b(\mathbf x)=[[x_i\in S]]+1\quad S\in\{1,2,\ldots,K\}，
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

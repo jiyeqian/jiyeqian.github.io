@@ -155,7 +155,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <p><a href="#lewis1995fastTM">[1]</a>
 <a href="#lewis1995fastNCC">[2]</a>
@@ -170,7 +170,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>事实上，通过事先计算图像积分，非归一化互相关可以被高效地归一化。</p>
 
-<h2 id="section-1">模版匹配</h2>
+<h2 id="模版匹配">模版匹配</h2>
 
 <p>采用互相关的模版匹配可从欧氏距离平方推导。以$(u,v)$为参考点，</p>
 
@@ -207,11 +207,11 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 
 <p>$\bar t$和$\bar f_{u,v}$分别表示特征和图像区域的均值。</p>
 
-<h2 id="section-2">特征追踪</h2>
+<h2 id="特征追踪">特征追踪</h2>
 
 <p>由于NCC并不具备尺度、旋转和透视变换不变性，并非理想的特征追踪方法。但是对某些应用，NCC是一种合理的选择。</p>
 
-<h2 id="section-3">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"><li><span id="lewis1995fastTM">[1]J. P. Lewis, “Fast template matching,” in <i>Vision interface</i>, 1995, vol. 95, no. 120123, pp. 15–19.</span>
 
@@ -241,7 +241,7 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 <div class="footnotes">
   <ol>
     <li id="fn:example1">
-      <p>For example, the correlation between the feature and an exactly matching region in the image may be less than the correlation between the feature and a bright spot. <a href="#fnref:example1" class="reversefootnote">&#8617;</a></p>
+      <p>For example, the correlation between the feature and an exactly matching region in the image may be less than the correlation between the feature and a bright spot. <a href="#fnref:example1" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -279,28 +279,26 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
   <a  href="/2015/10/minimum-cut-based-inference" class="pageNav" style="float:right"   >下一篇：DILinAV（4）：基于最小割的推理 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/09/fast-ncc" 	data-url="http://qianjiye.de/2015/09/fast-ncc" data-title="快速归一化互相关">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/09/fast-ncc';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/09/fast-ncc'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -313,7 +311,7 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/10/minimum-cut-based-inference'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/10/minimum-cut-based-inference'; --1> -->
 <!--         url = '/2015/10/minimum-cut-based-inference'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -333,7 +331,7 @@ c(u,v) = \sum_{x,y}f(x,y)t(x-u,y-v)
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

@@ -157,13 +157,13 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">简介</h2>
+<h2 id="简介">简介</h2>
 
 <p>Tesseract是开源的OCR引擎。Tesseract最初设计用于英文识别，经过改进引擎和训练系统，它能够处理其它语言和UTF-8字符。Tesseract 3.0能够处理任何Unicode字符，但并非在所有语言上都工作得很好。Tesseract在庞大字符集语言（比如中文）上较慢，但是工作良好。</p>
 
 <p>Tesseract需要知道相同字符的不同形状，也就是不同字体。最多允许的字体数量在<code>intproto.h</code>中通过<code>MAX_NUM_CONFIGS</code>定义，目前支持64种。当训练字体数量超过32种时，速度显著下降。</p>
 
-<h2 id="section-1">使用入门</h2>
+<h2 id="使用入门">使用入门</h2>
 
 <p>直接输入无参数命令<code>tesseract</code>可查看其<a href="https://github.com/tesseract-ocr/tesseract/blob/master/doc/tesseract.1.asc">用法</a>：</p>
 
@@ -217,7 +217,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <div class="highlight"><pre><code>项目名称 : 北京丰台 区花乡四合庄(中关村科技园丰台园京区2期)15 16-2 1地块C
 </code></pre></div>
 
-<h2 id="section-2">训练识别库</h2>
+<h2 id="训练识别库">训练识别库</h2>
 
 <p>为了训练一种新语言当识别库，需要在tessdata子文件夹中创建一些数据文件，然后用<code>combine_tessdata</code>将它们合并为一个文件。命名约定（naming convention）是<code>languagecode.file_name</code>，其中<code>languagecode</code>按ISO 638-3标准，当然也可使用任何字符串。用于英文识别库（3.00）的文件包括：</p>
 
@@ -341,7 +341,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>训练流程中有些是手动的（得到font_properties、words_list、unicharambigs文件），用到的相关工具位于training子目录。</p>
 
-<h3 id="section-3">生成训练图片</h3>
+<h3 id="生成训练图片">生成训练图片</h3>
 
 <p>创建训练文件需注意的重要事项：</p>
 
@@ -358,7 +358,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>直接收集图片，或者利用先打印后扫描的方式。</li>
 </ol>
 
-<h4 id="section-4">自动新方法（3.03版新功能）</h4>
+<h4 id="自动新方法303版新功能">自动新方法（3.03版新功能）</h4>
 
 <p>该方法通过字体文件，自动获得训练所需的tif/box文件对。</p>
 
@@ -391,7 +391,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 乡 612 4628 645 4676 0
 </code></pre></div>
 
-<h4 id="section-5">辅助软件</h4>
+<h4 id="辅助软件">辅助软件</h4>
 
 <p>text2image自动生成tif/box文件对的局限性在于：</p>
 
@@ -402,7 +402,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>因此，需要其它的自动化方案。借助可视化软件<a href="http://vietocr.sourceforge.net/training.html">jTessBoxEditor</a>，可以不受上述约束，利用其“TIFF/Box Generator”模块，自动生成tif/box文件对。</p>
 
-<h4 id="section-6">手动老方法</h4>
+<h4 id="手动老方法">手动老方法</h4>
 
 <p>该方法需要首先得到字符图像（比如通过打印扫描方式），获取字符图像需注意：</p>
 
@@ -415,7 +415,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>可以使用多达64个（多页的）训练文件（图片），最好是混合字体斜体和粗体风格（在不同文件中）。64个图像文件是对字体数量的限制。每个字体应当放到单个的多页tiff文件，box文件中每个字符坐标后面的数字确定了页码。因此，对给定字体，能够创建任意大的训练数据，使得能够训练大字符集语言。另一种方法是对单个字体创建多个单页的tiff文件，然后必须对每个字体cat（Linux中的文件连接命令）合并多个tr文件为只含一个字体的单个tr文件<sup id="fnref:if_this_true_several_trs"><a href="#fn:if_this_true_several_trs" class="footnote">2</a></sup>。任何情况下，输入给mftraining的每个tr文件必须是单一字体。</p>
 
-<h3 id="box">获取Box文件</h3>
+<h3 id="获取box文件">获取Box文件</h3>
 
 <p>如果只有字符图片数据，还需要为每张图创建一个box文件。它是一个文本文件，列出了训练图像中的字符，按顺序，一个字符一行，包含字符边界框的坐标。此步骤的关键是手动调整该文件，得到字符正确的坐标。</p>
 
@@ -440,7 +440,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>但是，不存在增量训练方法。每次<code>mfTraining</code>和<code>cnTraining</code>的过程都要用tr文件从头再来，不能直接使用已有的intproto/pffmtable/normproto文件。</p>
 
-<h4 id="tifbox">优化Tif/Box文件</h4>
+<h4 id="优化tifbox文件">优化Tif/Box文件</h4>
 
 <p>通过抽取子集或增加不同的字符或形状提升训练数据：</p>
 
@@ -452,7 +452,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <li>执行之后的训练过程。<code>cntraining</code>和<code>mftraining</code>最多只能采用64个tr文件，必须将不同语言的tr文件按字体连接在一起（每个tr文件的字体要相同）。tr文件中的字符必须和box文件中的字符顺序一致，也就是box的连接顺序要和tr相同。输入<code>cn/mftraining</code>和<code>unicharset_extractor</code>命令的tr和box文件顺序必须一致。</li>
 </ul>
 
-<h3 id="tesseract">Tesseract训练</h3>
+<h3 id="tesseract训练">Tesseract训练</h3>
 
 <p>对每个训练图像和box文件对，在训练模式运行Tesseract：</p>
 
@@ -500,7 +500,7 @@ dir is the direction of the segment [0,1.0]
 The cn feature is to correct for the moment normalization to
 distinguish position and size (eg c vs C and , vs &#39;)</code></pre></div>
 
-<h3 id="section-7">计算字符集</h3>
+<h3 id="计算字符集">计算字符集</h3>
 
 <p>Tesseract需要知道能够输出的字符。利用<code>unicharset_extractor</code>工具，可以从box文件得到<a href="https://github.com/tesseract-ocr/tesseract/blob/master/doc/unicharset.5.asc">unicharset文件</a>：</p>
 
@@ -538,13 +538,13 @@ Y 5 59,68,216,255,91,205,0,47,91,223 Latin 33 0 2 Y
 a 3 58,65,186,198,85,164,0,26,97,185 Latin 56 0 5 a
 </code></pre></div>
 
-<h3 id="setunicharsetproperties">set_unicharset_properties</h3>
+<h3 id="set_unicharset_properties">set_unicharset_properties</h3>
 
 <p>3.03版本中的新工具可以得到字符集的额外属性：</p>
 
 <div class="highlight"><pre><code class="language-bash">set_unicharset_properties -U unicharset -O output_unicharset --script_dir<span class="o">=</span>training/langdata</code></pre></div>
 
-<h3 id="fontproperties">font_properties</h3>
+<h3 id="font_properties">font_properties</h3>
 
 <p>3.01版新的要求是font_properties文件。该文件的作用是当字体被识别时，提供字体风格（style）信息。font_properties文件是文本文件，通过<code>-F filename</code>参数输入给命令<code>mftraining</code>。</p>
 
@@ -562,7 +562,7 @@ a 3 58,65,186,198,85,164,0,26,97,185 Latin 56 0 5 a
 <div class="highlight"><pre><code>fangsong_gb2312 0 0 0 0 0
 </code></pre></div>
 
-<h3 id="section-8">聚类</h3>
+<h3 id="聚类">聚类</h3>
 
 <p>当抽取了所有训练数据的字符特征后，需要通过聚类创建原型（prototype）。字符的形状特征可通过<code>shapeclustering</code>（3.02版的新功能）、<code>mftraining</code>和<code>cntraining</code>聚类得到。</p>
 
@@ -582,7 +582,7 @@ a 3 58,65,186,198,85,164,0,26,97,185 Latin 56 0 5 a
 
 <div class="highlight"><pre><code class="language-bash">cntraining chi_jyq.fangsong_gb2312.exp0.tr chi_jyq.fangsong_gb2312.exp1.tr</code></pre></div>
 
-<h3 id="section-9">字典数据（可选项）</h3>
+<h3 id="字典数据可选项">字典数据（可选项）</h3>
 
 <p>Tesseract对每种语言使用了多达8个字典文件。这些文件都是可选项，用于辅助确定不同可能字符组合的可能性。
 其中7个文件为有向无环字图（DAWG，directed acyclic word graph）格式，另外一个是纯UTF-8文本。</p>
@@ -597,7 +597,7 @@ wordlist2dawg words_list lang.word-dawg chi_jyq.unicharset</code></pre></div>
 <div class="highlight"><pre><code class="language-bash">combine_tessdata -u chi_sim.traineddata chi_sim
 dawg2wordlist chi_sim.unicharset chi_sim.freq-dawg wordlist</code></pre></div>
 
-<h3 id="unicharambigs">最后的unicharambigs文件</h3>
+<h3 id="最后的unicharambigs文件">最后的unicharambigs文件</h3>
 
 <p>unicharambigs描述了字符之间存在的混淆，该文件可手动填写，一个例子如下：</p>
 
@@ -624,7 +624,7 @@ iii m 0
 
 <p>和其它大多数文件一样，unicharambigs必须为UTF-8编码，并以换行符作为文件的结束。该文件不是必须的。</p>
 
-<h3 id="section-10">全部组合起来</h3>
+<h3 id="全部组合起来">全部组合起来</h3>
 
 <p>将生成的所有文件（shapetable、normproto、inttemp、pffmtable等）加上<code>lang.</code>前缀，lang通常是<a href="http://en.wikipedia.org/wiki/List_of_ISO_639-2_codes">3个字符的语言码</a>，然后执行如下合并：</p>
 
@@ -634,7 +634,7 @@ iii m 0
 
 <div class="highlight"><pre><code class="language-bash">tesseract image.tif output -l lang</code></pre></div>
 
-<h2 id="python">Python接口</h2>
+<h2 id="python接口">Python接口</h2>
 
 <div class="highlight"><pre><code class="language-python"><span class="kn">from</span> <span class="nn">pyocr</span> <span class="kn">import</span> <span class="n">tesseract</span>
 
@@ -642,13 +642,13 @@ iii m 0
 <span class="n">builder</span><span class="o">.</span><span class="n">tesseract_configs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-psm&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;scbid&#39;</span><span class="p">]</span> 
 <span class="n">result</span> <span class="o">=</span> <span class="n">tesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ocr_test.png&#39;</span><span class="p">),</span> <span class="s1">&#39;eng&#39;</span><span class="p">,</span> <span class="n">builder</span><span class="p">)</span></code></pre></div>
 
-<h2 id="section-11">性能提升</h2>
+<h2 id="性能提升">性能提升</h2>
 
-<h3 id="traineddata">直接修改traineddata文件</h3>
+<h3 id="直接修改traineddata文件">直接修改traineddata文件</h3>
 
 <p>针对具体问题，可用<code>combine_tessdata</code>解开traineddata库文件，修改DAWG和unicharambigs文件，然后再生成traineddata文件，从而提高识别率。</p>
 
-<h2 id="section-12">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
@@ -662,16 +662,16 @@ iii m 0
 <div class="footnotes">
   <ol>
     <li id="fn:error_text2_image">
-      <p>OSX系统中，由于pango库的原因，<code>text2image</code>命令会导致段错误，该命令是在Linux中执行的。 <a href="#fnref:error_text2_image" class="reversefootnote">&#8617;</a></p>
+      <p>OSX系统中，由于pango库的原因，<code>text2image</code>命令会导致段错误，该命令是在Linux中执行的。 <a href="#fnref:error_text2_image" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:if_this_true_several_trs">
-      <p>原文这样描述：you must cat together the tr files for each font into several single-font tr files. <a href="#fnref:if_this_true_several_trs" class="reversefootnote">&#8617;</a></p>
+      <p>原文这样描述：you must cat together the tr files for each font into several single-font tr files. <a href="#fnref:if_this_true_several_trs" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:character-pair">
-      <p>As of 3.00, there is a limit of 24 bytes for the description of a “character”. This will allow you between 6 and 24 unicodes to describe the character, depending on where your codes sit in the unicode set. If anyone hits this limit, please file an issue describing your situation. <a href="#fnref:character-pair" class="reversefootnote">&#8617;</a></p>
+      <p>As of 3.00, there is a limit of 24 bytes for the description of a “character”. This will allow you between 6 and 24 unicodes to describe the character, depending on where your codes sit in the unicode set. If anyone hits this limit, please file an issue describing your situation. <a href="#fnref:character-pair" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:downside_v2_unicharambigs">
-      <p>Note the downside of this simpler format is that Tesseract has to encode the utf-8 strings into the components of the unicharset. In complex scripts, this encoding may be ambiguous. In this case, the encoding is chosen such as to use the least utf-8 characters for each component, ie the shortest unicharset components will make up the encoding. <a href="#fnref:downside_v2_unicharambigs" class="reversefootnote">&#8617;</a></p>
+      <p>Note the downside of this simpler format is that Tesseract has to encode the utf-8 strings into the components of the unicharset. In complex scripts, this encoding may be ambiguous. In this case, the encoding is chosen such as to use the least utf-8 characters for each component, ie the shortest unicharset components will make up the encoding. <a href="#fnref:downside_v2_unicharambigs" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -709,28 +709,26 @@ iii m 0
   <a  href="/2015/09/haze-removal-kaiming" class="pageNav" style="float:right"   >下一篇：Single Image Haze Removal Using Dark Channel Prior </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/08/tesseract-ocr" 	data-url="http://qianjiye.de/2015/08/tesseract-ocr" data-title="开源OCR引擎Tesseract">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/08/tesseract-ocr';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/08/tesseract-ocr'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -743,7 +741,7 @@ iii m 0
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/09/haze-removal-kaiming'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/09/haze-removal-kaiming'; --1> -->
 <!--         url = '/2015/09/haze-removal-kaiming'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -763,7 +761,7 @@ iii m 0
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

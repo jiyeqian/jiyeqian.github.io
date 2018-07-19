@@ -157,7 +157,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 id="section">基本概念</h2>
+<h2 id="基本概念">基本概念</h2>
 
 <ul>
   <li><strong>并行（parallelism）</strong>：在多处理单元系统上，将计算或数据划分为多部分，各部分在不同处理单元上执行，各处理单元相互协作，同时运行。</li>
@@ -205,7 +205,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 * 利用已有的并行库；
 * 优化串行程序。 -->
 
-<h2 id="section-1">进程与线程</h2>
+<h2 id="进程与线程">进程与线程</h2>
 
 <p>进程的概念简化了程序设计、存储器管理等，并且提供了一种大粒度的并行方法。线程存在进程之中，进程中的所有线程共享进程的资源并独享某些资源，因此更易于通信。进程可调度到一台机器中的一个或多个处理器核心上执行，而线程会调度到一个核心上执行，向量化的代码则会映射到一个核心内的向量单元上执行。由于操作系统调度策略的不同，并不能保证进程和线程会一直在相同的核心上执行。通常基于进程的是类似MPI的分布式存储器编程模式，基于线程的是类似pthread、OpenMP等基于共享存储器的编程模式。由于分布式计算的各节点有其独立的存储器，因此基于进程的消息传递通信更适合，而多核等由于共享存储器，所以基于线程的共享存储器更易于通信。</p>
 
@@ -219,7 +219,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>如果一个操作并不阻碍进程或线程，接着执行代码，称这个操作为<strong>非阻塞</strong>，反之则为<strong>阻塞</strong>。相对非阻塞来说，阻塞更为常见，因为非阻塞要求开发人员手动保证操作的完成，这可能会带来数据一致性问题。同步或异步则是针对通信的多个进程或线程，如果一个进程或线程与其他进程与线程通信时，不需要其他线程做好准备，称之为<strong>异步</strong>，反之则为<strong>同步</strong>。在某些文献中，阻塞与同步、非阻塞与异步的含义是一样的。</p>
 
-<h2 id="section-2">并行硬件平台</h2>
+<h2 id="并行硬件平台">并行硬件平台</h2>
 
 <p>###机群</p>
 
@@ -247,7 +247,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>而由于电池容量和功耗的原因，移动端不可能使用桌面或服务器高性能处理器，因此其对性能优化具有很高需求。ARM支持的向量指令集称为NEON，大多数移动GPU已支持使用OpenCL进行并行计算。</p>
 
-<h2 id="section-3">现代处理器</h2>
+<h2 id="现代处理器">现代处理器</h2>
 
 <p>现代处理器利用了指令级并行技术，同一时刻存在着多条指令同时执行。处理器执行指令的顺序无须和汇编代码给出的指令顺序完全一致，编译器和处理器只需要保证最终结果一致，这类处理器称为<strong>乱序执行处理器</strong>。目前主流的CPU和GPU基本上都已经是乱序执行处理器。严格按照顺序一次执行一条指令，只有前一条执行完才开始执行后一条指令的处理器，称为<strong>按序处理器</strong>。</p>
 
@@ -279,7 +279,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <p>算法优化通常主要考虑计算代价，这和处理器相关。对于硬件相关的优化，存储器和总线结构是不可忽视的重要因素。</p>
 
-<h2 id="section-4">参考资料</h2>
+<h2 id="参考资料">参考资料</h2>
 
 <ol class="bibliography"></ol>
 
@@ -321,28 +321,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2015/08/tesseract-ocr" class="pageNav" style="float:right"   >下一篇：开源OCR引擎Tesseract </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2015/07/HPC-overview" 	data-url="http://qianjiye.de/2015/07/HPC-overview" data-title="高性能计算概述">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2015/07/HPC-overview';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2015/07/HPC-overview'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -355,7 +353,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2015/08/tesseract-ocr'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2015/08/tesseract-ocr'; --1> -->
 <!--         url = '/2015/08/tesseract-ocr'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -375,7 +373,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>

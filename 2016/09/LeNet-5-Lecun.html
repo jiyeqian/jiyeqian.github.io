@@ -161,20 +161,20 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 </section>
 <section class="post">
-<h2 class="no_toc" id="section">目录</h2>
+<h2 class="no_toc" id="目录">目录</h2>
 
 <ul id="markdown-toc">
-  <li><a href="#section-1" id="markdown-toc-section-1">摘要</a></li>
-  <li><a href="#section-2" id="markdown-toc-section-2">序言</a></li>
+  <li><a href="#摘要" id="markdown-toc-摘要">摘要</a></li>
+  <li><a href="#序言" id="markdown-toc-序言">序言</a></li>
 </ul>
 
-<h2 id="section-1">摘要</h2>
+<h2 id="摘要">摘要</h2>
 
 <p>反向传播（back-propagation）算法训练的多层神经网络是基于梯度法学习的最好范例。给定恰当的网络结构，基于梯度的学习算法能获得复杂的判别面，只需少量预处也能对高维模式分类，比如手写字符。<strong>卷积神经网络针对处理二维形状变化而特别设计，展了优于其它所有算法的性能。</strong></p>
 
 <p>现实中的文本识别系统由区域提取（field extraction）、分割（segmentation）、识别（recognition）和语言建模（language modeling）等多个模块组成。 利用称为GTN（graph transformer network）的学习范式，多模块系统能通过梯度法进行全局训练，从而达到全局最优。</p>
 
-<h2 id="section-2">序言</h2>
+<h2 id="序言">序言</h2>
 
 <p><strong>构建性能良好的识别系统，可更多的依靠自动学习机制，而少依赖手工设计的启发式方法。</strong>字符识别的案例表明：直接作用于像素的学习模型，经过精心设计，能方便地替代手动的特征抽取技术。</p>
 
@@ -214,28 +214,26 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
   <a  href="/2016/09/s13000-Introduction" class="pageNav" style="float:right"   >下一篇：鲁棒及自适应控制（1）：概论 </a>  
 </span>
 </section>
+<div id="disqus_thread"></div>
+<script>
 
-	<script type="text/javascript">
-	var first_image = document.getElementsByClassName("post")[0].getElementsByTagName("img")[0]; 
-	if (first_image != undefined) {
-	document.getElementsByClassName("ds-thread")[0].setAttribute("data-image", first_image.src);
-	}
-	</script>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"jiyeqian"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<ul class="ds-recent-visitors" data-num-items="16"></ul>
-	<div class="ds-thread"  data-thread-key="/2016/09/LeNet-5-Lecun" 	data-url="http://qianjiye.de/2016/09/LeNet-5-Lecun" data-title="Gradient-Based Learning Applied to Document Recognition">
-	</div>	
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
+var disqus_config = function () {
+this.page.url = 'http://qianjiye.de/2016/09/LeNet-5-Lecun';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'http://qianjiye.de/2016/09/LeNet-5-Lecun'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jiyeqian.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- <script type="text/javascript"> -->
 <!-- $(function(){ -->
@@ -248,7 +246,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!--         } -->
 <!--         else if (e.which == 39 || e.which == 76) {  // Right arrow and L -->
 <!--          -->
-<!--         <1!-- url = 'http://qianjiye.de/2016/09/s13000-Introduction'; --1> -->
+<!--         <1!-- url = 'http://localhost:4000/2016/09/s13000-Introduction'; --1> -->
 <!--         url = '/2016/09/s13000-Introduction'; -->
 <!--          -->
 <!--         } else if (e.which == 75) {  // K -->
@@ -268,7 +266,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
     <footer>
         <p><small>
-            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2017 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+            Powered by <a href="http://jekyllrb.com" target="_blank">Jekyll</a> | Copyright 2014 - 2018 by <a href="/about/">Jiye Qian</a> | <span class="label label-info" id="timeSpan"></span></small></p>
     </footer>
 
     </div>
