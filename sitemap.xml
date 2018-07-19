@@ -2,15 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://localhost:4000/2017/06/a-byte-of-ct-uav</loc>
-    
-    <lastmod>2017-06-22T21:39:14+08:00</lastmod>
-    
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <url>
     <loc>http://localhost:4000/2016/10/nnml-bp-learning</loc>
     
     <lastmod>2016-10-24T07:11:18+08:00</lastmod>
@@ -873,8 +864,6 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  
   
   
   
